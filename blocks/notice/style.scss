@@ -1,0 +1,30 @@
+.themeisle-block-notice {
+
+	&.components-notice {
+		background-color: #E5F5FA;
+		border-left: 4px solid #00a0d2;
+		margin: 5px 15px 10px;
+		padding: 8px 12px;
+	
+		&.is-success {
+			border-left-color: #4ab866;
+			background-color: lighten( #4ab866, 45% );
+		}
+	
+		&.is-warning {
+			border-left-color: #f0b849;
+			background-color: lighten( #f0b849, 35% );
+		}
+	
+		&.is-error {
+			border-left-color: #d94f4f;
+			background-color: lighten( #d94f4f, 35% );
+		}
+	
+		.components-notice__content {
+			font-size: 14px;
+			line-height: 1.5;
+			margin: 0 !important;
+		}
+	}
+}

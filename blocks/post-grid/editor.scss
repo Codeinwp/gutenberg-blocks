@@ -1,0 +1,152 @@
+.wp-block-themeisle-blocks-posts-grid {
+	display: flex;
+	flex-wrap: wrap;
+
+	&.is-grid {
+		.grid-post {
+			.grid-post-row {
+
+				.grid-image-area {
+					flex: 0 0 100%;
+					max-width: 100%;
+				}
+		
+				.grid-content-area {
+					flex: 0 0 100%;
+					max-width: 100%;
+
+					.grid-content-category {
+						margin: 10px 0;
+					}
+				}
+			}
+
+			&.grid-2 {
+				flex: 0 0 50%;
+				max-width: 50%;
+				padding: 0 15px;
+			}
+
+			&.grid-3 {
+				flex: 0 0 33%;
+				max-width: 33%;
+				padding: 0 15px;
+			}
+
+			&.grid-4 {
+				flex: 0 0 25%;
+				max-width: 25%;
+				padding: 0 15px;
+			}
+
+			&.grid-5 {
+				flex: 0 0 20%;
+				max-width: 20%;
+				padding: 0 15px;
+			}
+		}
+	}
+
+	.grid-post {
+		margin: 20px 0;
+		background: transparent;
+		box-shadow: none;
+		border: 0;
+		border-radius: 6px;
+		color: rgba(0,0,0,.87);
+		width: 100%;
+
+		.grid-post-row {
+			display: flex;
+			flex-wrap: wrap;
+			margin-right: -15px;
+			margin-left: -15px;
+
+			.grid-image-area {
+				flex: 0 0 33.333333%;
+				max-width: 33.333333%;
+				position: relative;
+				width: 100%;
+				min-height: 1px;
+				padding-right: 15px;
+				padding-left: 15px;
+
+				.post-thumbnail {
+					position: relative;
+					padding: 0;
+					z-index: 1;
+					border-radius: 6px;
+
+					img {
+						width: 100%;
+						border-radius: 6px;
+						box-shadow: 0 5px 15px 5px rgba(0,0,0,.24),0 8px 10px -5px rgba(0,0,0,.2);
+					}
+				}
+			}
+
+			.grid-content-area {
+				flex: 0 0 66.666667%;
+				max-width: 66.666667%;
+				position: relative;
+				width: 100%;
+				min-height: 1px;
+				padding-right: 15px;
+				padding-left: 15px;
+
+				&.full {
+					flex: 0 0 100%;
+					max-width: 100%;
+				}
+
+				.grid-content-category {
+					font-size: 11px;
+					font-weight: bold;
+					margin: 0;
+
+					a {
+						color: #000000;
+						text-decoration: none;
+					}
+				}
+
+				.grid-content-title {
+					font-size: 16px;
+					font-weight: bold;
+					margin: 0;
+
+					a {
+						text-decoration: none;
+					}
+				}
+
+				.grid-content-meta {
+					margin: 0;
+					font-size: 14px;
+
+					a {
+						color: #000000;
+					}
+				}
+
+				.grid-content-excerpt {
+					line-height: 1.5;
+					margin: 1em 0;
+				}
+			}
+		}
+	}
+}
+
+@media ( max-width:600px ) {
+	.wp-block-themeisle-blocks-posts-grid {
+
+		&.is-grid {
+			.grid-post {
+				flex: 0 0 100% !important;
+				max-width: 100% !important;
+				padding: 0 !important;
+			}
+		}
+	}
+}

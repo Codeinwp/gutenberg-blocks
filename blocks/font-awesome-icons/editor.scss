@@ -1,0 +1,40 @@
+.font-awesome-auto-complete {
+  label {
+    width: 15%;
+    margin-right: -4px;
+    border-radius: 3px 0 0 3px;
+    background: #ddd;
+    line-height: 30px;
+    text-align: center;
+    vertical-align: top;
+    display: inline-block;
+  }
+
+  .icon-complete {
+    width: 85%;
+    background: #ffffff;
+    display: inline-block;
+    font-size: 13px;
+    height: 30px;
+    box-shadow: 0 0 0 transparent;
+    transition: box-shadow .1s linear;
+    border-radius: 4px;
+    border: 1px solid #8d96a0;
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+    overflow: hidden;
+    padding: 5px 10px;
+
+    &:focus {
+      color: #191e23;
+      border-color: #00a0d2;
+      box-shadow: 0 0 0 1px #00a0d2;
+      outline: 2px solid transparent;
+      outline-offset: -2px;
+    }
+  }
+}
+
+.wp-block-themeisle-blocks-font-awesome-icons {
+  text-align: center;
+}

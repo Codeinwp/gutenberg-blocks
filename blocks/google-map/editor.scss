@@ -1,0 +1,26 @@
+.wp-block-themeisle-blocks-google-map {
+	position: relative;
+	
+	&.interactive {
+		&:before {
+			content: "";
+			display: block;
+		}
+
+		.map {
+			position: relative;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			text-align: center;
+		}
+	}
+
+	.components-placeholder__fieldset {
+	
+		.components-placeholder__instructions {
+			margin-top: 1em;
+		}
+	}
+}

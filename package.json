@@ -1,0 +1,41 @@
+{
+	"name": "themeisle-gutenberg-blocks",
+	"version": "1.0.0",
+	"description": "ThemeIsle Gutenberg Blocks",
+	"scripts": {
+		"build": "cross-env BABEL_ENV=default NODE_ENV=production webpack",
+		"dev": "cross-env BABEL_ENV=default webpack --watch",
+		"lint": "eslint blocks/*/*.js store/*.js"
+	},
+	"engines": {
+		"node": ">=8.0.0",
+		"npm": ">=6.0.0"
+	},
+	"dependencies": {
+		"@handsontable/react": "^1.1.0",
+		"handsontable": "^5.0.1",
+		"react": "16.4.1",
+		"react-google-charts": "^3.0.5"
+	},
+	"devDependencies": {
+		"@wordpress/babel-preset-default": "^1.3.0",
+		"autoprefixer": "^9.2.0",
+		"babel-core": "6.26.0",
+		"babel-loader": "7.1.4",
+		"babel-plugin-transform-async-generator-functions": "^6.24.1",
+		"babel-plugin-transform-react-jsx": "^6.24.1",
+		"classnames": "^2.2.6",
+		"cross-env": "3.2.4",
+		"eslint": "^5.7.0",
+		"eslint-config-wordpress": "^2.0.0",
+		"eslint-loader": "^2.1.1",
+		"eslint-plugin-react": "^7.11.1",
+		"extract-text-webpack-plugin": "4.0.0-beta.0",
+		"node-sass": "git://github.com/sass/node-sass.git#v4.7.0",
+		"postcss-loader": "2.1.3",
+		"raw-loader": "^0.5.1",
+		"sass-loader": "6.0.7",
+		"webpack": "4.8.3",
+		"webpack-cli": "2.1.3"
+	}
+}

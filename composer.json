@@ -1,0 +1,23 @@
+{
+	"name": "codeinwp/gutenberg-blocks",
+	"description": "A set of awesome Gutenberg Blocks!",
+	"type": "library",
+	"version": "1.0.0",
+	"license": "GPL-2.0-or-later",
+	"homepage": "https://github.com/Codeinwp/gutenberg-blocks",
+	"authors": [
+		{
+			"name": "ThemeIsle team",
+			"email": "friends@themeisle.com",
+			"homepage": "https://themeisle.com"
+		}
+	],
+	"autoload": {
+		"files": [
+			"load.php"
+		]
+	},
+	"support": {
+		"issues": "https://github.com/Codeinwp/gutenberg-blocks/issues"
+	}
+}

@@ -1,0 +1,119 @@
+// These margins make sure that nested blocks stack/overlay with the parent block chrome
+// This is sort of an experiment at making sure the editor looks as much like the end result as possible
+// Potentially the rules here can apply to all nested blocks and enable stacking, in which case it should be moved elsewhere
+.wp-block-themeisle-blocks-services .editor-block-list__layout {
+	margin-left: 0;
+	margin-right: 0;
+
+	// This max-width is used to constrain the main editor column, it should not cascade into columns
+	.editor-block-list__block {
+		max-width: none;
+	}
+}
+
+.wp-block-themeisle-blocks-services {
+	display: block;
+	position: relative;
+
+	&.is-dim {
+		&:before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			background-color: rgba(0,0,0,.5);
+		}
+
+		.wp-block-column {
+			z-index: 1;
+		}
+	}
+
+	&.is-parallax {
+		background-attachment: fixed !important;
+	}
+
+	> .editor-inner-blocks > .editor-block-list__layout {
+		display: flex;
+
+		> [data-type="themeisle-blocks/service-block"] {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			width: 0;
+
+			.editor-block-list__block-edit {
+				margin-top: 12px;
+				flex-basis: 100%;
+			}
+		}
+	}
+
+	.wp-block-column {
+		&:first-child {
+			margin-left: 0;
+		}
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		position: relative;
+		padding: 20px 10px;
+		margin: 0 20px;
+	}
+}
+
+[data-type="themeisle-blocks/services"] {
+	&[data-align="full"] {
+		.wp-block-themeisle-blocks-services {
+			padding: 100px 150px;
+		}
+	}
+
+	&[data-align="wide"] {
+		.wp-block-themeisle-blocks-services {
+			padding: 30px 50px;
+		}
+	}
+}
+
+@media ( max-width:768px ) {
+	.wp-block-themeisle-blocks-services {
+		display: block;
+
+		> .editor-inner-blocks > .editor-block-list__layout {
+			display: block;
+	
+			> [data-type="themeisle-blocks/service-block"] {
+				display: flex;
+				flex-direction: column;
+				flex: 1;
+				width: auto;
+	
+				.editor-block-list__block-edit {
+					margin-top: 12px;
+					flex-basis: 100%;
+				}
+			}
+		}
+	}
+}
+
+@media ( max-width:1024px ) {
+	[data-type="themeisle-blocks/services"] {
+		&[data-align="full"] {
+			.wp-block-themeisle-blocks-services {
+				padding: 100px 20px;
+			}
+		}
+
+		&[data-align="wide"] {
+			.wp-block-themeisle-blocks-services {
+				padding: 30px 50px;
+			}
+		}
+	}
+}
