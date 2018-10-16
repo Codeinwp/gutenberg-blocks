@@ -8,11 +8,11 @@ General structure of this module should be as the following:
 * If a block needs server side rendering than it should have an extension class of the `Base_Block` class.
 * Any server side data handling should happen in the `store`.
 
-You can add like this:
+You can include this library like this::
 
 ```
 if ( class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
-	\ThemeIsle\GutenbergBlocks::instance( __( 'Orbit Fox', 'themeisle' ) );
+	\ThemeIsle\GutenbergBlocks::instance( __( 'Orbit Fox', 'textdomain' ) );
 }
 ```
 
