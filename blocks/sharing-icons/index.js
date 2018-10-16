@@ -89,7 +89,7 @@ registerBlockType( 'themeisle-blocks/sharing-icons', {
 				<Toolbar
 					className='components-toolbar'
 				>
-					{ Object.keys( social_list ).map( ( item, i ) => {
+					{ Object.keys( socialList ).map( ( item, i ) => {
 						let prop = props.attributes[item];
 						return (
 							<Tooltip text={ __( `Display ${ socialList[item].label }` )	}>
@@ -115,7 +115,7 @@ registerBlockType( 'themeisle-blocks/sharing-icons', {
 					{ 'has-label': ( props.attributes.className ? ! props.attributes.className.includes( 'is-style-icons' ) : true ) },
 				) }
 			>
-				{ Object.keys( social_list ).map( ( item, i ) => {
+				{ Object.keys( socialList ).map( ( item, i ) => {
 					if ( true === props.attributes[item]) {
 						return (
 							<a className={ `social-icon is-${item}` }><i class={ `fab fa-${socialList[item].icon}` }></i>{ ( props.attributes.className ? ! props.attributes.className.includes( 'is-style-icons' ) : true ) && socialList[item].label }</a>
