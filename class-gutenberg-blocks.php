@@ -46,7 +46,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 			add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 			add_action( 'init', array( $this, 'autoload_block_classes' ), 11 );
 			add_action( 'wp', array( $this, 'load_server_side_blocks' ), 11 );
-			add_action( 'init', array( $this, 'register_settings' ) );
+			add_action( 'init', array( $this, 'register_settings' ), 99 );
 			add_action( 'block_categories', array( $this, 'block_categories' ) );
 		}
 
