@@ -58,9 +58,17 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 */
 		public function enqueue_block_editor_assets() {
 			wp_enqueue_script(
+				'themeisle-gutenberg-blocks-vendor',
+				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/vendor.js',
+				'',
+				'',
+				true
+			);
+
+			wp_enqueue_script(
 				'themeisle-gutenberg-blocks',
 				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/block.js',
-				array( 'wp-api' ),
+				array( 'wp-api', 'themeisle-gutenberg-blocks-vendor' ),
 				'',
 				true
 			);

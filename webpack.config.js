@@ -1,82 +1,87 @@
-const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
+const webpack = require( 'webpack' );
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const glob = require( 'glob' );
+const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 
-// CSS loader for styles specific to blocks in general.
-const blocksCSSPlugin = new ExtractTextPlugin({
-	filename: './build/style.css'
-});
-
-// CSS loader for styles specific to block editing.
-const editBlocksCSSPlugin = new ExtractTextPlugin({
-	filename: './build/edit-blocks.css'
-});
-
-// Configuration for the ExtractTextPlugin.
-const extractConfig = {
-	use: [
-		{ loader: 'raw-loader' },
-		{
-			loader: 'postcss-loader',
-			options: {
-				plugins: [
-					require( 'autoprefixer' )
-				]
+module.exports = {
+	mode: NODE_ENV,
+	entry: [ ...glob.sync( './blocks/**/index.js' ), './store/index.js' ],
+	output: {
+		path: __dirname,
+		filename: './build/block.js',
+		chunkFilename: './build/[name].js'
+	},
+	module: {
+		rules: [
+			{
+				test: /.js?$/,
+				use: [ {
+					loader: 'babel-loader',
+					options: {
+						presets: [ '@babel/preset-env' ],
+						plugins: [
+							'@babel/plugin-transform-async-to-generator',
+							'@babel/plugin-proposal-object-rest-spread',
+							[
+								'@babel/plugin-transform-react-jsx', {
+									'pragma': 'wp.element.createElement'
+								}
+							]
+						]
+					}
+				},
+				'eslint-loader' ],
+				exclude: /node_modules/
+			},
+			{
+				test: /\.(css|scss)$/,
+				use: [ {
+					loader: MiniCssExtractPlugin.loader
+				},
+				'css-loader',
+				{
+					loader: 'postcss-loader',
+					options: {
+						plugins: [
+							require( 'autoprefixer' )
+						]
+					}
+				},
+				{
+					loader: 'sass-loader',
+					query: {
+						outputStyle:
+							'production' === process.env.NODE_ENV ? 'compressed' : 'nested'
+					}
+				} ]
 			}
-		},
-		{
-			loader: 'sass-loader',
-			query: {
-				outputStyle:
-					'production' === process.env.NODE_ENV ? 'compressed' : 'nested'
+		]
+	},
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				vendor: {
+					name: 'vendor',
+					test: /[\\/]node_modules[\\/]/,
+					chunks: 'all',
+					reuseExistingChunk: true
+				},
+				editorStyles: {
+					name: 'vendor',
+					test: /editor\.scss$/,
+					chunks: 'all',
+					enforce: true
+				}
 			}
 		}
+	},
+	plugins: [
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': JSON.stringify( NODE_ENV )
+		}),
+		new MiniCssExtractPlugin({
+			filename: './build/style.css',
+			chunkFilename: './build/edit-blocks.css'
+		})
 	]
 };
-
-const glob = require( 'glob' ),
-	webpack = require( 'webpack' ),
-	NODE_ENV = process.env.NODE_ENV || 'development',
-	webpackConfig = {
-		mode: 'development',
-		entry: [ ...glob.sync( './blocks/**/index.js' ), './store/index.js' ],
-		output: {
-			path: __dirname,
-			filename: './build/block.js'
-		},
-		module: {
-			rules: [
-				{
-					enforce: 'pre',
-					test: /\.js?$/,
-					use: 'eslint-loader',
-					exclude: /node_modules/
-				},
-				{
-					test: /.js$/,
-					use: 'babel-loader',
-					exclude: /node_modules/
-				},
-				{
-					test: /style\.s?css$/,
-					use: blocksCSSPlugin.extract( extractConfig )
-				},
-				{
-					test: /editor\.s?css$/,
-					use: editBlocksCSSPlugin.extract( extractConfig )
-				},
-				{
-					test: /\.css$/,
-					include: /node_modules/,
-					use: editBlocksCSSPlugin.extract( extractConfig )
-				}
-			]
-		},
-		plugins: [
-			new webpack.DefinePlugin({
-				'process.env.NODE_ENV': JSON.stringify( NODE_ENV )
-			}),
-			blocksCSSPlugin,
-			editBlocksCSSPlugin
-		]
-	};
-
-module.exports = webpackConfig;
