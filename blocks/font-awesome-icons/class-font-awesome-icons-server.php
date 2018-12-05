@@ -21,7 +21,6 @@ class Font_Awesome_Icons_Server extends \WP_Rest_Controller {
 	 */
 	public $namespace = 'themeisle-gutenberg-blocks/';
 
-
 	/**
 	 * Rest route version.
 	 *
@@ -58,10 +57,26 @@ class Font_Awesome_Icons_Server extends \WP_Rest_Controller {
 	 * Get Icons List
 	 *
 	 * Get list of all Font Awesome icons.
+	 * 
+	 * Due to file size of JSON being 2MB, we're using a static JSON instead of one provided by Font Awesome.
+	 * When the fonts get updated, we can use `get_icons_list_ready` function to get the updated JSON.
 	 *
 	 * @return mixed|\WP_REST_Response
 	 */
 	public function get_icons_list( $request ) {
+		$content = file_get_contents( dirname( __FILE__ ) . '/icons.json', FILE_USE_INCLUDE_PATH );
+		$parsed_content = json_decode( $content, true );
+		return rest_ensure_response( $parsed_content );
+	}
+
+	/**
+	 * Get Icons List Ready
+	 *
+	 * Get list of all Font Awesome icons for development.
+	 *
+	 * @return mixed|\WP_REST_Response
+	 */
+	public function get_icons_list_ready( $request ) {
 		$content = file_get_contents( dirname( __FILE__ ) . '/icons.json', FILE_USE_INCLUDE_PATH );
 
 		$parsed_content = json_decode( $content, true );
@@ -95,7 +110,8 @@ class Font_Awesome_Icons_Server extends \WP_Rest_Controller {
 				);
 			}
 		}
-		return rest_ensure_response( $icons );
+
+		return rest_ensure_response( $parsed_content );
 	}
 
 	/**

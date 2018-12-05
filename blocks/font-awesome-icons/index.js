@@ -1,4 +1,11 @@
 /**
+ * External dependencies...
+ */
+import classnames from 'classnames';
+
+import Autosuggest from 'react-autosuggest';
+
+/**
  * WordPress dependencies...
  */
 
@@ -9,12 +16,16 @@ const {
 } = wp.blocks;
 
 const {
-	Autocomplete,
 	PanelBody,
 	Spinner,
 	Placeholder,
 	RangeControl
 } = wp.components;
+
+const {
+	compose,
+	withState
+} = wp.compose;
 
 const { withSelect } = wp.data;
 
@@ -84,34 +95,81 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 		align: [ 'left', 'center', 'right' ]
 	},
 
-	edit: withSelect( ( select, props ) => {
-		const iconsList = select( 'themeisle-gutenberg/blocks' ).getFaIconsList();
-		return {
-			iconsList,
-			props
-		};
-	})( ({ iconsList, props }) => {
+	edit: compose([
 
-		const autocompleters = [
-			{
-				name: 'font-awesome',
-				triggerPrefix: '',
-				options: iconsList,
-				getOptionLabel: option => (
-					<span>
-						<i className={ `${ option.prefix } fa-fw fa-${ option.name }` }></i> { option.name }
-					</span>
-				),
-				getOptionKeywords: option => [ option.name ],
-				getOptionCompletion: option => {
+		withSelect( ( select, props ) => {
+			const iconsList = select( 'themeisle-gutenberg/blocks' ).getFaIconsList();
+			return {
+				iconsList,
+				props
+			};
+		}),
+
+		withState({
+			suggestions: []
+		})
+
+	])( ({ iconsList, suggestions, setState, props }) => {
+
+		const getSuggestions = value => {
+			const inputValue = value.trim().toLowerCase();
+			const inputLength = inputValue.length;
+
+			return 0 === inputLength ? [] : iconsList.filter( icon =>
+				icon.name.toLowerCase().slice( 0, inputLength ) === inputValue
+			);
+		};
+
+		const getSuggestionValue = suggestion => suggestion;
+
+		const renderSuggestion = suggestion => {
+			return (
+				<div
+					className={ classnames(
+						'icon-select',
+						{ 'selected': ( suggestion.name === props.attributes.icon && suggestion.prefix === props.attributes.prefix ) },
+					) }
+				>
+					<i className={ `${ suggestion.prefix } fa-fw fa-${ suggestion.name }` }></i>
+					{ suggestion.name }
+				</div>
+			);
+		};
+
+		const renderSuggestionsContainer = ({ containerProps, children, query }) => {
+			return (
+				<div { ... containerProps }>
+					{ children }
+				</div>
+			);
+		};
+
+		const onSuggestionsFetchRequested = ({ value }) => {
+			setState({
+				suggestions: getSuggestions( value )
+			});
+		};
+
+		const onSuggestionsClearRequested = () => {
+			setState({
+				suggestions: []
+			});
+		};
+
+		const inputProps = {
+			placeholder: __( 'Start typing, like themeisle…' ),
+			value: props.attributes.icon,
+			onChange: ( event, { newValue }) => {
+				if ( 'object' === typeof newValue ) {
 					props.setAttributes({
-						prefix: option.prefix,
-						icon: option.name
+						icon: newValue.name,
+						prefix: newValue.prefix
 					});
-					return option.name;
+				} else {
+					props.setAttributes({ icon: newValue });
 				}
 			}
-		];
+		};
 
 		const changeFontSize = ( value ) => {
 			props.setAttributes({ fontSize: value });
@@ -168,28 +226,22 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 					title={ __( 'Icon Settings' ) }
 				>
 					{ iconsList !== undefined && 0 < iconsList.length ?
-						<Autocomplete completers={ autocompleters }>
-							{ ({ isExpanded, listBoxId, activeId }) => (
-								<div
-									className="font-awesome-auto-complete"
-								>
-									<label>
-										<i className={ `${ props.attributes.prefix } fa-${ props.attributes.icon }` }></i>
-									</label>
-									<div
-										className="icon-complete"
-										contentEditable
-										suppressContentEditableWarning
-										aria-autocomplete="list"
-										aria-expanded={ isExpanded }
-										aria-owns={ listBoxId }
-										aria-activedescendant={ activeId }
-									>
-										{ props.attributes.icon }
-									</div>
-								</div>
-							) }
-						</Autocomplete>					:
+						<div
+							className="font-awesome-auto-complete"
+						>
+							<label>
+								<i className={ `${ props.attributes.prefix } fa-${ props.attributes.icon }` }></i>
+							</label>
+							<Autosuggest
+								suggestions={ suggestions }
+								onSuggestionsFetchRequested={ onSuggestionsFetchRequested }
+								onSuggestionsClearRequested={ onSuggestionsClearRequested }
+								getSuggestionValue={ getSuggestionValue }
+								renderSuggestion={ renderSuggestion }
+								renderSuggestionsContainer={ renderSuggestionsContainer }
+								inputProps={ inputProps }
+							/>
+						</div>				:
 						<Placeholder>
 							<Spinner />
 						</Placeholder>
