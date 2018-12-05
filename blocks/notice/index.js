@@ -28,7 +28,7 @@ registerBlockType( 'themeisle-blocks/notice', {
 		content: {
 			type: 'array',
 			source: 'children',
-			selector: '.components-notice__content'
+			selector: 'p.components-notice__content'
 		}
 	},
 

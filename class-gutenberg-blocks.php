@@ -57,11 +57,25 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 * @access  public
 		 */
 		public function enqueue_block_editor_assets() {
+			if ( THEMEISLE_GUTENBERG_BLOCKS_DEV ) {
+				$version = time();
+			} else {
+				$version = THEMEISLE_GUTENBERG_BLOCKS_VERSION;
+			}
+
+			wp_enqueue_script(
+				'themeisle-gutenberg-blocks-vendor',
+				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/vendor.js',
+				'',
+				$version,
+				true
+			);
+
 			wp_enqueue_script(
 				'themeisle-gutenberg-blocks',
 				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/block.js',
-				array( 'wp-api' ),
-				'',
+				array( 'wp-api', 'themeisle-gutenberg-blocks-vendor' ),
+				$version,
 				true
 			);
 
