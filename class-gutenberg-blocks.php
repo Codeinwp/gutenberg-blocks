@@ -99,8 +99,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 			wp_enqueue_style(
 				'themeisle-block_styles',
-				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/style.css',
-				array( 'wp-blocks' )
+				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/style.css'
 			);
 
 			if ( has_block( 'themeisle-blocks/chart-pie' ) ) {
