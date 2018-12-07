@@ -146,9 +146,10 @@ class Posts_Grid_Block extends Base_Block {
 
 				if ( ( isset( $attributes['displayAuthor'] ) && $attributes['displayAuthor'] ) ) {
 					$list_items_markup .= sprintf(
-						'%1$s %2$s',
+						'%1$s <a href="%2$s">%3$s</a>',
 						__( 'by', 'textdomain' ),
-						get_the_author_posts_link( get_the_author_meta( $id ) )
+						get_author_posts_url( get_post_field( 'post_author', $id ) ),
+						get_the_author_meta( 'display_name', get_post_field( 'post_author', $id ) )
 					);
 				}
 
