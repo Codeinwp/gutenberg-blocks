@@ -42,43 +42,43 @@ class Sharing_Icons_Block extends Base_Block {
 			'facebook' => array(
 				'label'   => esc_html__( 'Facebook', 'textdomain' ),
 				'icon' => 'facebook-f',
-				'url' => 'https://www.facebook.com/sharer/sharer.php?u=' . get_the_permalink() . '&title=' . get_the_title(),
+				'url' => 'https://www.facebook.com/sharer/sharer.php?u=' . esc_url( get_the_permalink() ) . '&title=' . esc_attr( get_the_title() ),
 			),
 
 			'twitter' => array(
 				'label'   => esc_html__( 'Twitter', 'textdomain' ),
 				'icon' => 'twitter',
-				'url' => 'http://twitter.com/share?url=' . get_the_permalink() . '&text=' . get_the_title(),
+				'url' => 'http://twitter.com/share?url=' . esc_url( get_the_permalink() ) . '&text=' . esc_attr( get_the_title() ),
 			),
 
 			'googleplus' => array(
 				'label'   => esc_html__( 'Google Plus', 'textdomain' ),
 				'icon' => 'google-plus-g',
-				'url' => 'https://plus.google.com/share?url=' . get_the_permalink() . '&text=' . get_the_title(),
+				'url' => 'https://plus.google.com/share?url=' . esc_url( get_the_permalink() ) . '&text=' . esc_attr( get_the_title() ),
 			),
 
 			'linkedin' => array(
 				'label'   => esc_html__( 'Linkedin', 'textdomain' ),
 				'icon' => 'linkedin-in',
-				'url' => 'https://www.linkedin.com/shareArticle?mini=true&url=' . get_the_permalink() . '&title=' . get_the_title(),
+				'url' => 'https://www.linkedin.com/shareArticle?mini=true&url=' . esc_url( get_the_permalink() ) . '&title=' . esc_attr( get_the_title() ),
 			),
 
 			'pinterest' => array(
 				'label'   => esc_html__( 'Pinterest', 'textdomain' ),
 				'icon' => 'pinterest-p',
-				'url' => 'https://pinterest.com/pin/create/button/?url=' . get_the_permalink() . '&description=' . get_the_title(),
+				'url' => 'https://pinterest.com/pin/create/button/?url=' . esc_url( get_the_permalink() ) . '&description=' . esc_attr( get_the_title() ),
 			),
 
 			'tumblr' => array(
 				'label'   => esc_html__( 'Tumblr', 'textdomain' ),
 				'icon' => 'tumblr',
-				'url' => 'https://tumblr.com/share/link?url=' . get_the_permalink() . '&name=' . get_the_title(),
+				'url' => 'https://tumblr.com/share/link?url=' . esc_url( get_the_permalink() ) . '&name=' . esc_attr( get_the_title() ),
 			),
 
 			'reddit' => array(
 				'label'   => esc_html__( 'Reddit', 'textdomain' ),
 				'icon' => 'reddit-alien',
-				'url' => 'https://www.reddit.com/submit?url=' . get_the_permalink(),
+				'url' => 'https://www.reddit.com/submit?url=' . esc_url( get_the_permalink() ),
 			),
 		);
 
@@ -113,6 +113,7 @@ class Sharing_Icons_Block extends Base_Block {
 			),
 			'className'  => array(
 				'type'    => 'string',
+				'default' => 'is-default'
 			),
 		);
 	}
@@ -126,7 +127,7 @@ class Sharing_Icons_Block extends Base_Block {
 	 * @return mixed|string
 	 */
 	function render( $attributes ) {
-		if ( strpos( $attributes['className'], 'is-style-icons' ) !== false ) {
+		if ( isset( $attributes['className'] ) && strpos( $attributes['className'], 'is-style-icons' ) !== false ) {
 			$class = 'wp-block-themeisle-blocks-sharing-icons';
 		} else {
 			$class = 'wp-block-themeisle-blocks-sharing-icons has-label';
@@ -134,7 +135,7 @@ class Sharing_Icons_Block extends Base_Block {
 		$html = '<div class="' . $class . '">';
 		foreach ( $this->attributes as $key => $icon ) {
 			if ( $key !== 'className' && $attributes[ $key ] == 1 ) {
-				$html .= '<a class="social-icon is-' . $key . '" href="' . $this->social_attributes[ $key ]['url'] . '" target="_blank">';
+				$html .= '<a class="social-icon is-' . $key . '" href="' . esc_url( $this->social_attributes[ $key ]['url'] ) . '" target="_blank">';
 				$html .= '<i class="fab fa-' . $this->social_attributes[ $key ]['icon'] . '"></i>';
 				if ( strpos( $attributes['className'], 'is-style-icons' ) === false ) {
 					$html .= $this->social_attributes[ $key ]['label'];

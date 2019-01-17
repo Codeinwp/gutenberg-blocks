@@ -79,21 +79,6 @@ class Google_Map_Block extends Base_Block {
 		// Set the API url based to embed or static maps based on the interactive setting
 		$apiurl = "https://www.google.com/maps/embed/v1/place?key=${apikey}&q=${location}&zoom=${zoom}&maptype=${type}";
 
-		// Check status code of apiurl
-		$ch = curl_init( $apiurl );
-		curl_setopt( $ch, CURLOPT_HEADER, true );
-		curl_setopt( $ch, CURLOPT_NOBODY, true );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-		curl_setopt( $ch, CURLOPT_TIMEOUT, 10 );
-		$output   = curl_exec( $ch );
-		$httpcode = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		curl_close( $ch );
-
-		// Don't output anything if the response from Google Maps isn't a 200
-		if ( $httpcode !== 200 ) {
-			return;
-		}
-
 		$output = "<div class='wp-block-themeisle-blocks-google-map'><div class='map'>";
 			$output .= "<iframe width='100%' height='100%' frameborder='0' style='border:0; height:${height};' src='$apiurl' allowfullscreen></iframe>";
 		$output .= '</div></div>';

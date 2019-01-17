@@ -5,7 +5,10 @@ const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 
 module.exports = {
 	mode: NODE_ENV,
-	entry: [ ...glob.sync( './blocks/**/index.js' ), './store/index.js' ],
+	entry: [ ...glob.sync( './blocks/**/index.js' ), ...glob.sync( './components/**/index.js' ), './store/index.js' ],
+	externals: {
+		'react-dom': 'ReactDOM'
+	},
 	output: {
 		path: __dirname,
 		filename: './build/block.js',

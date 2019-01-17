@@ -1,0 +1,21 @@
+.wp-block-themeisle-blocks-control-panel-control {
+	padding: 10px 0;
+
+	.components-base-control__title {
+		display: flex;
+		justify-content: space-between;
+
+		label {
+			padding: 5px 0;
+		}
+
+		.floating-controls {
+			display: flex;
+		}
+	}
+}
+
+.wp-block-themeisle-popover-settings {
+	padding: 10px;
+	overflow: hidden;
+}

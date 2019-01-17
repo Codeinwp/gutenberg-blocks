@@ -1,14 +1,6 @@
 /**
- * External dependencies...
- */
-import classnames from 'classnames';
-
-import Autosuggest from 'react-autosuggest';
-
-/**
  * WordPress dependencies...
  */
-
 const { __ } = wp.i18n;
 
 const {
@@ -17,17 +9,8 @@ const {
 
 const {
 	PanelBody,
-	Spinner,
-	Placeholder,
 	RangeControl
 } = wp.components;
-
-const {
-	compose,
-	withState
-} = wp.compose;
-
-const { withSelect } = wp.data;
 
 const {
 	ContrastChecker,
@@ -41,10 +24,14 @@ const {
 import './style.scss';
 import './editor.scss';
 
+import { faIcon } from '../../utils/icons.js';
+
+import IconPickerControl from '../../components/icon-picker-control/index.js';
+
 registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 	title: __( 'Font Awesome Icons' ),
 	description: __( 'Share buttons for your website visitors to share content on any social sharing service.' ),
-	icon: 'smiley',
+	icon: faIcon,
 	category: 'themeisle-blocks',
 	keywords: [
 		'font awesome',
@@ -95,111 +82,48 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 		align: [ 'left', 'center', 'right' ]
 	},
 
-	edit: compose([
+	edit: props => {
 
-		withSelect( ( select, props ) => {
-			const iconsList = select( 'themeisle-gutenberg/blocks' ).getFaIconsList();
-			return {
-				iconsList,
-				props
-			};
-		}),
-
-		withState({
-			suggestions: []
-		})
-
-	])( ({ iconsList, suggestions, setState, props }) => {
-
-		const getSuggestions = value => {
-			const inputValue = value.trim().toLowerCase();
-			const inputLength = inputValue.length;
-
-			return 0 === inputLength ? [] : iconsList.filter( icon =>
-				icon.name.toLowerCase().slice( 0, inputLength ) === inputValue
-			);
-		};
-
-		const getSuggestionValue = suggestion => suggestion;
-
-		const renderSuggestion = suggestion => {
-			return (
-				<div
-					className={ classnames(
-						'icon-select',
-						{ 'selected': ( suggestion.name === props.attributes.icon && suggestion.prefix === props.attributes.prefix ) },
-					) }
-				>
-					<i className={ `${ suggestion.prefix } fa-fw fa-${ suggestion.name }` }></i>
-					{ suggestion.name }
-				</div>
-			);
-		};
-
-		const renderSuggestionsContainer = ({ containerProps, children, query }) => {
-			return (
-				<div { ... containerProps }>
-					{ children }
-				</div>
-			);
-		};
-
-		const onSuggestionsFetchRequested = ({ value }) => {
-			setState({
-				suggestions: getSuggestions( value )
-			});
-		};
-
-		const onSuggestionsClearRequested = () => {
-			setState({
-				suggestions: []
-			});
-		};
-
-		const inputProps = {
-			placeholder: __( 'Start typing, like themeisle…' ),
-			value: props.attributes.icon,
-			onChange: ( event, { newValue }) => {
-				if ( 'object' === typeof newValue ) {
-					props.setAttributes({
-						icon: newValue.name,
-						prefix: newValue.prefix
-					});
-				} else {
-					props.setAttributes({ icon: newValue });
-				}
+		const changeIcon = value => {
+			if ( 'object' === typeof value ) {
+				props.setAttributes({
+					icon: value.name,
+					prefix: value.prefix
+				});
+			} else {
+				props.setAttributes({ icon: value });
 			}
 		};
 
-		const changeFontSize = ( value ) => {
+		const changeFontSize = value => {
 			props.setAttributes({ fontSize: value });
 		};
 
-		const changePadding = ( value ) => {
+		const changePadding = value => {
 			props.setAttributes({ padding: value });
 		};
 
-		const changeMargin = ( value ) => {
+		const changeMargin = value => {
 			props.setAttributes({ margin: value });
 		};
 
-		const changeBackgroundColor = ( value ) => {
+		const changeBackgroundColor = value => {
 			props.setAttributes({ backgroundColor: value });
 		};
 
-		const changeTextColor = ( value ) => {
+		const changeTextColor = value => {
 			props.setAttributes({ textColor: value });
 		};
 
-		const changeBorderColor = ( value ) => {
+		const changeBorderColor = value => {
 			props.setAttributes({ borderColor: value });
 		};
 
-		const changeBorderSize = ( value ) => {
+		const changeBorderSize = value => {
 			props.setAttributes({ borderSize: value });
 		};
 
-		const changeBorderRadius = ( value ) => {
+		const changeBorderRadius = value => {
 			props.setAttributes({ borderRadius: value });
 		};
 
@@ -225,27 +149,12 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 				<PanelBody
 					title={ __( 'Icon Settings' ) }
 				>
-					{ iconsList !== undefined && 0 < iconsList.length ?
-						<div
-							className="font-awesome-auto-complete"
-						>
-							<label>
-								<i className={ `${ props.attributes.prefix } fa-${ props.attributes.icon }` }></i>
-							</label>
-							<Autosuggest
-								suggestions={ suggestions }
-								onSuggestionsFetchRequested={ onSuggestionsFetchRequested }
-								onSuggestionsClearRequested={ onSuggestionsClearRequested }
-								getSuggestionValue={ getSuggestionValue }
-								renderSuggestion={ renderSuggestion }
-								renderSuggestionsContainer={ renderSuggestionsContainer }
-								inputProps={ inputProps }
-							/>
-						</div>				:
-						<Placeholder>
-							<Spinner />
-						</Placeholder>
-					}
+					<IconPickerControl
+						label={ __( 'Icon Picker' ) }
+						prefix={ props.attributes.prefix }
+						icon={ props.attributes.icon }
+						onChange={ changeIcon }
+					/>
 				</PanelBody>
 				<PanelBody
 					title={ __( 'Icon Sizes' ) }
@@ -349,7 +258,7 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 				</span>
 			</p>
 		];
-	}),
+	},
 
 	save: props => {
 		const iconStyle = {
@@ -370,8 +279,11 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 		};
 
 		return (
-			<p>
-				<span style={ containerStyle } >
+			<p className={ props.className } >
+				<span
+					className={ `${ props.className }-container` }
+					style={ containerStyle }
+				>
 					<i
 						className={ `${ props.attributes.prefix } fa-${ props.attributes.icon }` }
 						style={ iconStyle }

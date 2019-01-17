@@ -34,5 +34,4 @@ const socialList = {
 	}
 };
 
-
 export default socialList;
