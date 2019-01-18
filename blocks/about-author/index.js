@@ -20,10 +20,12 @@ const { withSelect } = wp.data;
 import './editor.scss';
 import './style.scss';
 
+import { authorIcon } from '../../utils/icons.js';
+
 registerBlockType( 'themeisle-blocks/about-author', {
 	title: __( 'About Author' ),
 	description: __( 'About Author block is the easiest way to add a author bio below your posts.' ),
-	icon: 'admin-users',
+	icon: authorIcon,
 	category: 'themeisle-blocks',
 	keywords: [
 		'about',
@@ -57,10 +59,12 @@ registerBlockType( 'themeisle-blocks/about-author', {
 
 	])( ({ postAuthor, authors, status, authorDetails, setState, props, className }) => {
 
-		if ( 0 === status && postAuthor && authors && postAuthor !== props.attributes.id ) {
+		if ( 0 === status && postAuthor && authors ) {
 			authors.find( ( o ) => {
 				if ( o.id === postAuthor ) {
-					props.setAttributes({ id: o.id });
+					if ( postAuthor !== props.attributes.id ) {
+						props.setAttributes({ id: o.id });
+					}
 					setState({
 						authorDetails: o,
 						status: 1

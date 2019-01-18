@@ -32,17 +32,8 @@ const starRating = stars => {
 	const fullStars = Math.floor( rating );
 	const halfStars = Math.ceil( rating - fullStars );
 	const emptyStars = 5 - fullStars - halfStars;
-	const ratings = '<span class="star-full"></span>'.repeat( fullStars ) + '<span class="star-half"></span>'.repeat( halfStars ) + '<span class="star-empty"></span>'.repeat( emptyStars );
+	const ratings = '<span className="star-full"></span>'.repeat( fullStars ) + '<span className="star-half"></span>'.repeat( halfStars ) + '<span className="star-empty"></span>'.repeat( emptyStars );
 	return ratings;
-};
-
-const unescapeHTML = value => {
-	const htmlNode = document.createElement( 'div' );
-	htmlNode.innerHTML = value;
-	if ( htmlNode.innerText !== undefined ) {
-		return htmlNode.innerText;
-	}
-	return htmlNode.textContent;
 };
 
 /**
@@ -50,11 +41,14 @@ const unescapeHTML = value => {
  */
 import './editor.scss';
 import './style.scss';
+import { pluginsIcon } from '../../utils/icons.js';
+
+import { unescapeHTML } from '../../utils/helper-functions.js';
 
 registerBlockType( 'themeisle-blocks/plugin-cards', {
 	title: __( 'Plugin Card' ),
 	description: __( 'Plugin Card block lets you display plugins data in your blog posts.' ),
-	icon: 'admin-plugins',
+	icon: pluginsIcon,
 	category: 'themeisle-blocks',
 	keywords: [
 		'plugin',
@@ -114,11 +108,11 @@ registerBlockType( 'themeisle-blocks/plugin-cards', {
 
 	])( ({ props, className, status, results, setState }) => {
 
-		const changeSlug = ( value ) => {
+		const changeSlug = value => {
 			props.setAttributes({ slug: value });
 		};
 
-		const searchPlugins = ( search ) => {
+		const searchPlugins = search => {
 			setState({ status: 1 });
 			wp.apiFetch({ path: `themeisle-gutenberg-blocks/v1/get_plugins?search='${ encodeURIComponent( search ) }` }).then( payload => {
 				const data = payload.data.plugins;
@@ -129,7 +123,7 @@ registerBlockType( 'themeisle-blocks/plugin-cards', {
 			});
 		};
 
-		const selectPlugin = ( data ) => {
+		const selectPlugin = data => {
 			let icon;
 			if ( data.icons.svg ) {
 				icon = data.icons.svg;
@@ -186,42 +180,42 @@ registerBlockType( 'themeisle-blocks/plugin-cards', {
 					</Toolbar>
 				</BlockControls>
 			),
-			<div className={ `${ className }` }>
+			<div className={ className }>
 				{ ( props.attributes.pluginName ) ?
-					<div class="themeisle-plugin-card">
-						<div class="card-header">
-							<div class="card-main">
-								<div class="card-logo">
+					<div className="themeisle-plugin-card">
+						<div className="card-header">
+							<div className="card-main">
+								<div className="card-logo">
 									<img src={ props.attributes.pluginIcon } alt={ unescapeHTML( props.attributes.pluginName ) } title={ unescapeHTML( props.attributes.pluginName ) }/>
 								</div>
-								<div class="card-info">
+								<div className="card-info">
 									<h4>{ unescapeHTML( props.attributes.pluginName ) }</h4>
 									<h5 dangerouslySetInnerHTML={ { __html: _.unescape( props.attributes.pluginAuthor ) } }></h5>
 								</div>
-								<div class={ 'card-ratings' } dangerouslySetInnerHTML={ { __html: _.unescape( starRating( props.attributes.pluginRating ) ) } }></div>
+								<div className={ 'card-ratings' } dangerouslySetInnerHTML={ { __html: _.unescape( starRating( props.attributes.pluginRating ) ) } }></div>
 							</div>
 						</div>
-						<div class="card-details">
-							<div class="card-description">{ unescapeHTML( props.attributes.pluginDescription ) }</div>
-							<div class="card-stats">
+						<div className="card-details">
+							<div className="card-description">{ unescapeHTML( props.attributes.pluginDescription ) }</div>
+							<div className="card-stats">
 								<h5>{__( 'Plugin Stats' ) }</h5>
-								<div class="card-stats-list">
-									<div class="card-stat">
-										<span class="card-text-large">{ props.attributes.pluginInstalls.toLocaleString() }+</span>
+								<div className="card-stats-list">
+									<div className="card-stat">
+										<span className="card-text-large">{ props.attributes.pluginInstalls.toLocaleString() }+</span>
 										{ __( 'active installs' ) }
 									</div>
-									<div class="card-stat">
-										<span class="card-text-large">{ props.attributes.pluginVersion }</span>
+									<div className="card-stat">
+										<span className="card-text-large">{ props.attributes.pluginVersion }</span>
 										{ __( 'version' ) }
 									</div>
-									<div class="card-stat">
-										<span class="card-text-large">{ props.attributes.pluginTested }</span>
+									<div className="card-stat">
+										<span className="card-text-large">{ props.attributes.pluginTested }</span>
 										{ __( 'tested up to' ) }
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="card-download">
+						<div className="card-download">
 							<a href={ props.attributes.pluginLink }>{ __( 'Download' ) }</a>
 						</div>
 					</div>				:

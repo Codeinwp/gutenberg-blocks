@@ -1,0 +1,38 @@
+.wp-block-themeisle-blocks-advanced-heading-header-panel {
+	&.is-opened {
+		padding: 0;
+	}
+
+	.header-tab {
+		display: inline-block;
+		width: calc( 100% / 2 );
+		padding: 10px 20px;
+		text-align: center;
+		cursor: pointer;
+
+		&.is-selected {
+			border-bottom: 2px solid #0085ba;
+			background: #f3f4f5;
+		}
+
+		&:hover {
+			background: #f3f4f5;
+		}
+
+		span {
+			display: inline-block;
+			font-size: 12px;
+
+			svg {
+				display: block;
+				margin: 0 auto;
+			}
+		}
+	}
+}
+
+.edit-post-settings-sidebar__panel-block .components-panel__body {
+	.components-color-palette {
+		display: inline-block;
+	}
+}

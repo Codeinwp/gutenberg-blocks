@@ -92,7 +92,7 @@ class Posts_Grid_Block extends Base_Block {
 				'post_status' => 'publish',
 				'order'       => $attributes['order'],
 				'orderby'     => $attributes['orderBy'],
-				'category'    => $attributes['categories'],
+				'category'    => isset( $attributes['categories'] ) ? $attributes['categories'] : 0,
 			)
 		);
 

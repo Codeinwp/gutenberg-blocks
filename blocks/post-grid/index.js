@@ -8,7 +8,6 @@ import Thumbnail from './Thumbnail.js';
 /**
  * WordPress dependencies...
  */
-
 const { isUndefined, pickBy } = lodash;
 
 const { __ } = wp.i18n;
@@ -35,41 +34,18 @@ const {
 	InspectorControls
 } = wp.editor;
 
-const unescapeHTML = value => {
-	const htmlNode = document.createElement( 'div' );
-	htmlNode.innerHTML = value;
-	if ( htmlNode.innerText !== undefined ) {
-		return htmlNode.innerText;
-	}
-	return htmlNode.textContent;
-};
-
-const formatDate = date => {
-	const monthNames = [
-		__( 'January' ), __( 'February' ), __( 'March' ),
-		__( 'April' ), __( 'May' ), __( 'June' ), __( 'July' ),
-		__( 'August' ), __( 'September' ), __( 'October' ),
-		__( 'November' ), __( 'December' )
-	];
-	const weekNames = [
-		__( 'Sunday' ), __( 'Monday' ), __( 'Tuesday' ), __( 'Wednesday' ),
-		__( 'Thursday' ), __( 'Friday' ), __( 'Saturday' )
-	];
-	date = new Date( date );
-	const day = date.getDate();
-	const monthIndex = date.getMonth();
-	const year = date.getFullYear();
-	return day + ' ' + monthNames[monthIndex] + ', ' + year;
-};
-
-
+/**
+ * Internal dependencies
+ */
 import './style.scss';
 import './editor.scss';
+import { postsIcon } from '../../utils/icons.js';
+import { unescapeHTML, formatDate} from '../../utils/helper-functions.js';
 
 registerBlockType( 'themeisle-blocks/posts-grid', {
-	title: __( 'Posts Grid' ),
+	title: __( 'Post Grid' ),
 	description: __( 'Display a list of your most recent posts in a beautiful grid.' ),
-	icon: 'screenoptions',
+	icon: postsIcon,
 	category: 'themeisle-blocks',
 	keywords: [
 		'posts',
@@ -285,7 +261,7 @@ registerBlockType( 'themeisle-blocks/posts-grid', {
 			<div className={ classnames(
 				className,
 				{ 'is-grid': grid },
-			) }>
+			)}>
 				{ posts.map( post => {
 					let category, author;
 					if ( categoriesList ) {
@@ -294,6 +270,7 @@ registerBlockType( 'themeisle-blocks/posts-grid', {
 					if ( authors ) {
 						author = authors.find( item => item.id === post.author );
 					}
+
 					return (
 						<div className={ `grid-post grid-${ columns }` }>
 							<div className="grid-post-row">
@@ -320,7 +297,7 @@ registerBlockType( 'themeisle-blocks/posts-grid', {
 												<time datetime={ post.date }>{ formatDate( post.date ) }</time>,
 												' '
 											] }
-											{ ( displayAuthor && authors ) && [
+											{ ( undefined !== author && ( displayAuthor && authors ) ) && [
 												__( 'by ' ),
 												<a href={ author.link }>{ author.name }</a>
 											] }

@@ -28,11 +28,12 @@ const { InspectorControls } = wp.editor;
  * Internal dependencies
  */
 import './editor.scss';
+import { mapIcon } from '../../utils/icons.js';
 
 registerBlockType( 'themeisle-blocks/google-map', {
 	title: __( 'Google Map' ),
 	description: __( 'Display a Google Map on your website with Google Map block.' ),
-	icon: 'admin-site',
+	icon: mapIcon,
 	category: 'themeisle-blocks',
 	keywords: [
 		'map',
@@ -174,7 +175,7 @@ registerBlockType( 'themeisle-blocks/google-map', {
 						>
 							{ __( 'Save API Key' ) }
 						</Button>
-						<div class="components-placeholder__instructions">
+						<div className="components-placeholder__instructions">
 							{ __( 'Need an API key? Get one' ) }
 							<a target="_blank" href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,static_maps_backend,maps_embed_backend&keyType=CLIENT_SIDE&reusekey=true">
 								{ __( ' here.' ) }

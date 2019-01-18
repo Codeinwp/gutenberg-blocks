@@ -1,0 +1,27 @@
+.wp-block-themeisle-blocks-button-group {
+	display: flex;
+	margin-bottom: 0;
+	position: relative;
+
+	.wp-block-themeisle-blocks-button {
+		cursor: pointer;
+		display: inline-block;
+		font-size: 18px;
+		margin: 0;
+		text-align: center;
+		text-decoration: none;
+		white-space: normal;
+		overflow-wrap: break-word;
+		height: 100%;
+	}
+
+	i {
+		&.margin-left {
+			margin-left: 10px;
+		}
+	
+		&.margin-right {
+			margin-right: 10px;
+		}
+	}
+}

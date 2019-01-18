@@ -25,13 +25,14 @@ const {
  */
 import './style.scss';
 import './editor.scss';
+import { sharingIcon } from '../../utils/icons.js';
 import socialList from './social_list';
 import SocialIcons from './icons';
 
 registerBlockType( 'themeisle-blocks/sharing-icons', {
 	title: __( 'Sharing Icons' ),
 	description: __( 'Share buttons for your website visitors to share content on any social sharing service.' ),
-	icon: 'networking',
+	icon: sharingIcon,
 	category: 'themeisle-blocks',
 	keywords: [
 		'social media',
@@ -118,7 +119,7 @@ registerBlockType( 'themeisle-blocks/sharing-icons', {
 				{ Object.keys( socialList ).map( ( item, i ) => {
 					if ( true === props.attributes[item]) {
 						return (
-							<a className={ `social-icon is-${item}` }><i class={ `fab fa-${socialList[item].icon}` }></i>{ ( props.attributes.className ? ! props.attributes.className.includes( 'is-style-icons' ) : true ) && socialList[item].label }</a>
+							<a className={ `social-icon is-${item}` }><i className={ `fab fa-${socialList[item].icon}` }></i>{ ( props.attributes.className ? ! props.attributes.className.includes( 'is-style-icons' ) : true ) && socialList[item].label }</a>
 						);
 					}
 				}) }
