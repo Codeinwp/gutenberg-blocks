@@ -71,7 +71,7 @@
 			.library-modal-header-logo {
 				display: flex;
 				flex-basis: 100%;
-				justify-content: left;
+				justify-content: flex-start;
 
 				.library-modal-header-tabs-button {
 					display: flex;
@@ -126,7 +126,7 @@
 			.library-modal-header-actions {
 				display: flex;
 				flex-basis: 100%;
-				justify-content: right;
+				justify-content: flex-end;
 
 				.library-modal-header-tabs-button {
 					display: flex;
