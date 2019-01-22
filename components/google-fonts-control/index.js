@@ -25,10 +25,7 @@ const {
 	TextControl
 } = wp.components;
 
-const {
-	Component,
-	Fragment
-} = wp.element;
+const { Component } = wp.element;
 
 class GoogleFontsControl extends Component {
 	constructor() {
@@ -75,87 +72,124 @@ class GoogleFontsControl extends Component {
 					id={ id }
 				>
 					{( null !== this.state.fonts ) ? (
-						<Dropdown
-							contentClassName="wp-block-themeisle-blocks-google-fonts-popover"
-							position="bottom center"
-							renderToggle={ ({ isOpen, onToggle }) => (
-								<Button
-									isLarge
-									className="wp-block-themeisle-blocks-google-fonts-button"
-									onClick={ onToggle }
-									aria-expanded={ isOpen }
-								>
-									{ this.props.value ? this.props.value : __( 'Select Font Family' ) }
-								</Button>
-							) }
-							renderContent={ ({ onToggle }) => (
-								<MenuGroup label={ __( 'Google Fonts' ) }>
-									<TextControl
-										value={ this.state.search }
-										onChange={ e => this.setState({ search: e }) }
-									/>
+						( this.props.isSelect ) ? (
+							<SelectControl
+								value={ this.props.value || '' }
+								options={ [
+									{
+										label: __( 'Default' ),
+										value: ''
+									},
+									...this.state.fonts.map( i => {
+										return i = {
+											label: i.family,
+											value: i.family
+										};
+									})
+								] }
+								onChange={ e => {
+									this.props.onChangeFontFamily( e );
+									this.props.onChangeFontVariant( 'regular' );
 
-									<div className="components-popover__items">
-										<MenuItem
-											onClick={ () => {
-												onToggle();
-												this.props.onChangeFontFamily( '' );
-												this.setState({
-													font: [],
-													variants: [],
-													search: ''
-												});
-											}}
-										>
-											{ __( 'Default' ) }
-										</MenuItem>
-										{ ( this.state.fonts ).map( i => {
-											if ( ! this.state.search || i.family.toLowerCase().includes( this.state.search.toLowerCase() ) ) {
-												return (
-													<MenuItem
-														onClick={ () => {
-															onToggle();
-															this.props.onChangeFontFamily( i.family );
+									const font = this.state.fonts.find( i => e === i.family );
 
-															const variants = ( i.variants )
-																.filter( o => false === o.includes( 'italic' ) )
-																.map( o => {
-																	return o = {
-																		'label': startCase( toLower( o ) ),
-																		'value': o
-																	};
+									const variants = ( font.variants )
+										.filter( o => false === o.includes( 'italic' ) )
+										.map( o => {
+											return o = {
+												'label': startCase( toLower( o ) ),
+												'value': o
+											};
+										});
+
+									this.setState({
+										font,
+										variants
+									});
+								} }
+							/>
+						) : (
+							<Dropdown
+								contentClassName="wp-block-themeisle-blocks-google-fonts-popover"
+								position="bottom center"
+								renderToggle={ ({ isOpen, onToggle }) => (
+									<Button
+										isLarge
+										className="wp-block-themeisle-blocks-google-fonts-button"
+										onClick={ onToggle }
+										aria-expanded={ isOpen }
+									>
+										{ this.props.value ? this.props.value : __( 'Select Font Family' ) }
+									</Button>
+								) }
+								renderContent={ ({ onToggle }) => (
+									<MenuGroup label={ __( 'Google Fonts' ) }>
+										<TextControl
+											value={ this.state.search }
+											onChange={ e => this.setState({ search: e }) }
+										/>
+
+										<div className="components-popover__items">
+											<MenuItem
+												onClick={ () => {
+													onToggle();
+													this.props.onChangeFontFamily( '' );
+													this.setState({
+														font: [],
+														variants: [],
+														search: ''
+													});
+												}}
+											>
+												{ __( 'Default' ) }
+											</MenuItem>
+											{ ( this.state.fonts ).map( i => {
+												if ( ! this.state.search || i.family.toLowerCase().includes( this.state.search.toLowerCase() ) ) {
+													return (
+														<MenuItem
+															onClick={ () => {
+																onToggle();
+																this.props.onChangeFontFamily( i.family );
+																this.props.onChangeFontVariant( 'regular' );
+
+																const variants = ( i.variants )
+																	.filter( o => false === o.includes( 'italic' ) )
+																	.map( o => {
+																		return o = {
+																			'label': startCase( toLower( o ) ),
+																			'value': o
+																		};
+																	});
+
+																this.setState({
+																	font: i,
+																	variants,
+																	search: ''
 																});
-
-															this.setState({
-																font: i,
-																variants,
-																search: ''
-															});
-														}}
-													>
-														{ i.family }
-													</MenuItem>
-												);
-											}
-										})}
-									</div>
-								</MenuGroup>
-							) }
-						/>
+															}}
+														>
+															{ i.family }
+														</MenuItem>
+													);
+												}
+											})}
+										</div>
+									</MenuGroup>
+								) }
+							/>
+						)
 					) : (
 						__( 'Loading…' )
 					)}
 				</BaseControl>
 
 				{ this.state.variants && (
-					<Fragment>
-						<SelectControl
-							label={ __( 'Font Width' ) }
-							value={ this.props.valueVariant }
-							options={ this.state.variants }
-							onChange={ this.props.onChangeFontVariant }
-						/>
-					</Fragment>
+					<SelectControl
+						label={ __( 'Font Width' ) }
+						value={ this.props.valueVariant || 'regular' }
+						options={ this.state.variants }
+						onChange={ this.props.onChangeFontVariant }
+					/>
 				)}
 
 				<SelectControl

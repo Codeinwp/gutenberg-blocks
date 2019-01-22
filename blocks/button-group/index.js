@@ -23,11 +23,13 @@ const {
 	MenuGroup,
 	MenuItem,
 	Icon,
+	IconButton,
 	PanelBody,
 	RangeControl,
 	SelectControl,
 	TextControl,
-	ToggleControl
+	ToggleControl,
+	Toolbar
 } = wp.components;
 
 const {
@@ -412,6 +414,54 @@ registerBlockType( 'themeisle-blocks/button-group', {
 							}
 						]}
 					/>
+
+					<Toolbar
+						className="wp-themesiel-blocks-button-group-components-toolbar"
+					>
+						<Dropdown
+							contentClassName="wp-themesiel-blocks-button-group-popover-content"
+							position="bottom center"
+							renderToggle={ ({ isOpen, onToggle }) => (
+								<IconButton
+									className="components-dropdown-menu__toggle"
+									icon={ 'editor-textcolor' }
+									onClick={ onToggle }
+									aria-haspopup="true"
+									aria-expanded={ isOpen }
+									label={ __( 'Typography Settings' ) }
+									tooltip={ __( 'Typography Settings' ) }
+								>
+									<span className="components-dropdown-menu__indicator" />
+								</IconButton>
+							) }
+							renderContent={ () => (
+								<Fragment>
+									<RangeControl
+										label={ __( 'Font Size' ) }
+										value={ fontSize }
+										onChange={ changeFontSize }
+										min={ 0 }
+										max={ 50 }
+									/>
+
+									<GoogleFontsControl
+										label={ __( 'Font Family' ) }
+										value={ fontFamily }
+										onChangeFontFamily={ changeFontFamily }
+										isSelect={ true }
+										valueVariant={ fontVariant }
+										onChangeFontVariant={ changeFontVariant }
+										valueStyle={ fontStyle }
+										onChangeFontStyle={ changeFontStyle }
+										valueStyle={ fontStyle }
+										onChangeFontStyle={ changeFontStyle }
+										valueTransform={ textTransform }
+										onChangeTextTransform={ changeTextTransform }
+									/>
+								</Fragment>
+							) }
+						/>
+					</Toolbar>
 				</BlockControls>
 
 				<InspectorControls className="wp-block-themeisle-blocks-button-group-inspector">
@@ -853,7 +903,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 							</PanelBody>
 
 							<PanelBody
-								title={ __( 'Typography' ) }
+								title={ __( 'Typography Settings' ) }
 								initialOpen={ false }
 							>
 								<RangeControl

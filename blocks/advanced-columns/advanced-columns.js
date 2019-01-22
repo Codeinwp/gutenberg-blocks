@@ -2115,7 +2115,6 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 								<RangeControl
 									label={ __( 'Maximum Content Width' ) }
 									value={ columnsWidth || '' }
-									allowReset={ true }
 									onChange={ changeColumnsWidth }
 									min={ 0 }
 									max={ 1200 }

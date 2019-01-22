@@ -18,11 +18,14 @@ const {
 const {
 	Button,
 	Dashicon,
+	Dropdown,
 	DropdownMenu,
+	IconButton,
 	PanelBody,
 	RangeControl,
 	SVG,
-	ToggleControl
+	ToggleControl,
+	Toolbar
 } = wp.components;
 
 const {
@@ -850,6 +853,60 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 						isCollapsed={ true }
 						onChange={ changeAlignment }
 					/>
+
+					<Toolbar
+						className="wp-themesiel-blocks-advanced-heading-components-toolbar"
+					>
+						<Dropdown
+							contentClassName="wp-themesiel-blocks-advanced-heading-popover-content"
+							position="bottom center"
+							renderToggle={ ({ isOpen, onToggle }) => (
+								<IconButton
+									className="components-dropdown-menu__toggle"
+									icon={ 'editor-textcolor' }
+									onClick={ onToggle }
+									aria-haspopup="true"
+									aria-expanded={ isOpen }
+									label={ __( 'Typography Settings' ) }
+									tooltip={ __( 'Typography Settings' ) }
+								>
+									<span className="components-dropdown-menu__indicator" />
+								</IconButton>
+							) }
+							renderContent={ () => (
+								<Fragment>
+									<GoogleFontsControl
+										label={ __( 'Font Family' ) }
+										value={ fontFamily }
+										onChangeFontFamily={ changeFontFamily }
+										isSelect={ true }
+										valueVariant={ fontVariant }
+										onChangeFontVariant={ changeFontVariant }
+										valueStyle={ fontStyle }
+										onChangeFontStyle={ changeFontStyle }
+										valueTransform={ textTransform }
+										onChangeTextTransform={ changeTextTransform }
+									/>
+
+									<RangeControl
+										label={ __( 'Line Height' ) }
+										value={ lineHeight }
+										onChange={ changeLineHeight }
+										min={ 0 }
+										max={ 200 }
+									/>
+
+									<RangeControl
+										label={ __( 'Letter Spacing' ) }
+										value={ letterSpacing }
+										onChange={ changeLetterSpacing }
+										min={ -50 }
+										max={ 100 }
+									/>
+								</Fragment>
+							) }
+						/>
+					</Toolbar>
 				</BlockControls>
 
 				<InspectorControls className="wp-block-themeisle-blocks-advanced-heading-inspector">
@@ -906,7 +963,6 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 								>
 									<RangeControl
 										value={ getFontSize || '' }
-										allowReset={ true }
 										onChange={ changeFontSize }
 										min={ 1 }
 										max={ 200 }
@@ -933,7 +989,6 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 								<RangeControl
 									label={ __( 'Line Height' ) }
 									value={ lineHeight }
-									allowReset={ true }
 									onChange={ changeLineHeight }
 									min={ 0 }
 									max={ 200 }
@@ -942,7 +997,6 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 								<RangeControl
 									label={ __( 'Letter Spacing' ) }
 									value={ letterSpacing }
-									allowReset={ true }
 									onChange={ changeLetterSpacing }
 									min={ -50 }
 									max={ 100 }
