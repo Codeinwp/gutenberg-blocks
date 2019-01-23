@@ -90,6 +90,10 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			type: 'number',
 			default: 20
 		},
+		collapse: {
+			type: 'string',
+			default: 'collapse-none'
+		},
 		fontSize: {
 			type: 'number',
 			default: 18
@@ -206,6 +210,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			buttons,
 			align,
 			spacing,
+			collapse,
 			fontSize,
 			fontFamily,
 			fontStyle,
@@ -272,6 +277,10 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			if ( 0 <= value && 100 >= value ) {
 				props.setAttributes({ spacing: value });
 			}
+		};
+
+		const changeCollapse = value => {
+			props.setAttributes({ collapse: value });
 		};
 
 		const changeFontSize = value => {
@@ -531,7 +540,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 								/>
 
 								<BaseControl
-									label={ __( 'Button to Edit' ) }
+									label={ __( 'Edit Button' ) }
 								>
 									<Dropdown
 										contentClassName="wp-block-themeisle-blocks-select-button-popover"
@@ -919,6 +928,18 @@ registerBlockType( 'themeisle-blocks/button-group', {
 									min={ 0 }
 									max={ 50 }
 								/>
+
+								<SelectControl
+									label={ __( 'Collapse On' ) }
+									value={ collapse }
+									options={ [
+										{ label: 'None', value: 'collapse-none' },
+										{ label: 'Desktop', value: 'collapse-desktop' },
+										{ label: 'Tablet', value: 'collapse-tablet' },
+										{ label: 'Mobile', value: 'collapse-mobile' }
+									] }
+									onChange={ changeCollapse }
+								/>
 							</PanelBody>
 
 							<PanelBody
@@ -961,7 +982,10 @@ registerBlockType( 'themeisle-blocks/button-group', {
 
 				<div
 					id={ id }
-					className={ props.className }
+					className={ classnames(
+						props.className,
+						collapse
+					)}
 					style={ { justifyContent: align } }
 				>
 					{ times( buttons, i => button( i ) ) }
@@ -975,6 +999,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			id,
 			buttons,
 			align,
+			collapse,
 			fontSize,
 			fontFamily,
 			fontStyle,
@@ -1040,7 +1065,10 @@ registerBlockType( 'themeisle-blocks/button-group', {
 		return (
 			<div
 				id={ id }
-				className={ props.className }
+				className={ classnames(
+					props.className,
+					collapse
+				)}
 				style={ { justifyContent: align } }
 			>
 				{ times( buttons, i => button( i ) ) }
