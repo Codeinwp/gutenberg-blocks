@@ -107,6 +107,9 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			type: 'string',
 			default: 'normal'
 		},
+		lineHeight: {
+			type: 'number'
+		},
 		data: {
 			type: 'array',
 			default: [
@@ -208,6 +211,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			fontStyle,
 			fontVariant,
 			textTransform,
+			lineHeight,
 			data
 		} = props.attributes;
 
@@ -286,12 +290,18 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			props.setAttributes({ fontVariant: value });
 		};
 
+		const changeFontStyle = value => {
+			props.setAttributes({ fontStyle: value });
+		};
+
 		const changeTextTransform = value => {
 			props.setAttributes({ textTransform: value });
 		};
 
-		const changeFontStyle = value => {
-			props.setAttributes({ fontStyle: value });
+		const changeLineHeight = value => {
+			if ( 0 <= value && 200 >= value ) {
+				props.setAttributes({ lineHeight: value });
+			}
 		};
 
 		const updateButton = ( value, index ) => {
@@ -312,7 +322,8 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			fontFamily: fontFamily,
 			fontWeight: fontVariant,
 			fontStyle: fontStyle,
-			textTransform: textTransform
+			textTransform: textTransform,
+			lineHeight: lineHeight && `${ lineHeight }px`
 		};
 
 		const button = i => {
@@ -457,6 +468,14 @@ registerBlockType( 'themeisle-blocks/button-group', {
 										onChangeFontStyle={ changeFontStyle }
 										valueTransform={ textTransform }
 										onChangeTextTransform={ changeTextTransform }
+									/>
+
+									<RangeControl
+										label={ __( 'Line Height' ) }
+										value={ lineHeight }
+										onChange={ changeLineHeight }
+										min={ 0 }
+										max={ 200 }
 									/>
 								</Fragment>
 							) }
@@ -927,6 +946,14 @@ registerBlockType( 'themeisle-blocks/button-group', {
 									valueTransform={ textTransform }
 									onChangeTextTransform={ changeTextTransform }
 								/>
+
+								<RangeControl
+									label={ __( 'Line Height' ) }
+									value={ lineHeight }
+									onChange={ changeLineHeight }
+									min={ 0 }
+									max={ 200 }
+								/>
 							</PanelBody>
 						</Fragment>
 					)}
@@ -948,12 +975,12 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			id,
 			buttons,
 			align,
-			spacing,
 			fontSize,
 			fontFamily,
 			fontStyle,
 			fontVariant,
 			textTransform,
+			lineHeight,
 			data
 		} = props.attributes;
 
@@ -962,7 +989,8 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			fontFamily: fontFamily,
 			fontWeight: fontVariant,
 			fontStyle: fontStyle,
-			textTransform: textTransform
+			textTransform: textTransform,
+			lineHeight: lineHeight && `${ lineHeight }px`
 		};
 
 		const button = i => {
