@@ -75,6 +75,7 @@ class GoogleFontsControl extends Component {
 						( this.props.isSelect ) ? (
 							<SelectControl
 								value={ this.props.value || '' }
+								id={ id }
 								options={ [
 									{
 										label: __( 'Default' ),
@@ -116,6 +117,7 @@ class GoogleFontsControl extends Component {
 									<Button
 										isLarge
 										className="wp-block-themeisle-blocks-google-fonts-button"
+										id={ id }
 										onClick={ onToggle }
 										aria-expanded={ isOpen }
 									>
