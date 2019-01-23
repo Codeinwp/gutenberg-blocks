@@ -241,7 +241,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 * @access  public
 		 */
 		public function parse_blocks( $content ) {
-			if ( function_exists( 'gutenberg_parse_blocks' ) ) {
+			if ( ! function_exists( 'parse_blocks' ) ) {
 				return gutenberg_parse_blocks( $content );
 			} else {
 				return parse_blocks( $content );

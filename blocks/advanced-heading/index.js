@@ -486,7 +486,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 		};
 
 		const changeFontSize = value => {
-			if ( 1 <= value && 200 >= value ) {
+			if ( 1 <= value && 500 >= value ) {
 				if ( 'desktop' === fontSizeViewType ) {
 					props.setAttributes({ fontSize: value });
 				}
@@ -769,7 +769,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 			color: headingColor,
 			...fontSizeStyle,
 			fontFamily: undefined !== fontFamily && fontFamily,
-			fontWeight: fontVariant,
+			fontWeight: 'regular' === fontVariant ? 'normal' : fontVariant,
 			fontStyle: fontStyle,
 			textTransform: textTransform,
 			lineHeight: lineHeight && `${ lineHeight }px`,
@@ -965,7 +965,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 										value={ getFontSize || '' }
 										onChange={ changeFontSize }
 										min={ 1 }
-										max={ 200 }
+										max={ 500 }
 									/>
 								</ResponsiveControl>
 							</PanelBody>
@@ -1271,7 +1271,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 			textAlign: align,
 			color: headingColor,
 			fontFamily: fontFamily,
-			fontWeight: fontVariant,
+			fontWeight: 'regular' === fontVariant ? 'normal' : fontVariant,
 			fontStyle: fontStyle,
 			textTransform: textTransform,
 			lineHeight: lineHeight && `${ lineHeight }px`,
