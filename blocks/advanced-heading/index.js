@@ -496,16 +496,14 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 		};
 
 		const changeFontSize = value => {
-			if ( 1 <= value && 500 >= value ) {
-				if ( 'desktop' === fontSizeViewType ) {
-					props.setAttributes({ fontSize: value });
-				}
-				if ( 'tablet' === fontSizeViewType ) {
-					props.setAttributes({ fontSizeTablet: value });
-				}
-				if ( 'mobile' === fontSizeViewType ) {
-					props.setAttributes({ fontSizeMobile: value });
-				}
+			if ( 'desktop' === fontSizeViewType ) {
+				props.setAttributes({ fontSize: value });
+			}
+			if ( 'tablet' === fontSizeViewType ) {
+				props.setAttributes({ fontSizeTablet: value });
+			}
+			if ( 'mobile' === fontSizeViewType ) {
+				props.setAttributes({ fontSizeMobile: value });
 			}
 		};
 
@@ -582,15 +580,11 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 		};
 
 		const changeLineHeight = value => {
-			if ( 0 <= value && 200 >= value ) {
-				props.setAttributes({ lineHeight: value });
-			}
+			props.setAttributes({ lineHeight: value });
 		};
 
 		const changeLetterSpacing = value => {
-			if ( -50 <= value && 100 >= value ) {
-				props.setAttributes({ letterSpacing: value });
-			}
+			props.setAttributes({ letterSpacing: value });
 		};
 
 		const changeTextShadowColor = value => {
@@ -630,72 +624,62 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 		};
 
 		const changePadding = value => {
-			if ( 0 <= value && 500 >= value ) {
-				if ( 'desktop' === paddingViewType ) {
-					props.setAttributes({ padding: value });
-				}
-				if ( 'tablet' === paddingViewType ) {
-					props.setAttributes({ paddingTablet: value });
-				}
-				if ( 'mobile' === paddingViewType ) {
-					props.setAttributes({ paddingMobile: value });
-				}
+			if ( 'desktop' === paddingViewType ) {
+				props.setAttributes({ padding: value });
+			}
+			if ( 'tablet' === paddingViewType ) {
+				props.setAttributes({ paddingTablet: value });
+			}
+			if ( 'mobile' === paddingViewType ) {
+				props.setAttributes({ paddingMobile: value });
 			}
 		};
 
 		const changePaddingTop = value => {
-			if ( 0 <= value && 500 >= value ) {
-				if ( 'desktop' === paddingViewType ) {
-					props.setAttributes({ paddingTop: value });
-				}
-				if ( 'tablet' === paddingViewType ) {
-					props.setAttributes({ paddingTopTablet: value });
-				}
-				if ( 'mobile' === paddingViewType ) {
-					props.setAttributes({ paddingTopMobile: value });
-				}
+			if ( 'desktop' === paddingViewType ) {
+				props.setAttributes({ paddingTop: value });
+			}
+			if ( 'tablet' === paddingViewType ) {
+				props.setAttributes({ paddingTopTablet: value });
+			}
+			if ( 'mobile' === paddingViewType ) {
+				props.setAttributes({ paddingTopMobile: value });
 			}
 		};
 
 		const changePaddingRight = value => {
-			if ( 0 <= value && 500 >= value ) {
-				if ( 'desktop' === paddingViewType ) {
-					props.setAttributes({ paddingRight: value });
-				}
-				if ( 'tablet' === paddingViewType ) {
-					props.setAttributes({ paddingRightTablet: value });
-				}
-				if ( 'mobile' === paddingViewType ) {
-					props.setAttributes({ paddingRightMobile: value });
-				}
+			if ( 'desktop' === paddingViewType ) {
+				props.setAttributes({ paddingRight: value });
+			}
+			if ( 'tablet' === paddingViewType ) {
+				props.setAttributes({ paddingRightTablet: value });
+			}
+			if ( 'mobile' === paddingViewType ) {
+				props.setAttributes({ paddingRightMobile: value });
 			}
 		};
 
 		const changePaddingBottom = value => {
-			if ( 0 <= value && 500 >= value ) {
-				if ( 'desktop' === paddingViewType ) {
-					props.setAttributes({ paddingBottom: value });
-				}
-				if ( 'tablet' === paddingViewType ) {
-					props.setAttributes({ paddingBottomTablet: value });
-				}
-				if ( 'mobile' === paddingViewType ) {
-					props.setAttributes({ paddingBottomMobile: value });
-				}
+			if ( 'desktop' === paddingViewType ) {
+				props.setAttributes({ paddingBottom: value });
+			}
+			if ( 'tablet' === paddingViewType ) {
+				props.setAttributes({ paddingBottomTablet: value });
+			}
+			if ( 'mobile' === paddingViewType ) {
+				props.setAttributes({ paddingBottomMobile: value });
 			}
 		};
 
 		const changePaddingLeft = value => {
-			if ( 0 <= value && 500 >= value ) {
-				if ( 'desktop' === paddingViewType ) {
-					props.setAttributes({ paddingLeft: value });
-				}
-				if ( 'tablet' === paddingViewType ) {
-					props.setAttributes({ paddingLeftTablet: value });
-				}
-				if ( 'mobile' === paddingViewType ) {
-					props.setAttributes({ paddingLeftMobile: value });
-				}
+			if ( 'desktop' === paddingViewType ) {
+				props.setAttributes({ paddingLeft: value });
+			}
+			if ( 'tablet' === paddingViewType ) {
+				props.setAttributes({ paddingLeftTablet: value });
+			}
+			if ( 'mobile' === paddingViewType ) {
+				props.setAttributes({ paddingLeftMobile: value });
 			}
 		};
 
@@ -712,44 +696,38 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 		};
 
 		const changeMargin = value => {
-			if ( -500 <= value && 500 >= value ) {
-				if ( 'desktop' === marginViewType ) {
-					props.setAttributes({ margin: value });
-				}
-				if ( 'tablet' === marginViewType ) {
-					props.setAttributes({ marginTablet: value });
-				}
-				if ( 'mobile' === marginViewType ) {
-					props.setAttributes({ marginMobile: value });
-				}
+			if ( 'desktop' === marginViewType ) {
+				props.setAttributes({ margin: value });
+			}
+			if ( 'tablet' === marginViewType ) {
+				props.setAttributes({ marginTablet: value });
+			}
+			if ( 'mobile' === marginViewType ) {
+				props.setAttributes({ marginMobile: value });
 			}
 		};
 
 		const changeMarginTop = value => {
-			if ( -500 <= value && 500 >= value ) {
-				if ( 'desktop' === marginViewType ) {
-					props.setAttributes({ marginTop: value });
-				}
-				if ( 'tablet' === marginViewType ) {
-					props.setAttributes({ marginTopTablet: value });
-				}
-				if ( 'mobile' === marginViewType ) {
-					props.setAttributes({ marginTopMobile: value });
-				}
+			if ( 'desktop' === marginViewType ) {
+				props.setAttributes({ marginTop: value });
+			}
+			if ( 'tablet' === marginViewType ) {
+				props.setAttributes({ marginTopTablet: value });
+			}
+			if ( 'mobile' === marginViewType ) {
+				props.setAttributes({ marginTopMobile: value });
 			}
 		};
 
 		const changeMarginBottom = value => {
-			if ( -500 <= value && 500 >= value ) {
-				if ( 'desktop' === marginViewType ) {
-					props.setAttributes({ marginBottom: value });
-				}
-				if ( 'tablet' === marginViewType ) {
-					props.setAttributes({ marginBottomTablet: value });
-				}
-				if ( 'mobile' === marginViewType ) {
-					props.setAttributes({ marginBottomMobile: value });
-				}
+			if ( 'desktop' === marginViewType ) {
+				props.setAttributes({ marginBottom: value });
+			}
+			if ( 'tablet' === marginViewType ) {
+				props.setAttributes({ marginBottomTablet: value });
+			}
+			if ( 'mobile' === marginViewType ) {
+				props.setAttributes({ marginBottomMobile: value });
 			}
 		};
 
@@ -1052,7 +1030,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 								/>
 
 								<ToggleControl
-									label={ 'Text Shadow' }
+									label={ 'Shadow Properties' }
 									checked={ textShadow }
 									onChange={ changeTextShadow }
 								/>
@@ -1071,7 +1049,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 										</Fragment>
 
 										<ControlPanelControl
-											label={ 'Text Shadow' }
+											label={ 'Shadow Properties' }
 										>
 											<RangeControl
 												label={ __( 'Opacity' ) }

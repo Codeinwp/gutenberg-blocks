@@ -21,21 +21,11 @@ The process of adding new templates to the Template Library is reasonably straig
 
 2. Once your template is ready, you need to export it to JSON using [Blocks Export Import plugin](https://wordpress.org/plugins/blocks-export-import/).
 
-3. Once you have your JSON file, you need to make sure of two things:
+3. Once you have your JSON file, replace links to all the images used in the layout, if any, with links to remote images.
 
-	- Remove all the occurrences of `"id": "wp-block-themeisle-blocks-...",` from your JSON file.
+	If your template is an official template then you can upload or use pre-uploaded images from: [gutenberg-templates/tree/master/assets/images](https://github.com/Codeinwp/gutenberg-templates/tree/master/assets/images)
 
-		Some of the blocks generate front-end CSS using a unique ID, so you need to make sure the IDs are generated client-site and are not added to the templates.
-
-		You can either remove all the IDs manually, or you can run the following regex in search are replace on editors such as VS Code.
-
-		`\n(.*)"id": "wp-block-themeisle-blocks-(.*)"`
-
-	- Replace links to all the images used in the layout, if any, with links to remote images.
-
-		If your template is an official template then you can upload or use pre-uploaded images from: [gutenberg-templates/tree/master/assets/images](https://github.com/Codeinwp/gutenberg-templates/tree/master/assets/images)
-
-		If the images are coming from a plugin, theme or any third-party resource, you can keep the image in your plugin/theme's assets.
+	If the images are coming from a plugin, theme or any third-party resource, you can keep the image in your plugin/theme's assets.
 
 4. Take a screenshot of your section for the display. It is recommended to use your browser's development tools to take a picture of the parent node to get the best output.
 
