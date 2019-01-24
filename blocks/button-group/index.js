@@ -274,9 +274,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 		};
 
 		const changeSpacing = value => {
-			if ( 0 <= value && 100 >= value ) {
-				props.setAttributes({ spacing: value });
-			}
+			props.setAttributes({ spacing: value });
 		};
 
 		const changeCollapse = value => {
@@ -308,9 +306,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 		};
 
 		const changeLineHeight = value => {
-			if ( 0 <= value && 200 >= value ) {
-				props.setAttributes({ lineHeight: value });
-			}
+			props.setAttributes({ lineHeight: value });
 		};
 
 		const updateButton = ( value, index ) => {
@@ -352,7 +348,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 				...boxShadowStyle,
 				padding: `${ data[i].paddingTopBottom }px ${ data[i].paddingLeftRight }px `,
 				marginLeft: 0 === i ? '0px' : `${ spacing / 2 }px`,
-				marginRight: `${ spacing / 2 }px`
+				marginRight: buttons === i + 1 ? '0px' : `${ spacing / 2 }px`
 			};
 
 			return (
@@ -746,7 +742,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 												</BaseControl>
 
 												<ControlPanelControl
-													label={ 'Border Shadow' }
+													label={ 'Shadow Properties' }
 												>
 
 													<RangeControl
@@ -805,7 +801,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 
 
 												<ControlPanelControl
-													label={ 'Hover Border Shadow' }
+													label={ 'Hover Shadow Properties' }
 												>
 
 													<RangeControl

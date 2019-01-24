@@ -9,7 +9,7 @@ import classnames from 'classnames';
  */
 import './editor.scss';
 
-import { themeisleIcon } from '../../../utils/icons.js';
+import { columnsIcon } from '../../../utils/icons.js';
 
 /**
  * WordPress dependencies...
@@ -179,7 +179,7 @@ class Library extends Component {
 					<div className="library-modal-header">
 						<div className="library-modal-header-logo">
 							<div className="library-modal-header-tabs-button">
-								<Icon icon={ themeisleIcon } />
+								<Icon icon={ columnsIcon } />
 							</div>
 						</div>
 
