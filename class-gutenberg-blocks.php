@@ -693,6 +693,11 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				$this->get_google_fonts( $attr );
 
 				$style .= '#' . $attr['id'] . ' {' . "\n";
+
+				if ( isset( $attr['align'] ) ) {
+					$style .= '	text-align: ' . $this->get_attr_value( ( isset( $attr['align'] ) ? $attr['align'] : 'unset' ) ) . ';' . "\n";
+				}
+
 				if ( isset( $attr['fontSize'] ) ) {
 					$style .= '	font-size: ' . $this->get_attr_value( ( isset( $attr['fontSize'] ) ? $attr['fontSize'] : null ) ) . 'px;' . "\n";
 				}
@@ -733,6 +738,10 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				$style .= '@media ( min-width: 600px ) and ( max-width: 960px )  {' . "\n";
 	
 					$style .= '	#' . $attr['id'] . ' {' . "\n";
+					if ( isset( $attr['alignTablet'] ) ) {
+						$style .= '		text-align: ' . $this->get_attr_value( ( isset( $attr['alignTablet'] ) ? $attr['alignTablet'] : 'unset' ) ) . ';' . "\n";
+					}
+
 					if ( isset( $attr['fontSizeTablet'] ) ) {
 						$style .= '		font-size: ' . $this->get_attr_value( ( isset( $attr['fontSizeTablet'] ) ? $attr['fontSizeTablet'] : null ) ) . 'px;' . "\n";
 					}
@@ -764,6 +773,10 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				$style .= '@media ( max-width: 600px )  {' . "\n";
 	
 					$style .= '	#' . $attr['id'] . ' {' . "\n";
+					if ( isset( $attr['alignMobile'] ) ) {
+						$style .= '		text-align: ' . $this->get_attr_value( ( isset( $attr['alignMobile'] ) ? $attr['alignMobile'] : 'unset' ) ) . ';' . "\n";
+					}
+
 					if ( isset( $attr['fontSizeMobile'] ) ) {
 						$style .= '		font-size: ' . $this->get_attr_value( ( isset( $attr['fontSizeMobile'] ) ? $attr['fontSizeMobile'] : null ) ) . 'px;' . "\n";
 					}

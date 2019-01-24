@@ -91,6 +91,12 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 		align: {
 			type: 'string'
 		},
+		alignTablet: {
+			type: 'string'
+		},
+		alignMobile: {
+			type: 'string'
+		},
 		headingColor: {
 			type: 'string',
 			default: '#000000'
@@ -321,6 +327,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 		withState({
 			tab: 'style',
 			fontSizeViewType: 'desktop',
+			alignmentViewType: 'desktop',
 			paddingViewType: 'desktop',
 			marginViewType: 'desktop'
 		}),
@@ -335,6 +342,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 	])( ({
 		tab,
 		fontSizeViewType,
+		alignmentViewType,
 		paddingViewType,
 		marginViewType,
 		setState,
@@ -350,6 +358,8 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 			content,
 			tag,
 			align,
+			alignTablet,
+			alignMobile,
 			headingColor,
 			highlightColor,
 			highlightBackground,
@@ -415,6 +425,10 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 			setState({ fontSizeViewType: value });
 		};
 
+		const changeAlignmentViewType = value => {
+			setState({ alignmentViewType: value });
+		};
+
 		const changePaddingViewType = value => {
 			setState({ paddingViewType: value });
 		};
@@ -469,10 +483,6 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 			}
 		};
 
-		const changeAlignment = value => {
-			props.setAttributes({ align: value });
-		};
-
 		const changeHeadingColor = value => {
 			props.setAttributes({ headingColor: value });
 		};
@@ -518,6 +528,38 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 		};
 
 		getFontSize = getFontSize();
+
+		const changeAlignment = value => {
+			if ( 'desktop' === alignmentViewType ) {
+				props.setAttributes({ align: value });
+			}
+			if ( 'tablet' === alignmentViewType ) {
+				props.setAttributes({ alignTablet: value });
+			}
+			if ( 'mobile' === alignmentViewType ) {
+				props.setAttributes({ alignMobile: value });
+			}
+		};
+
+		let getAlignment = () => {
+			let value;
+
+			if ( 'desktop' === alignmentViewType ) {
+				value = align;
+			}
+
+			if ( 'tablet' === alignmentViewType ) {
+				value = alignTablet;
+			}
+
+			if ( 'mobile' === alignmentViewType ) {
+				value = alignMobile;
+			}
+
+			return value;
+		};
+
+		getAlignment = getAlignment();
 
 		const changeFontFamily = value => {
 			props.setAttributes({
@@ -719,6 +761,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 			};
 
 			stylesheet = {
+				textAlign: align,
 				paddingTop: 'linked' === paddingType ? `${ padding }px` : `${ paddingTop }px`,
 				paddingRight: 'linked' === paddingType ? `${ padding }px` : `${ paddingRight }px`,
 				paddingBottom: 'linked' === paddingType ? `${ padding }px` : `${ paddingBottom }px`,
@@ -734,6 +777,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 			};
 
 			stylesheet = {
+				textAlign: alignTablet,
 				paddingTop: 'linked' === paddingTypeTablet ? `${ paddingTablet }px` : `${ paddingTopTablet }px`,
 				paddingRight: 'linked' === paddingTypeTablet ? `${ paddingTablet }px` : `${ paddingRightTablet }px`,
 				paddingBottom: 'linked' === paddingTypeTablet ? `${ paddingTablet }px` : `${ paddingBottomTablet }px`,
@@ -749,6 +793,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 			};
 
 			stylesheet = {
+				textAlign: alignMobile,
 				paddingTop: 'linked' === paddingTypeMobile ? `${ paddingMobile }px` : `${ paddingTopMobile }px`,
 				paddingRight: 'linked' === paddingTypeMobile ? `${ paddingMobile }px` : `${ paddingRightMobile }px`,
 				paddingBottom: 'linked' === paddingTypeMobile ? `${ paddingMobile }px` : `${ paddingBottomMobile }px`,
@@ -765,7 +810,6 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 		}
 
 		const style = {
-			textAlign: align,
 			color: headingColor,
 			...fontSizeStyle,
 			fontFamily: undefined !== fontFamily && fontFamily,
@@ -846,12 +890,6 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 								onClick: () => changeTag( 'span' )
 							}
 						] }
-					/>
-
-					<AlignmentToolbar
-						value={ align }
-						isCollapsed={ true }
-						onChange={ changeAlignment }
 					/>
 
 					<Toolbar
@@ -944,7 +982,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 
 						<Fragment>
 							<PanelBody
-								title={ __( 'Color Settings' ) }
+								title={ __( 'General Settings' ) }
 							>
 								<Fragment>
 									<p>{ __( 'Heading Color' ) }</p>
@@ -966,6 +1004,17 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 										onChange={ changeFontSize }
 										min={ 1 }
 										max={ 500 }
+									/>
+								</ResponsiveControl>
+
+								<ResponsiveControl
+									label={ 'Alignment' }
+									view={ alignmentViewType }
+									changeViewType={ changeAlignmentViewType }
+								>
+									<AlignmentToolbar
+										value={ getAlignment }
+										onChange={ changeAlignment }
 									/>
 								</ResponsiveControl>
 							</PanelBody>
@@ -1243,7 +1292,6 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 			id,
 			content,
 			tag,
-			align,
 			headingColor,
 			fontFamily,
 			fontVariant,
@@ -1268,7 +1316,6 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 		}
 
 		const style = {
-			textAlign: align,
 			color: headingColor,
 			fontFamily: fontFamily,
 			fontWeight: 'regular' === fontVariant ? 'normal' : fontVariant,
