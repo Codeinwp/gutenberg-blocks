@@ -430,7 +430,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 			columnsHTMLTag
 		} = props.attributes;
 
-		if ( id === undefined ) {
+		if ( id === undefined || id.substr( id.length - 8 ) !== props.clientId.substr( 0, 8 ) ) {
 			const instanceId = `wp-block-themeisle-blocks-advanced-column-${ props.clientId.substr( 0, 8 ) }`;
 			props.setAttributes({ id: instanceId });
 		}
