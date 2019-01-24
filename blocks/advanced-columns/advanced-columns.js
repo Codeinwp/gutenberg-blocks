@@ -894,7 +894,8 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 			...borderStyle,
 			...borderRadiusStyle,
 			...boxShadowStyle,
-			alignItems: horizontalAlign
+			alignItems: horizontalAlign,
+			justifyContent: verticalAlign
 		};
 
 		if ( 'color' === backgroundOverlayType ) {
@@ -950,8 +951,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 			`has-desktop-${ layout }-layout`,
 			`has-tablet-${ layoutTablet }-layout`,
 			`has-mobile-${ layoutMobile }-layout`,
-			`has-${ columnsGap }-gap`,
-			`has-vertical-${ verticalAlign }`
+			`has-${ columnsGap }-gap`
 		);
 
 		const ALLOWED_BLOCKS = [ 'themeisle-blocks/advanced-columns' ];

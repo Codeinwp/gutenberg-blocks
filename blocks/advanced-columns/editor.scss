@@ -66,25 +66,6 @@
 			}
 		}
 	}
-	
-	
-	&.has-vertical-flex-start {
-		> .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"] {
-			align-self: flex-start;
-		}
-	}
-
-	&.has-vertical-center {
-		> .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"] {
-			align-self: center;
-		}
-	}
-
-	&.has-vertical-flex-end {
-		> .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"] {
-			align-self: flex-end;
-		}
-	}
 
 	.components-resizable-box__container {
 		.components-resizable-box__handle {
