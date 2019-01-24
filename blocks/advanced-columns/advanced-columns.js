@@ -176,15 +176,15 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 		},
 		marginType: {
 			type: 'string',
-			default: 'linked'
+			default: 'unlinked'
 		},
 		marginTypeTablet: {
 			type: 'string',
-			default: 'linked'
+			default: 'unlinked'
 		},
 		marginTypeMobile: {
 			type: 'string',
-			default: 'linked'
+			default: 'unlinked'
 		},
 		margin: {
 			type: 'number',
@@ -210,6 +210,18 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 			type: 'number',
 			default: 20
 		},
+		marginRight: {
+			type: 'number',
+			default: 0
+		},
+		marginRightTablet: {
+			type: 'number',
+			default: 0
+		},
+		marginRightMobile: {
+			type: 'number',
+			default: 0
+		},
 		marginBottom: {
 			type: 'number',
 			default: 20
@@ -221,6 +233,18 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 		marginBottomMobile: {
 			type: 'number',
 			default: 20
+		},
+		marginLeft: {
+			type: 'number',
+			default: 0
+		},
+		marginLeftTablet: {
+			type: 'number',
+			default: 0
+		},
+		marginLeftMobile: {
+			type: 'number',
+			default: 0
 		},
 		columnsWidth: {
 			type: 'number'
@@ -643,9 +667,15 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 			marginTop,
 			marginTopTablet,
 			marginTopMobile,
+			marginRight,
+			marginRightTablet,
+			marginRightMobile,
 			marginBottom,
 			marginBottomTablet,
 			marginBottomMobile,
+			marginLeft,
+			marginLeftTablet,
+			marginLeftMobile,
 			columnsWidth,
 			columnsHeight,
 			columnsHeightCustom,
@@ -735,7 +765,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 			columnsHTMLTag
 		} = props.attributes;
 
-		if ( id === undefined ) {
+		if ( id === undefined || id.substr( id.length - 8 ) !== props.clientId.substr( 0, 8 ) ) {
 			const instanceId = `wp-block-themeisle-blocks-advanced-columns-${ props.clientId.substr( 0, 8 ) }`;
 			props.setAttributes({ id: instanceId });
 		}
@@ -755,7 +785,9 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 				paddingRight: 'linked' === paddingType ? `${ padding }px` : `${ paddingRight }px`,
 				paddingLeft: 'linked' === paddingType ? `${ padding }px` : `${ paddingLeft }px`,
 				marginTop: 'linked' === marginType ? `${ margin }px` : `${ marginTop }px`,
+				marginRight: 'linked' === marginType ? `${ margin }px` : `${ marginRight }px`,
 				marginBottom: 'linked' === marginType ? `${ margin }px` : `${ marginBottom }px`,
+				marginLeft: 'linked' === marginType ? `${ margin }px` : `${ marginLeft }px`,
 				minHeight: 'custom' === columnsHeight ? `${ columnsHeightCustom }px` : columnsHeight
 			};
 		}
@@ -765,7 +797,9 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 				paddingRight: 'linked' === paddingTypeTablet ? `${ paddingTablet }px` : `${ paddingRightTablet }px`,
 				paddingLeft: 'linked' === paddingTypeTablet ? `${ paddingTablet }px` : `${ paddingLeftTablet }px`,
 				marginTop: 'linked' === marginTypeTablet ? `${ marginTablet }px` : `${ marginTopTablet }px`,
+				marginRight: 'linked' === marginTypeTablet ? `${ marginTablet }px` : `${ marginRightTablet }px`,
 				marginBottom: 'linked' === marginTypeTablet ? `${ marginTablet }px` : `${ marginBottomTablet }px`,
+				marginLeft: 'linked' === marginTypeTablet ? `${ marginTablet }px` : `${ marginLeftTablet }px`,
 				minHeight: 'custom' === columnsHeight ? `${ columnsHeightCustomTablet }px` : columnsHeight
 			};
 		}
@@ -775,7 +809,9 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 				paddingRight: 'linked' === paddingTypeMobile ? `${ paddingMobile }px` : `${ paddingRightMobile }px`,
 				paddingLeft: 'linked' === paddingTypeMobile ? `${ paddingMobile }px` : `${ paddingLeftMobile }px`,
 				marginTop: 'linked' === marginTypeMobile ? `${ marginMobile }px` : `${ marginTopMobile }px`,
+				marginRight: 'linked' === marginTypeMobile ? `${ marginMobile }px` : `${ marginRightMobile }px`,
 				marginBottom: 'linked' === marginTypeMobile ? `${ marginMobile }px` : `${ marginBottomMobile }px`,
+				marginLeft: 'linked' === marginTypeMobile ? `${ marginMobile }px` : `${ marginLeftMobile }px`,
 				minHeight: 'custom' === columnsHeight ? `${ columnsHeightCustomMobile }px` : columnsHeight
 			};
 		}
@@ -858,7 +894,8 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 			...borderStyle,
 			...borderRadiusStyle,
 			...boxShadowStyle,
-			alignItems: horizontalAlign
+			alignItems: horizontalAlign,
+			justifyContent: verticalAlign
 		};
 
 		if ( 'color' === backgroundOverlayType ) {
@@ -914,8 +951,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 			`has-desktop-${ layout }-layout`,
 			`has-tablet-${ layoutTablet }-layout`,
 			`has-mobile-${ layoutMobile }-layout`,
-			`has-${ columnsGap }-gap`,
-			`has-vertical-${ verticalAlign }`
+			`has-${ columnsGap }-gap`
 		);
 
 		const ALLOWED_BLOCKS = [ 'themeisle-blocks/advanced-columns' ];
@@ -1215,6 +1251,20 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 			}
 		};
 
+		const changeMarginRight = value => {
+			if ( -1000 <= value && 1000 >= value ) {
+				if ( 'desktop' === marginViewType ) {
+					props.setAttributes({ marginRight: value });
+				}
+				if ( 'tablet' === marginViewType ) {
+					props.setAttributes({ marginRightTablet: value });
+				}
+				if ( 'mobile' === marginViewType ) {
+					props.setAttributes({ marginRightMobile: value });
+				}
+			}
+		};
+
 		const changeMarginBottom = value => {
 			if ( -500 <= value && 500 >= value ) {
 				if ( 'desktop' === marginViewType ) {
@@ -1225,6 +1275,20 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 				}
 				if ( 'mobile' === marginViewType ) {
 					props.setAttributes({ marginBottomMobile: value });
+				}
+			}
+		};
+
+		const changeMarginLeft = value => {
+			if ( -1000 <= value && 1000 >= value ) {
+				if ( 'desktop' === marginViewType ) {
+					props.setAttributes({ marginLeft: value });
+				}
+				if ( 'tablet' === marginViewType ) {
+					props.setAttributes({ marginLeftTablet: value });
+				}
+				if ( 'mobile' === marginViewType ) {
+					props.setAttributes({ marginLeftMobile: value });
 				}
 			}
 		};
@@ -2094,6 +2158,19 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 									/>
 
 									<RangeControl
+										label={ __( 'Margin Right' ) }
+										beforeIcon="arrow-right"
+										value={
+											( 'desktop' === marginViewType ) && marginRight ||
+											( 'tablet' === marginViewType ) && marginRightTablet ||
+											( 'mobile' === marginViewType ) && marginRightMobile
+										}
+										onChange={ changeMarginRight }
+										min={ -1000 }
+										max={ 1000 }
+									/>
+
+									<RangeControl
 										label={ __( 'Margin Bottom' ) }
 										beforeIcon="arrow-down"
 										value={
@@ -2105,6 +2182,20 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 										min={ -500 }
 										max={ 500 }
 									/>
+
+									<RangeControl
+										label={ __( 'Margin Left' ) }
+										beforeIcon="arrow-left"
+										value={
+											( 'desktop' === marginViewType ) && marginLeft ||
+											( 'tablet' === marginViewType ) && marginLeftTablet ||
+											( 'mobile' === marginViewType ) && marginLeftMobile
+										}
+										onChange={ changeMarginLeft }
+										min={ -1000 }
+										max={ 1000 }
+									/>
+
 								</SizeControl>
 							</PanelBody>
 
@@ -2115,7 +2206,6 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 								<RangeControl
 									label={ __( 'Maximum Content Width' ) }
 									value={ columnsWidth || '' }
-									allowReset={ true }
 									onChange={ changeColumnsWidth }
 									min={ 0 }
 									max={ 1200 }

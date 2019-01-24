@@ -23,11 +23,13 @@ const {
 	MenuGroup,
 	MenuItem,
 	Icon,
+	IconButton,
 	PanelBody,
 	RangeControl,
 	SelectControl,
 	TextControl,
-	ToggleControl
+	ToggleControl,
+	Toolbar
 } = wp.components;
 
 const {
@@ -88,6 +90,10 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			type: 'number',
 			default: 20
 		},
+		collapse: {
+			type: 'string',
+			default: 'collapse-none'
+		},
 		fontSize: {
 			type: 'number',
 			default: 18
@@ -104,6 +110,9 @@ registerBlockType( 'themeisle-blocks/button-group', {
 		fontStyle: {
 			type: 'string',
 			default: 'normal'
+		},
+		lineHeight: {
+			type: 'number'
 		},
 		data: {
 			type: 'array',
@@ -201,15 +210,17 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			buttons,
 			align,
 			spacing,
+			collapse,
 			fontSize,
 			fontFamily,
 			fontStyle,
 			fontVariant,
 			textTransform,
+			lineHeight,
 			data
 		} = props.attributes;
 
-		if ( id === undefined ) {
+		if ( id === undefined || id.substr( id.length - 8 ) !== props.clientId.substr( 0, 8 ) ) {
 			const instanceId = `wp-block-themeisle-blocks-button-group-${ props.clientId.substr( 0, 8 ) }`;
 			props.setAttributes({ id: instanceId });
 		}
@@ -268,6 +279,10 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			}
 		};
 
+		const changeCollapse = value => {
+			props.setAttributes({ collapse: value });
+		};
+
 		const changeFontSize = value => {
 			props.setAttributes({ fontSize: value });
 		};
@@ -284,12 +299,18 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			props.setAttributes({ fontVariant: value });
 		};
 
+		const changeFontStyle = value => {
+			props.setAttributes({ fontStyle: value });
+		};
+
 		const changeTextTransform = value => {
 			props.setAttributes({ textTransform: value });
 		};
 
-		const changeFontStyle = value => {
-			props.setAttributes({ fontStyle: value });
+		const changeLineHeight = value => {
+			if ( 0 <= value && 200 >= value ) {
+				props.setAttributes({ lineHeight: value });
+			}
 		};
 
 		const updateButton = ( value, index ) => {
@@ -310,7 +331,8 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			fontFamily: fontFamily,
 			fontWeight: fontVariant,
 			fontStyle: fontStyle,
-			textTransform: textTransform
+			textTransform: textTransform,
+			lineHeight: lineHeight && `${ lineHeight }px`
 		};
 
 		const button = i => {
@@ -412,6 +434,62 @@ registerBlockType( 'themeisle-blocks/button-group', {
 							}
 						]}
 					/>
+
+					<Toolbar
+						className="wp-themesiel-blocks-button-group-components-toolbar"
+					>
+						<Dropdown
+							contentClassName="wp-themesiel-blocks-button-group-popover-content"
+							position="bottom center"
+							renderToggle={ ({ isOpen, onToggle }) => (
+								<IconButton
+									className="components-dropdown-menu__toggle"
+									icon={ 'editor-textcolor' }
+									onClick={ onToggle }
+									aria-haspopup="true"
+									aria-expanded={ isOpen }
+									label={ __( 'Typography Settings' ) }
+									tooltip={ __( 'Typography Settings' ) }
+								>
+									<span className="components-dropdown-menu__indicator" />
+								</IconButton>
+							) }
+							renderContent={ () => (
+								<Fragment>
+									<RangeControl
+										label={ __( 'Font Size' ) }
+										value={ fontSize }
+										onChange={ changeFontSize }
+										min={ 0 }
+										max={ 50 }
+									/>
+
+									<GoogleFontsControl
+										label={ __( 'Font Family' ) }
+										value={ fontFamily }
+										onChangeFontFamily={ changeFontFamily }
+										isSelect={ true }
+										valueVariant={ fontVariant }
+										onChangeFontVariant={ changeFontVariant }
+										valueStyle={ fontStyle }
+										onChangeFontStyle={ changeFontStyle }
+										valueStyle={ fontStyle }
+										onChangeFontStyle={ changeFontStyle }
+										valueTransform={ textTransform }
+										onChangeTextTransform={ changeTextTransform }
+									/>
+
+									<RangeControl
+										label={ __( 'Line Height' ) }
+										value={ lineHeight }
+										onChange={ changeLineHeight }
+										min={ 0 }
+										max={ 200 }
+									/>
+								</Fragment>
+							) }
+						/>
+					</Toolbar>
 				</BlockControls>
 
 				<InspectorControls className="wp-block-themeisle-blocks-button-group-inspector">
@@ -462,7 +540,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 								/>
 
 								<BaseControl
-									label={ __( 'Button to Edit' ) }
+									label={ __( 'Edit Button' ) }
 								>
 									<Dropdown
 										contentClassName="wp-block-themeisle-blocks-select-button-popover"
@@ -850,10 +928,22 @@ registerBlockType( 'themeisle-blocks/button-group', {
 									min={ 0 }
 									max={ 50 }
 								/>
+
+								<SelectControl
+									label={ __( 'Collapse On' ) }
+									value={ collapse }
+									options={ [
+										{ label: 'None', value: 'collapse-none' },
+										{ label: 'Desktop', value: 'collapse-desktop' },
+										{ label: 'Tablet', value: 'collapse-tablet' },
+										{ label: 'Mobile', value: 'collapse-mobile' }
+									] }
+									onChange={ changeCollapse }
+								/>
 							</PanelBody>
 
 							<PanelBody
-								title={ __( 'Typography' ) }
+								title={ __( 'Typography Settings' ) }
 								initialOpen={ false }
 							>
 								<RangeControl
@@ -877,6 +967,14 @@ registerBlockType( 'themeisle-blocks/button-group', {
 									valueTransform={ textTransform }
 									onChangeTextTransform={ changeTextTransform }
 								/>
+
+								<RangeControl
+									label={ __( 'Line Height' ) }
+									value={ lineHeight }
+									onChange={ changeLineHeight }
+									min={ 0 }
+									max={ 200 }
+								/>
 							</PanelBody>
 						</Fragment>
 					)}
@@ -884,7 +982,10 @@ registerBlockType( 'themeisle-blocks/button-group', {
 
 				<div
 					id={ id }
-					className={ props.className }
+					className={ classnames(
+						props.className,
+						collapse
+					)}
 					style={ { justifyContent: align } }
 				>
 					{ times( buttons, i => button( i ) ) }
@@ -898,12 +999,13 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			id,
 			buttons,
 			align,
-			spacing,
+			collapse,
 			fontSize,
 			fontFamily,
 			fontStyle,
 			fontVariant,
 			textTransform,
+			lineHeight,
 			data
 		} = props.attributes;
 
@@ -912,7 +1014,8 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			fontFamily: fontFamily,
 			fontWeight: fontVariant,
 			fontStyle: fontStyle,
-			textTransform: textTransform
+			textTransform: textTransform,
+			lineHeight: lineHeight && `${ lineHeight }px`
 		};
 
 		const button = i => {
@@ -962,7 +1065,10 @@ registerBlockType( 'themeisle-blocks/button-group', {
 		return (
 			<div
 				id={ id }
-				className={ props.className }
+				className={ classnames(
+					props.className,
+					collapse
+				)}
 				style={ { justifyContent: align } }
 			>
 				{ times( buttons, i => button( i ) ) }

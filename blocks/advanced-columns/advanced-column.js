@@ -133,15 +133,15 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 		},
 		marginType: {
 			type: 'string',
-			default: 'linked'
+			default: 'unlinked'
 		},
 		marginTypeTablet: {
 			type: 'string',
-			default: 'linked'
+			default: 'unlinked'
 		},
 		marginTypeMobile: {
 			type: 'string',
-			default: 'linked'
+			default: 'unlinked'
 		},
 		margin: {
 			type: 'number',
@@ -167,6 +167,18 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 			type: 'number',
 			default: 20
 		},
+		marginRight: {
+			type: 'number',
+			default: 0
+		},
+		marginRightTablet: {
+			type: 'number',
+			default: 0
+		},
+		marginRightMobile: {
+			type: 'number',
+			default: 0
+		},
 		marginBottom: {
 			type: 'number',
 			default: 20
@@ -178,6 +190,18 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 		marginBottomMobile: {
 			type: 'number',
 			default: 20
+		},
+		marginLeft: {
+			type: 'number',
+			default: 0
+		},
+		marginLeftTablet: {
+			type: 'number',
+			default: 0
+		},
+		marginLeftMobile: {
+			type: 'number',
+			default: 0
 		},
 		backgroundType: {
 			type: 'string',
@@ -389,9 +413,15 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 			marginTop,
 			marginTopTablet,
 			marginTopMobile,
+			marginRight,
+			marginRightTablet,
+			marginRightMobile,
 			marginBottom,
 			marginBottomTablet,
 			marginBottomMobile,
+			marginLeft,
+			marginLeftTablet,
+			marginLeftMobile,
 			backgroundType,
 			backgroundColor,
 			backgroundImageID,
@@ -430,7 +460,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 			columnsHTMLTag
 		} = props.attributes;
 
-		if ( id === undefined ) {
+		if ( id === undefined || id.substr( id.length - 8 ) !== props.clientId.substr( 0, 8 ) ) {
 			const instanceId = `wp-block-themeisle-blocks-advanced-column-${ props.clientId.substr( 0, 8 ) }`;
 			props.setAttributes({ id: instanceId });
 		}
@@ -452,7 +482,9 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 				paddingBottom: 'linked' === paddingType ? `${ padding }px` : `${ paddingBottom }px`,
 				paddingLeft: 'linked' === paddingType ? `${ padding }px` : `${ paddingLeft }px`,
 				marginTop: 'linked' === marginType ? `${ margin }px` : `${ marginTop }px`,
-				marginBottom: 'linked' === marginType ? `${ margin }px` : `${ marginBottom }px`
+				marginRight: 'linked' === marginType ? `${ margin }px` : `${ marginRight }px`,
+				marginBottom: 'linked' === marginType ? `${ margin }px` : `${ marginBottom }px`,
+				marginLeft: 'linked' === marginType ? `${ margin }px` : `${ marginLeft }px`
 			};
 		}
 
@@ -463,7 +495,9 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 				paddingBottom: 'linked' === paddingTypeTablet ? `${ paddingTablet }px` : `${ paddingBottomTablet }px`,
 				paddingLeft: 'linked' === paddingTypeTablet ? `${ paddingTablet }px` : `${ paddingLeftTablet }px`,
 				marginTop: 'linked' === marginTypeTablet ? `${ marginTablet }px` : `${ marginTopTablet }px`,
-				marginBottom: 'linked' === marginTypeTablet ? `${ marginTablet }px` : `${ marginBottomTablet }px`
+				marginRight: 'linked' === marginTypeTablet ? `${ marginTablet }px` : `${ marginRightTablet }px`,
+				marginBottom: 'linked' === marginTypeTablet ? `${ marginTablet }px` : `${ marginBottomTablet }px`,
+				marginLeft: 'linked' === marginTypeTablet ? `${ marginTablet }px` : `${ marginLeftTablet }px`
 			};
 		}
 
@@ -474,7 +508,9 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 				paddingBottom: 'linked' === paddingTypeMobile ? `${ paddingMobile }px` : `${ paddingBottomMobile }px`,
 				paddingLeft: 'linked' === paddingTypeMobile ? `${ paddingMobile }px` : `${ paddingLeftMobile }px`,
 				marginTop: 'linked' === marginTypeMobile ? `${ marginMobile }px` : `${ marginTopMobile }px`,
-				marginBottom: 'linked' === marginTypeMobile ? `${ marginMobile }px` : `${ marginBottomMobile }px`
+				marginRight: 'linked' === marginTypeMobile ? `${ marginMobile }px` : `${ marginRightMobile }px`,
+				marginBottom: 'linked' === marginTypeMobile ? `${ marginMobile }px` : `${ marginBottomMobile }px`,
+				marginLeft: 'linked' === marginTypeMobile ? `${ marginMobile }px` : `${ marginLeftMobile }px`
 			};
 		}
 
@@ -688,6 +724,20 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 			}
 		};
 
+		const changeMarginRight = value => {
+			if ( -1000 <= value && 1000 >= value ) {
+				if ( 'desktop' === marginViewType ) {
+					props.setAttributes({ marginRight: value });
+				}
+				if ( 'tablet' === marginViewType ) {
+					props.setAttributes({ marginRightTablet: value });
+				}
+				if ( 'mobile' === marginViewType ) {
+					props.setAttributes({ marginRightMobile: value });
+				}
+			}
+		};
+
 		const changeMarginBottom = value => {
 			if ( -500 <= value && 500 >= value ) {
 				if ( 'desktop' === marginViewType ) {
@@ -698,6 +748,20 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 				}
 				if ( 'mobile' === marginViewType ) {
 					props.setAttributes({ marginBottomMobile: value });
+				}
+			}
+		};
+
+		const changeMarginLeft = value => {
+			if ( -1000 <= value && 1000 >= value ) {
+				if ( 'desktop' === marginViewType ) {
+					props.setAttributes({ marginLeft: value });
+				}
+				if ( 'tablet' === marginViewType ) {
+					props.setAttributes({ marginLeftTablet: value });
+				}
+				if ( 'mobile' === marginViewType ) {
+					props.setAttributes({ marginLeftMobile: value });
 				}
 			}
 		};
@@ -1002,6 +1066,19 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 									/>
 
 									<RangeControl
+										label={ __( 'Margin Right' ) }
+										beforeIcon="arrow-right"
+										value={
+											( 'desktop' === marginViewType ) && marginRight ||
+											( 'tablet' === marginViewType ) && marginRightTablet ||
+											( 'mobile' === marginViewType ) && marginRightMobile
+										}
+										onChange={ changeMarginRight }
+										min={ -1000 }
+										max={ 1000 }
+									/>
+
+									<RangeControl
 										label={ __( 'Margin Bottom' ) }
 										beforeIcon="arrow-down"
 										value={
@@ -1012,6 +1089,19 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 										onChange={ changeMarginBottom }
 										min={ -500 }
 										max={ 500 }
+									/>
+
+									<RangeControl
+										label={ __( 'Margin Left' ) }
+										beforeIcon="arrow-left"
+										value={
+											( 'desktop' === marginViewType ) && marginLeft ||
+											( 'tablet' === marginViewType ) && marginLeftTablet ||
+											( 'mobile' === marginViewType ) && marginLeftMobile
+										}
+										onChange={ changeMarginLeft }
+										min={ -1000 }
+										max={ 1000 }
 									/>
 								</SizeControl>
 							</PanelBody>
