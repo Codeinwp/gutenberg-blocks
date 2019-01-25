@@ -83,6 +83,9 @@ class Sharing_Icons_Block extends Base_Block {
 		);
 
 		$this->attributes = array(
+			'align'  => array(
+				'type'    => 'string'
+			),
 			'facebook'  => array(
 				'type'    => 'boolean',
 				'default' => 1,
@@ -132,8 +135,15 @@ class Sharing_Icons_Block extends Base_Block {
 		} else {
 			$class = 'wp-block-themeisle-blocks-sharing-icons has-label';
 		}
-		$html = '<div class="' . $class . '">';
-		foreach ( $this->attributes as $key => $icon ) {
+
+		$style = '';
+
+		if ( isset( $attributes['align'] ) ) {
+			$style .= 'style="text-align: ' . $attributes['align'] .';"';
+		}
+
+		$html = '<div class="' . $class . '" ' . $style . '>';
+		foreach ( $attributes as $key => $icon ) {
 			if ( $key !== 'className' && $attributes[ $key ] == 1 ) {
 				$html .= '<a class="social-icon is-' . $key . '" href="' . esc_url( $this->social_attributes[ $key ]['url'] ) . '" target="_blank">';
 				$html .= '<i class="fab fa-' . $this->social_attributes[ $key ]['icon'] . '"></i>';
