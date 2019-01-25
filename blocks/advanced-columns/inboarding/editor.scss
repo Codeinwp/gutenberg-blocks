@@ -65,170 +65,147 @@
 			display: none;
 		}
 
-		.library-modal-header {
-			display: flex;
+		.library-modal-control-panel {
+			background: #ffffff;
+			position: sticky;
+			top: 0;
+			box-shadow: 0 0px 10px rgba(25,30,35,.2);
+			z-index: 99999999;
 
-			.library-modal-header-logo {
+			.library-modal-header {
 				display: flex;
-				flex-basis: 100%;
-				justify-content: left;
-
-				.library-modal-header-tabs-button {
+	
+				.library-modal-header-logo {
 					display: flex;
-					align-items: center;
+					flex-basis: 100%;
+					justify-content: flex-start;
+	
+					.library-modal-header-tabs-button {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						padding: 17px 20px;
+						background: transparent;
+						border: 0;
+	
+						svg {
+							width: 20px;
+							height: 20px;
+							margin-right: 10px;
+						}
+					}
+				}
+	
+				.library-modal-header-tabs {
+					display: flex;
+					flex-basis: 100%;
 					justify-content: center;
-					padding: 17px 20px;
-					background: transparent;
-					border: 0;
-
-					svg {
-						width: 20px;
-						height: 20px;
-						margin-right: 10px;
+	
+					.library-modal-header-tabs-button {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						width: 115px;
+						padding: 17px 0;
+						background: transparent;
+						font-weight: 600;
+						cursor: pointer;
+						border: 0;
+	
+						&.is-selected {
+							background: #f2f2f3;
+						}
+	
+						&:hover {
+							background: #f2f2f3;
+						}
+	
+						&:focus {
+							background: #f2f2f3;
+						}
+	
+						svg {
+							margin-right: 5px;
+						}
+					}
+				}
+	
+				.library-modal-header-actions {
+					display: flex;
+					flex-basis: 100%;
+					justify-content: flex-end;
+	
+					.library-modal-header-tabs-button {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						padding: 17px;
+						background: transparent;
+						font-weight: 600;
+						cursor: pointer;
+						border: 0;
+	
+						&.is-selected {
+							background: #f2f2f3;
+						}
+	
+						&:hover {
+							background: #f2f2f3;
+						}
+	
+						&:focus {
+							background: #f2f2f3;
+						}
+	
+						&:last-child {
+							border-left: 1px solid #e6e9ec;
+						}
+	
+						svg {
+							width: 20px;
+							height: 20px;
+						}
 					}
 				}
 			}
-
-			.library-modal-header-tabs {
+	
+			.library-modal-actions {
 				display: flex;
-				flex-basis: 100%;
+				padding: 15px;
+				background: #f2f2f3;
 				justify-content: center;
-
-				.library-modal-header-tabs-button {
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					width: 115px;
-					padding: 17px 0;
-					background: transparent;
-					font-weight: 600;
-					cursor: pointer;
-					border: 0;
-
-					&.is-selected {
-						background: #f2f2f3;
-					}
-
-					&:hover {
-						background: #f2f2f3;
-					}
-
-					&:focus {
-						background: #f2f2f3;
-					}
-
-					svg {
-						margin-right: 5px;
-					}
-				}
-			}
-
-			.library-modal-header-actions {
-				display: flex;
-				flex-basis: 100%;
-				justify-content: right;
-
-				.library-modal-header-tabs-button {
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					padding: 17px;
-					background: transparent;
-					font-weight: 600;
-					cursor: pointer;
-					border: 0;
-
-					&.is-selected {
-						background: #f2f2f3;
-					}
-
-					&:hover {
-						background: #f2f2f3;
-					}
-
-					&:focus {
-						background: #f2f2f3;
-					}
-
-					&:last-child {
-						border-left: 1px solid #e6e9ec;
-					}
-
-					svg {
-						width: 20px;
-						height: 20px;
-					}
-				}
-			}
-		}
-
-		.library-modal-actions {
-			display: flex;
-			padding: 15px;
-			background: #f2f2f3;
-			justify-content: center;
-
-			.components-base-control {
-				.components-base-control__field {
-					margin-bottom: 0;
-				}
-			}
-
-			.library-modal-category-control {
-				margin-right: 10px;
 	
-				button {
-					background: #ffffff;
+				.components-base-control {
+					.components-base-control__field {
+						margin-bottom: 0;
+					}
+				}
+	
+				.library-modal-category-control {
+					min-width: 200px;
+					margin-right: 10px;
+
+					select {
+						height: 30px;
+						min-width: 150px;
+						padding: 0 5px;
+					}
+				}
+		
+				.library-modal-search-control {
+					min-width: 200px;
 					position: relative;
-					min-width: 150px;
-					box-shadow: 0 0 0 transparent;
-					transition: box-shadow .1s linear;
-					border-radius: 4px;
-					border: 1px solid #8d96a0;
-	
-					&:hover {
-						background: #fafafa;
-						border-color: #999;
-						box-shadow: inset 0 -1px 0 #999;
-						color: #23282d;
-						text-decoration: none;
-					}
-
-					&:focus {
-						border: 1px solid black;
-					}
-	
+		
 					&:after {
-						content: "";
+						content: "\F179";
+						font-family: dashicons;
 						pointer-events: none;
 						display: block;
-						width: 0;
-						height: 0;
-						border-left: 3px solid transparent;
-						border-right: 3px solid transparent;
-						border-top: 5px solid currentColor;
-						margin-left: 4px;
-						margin-right: 2px;
-						right: 8px;
-						top: 12px;
 						position: absolute;
+						right: 6px;
+						top: 6px;
+						font-size: 18px;
 					}
-				}
-			}
-	
-			.library-modal-search-control {
-				width: 300px;
-				position: relative;
-	
-				&:after {
-					content: "\F179";
-					font-family: dashicons;
-					pointer-events: none;
-					display: block;
-					position: absolute;
-					right: 6px;
-					top: 6px;
-					font-size: 18px;
 				}
 			}
 		}
@@ -352,19 +329,21 @@
 
 	.themeisle-library-modal {
 		.components-modal__content {
-			.library-modal-actions {
-				flex-direction: column;
+			.library-modal-control-panel {
+				.library-modal-actions {
+					flex-direction: column;
 
-				.library-modal-category-control {
-					margin: 0 0 10px 0;
-		
-					button {
+					.library-modal-category-control {
+						margin: 0 0 10px 0;
+			
+						button {
+							width: 100%;
+						}
+					}
+			
+					.library-modal-search-control {
 						width: 100%;
 					}
-				}
-		
-				.library-modal-search-control {
-					width: 100%;
 				}
 			}
 

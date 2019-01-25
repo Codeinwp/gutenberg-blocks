@@ -3,9 +3,16 @@
 	margin-bottom: 0;
 	position: relative;
 
+	&.collapse-desktop {
+		flex-direction: column;
+
+		.wp-block-themeisle-blocks-button {
+			margin: 10px 0 !important;
+		}
+	}
+
 	.wp-block-themeisle-blocks-button {
 		cursor: pointer;
-		display: inline-block;
 		font-size: 18px;
 		margin: 0;
 		text-align: center;
@@ -22,6 +29,30 @@
 	
 		&.margin-right {
 			margin-right: 10px;
+		}
+	}
+}
+
+@media ( max-width: 960px )  {
+	.wp-block-themeisle-blocks-button-group {
+		&.collapse-tablet {
+			flex-direction: column;
+
+			.wp-block-themeisle-blocks-button {
+				margin: 10px 0 !important;
+			}
+		}
+	}
+}
+
+@media ( max-width: 600px )  {
+	.wp-block-themeisle-blocks-button-group {
+		&.collapse-mobile {
+			flex-direction: column;
+
+			.wp-block-themeisle-blocks-button {
+				margin: 10px 0 !important;
+			}
 		}
 	}
 }

@@ -78,7 +78,7 @@ function IconPickerControl({ label, prefix, icon, help, className, iconsList, su
 
 	const inputProps = {
 		placeholder: __( 'Start typing, like themeisle…' ),
-		value: icon,
+		value: icon || '',
 		onChange: ( event, { newValue }) => {
 			onChange( newValue );
 		}
