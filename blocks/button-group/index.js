@@ -982,7 +982,10 @@ registerBlockType( 'themeisle-blocks/button-group', {
 						props.className,
 						collapse
 					)}
-					style={ { justifyContent: align } }
+					style={ {
+						justifyContent: align,
+						alignItems: align ? align : 'flex-start'
+					} }
 				>
 					{ times( buttons, i => button( i ) ) }
 				</div>
@@ -1065,7 +1068,10 @@ registerBlockType( 'themeisle-blocks/button-group', {
 					props.className,
 					collapse
 				)}
-				style={ { justifyContent: align } }
+				style={ {
+					justifyContent: align,
+					alignItems: align ? align : 'flex-start'
+				} }
 			>
 				{ times( buttons, i => button( i ) ) }
 			</div>

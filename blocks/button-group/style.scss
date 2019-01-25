@@ -4,17 +4,15 @@
 	position: relative;
 
 	&.collapse-desktop {
-		display: inline-block;
+		flex-direction: column;
 
 		.wp-block-themeisle-blocks-button {
-			display: block;
 			margin: 10px 0 !important;
 		}
 	}
 
 	.wp-block-themeisle-blocks-button {
 		cursor: pointer;
-		display: inline-block;
 		font-size: 18px;
 		margin: 0;
 		text-align: center;
@@ -38,10 +36,9 @@
 @media ( max-width: 960px )  {
 	.wp-block-themeisle-blocks-button-group {
 		&.collapse-tablet {
-			display: inline-block;
+			flex-direction: column;
 
 			.wp-block-themeisle-blocks-button {
-				display: block;
 				margin: 10px 0 !important;
 			}
 		}
@@ -51,10 +48,9 @@
 @media ( max-width: 600px )  {
 	.wp-block-themeisle-blocks-button-group {
 		&.collapse-mobile {
-			display: inline-block;
+			flex-direction: column;
 
 			.wp-block-themeisle-blocks-button {
-				display: block;
 				margin: 10px 0 !important;
 			}
 		}

@@ -81,10 +81,9 @@
 	position: relative;
 
 	&.collapse-desktop {
-		display: inline-block;
+		flex-direction: column;
 
 		.wp-block-themeisle-blocks-button {
-			display: block;
 			margin: 10px 0 !important;
 		}
 	}
@@ -194,10 +193,9 @@
 @media ( max-width: 960px )  {
 	.wp-block-themeisle-blocks-button-group {
 		&.collapse-tablet {
-			display: inline-block;
+			flex-direction: column;
 
 			.wp-block-themeisle-blocks-button {
-				display: block;
 				margin: 10px 0 !important;
 			}
 		}
@@ -207,10 +205,9 @@
 @media ( max-width: 600px )  {
 	.wp-block-themeisle-blocks-button-group {
 		&.collapse-mobile {
-			display: inline-block !important;
+			flex-direction: column;
 
 			.wp-block-themeisle-blocks-button {
-				display: block;
 				margin: 10px 0 !important;
 			}
 		}
