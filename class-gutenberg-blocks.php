@@ -67,6 +67,12 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				$version = THEMEISLE_GUTENBERG_BLOCKS_VERSION;
 			}
 
+			if ( defined( 'THEMEISLE_GUTENBERG_GOOGLE_MAPS_API' ) ) {
+				$api = THEMEISLE_GUTENBERG_GOOGLE_MAPS_API;
+			} else {
+				$api = false;
+			}
+
 			wp_enqueue_script(
 				'themeisle-gutenberg-blocks-vendor',
 				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/vendor.js',
@@ -82,6 +88,10 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				$version,
 				true
 			);
+
+			wp_localize_script( 'themeisle-gutenberg-blocks', 'themeisleGutenberg', array(
+				'mapsAPI' => $api
+			) );
 
 			wp_enqueue_style(
 				'themeisle-gutenberg-blocks-editor',
