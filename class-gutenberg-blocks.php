@@ -407,16 +407,12 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 				if ( 'linked' === $this->get_attr_value( ( isset( $attr['marginType'] ) ? $attr['marginType'] : null ), 'unlinked' ) ) {
 					$style .= '	margin-top: ' . $this->get_attr_value( ( isset( $attr['margin'] ) ? $attr['margin'] : null ), 20 ) . 'px;' . "\n";
-					$style .= '	margin-right: ' . $this->get_attr_value( ( isset( $attr['margin'] ) ? $attr['margin'] : null ), 20 ) . 'px;' . "\n";
 					$style .= '	margin-bottom: ' . $this->get_attr_value( ( isset( $attr['margin'] ) ? $attr['margin'] : null ), 20 ) . 'px;' . "\n";
-					$style .= '	margin-left: ' . $this->get_attr_value( ( isset( $attr['margin'] ) ? $attr['margin'] : null ), 20 ) . 'px;' . "\n";
 				}
 
 				if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginType'] ) ? $attr['marginType'] : null ), 'unlinked' ) ) {
 					$style .= '	margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTop'] ) ? $attr['marginTop'] : null ), 20 ) . 'px;' . "\n";
-					$style .= '	margin-right: ' . $this->get_attr_value( ( isset( $attr['marginRight'] ) ? $attr['marginRight'] : null ), 0 ) . 'px;' . "\n";
 					$style .= '	margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginBottom'] ) ? $attr['marginBottom'] : null ), 20 ) . 'px;' . "\n";
-					$style .= '	margin-left: ' . $this->get_attr_value( ( isset( $attr['marginLeft'] ) ? $attr['marginLeft'] : null ), 0 ) . 'px;' . "\n";
 				}
 
 				if ( 'custom' !== $this->get_attr_value( ( isset( $attr['columnsHeight'] ) ? $attr['columnsHeight'] : null ), 'auto' ) ) {
@@ -468,16 +464,12 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 	
 					if ( 'linked' === $this->get_attr_value( ( isset( $attr['marginTypeTablet'] ) ? $attr['marginTypeTablet'] : null ), 'unlinked' ) ) {
 						$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTablet'] ) ? $attr['marginTablet'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-right: ' . $this->get_attr_value( ( isset( $attr['marginTablet'] ) ? $attr['marginTablet'] : null ), 20 ) . 'px;' . "\n";
 						$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginTablet'] ) ? $attr['marginTablet'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-left: ' . $this->get_attr_value( ( isset( $attr['marginTablet'] ) ? $attr['marginTablet'] : null ), 20 ) . 'px;' . "\n";
 					}
 		
 					if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeTablet'] ) ? $attr['marginTypeTablet'] : null ), 'unlinked' ) ) {
 						$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTopTablet'] ) ? $attr['marginTopTablet'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-right: ' . $this->get_attr_value( ( isset( $attr['marginRightTablet'] ) ? $attr['marginRightTablet'] : null ), 0 ) . 'px;' . "\n";
 						$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginBottomTablet'] ) ? $attr['marginBottomTablet'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-left: ' . $this->get_attr_value( ( isset( $attr['marginLeftTablet'] ) ? $attr['marginLeftTablet'] : null ), 0 ) . 'px;' . "\n";
 					}
 	
 					if ( ( 'custom' === $this->get_attr_value( ( isset( $attr['columnsHeight'] ) ? $attr['columnsHeight'] : null ), 'auto' ) ) && isset( $attr['columnsHeightCustomTablet'] ) ) {
@@ -527,16 +519,12 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 	
 					if ( 'linked' === $this->get_attr_value( ( isset( $attr['marginTypeMobile'] ) ? $attr['marginTypeMobile'] : null ), 'unlinked' ) ) {
 						$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginMobile'] ) ? $attr['marginMobile'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-right: ' . $this->get_attr_value( ( isset( $attr['marginMobile'] ) ? $attr['marginMobile'] : null ), 20 ) . 'px;' . "\n";
 						$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginMobile'] ) ? $attr['marginMobile'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-left: ' . $this->get_attr_value( ( isset( $attr['marginMobile'] ) ? $attr['marginMobile'] : null ), 20 ) . 'px;' . "\n";
 					}
 		
 					if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeMobile'] ) ? $attr['marginTypeMobile'] : null ), 'unlinked' ) ) {
 						$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTopMobile'] ) ? $attr['marginTopMobile'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-right: ' . $this->get_attr_value( ( isset( $attr['marginRightMobile'] ) ? $attr['marginRightMobile'] : null ), 0 ) . 'px;' . "\n";
 						$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginBottomMobile'] ) ? $attr['marginBottomMobile'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-left: ' . $this->get_attr_value( ( isset( $attr['marginLeftMobile'] ) ? $attr['marginLeftMobile'] : null ), 0 ) . 'px;' . "\n";
 					}
 	
 					if ( ( 'custom' === $this->get_attr_value( ( isset( $attr['columnsHeight'] ) ? $attr['columnsHeight'] : null ), 'auto' ) ) && isset( $attr['columnsHeightCustomMobile'] ) ) {
@@ -599,16 +587,24 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 				if ( 'linked' === $this->get_attr_value( ( isset( $attr['marginType'] ) ? $attr['marginType'] : null ), 'unlinked' ) ) {
 					$style .= '	margin-top: ' . $this->get_attr_value( ( isset( $attr['margin'] ) ? $attr['margin'] : null ), 20 ) . 'px;' . "\n";
-					$style .= '	margin-right: ' . $this->get_attr_value( ( isset( $attr['margin'] ) ? $attr['margin'] : null ), 20 ) . 'px;' . "\n";
+					if ( isset( $attr['margin'] ) ) {
+						$style .= '	margin-right: ' . $this->get_attr_value( ( isset( $attr['margin'] ) ? $attr['margin'] : null ), 20 ) . 'px;' . "\n";
+					}
 					$style .= '	margin-bottom: ' . $this->get_attr_value( ( isset( $attr['margin'] ) ? $attr['margin'] : null ), 20 ) . 'px;' . "\n";
-					$style .= '	margin-left: ' . $this->get_attr_value( ( isset( $attr['margin'] ) ? $attr['margin'] : null ), 20 ) . 'px;' . "\n";
+					if ( isset( $attr['margin'] ) ) {
+						$style .= '	margin-left: ' . $this->get_attr_value( ( isset( $attr['margin'] ) ? $attr['margin'] : null ), 20 ) . 'px;' . "\n";
+					}
 				}
 
 				if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginType'] ) ? $attr['marginType'] : null ), 'unlinked' ) ) {
 					$style .= '	margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTop'] ) ? $attr['marginTop'] : null ), 20 ) . 'px;' . "\n";
-					$style .= '	margin-right: ' . $this->get_attr_value( ( isset( $attr['marginRight'] ) ? $attr['marginRight'] : null ), 0 ) . 'px;' . "\n";
+					if ( isset( $attr['marginRight'] ) ) {
+						$style .= '	margin-right: ' . $this->get_attr_value( ( isset( $attr['marginRight'] ) ? $attr['marginRight'] : null ), 0 ) . 'px;' . "\n";
+					}
 					$style .= '	margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginBottom'] ) ? $attr['marginBottom'] : null ), 20 ) . 'px;' . "\n";
-					$style .= '	margin-left: ' . $this->get_attr_value( ( isset( $attr['marginLeft'] ) ? $attr['marginLeft'] : null ), 0 ) . 'px;' . "\n";
+					if ( isset( $attr['marginLeft'] ) ) {
+						$style .= '	margin-left: ' . $this->get_attr_value( ( isset( $attr['marginLeft'] ) ? $attr['marginLeft'] : null ), 0 ) . 'px;' . "\n";
+					}
 				}
 				$style .= '}' . "\n \n";
 
@@ -628,16 +624,24 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 	
 					if ( 'linked' === $this->get_attr_value( ( isset( $attr['marginTypeTablet'] ) ? $attr['marginTypeTablet'] : null ), 'unlinked' ) ) {
 						$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTablet'] ) ? $attr['marginTablet'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-right: ' . $this->get_attr_value( ( isset( $attr['marginTablet'] ) ? $attr['marginTablet'] : null ), 20 ) . 'px;' . "\n";
+						if ( isset( $attr['marginTablet'] ) ) {
+							$style .= '		margin-right: ' . $this->get_attr_value( ( isset( $attr['marginTablet'] ) ? $attr['marginTablet'] : null ), 20 ) . 'px;' . "\n";
+						}
 						$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginTablet'] ) ? $attr['marginTablet'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-left: ' . $this->get_attr_value( ( isset( $attr['marginTablet'] ) ? $attr['marginTablet'] : null ), 20 ) . 'px;' . "\n";
+						if ( isset( $attr['marginTablet'] ) ) {
+							$style .= '		margin-left: ' . $this->get_attr_value( ( isset( $attr['marginTablet'] ) ? $attr['marginTablet'] : null ), 20 ) . 'px;' . "\n";
+						}
 					}
 		
 					if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeTablet'] ) ? $attr['marginTypeTablet'] : null ), 'unlinked' ) ) {
 						$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTopTablet'] ) ? $attr['marginTopTablet'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-right: ' . $this->get_attr_value( ( isset( $attr['marginRightTablet'] ) ? $attr['marginRightTablet'] : null ), 0 ) . 'px;' . "\n";
+						if ( isset( $attr['marginRightTablet'] ) ) {
+							$style .= '		margin-right: ' . $this->get_attr_value( ( isset( $attr['marginRightTablet'] ) ? $attr['marginRightTablet'] : null ), 0 ) . 'px;' . "\n";
+						}
 						$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginBottomTablet'] ) ? $attr['marginBottomTablet'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-left: ' . $this->get_attr_value( ( isset( $attr['marginLeftTablet'] ) ? $attr['marginLeftTablet'] : null ), 0 ) . 'px;' . "\n";
+						if ( isset( $attr['marginLeftTablet'] ) ) {
+							$style .= '		margin-left: ' . $this->get_attr_value( ( isset( $attr['marginLeftTablet'] ) ? $attr['marginLeftTablet'] : null ), 0 ) . 'px;' . "\n";
+						}
 					}
 					$style .= '	}' . "\n \n";
 	
@@ -659,16 +663,24 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 	
 					if ( 'linked' === $this->get_attr_value( ( isset( $attr['marginTypeMobile'] ) ? $attr['marginTypeMobile'] : null ), 'unlinked' ) ) {
 						$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginMobile'] ) ? $attr['marginMobile'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-right: ' . $this->get_attr_value( ( isset( $attr['marginMobile'] ) ? $attr['marginMobile'] : null ), 20 ) . 'px;' . "\n";
+						if ( isset( $attr['marginMobile'] ) ) {
+							$style .= '		margin-right: ' . $this->get_attr_value( ( isset( $attr['marginMobile'] ) ? $attr['marginMobile'] : null ), 20 ) . 'px;' . "\n";
+						}
 						$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginMobile'] ) ? $attr['marginMobile'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-left: ' . $this->get_attr_value( ( isset( $attr['marginMobile'] ) ? $attr['marginMobile'] : null ), 20 ) . 'px;' . "\n";
+						if ( isset( $attr['marginMobile'] ) ) {
+							$style .= '		margin-left: ' . $this->get_attr_value( ( isset( $attr['marginMobile'] ) ? $attr['marginMobile'] : null ), 20 ) . 'px;' . "\n";
+						}
 					}
 		
 					if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeMobile'] ) ? $attr['marginTypeMobile'] : null ), 'unlinked' ) ) {
 						$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTopMobile'] ) ? $attr['marginTopMobile'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-right: ' . $this->get_attr_value( ( isset( $attr['marginRightMobile'] ) ? $attr['marginRightMobile'] : null ), 0 ) . 'px;' . "\n";
+						if ( isset( $attr['marginRightMobile'] ) ) {
+							$style .= '		margin-right: ' . $this->get_attr_value( ( isset( $attr['marginRightMobile'] ) ? $attr['marginRightMobile'] : null ), 0 ) . 'px;' . "\n";
+						}
 						$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginBottomMobile'] ) ? $attr['marginBottomMobile'] : null ), 20 ) . 'px;' . "\n";
-						$style .= '		margin-left: ' . $this->get_attr_value( ( isset( $attr['marginLeftMobile'] ) ? $attr['marginLeftMobile'] : null ), 0 ) . 'px;' . "\n";
+						if ( isset( $attr['marginLeftMobile'] ) ) {
+							$style .= '		margin-left: ' . $this->get_attr_value( ( isset( $attr['marginLeftMobile'] ) ? $attr['marginLeftMobile'] : null ), 0 ) . 'px;' . "\n";
+						}
 					}
 					$style .= '	}' . "\n \n";
 	
