@@ -2,7 +2,6 @@
  * External dependencies...
  */
 import classnames from 'classnames';
-import Autosuggest from 'react-autosuggest';
 
 /**
  * WordPress dependencies
@@ -10,128 +9,153 @@ import Autosuggest from 'react-autosuggest';
 const { __ } = wp.i18n;
 
 const {
+	Button,
 	BaseControl,
-	Placeholder,
-	Spinner
+	Dropdown,
+	MenuGroup,
+	MenuItem,
+	TextControl
 } = wp.components;
 
 const {
-	compose,
-	withInstanceId,
-	withState
-} = wp.compose;
-
-const { withSelect } = wp.data;
+	Component,
+	Fragment
+} = wp.element;
 
 /**
  * Internal dependencies
  */
 import './editor.scss';
 
-function IconPickerControl({ label, prefix, icon, help, className, iconsList, suggestions, setState, instanceId, onChange }) {
-	const id = `inspector-font-awesome-icon-control-${ instanceId }`;
+import data from './icons.json';
 
-	const getSuggestions = value => {
-		const inputValue = value.trim().toLowerCase();
-		const inputLength = inputValue.length;
+class IconPickerControl extends Component {
+	constructor() {
+		super( ...arguments );
 
-		return 0 === inputLength ? [] : iconsList.filter( icon =>
-			icon.name.toLowerCase().slice( 0, inputLength ) === inputValue
-		);
-	};
+		this.state = {
+			search: '',
+			icons: null
+		};
+	}
 
-	const getSuggestionValue = suggestion => suggestion;
+	componentDidMount() {
+		let icons = [];
 
-	const renderSuggestion = suggestion => {
-		return (
-			<div
-				className={ classnames(
-					'icon-select',
-					{ 'selected': ( suggestion.name === icon && suggestion.prefix === prefix ) },
-				) }
-			>
-				<i className={ `${ suggestion.prefix } fa-fw fa-${ suggestion.name }` }></i>
-				{ suggestion.name }
-			</div>
-		);
-	};
+		Object.keys( data ).forEach( i => {
+			Object.keys( data[i].styles ).forEach( o => {
+				let prefix = '';
+				let terms = data[i].search.terms;
 
-	const renderSuggestionsContainer = ({ containerProps, children, query }) => {
-		return (
-			<div { ... containerProps }>
-				{ children }
-			</div>
-		);
-	};
+				switch ( data[i].styles[o]) {
+				case 'brands':
+					prefix = 'fab';
+					break;
+				case 'solid':
+					prefix = 'fas';
+					break;
+				case 'regular':
+					prefix = 'far';
+					break;
+				default:
+					prefix = 'fas';
+				}
 
-	const onSuggestionsFetchRequested = ({ value }) => {
-		setState({
-			suggestions: getSuggestions( value )
+				terms.push(
+					i,
+					data[i].label
+				);
+
+				icons.push({
+					name: i,
+					unicode: data[i].unicode,
+					prefix: prefix,
+					label: data[i].label,
+					search: terms
+				});
+			});
 		});
-	};
 
-	const onSuggestionsClearRequested = () => {
-		setState({
-			suggestions: []
-		});
-	};
+		this.setState({ icons });
+	}
 
-	const inputProps = {
-		placeholder: __( 'Start typing, like themeisle…' ),
-		value: icon || '',
-		onChange: ( event, { newValue }) => {
-			onChange( newValue );
-		}
-	};
-
-	if ( iconsList !== undefined && 0 < iconsList.length ) {
+	render() {
+		const id = `inspector-icon-picker-control-${ this.props.instanceId }`;
 		return (
 			<BaseControl
-				label={ label }
-				help={ help }
-				className={ className }
+				label={ this.props.label }
+				id={ id }
+				className="wp-block-themeisle-blocks-icon-picker-control"
 			>
-				<div
-					className="font-awesome-auto-complete"
-				>
-					<label>
-						<i className={ `${ prefix ? prefix : 'fab' } fa-${ icon ? icon : 'themeisle' }` }></i>
-					</label>
-					<Autosuggest
-						id={ id }
-						suggestions={ suggestions }
-						onSuggestionsFetchRequested={ onSuggestionsFetchRequested }
-						onSuggestionsClearRequested={ onSuggestionsClearRequested }
-						getSuggestionValue={ getSuggestionValue }
-						renderSuggestion={ renderSuggestion }
-						renderSuggestionsContainer={ renderSuggestionsContainer }
-						inputProps={ inputProps }
-					/>
-				</div>
+				<Dropdown
+					contentClassName="wp-block-themeisle-blocks-icon-picker-popover"
+					position="bottom center"
+					renderToggle={ ({ isOpen, onToggle }) => (
+						<Button
+							isLarge
+							className="wp-block-themeisle-blocks-icon-picker-button"
+							onClick={ onToggle }
+							aria-expanded={ isOpen }
+						>
+							{ ( this.props.prefix && this.props.icon ) ?
+								<Fragment>
+									<i
+										className={ classnames(
+											this.props.prefix,
+											`fa-${ this.props.icon }`,
+											'fa-fw'
+										)}
+									>
+									</i>
+									{ this.props.icon }
+								</Fragment> : __( 'Select Icon' )
+							}
+						</Button>
+					) }
+					renderContent={ ({ onToggle }) => (
+						<MenuGroup label={ __( 'Font Awesome Icons' ) }>
+							<TextControl
+								value={ this.state.search }
+								onChange={ e => this.setState({ search: e }) }
+							/>
+
+							<div className="components-popover__items">
+								{ ( this.state.icons ).map( i => {
+									if ( ! this.state.search || i.search.some( o => o.match( this.state.search ) ) ) {
+										return (
+											<MenuItem
+												label={ i.label }
+												className={ classnames(
+													{ 'is-selected': ( i.name === this.props.icon && i.prefix === this.props.prefix ) }
+												)}
+												onClick={ () => {
+													onToggle();
+													this.props.onChange({
+														name: i.name,
+														prefix: i.prefix
+													});
+												}}
+											>
+												<i
+													className={ classnames(
+														i.prefix,
+														`fa-${ i.name }`,
+														'fa-fw'
+													)}
+												>
+												</i>
+												{ i.name }
+											</MenuItem>
+										);
+									}
+								})}
+							</div>
+						</MenuGroup>
+					) }
+				/>
 			</BaseControl>
-		);
-	} else {
-		return (
-			<Placeholder>
-				<Spinner />
-			</Placeholder>
 		);
 	}
 }
 
-export default compose([
-
-	withSelect( ( select ) => {
-		const iconsList = select( 'themeisle-gutenberg/blocks' ).getFaIconsList();
-		return {
-			iconsList
-		};
-	}),
-
-	withInstanceId,
-
-	withState({
-		suggestions: []
-	})
-
-])( IconPickerControl );
+export default IconPickerControl;

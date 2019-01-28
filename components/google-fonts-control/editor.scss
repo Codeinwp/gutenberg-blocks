@@ -1,4 +1,10 @@
 .wp-block-themeisle-blocks-google-fonts-popover {
+	&:not(.is-mobile) {
+		&.is-bottom {
+			z-index: 9999999;
+		}
+	}
+
 	.components-popover__content {
 		overflow-y: hidden;
 		
