@@ -980,7 +980,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 					id={ id }
 					className={ classnames(
 						props.className,
-						collapse
+						{ collapse: 'collapse-none' !== collapse }
 					)}
 					style={ {
 						justifyContent: align,
@@ -1066,7 +1066,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 				id={ id }
 				className={ classnames(
 					props.className,
-					collapse
+					{ collapse: 'collapse-none' !== collapse }
 				)}
 				style={ {
 					justifyContent: align,
