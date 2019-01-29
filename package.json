@@ -18,7 +18,8 @@
 		"hex-rgba": "^1.0.2",
 		"react-google-charts": "^3.0.5",
 		"react-google-font-loader": "^1.0.5",
-		"react-lazy-load": "^3.0.13"
+		"react-lazy-load": "^3.0.13",
+		"uuid": "^3.3.2"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.1.6",

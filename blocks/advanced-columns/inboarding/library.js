@@ -3,6 +3,7 @@
  */
 import LazyLoad from 'react-lazy-load';
 import classnames from 'classnames';
+import uuidv4 from 'uuid';
 
 /**
  * Internal dependencies
@@ -52,6 +53,7 @@ class Library extends Component {
 		this.removeError = this.removeError.bind( this );
 		this.selectCategory = this.selectCategory.bind( this );
 		this.changeSearch = this.changeSearch.bind( this );
+		this.changeClientId = this.changeClientId.bind( this );
 		this.importTemplate = this.importTemplate.bind( this );
 		this.getOptions = this.getOptions.bind( this );
 
@@ -126,12 +128,34 @@ class Library extends Component {
 		});
 	}
 
+	changeClientId( data ) {
+		if ( Array.isArray( data ) ) {
+			data.map( i => this.changeClientId( i ) );
+		} else if ( 'object' === typeof data ) {
+			Object.keys( data ).map( ( k ) => {
+				if ( 'clientId' === k ) {
+					data[k] = uuidv4();
+				}
+
+				if ( 'innerBlocks' === k ) {
+					data[k].map( i => {
+						this.changeClientId( i );
+					});
+				}
+			});
+		}
+
+		return data;
+	}
+
 	async importTemplate( url ) {
 		this.setState({
 			isLoaded: false
 		});
 
 		let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ url }` });
+
+		data = this.changeClientId( data );
 
 		if ( null !== data ) {
 			this.setState({
