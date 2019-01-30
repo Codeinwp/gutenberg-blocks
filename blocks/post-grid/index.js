@@ -114,7 +114,7 @@ registerBlockType( 'themeisle-blocks/posts-grid', {
 			props
 		};
 	})( ({ posts, categoriesList, authors, className, setAttributes, props }) => {
-		if ( ! posts ) {
+		if ( ! posts || ! categoriesList || ! authors ) {
 			return (
 				<p className={ className } >
 					<Spinner />
@@ -122,6 +122,7 @@ registerBlockType( 'themeisle-blocks/posts-grid', {
 				</p>
 			);
 		}
+
 		if ( 0 === posts.length ) {
 			return <p>{ __( 'No Posts' ) }</p>;
 		}
@@ -280,7 +281,7 @@ registerBlockType( 'themeisle-blocks/posts-grid', {
 									</div>
 								}
 								<div className={ `grid-content-area ${ ! displayFeaturedImage && 'full' }` }>
-									{ ( displayCategory && categoriesList ) && (
+									{ ( undefined !== category && ( displayCategory && categoriesList ) ) && (
 										<h6 className="grid-content-category">
 											<a href={ category.link }>{ category.name }</a>
 										</h6>
