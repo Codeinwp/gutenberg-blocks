@@ -13,7 +13,7 @@ import './editor.scss';
 import { columnsIcon } from '../../../utils/icons.js';
 
 /**
- * WordPress dependencies...
+ * WordPress dependencies
  */
 const {
 	startCase,

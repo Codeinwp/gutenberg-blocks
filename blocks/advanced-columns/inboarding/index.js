@@ -8,7 +8,7 @@ import { columnsIcon } from '../../../utils/icons.js';
 import Library from './library.js';
 
 /**
- * WordPress dependencies...
+ * WordPress dependencies
  */
 const { __ } = wp.i18n;
 
