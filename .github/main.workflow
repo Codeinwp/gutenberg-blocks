@@ -1,6 +1,6 @@
 workflow "Build on push" {
-  on = "pull_request"
   resolves = ["npm build"]
+  on = "push"
 }
 
 action "npm install" {
