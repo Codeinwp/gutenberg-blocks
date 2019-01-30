@@ -13,10 +13,14 @@ const {
 } = wp.components;
 
 const {
+	AlignmentToolbar,
+	BlockControls,
 	ContrastChecker,
 	InspectorControls,
 	PanelColorSettings
 } = wp.editor;
+
+const { Fragment } = wp.element;
 
 /**
  * Internal dependencies
@@ -39,6 +43,9 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 		'icons'
 	],
 	attributes: {
+		align: {
+			type: 'string'
+		},
 		prefix: {
 			type: 'string',
 			default: 'fab'
@@ -78,11 +85,11 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 		}
 	},
 
-	supports: {
-		align: [ 'left', 'center', 'right' ]
-	},
-
 	edit: props => {
+
+		const changeAlignment = value => {
+			props.setAttributes({ align: value });
+		};
 
 		const changeIcon = value => {
 			if ( 'object' === typeof value ) {
@@ -144,120 +151,155 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 			margin: props.attributes.margin + 'px'
 		};
 
-		return [
-			<InspectorControls>
-				<PanelBody
-					title={ __( 'Icon Settings' ) }
-				>
-					<IconPickerControl
-						label={ __( 'Icon Picker' ) }
-						prefix={ props.attributes.prefix }
-						icon={ props.attributes.icon }
-						onChange={ changeIcon }
+		return (
+			<Fragment>
+				<BlockControls>
+					<AlignmentToolbar
+						value={ props.attributes.align }
+						onChange={ changeAlignment }
+						alignmentControls={[
+							{
+								icon: 'editor-alignleft',
+								title: __( 'Align left' ),
+								align: 'left'
+							},
+							{
+								icon: 'editor-aligncenter',
+								title: __( 'Align center' ),
+								align: 'center'
+							},
+							{
+								icon: 'editor-alignright',
+								title: __( 'Align right' ),
+								align: 'right'
+							}
+						]}
 					/>
-				</PanelBody>
-				<PanelBody
-					title={ __( 'Icon Sizes' ) }
-					className="blocks-font-size"
-					initialOpen={ false }
-				>
-					<RangeControl
-						label={ __( 'Text Size' ) }
-						value={ props.attributes.fontSize || '' }
-						initialPosition={ 16 }
-						onChange={ changeFontSize }
-						min={ 12 }
-						max={ 140 }
-						beforeIcon="editor-textcolor"
-						afterIcon="editor-textcolor"
-					/>
-					<RangeControl
-						label={ __( 'Padding' ) }
-						value={ props.attributes.padding || '' }
-						initialPosition={ 5 }
-						onChange={ changePadding }
-						min={ 0 }
-						max={ 100 }
-						beforeIcon="minus"
-						afterIcon="plus"
-					/>
-					<RangeControl
-						label={ __( 'Margin' ) }
-						value={ props.attributes.margin || '' }
-						initialPosition={ 5 }
-						onChange={ changeMargin }
-						min={ 0 }
-						max={ 100 }
-						beforeIcon="minus"
-						afterIcon="plus"
-					/>
-				</PanelBody>
-				<PanelColorSettings
-					title={ __( 'Color Settings' ) }
-					initialOpen={ false }
-					colorSettings={ [
-						{
-							value: props.attributes.backgroundColor,
-							onChange: changeBackgroundColor,
-							label: __( 'Background Color' )
-						},
-						{
-							value: props.attributes.textColor,
-							onChange: changeTextColor,
-							label: __( 'Icon Color' )
-						},
-						{
-							value: props.attributes.borderColor,
-							onChange: changeBorderColor,
-							label: __( 'Border Color' )
-						}
-					] }
-				>
-					<ContrastChecker
-						{ ...{
-							textColor: props.attributes.textColor,
-							backgroundColor: props.attributes.backgroundColor
-						} }
-					/>
-				</PanelColorSettings>
-				<PanelBody
-					title={ __( 'Border Settings' ) }
-					initialOpen={ false }
-				>
-					<RangeControl
-						label={ __( 'Border Size' ) }
-						value={ props.attributes.borderSize }
-						onChange={ changeBorderSize }
-						min={ 0 }
-						max={ 120 }
-						beforeIcon="minus"
-						afterIcon="plus"
-					/>
-					<RangeControl
-						label={ __( 'Border Radius' ) }
-						value={ props.attributes.borderRadius }
-						onChange={ changeBorderRadius }
-						min={ 0 }
-						max={ 100 }
-						beforeIcon="grid-view"
-						afterIcon="marker"
-					/>
-				</PanelBody>
-			</InspectorControls>,
+				</BlockControls>
 
-			<p className={ props.className } >
-				<span
-					className={ `${ props.className }-container` }
-					style={ containerStyle }
-				>
-					<i
-						className={ `${ props.attributes.prefix } fa-${ props.attributes.icon }` }
-						style={ iconStyle }
+				<InspectorControls>
+					<PanelBody
+						title={ __( 'Icon Settings' ) }
 					>
-					</i>
-				</span>
-			</p>
-		];
+						<IconPickerControl
+							label={ __( 'Icon Picker' ) }
+							prefix={ props.attributes.prefix }
+							icon={ props.attributes.icon }
+							onChange={ changeIcon }
+						/>
+					</PanelBody>
+
+					<PanelBody
+						title={ __( 'Icon Sizes' ) }
+						className="blocks-font-size"
+						initialOpen={ false }
+					>
+						<RangeControl
+							label={ __( 'Text Size' ) }
+							value={ props.attributes.fontSize || '' }
+							initialPosition={ 16 }
+							onChange={ changeFontSize }
+							min={ 12 }
+							max={ 140 }
+							beforeIcon="editor-textcolor"
+							afterIcon="editor-textcolor"
+						/>
+
+						<RangeControl
+							label={ __( 'Padding' ) }
+							value={ props.attributes.padding || '' }
+							initialPosition={ 5 }
+							onChange={ changePadding }
+							min={ 0 }
+							max={ 100 }
+							beforeIcon="minus"
+							afterIcon="plus"
+						/>
+
+						<RangeControl
+							label={ __( 'Margin' ) }
+							value={ props.attributes.margin || '' }
+							initialPosition={ 5 }
+							onChange={ changeMargin }
+							min={ 0 }
+							max={ 100 }
+							beforeIcon="minus"
+							afterIcon="plus"
+						/>
+					</PanelBody>
+
+					<PanelColorSettings
+						title={ __( 'Color Settings' ) }
+						initialOpen={ false }
+						colorSettings={ [
+							{
+								value: props.attributes.backgroundColor,
+								onChange: changeBackgroundColor,
+								label: __( 'Background Color' )
+							},
+							{
+								value: props.attributes.textColor,
+								onChange: changeTextColor,
+								label: __( 'Icon Color' )
+							},
+							{
+								value: props.attributes.borderColor,
+								onChange: changeBorderColor,
+								label: __( 'Border Color' )
+							}
+						] }
+					>
+						<ContrastChecker
+							{ ...{
+								textColor: props.attributes.textColor,
+								backgroundColor: props.attributes.backgroundColor
+							} }
+						/>
+					</PanelColorSettings>
+
+					<PanelBody
+						title={ __( 'Border Settings' ) }
+						initialOpen={ false }
+					>
+						<RangeControl
+							label={ __( 'Border Size' ) }
+							value={ props.attributes.borderSize }
+							onChange={ changeBorderSize }
+							min={ 0 }
+							max={ 120 }
+							beforeIcon="minus"
+							afterIcon="plus"
+						/>
+
+						<RangeControl
+							label={ __( 'Border Radius' ) }
+							value={ props.attributes.borderRadius }
+							onChange={ changeBorderRadius }
+							min={ 0 }
+							max={ 100 }
+							beforeIcon="grid-view"
+							afterIcon="marker"
+						/>
+					</PanelBody>
+				</InspectorControls>
+
+				<p
+					className={ props.className }
+					style={{ textAlign: props.attributes.align }}
+				>
+					<span
+						className={ `${ props.className }-container` }
+						style={ containerStyle }
+					>
+						<i
+							className={ `${ props.attributes.prefix } fa-${ props.attributes.icon }` }
+							style={ iconStyle }
+						>
+						</i>
+					</span>
+				</p>
+			</Fragment>
+		);
 	},
 
 	save: props => {
@@ -279,7 +321,10 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 		};
 
 		return (
-			<p className={ props.className } >
+			<p
+				className={ props.className }
+				style={{ textAlign: props.attributes.align }}
+			>
 				<span
 					className={ `${ props.className }-container` }
 					style={ containerStyle }
