@@ -25,8 +25,10 @@ const {
 	Icon,
 	IconButton,
 	PanelBody,
+	Placeholder,
 	RangeControl,
 	SelectControl,
+	Spinner,
 	TextControl,
 	ToggleControl,
 	Toolbar
@@ -194,13 +196,15 @@ registerBlockType( 'themeisle-blocks/button-group', {
 		withState({
 			tab: 'buttons',
 			selectedButton: 0,
-			hover: false
+			hover: false,
+			wait: false
 		})
 
 	])( ({
 		tab,
 		selectedButton,
 		hover,
+		wait,
 		setState,
 		props
 	}) => {
@@ -225,7 +229,18 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			props.setAttributes({ id: instanceId });
 		}
 
-		const changeButtons =  value => {
+		const changeButton = value => {
+			setState({
+				selectedButton: value,
+				wait: true
+			});
+
+			setTimeout( () => {
+				setState({ wait: false  });
+			}, 500 );
+		};
+
+		const changeButtons = value => {
 			if ( 1 <= value && 5 >= value ) {
 				if ( data.length < value ) {
 					times( value - data.length, i => {
@@ -367,7 +382,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 							'wp-block-themeisle-blocks-button',
 							`wp-block-themeisle-blocks-button-${ i }`
 						) }
-						onClick={ () => setState({ selectedButton: i })}
+						onClick={ () => changeButton( i ) }
 					>
 						{ ( 'left' === data[i].iconType || 'only' === data[i].iconType ) && (
 							<i className={ classnames(
@@ -559,7 +574,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 													return (
 														<MenuItem
 															onClick={ () => {
-																setState({ selectedButton: n });
+																changeButton( n );
 																onToggle();
 															}}
 														>
@@ -573,145 +588,33 @@ registerBlockType( 'themeisle-blocks/button-group', {
 								</BaseControl>
 							</PanelBody>
 
-							<PanelBody
-								title={ __( 'Link' ) }
-							>
-								<TextControl
-									label={ 'Link' }
-									type="url"
-									placeholder={ __( 'https://…' ) }
-									value={ data[selectedButton].link }
-									onChange={ e => updateButton({ link: e }, selectedButton ) }
-								/>
-
-								<ToggleControl
-									label={ 'Open in New Tab?' }
-									checked={ data[selectedButton].newTab }
-									onChange={ () => updateButton({ newTab: ! data[selectedButton].newTab }, selectedButton ) }
-								/>
-							</PanelBody>
-
-							<PanelBody
-								title={ __( 'Color & Border' ) }
-								initialOpen={ false }
-							>
-								<ButtonGroup className="wp-block-themeisle-blocks-button-group-hover-control" >
-									<Button
-										isDefault
-										isLarge
-										isPrimary={ ! hover }
-										onClick={ () => setState({ hover: false }) }
+							{ wait ?
+								<Placeholder>
+									<Spinner/>
+								</Placeholder> :
+								<Fragment>
+									<PanelBody
+										title={ __( 'Link' ) }
 									>
-										{ __( 'Normal' )}
-									</Button>
-									<Button
-										isDefault
-										isLarge
-										isPrimary={ hover }
-										onClick={ () => setState({ hover: true }) }
+										<TextControl
+											label={ 'Link' }
+											type="url"
+											placeholder={ __( 'https://…' ) }
+											value={ data[selectedButton].link }
+											onChange={ e => updateButton({ link: e }, selectedButton ) }
+										/>
+
+										<ToggleControl
+											label={ 'Open in New Tab?' }
+											checked={ data[selectedButton].newTab }
+											onChange={ () => updateButton({ newTab: ! data[selectedButton].newTab }, selectedButton ) }
+										/>
+									</PanelBody>
+
+									<PanelBody
+										title={ __( 'Color & Border' ) }
+										initialOpen={ false }
 									>
-										{ __( 'Hover' )}
-									</Button>
-								</ButtonGroup>
-
-								{ ! hover && (
-									<Fragment>
-										<BaseControl
-											label={ 'Color' }
-										>
-											<ColorPalette
-												label={ 'Color' }
-												value={ data[selectedButton].color }
-												onChange={ e => updateButton({ color: e }, selectedButton ) }
-											/>
-										</BaseControl>
-
-										<BaseControl
-											label={ 'Background' }
-										>
-											<ColorPalette
-												label={ 'Background' }
-												value={ data[selectedButton].background }
-												onChange={ e => updateButton({ background: e }, selectedButton ) }
-											/>
-										</BaseControl>
-
-										<BaseControl
-											label={ 'Border' }
-										>
-											<ColorPalette
-												label={ 'Border' }
-												value={ data[selectedButton].border }
-												onChange={ e => updateButton({ border: e }, selectedButton ) }
-											/>
-										</BaseControl>
-									</Fragment>
-								) || hover && (
-									<Fragment>
-										<BaseControl
-											label={ 'Hover Color' }
-										>
-											<ColorPalette
-												label={ 'Hover Color' }
-												value={ data[selectedButton].hoverColor }
-												onChange={ e => updateButton({ hoverColor: e }, selectedButton ) }
-											/>
-										</BaseControl>
-
-										<BaseControl
-											label={ 'Hover Background' }
-										>
-											<ColorPalette
-												label={ 'Hover Background' }
-												value={ data[selectedButton].hoverBackground }
-												onChange={ e => updateButton({ hoverBackground: e }, selectedButton ) }
-											/>
-										</BaseControl>
-
-										<BaseControl
-											label={ 'Hover Border' }
-										>
-											<ColorPalette
-												label={ 'Hover Border' }
-												value={ data[selectedButton].hoverBorder }
-												onChange={ e => updateButton({ hoverBorder: e }, selectedButton ) }
-											/>
-										</BaseControl>
-									</Fragment>
-								)}
-
-								<RangeControl
-									label={ __( 'Border Width' ) }
-									className="border-width"
-									beforeIcon="move"
-									value={ data[selectedButton].borderSize }
-									onChange={ e => updateButton({ borderSize: e }, selectedButton ) }
-									min={ 0 }
-									max={ 10 }
-								/>
-
-								<RangeControl
-									label={ __( 'Border Radius' ) }
-									beforeIcon="move"
-									value={ data[selectedButton].borderRadius }
-									onChange={ e => updateButton({ borderRadius: e }, selectedButton ) }
-									min={ 0 }
-									max={ 100 }
-								/>
-							</PanelBody>
-
-							<PanelBody
-								title={ __( 'Box Shadow' ) }
-								initialOpen={ false }
-							>
-								<ToggleControl
-									label={ 'Box Shadow' }
-									checked={ data[selectedButton].boxShadow }
-									onChange={ e => updateButton({ boxShadow: ! data[selectedButton].boxShadow }, selectedButton ) }
-								/>
-
-								{ data[selectedButton].boxShadow && (
-									<Fragment>
 										<ButtonGroup className="wp-block-themeisle-blocks-button-group-hover-control" >
 											<Button
 												isDefault
@@ -734,184 +637,303 @@ registerBlockType( 'themeisle-blocks/button-group', {
 										{ ! hover && (
 											<Fragment>
 												<BaseControl
-													label={ 'Shadow Color' }
+													label={ 'Color' }
 												>
 													<ColorPalette
-														label={ 'Shadow Color' }
-														value={ data[selectedButton].boxShadowColor }
-														onChange={ e => updateButton({ boxShadowColor: e }, selectedButton ) }
+														label={ 'Color' }
+														value={ data[selectedButton].color }
+														onChange={ e => updateButton({ color: e }, selectedButton ) }
 													/>
 												</BaseControl>
 
-												<ControlPanelControl
-													label={ 'Shadow Properties' }
+												<BaseControl
+													label={ 'Background' }
 												>
-
-													<RangeControl
-														label={ __( 'Opacity' ) }
-														value={ data[selectedButton].boxShadowColorOpacity }
-														onChange={ e => updateButton({ boxShadowColorOpacity: e }, selectedButton ) }
-														min={ 0 }
-														max={ 100 }
+													<ColorPalette
+														label={ 'Background' }
+														value={ data[selectedButton].background }
+														onChange={ e => updateButton({ background: e }, selectedButton ) }
 													/>
+												</BaseControl>
 
-													<RangeControl
-														label={ __( 'Blur' ) }
-														value={ data[selectedButton].boxShadowBlur }
-														onChange={ e => updateButton({ boxShadowBlur: e }, selectedButton ) }
-														min={ 0 }
-														max={ 100 }
+												<BaseControl
+													label={ 'Border' }
+												>
+													<ColorPalette
+														label={ 'Border' }
+														value={ data[selectedButton].border }
+														onChange={ e => updateButton({ border: e }, selectedButton ) }
 													/>
-
-													<RangeControl
-														label={ __( 'Spread' ) }
-														value={ data[selectedButton].boxShadowSpread }
-														onChange={ e => updateButton({ boxShadowSpread: e }, selectedButton ) }
-														min={ -100 }
-														max={ 100 }
-													/>
-
-													<RangeControl
-														label={ __( 'Horizontal' ) }
-														value={ data[selectedButton].boxShadowHorizontal }
-														onChange={ e => updateButton({ boxShadowHorizontal: e }, selectedButton ) }
-														min={ -100 }
-														max={ 100 }
-													/>
-
-													<RangeControl
-														label={ __( 'Vertical' ) }
-														value={ data[selectedButton].boxShadowVertical }
-														onChange={ e => updateButton({ boxShadowVertical: e }, selectedButton ) }
-														min={ -100 }
-														max={ 100 }
-													/>
-
-												</ControlPanelControl>
+												</BaseControl>
 											</Fragment>
 										) || hover && (
 											<Fragment>
 												<BaseControl
-													label={ 'Hover Shadow Color' }
+													label={ 'Hover Color' }
 												>
 													<ColorPalette
-														label={ 'Hover Shadow Color' }
-														value={ data[selectedButton].hoverBoxShadowColor }
-														onChange={ e => updateButton({ hoverBoxShadowColor: e }, selectedButton ) }
+														label={ 'Hover Color' }
+														value={ data[selectedButton].hoverColor }
+														onChange={ e => updateButton({ hoverColor: e }, selectedButton ) }
 													/>
 												</BaseControl>
 
-
-												<ControlPanelControl
-													label={ 'Hover Shadow Properties' }
+												<BaseControl
+													label={ 'Hover Background' }
 												>
-
-													<RangeControl
-														label={ __( 'Opacity' ) }
-														value={ data[selectedButton].hoverBoxShadowColorOpacity }
-														onChange={ e => updateButton({ hoverBoxShadowColorOpacity: e }, selectedButton ) }
-														min={ 0 }
-														max={ 100 }
+													<ColorPalette
+														label={ 'Hover Background' }
+														value={ data[selectedButton].hoverBackground }
+														onChange={ e => updateButton({ hoverBackground: e }, selectedButton ) }
 													/>
+												</BaseControl>
 
-													<RangeControl
-														label={ __( 'Blur' ) }
-														value={ data[selectedButton].hoverBoxShadowBlur }
-														onChange={ e => updateButton({ hoverBoxShadowBlur: e }, selectedButton ) }
-														min={ 0 }
-														max={ 100 }
+												<BaseControl
+													label={ 'Hover Border' }
+												>
+													<ColorPalette
+														label={ 'Hover Border' }
+														value={ data[selectedButton].hoverBorder }
+														onChange={ e => updateButton({ hoverBorder: e }, selectedButton ) }
 													/>
-
-													<RangeControl
-														label={ __( 'Spread' ) }
-														value={ data[selectedButton].hoverBoxShadowSpread }
-														onChange={ e => updateButton({ hoverBoxShadowSpread: e }, selectedButton ) }
-														min={ -100 }
-														max={ 100 }
-													/>
-
-													<RangeControl
-														label={ __( 'Horizontal' ) }
-														value={ data[selectedButton].hoverBoxShadowHorizontal }
-														onChange={ e => updateButton({ hoverBoxShadowHorizontal: e }, selectedButton ) }
-														min={ -100 }
-														max={ 100 }
-													/>
-
-													<RangeControl
-														label={ __( 'Vertical' ) }
-														value={ data[selectedButton].hoverBoxShadowVertical }
-														onChange={ e => updateButton({ hoverBoxShadowVertical: e }, selectedButton ) }
-														min={ -100 }
-														max={ 100 }
-													/>
-
-												</ControlPanelControl>
+												</BaseControl>
 											</Fragment>
 										)}
-									</Fragment>
-								)}
-							</PanelBody>
 
-							<PanelBody
-								title={ __( 'Icon Settings' ) }
-								initialOpen={ false }
-							>
-								<SelectControl
-									label={ __( 'Icon Position' ) }
-									value={ data[selectedButton].iconType }
-									options={ [
-										{ label: 'No Icon', value: 'none' },
-										{ label: 'Left', value: 'left' },
-										{ label: 'Right', value: 'right' },
-										{ label: 'Icon Only', value: 'only' }
-									] }
-									onChange={ e => updateButton({ iconType: e }, selectedButton ) }
-								/>
-
-								{ 'none' !== data[selectedButton].iconType && (
-									<Fragment>
-										<IconPickerControl
-											label={ __( 'Icon Picker' ) }
-											prefix={ data[selectedButton].prefix }
-											icon={ data[selectedButton].icon }
-											onChange={ e => {
-												if ( 'object' === typeof e ) {
-													updateButton({
-														icon: e.name,
-														prefix: e.prefix
-													}, selectedButton );
-												} else {
-													updateButton({ icon: e }, selectedButton );
-												}
-											}}
+										<RangeControl
+											label={ __( 'Border Width' ) }
+											className="border-width"
+											beforeIcon="move"
+											value={ data[selectedButton].borderSize }
+											onChange={ e => updateButton({ borderSize: e }, selectedButton ) }
+											min={ 0 }
+											max={ 10 }
 										/>
-									</Fragment>
-								)}
-							</PanelBody>
 
-							<PanelBody
-								title={ __( 'Padding' ) }
-								initialOpen={ false }
-							>
-								<RangeControl
-									label={ __( 'Padding Top/Bottom' ) }
-									beforeIcon="sort"
-									value={ data[selectedButton].paddingTopBottom }
-									onChange={ e => updateButton({ paddingTopBottom: e }, selectedButton ) }
-									min={ 0 }
-									max={ 100 }
-								/>
+										<RangeControl
+											label={ __( 'Border Radius' ) }
+											beforeIcon="move"
+											value={ data[selectedButton].borderRadius }
+											onChange={ e => updateButton({ borderRadius: e }, selectedButton ) }
+											min={ 0 }
+											max={ 100 }
+										/>
+									</PanelBody>
 
-								<RangeControl
-									label={ __( 'Padding Left/Right' ) }
-									beforeIcon="leftright"
-									value={ data[selectedButton].paddingLeftRight }
-									onChange={ e => updateButton({ paddingLeftRight: e }, selectedButton ) }
-									min={ 0 }
-									max={ 100 }
-								/>
-							</PanelBody>
+									<PanelBody
+										title={ __( 'Box Shadow' ) }
+										initialOpen={ false }
+									>
+										<ToggleControl
+											label={ 'Box Shadow' }
+											checked={ data[selectedButton].boxShadow }
+											onChange={ e => updateButton({ boxShadow: ! data[selectedButton].boxShadow }, selectedButton ) }
+										/>
+
+										{ data[selectedButton].boxShadow && (
+											<Fragment>
+												<ButtonGroup className="wp-block-themeisle-blocks-button-group-hover-control" >
+													<Button
+														isDefault
+														isLarge
+														isPrimary={ ! hover }
+														onClick={ () => setState({ hover: false }) }
+													>
+														{ __( 'Normal' )}
+													</Button>
+													<Button
+														isDefault
+														isLarge
+														isPrimary={ hover }
+														onClick={ () => setState({ hover: true }) }
+													>
+														{ __( 'Hover' )}
+													</Button>
+												</ButtonGroup>
+
+												{ ! hover && (
+													<Fragment>
+														<BaseControl
+															label={ 'Shadow Color' }
+														>
+															<ColorPalette
+																label={ 'Shadow Color' }
+																value={ data[selectedButton].boxShadowColor }
+																onChange={ e => updateButton({ boxShadowColor: e }, selectedButton ) }
+															/>
+														</BaseControl>
+
+														<ControlPanelControl
+															label={ 'Shadow Properties' }
+														>
+
+															<RangeControl
+																label={ __( 'Opacity' ) }
+																value={ data[selectedButton].boxShadowColorOpacity }
+																onChange={ e => updateButton({ boxShadowColorOpacity: e }, selectedButton ) }
+																min={ 0 }
+																max={ 100 }
+															/>
+
+															<RangeControl
+																label={ __( 'Blur' ) }
+																value={ data[selectedButton].boxShadowBlur }
+																onChange={ e => updateButton({ boxShadowBlur: e }, selectedButton ) }
+																min={ 0 }
+																max={ 100 }
+															/>
+
+															<RangeControl
+																label={ __( 'Spread' ) }
+																value={ data[selectedButton].boxShadowSpread }
+																onChange={ e => updateButton({ boxShadowSpread: e }, selectedButton ) }
+																min={ -100 }
+																max={ 100 }
+															/>
+
+															<RangeControl
+																label={ __( 'Horizontal' ) }
+																value={ data[selectedButton].boxShadowHorizontal }
+																onChange={ e => updateButton({ boxShadowHorizontal: e }, selectedButton ) }
+																min={ -100 }
+																max={ 100 }
+															/>
+
+															<RangeControl
+																label={ __( 'Vertical' ) }
+																value={ data[selectedButton].boxShadowVertical }
+																onChange={ e => updateButton({ boxShadowVertical: e }, selectedButton ) }
+																min={ -100 }
+																max={ 100 }
+															/>
+
+														</ControlPanelControl>
+													</Fragment>
+												) || hover && (
+													<Fragment>
+														<BaseControl
+															label={ 'Hover Shadow Color' }
+														>
+															<ColorPalette
+																label={ 'Hover Shadow Color' }
+																value={ data[selectedButton].hoverBoxShadowColor }
+																onChange={ e => updateButton({ hoverBoxShadowColor: e }, selectedButton ) }
+															/>
+														</BaseControl>
+
+
+														<ControlPanelControl
+															label={ 'Hover Shadow Properties' }
+														>
+
+															<RangeControl
+																label={ __( 'Opacity' ) }
+																value={ data[selectedButton].hoverBoxShadowColorOpacity }
+																onChange={ e => updateButton({ hoverBoxShadowColorOpacity: e }, selectedButton ) }
+																min={ 0 }
+																max={ 100 }
+															/>
+
+															<RangeControl
+																label={ __( 'Blur' ) }
+																value={ data[selectedButton].hoverBoxShadowBlur }
+																onChange={ e => updateButton({ hoverBoxShadowBlur: e }, selectedButton ) }
+																min={ 0 }
+																max={ 100 }
+															/>
+
+															<RangeControl
+																label={ __( 'Spread' ) }
+																value={ data[selectedButton].hoverBoxShadowSpread }
+																onChange={ e => updateButton({ hoverBoxShadowSpread: e }, selectedButton ) }
+																min={ -100 }
+																max={ 100 }
+															/>
+
+															<RangeControl
+																label={ __( 'Horizontal' ) }
+																value={ data[selectedButton].hoverBoxShadowHorizontal }
+																onChange={ e => updateButton({ hoverBoxShadowHorizontal: e }, selectedButton ) }
+																min={ -100 }
+																max={ 100 }
+															/>
+
+															<RangeControl
+																label={ __( 'Vertical' ) }
+																value={ data[selectedButton].hoverBoxShadowVertical }
+																onChange={ e => updateButton({ hoverBoxShadowVertical: e }, selectedButton ) }
+																min={ -100 }
+																max={ 100 }
+															/>
+
+														</ControlPanelControl>
+													</Fragment>
+												)}
+											</Fragment>
+										)}
+									</PanelBody>
+
+									<PanelBody
+										title={ __( 'Icon Settings' ) }
+										initialOpen={ false }
+									>
+										<SelectControl
+											label={ __( 'Icon Position' ) }
+											value={ data[selectedButton].iconType }
+											options={ [
+												{ label: 'No Icon', value: 'none' },
+												{ label: 'Left', value: 'left' },
+												{ label: 'Right', value: 'right' },
+												{ label: 'Icon Only', value: 'only' }
+											] }
+											onChange={ e => updateButton({ iconType: e }, selectedButton ) }
+										/>
+
+										{ 'none' !== data[selectedButton].iconType && (
+											<Fragment>
+												<IconPickerControl
+													label={ __( 'Icon Picker' ) }
+													prefix={ data[selectedButton].prefix }
+													icon={ data[selectedButton].icon }
+													onChange={ e => {
+														if ( 'object' === typeof e ) {
+															updateButton({
+																icon: e.name,
+																prefix: e.prefix
+															}, selectedButton );
+														} else {
+															updateButton({ icon: e }, selectedButton );
+														}
+													}}
+												/>
+											</Fragment>
+										)}
+									</PanelBody>
+
+									<PanelBody
+										title={ __( 'Padding' ) }
+										initialOpen={ false }
+									>
+										<RangeControl
+											label={ __( 'Padding Top/Bottom' ) }
+											beforeIcon="sort"
+											value={ data[selectedButton].paddingTopBottom }
+											onChange={ e => updateButton({ paddingTopBottom: e }, selectedButton ) }
+											min={ 0 }
+											max={ 100 }
+										/>
+
+										<RangeControl
+											label={ __( 'Padding Left/Right' ) }
+											beforeIcon="leftright"
+											value={ data[selectedButton].paddingLeftRight }
+											onChange={ e => updateButton({ paddingLeftRight: e }, selectedButton ) }
+											min={ 0 }
+											max={ 100 }
+										/>
+									</PanelBody>
+								</Fragment>
+							}
 						</Fragment>
 
 					) || 'group' === tab && (

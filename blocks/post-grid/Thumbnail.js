@@ -29,7 +29,7 @@ export default withSelect( ( select, ownProps ) => {
 	const { id } = ownProps;
 	const image = id ? select( 'core' ).getMedia( id ) : undefined;
 	const size = 'medium';
-	const thumbnail = image ? image.media_details.sizes[size].source_url : null;
+	const thumbnail = image ? 0 < Object.keys( image.media_details.sizes ).length ? image.media_details.sizes[size].source_url : image.source_url : null;
 
 	return image ? {
 		thumbnail: thumbnail,
