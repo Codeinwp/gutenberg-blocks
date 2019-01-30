@@ -414,6 +414,8 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			);
 		};
 
+		const collapseClass = 'collapse-none' !== collapse ? collapse : '';
+
 		return (
 			<Fragment>
 				{ fontFamily && (
@@ -1002,7 +1004,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 					id={ id }
 					className={ classnames(
 						props.className,
-						{ collapse: 'collapse-none' !== collapse }
+						collapseClass
 					)}
 					style={ {
 						justifyContent: align,
@@ -1083,12 +1085,14 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			);
 		};
 
+		const collapseClass = 'collapse-none' !== collapse ? collapse : '';
+
 		return (
 			<div
 				id={ id }
 				className={ classnames(
 					props.className,
-					{ collapse: 'collapse-none' !== collapse }
+					collapseClass
 				)}
 				style={ {
 					justifyContent: align,
