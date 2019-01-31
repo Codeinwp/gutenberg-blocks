@@ -121,7 +121,7 @@ class IconPickerControl extends Component {
 
 							<div className="components-popover__items">
 								{ ( this.state.icons ).map( i => {
-									if ( ! this.state.search || i.search.some( o => o.match( this.state.search ) ) ) {
+									if ( ! this.state.search || i.search.some( o => o.toLowerCase().match( this.state.search.toLowerCase() ) ) ) {
 										return (
 											<MenuItem
 												label={ i.label }
