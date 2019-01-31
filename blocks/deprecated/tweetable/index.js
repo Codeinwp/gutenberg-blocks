@@ -15,11 +15,12 @@ const {
 	TextControl
 } = wp.components;
 
-const { BlockControls } = wp.editor;
-
 const { withSelect } = wp.data;
 
-const { RichText } = wp.editor;
+const {
+	BlockControls,
+	RichText
+} = wp.editor;
 
 /**
  * Internal dependencies
