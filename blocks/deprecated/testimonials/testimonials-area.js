@@ -4,7 +4,7 @@
 import classnames from 'classnames';
 
 /**
- * WordPress dependencies...
+ * WordPress dependencies
  */
 
 const { __ } = wp.i18n;
