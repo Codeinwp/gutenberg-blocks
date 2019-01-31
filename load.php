@@ -8,7 +8,7 @@
  * @since       1.0.0
  */
 
-define( 'THEMEISLE_GUTENBERG_BLOCKS_VERSION', '1.1.3' );
+define( 'THEMEISLE_GUTENBERG_BLOCKS_VERSION', '1.1.4' );
 define( 'THEMEISLE_GUTENBERG_BLOCKS_DEV', false );
 
 add_action(

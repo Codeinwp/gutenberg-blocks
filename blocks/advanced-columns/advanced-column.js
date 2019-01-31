@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import hexToRgba from 'hex-rgba';
 
 /**
- * WordPress dependencies...
+ * WordPress dependencies
  */
 const { __ } = wp.i18n;
 

@@ -76,17 +76,15 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 			wp_enqueue_script(
 				'themeisle-gutenberg-blocks-vendor',
 				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/vendor.js',
-				'',
-				$version,
-				true
+				array( 'react', 'react-dom' ),
+				$version
 			);
 
 			wp_enqueue_script(
 				'themeisle-gutenberg-blocks',
 				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/block.js',
-				array( 'wp-api', 'themeisle-gutenberg-blocks-vendor' ),
-				$version,
-				true
+				array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-element', 'wp-keycodes', 'wp-rich-text' ,'wp-viewport', 'themeisle-gutenberg-blocks-vendor' ),
+				$version
 			);
 
 			wp_localize_script( 'themeisle-gutenberg-blocks', 'themeisleGutenberg', array(
@@ -120,6 +118,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				wp_enqueue_script( 'google-charts', 'https://www.gstatic.com/charts/loader.js' );
 			}
 		}
+
 		/**
 		 * Method to define hooks needed.
 		 *

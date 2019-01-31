@@ -3,9 +3,7 @@
  */
 const { __ } = wp.i18n;
 
-const {
-	registerBlockType
-} = wp.blocks;
+const { registerBlockType } = wp.blocks;
 
 const {
 	PanelBody,
@@ -31,6 +29,8 @@ import './editor.scss';
 import { faIcon } from '../../utils/icons.js';
 
 import IconPickerControl from '../../components/icon-picker-control/index.js';
+
+import deprecated from './deprecated.js';
 
 registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 	title: __( 'Font Awesome Icons' ),
@@ -84,6 +84,8 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 			default: 0
 		}
 	},
+
+	deprecated: deprecated,
 
 	edit: props => {
 

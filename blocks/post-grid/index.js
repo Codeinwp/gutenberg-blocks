@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import Thumbnail from './Thumbnail.js';
 
 /**
- * WordPress dependencies...
+ * WordPress dependencies
  */
 const { isUndefined, pickBy } = lodash;
 

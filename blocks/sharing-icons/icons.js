@@ -1,5 +1,5 @@
 /**
- * WordPress dependencies...
+ * WordPress dependencies
  */
 const {
 	Path,

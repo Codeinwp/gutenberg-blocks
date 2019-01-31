@@ -1,10 +1,10 @@
 /**
- * Internal dependencies
+ * External dependencies
  */
-import './editor.scss';
+import classnames from 'classnames';
 
 /**
- * WordPress dependencies...
+ * WordPress dependencies
  */
 const {
 	startCase,
@@ -26,6 +26,11 @@ const {
 } = wp.components;
 
 const { Component } = wp.element;
+
+/**
+* Internal dependencies
+*/
+import './editor.scss';
 
 class GoogleFontsControl extends Component {
 	constructor() {
@@ -149,6 +154,9 @@ class GoogleFontsControl extends Component {
 												if ( ! this.state.search || i.family.toLowerCase().includes( this.state.search.toLowerCase() ) ) {
 													return (
 														<MenuItem
+															className={ classnames(
+																{ 'is-selected': ( i.family === this.props.value ) }
+															)}
 															onClick={ () => {
 																onToggle();
 																this.props.onChangeFontFamily( i.family );
