@@ -10,7 +10,7 @@ import uuidv4 from 'uuid';
  */
 import './editor.scss';
 
-import { columnsIcon } from '../../../utils/icons.js';
+import { otterIcon } from '../../../utils/icons.js';
 
 /**
  * WordPress dependencies
@@ -54,6 +54,7 @@ class Library extends Component {
 		this.selectCategory = this.selectCategory.bind( this );
 		this.changeSearch = this.changeSearch.bind( this );
 		this.changeClientId = this.changeClientId.bind( this );
+		this.previewTemplate = this.previewTemplate.bind( this );
 		this.importTemplate = this.importTemplate.bind( this );
 		this.getOptions = this.getOptions.bind( this );
 
@@ -65,7 +66,9 @@ class Library extends Component {
 			search: '',
 			blocksCategories: [],
 			templateCategories: [],
-			data: []
+			data: [],
+			preview: false,
+			selectedTemplate: null
 		};
 	}
 
@@ -150,6 +153,7 @@ class Library extends Component {
 
 	async importTemplate( url ) {
 		this.setState({
+			preview: false,
 			isLoaded: false
 		});
 
@@ -194,7 +198,10 @@ class Library extends Component {
 
 		return (
 			<Modal
-				className="themeisle-library-modal"
+				className={ classnames(
+					'themeisle-library-modal',
+					{ 'is-preview': this.state.preview }
+				)}
 				onRequestClose={ this.props.close }
 				isDismissable={ false }
 				shouldCloseOnClickOutside={ false }
@@ -202,36 +209,59 @@ class Library extends Component {
 				<div className="library-modal-control-panel">
 					<div className="library-modal-header">
 						<div className="library-modal-header-logo">
-							<div className="library-modal-header-tabs-button">
-								<Icon icon={ columnsIcon } />
+							{ this.state.preview ? (
+								<Button
+									className="library-modal-header-tabs-button back-to-library"
+									aria-label={ __( 'Back to Library' ) }
+									onClick={ () => this.setState({ preview: false }) }
+								>
+									<Dashicon icon="arrow-left-alt" /> { __( 'Back to Library' ) }
+								</Button>
+							) :
+								<div className="library-modal-header-tabs-button">
+									<Icon icon={ otterIcon } />
+								</div>
+							}
+						</div>
+
+						{ ! this.state.preview && (
+							<div className="library-modal-header-tabs">
+								<Button
+									className={ classnames(
+										'library-modal-header-tabs-button',
+										{ 'is-selected': 'block' === this.state.tab }
+									)}
+									onClick={ () => this.changeTab( 'block' ) }
+								>
+									<Dashicon icon="screenoptions" />
+									{ __( 'Blocks' ) }
+								</Button>
+
+								<Button
+									className={ classnames(
+										'library-modal-header-tabs-button',
+										{ 'is-selected': 'template' === this.state.tab }
+									)}
+									onClick={ () => this.changeTab( 'template' ) }
+								>
+									<Dashicon icon="editor-table" />
+									{ __( 'Templates' ) }
+								</Button>
 							</div>
-						</div>
-
-						<div className="library-modal-header-tabs">
-							<Button
-								className={ classnames(
-									'library-modal-header-tabs-button',
-									{ 'is-selected': 'block' === this.state.tab }
-								)}
-								onClick={ () => this.changeTab( 'block' ) }
-							>
-								<Dashicon icon="screenoptions" />
-								{ __( 'Blocks' ) }
-							</Button>
-
-							<Button
-								className={ classnames(
-									'library-modal-header-tabs-button',
-									{ 'is-selected': 'template' === this.state.tab }
-								)}
-								onClick={ () => this.changeTab( 'template' ) }
-							>
-								<Dashicon icon="editor-table" />
-								{ __( 'Templates' ) }
-							</Button>
-						</div>
+						)}
 
 						<div className="library-modal-header-actions">
+							{ this.state.preview && (
+								<Button
+									className="library-modal-header-tabs-button insert-button"
+									onClick={ () => this.importTemplate( this.state.selectedTemplate.template_url ) }
+									tabindex="0"
+								>
+									<Dashicon icon="arrow-down-alt" size={ 16 } />
+									{ __( 'Insert' ) }
+								</Button>
+							)}
+
 							<Tooltip text={ __( 'Close' ) }>
 								<Button
 									className="library-modal-header-tabs-button"
@@ -244,22 +274,24 @@ class Library extends Component {
 						</div>
 					</div>
 
-					<div className="library-modal-actions">
-						<SelectControl
-							className="library-modal-category-control"
-							value={ 'all' === this.state.selectedCategory ? 'all' : this.state.selectedCategory }
-							onChange={ this.selectCategory }
-							options={ options }
-						/>
+					{ ! this.state.preview && (
+						<div className="library-modal-actions">
+							<SelectControl
+								className="library-modal-category-control"
+								value={ 'all' === this.state.selectedCategory ? 'all' : this.state.selectedCategory }
+								onChange={ this.selectCategory }
+								options={ options }
+							/>
 
-						<TextControl
-							type="text"
-							value={ this.state.search || '' }
-							placeholder={ __( 'Search' ) }
-							className="library-modal-search-control"
-							onChange={ this.changeSearch }
-						/>
-					</div>
+							<TextControl
+								type="text"
+								value={ this.state.search || '' }
+								placeholder={ __( 'Search' ) }
+								className="library-modal-search-control"
+								onChange={ this.changeSearch }
+							/>
+						</div>
+					)}
 				</div>
 
 				{ this.state.isError && (
@@ -273,45 +305,89 @@ class Library extends Component {
 					</div>
 				)}
 
-				{ this.state.isLoaded ? (
-					<div className="library-modal-content">
-						{ this.state.data.map( i => {
-							if (
-								( i.template_url ) &&
-								( 'all' === this.state.selectedCategory || i.categories && i.categories.includes( this.state.selectedCategory ) ) &&
-								( ! this.state.search || i.keywords && i.keywords.some( o => o.toLowerCase().includes( this.state.search.toLowerCase() ) ) ) &&
-								( this.state.tab === i.type )
-							) {
-								return (
-									<Button
-										aria-label={ i.title || __( 'Untitled Gutenberg Template' ) }
-										onClick={ () => this.importTemplate( i.template_url ) }
-									>
-										<LazyLoad>
-											<img src={ i.screenshot_url || 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/assets/images/default.jpg' } />
-										</LazyLoad>
-										<div className="library-modal-overlay">
-											<Dashicon icon="plus" size="36"/>
-										</div>
-									</Button>
-								);
-							}
-						})}
-						<Button
-							aria-label={ __( 'Coming Soon' ) }
-						>
-							<LazyLoad>
-								<img src={ 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/assets/images/coming-soon.jpg' } />
-							</LazyLoad>
-							<div className="library-modal-overlay">
-								<Dashicon icon="smiley" size="36"/>
-							</div>
-						</Button>
+				{ this.state.preview ? (
+					<div className="library-modal-preview">
+						<iframe src={ this.state.selectedTemplate.demo_url }/>
 					</div>
 				) :
-					<div className="library-modal-loader">
-						<Spinner/>
-					</div>
+					this.state.isLoaded ? (
+						<div className="library-modal-content">
+							{ this.state.data.map( i => {
+								if (
+									( i.template_url ) &&
+									( 'all' === this.state.selectedCategory || i.categories && i.categories.includes( this.state.selectedCategory ) ) &&
+									( ! this.state.search || i.keywords && i.keywords.some( o => o.toLowerCase().includes( this.state.search.toLowerCase() ) ) ) &&
+									( this.state.tab === i.type )
+								) {
+									return (
+										<div
+											aria-label={ i.title || __( 'Untitled Gutenberg Template' ) }
+											className="library-modal-content__item"
+											tabindex="0"
+										>
+											<div className="library-modal-content__preview">
+												<LazyLoad>
+													<img src={ i.screenshot_url || 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/assets/images/default.jpg' } />
+												</LazyLoad>
+											</div>
+
+											<div className="library-modal-content__footer">
+												<div className="library-modal-content__footer_meta">
+													{ ( i.title && 'template' === i.type ) && (
+														<h4 className="library-modal-content__footer_meta_title">{ i.title }{ i.author && __( ' by ' ) + i.author } </h4>
+													)}
+
+													{ ( i.author && 'block' === i.type ) && (
+														<h4 className="library-modal-content__footer_meta_author">{ __( 'Author:' ) } { i.author }</h4>
+													)}
+												</div>
+
+												<div className="library-modal-content__footer_actions">
+													{ i.demo_url && (
+														<Button
+															isDefault
+															isLarge
+															className="library-modal-overlay__actions"
+															onClick={ () => this.setState({
+																preview: true,
+																selectedTemplate: value
+															})}
+															tabindex="0"
+														>
+															{ __( 'Preview' ) }
+														</Button>
+													)}
+
+													<Button
+														isPrimary
+														isLarge
+														className="library-modal-overlay__actions"
+														onClick={ () => this.importTemplate( i.template_url ) }
+														tabindex="0"
+													>
+														{ __( 'Insert' ) }
+													</Button>
+												</div>
+											</div>
+										</div>
+									);
+								}
+							})}
+							<div
+								aria-label={ __( 'Coming Soon' ) }
+								className="library-modal-content__item"
+							>
+								<div className="library-modal-content__preview">
+									<LazyLoad>
+										<img src={ 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/assets/images/coming-soon.jpg' } />
+									</LazyLoad>
+								</div>
+							</div>
+						</div>
+					) :
+						<div className="library-modal-loader">
+							<Spinner/>
+						</div>
 				}
 			</Modal>
 		);

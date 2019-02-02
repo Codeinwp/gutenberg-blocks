@@ -85,6 +85,7 @@ class Advanced_Columns_Server extends \WP_Rest_Controller {
 			array(
 				'title'				=> __( 'Header with Video', 'textdomain' ),
 				'type'				=> 'block',
+				'author'			=> __( 'Otter', 'textdomain' ),
 				'keywords'			=> array( 'header', 'video' ),
 				'categories'		=> array( 'header' ),
 				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/header-video/template.json',
@@ -93,6 +94,7 @@ class Advanced_Columns_Server extends \WP_Rest_Controller {
 			array(
 				'title'				=> __( 'Services Simple', 'textdomain' ),
 				'type'				=> 'block',
+				'author'			=> __( 'Otter', 'textdomain' ),
 				'keywords'			=> array( 'services', 'features' ),
 				'categories'		=> array( 'services' ),
 				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-simple/template.json',
@@ -101,6 +103,7 @@ class Advanced_Columns_Server extends \WP_Rest_Controller {
 			array(
 				'title'				=> __( 'Services Round Icons', 'textdomain' ),
 				'type'				=> 'block',
+				'author'			=> __( 'Otter', 'textdomain' ),
 				'keywords'			=> array( 'services', 'features', 'icons' ),
 				'categories'		=> array( 'services' ),
 				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-round-icons/template.json',
@@ -109,6 +112,7 @@ class Advanced_Columns_Server extends \WP_Rest_Controller {
 			array(
 				'title'				=> __( 'Services Image Background', 'textdomain' ),
 				'type'				=> 'block',
+				'author'			=> __( 'Otter', 'textdomain' ),
 				'keywords'			=> array( 'services', 'features' ),
 				'categories'		=> array( 'services' ),
 				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-image-background/template.json',
@@ -117,6 +121,7 @@ class Advanced_Columns_Server extends \WP_Rest_Controller {
 			array(
 				'title'				=> __( 'Pricing Boxed', 'textdomain' ),
 				'type'				=> 'block',
+				'author'			=> __( 'Otter', 'textdomain' ),
 				'keywords'			=> array( 'pricing' ),
 				'categories'		=> array( 'pricing' ),
 				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/pricing-boxed/template.json',
@@ -125,6 +130,7 @@ class Advanced_Columns_Server extends \WP_Rest_Controller {
 			array(
 				'title'				=> __( 'Pricing Hestia', 'textdomain' ),
 				'type'				=> 'block',
+				'author'			=> __( 'Otter', 'textdomain' ),
 				'keywords'			=> array( 'pricing', 'hestia' ),
 				'categories'		=> array( 'pricing' ),
 				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/pricing-hestia/template.json',
@@ -133,6 +139,7 @@ class Advanced_Columns_Server extends \WP_Rest_Controller {
 			array(
 				'title'				=> __( 'Testimonials Simple', 'textdomain' ),
 				'type'				=> 'block',
+				'author'			=> __( 'Otter', 'textdomain' ),
 				'keywords'			=> array( 'testimonials', 'quote' ),
 				'categories'		=> array( 'testimonials' ),
 				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/testimonials-simple/template.json',
@@ -141,6 +148,7 @@ class Advanced_Columns_Server extends \WP_Rest_Controller {
 			array(
 				'title'				=> __( 'Testimonials Boxed', 'textdomain' ),
 				'type'				=> 'block',
+				'author'			=> __( 'Otter', 'textdomain' ),
 				'keywords'			=> array( 'testimonials', 'quote', 'boxed' ),
 				'categories'		=> array( 'testimonials' ),
 				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/testimonials-boxed/template.json',
@@ -149,6 +157,7 @@ class Advanced_Columns_Server extends \WP_Rest_Controller {
 			array(
 				'title'				=> __( 'About with Map', 'textdomain' ),
 				'type'				=> 'block',
+				'author'			=> __( 'Otter', 'textdomain' ),
 				'keywords'			=> array( 'about', 'social', 'maps', 'footer' ),
 				'categories'		=> array( 'about', 'footer' ),
 				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/about-with-map/template.json',
