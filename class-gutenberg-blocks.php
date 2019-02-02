@@ -840,7 +840,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 			$attr = $block['attrs'];
 			$style = '';
 
-			if ( isset( $attr['id'] ) ) {
+			if ( isset( $attr['id'] ) && isset( $attr['data'] ) ) {
 				$this->get_google_fonts( $attr );
 
 				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button {' . "\n";
