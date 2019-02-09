@@ -617,6 +617,14 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				}
 				$style .= '}' . "\n \n";
 
+				if ( isset( $attr['columnWidth'] ) ) {
+					$style .= '@media ( min-width: 960px )  {' . "\n";
+						$style .= '	#' . $attr['id'] . ' {' . "\n";
+							$style .= '		flex-basis: ' . $this->get_attr_value( floatval( $attr['columnWidth' ] ) ) . '%;' . "\n";
+						$style .= '	}' . "\n \n";
+					$style .= '}' . "\n \n";
+				}
+
 				$style .= '@media ( min-width: 600px ) and ( max-width: 960px )  {' . "\n";
 	
 					$style .= '	#' . $attr['id'] . ' {' . "\n";

@@ -17,6 +17,7 @@ const {
 	PanelBody,
 	ToggleControl,
 	RangeControl,
+	ResizableBox,
 	SelectControl
 } = wp.components;
 
@@ -25,7 +26,10 @@ const {
 	withState
 } = wp.compose;
 
-const { withSelect } = wp.data;
+const {
+	withDispatch,
+	withSelect
+} = wp.data;
 
 const {
 	ColorPalette,
@@ -42,6 +46,8 @@ const { withViewportMatch } = wp.viewport;
  * Internal dependencies
  */
 import { columnIcon } from '../../utils/icons.js';
+
+import layouts from './layouts.js';
 
 import SizeControl from '../../components/size-control/index.js';
 
@@ -343,6 +349,9 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 		columnsHTMLTag: {
 			type: 'string',
 			default: 'div'
+		},
+		columnWidth: {
+			type: 'string'
 		}
 	},
 
@@ -354,8 +363,31 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 
 	edit: compose([
 
-		withSelect( ( select, props ) => {
+		withDispatch( ( dispatch ) => {
+			const { updateBlockAttributes } = dispatch( 'core/editor' );
+
 			return {
+				updateBlockAttributes
+			};
+		}),
+
+		withSelect( ( select, props ) => {
+			const { clientId } = props;
+			const {
+				getAdjacentBlockClientId,
+				getBlock,
+				getBlockRootClientId
+			} = select( 'core/editor' );
+			const adjacentBlockClientId = getAdjacentBlockClientId( clientId );
+			const adjacentBlock = getBlock( adjacentBlockClientId );
+			const parentClientId = getBlockRootClientId( clientId );
+			const parentBlock = getBlock( parentClientId );
+
+			return {
+				adjacentBlockClientId,
+				adjacentBlock,
+				parentClientId,
+				parentBlock,
 				props
 			};
 		}),
@@ -363,7 +395,9 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 		withState({
 			tab: 'layout',
 			paddingViewType: 'desktop',
-			marginViewType: 'desktop'
+			marginViewType: 'desktop',
+			currentWidth: 0,
+			nextWidth: 0
 		}),
 
 		withViewportMatch({
@@ -377,12 +411,19 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 		tab,
 		paddingViewType,
 		marginViewType,
+		currentWidth,
+		nextWidth,
 		setState,
 		isLarger,
 		isLarge,
 		isSmall,
 		isSmaller,
-		props
+		props,
+		adjacentBlockClientId,
+		adjacentBlock,
+		parentClientId,
+		parentBlock,
+		updateBlockAttributes
 	}) => {
 		const {
 			id,
@@ -457,7 +498,8 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 			boxShadowSpread,
 			boxShadowHorizontal,
 			boxShadowVertical,
-			columnsHTMLTag
+			columnsHTMLTag,
+			columnWidth
 		} = props.attributes;
 
 		if ( id === undefined || id.substr( id.length - 8 ) !== props.clientId.substr( 0, 8 ) ) {
@@ -470,6 +512,28 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 		const isTablet = ( ! isLarger && ! isLarge && isSmall && ! isSmaller );
 
 		const isMobile = ( ! isLarger && ! isLarge && ! isSmall && ! isSmaller );
+
+		if ( columnWidth === undefined ) {
+			( parentBlock.innerBlocks ).map( ( innerBlock, i ) => {
+				if ( props.clientId === innerBlock.clientId ) {
+					const columns = parentBlock.attributes.columns;
+					const layout = parentBlock.attributes.layout;
+					updateBlockAttributes( props.clientId, {
+						columnWidth: parseFloat( layouts[columns][layout][i])
+					});
+				}
+			});
+		}
+
+		const columnContainer = document.getElementById( `block-${ props.clientId }` );
+
+		if ( null !== columnContainer ) {
+			if ( isDesktop ) {
+				columnContainer.style.flexBasis = `${ columnWidth }%`;
+			} else {
+				columnContainer.style.flexBasis = '';
+			}
+		}
 
 		const Tag = columnsHTMLTag;
 
@@ -1485,12 +1549,67 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 					)}
 				</InspectorControls>
 
-				<Tag
-					className={ props.className }
-					style={ style }
+				<ResizableBox
+					className="block-library-spacer__resize-container wp-themeisle-block-advanced-column-resize-container"
+					enable={ {
+						right: adjacentBlockClientId ? true : false
+					} }
+					handleWrapperClass="wp-themeisle-block-advanced-column-resize-container-handle"
+					onResizeStart={ ( event, direction, elt, delta ) => {
+						const handle = document.querySelector( `#block-${ props.clientId } .wp-themeisle-block-advanced-column-resize-container-handle .components-resizable-box__handle` );
+						const handleTooltipLeft = document.createElement( 'div' );
+						const handleTooltipRight = document.createElement( 'div' );
+
+						handleTooltipLeft.setAttribute( 'class', 'resizable-tooltip resizable-tooltip-left' );
+						handleTooltipLeft.innerHTML = `${ parseFloat( columnWidth ).toFixed( 2 ) }%`;
+						handle.appendChild( handleTooltipLeft );
+						handleTooltipRight.setAttribute( 'class', 'resizable-tooltip resizable-tooltip-right' );
+						handleTooltipRight.innerHTML = `${ parseFloat( adjacentBlock.attributes.columnWidth ).toFixed( 2 ) }%`;
+						handle.appendChild( handleTooltipRight );
+
+						setState({
+							currentWidth: columnWidth,
+							nextWidth: adjacentBlock.attributes.columnWidth
+						});
+						props.toggleSelection( false );
+					} }
+					onResize={ ( event, direction, elt, delta ) => {
+						const parent = document.getElementById( `block-${ parentClientId }` );
+						const parentWidth = parent.getBoundingClientRect().width;
+						const changedWidth = ( delta.width / parentWidth ) * 100;
+						const width = parseFloat( currentWidth ) + changedWidth;
+						const nextColumnWidth = nextWidth - changedWidth;
+						const handleTooltipLeft = document.querySelector( '.resizable-tooltip-left' );
+						const handleTooltipRight = document.querySelector( '.resizable-tooltip-right' );
+
+						if ( 10 <= width && 10 <= nextColumnWidth ) {
+							handleTooltipLeft.innerHTML = `${ width.toFixed( 2 ) }%`;
+							handleTooltipRight.innerHTML = `${ nextColumnWidth.toFixed( 2 ) }%`;
+
+							props.setAttributes({ columnWidth: width.toFixed( 2 ) });
+							updateBlockAttributes( adjacentBlockClientId, {
+								columnWidth: nextColumnWidth.toFixed( 2 )
+							});
+						}
+
+					} }
+					onResizeStop={ ( event, direction, elt, delta ) => {
+						const handleTooltipLeft = document.querySelector( '.resizable-tooltip-left' );
+						const handleTooltipRight = document.querySelector( '.resizable-tooltip-right' );
+
+						handleTooltipLeft.parentNode.removeChild( handleTooltipLeft );
+						handleTooltipRight.parentNode.removeChild( handleTooltipRight );
+						props.toggleSelection( true );
+					} }
 				>
-					<InnerBlocks templateLock={ false } />
-				</Tag>
+					<Tag
+						className={ props.className }
+						id={ id }
+						style={ style }
+					>
+						<InnerBlocks templateLock={ false } />
+					</Tag>
+				</ResizableBox>
 			</Fragment>
 		);
 	}),

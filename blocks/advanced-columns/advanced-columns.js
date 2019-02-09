@@ -33,7 +33,10 @@ const {
 	withState
 } = wp.compose;
 
-const { withSelect } = wp.data;
+const {
+	withDispatch,
+	withSelect
+} = wp.data;
 
 const {
 	ColorPalette,
@@ -56,6 +59,8 @@ import {
 	bottomIcon
 } from '../../utils/icons.js';
 
+import layouts from './layouts.js';
+
 import LayoutControl from './layout-control/index.js';
 
 import SizeControl from '../../components/size-control/index.js';
@@ -69,6 +74,7 @@ import ControlPanelControl from '../../components/control-panel-control/index.js
 import Separators from './separators/index.js';
 
 import Inboarding from './inboarding/index.js';
+import { equal } from 'assert';
 
 registerBlockType( 'themeisle-blocks/advanced-columns', {
 	title: __( 'Section' ),
@@ -569,8 +575,21 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 
 	edit: compose([
 
-		withSelect( ( select, props ) => {
+		withDispatch( ( dispatch ) => {
+			const { updateBlockAttributes } = dispatch( 'core/editor' );
+
 			return {
+				updateBlockAttributes
+			};
+		}),
+
+		withSelect( ( select, props ) => {
+			const { clientId } = props;
+			const { getBlock } = select( 'core/editor' );
+			const sectionBlock = getBlock( clientId );
+
+			return {
+				sectionBlock,
 				props
 			};
 		}),
@@ -607,7 +626,9 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 		isLarge,
 		isSmall,
 		isSmaller,
-		props
+		props,
+		sectionBlock,
+		updateBlockAttributes
 	}) => {
 		const {
 			id,
@@ -948,6 +969,14 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 			setState({ dividerHeightViewType: value });
 		};
 
+		const updateColumnsWidth = ( columns, layout ) => {
+			( sectionBlock.innerBlocks ).map( ( innerBlock, i ) => {
+				updateBlockAttributes( innerBlock.clientId, {
+					columnWidth: parseFloat( layouts[columns][layout][i])
+				});
+			});
+		};
+
 		const setupColumns = ( columns, layout ) => {
 			if ( 1 >= columns ) {
 				props.setAttributes({
@@ -974,6 +1003,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 					layoutTablet: 'equal',
 					layoutMobile: 'collapsedRows'
 				});
+				updateColumnsWidth( value, 'equal' );
 			}
 
 			if ( 6 < value ) {
@@ -983,6 +1013,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 					layoutTablet: 'equal',
 					layoutMobile: 'collapsedRows'
 				});
+				updateColumnsWidth( 6, 'equal' );
 			}
 
 			if ( 1 >= value ) {
@@ -992,12 +1023,14 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 					layoutTablet: 'equal',
 					layoutMobile: 'equal'
 				});
+				updateColumnsWidth( 1, 'equal' );
 			}
 		};
 
 		const changeLayout = value => {
 			if ( 'desktop' === columnsViewType ) {
 				props.setAttributes({ layout: value });
+				updateColumnsWidth( columns, value );
 			}
 			if ( 'tablet' === columnsViewType ) {
 				props.setAttributes({ layoutTablet: value });
@@ -1819,7 +1852,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 		};
 
 		const getColumnsTemplate = columns => {
-			return times( columns, () => [ 'themeisle-blocks/advanced-column' ]);
+			return times( columns, i => [ 'themeisle-blocks/advanced-column', { columnWidth: parseFloat( layouts[columns][layout][i]) } ]);
 		};
 
 		if ( ! columns ) {
@@ -2949,7 +2982,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 					</div>
 
 					<ResizableBox
-						className="block-library-spacer__resize-container"
+						className="block-library-spacer__resize-container wp-themeisle-block-advanced-columns-resize-container"
 						size={ {
 							height: getPadding( 'top' )
 						} }
@@ -3012,7 +3045,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 					/>
 
 					<ResizableBox
-						className="block-library-spacer__resize-container"
+						className="block-library-spacer__resize-container wp-themeisle-block-advanced-columns-resize-container"
 						size={ {
 							height: getPadding( 'bottom' )
 						} }

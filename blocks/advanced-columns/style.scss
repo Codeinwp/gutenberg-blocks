@@ -76,7 +76,6 @@
 
 			.wp-block-themeisle-blocks-advanced-column {
 				position: relative;
-				flex: 1;
 	
 				&:first-child {
 					margin-left: 0;
@@ -92,15 +91,37 @@
 			display: none;
 		}
 
+		&.has-1-columns {
+
+			&.has-desktop-equal-layout {
+
+				> .innerblocks-wrap {
+					> .wp-block-themeisle-blocks-advanced-column {
+						flex-basis: 100%;
+					}
+				}
+			}
+		}
+
 		&.has-2-columns {
+
+			&.has-desktop-equal-layout {
+
+				> .innerblocks-wrap {
+					> .wp-block-themeisle-blocks-advanced-column {
+						flex-basis: 50%;
+					}
+				}
+			}
 
 			&.has-desktop-oneTwo-layout {
 
 				> .innerblocks-wrap {
 					> .wp-block-themeisle-blocks-advanced-column {
+						flex-basis: 33.34%;
 	
 						&:last-child {
-							flex: 2;
+							flex-basis: 66.66%;
 						}
 					}
 				}
@@ -110,9 +131,10 @@
 
 				> .innerblocks-wrap {
 					> .wp-block-themeisle-blocks-advanced-column {
+						flex-basis: 33.34%;
 			
 						&:first-child {
-							flex: 2;
+							flex-basis: 66.66%;
 						}
 					}
 				}
@@ -121,13 +143,23 @@
 
 		&.has-3-columns {
 
+			&.has-desktop-equal-layout {
+
+				> .innerblocks-wrap {
+					> .wp-block-themeisle-blocks-advanced-column {
+						flex-basis: 33.33%;
+					}
+				}
+			}
+
 			&.has-desktop-oneOneTwo-layout {
 
 				> .innerblocks-wrap {
 					> .wp-block-themeisle-blocks-advanced-column {
+						flex-basis: 25%;
 			
 						&:last-child {
-							flex: 2;
+							flex-basis: 50%;
 						}
 					}
 				}
@@ -137,9 +169,10 @@
 
 				> .innerblocks-wrap {
 					> .wp-block-themeisle-blocks-advanced-column {
+						flex-basis: 25%;
 			
 						&:first-child {
-							flex: 2;
+							flex-basis: 50%;
 						}
 					}
 				}
@@ -149,14 +182,14 @@
 
 				> .innerblocks-wrap {
 					> .wp-block-themeisle-blocks-advanced-column {
-						flex: 2;
+						flex-basis: 50%;
 			
 						&:first-child {
-							flex: 1;
+							flex-basis: 25%;
 						}
 
 						&:last-child {
-							flex: 1;
+							flex-basis: 25%;
 						}
 					}
 				}
@@ -166,15 +199,51 @@
 
 				> .innerblocks-wrap {
 					> .wp-block-themeisle-blocks-advanced-column {
-						flex: 3;
-			
+						flex-basis: 60%;
+		
 						&:first-child {
-							flex: 1;
+							flex-basis: 20%;
 						}
-
+		
 						&:last-child {
-							flex: 1;
+							flex-basis: 20%;
 						}
+					}
+				}
+			}
+		}
+
+		&.has-4-columns {
+
+			&.has-desktop-equal-layout {
+
+				> .innerblocks-wrap {
+					> .wp-block-themeisle-blocks-advanced-column {
+						flex-basis: 25%;
+					}
+				}
+			}
+		}
+
+		&.has-5-columns {
+
+			&.has-desktop-equal-layout {
+
+				> .innerblocks-wrap {
+					> .wp-block-themeisle-blocks-advanced-column {
+						flex-basis: 20%;
+					}
+				}
+			}
+		}
+
+		&.has-6-columns {
+
+			&.has-desktop-equal-layout {
+
+				> .innerblocks-wrap {
+					> .wp-block-themeisle-blocks-advanced-column {
+						flex-basis: 16.66%;
 					}
 				}
 			}

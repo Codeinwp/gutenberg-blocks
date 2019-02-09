@@ -54,7 +54,6 @@ class Library extends Component {
 		this.selectCategory = this.selectCategory.bind( this );
 		this.changeSearch = this.changeSearch.bind( this );
 		this.changeClientId = this.changeClientId.bind( this );
-		this.previewTemplate = this.previewTemplate.bind( this );
 		this.importTemplate = this.importTemplate.bind( this );
 		this.getOptions = this.getOptions.bind( this );
 
