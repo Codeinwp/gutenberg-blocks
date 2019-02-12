@@ -52,6 +52,8 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 			add_action( 'block_categories', array( $this, 'block_categories' ) );
 			add_action( 'wp_head', array( $this, 'render_server_side_css' ) );
 			add_action( 'wp_head', array( $this, 'enqueue_google_fonts' ) );
+
+			add_filter( 'safe_style_css', array( $this, 'used_css_properties' ), 99 );
 		}
 
 		/**
@@ -242,6 +244,38 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				)
 			);
 		}
+
+		/**
+		 * Used CSS properties
+		 * 
+		 * @since   1.2.0
+		 * @access  public
+		 */
+		public function used_css_properties( $attr ) {
+			$props = array(
+				'background-attachment',
+				'background-position',
+				'background-repeat',
+				'background-size',
+				'border-radius',
+				'border-top-left-radius',
+				'border-top-right-radius',
+				'border-bottom-right-radius',
+				'border-bottom-left-radius',
+				'box-shadow',
+				'display',
+				'justify-content',
+				'mix-blend-mode',
+				'opacity',
+				'text-shadow',
+				'text-transform',
+				'transform'
+			);
+
+			$list = array_merge( $props, $attr );
+
+			return $list;
+		} 
 
 		/**
 		 * Parse Blocks for Gutenberg and WordPress 5.0
@@ -456,6 +490,10 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 						$style .= '	height: ' . $this->get_attr_value( ( isset( $attr['dividerBottomHeight'] ) ? $attr['dividerBottomHeight'] : null ) ) . 'px;' . "\n";
 					$style .= '}' . "\n \n";
 				}
+
+				$style .= '#' . $attr['id'] . ' .wp-themeisle-block-overlay {' . "\n";
+					$style .= '	filter: blur( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterBlur'] ) ? ( $attr['backgroundOverlayFilterBlur'] / 10 ) : 0 ) ) . 'px ) brightness( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterBrightness'] ) ? ( $attr['backgroundOverlayFilterBrightness'] / 10 ) : 10 ) ) . ' ) contrast( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterContrast'] ) ? ( $attr['backgroundOverlayFilterContrast'] / 10 ) : 10 ) ) . ' ) grayscale( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterGrayscale'] ) ? ( $attr['backgroundOverlayFilterGrayscale'] / 100 ) : 0 ) ) . ' ) hue-rotate( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterHue'] ) ? $attr['backgroundOverlayFilterHue'] : 0 ) ) . 'deg ) saturate( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterSaturate'] ) ? ( $attr['backgroundOverlayFilterSaturate'] / 10 ) : 10 ) ) . ' )' . "\n";
+				$style .= '}' . "\n \n";
 
 				$style .= '@media ( min-width: 600px ) and ( max-width: 960px )  {' . "\n";
 	

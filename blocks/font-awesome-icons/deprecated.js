@@ -101,7 +101,6 @@ const deprecated = [ {
 			</p>
 		);
 	}
-}
-];
+} ];
 
 export default deprecated;

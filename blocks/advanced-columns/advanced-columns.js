@@ -74,7 +74,8 @@ import ControlPanelControl from '../../components/control-panel-control/index.js
 import Separators from './separators/index.js';
 
 import Inboarding from './inboarding/index.js';
-import { equal } from 'assert';
+
+import deprecated from './deprecated.js';
 
 registerBlockType( 'themeisle-blocks/advanced-columns', {
 	title: __( 'Section' ),
@@ -572,6 +573,8 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 		align: [ 'wide', 'full' ],
 		html: false
 	},
+
+	deprecated: deprecated,
 
 	edit: compose([
 
@@ -3122,12 +3125,6 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 			backgroundOverlayGradientType,
 			backgroundOverlayGradientAngle,
 			backgroundOverlayGradientPosition,
-			backgroundOverlayFilterBlur,
-			backgroundOverlayFilterBrightness,
-			backgroundOverlayFilterContrast,
-			backgroundOverlayFilterGrayscale,
-			backgroundOverlayFilterHue,
-			backgroundOverlayFilterSaturate,
 			backgroundOverlayBlend,
 			borderType,
 			border,
@@ -3278,8 +3275,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 
 		const overlayStyle = {
 			...overlayBackground,
-			mixBlendMode: backgroundOverlayBlend,
-			filter: `blur( ${ backgroundOverlayFilterBlur / 10 }px ) brightness( ${ backgroundOverlayFilterBrightness / 10 } ) contrast( ${ backgroundOverlayFilterContrast / 10 } ) grayscale( ${ backgroundOverlayFilterGrayscale / 100 } ) hue-rotate( ${ backgroundOverlayFilterHue }deg ) saturate( ${ backgroundOverlayFilterSaturate / 10 } )`
+			mixBlendMode: backgroundOverlayBlend
 		};
 
 		let innerStyle = {};
