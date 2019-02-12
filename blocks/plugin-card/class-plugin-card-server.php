@@ -68,6 +68,10 @@ class Plugin_Card_Server extends \WP_Rest_Controller {
 	 * @return mixed|\WP_REST_Response
 	 */
 	public function search( $request ) {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return false;
+		}
+
 		$return = array(
 			'success' => false,
 			'data'     => esc_html__( 'Something went wrong', 'textdomain' ),

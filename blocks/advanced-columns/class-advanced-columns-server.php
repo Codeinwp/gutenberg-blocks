@@ -77,7 +77,7 @@ class Advanced_Columns_Server extends \WP_Rest_Controller {
 	 * @return array|bool|\WP_Error
 	 */
 	public function fetch_templates( \WP_REST_Request $request ) {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'edit_posts' ) ) {
 			return false;
 		}
 
@@ -176,7 +176,7 @@ class Advanced_Columns_Server extends \WP_Rest_Controller {
 	 * @return array|bool|\WP_Error
 	 */
 	public function import_template( $request ) {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'edit_posts' ) ) {
 			return false;
 		}
 
