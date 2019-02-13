@@ -228,24 +228,16 @@
 							display: block;
 						}
 					}
-		
 				}
 			}
 		}
-	}
-	
-	[data-type="themeisle-blocks/advanced-column"] {
-	
-		&.is-selected {
-			&:hover,
-			&:focus {
-				> .editor-block-list__block-edit {
-					.wp-themeisle-block-advanced-column-resize-container {
-						> span > .components-resizable-box__handle {
-							display: block;
-						}
+
+		&:focus-within {
+			> .editor-block-list__block-edit {
+				.wp-themeisle-block-advanced-column-resize-container {
+					> span > .components-resizable-box__handle {
+						display: block;
 					}
-		
 				}
 			}
 		}
