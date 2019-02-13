@@ -172,9 +172,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		public function autoload_block_classes() {
 			// load the base class
 			require_once $this->get_dir() .  '/class-base-block.php';
-			$blocks = glob( $this->get_dir() . '/blocks/*/*.php' );
-			$components = glob( $this->get_dir() . '/components/*/*.php' );
-			$paths = array_merge( $blocks, $components );
+			$paths = glob( $this->get_dir() . '/src/*/*/*.php' );
 
 			foreach ( $paths as $path ) {
 				require_once $path;
