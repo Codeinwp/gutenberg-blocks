@@ -39,8 +39,8 @@ const {
  */
 import './style.scss';
 import './editor.scss';
-import { postsIcon } from '../../utils/icons.js';
-import { unescapeHTML, formatDate} from '../../utils/helper-functions.js';
+import { postsIcon } from '../../helpers/icons.js';
+import { unescapeHTML, formatDate} from '../../helpers/helper-functions.js';
 
 registerBlockType( 'themeisle-blocks/posts-grid', {
 	title: __( 'Post Grid' ),

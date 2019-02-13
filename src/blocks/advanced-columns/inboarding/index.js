@@ -3,7 +3,7 @@
  */
 import './editor.scss';
 
-import { columnsIcon } from '../../../utils/icons.js';
+import { columnsIcon } from '../../../helpers/icons.js';
 
 import Library from './library.js';
 

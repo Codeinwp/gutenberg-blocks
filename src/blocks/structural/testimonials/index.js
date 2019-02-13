@@ -11,7 +11,7 @@ const { InnerBlocks } = wp.editor;
 /**
  * Internal dependencies
  */
-import { testimonialsIcon } from '../../../utils/icons.js';
+import { testimonialsIcon } from '../../../helpers/icons.js';
 
 registerBlockType( 'themeisle-blocks/testimonials', {
 	title: __( 'Testimonials' ),

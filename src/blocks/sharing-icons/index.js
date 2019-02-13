@@ -25,7 +25,7 @@ const {
  */
 import './style.scss';
 import './editor.scss';
-import { sharingIcon } from '../../utils/icons.js';
+import { sharingIcon } from '../../helpers/icons.js';
 import socialList from './social_list';
 import SocialIcons from './icons';
 

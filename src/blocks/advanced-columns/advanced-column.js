@@ -45,7 +45,7 @@ const { withViewportMatch } = wp.viewport;
 /**
  * Internal dependencies
  */
-import { columnIcon } from '../../utils/icons.js';
+import { columnIcon } from '../../helpers/icons.js';
 
 import layouts from './layouts.js';
 

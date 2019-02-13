@@ -11,7 +11,7 @@ const { InnerBlocks } = wp.editor;
 /**
  * Internal dependencies
  */
-import { pricingIcon } from '../../../utils/icons.js';
+import { pricingIcon } from '../../../helpers/icons.js';
 
 registerBlockType( 'themeisle-blocks/pricing', {
 	title: __( 'Pricing' ),

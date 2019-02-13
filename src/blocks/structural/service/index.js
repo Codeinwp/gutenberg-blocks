@@ -11,7 +11,7 @@ const { InnerBlocks } = wp.editor;
 /**
  * Internal dependencies
  */
-import { servicesIcon } from '../../../utils/icons.js';
+import { servicesIcon } from '../../../helpers/icons.js';
 
 registerBlockType( 'themeisle-blocks/service', {
 	title: __( 'Service' ),

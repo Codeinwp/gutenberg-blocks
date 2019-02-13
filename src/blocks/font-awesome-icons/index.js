@@ -26,7 +26,7 @@ const { Fragment } = wp.element;
 import './style.scss';
 import './editor.scss';
 
-import { faIcon } from '../../utils/icons.js';
+import { faIcon } from '../../helpers/icons.js';
 
 import IconPickerControl from '../../components/icon-picker-control/index.js';
 

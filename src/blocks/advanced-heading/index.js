@@ -54,7 +54,7 @@ import './editor.scss';
 import './style.scss';
 import './registerHeadingHighlight.js';
 
-import { headingIcon } from '../../utils/icons.js';
+import { headingIcon } from '../../helpers/icons.js';
 
 import GoogleFontsControl from '../../components/google-fonts-control/index.js';
 

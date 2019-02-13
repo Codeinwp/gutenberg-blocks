@@ -10,7 +10,7 @@ import uuidv4 from 'uuid';
  */
 import './editor.scss';
 
-import { otterIcon } from '../../../utils/icons.js';
+import { otterIcon } from '../../../helpers/icons.js';
 
 /**
  * WordPress dependencies

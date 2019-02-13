@@ -28,7 +28,7 @@ const { InspectorControls } = wp.editor;
  * Internal dependencies
  */
 import './editor.scss';
-import { mapIcon } from '../../utils/icons.js';
+import { mapIcon } from '../../helpers/icons.js';
 
 registerBlockType( 'themeisle-blocks/google-map', {
 	title: __( 'Google Map' ),

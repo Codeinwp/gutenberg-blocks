@@ -41,9 +41,9 @@ const starRating = stars => {
  */
 import './editor.scss';
 import './style.scss';
-import { pluginsIcon } from '../../utils/icons.js';
+import { pluginsIcon } from '../../helpers/icons.js';
 
-import { unescapeHTML } from '../../utils/helper-functions.js';
+import { unescapeHTML } from '../../helpers/helper-functions.js';
 
 registerBlockType( 'themeisle-blocks/plugin-cards', {
 	title: __( 'Plugin Card' ),

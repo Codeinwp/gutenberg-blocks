@@ -8,7 +8,7 @@ import classnames from 'classnames';
  */
 import './editor.scss';
 
-import { barcodeIcon } from '../../../utils/icons.js';
+import { barcodeIcon } from '../../../helpers/icons.js';
 
 /**
  * WordPress dependencies

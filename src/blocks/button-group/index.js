@@ -57,9 +57,9 @@ const { Fragment } = wp.element;
 import './editor.scss';
 import './style.scss';
 
-import { buttonsIcon } from '../../utils/icons.js';
+import { buttonsIcon } from '../../helpers/icons.js';
 
-import { unescapeHTML } from '../../utils/helper-functions.js';
+import { unescapeHTML } from '../../helpers/helper-functions.js';
 
 import GoogleFontsControl from '../../components/google-fonts-control/index.js';
 

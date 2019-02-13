@@ -20,7 +20,7 @@ const { withSelect } = wp.data;
 import './editor.scss';
 import './style.scss';
 
-import { authorIcon } from '../../utils/icons.js';
+import { authorIcon } from '../../helpers/icons.js';
 
 registerBlockType( 'themeisle-blocks/about-author', {
 	title: __( 'About Author' ),

@@ -57,7 +57,7 @@ import {
 	topIcon,
 	middleIcon,
 	bottomIcon
-} from '../../utils/icons.js';
+} from '../../helpers/icons.js';
 
 import layouts from './layouts.js';
 
