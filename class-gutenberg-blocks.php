@@ -85,7 +85,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 			wp_enqueue_script(
 				'themeisle-gutenberg-blocks',
 				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/block.js',
-				array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-element', 'wp-keycodes', 'wp-rich-text' ,'wp-viewport', 'themeisle-gutenberg-blocks-vendor' ),
+				array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text' ,'wp-viewport', 'themeisle-gutenberg-blocks-vendor' ),
 				$version
 			);
 
