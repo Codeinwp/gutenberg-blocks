@@ -1561,10 +1561,10 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 						const handleTooltipRight = document.createElement( 'div' );
 
 						handleTooltipLeft.setAttribute( 'class', 'resizable-tooltip resizable-tooltip-left' );
-						handleTooltipLeft.innerHTML = `${ parseFloat( columnWidth ).toFixed( 2 ) }%`;
+						handleTooltipLeft.innerHTML = `${ parseFloat( columnWidth ).toFixed( 0 ) }%`;
 						handle.appendChild( handleTooltipLeft );
 						handleTooltipRight.setAttribute( 'class', 'resizable-tooltip resizable-tooltip-right' );
-						handleTooltipRight.innerHTML = `${ parseFloat( adjacentBlock.attributes.columnWidth ).toFixed( 2 ) }%`;
+						handleTooltipRight.innerHTML = `${ parseFloat( adjacentBlock.attributes.columnWidth ).toFixed( 0 ) }%`;
 						handle.appendChild( handleTooltipRight );
 
 						setState({
@@ -1583,8 +1583,8 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 						const handleTooltipRight = document.querySelector( '.resizable-tooltip-right' );
 
 						if ( 10 <= width && 10 <= nextColumnWidth ) {
-							handleTooltipLeft.innerHTML = `${ width.toFixed( 2 ) }%`;
-							handleTooltipRight.innerHTML = `${ nextColumnWidth.toFixed( 2 ) }%`;
+							handleTooltipLeft.innerHTML = `${ width.toFixed( 0 ) }%`;
+							handleTooltipRight.innerHTML = `${ nextColumnWidth.toFixed( 0 ) }%`;
 
 							props.setAttributes({ columnWidth: width.toFixed( 2 ) });
 							updateBlockAttributes( adjacentBlockClientId, {
