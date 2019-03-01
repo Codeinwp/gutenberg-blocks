@@ -1,5 +1,89 @@
 const deprecated = [ {
 	attributes: {
+		align: {
+			type: 'string'
+		},
+		prefix: {
+			type: 'string',
+			default: 'fab'
+		},
+		icon: {
+			type: 'string',
+			default: 'themeisle'
+		},
+		fontSize: {
+			type: 'number',
+			default: 16
+		},
+		padding: {
+			type: 'number',
+			default: 5
+		},
+		margin: {
+			type: 'number',
+			default: 5
+		},
+		backgroundColor: {
+			type: 'string'
+		},
+		textColor: {
+			type: 'string'
+		},
+		borderColor: {
+			type: 'string'
+		},
+		borderSize: {
+			type: 'number',
+			default: 0
+		},
+		borderRadius: {
+			type: 'number',
+			default: 0
+		}
+	},
+
+	supports: {
+		align: [ 'left', 'center', 'right' ]
+	},
+
+	save: props => {
+		const iconStyle = {
+			borderRadius: props.attributes.borderRadius + '%',
+			fontSize: props.attributes.fontSize + 'px',
+			padding: props.attributes.padding + 'px'
+		};
+
+		const containerStyle = {
+			color: props.attributes.textColor,
+			backgroundColor: props.attributes.backgroundColor,
+			borderColor: props.attributes.borderColor,
+			borderRadius: props.attributes.borderRadius + '%',
+			borderStyle: 'solid',
+			borderWidth: props.attributes.borderSize + 'px',
+			display: 'inline-block',
+			margin: props.attributes.margin + 'px'
+		};
+
+		return (
+			<p
+				className={ props.className }
+				style={{ textAlign: props.attributes.align }}
+			>
+				<span
+					className={ `${ props.className }-container` }
+					style={ containerStyle }
+				>
+					<i
+						className={ `${ props.attributes.prefix } fa-${ props.attributes.icon }` }
+						style={ iconStyle }
+					>
+					</i>
+				</span>
+			</p>
+		);
+	}
+}, {
+	attributes: {
 		prefix: {
 			type: 'string',
 			default: 'fab'

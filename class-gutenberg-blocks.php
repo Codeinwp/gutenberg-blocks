@@ -416,6 +416,10 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 					$style .= $this->generate_button_group_css( $block );
 				}
 
+				if ( 'themeisle-blocks/font-awesome-icons' === $block['blockName'] ) {
+					$style .= $this->generate_font_awesome_icons_css( $block );
+				}
+
 				if ( isset( $block['innerBlocks'] ) && ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
 					$style .= $this->cycle_through_blocks( $block['innerBlocks'] );
 				}
@@ -941,6 +945,45 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 					$style .= '}' . "\n \n";
 					$i++;
 				}
+			}
+
+			return $style;
+		}
+
+		/**
+		 * Generate Button Group CSS
+		 * 
+		 * @since   1.1.5
+		 * @access  public
+		 */
+		public function generate_font_awesome_icons_css( $block ) {
+			$attr = $block['attrs'];
+			$style = '';
+
+			if ( isset( $attr['id'] ) ) {
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container {' . "\n";
+					if ( isset( $attr['textColor'] ) ) {
+						$style .= '	color: ' . $this->get_attr_value( $attr['textColor'] ) . ';' . "\n";
+					}
+					if ( isset( $attr['backgroundColor'] ) ) {
+						$style .= '	background: ' . $this->get_attr_value( $attr['backgroundColor'] ) . ';' . "\n";
+					}
+					if ( isset( $attr['borderColor'] ) ) {
+						$style .= '	border-color: ' . $this->get_attr_value( $attr['borderColor'] ) . ';' . "\n";
+					}
+				$style .= '}' . "\n \n";
+
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container:hover {' . "\n";
+					if ( isset( $attr['textColorHover'] ) ) {
+						$style .= '	color: ' . $this->get_attr_value( $attr['textColorHover'] ) . ';' . "\n";
+					}
+					if ( isset( $attr['backgroundColorHover'] ) ) {
+						$style .= '	background: ' . $this->get_attr_value( $attr['backgroundColorHover'] ) . ';' . "\n";
+					}
+					if ( isset( $attr['borderColorHover'] ) ) {
+						$style .= '	border-color: ' . $this->get_attr_value( $attr['borderColorHover'] ) . ';' . "\n";
+					}
+				$style .= '}' . "\n";
 			}
 
 			return $style;

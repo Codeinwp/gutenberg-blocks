@@ -6,16 +6,27 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
 const {
+	BaseControl,
+	Button,
+	ButtonGroup,
 	PanelBody,
-	RangeControl
+	RangeControl,
+	TextControl
 } = wp.components;
+
+const {
+	compose,
+	withState
+} = wp.compose;
+
+const { withSelect } = wp.data;
 
 const {
 	AlignmentToolbar,
 	BlockControls,
+	ColorPalette,
 	ContrastChecker,
-	InspectorControls,
-	PanelColorSettings
+	InspectorControls
 } = wp.editor;
 
 const { Fragment } = wp.element;
@@ -27,6 +38,8 @@ import './style.scss';
 import './editor.scss';
 
 import { faIcon } from '../../helpers/icons.js';
+
+import { validateUrl } from '../../helpers/helper-functions.js';
 
 import IconPickerControl from '../../components/icon-picker-control/index.js';
 
@@ -43,6 +56,9 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 		'icons'
 	],
 	attributes: {
+		id: {
+			type: 'string'
+		},
 		align: {
 			type: 'string'
 		},
@@ -53,6 +69,9 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 		icon: {
 			type: 'string',
 			default: 'themeisle'
+		},
+		link: {
+			type: 'string'
 		},
 		fontSize: {
 			type: 'number',
@@ -75,6 +94,15 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 		borderColor: {
 			type: 'string'
 		},
+		backgroundColorHover: {
+			type: 'string'
+		},
+		textColorHover: {
+			type: 'string'
+		},
+		borderColorHover: {
+			type: 'string'
+		},
 		borderSize: {
 			type: 'number',
 			default: 0
@@ -87,7 +115,25 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 
 	deprecated: deprecated,
 
-	edit: props => {
+	edit: compose([
+
+		withSelect( ( select, props ) => {
+			return {
+				props
+			};
+		}),
+
+		withState({
+			isValid: true,
+			hover: false
+		})
+
+	])( ({ isValid, hover, setState, props }) => {
+
+		if ( props.attributes.id === undefined || props.attributes.id.substr( props.attributes.id.length - 8 ) !== props.clientId.substr( 0, 8 ) ) {
+			const instanceId = `wp-block-themeisle-blocks-font-awesome-icons-${ props.clientId.substr( 0, 8 ) }`;
+			props.setAttributes({ id: instanceId });
+		}
 
 		const changeAlignment = value => {
 			props.setAttributes({ align: value });
@@ -102,6 +148,11 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 			} else {
 				props.setAttributes({ icon: value });
 			}
+		};
+
+		const changeLink = value => {
+			setState({ isValid: validateUrl( value ) });
+			props.setAttributes({ link: value });
 		};
 
 		const changeFontSize = value => {
@@ -126,6 +177,18 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 
 		const changeBorderColor = value => {
 			props.setAttributes({ borderColor: value });
+		};
+
+		const changeBackgroundColorHover = value => {
+			props.setAttributes({ backgroundColorHover: value });
+		};
+
+		const changeTextColorHover = value => {
+			props.setAttributes({ textColorHover: value });
+		};
+
+		const changeBorderColorHover = value => {
+			props.setAttributes({ borderColorHover: value });
 		};
 
 		const changeBorderSize = value => {
@@ -189,6 +252,15 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 							icon={ props.attributes.icon }
 							onChange={ changeIcon }
 						/>
+
+						<TextControl
+							label={ __( 'Link' ) }
+							type="url"
+							placeholder="https://…"
+							value={ props.attributes.link }
+							onChange={ changeLink }
+							help={ ! isValid && __( 'Please enter a valid URL.' ) }
+						/>
 					</PanelBody>
 
 					<PanelBody
@@ -230,34 +302,109 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 						/>
 					</PanelBody>
 
-					<PanelColorSettings
-						title={ __( 'Color Settings' ) }
+					<PanelBody
+						title={ __( 'Color' ) }
 						initialOpen={ false }
-						colorSettings={ [
-							{
-								value: props.attributes.backgroundColor,
-								onChange: changeBackgroundColor,
-								label: __( 'Background Color' )
-							},
-							{
-								value: props.attributes.textColor,
-								onChange: changeTextColor,
-								label: __( 'Icon Color' )
-							},
-							{
-								value: props.attributes.borderColor,
-								onChange: changeBorderColor,
-								label: __( 'Border Color' )
-							}
-						] }
 					>
-						<ContrastChecker
-							{ ...{
-								textColor: props.attributes.textColor,
-								backgroundColor: props.attributes.backgroundColor
-							} }
-						/>
-					</PanelColorSettings>
+						<ButtonGroup className="wp-block-themeisle-blocks-font-awesome-icons-hover-control">
+							<Button
+								isDefault
+								isLarge
+								isPrimary={ ! hover }
+								onClick={ () => setState({ hover: false }) }
+							>
+								{ __( 'Normal' )}
+							</Button>
+							<Button
+								isDefault
+								isLarge
+								isPrimary={ hover }
+								onClick={ () => setState({ hover: true }) }
+							>
+								{ __( 'Hover' )}
+							</Button>
+						</ButtonGroup>
+
+						{ hover ? (
+							<Fragment>
+								<BaseControl
+									label={ 'Hover Background' }
+								>
+									<ColorPalette
+										label={ 'Hover Background' }
+										value={ props.attributes.backgroundColorHover }
+										onChange={ changeBackgroundColorHover }
+									/>
+								</BaseControl>
+
+								<BaseControl
+									label={ 'Hover Icon' }
+								>
+									<ColorPalette
+										label={ 'Hover Icon' }
+										value={ props.attributes.textColorHover }
+										onChange={ changeTextColorHover }
+									/>
+								</BaseControl>
+
+								<BaseControl
+									label={ 'Hover Border' }
+								>
+									<ColorPalette
+										label={ 'Hover Border' }
+										value={ props.attributes.borderColorHover }
+										onChange={ changeBorderColorHover }
+									/>
+								</BaseControl>
+
+								<ContrastChecker
+									{ ...{
+										textColor: props.attributes.textColorHover,
+										backgroundColor: props.attributes.backgroundColorHover
+									} }
+								/>
+							</Fragment>
+						) : (
+							<Fragment>
+								<BaseControl
+									label={ 'Background' }
+								>
+									<ColorPalette
+										label={ 'Background' }
+										value={ props.attributes.backgroundColor }
+										onChange={ changeBackgroundColor }
+									/>
+								</BaseControl>
+
+								<BaseControl
+									label={ 'Icon' }
+								>
+									<ColorPalette
+										label={ 'Icon' }
+										value={ props.attributes.textColor }
+										onChange={ changeTextColor }
+									/>
+								</BaseControl>
+
+								<BaseControl
+									label={ 'Border' }
+								>
+									<ColorPalette
+										label={ 'Border' }
+										value={ props.attributes.borderColor }
+										onChange={ changeBorderColor }
+									/>
+								</BaseControl>
+
+								<ContrastChecker
+									{ ...{
+										textColor: props.attributes.textColor,
+										backgroundColor: props.attributes.backgroundColor
+									} }
+								/>
+							</Fragment>
+						)}
+					</PanelBody>
 
 					<PanelBody
 						title={ __( 'Border Settings' ) }
@@ -285,12 +432,21 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 					</PanelBody>
 				</InspectorControls>
 
+				<style>
+					{ `#${ props.attributes.id } .${ props.className }-container:hover {
+						color: ${ props.attributes.textColorHover ? props.attributes.textColorHover : props.attributes.textColor } !important;
+						background: ${ props.attributes.backgroundColorHover ? props.attributes.backgroundColorHover : props.attributes.backgroundColor } !important;
+						border-color: ${ props.attributes.borderColorHover ? props.attributes.borderColorHover : props.attributes.borderColor } !important;
+					}` }
+				</style>
+
 				<p
 					className={ props.className }
+					id={ props.attributes.id }
 					style={{ textAlign: props.attributes.align }}
 				>
 					<span
-						className={ `${ props.className }-container` }
+						className="wp-block-themeisle-blocks-font-awesome-icons-container"
 						style={ containerStyle }
 					>
 						<i
@@ -302,19 +458,10 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 				</p>
 			</Fragment>
 		);
-	},
+	}),
 
 	save: props => {
-		const iconStyle = {
-			borderRadius: props.attributes.borderRadius + '%',
-			fontSize: props.attributes.fontSize + 'px',
-			padding: props.attributes.padding + 'px'
-		};
-
 		const containerStyle = {
-			color: props.attributes.textColor,
-			backgroundColor: props.attributes.backgroundColor,
-			borderColor: props.attributes.borderColor,
 			borderRadius: props.attributes.borderRadius + '%',
 			borderStyle: 'solid',
 			borderWidth: props.attributes.borderSize + 'px',
@@ -322,20 +469,44 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 			margin: props.attributes.margin + 'px'
 		};
 
+		const iconStyle = {
+			borderRadius: props.attributes.borderRadius + '%',
+			fontSize: props.attributes.fontSize + 'px',
+			padding: props.attributes.padding + 'px'
+		};
+
+		const IconElement = () => {
+			return (
+				<i
+					className={ `${ props.attributes.prefix } fa-${ props.attributes.icon }` }
+					style={ iconStyle }
+				>
+				</i>
+			);
+		};
+
 		return (
 			<p
 				className={ props.className }
+				id={ props.attributes.id }
 				style={{ textAlign: props.attributes.align }}
 			>
 				<span
-					className={ `${ props.className }-container` }
+					className="wp-block-themeisle-blocks-font-awesome-icons-container"
 					style={ containerStyle }
 				>
-					<i
-						className={ `${ props.attributes.prefix } fa-${ props.attributes.icon }` }
-						style={ iconStyle }
-					>
-					</i>
+					{ ( props.attributes.link && validateUrl( props.attributes.link ) ) ? (
+						<a
+							href={ props.attributes.link }
+							style={{
+								color: props.attributes.textColor
+							}}
+						>
+							<IconElement />
+						</a>
+					) : (
+						<IconElement />
+					)}
 				</span>
 			</p>
 		);

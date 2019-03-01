@@ -615,7 +615,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 										title={ __( 'Color & Border' ) }
 										initialOpen={ false }
 									>
-										<ButtonGroup className="wp-block-themeisle-blocks-button-group-hover-control" >
+										<ButtonGroup className="wp-block-themeisle-blocks-button-group-hover-control">
 											<Button
 												isDefault
 												isLarge
@@ -634,39 +634,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 											</Button>
 										</ButtonGroup>
 
-										{ ! hover && (
-											<Fragment>
-												<BaseControl
-													label={ 'Color' }
-												>
-													<ColorPalette
-														label={ 'Color' }
-														value={ data[selectedButton].color }
-														onChange={ e => updateButton({ color: e }, selectedButton ) }
-													/>
-												</BaseControl>
-
-												<BaseControl
-													label={ 'Background' }
-												>
-													<ColorPalette
-														label={ 'Background' }
-														value={ data[selectedButton].background }
-														onChange={ e => updateButton({ background: e }, selectedButton ) }
-													/>
-												</BaseControl>
-
-												<BaseControl
-													label={ 'Border' }
-												>
-													<ColorPalette
-														label={ 'Border' }
-														value={ data[selectedButton].border }
-														onChange={ e => updateButton({ border: e }, selectedButton ) }
-													/>
-												</BaseControl>
-											</Fragment>
-										) || hover && (
+										{ hover ? (
 											<Fragment>
 												<BaseControl
 													label={ 'Hover Color' }
@@ -695,6 +663,38 @@ registerBlockType( 'themeisle-blocks/button-group', {
 														label={ 'Hover Border' }
 														value={ data[selectedButton].hoverBorder }
 														onChange={ e => updateButton({ hoverBorder: e }, selectedButton ) }
+													/>
+												</BaseControl>
+											</Fragment>
+										) : (
+											<Fragment>
+												<BaseControl
+													label={ 'Color' }
+												>
+													<ColorPalette
+														label={ 'Color' }
+														value={ data[selectedButton].color }
+														onChange={ e => updateButton({ color: e }, selectedButton ) }
+													/>
+												</BaseControl>
+
+												<BaseControl
+													label={ 'Background' }
+												>
+													<ColorPalette
+														label={ 'Background' }
+														value={ data[selectedButton].background }
+														onChange={ e => updateButton({ background: e }, selectedButton ) }
+													/>
+												</BaseControl>
+
+												<BaseControl
+													label={ 'Border' }
+												>
+													<ColorPalette
+														label={ 'Border' }
+														value={ data[selectedButton].border }
+														onChange={ e => updateButton({ border: e }, selectedButton ) }
 													/>
 												</BaseControl>
 											</Fragment>
@@ -1059,6 +1059,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 							`wp-block-themeisle-blocks-button-${ i }`
 						) }
 						style={ buttonStyle }
+						rel="noopener noreferrer"
 					>
 						{ ( 'left' === data[i].iconType || 'only' === data[i].iconType ) && (
 							<i className={ classnames(

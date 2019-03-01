@@ -17,7 +17,7 @@ const {
 	Path
 } = wp.components;
 
-export default function Separators({ type, front, style, fill, invert, width, height }) {
+const Separators = ({ type, front, style, fill, invert, width, height }) => {
 	if ( 'none' === style ) {
 		return false;
 	}
@@ -169,4 +169,6 @@ export default function Separators({ type, front, style, fill, invert, width, he
 			)}
 		</div>
 	);
-}
+};
+
+export default Separators;

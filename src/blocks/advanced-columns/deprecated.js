@@ -16,6 +16,9 @@ import Separators from './separators/index.js';
 
 const deprecated = [ {
 	attributes: {
+		align: {
+			type: 'string'
+		},
 		id: {
 			type: 'string'
 		},
@@ -495,6 +498,11 @@ const deprecated = [ {
 			type: 'string',
 			default: 'div'
 		}
+	},
+
+	supports: {
+		align: [ 'wide', 'full' ],
+		html: false
 	},
 
 	save: props => {
