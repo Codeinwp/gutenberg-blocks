@@ -67,6 +67,8 @@ import ControlPanelControl from '../../components/control-panel-control/index.js
 
 import IconPickerControl from '../../components/icon-picker-control/index.js';
 
+import deprecated from './deprecated.js';
+
 registerBlockType( 'themeisle-blocks/button-group', {
 	title: __( 'Button Group' ),
 	description: __( 'Prompt visitors to take action with a button group.' ),
@@ -184,6 +186,8 @@ registerBlockType( 'themeisle-blocks/button-group', {
 			]
 		}
 	},
+
+	deprecated: deprecated,
 
 	edit: compose([
 

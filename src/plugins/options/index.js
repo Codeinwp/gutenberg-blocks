@@ -77,7 +77,7 @@ class Options extends Component {
 	render() {
 		return (
 			<Fragment>
-				{ this.state.canUser && (
+				{ ( this.state.canUser && undefined !== PluginMoreMenuItem ) && (
 					<PluginMoreMenuItem
 						onClick={ () => this.setState({ isOpen: true }) }
 					>

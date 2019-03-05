@@ -27,8 +27,3 @@ export const formatDate = date => {
 	const year = date.getFullYear();
 	return day + ' ' + monthNames[monthIndex] + ', ' + year;
 };
-
-// Validate URL
-export const validateUrl = url => {
-	return /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(:[0-9]+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/i.test( url );
-};

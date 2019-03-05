@@ -39,8 +39,6 @@ import './editor.scss';
 
 import { faIcon } from '../../helpers/icons.js';
 
-import { validateUrl } from '../../helpers/helper-functions.js';
-
 import IconPickerControl from '../../components/icon-picker-control/index.js';
 
 import deprecated from './deprecated.js';
@@ -124,11 +122,10 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 		}),
 
 		withState({
-			isValid: true,
 			hover: false
 		})
 
-	])( ({ isValid, hover, setState, props }) => {
+	])( ({ hover, setState, props }) => {
 
 		if ( props.attributes.id === undefined || props.attributes.id.substr( props.attributes.id.length - 8 ) !== props.clientId.substr( 0, 8 ) ) {
 			const instanceId = `wp-block-themeisle-blocks-font-awesome-icons-${ props.clientId.substr( 0, 8 ) }`;
@@ -151,7 +148,6 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 		};
 
 		const changeLink = value => {
-			setState({ isValid: validateUrl( value ) });
 			props.setAttributes({ link: value });
 		};
 
@@ -259,7 +255,6 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 							placeholder="https://…"
 							value={ props.attributes.link }
 							onChange={ changeLink }
-							help={ ! isValid && __( 'Please enter a valid URL.' ) }
 						/>
 					</PanelBody>
 
@@ -495,7 +490,7 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 					className="wp-block-themeisle-blocks-font-awesome-icons-container"
 					style={ containerStyle }
 				>
-					{ ( props.attributes.link && validateUrl( props.attributes.link ) ) ? (
+					{ ( props.attributes.link ) ? (
 						<a
 							href={ props.attributes.link }
 							style={{
