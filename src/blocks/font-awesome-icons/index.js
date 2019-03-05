@@ -11,7 +11,8 @@ const {
 	ButtonGroup,
 	PanelBody,
 	RangeControl,
-	TextControl
+	TextControl,
+	ToggleControl
 } = wp.components;
 
 const {
@@ -70,6 +71,10 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 		},
 		link: {
 			type: 'string'
+		},
+		newTab: {
+			type: 'boolean',
+			default: false
 		},
 		fontSize: {
 			type: 'number',
@@ -149,6 +154,10 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 
 		const changeLink = value => {
 			props.setAttributes({ link: value });
+		};
+
+		const toggleNewTab = () => {
+			props.setAttributes({ newTab: ! props.attributes.newTab });
 		};
 
 		const changeFontSize = value => {
@@ -255,6 +264,12 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 							placeholder="https://…"
 							value={ props.attributes.link }
 							onChange={ changeLink }
+						/>
+
+						<ToggleControl
+							label={ 'Open in New Tab?' }
+							checked={ props.attributes.newTab }
+							onChange={ toggleNewTab }
 						/>
 					</PanelBody>
 
@@ -493,9 +508,11 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 					{ ( props.attributes.link ) ? (
 						<a
 							href={ props.attributes.link }
+							target={ props.attributes.newTab ? '_blank' : '_self' }
 							style={{
 								color: props.attributes.textColor
 							}}
+							rel="noopener noreferrer"
 						>
 							<IconElement />
 						</a>

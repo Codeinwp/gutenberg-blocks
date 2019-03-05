@@ -232,6 +232,10 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 		columnsWidth: {
 			type: 'number'
 		},
+		horizontalAlign: {
+			type: 'string',
+			default: 'unset'
+		},
 		columnsHeight: {
 			type: 'string',
 			default: 'auto'
@@ -244,10 +248,6 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 		},
 		columnsHeightCustomMobile: {
 			type: 'number'
-		},
-		horizontalAlign: {
-			type: 'string',
-			default: 'unset'
 		},
 		verticalAlign: {
 			type: 'string',
@@ -2078,6 +2078,41 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 									max={ 1200 }
 								/>
 
+								{ columnsWidth && (
+									<BaseControl
+										label={ 'Horizontal Align' }
+									>
+										<ButtonGroup className="icon-buttom-group">
+											<Tooltip text={ __( 'Left' ) } >
+												<IconButton
+													icon="editor-alignleft"
+													className="is-button is-large"
+													isPrimary={ 'flex-start' === horizontalAlign }
+													onClick={ () => changeHorizontalAlign( 'flex-start' ) }
+												/>
+											</Tooltip>
+
+											<Tooltip text={ __( 'Center' ) } >
+												<IconButton
+													icon="editor-aligncenter"
+													className="is-button is-large"
+													isPrimary={ 'center' === horizontalAlign }
+													onClick={ () => changeHorizontalAlign( 'center' ) }
+												/>
+											</Tooltip>
+
+											<Tooltip text={ __( 'Right' ) } >
+												<IconButton
+													icon="editor-alignright"
+													className="is-button is-large"
+													isPrimary={ 'flex-end' === horizontalAlign }
+													onClick={ () => changeHorizontalAlign( 'flex-end' ) }
+												/>
+											</Tooltip>
+										</ButtonGroup>
+									</BaseControl>
+								)}
+
 								<SelectControl
 									label={ __( 'Minimum Height' ) }
 									value={ columnsHeight }
@@ -2104,83 +2139,52 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 									</ResponsiveControl>
 								)}
 
-								<BaseControl
-									label={ 'Horizontal Align' }
-								>
-									<ButtonGroup className="icon-buttom-group">
-										<Tooltip text={ __( 'Left' ) } >
-											<IconButton
-												icon="editor-alignleft"
-												className="is-button is-large"
-												isPrimary={ 'flex-start' === horizontalAlign }
-												onClick={ () => changeHorizontalAlign( 'flex-start' ) }
-											/>
-										</Tooltip>
+								{ 'auto' !== columnsHeight && (
+									<BaseControl
+										label={ 'Vertical Align' }
+									>
+										<ButtonGroup className="icon-buttom-group">
+											<Tooltip text={ __( 'Top' ) } >
+												<Button
+													className="components-icon-button is-button is-large"
+													isPrimary={ 'flex-start' === verticalAlign }
+													onClick={ () => changeVerticalAlign( 'flex-start' ) }
+												>
+													<Icon
+														icon={ topIcon }
+														size={ 20 }
+													/>
+												</Button>
+											</Tooltip>
 
-										<Tooltip text={ __( 'Center' ) } >
-											<IconButton
-												icon="editor-aligncenter"
-												className="is-button is-large"
-												isPrimary={ 'center' === horizontalAlign }
-												onClick={ () => changeHorizontalAlign( 'center' ) }
-											/>
-										</Tooltip>
+											<Tooltip text={ __( 'Middle' ) } >
+												<Button
+													className="components-icon-button is-button is-large"
+													isPrimary={ 'center' === verticalAlign }
+													onClick={ () => changeVerticalAlign( 'center' ) }
+												>
+													<Icon
+														icon={ middleIcon }
+														size={ 20 }
+													/>
+												</Button>
+											</Tooltip>
 
-										<Tooltip text={ __( 'Right' ) } >
-											<IconButton
-												icon="editor-alignright"
-												className="is-button is-large"
-												isPrimary={ 'flex-end' === horizontalAlign }
-												onClick={ () => changeHorizontalAlign( 'flex-end' ) }
-											/>
-										</Tooltip>
-									</ButtonGroup>
-								</BaseControl>
-
-								<BaseControl
-									label={ 'Vertical Align' }
-								>
-									<ButtonGroup className="icon-buttom-group">
-										<Tooltip text={ __( 'Top' ) } >
-											<Button
-												className="components-icon-button is-button is-large"
-												isPrimary={ 'flex-start' === verticalAlign }
-												onClick={ () => changeVerticalAlign( 'flex-start' ) }
-											>
-												<Icon
-													icon={ topIcon }
-													size={ 20 }
-												/>
-											</Button>
-										</Tooltip>
-
-										<Tooltip text={ __( 'Middle' ) } >
-											<Button
-												className="components-icon-button is-button is-large"
-												isPrimary={ 'center' === verticalAlign }
-												onClick={ () => changeVerticalAlign( 'center' ) }
-											>
-												<Icon
-													icon={ middleIcon }
-													size={ 20 }
-												/>
-											</Button>
-										</Tooltip>
-
-										<Tooltip text={ __( 'Bottom' ) } >
-											<Button
-												className="components-icon-button is-button is-large"
-												isPrimary={ 'flex-end' === verticalAlign }
-												onClick={ () => changeVerticalAlign( 'flex-end' ) }
-											>
-												<Icon
-													icon={ bottomIcon }
-													size={ 20 }
-												/>
-											</Button>
-										</Tooltip>
-									</ButtonGroup>
-								</BaseControl>
+											<Tooltip text={ __( 'Bottom' ) } >
+												<Button
+													className="components-icon-button is-button is-large"
+													isPrimary={ 'flex-end' === verticalAlign }
+													onClick={ () => changeVerticalAlign( 'flex-end' ) }
+												>
+													<Icon
+														icon={ bottomIcon }
+														size={ 20 }
+													/>
+												</Button>
+											</Tooltip>
+										</ButtonGroup>
+									</BaseControl>
+								)}
 							</PanelBody>
 						</Fragment>
 

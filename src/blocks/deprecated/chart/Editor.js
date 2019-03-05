@@ -20,7 +20,9 @@ const {
 const {
 	Button,
 	Dashicon,
+	ExternalLink,
 	FormToggle,
+	Notice,
 	PanelBody,
 	PanelRow,
 	TextControl,
@@ -154,6 +156,7 @@ class Editor extends Component {
 						/>
 					}
 				</div>
+				<Notice status="warning" isDismissible={ false }>{ __( 'We have deprecated Pie Chart Block and it will be removed soon. For advanced options and more charts, please install our Visualizer plugin:' ) } <ExternalLink href="http://wordpress.org/plugins/visualizer/">{ __( 'Visualizer: Tables and Charts Manager for WordPress' ) }</ExternalLink></Notice>
 			</Fragment>
 		);
 	}

@@ -54,7 +54,7 @@
 		> .innerblocks-wrap {
 			flex-basis: 100%;
 			width: 100%;
-			word-break: break-word;
+			word-break: keep-all;
 
 			> .editor-inner-blocks > .editor-block-list__layout {
 				display: flex;
@@ -252,7 +252,7 @@
 		> .innerblocks-wrap {
 			flex-basis: 100%;
 			width: 100%;
-			word-break: break-word;
+			word-break: keep-all;
 
 			> .editor-inner-blocks > .editor-block-list__layout {
 				display: flex;
@@ -389,7 +389,7 @@
 		> .innerblocks-wrap {
 			flex-basis: 100%;
 			width: 100%;
-			word-break: break-word;
+			word-break: keep-all;
 
 			> .editor-inner-blocks > .editor-block-list__layout {
 				display: flex;
