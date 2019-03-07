@@ -518,6 +518,16 @@
 	}
 }
 
+.editor-block-list__block {
+	&[data-type="themeisle-blocks/advanced-columns"] {
+		> .editor-block-list__block-edit {
+			&:before {
+				outline: 2px dashed #d5dadf;
+			}
+		}
+	}
+}
+
 [data-type="themeisle-blocks/advanced-columns"] {
 
 	.wp-themeisle-block-advanced-columns-resize-container {
