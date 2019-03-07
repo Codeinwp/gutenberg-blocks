@@ -12,10 +12,6 @@ const socialList = {
 		label: __( 'Twitter' ),
 		icon: 'twitter'
 	},
-	googleplus: {
-		label: __( 'Google+' ),
-		icon: 'google-plus-g'
-	},
 	linkedin: {
 		label: __( 'Linkedin' ),
 		icon: 'linkedin-in'

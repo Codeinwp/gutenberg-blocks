@@ -51,12 +51,6 @@ class Sharing_Icons_Block extends Base_Block {
 				'url' => 'http://twitter.com/share?url=' . esc_url( get_the_permalink() ) . '&text=' . esc_attr( get_the_title() ),
 			),
 
-			'googleplus' => array(
-				'label'   => esc_html__( 'Google Plus', 'textdomain' ),
-				'icon' => 'google-plus-g',
-				'url' => 'https://plus.google.com/share?url=' . esc_url( get_the_permalink() ) . '&text=' . esc_attr( get_the_title() ),
-			),
-
 			'linkedin' => array(
 				'label'   => esc_html__( 'Linkedin', 'textdomain' ),
 				'icon' => 'linkedin-in',
@@ -91,10 +85,6 @@ class Sharing_Icons_Block extends Base_Block {
 				'default' => 1,
 			),
 			'twitter'  => array(
-				'type'    => 'boolean',
-				'default' => 1,
-			),
-			'googleplus'  => array(
 				'type'    => 'boolean',
 				'default' => 1,
 			),

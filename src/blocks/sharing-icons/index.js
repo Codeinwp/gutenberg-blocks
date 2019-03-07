@@ -48,10 +48,6 @@ registerBlockType( 'themeisle-blocks/sharing-icons', {
 			type: 'boolean',
 			default: true
 		},
-		googleplus: {
-			type: 'boolean',
-			default: true
-		},
 		linkedin: {
 			type: 'boolean',
 			default: true
