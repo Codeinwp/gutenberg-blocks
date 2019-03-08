@@ -5,7 +5,7 @@
 	"scripts": {
 		"build": "cross-env BABEL_ENV=default NODE_ENV=production webpack",
 		"dev": "cross-env BABEL_ENV=default NODE_ENV=development webpack --watch",
-		"lint": "eslint blocks/*/*.js"
+		"lint": "eslint src/*/*/*.js"
 	},
 	"engines": {
 		"node": ">=8.0.0",

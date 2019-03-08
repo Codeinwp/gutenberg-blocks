@@ -42,10 +42,6 @@ const deprecated = [ {
 		}
 	},
 
-	supports: {
-		align: [ 'left', 'center', 'right' ]
-	},
-
 	save: props => {
 		const iconStyle = {
 			borderRadius: props.attributes.borderRadius + '%',
@@ -70,7 +66,7 @@ const deprecated = [ {
 				style={{ textAlign: props.attributes.align }}
 			>
 				<span
-					className={ `${ props.className }-container` }
+					className="undefined-container"
 					style={ containerStyle }
 				>
 					<i
