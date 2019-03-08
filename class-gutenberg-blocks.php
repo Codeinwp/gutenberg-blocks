@@ -89,6 +89,8 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				$version
 			);
 
+			wp_set_script_translations( 'themeisle-gutenberg-blocks', 'textdomain' );
+
 			wp_localize_script( 'themeisle-gutenberg-blocks', 'themeisleGutenberg', array(
 				'mapsAPI' => $api
 			) );
