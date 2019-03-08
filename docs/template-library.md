@@ -37,10 +37,12 @@ The process of adding new templates to the Template Library is reasonably straig
 
 	- name: Template Name
 	- type: Decided in which tab this template it will appear. It can be either `block` or `template`.
+	- author: Author of the template, could be name of the theme or plugin.
 	- keywords: Keywords that can be used to search.
 	- categories: Categories that can be used for sorting.
 	- template_url: Link to template's JSON file.
 	- screenshot_url: Link to screenshot of the template for preview.
+	- demo_url: Link to a webpage showing demo of the template.
 
 ```
 $templates_list = array(
@@ -48,10 +50,12 @@ $templates_list = array(
 	array(
 		'title'			=> __( 'Example Header Block', 'textdomain' ),
 		'type'			=> 'block',
+		'author'		=> __( 'Otter', 'textdomain' ),
 		'keywords'		=> array( 'example', 'header' ),
 		'categories'		=> array( 'header' ),
 		'template_url'		=> 'template.json',
 		'screenshot_url'	=> 'screenshot.png',
+		'demo_url'		=> 'https://demo.com',
 	),
 );
 ```
@@ -66,10 +70,12 @@ function plugin_add_new_templates( $templates_list ) {
 		array(
 			'title'			=> __( 'Example Header Block', 'textdomain' ),
 			'type'			=> 'block',
+			'author'		=> __( 'Otter', 'textdomain' ),
 			'keywords'		=> array( 'example', 'header' ),
 			'categories'		=> array( 'header' ),
 			'template_url'		=> 'template.json',
 			'screenshot_url'	=> 'screenshot.png',
+			'demo_url'		=> 'https://demo.com',
 		),
 	);
 

@@ -52,6 +52,8 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 			add_action( 'block_categories', array( $this, 'block_categories' ) );
 			add_action( 'wp_head', array( $this, 'render_server_side_css' ) );
 			add_action( 'wp_head', array( $this, 'enqueue_google_fonts' ) );
+
+			add_filter( 'safe_style_css', array( $this, 'used_css_properties' ), 99 );
 		}
 
 		/**
@@ -83,7 +85,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 			wp_enqueue_script(
 				'themeisle-gutenberg-blocks',
 				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/block.js',
-				array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-element', 'wp-keycodes', 'wp-rich-text' ,'wp-viewport', 'themeisle-gutenberg-blocks-vendor' ),
+				array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text' ,'wp-viewport', 'themeisle-gutenberg-blocks-vendor' ),
 				$version
 			);
 
@@ -170,9 +172,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		public function autoload_block_classes() {
 			// load the base class
 			require_once $this->get_dir() .  '/class-base-block.php';
-			$blocks = glob( $this->get_dir() . '/blocks/*/*.php' );
-			$components = glob( $this->get_dir() . '/components/*/*.php' );
-			$paths = array_merge( $blocks, $components );
+			$paths = glob( $this->get_dir() . '/src/*/*/*.php' );
 
 			foreach ( $paths as $path ) {
 				require_once $path;
@@ -242,6 +242,38 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				)
 			);
 		}
+
+		/**
+		 * Used CSS properties
+		 * 
+		 * @since   1.2.0
+		 * @access  public
+		 */
+		public function used_css_properties( $attr ) {
+			$props = array(
+				'background-attachment',
+				'background-position',
+				'background-repeat',
+				'background-size',
+				'border-radius',
+				'border-top-left-radius',
+				'border-top-right-radius',
+				'border-bottom-right-radius',
+				'border-bottom-left-radius',
+				'box-shadow',
+				'display',
+				'justify-content',
+				'mix-blend-mode',
+				'opacity',
+				'text-shadow',
+				'text-transform',
+				'transform'
+			);
+
+			$list = array_merge( $props, $attr );
+
+			return $list;
+		} 
 
 		/**
 		 * Parse Blocks for Gutenberg and WordPress 5.0
@@ -384,6 +416,10 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 					$style .= $this->generate_button_group_css( $block );
 				}
 
+				if ( 'themeisle-blocks/font-awesome-icons' === $block['blockName'] ) {
+					$style .= $this->generate_font_awesome_icons_css( $block );
+				}
+
 				if ( isset( $block['innerBlocks'] ) && ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
 					$style .= $this->cycle_through_blocks( $block['innerBlocks'] );
 				}
@@ -456,6 +492,10 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 						$style .= '	height: ' . $this->get_attr_value( ( isset( $attr['dividerBottomHeight'] ) ? $attr['dividerBottomHeight'] : null ) ) . 'px;' . "\n";
 					$style .= '}' . "\n \n";
 				}
+
+				$style .= '#' . $attr['id'] . ' .wp-themeisle-block-overlay {' . "\n";
+					$style .= '	filter: blur( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterBlur'] ) ? ( $attr['backgroundOverlayFilterBlur'] / 10 ) : 0 ) ) . 'px ) brightness( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterBrightness'] ) ? ( $attr['backgroundOverlayFilterBrightness'] / 10 ) : 1 ) ) . ' ) contrast( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterContrast'] ) ? ( $attr['backgroundOverlayFilterContrast'] / 10 ) : 1 ) ) . ' ) grayscale( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterGrayscale'] ) ? ( $attr['backgroundOverlayFilterGrayscale'] / 100 ) : 0 ) ) . ' ) hue-rotate( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterHue'] ) ? $attr['backgroundOverlayFilterHue'] : 0 ) ) . 'deg ) saturate( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterSaturate'] ) ? ( $attr['backgroundOverlayFilterSaturate'] / 10 ) : 1 ) ) . ' )' . "\n";
+				$style .= '}' . "\n \n";
 
 				$style .= '@media ( min-width: 600px ) and ( max-width: 960px )  {' . "\n";
 	
@@ -616,6 +656,14 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 					}
 				}
 				$style .= '}' . "\n \n";
+
+				if ( isset( $attr['columnWidth'] ) ) {
+					$style .= '@media ( min-width: 960px )  {' . "\n";
+						$style .= '	#' . $attr['id'] . ' {' . "\n";
+							$style .= '		flex-basis: ' . $this->get_attr_value( floatval( $attr['columnWidth' ] ) ) . '%;' . "\n";
+						$style .= '	}' . "\n \n";
+					$style .= '}' . "\n \n";
+				}
 
 				$style .= '@media ( min-width: 600px ) and ( max-width: 960px )  {' . "\n";
 	
@@ -840,7 +888,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 			$attr = $block['attrs'];
 			$style = '';
 
-			if ( isset( $attr['id'] ) ) {
+			if ( isset( $attr['id'] ) && isset( $attr['data'] ) ) {
 				$this->get_google_fonts( $attr );
 
 				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button {' . "\n";
@@ -897,6 +945,45 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 					$style .= '}' . "\n \n";
 					$i++;
 				}
+			}
+
+			return $style;
+		}
+
+		/**
+		 * Generate Button Group CSS
+		 * 
+		 * @since   1.1.5
+		 * @access  public
+		 */
+		public function generate_font_awesome_icons_css( $block ) {
+			$attr = $block['attrs'];
+			$style = '';
+
+			if ( isset( $attr['id'] ) ) {
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container {' . "\n";
+					if ( isset( $attr['textColor'] ) ) {
+						$style .= '	color: ' . $this->get_attr_value( $attr['textColor'] ) . ';' . "\n";
+					}
+					if ( isset( $attr['backgroundColor'] ) ) {
+						$style .= '	background: ' . $this->get_attr_value( $attr['backgroundColor'] ) . ';' . "\n";
+					}
+					if ( isset( $attr['borderColor'] ) ) {
+						$style .= '	border-color: ' . $this->get_attr_value( $attr['borderColor'] ) . ';' . "\n";
+					}
+				$style .= '}' . "\n \n";
+
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container:hover {' . "\n";
+					if ( isset( $attr['textColorHover'] ) ) {
+						$style .= '	color: ' . $this->get_attr_value( $attr['textColorHover'] ) . ';' . "\n";
+					}
+					if ( isset( $attr['backgroundColorHover'] ) ) {
+						$style .= '	background: ' . $this->get_attr_value( $attr['backgroundColorHover'] ) . ';' . "\n";
+					}
+					if ( isset( $attr['borderColorHover'] ) ) {
+						$style .= '	border-color: ' . $this->get_attr_value( $attr['borderColorHover'] ) . ';' . "\n";
+					}
+				$style .= '}' . "\n";
 			}
 
 			return $style;
