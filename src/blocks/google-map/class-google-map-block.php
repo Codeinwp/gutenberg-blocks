@@ -31,21 +31,56 @@ class Google_Map_Block extends Base_Block {
 	 */
 	function set_attributes() {
 		$this->attributes = array(
-			'location'    => array(
+			'id'				=> array(
 				'type'    => 'string',
-				'default' => '',
 			),
-			'type'     => array(
+			'location'			=> array(
+				'type'    => 'string',
+				'default' => 'La Sagrada Familia, Barcelona, Spain',
+			),
+			'latitude'			=> array(
+				'type'    => 'string',
+				'default' => '41.4036299',
+			),
+			'longitude'			=> array(
+				'type'    => 'string',
+				'default' => '2.1743558000000576',
+			),
+			'type'				=> array(
 				'type'    => 'string',
 				'default' => 'roadmap',
 			),
-			'zoom'        => array(
+			'zoom'				=> array(
 				'type'    => 'number',
-				'default' => 10,
+				'default' => 15,
 			),
-			'height'      => array(
-				'type'    => 'string',
-				'default' => '400px',
+			'height'			=> array(
+				'type'    => 'number',
+				'default' => 400,
+			),
+			'draggable'			=> array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
+			'mapTypeControl'	=> array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
+			'zoomControl'		=> array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
+			'fullscreenControl'	=> array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
+			'streetViewControl'	=> array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
+			'markers'			=> array(
+				'type'    => 'object',
+				'default' => [],
 			),
 		);
 	}
@@ -59,31 +94,21 @@ class Google_Map_Block extends Base_Block {
 	 * @return mixed|string
 	 */
 	function render( $attributes ) {
+		$id = isset( $attributes['id'] ) ? $attributes['id'] : 'wp-block-themeisle-blocks-google-map-' . rand( 10,100 );
+		$class = 'wp-block-themeisle-blocks-google-map';
 
-		// Get the API key
-		$apikey = get_option( 'themeisle_google_map_block_api_key' );
-
-		// Don't output anything if there is no API key
-		if ( null === $apikey || empty( $apikey ) ) {
-			return;
+		if ( isset( $attributes['align'] ) ) {
+			$class = 'wp-block-themeisle-blocks-google-map align' . $attributes['align'];
 		}
 
-		// Exapnd all the atributes into separate variables
-		foreach ( $attributes as $key => $value ) {
-			${ $key } = $value;
-		}
+		$output = '<div class="' . $class . '" id="' . $id . '" style="height:' . $attributes['height'] . 'px;"></div>' . "\n";
+		$output .= '<script type="text/javascript">' . "\n";
+		$output .= '	/* <![CDATA[ */' . "\n";
+		$output .= '		if ( ! window.themeisleGoogleMaps ) window.themeisleGoogleMaps =[];' . "\n";
+		$output .= '		window.themeisleGoogleMaps.push( { container: "' . $id . '", attributes: ' . json_encode( $attributes ) . ' } );' . "\n";
+		$output .= '	/* ]]> */' . "\n";
+		$output .= '</script>' . "\n";
 
-		// URL encode the location for Google Maps
-		$location = urlencode( $location );
-
-		// Set the API url based to embed or static maps based on the interactive setting
-		$apiurl = "https://www.google.com/maps/embed/v1/place?key=${apikey}&q=${location}&zoom=${zoom}&maptype=${type}";
-
-		$output = "<div class='wp-block-themeisle-blocks-google-map'><div class='map'>";
-			$output .= "<iframe width='100%' height='100%' frameborder='0' style='border:0; height:${height};' src='$apiurl' allowfullscreen></iframe>";
-		$output .= '</div></div>';
-
-		// Return the output
 		return $output;
 	}
 }

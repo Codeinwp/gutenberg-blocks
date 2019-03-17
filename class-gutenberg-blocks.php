@@ -113,6 +113,12 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				return;
 			}
 
+			if ( THEMEISLE_GUTENBERG_BLOCKS_DEV ) {
+				$version = time();
+			} else {
+				$version = THEMEISLE_GUTENBERG_BLOCKS_VERSION;
+			}
+
 			wp_enqueue_style(
 				'themeisle-block_styles',
 				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/style.css'
@@ -120,6 +126,33 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 			if ( has_block( 'themeisle-blocks/chart-pie' ) ) {
 				wp_enqueue_script( 'google-charts', 'https://www.gstatic.com/charts/loader.js' );
+			}
+
+			if ( has_block( 'themeisle-blocks/google-map' ) ) {
+
+				// Get the API key
+				$apikey = get_option( 'themeisle_google_map_block_api_key' );
+		
+				// Don't output anything if there is no API key
+				if ( null === $apikey || empty( $apikey ) ) {
+					return;
+				}
+
+				wp_enqueue_script(
+					'themeisle-gutenberg-google-maps',
+					plugin_dir_url( $this->get_dir() ) . $this->slug . '/src/frontend/google-map/loader.js',
+					'',
+					$version,
+					true
+				);
+
+				wp_enqueue_script(
+					'google-maps',
+					'https://maps.googleapis.com/maps/api/js?key=' . $apikey . '&libraries=places&callback=initMapScript',
+					array( 'themeisle-gutenberg-google-maps' ),
+					'',
+					true
+				);
 			}
 		}
 

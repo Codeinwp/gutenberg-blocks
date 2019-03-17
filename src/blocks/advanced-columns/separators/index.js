@@ -4,18 +4,18 @@
 import classnames from 'classnames';
 
 /**
- * Internal dependencies
- */
-import './style.scss';
-import './editor.scss';
-
-/**
  * WordPress dependencies
  */
 const {
 	SVG,
 	Path
 } = wp.components;
+
+/**
+ * Internal dependencies
+ */
+import './style.scss';
+import './editor.scss';
 
 const Separators = ({ type, front, style, fill, invert, width, height }) => {
 	if ( 'none' === style ) {

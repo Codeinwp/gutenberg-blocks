@@ -4,11 +4,6 @@
 import classnames from 'classnames';
 
 /**
- * Internal dependencies
- */
-import './editor.scss';
-
-/**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
@@ -21,6 +16,11 @@ const {
 } = wp.components;
 
 const { withInstanceId } = wp.compose;
+
+/**
+ * Internal dependencies
+ */
+import './editor.scss';
 
 function ResponsiveControl({ label, instanceId, changeViewType, view, children }) {
 	const id = `inspector-layout-control-${ instanceId }`;

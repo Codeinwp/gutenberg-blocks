@@ -4,11 +4,6 @@
 import classnames from 'classnames';
 
 /**
- * Internal dependencies
- */
-import './editor.scss';
-
-/**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
@@ -26,6 +21,11 @@ const {
 const { withInstanceId } = wp.compose;
 
 const { Fragment } = wp.element;
+
+/**
+ * Internal dependencies
+ */
+import './editor.scss';
 
 function LayoutControl({ label, instanceId, onClick, layout, layoutTablet, layoutMobile, columns, changeViewType, view }) {
 	const id = `inspector-layout-control-${ instanceId }`;

@@ -1,13 +1,4 @@
 /**
- * Internal dependencies
- */
-import './editor.scss';
-
-import { columnsIcon } from '../../../helpers/icons.js';
-
-import Library from './library.js';
-
-/**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
@@ -23,6 +14,15 @@ const {
 } = wp.components;
 
 const { Component } = wp.element;
+
+/**
+ * Internal dependencies
+ */
+import './editor.scss';
+
+import { columnsIcon } from '../../../helpers/icons.js';
+
+import Library from './library.js';
 
 class Inboarding extends Component {
 	constructor() {

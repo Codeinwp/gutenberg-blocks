@@ -4,11 +4,6 @@
 import classnames from 'classnames';
 
 /**
- * Internal dependencies
- */
-import './editor.scss';
-
-/**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
@@ -23,6 +18,11 @@ const {
 } = wp.components;
 
 const { withInstanceId } = wp.compose;
+
+/**
+ * Internal dependencies
+ */
+import './editor.scss';
 
 function SizeControl({ label, instanceId, minus, responsive, changeViewType, changeType, changeValue, view, sizeType, typeDesktop, typeTablet, typeMobile, sizeValue, valueDesktop, valueTablet, valueMobile, children }) {
 	const id = `inspector-layout-control-${ instanceId }`;

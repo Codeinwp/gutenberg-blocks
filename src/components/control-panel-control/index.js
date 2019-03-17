@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import './editor.scss';
-
-/**
  * WordPress dependencies
  */
 const {
@@ -12,6 +7,11 @@ const {
 } = wp.components;
 
 const { withInstanceId } = wp.compose;
+
+/**
+ * Internal dependencies
+ */
+import './editor.scss';
 
 function ControlPanelControl({ label, instanceId, children }) {
 	const id = `inspector-layout-control-${ instanceId }`;

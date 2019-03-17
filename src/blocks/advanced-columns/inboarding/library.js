@@ -6,13 +6,6 @@ import classnames from 'classnames';
 import uuidv4 from 'uuid';
 
 /**
- * Internal dependencies
- */
-import './editor.scss';
-
-import { otterIcon } from '../../../helpers/icons.js';
-
-/**
  * WordPress dependencies
  */
 const {
@@ -44,6 +37,13 @@ const {
 } = wp.data;
 
 const { Component } = wp.element;
+
+/**
+ * Internal dependencies
+ */
+import './editor.scss';
+
+import { otterIcon } from '../../../helpers/icons.js';
 
 class Library extends Component {
 	constructor() {
