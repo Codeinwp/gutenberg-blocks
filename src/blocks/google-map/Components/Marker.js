@@ -11,6 +11,7 @@ const { __ } = wp.i18n;
 const {
 	BaseControl,
 	Button,
+	ExternalLink,
 	IconButton,
 	TextControl,
 	TextareaControl
@@ -85,7 +86,17 @@ class Marker extends Component {
 							className="wp-block-themeisle-blocks-google-map-search"
 							onFocus={ e => this.initSearch( e ) }
 							onChange={ e => this.changeLocation( e ) }
+							disabled={ ! this.props.isPlaceAPIAvailable }
 						/>
+
+						{ ! this.props.isPlaceAPIAvailable && (
+							<p>
+								{ __( 'To enable locations earch, please ensure Places API is activated in the Google Developers Console.' ) + ' ' }
+								<ExternalLink href="https://developers.google.com/places/web-service/intro">
+									{ __( 'More info.' ) }
+								</ExternalLink>
+							</p>
+						)}
 					</BaseControl>
 
 					<TextControl

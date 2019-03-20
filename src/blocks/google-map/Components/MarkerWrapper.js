@@ -42,6 +42,7 @@ class MarkerWrapper extends Component {
 							<Marker
 								marker={ marker }
 								isOpen={ this.state.isOpen }
+								isPlaceAPIAvailable={ this.props.isPlaceAPIAvailable }
 								openMarker={ this.openMarker }
 								removeMarker={ this.props.removeMarker }
 								changeMarkerProp={ this.props.changeMarkerProp }

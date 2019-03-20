@@ -37,7 +37,6 @@ class Editor extends Component {
 	constructor() {
 		super( ...arguments );
 		this.enqueueScript = this.enqueueScript.bind( this );
-		this.initMapScript = this.initMapScript.bind( this );
 		this.initMap = this.initMap.bind( this );
 		this.initSearch = this.initSearch.bind( this );
 		this.cycleMarkers = this.cycleMarkers.bind( this );
@@ -61,14 +60,14 @@ class Editor extends Component {
 		this.changeMarkerProp = this.changeMarkerProp.bind( this );
 
 		window.isMapLoaded = window.isMapLoaded || false;
-		window.initMapScript = this.initMapScript;
 		window.removeMarker = this.removeMarker;
 
 		this.state = {
 			api: '',
 			isAPILoaded: false,
 			isAPISaved: false,
-			isSaving: false
+			isSaving: false,
+			isPlaceAPIAvailable: true
 		};
 
 		this.settings;
@@ -96,7 +95,7 @@ class Editor extends Component {
 		}
 
 		if ( false === Boolean( themeisleGutenberg.mapsAPI ) ) {
-			if ( false === this.state.isAPILoaded ) {
+			if ( ! this.state.isAPILoaded ) {
 				this.settings.fetch().then( response => {
 					this.setState({
 						api: response.themeisle_google_map_block_api_key,
@@ -113,7 +112,7 @@ class Editor extends Component {
 				});
 			}
 		} else {
-			if ( false === this.state.isAPILoaded ) {
+			if ( ! this.state.isAPILoaded ) {
 				this.setState({
 					api: themeisleGutenberg.mapsAPI,
 					isAPILoaded: true,
@@ -126,7 +125,7 @@ class Editor extends Component {
 	}
 
 	componentDidUpdate( prevProps ) {
-		if ( this.props.isSelected !== prevProps.isSelected ) {
+		if ( this.props.isSelected !== prevProps.isSelected && false !== this.state.isAPISaved ) {
 			const isSelected = this.props.isSelected;
 
 			this.map.setOptions({
@@ -138,29 +137,16 @@ class Editor extends Component {
 		}
 	}
 
-	initMapScript() {
-		const script = document.getElementById( 'themeisle-google-map-api-loading' );
-		script.id = 'themeisle-google-map-api';
-	}
-
 	enqueueScript( api ) {
 		if ( ! window.isMapLoaded ) {
 			window.isMapLoaded = true;
-			this.link.src = `https://maps.googleapis.com/maps/api/js?key=${ api }&libraries=places&callback=initMapScript`;
+			this.link.onload = () => {
+				const script = document.getElementById( 'themeisle-google-map-api-loading' );
+				script.id = 'themeisle-google-map-api';
+				this.initMap();
+			};
+			this.link.src = `https://maps.googleapis.com/maps/api/js?key=${ api }&libraries=places&cache=${ Math.random() }`;
 			document.head.appendChild( this.link );
-		}
-
-		const loading = document.getElementById( 'themeisle-google-map-api-loading' );
-
-		if ( loading ) {
-			const observer = new MutationObserver( e => this.initMap() );
-
-			observer.observe( loading, {
-				attributes: true,
-				attributeFilter: [ 'id' ],
-				childList: false,
-				characterData: false
-			});
 		}
 
 		const loaded = document.getElementById( 'themeisle-google-map-api' );
@@ -221,6 +207,19 @@ class Editor extends Component {
 		if ( 0 < this.props.attributes.markers.length ) {
 			this.cycleMarkers( this.props.attributes.markers );
 		}
+
+		const request = {
+			query: this.props.attributes.location,
+			fields: [ 'name', 'geometry' ]
+		};
+
+		const service = new google.maps.places.PlacesService( this.map );
+
+		service.findPlaceFromQuery( request, ( results, status ) => {
+			if ( 'REQUEST_DENIED' === status ) {
+				this.setState({ isPlaceAPIAvailable: false });
+			}
+		});
 	}
 
 	initSearch( e ) {
@@ -289,7 +288,7 @@ class Editor extends Component {
 	}
 
 	addInfoWindow( marker, id, title, description ) {
-		const contentString = `<div class="themeisle-map-overview"><h6 class="themeisle-map-title">${ title }</h6><div class="themeisle-map-content">${ description ? `<p>${ description }</p>` : '' }<a class="themeisle-map-delete" onclick="removeMarker( '${ id }' )">${ __( 'Delete Marker' ) }</a></div></div>`;
+		const contentString = `<div class="wp-block-themeisle-blocks-map-overview"><h6 class="wp-block-themeisle-blocks-map-overview-title">${ title }</h6><div class="wp-block-themeisle-blocks-map-overview-content">${ description ? `<p>${ description }</p>` : '' }<a class="wp-block-themeisle-blocks-map-overview-delete" onclick="removeMarker( '${ id }' )">${ __( 'Delete Marker' ) }</a></div></div>`;
 
 		const infowindow = new google.maps.InfoWindow({
 			content: contentString
@@ -364,14 +363,23 @@ class Editor extends Component {
 			});
 
 			model.save().then( response => {
+				let status = false;
+
 				this.settings.fetch();
+
+				if ( '' !== response.themeisle_google_map_block_api_key ) {
+					status = true;
+				}
+
 				this.setState({
 					isSaving: false,
-					isAPISaved: true
+					isAPISaved: status
 				});
 
-				window.isMapLoaded = false;
-				this.enqueueScript( response.themeisle_google_map_block_api_key );
+				if ( '' !== response.themeisle_google_map_block_api_key ) {
+					window.isMapLoaded = false;
+					this.enqueueScript( response.themeisle_google_map_block_api_key );
+				}
 			});
 		}
 	}
@@ -473,16 +481,17 @@ class Editor extends Component {
 							type="submit"
 							onClick={ this.saveAPIKey }
 							isBusy={ this.state.isSaving }
-							disabled={ '' === this.state.api}
+							disabled={ '' === this.state.api }
 						>
 							{ __( 'Save API Key' ) }
 						</Button>
 
 						<div className="components-placeholder__instructions">
-							{ __( 'Need an API key? Get one ' ) }
-							<ExternalLink href="https://developers.google.com/maps/documentation/javascript/get-api-key">{ __( 'here.' ) }</ExternalLink>
-							<br/>
-							{ __( 'You need to activate Maps and Places API.' ) }
+							<p className="components-placeholder__text">
+								{ __( 'Need an API key? Get one ' ) }
+								<ExternalLink href="https://developers.google.com/maps/documentation/javascript/get-api-key">{ __( 'here.' ) }</ExternalLink>
+							</p>
+							<p className="components-placeholder__text">{ __( 'You need to activate Maps and Places API.' ) }</p>
 						</div>
 					</Placeholder>
 				</div>
@@ -507,7 +516,17 @@ class Editor extends Component {
 								className="wp-block-themeisle-blocks-google-map-search"
 								onFocus={ e => this.initSearch( e ) }
 								onChange={ e => this.changeLocation( e ) }
+								disabled={ ! this.state.isPlaceAPIAvailable }
 							/>
+
+							{ ! this.state.isPlaceAPIAvailable && (
+								<p>
+									{ __( 'To enable locations earch, please ensure Places API is activated in the Google Developers Console.' ) + ' ' }
+									<ExternalLink href="https://developers.google.com/places/web-service/intro">
+										{ __( 'More info.' ) }
+									</ExternalLink>
+								</p>
+							)}
 						</BaseControl>
 
 						<TextControl
@@ -556,7 +575,7 @@ class Editor extends Component {
 							value={ this.props.attributes.height }
 							onChange={ this.changeHeight }
 							min={ 100 }
-							max={ 2000 }
+							max={ 1400 }
 						/>
 					</PanelBody>
 
@@ -608,6 +627,7 @@ class Editor extends Component {
 							addMarker={ this.addMarker }
 							removeMarker={ this.removeMarker }
 							changeMarkerProp={ this.changeMarkerProp }
+							isPlaceAPIAvailable={ this.state.isPlaceAPIAvailable }
 						/>
 					</PanelBody>
 
@@ -622,7 +642,7 @@ class Editor extends Component {
 							value={ this.state.api }
 							className="components-placeholder__input"
 							onChange={ this.changeAPI }
-							help={ __( 'Changing the API key effects all Google Map Embed blocks.' ) }
+							help={ __( 'Changing the API key effects all Google Map Embed blocks. You will have to refresh the page after changing your API keys.' ) }
 						/>
 
 						<Button

@@ -46,7 +46,7 @@ const initMapScript = () => {
 				});
 
 				if ( marker.title || marker.description ) {
-					const contentString = `<div class="themeisle-map-overview"><h6 class="themeisle-map-title">${ marker.title }</h6><div class="themeisle-map-content">${ marker.description ? `<p>${ marker.description }</p>` : '' }</div></div>`;
+					const contentString = `<div class="wp-block-themeisle-blocks-map-overview"><h6 class="wp-block-themeisle-blocks-map-overview-title">${ marker.title }</h6><div class="wp-block-themeisle-blocks-map-overview-content">${ marker.description ? `<p>${ marker.description }</p>` : '' }</div></div>`;
 
 					const infowindow = new google.maps.InfoWindow({
 						content: contentString
