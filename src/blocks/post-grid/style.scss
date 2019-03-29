@@ -1,4 +1,4 @@
-.wp-block-themeisle-blocks-posts {
+.wp-block-themeisle-blocks-posts-grid {
 	display: flex;
 	flex-wrap: wrap;
 
@@ -116,7 +116,7 @@
 }
 
 @media ( min-width: 600px ) and ( max-width: 960px )  {
-	.wp-block-themeisle-blocks-posts {
+	.wp-block-themeisle-blocks-posts-grid {
 		display: flex;
 		flex-wrap: wrap;
 	
@@ -129,7 +129,7 @@
 }
 
 @media ( max-width: 600px )  {
-	.wp-block-themeisle-blocks-posts {
+	.wp-block-themeisle-blocks-posts-grid {
 		display: flex;
 		flex-wrap: wrap;
 	

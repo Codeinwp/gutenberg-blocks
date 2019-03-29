@@ -46,7 +46,7 @@ class LayoutBuilder extends Component {
 	render() {
 		const DragHandle = SortableHandle( () => {
 			return (
-				<div className="wp-block-themeisle-blocks-posts-builder-handle">
+				<div className="wp-block-themeisle-blocks-posts-grid-builder-handle">
 					<span></span>
 				</div>
 			);
@@ -63,17 +63,17 @@ class LayoutBuilder extends Component {
 			}
 
 			return (
-				<div className="wp-block-themeisle-blocks-posts-builder-item">
+				<div className="wp-block-themeisle-blocks-posts-grid-builder-item">
 					<DragHandle />
 
-					<div className="wp-block-themeisle-blocks-posts-builder-label">
+					<div className="wp-block-themeisle-blocks-posts-grid-builder-label">
 						{ label }
 					</div>
 
 					<IconButton
 						icon={ icon }
 						label={ message }
-						className="wp-block-themeisle-blocks-posts-builder-button"
+						className="wp-block-themeisle-blocks-posts-grid-builder-button"
 						onClick={ () => this.props.toggleFields( value ) }
 					/>
 				</div>
@@ -97,20 +97,20 @@ class LayoutBuilder extends Component {
 			<Fragment>
 				<div
 					className={ classnames(
-						'wp-block-themeisle-blocks-posts-builder',
+						'wp-block-themeisle-blocks-posts-grid-builder',
 						this.props.attributes.style
 					) }
 				>
-					<div className="wp-block-themeisle-blocks-posts-builder-item disabled">
+					<div className="wp-block-themeisle-blocks-posts-grid-builder-item disabled">
 
-						<div className="wp-block-themeisle-blocks-posts-builder-label">
+						<div className="wp-block-themeisle-blocks-posts-grid-builder-label">
 							{ __( 'Featured Image' ) }
 						</div>
 
 						<IconButton
 							icon={ this.props.getFields( 'image' ) ? 'visibility' : 'hidden' }
 							label={ this.props.getFields( 'image' ) ? __( 'Hide Featured Image' ) : __( 'Display Featured Image' ) }
-							className="wp-block-themeisle-blocks-posts-builder-button"
+							className="wp-block-themeisle-blocks-posts-grid-builder-button"
 							onClick={ () => this.props.toggleFields( 'image' ) }
 						/>
 					</div>

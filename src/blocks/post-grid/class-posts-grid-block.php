@@ -186,7 +186,7 @@ class Posts_Grid_Block extends Base_Block {
 			$list_items_markup .= '</div></div></div>';
 		}
 
-		$class = 'wp-block-themeisle-blocks-posts';
+		$class = 'wp-block-themeisle-blocks-posts-grid';
 
 		if ( isset( $attributes['align'] ) ) {
 			$class .= ' align' . $attributes['align'];
