@@ -22,8 +22,8 @@ const { withInstanceId } = wp.compose;
  */
 import './editor.scss';
 
-function ResponsiveControl({ label, instanceId, changeViewType, view, children }) {
-	const id = `inspector-layout-control-${ instanceId }`;
+const ResponsiveControl = ({ label, instanceId, changeViewType, view, children }) => {
+	const id = `inspector-responsive-control-${ instanceId }`;
 
 	return (
 		<div id={ id } className="wp-block-themeisle-blocks-responsive-control">
@@ -104,6 +104,6 @@ function ResponsiveControl({ label, instanceId, changeViewType, view, children }
 			</div>
 		</div>
 	);
-}
+};
 
 export default withInstanceId( ResponsiveControl );

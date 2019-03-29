@@ -92,7 +92,8 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 			wp_set_script_translations( 'themeisle-gutenberg-blocks', 'textdomain' );
 
 			wp_localize_script( 'themeisle-gutenberg-blocks', 'themeisleGutenberg', array(
-				'mapsAPI' => $api
+				'mapsAPI' => $api,
+				'assetsPath' => plugin_dir_url( $this->get_dir() ) . $this->slug . '/assets'
 			) );
 
 			wp_enqueue_style(

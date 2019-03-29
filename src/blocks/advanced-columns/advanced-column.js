@@ -968,7 +968,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 							className={ classnames(
 								'header-tab',
 								{ 'is-selected': 'layout' === tab }
-							)}
+							) }
 							onClick={ () => setState({ tab: 'layout' }) }
 						>
 							<span
@@ -982,7 +982,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 							className={ classnames(
 								'header-tab',
 								{ 'is-selected': 'style' === tab }
-							)}
+							) }
 							onClick={ () => setState({ tab: 'style' }) }
 						>
 							<span
@@ -996,7 +996,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 							className={ classnames(
 								'header-tab',
 								{ 'is-selected': 'advanced' === tab }
-							)}
+							) }
 							onClick={ () => setState({ tab: 'advanced' }) }
 						>
 							<span
@@ -1346,7 +1346,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 											/>
 										}
 									</Fragment>
-								)}
+								) }
 							</PanelBody>
 
 							<PanelBody
@@ -1522,7 +1522,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 										</ControlPanelControl>
 
 									</Fragment>
-								)}
+								) }
 							</PanelBody>
 						</Fragment>
 					) || 'advanced' === tab && (
@@ -1546,7 +1546,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 							/>
 						</PanelBody>
 
-					)}
+					) }
 				</InspectorControls>
 
 				<ResizableBox

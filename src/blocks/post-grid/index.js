@@ -16,19 +16,32 @@ import { postsIcon } from '../../helpers/icons.js';
 import Editor from './Components/Editor.js';
 
 registerBlockType( 'themeisle-blocks/posts-grid', {
-	title: __( 'Post Grid' ),
-	description: __( 'Display a list of your most recent posts in a beautiful grid.' ),
+	title: __( 'Posts' ),
+	description: __( 'Display a list of your most recent posts in a beautiful layout.' ),
 	icon: postsIcon,
 	category: 'themeisle-blocks',
 	keywords: [
 		'posts',
 		'grid',
-		'orbitfox'
+		'news'
 	],
 	attributes: {
+		style: {
+			type: 'string',
+			default: 'grid'
+		},
 		columns: {
 			type: 'number',
 			default: 3
+		},
+		template: {
+			type: 'array',
+			default: [
+				'category',
+				'title',
+				'meta',
+				'description'
+			]
 		},
 		categories: {
 			type: 'string'
@@ -45,6 +58,10 @@ registerBlockType( 'themeisle-blocks/posts-grid', {
 			type: 'string',
 			default: 'date'
 		},
+		imageSize: {
+			type: 'string',
+			default: 'full'
+		},
 		displayFeaturedImage: {
 			type: 'boolean',
 			default: true
@@ -53,18 +70,27 @@ registerBlockType( 'themeisle-blocks/posts-grid', {
 			type: 'boolean',
 			default: true
 		},
-		displayDate: {
+		displayTitle: {
 			type: 'boolean',
 			default: true
 		},
-		displayAuthor: {
+		displayMeta: {
+			type: 'boolean',
+			default: true
+		},
+		displayDescription: {
 			type: 'boolean',
 			default: true
 		},
 		excerptLength: {
 			type: 'number',
-			default: 200
+			default: 100
 		}
+	},
+
+	supports: {
+		align: [ 'wide', 'full' ],
+		html: false
 	},
 
 	edit: Editor,

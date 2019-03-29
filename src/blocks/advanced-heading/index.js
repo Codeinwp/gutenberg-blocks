@@ -810,11 +810,11 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 				</style>
 
 				{ fontFamily && (
-					<GoogleFontLoader fonts={[ {
+					<GoogleFontLoader fonts={ [ {
 						font: fontFamily,
-						weights: fontVariant && [ `${fontVariant + ( 'italic' === fontStyle ? ':i' : '' )}` ]
-					} ]} />
-				)}
+						weights: fontVariant && [ `${fontVariant + ( 'italic' === fontStyle ? ':i' : '' ) }` ]
+					} ] } />
+				) }
 
 				<BlockControls>
 					<DropdownMenu
@@ -931,7 +931,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 							className={ classnames(
 								'header-tab',
 								{ 'is-selected': 'style' === tab }
-							)}
+							) }
 							onClick={ () => setState({ tab: 'style' }) }
 						>
 							<span
@@ -945,7 +945,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 							className={ classnames(
 								'header-tab',
 								{ 'is-selected': 'advanced' === tab }
-							)}
+							) }
 							onClick={ () => setState({ tab: 'advanced' }) }
 						>
 							<span
@@ -1085,7 +1085,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 										</ControlPanelControl>
 
 									</Fragment>
-								)}
+								) }
 							</PanelBody>
 						</Fragment>
 
@@ -1231,7 +1231,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 								</SizeControl>
 							</PanelBody>
 						</Fragment>
-					)}
+					) }
 				</InspectorControls>
 
 				<RichText

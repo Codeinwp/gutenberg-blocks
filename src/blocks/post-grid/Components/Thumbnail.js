@@ -1,7 +1,10 @@
 /**
  * WordPress Dependencies
  */
-const { Spinner } = wp.components;
+const {
+	Placeholder,
+	Spinner
+} = wp.components;
 
 const { withSelect } = wp.data;
 
@@ -15,26 +18,29 @@ class Thumbnail extends Component {
 	render() {
 		const { alt, id, thumbnail, link } = this.props;
 
-		const img = thumbnail ? <img src={ thumbnail } alt={ alt } data-id={ id } /> : <Spinner />;
+		let img = <Placeholder><Spinner /></Placeholder>;
+
+		if ( thumbnail ) {
+			img = <img src={ thumbnail } alt={ alt } data-id={ id } />;
+		}
 
 		return (
-			<div className="post-thumbnail" >
+			<div className="posts-grid-post-image">
 				<a href={ link }>{ img }</a>
 			</div>
 		);
 	}
 }
 
-export default withSelect( ( select, ownProps ) => {
-	const { id } = ownProps;
+export default withSelect( ( select, props ) => {
+	const { id, alt, size } = props;
 	const image = id ? select( 'core' ).getMedia( id ) : undefined;
-	const size = 'medium';
 	const thumbnail = image ? 0 < Object.keys( image.media_details.sizes ).length ? image.media_details.sizes[size].source_url : image.source_url : null;
 
 	return image ? {
 		thumbnail: thumbnail,
-		alt: image.alt_text
+		alt: image.alt_text || alt
 	} : {
-		alt: null
+		alt: alt
 	};
 })( Thumbnail );

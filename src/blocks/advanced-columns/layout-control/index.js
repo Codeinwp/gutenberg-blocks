@@ -27,7 +27,7 @@ const { Fragment } = wp.element;
  */
 import './editor.scss';
 
-function LayoutControl({ label, instanceId, onClick, layout, layoutTablet, layoutMobile, columns, changeViewType, view }) {
+const LayoutControl = ({ label, instanceId, onClick, layout, layoutTablet, layoutMobile, columns, changeViewType, view }) => {
 	const id = `inspector-layout-control-${ instanceId }`;
 	let value;
 
@@ -188,7 +188,7 @@ function LayoutControl({ label, instanceId, onClick, layout, layoutTablet, layou
 									</SVG>
 								</Button>
 							</Tooltip>
-						)}
+						) }
 					</Fragment>
 				) || 3 === columns && (
 					<Fragment>
@@ -277,7 +277,7 @@ function LayoutControl({ label, instanceId, onClick, layout, layoutTablet, layou
 									</SVG>
 								</Button>
 							</Tooltip>
-						)}
+						) }
 					</Fragment>
 				) || 4 === columns && (
 					<Fragment>
@@ -329,7 +329,7 @@ function LayoutControl({ label, instanceId, onClick, layout, layoutTablet, layou
 									</Button>
 								</Tooltip>
 							</Fragment>
-						)}
+						) }
 					</Fragment>
 				) || 5 === columns && (
 					<Fragment>
@@ -362,7 +362,7 @@ function LayoutControl({ label, instanceId, onClick, layout, layoutTablet, layou
 									</SVG>
 								</Button>
 							</Tooltip>
-						)}
+						) }
 					</Fragment>
 				) || 6 === columns && (
 					<Fragment>
@@ -435,12 +435,12 @@ function LayoutControl({ label, instanceId, onClick, layout, layoutTablet, layou
 									</Button>
 								</Tooltip>
 							</Fragment>
-						)}
+						) }
 					</Fragment>
-				)}
+				) }
 			</div>
 		</div>
 	);
-}
+};
 
 export default withInstanceId( LayoutControl );

@@ -227,7 +227,7 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 					<AlignmentToolbar
 						value={ props.attributes.align }
 						onChange={ changeAlignment }
-						alignmentControls={[
+						alignmentControls={ [
 							{
 								icon: 'editor-alignleft',
 								title: __( 'Align left' ),
@@ -243,7 +243,7 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 								title: __( 'Align right' ),
 								align: 'right'
 							}
-						]}
+						] }
 					/>
 				</BlockControls>
 
@@ -323,7 +323,7 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 								isPrimary={ ! hover }
 								onClick={ () => setState({ hover: false }) }
 							>
-								{ __( 'Normal' )}
+								{ __( 'Normal' ) }
 							</Button>
 							<Button
 								isDefault
@@ -331,7 +331,7 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 								isPrimary={ hover }
 								onClick={ () => setState({ hover: true }) }
 							>
-								{ __( 'Hover' )}
+								{ __( 'Hover' ) }
 							</Button>
 						</ButtonGroup>
 
@@ -413,7 +413,7 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 									} }
 								/>
 							</Fragment>
-						)}
+						) }
 					</PanelBody>
 
 					<PanelBody
@@ -518,7 +518,7 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 						</a>
 					) : (
 						<IconElement />
-					)}
+					) }
 				</span>
 			</p>
 		);

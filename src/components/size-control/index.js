@@ -24,8 +24,8 @@ const { withInstanceId } = wp.compose;
  */
 import './editor.scss';
 
-function SizeControl({ label, instanceId, minus, responsive, changeViewType, changeType, changeValue, view, sizeType, typeDesktop, typeTablet, typeMobile, sizeValue, valueDesktop, valueTablet, valueMobile, children }) {
-	const id = `inspector-layout-control-${ instanceId }`;
+const SizeControl = ({ label, instanceId, minus, responsive, changeViewType, changeType, changeValue, view, sizeType, typeDesktop, typeTablet, typeMobile, sizeValue, valueDesktop, valueTablet, valueMobile, children }) => {
+	const id = `inspector-size-control-${ instanceId }`;
 	let value, type;
 
 	if ( responsive ) {
@@ -144,7 +144,7 @@ function SizeControl({ label, instanceId, minus, responsive, changeViewType, cha
 								}}
 							/>
 						</div>
-					)}
+					) }
 				</div>
 
 				{ 'linked' === type ? (
@@ -162,6 +162,6 @@ function SizeControl({ label, instanceId, minus, responsive, changeViewType, cha
 			</div>
 		</div>
 	);
-}
+};
 
 export default withInstanceId( SizeControl );

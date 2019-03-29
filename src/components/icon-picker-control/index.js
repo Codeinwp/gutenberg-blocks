@@ -104,7 +104,7 @@ class IconPickerControl extends Component {
 											this.props.prefix,
 											`fa-${ this.props.icon }`,
 											'fa-fw'
-										)}
+										) }
 									>
 									</i>
 									{ this.props.icon }
@@ -127,7 +127,7 @@ class IconPickerControl extends Component {
 												label={ i.label }
 												className={ classnames(
 													{ 'is-selected': ( i.name === this.props.icon && i.prefix === this.props.prefix ) }
-												)}
+												) }
 												onClick={ () => {
 													onToggle();
 													this.props.onChange({
@@ -141,14 +141,14 @@ class IconPickerControl extends Component {
 														i.prefix,
 														`fa-${ i.name }`,
 														'fa-fw'
-													)}
+													) }
 												>
 												</i>
 												{ i.name }
 											</MenuItem>
 										);
 									}
-								})}
+								}) }
 							</div>
 						</MenuGroup>
 					) }

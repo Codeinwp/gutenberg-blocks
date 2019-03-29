@@ -72,7 +72,7 @@ class Marker extends Component {
 					className={ classnames(
 						'wp-block-themeisle-blocks-google-map-marker-control-area',
 						{ 'opened': this.props.marker.id === this.props.isOpen }
-					)}
+					) }
 				>
 					<BaseControl
 						label={ __( 'Location' ) }
@@ -96,7 +96,7 @@ class Marker extends Component {
 									{ __( 'More info.' ) }
 								</ExternalLink>
 							</p>
-						)}
+						) }
 					</BaseControl>
 
 					<TextControl

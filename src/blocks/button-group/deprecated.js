@@ -171,18 +171,18 @@ const deprecated = [ {
 								{ 'margin-right': 'left' === data[i].iconType }
 							) }>
 							</i>
-						)}
+						) }
 
 						{ 'only' !== data[i].iconType && (
 							<RichText.Content
 								tagName="span"
 								value={ data[i].text }
 							/>
-						)}
+						) }
 
 						{ 'right' === data[i].iconType && (
 							<i className={ `${ data[i].prefix } fa-fw fa-${ data[i].icon } margin-left` }></i>
-						)}
+						) }
 					</a>
 				</Fragment>
 			);
@@ -196,7 +196,7 @@ const deprecated = [ {
 				className={ classnames(
 					props.className,
 					collapseClass
-				)}
+				) }
 				style={ {
 					justifyContent: align,
 					alignItems: align ? align : 'flex-start'

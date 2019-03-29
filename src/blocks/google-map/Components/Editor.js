@@ -526,7 +526,7 @@ class Editor extends Component {
 										{ __( 'More info.' ) }
 									</ExternalLink>
 								</p>
-							)}
+							) }
 						</BaseControl>
 
 						<TextControl

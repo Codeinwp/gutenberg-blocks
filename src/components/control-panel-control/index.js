@@ -13,8 +13,8 @@ const { withInstanceId } = wp.compose;
  */
 import './editor.scss';
 
-function ControlPanelControl({ label, instanceId, children }) {
-	const id = `inspector-layout-control-${ instanceId }`;
+const ControlPanelControl = ({ label, instanceId, children }) => {
+	const id = `inspector-control-panel-control-${ instanceId }`;
 
 	return (
 		<div className="wp-block-themeisle-blocks-control-panel-control">
@@ -52,6 +52,6 @@ function ControlPanelControl({ label, instanceId, children }) {
 			</div>
 		</div>
 	);
-}
+};
 
 export default withInstanceId( ControlPanelControl );
