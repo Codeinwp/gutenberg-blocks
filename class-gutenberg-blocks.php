@@ -92,8 +92,10 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 			wp_set_script_translations( 'themeisle-gutenberg-blocks', 'textdomain' );
 
 			wp_localize_script( 'themeisle-gutenberg-blocks', 'themeisleGutenberg', array(
-				'mapsAPI' => $api,
-				'assetsPath' => plugin_dir_url( $this->get_dir() ) . $this->slug . '/assets'
+				'isCompatible' => $this->is_compatible(),
+				'assetsPath' => plugin_dir_url( $this->get_dir() ) . $this->slug . '/assets',
+				'updatePath' => admin_url( 'update-core.php' ),
+				'mapsAPI' => $api
 			) );
 
 			wp_enqueue_style(
@@ -155,6 +157,43 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 					true
 				);
 			}
+		}
+
+		/**
+		 * Get if the version of plugin in latest.
+		 *
+		 * @since   1.2.0
+		 * @access  public
+		 */
+		public function is_compatible() {
+			if ( ! function_exists( 'plugins_api' ) ) {
+				require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
+			}
+
+			if ( ! OTTER_BLOCKS_VERSION ) {
+				return true;
+			}
+
+			$current = OTTER_BLOCKS_VERSION;
+
+			$args = array(
+				'slug' => 'otter-blocks',
+				'fields' => array(
+					'version' => true,
+				)
+			);
+			
+			$call_api = plugins_api( 'plugin_information', $args );
+			
+			if ( is_wp_error( $call_api ) ) {
+				return true;	
+			} else {
+				if ( ! empty( $call_api->version ) ) {
+					$latest = $call_api->version;
+				}
+			}
+
+			return version_compare( $current, $latest , '>=' );
 		}
 
 		/**

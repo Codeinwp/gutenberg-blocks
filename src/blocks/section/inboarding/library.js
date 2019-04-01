@@ -293,6 +293,24 @@ class Library extends Component {
 					) }
 				</div>
 
+				{ ! Boolean( themeisleGutenberg.isCompatible ) && (
+					<div className="library-modal-error">
+						<Notice
+							status="warning"
+							isDismissible={ false }
+							className="version-warning"
+							actions={ [
+								{
+									label: __( 'Update Now' ),
+									url: themeisleGutenberg.updatePath
+								}
+							] }
+						>
+							{ __( 'You are using an older version of Otter. Use the latest version of Otter to have maximum compatibility with Template Library.' ) }
+						</Notice>
+					</div>
+				) }
+
 				{ this.state.isError && (
 					<div className="library-modal-error">
 						<Notice
