@@ -658,6 +658,7 @@ class Editor extends Component {
 
 				<div
 					id={ this.props.attributes.id }
+					className={ this.props.className }
 					style={ {
 						height: this.props.attributes.height + 'px'
 					} }

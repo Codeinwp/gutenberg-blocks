@@ -126,19 +126,23 @@ class Sharing_Icons_Block extends Base_Block {
 			$class = 'wp-block-themeisle-blocks-sharing-icons has-label';
 		}
 
+		if ( isset( $attributes['className'] ) ) {
+			$class .=  ' ' . esc_attr( $attributes['className'] );
+		}
+
 		$style = '';
 
 		if ( isset( $attributes['align'] ) ) {
 			$style .= 'style="text-align: ' . $attributes['align'] .';"';
 		}
 
-		$html = '<div class="' . $class . '" ' . $style . '>';
+		$html = '<div class="' . esc_attr( $class ) . '" ' . $style . '>';
 		foreach ( $this->social_attributes as $key => $icon ) {
 			if ( $key !== 'className' && $attributes[ $key ] == 1 ) {
-				$html .= '<a class="social-icon is-' . $key . '" href="' . esc_url( $icon['url'] ) . '" target="_blank">';
-				$html .= '<i class="fab fa-' . $icon['icon'] . '"></i>';
+				$html .= '<a class="social-icon is-' . esc_html( $key ) . '" href="' . esc_url( $icon['url'] ) . '" target="_blank">';
+				$html .= '<i class="fab fa-' . esc_html( $icon['icon'] ) . '"></i>';
 				if ( strpos( $attributes['className'], 'is-style-icons' ) === false ) {
-					$html .= $icon['label'];
+					$html .= esc_html( $icon['label'] );
 				}
 				$html .= '</a>';
 			}

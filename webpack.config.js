@@ -17,7 +17,7 @@ module.exports = {
 		path: __dirname,
 		filename: './build/block.js',
 		chunkFilename: './build/[name].js',
-		jsonpFunction: 'tiOtterJsonp'
+		jsonpFunction: 'tiOtterWebpackJsonp'
 	},
 	module: {
 		rules: [

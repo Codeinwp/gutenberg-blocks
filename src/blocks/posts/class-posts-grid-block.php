@@ -188,6 +188,10 @@ class Posts_Grid_Block extends Base_Block {
 
 		$class = 'wp-block-themeisle-blocks-posts-grid';
 
+		if ( isset( $attributes['className'] ) ) {
+			$class .=  ' ' . esc_attr( $attributes['className'] );
+		}
+
 		if ( isset( $attributes['align'] ) ) {
 			$class .= ' align' . $attributes['align'];
 		}

@@ -82,9 +82,5 @@ registerBlockType( 'themeisle-blocks/google-map', {
 		html: false
 	},
 
-	edit: Editor,
-
-	save: () => {
-		return null;
-	}
+	edit: Editor
 });

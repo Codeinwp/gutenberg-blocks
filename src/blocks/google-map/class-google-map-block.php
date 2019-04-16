@@ -97,11 +97,15 @@ class Google_Map_Block extends Base_Block {
 		$id = isset( $attributes['id'] ) ? $attributes['id'] : 'wp-block-themeisle-blocks-google-map-' . rand( 10,100 );
 		$class = 'wp-block-themeisle-blocks-google-map';
 
-		if ( isset( $attributes['align'] ) ) {
-			$class = 'wp-block-themeisle-blocks-google-map align' . $attributes['align'];
+		if ( isset( $attributes['className'] ) ) {
+			$class .=  ' ' . esc_attr( $attributes['className'] );
 		}
 
-		$output = '<div class="' . $class . '" id="' . $id . '" style="height:' . $attributes['height'] . 'px;"></div>' . "\n";
+		if ( isset( $attributes['align'] ) ) {
+			$class .=  ' align' . esc_attr( $attributes['align'] );
+		}
+
+		$output = '<div class="' . esc_attr( $class ) . '" id="' . esc_attr( $id ) . '" style="height:' . intval( $attributes['height'] ) . 'px;"></div>' . "\n";
 		$output .= '<script type="text/javascript">' . "\n";
 		$output .= '	/* <![CDATA[ */' . "\n";
 		$output .= '		if ( ! window.themeisleGoogleMaps ) window.themeisleGoogleMaps =[];' . "\n";
