@@ -790,7 +790,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 		const style = {
 			color: headingColor,
 			...fontSizeStyle,
-			fontFamily: undefined !== fontFamily && fontFamily,
+			fontFamily: fontFamily ? fontFamily : 'inherit',
 			fontWeight: 'regular' === fontVariant ? 'normal' : fontVariant,
 			fontStyle: fontStyle,
 			textTransform: textTransform,
