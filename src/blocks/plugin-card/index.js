@@ -89,8 +89,7 @@ registerBlockType( 'themeisle-blocks/plugin-cards', {
 	},
 
 	supports: {
-		html: false,
-		align: [ 'left', 'center', 'right' ]
+		html: false
 	},
 
 	edit: compose([

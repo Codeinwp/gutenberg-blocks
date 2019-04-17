@@ -6,13 +6,6 @@ import classnames from 'classnames';
 import uuidv4 from 'uuid';
 
 /**
- * Internal dependencies
- */
-import './editor.scss';
-
-import { otterIcon } from '../../../helpers/icons.js';
-
-/**
  * WordPress dependencies
  */
 const {
@@ -44,6 +37,13 @@ const {
 } = wp.data;
 
 const { Component } = wp.element;
+
+/**
+ * Internal dependencies
+ */
+import './editor.scss';
+
+import { otterIcon } from '../../../helpers/icons.js';
 
 class Library extends Component {
 	constructor() {
@@ -200,7 +200,7 @@ class Library extends Component {
 				className={ classnames(
 					'themeisle-library-modal',
 					{ 'is-preview': this.state.preview }
-				)}
+				) }
 				onRequestClose={ this.props.close }
 				isDismissable={ false }
 				shouldCloseOnClickOutside={ false }
@@ -229,7 +229,7 @@ class Library extends Component {
 									className={ classnames(
 										'library-modal-header-tabs-button',
 										{ 'is-selected': 'block' === this.state.tab }
-									)}
+									) }
 									onClick={ () => this.changeTab( 'block' ) }
 								>
 									<Dashicon icon="screenoptions" />
@@ -240,14 +240,14 @@ class Library extends Component {
 									className={ classnames(
 										'library-modal-header-tabs-button',
 										{ 'is-selected': 'template' === this.state.tab }
-									)}
+									) }
 									onClick={ () => this.changeTab( 'template' ) }
 								>
 									<Dashicon icon="editor-table" />
 									{ __( 'Templates' ) }
 								</Button>
 							</div>
-						)}
+						) }
 
 						<div className="library-modal-header-actions">
 							{ this.state.preview && (
@@ -259,7 +259,7 @@ class Library extends Component {
 									<Dashicon icon="arrow-down-alt" size={ 16 } />
 									{ __( 'Insert' ) }
 								</Button>
-							)}
+							) }
 
 							<Tooltip text={ __( 'Close' ) }>
 								<Button
@@ -290,8 +290,26 @@ class Library extends Component {
 								onChange={ this.changeSearch }
 							/>
 						</div>
-					)}
+					) }
 				</div>
+
+				{ ! Boolean( themeisleGutenberg.isCompatible ) && (
+					<div className="library-modal-error">
+						<Notice
+							status="warning"
+							isDismissible={ false }
+							className="version-warning"
+							actions={ [
+								{
+									label: __( 'Update Now' ),
+									url: themeisleGutenberg.updatePath
+								}
+							] }
+						>
+							{ __( 'You are using an older version of Otter. Use the latest version of Otter to have maximum compatibility with Template Library.' ) }
+						</Notice>
+					</div>
+				) }
 
 				{ this.state.isError && (
 					<div className="library-modal-error">
@@ -302,7 +320,7 @@ class Library extends Component {
 							{ __( 'There seems to be an error. Please try again.' ) }
 						</Notice>
 					</div>
-				)}
+				) }
 
 				{ this.state.preview ? (
 					<div className="library-modal-preview">
@@ -334,11 +352,11 @@ class Library extends Component {
 												<div className="library-modal-content__footer_meta">
 													{ ( i.title && 'template' === i.type ) && (
 														<h4 className="library-modal-content__footer_meta_title">{ i.title }{ i.author && __( ' by ' ) + i.author } </h4>
-													)}
+													) }
 
 													{ ( i.author && 'block' === i.type ) && (
 														<h4 className="library-modal-content__footer_meta_author">{ __( 'Author:' ) } { i.author }</h4>
-													)}
+													) }
 												</div>
 
 												<div className="library-modal-content__footer_actions">
@@ -350,12 +368,12 @@ class Library extends Component {
 															onClick={ () => this.setState({
 																preview: true,
 																selectedTemplate: value
-															})}
+															}) }
 															tabindex="0"
 														>
 															{ __( 'Preview' ) }
 														</Button>
-													)}
+													) }
 
 													<Button
 														isPrimary
@@ -371,7 +389,7 @@ class Library extends Component {
 										</div>
 									);
 								}
-							})}
+							}) }
 							<div
 								aria-label={ __( 'Coming Soon' ) }
 								className="library-modal-content__item"

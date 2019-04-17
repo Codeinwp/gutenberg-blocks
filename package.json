@@ -1,6 +1,6 @@
 {
 	"name": "themeisle-gutenberg-blocks",
-	"version": "1.1.5",
+	"version": "1.2.0",
 	"description": "ThemeIsle Gutenberg Blocks",
 	"scripts": {
 		"build": "cross-env BABEL_ENV=default NODE_ENV=production webpack",
@@ -12,13 +12,13 @@
 		"npm": ">=6.0.0"
 	},
 	"dependencies": {
-		"@handsontable/react": "^1.1.0",
+		"array-move": "^2.0.0",
 		"classnames": "^2.2.6",
-		"handsontable": "^5.0.1",
 		"hex-rgba": "^1.0.2",
 		"react-google-charts": "^3.0.5",
 		"react-google-font-loader": "^1.0.5",
 		"react-lazy-load": "^3.0.13",
+		"react-sortable-hoc": "^1.8.3",
 		"uuid": "^3.3.2"
 	},
 	"devDependencies": {

@@ -6,7 +6,7 @@ const {
 	SVG
 } = wp.components;
 
-function SocialIcons({ icon }) {
+const SocialIcons = ({ icon }) => {
 	if ( 'facebook' === icon ) {
 		return (
 			<SVG className="themeisle-toolbar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512">
@@ -50,6 +50,6 @@ function SocialIcons({ icon }) {
 			</SVG>
 		);
 	}
-}
+};
 
 export default SocialIcons;

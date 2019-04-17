@@ -83,7 +83,7 @@ class Options extends Component {
 					>
 						{ __( 'Otter Options' ) }
 					</PluginMoreMenuItem>
-				)}
+				) }
 
 				{ this.state.isOpen && (
 					<Modal
@@ -99,7 +99,7 @@ class Options extends Component {
 							/>
 						</BaseControl>
 					</Modal>
-				)}
+				) }
 			</Fragment>
 		);
 	}

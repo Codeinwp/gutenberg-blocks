@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import './editor.scss';
-
-/**
  * WordPress dependencies
  */
 const {
@@ -13,8 +8,13 @@ const {
 
 const { withInstanceId } = wp.compose;
 
-function ControlPanelControl({ label, instanceId, children }) {
-	const id = `inspector-layout-control-${ instanceId }`;
+/**
+ * Internal dependencies
+ */
+import './editor.scss';
+
+const ControlPanelControl = ({ label, instanceId, children }) => {
+	const id = `inspector-control-panel-control-${ instanceId }`;
 
 	return (
 		<div className="wp-block-themeisle-blocks-control-panel-control">
@@ -52,6 +52,6 @@ function ControlPanelControl({ label, instanceId, children }) {
 			</div>
 		</div>
 	);
-}
+};
 
 export default withInstanceId( ControlPanelControl );

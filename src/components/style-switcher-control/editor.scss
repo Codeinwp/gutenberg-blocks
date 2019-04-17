@@ -1,0 +1,36 @@
+.wp-block-themeisle-blocks-style-switcher {
+	display: flex;
+
+	.blocks-style-switcher-item {
+		margin: 0 4px;
+		padding: 5px;
+		flex-basis: 50%;
+		cursor: pointer;
+		overflow: hidden;
+		border-radius: 4px;
+
+		&.is-active {
+			box-shadow: 0 0 0 2px #000;
+		}
+
+		&:hover {
+			background: #f3f4f5;
+		}
+
+		&:focus {
+			box-shadow: 0 0 0 2px #00a0d2;
+		}
+
+		.blocks-style-switcher-item-preview {
+
+			img {
+				border: 1px solid #dcddde;
+				border-radius: 5px;
+			}
+		}
+
+		.blocks-style-switcher-item-label {
+			text-align: center;
+		}
+	}
+}

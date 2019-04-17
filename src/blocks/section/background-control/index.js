@@ -25,8 +25,8 @@ const {
 
 const { withInstanceId } = wp.compose;
 
-function BackgroundControl({ label, instanceId, backgroundType, changeBackgroundType }) {
-	const id = `inspector-layout-control-${ instanceId }`;
+const BackgroundControl = ({ label, instanceId, backgroundType, changeBackgroundType }) => {
+	const id = `inspector-background-control-${ instanceId }`;
 
 	return (
 		<div id={ id } className="components-base-control wp-block-themeisle-blocks-advanced-columns-background-control">
@@ -40,7 +40,7 @@ function BackgroundControl({ label, instanceId, backgroundType, changeBackground
 							className={ classnames(
 								'is-button',
 								{ 'is-primary': 'color' === backgroundType }
-							)}
+							) }
 							onClick={ () => {
 								changeBackgroundType( 'color' );
 							}}
@@ -51,7 +51,7 @@ function BackgroundControl({ label, instanceId, backgroundType, changeBackground
 							className={ classnames(
 								'is-button',
 								{ 'is-primary': 'image' === backgroundType }
-							)}
+							) }
 							onClick={ () => {
 								changeBackgroundType( 'image' );
 							}}
@@ -62,7 +62,7 @@ function BackgroundControl({ label, instanceId, backgroundType, changeBackground
 								className={ classnames(
 									'is-button',
 									{ 'is-primary': 'gradient' === backgroundType }
-								)}
+								) }
 								onClick={ () => {
 									changeBackgroundType( 'gradient' );
 								}}
@@ -75,6 +75,6 @@ function BackgroundControl({ label, instanceId, backgroundType, changeBackground
 			</div>
 		</div>
 	);
-}
+};
 
 export default withInstanceId( BackgroundControl );

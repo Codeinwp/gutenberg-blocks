@@ -60,7 +60,7 @@ class Chart_Pie_Block extends Base_Block {
 		$chart_markup = "<div class='wp-block-themeisle-blocks-chart-pie' id='" . $attributes['id'] . "' style='width: 100%; min-height: 450px;'></div>";
 
 		$script = "<script>
-			google.charts.load('current', {'packages':['corechart']});
+			google.charts.load('current', {'packages':['corechart'] });
 			google.charts.setOnLoadCallback(drawChart);
 	
 			function drawChart() {

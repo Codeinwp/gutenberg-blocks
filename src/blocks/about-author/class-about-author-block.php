@@ -60,6 +60,11 @@ class About_Author_Block extends Base_Block {
 		);
 
 		$class = 'wp-block-themeisle-blocks-about-author';
+
+		if ( isset( $attributes['className'] ) ) {
+			$class .=  ' ' . esc_attr( $attributes['className'] );
+		}
+
 		return sprintf(
 			'<section class="%1$s"><div class="themeisle-author-image">%2$s</div><div class="themeisle-author-data">%3$s%4$s</div></section>',
 			esc_attr( $class ),

@@ -1872,7 +1872,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 							className={ classnames(
 								'header-tab',
 								{ 'is-selected': 'layout' === tab }
-							)}
+							) }
 							onClick={ () => setState({ tab: 'layout' }) }
 						>
 							<span
@@ -1886,7 +1886,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 							className={ classnames(
 								'header-tab',
 								{ 'is-selected': 'style' === tab }
-							)}
+							) }
 							onClick={ () => setState({ tab: 'style' }) }
 						>
 							<span
@@ -1900,7 +1900,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 							className={ classnames(
 								'header-tab',
 								{ 'is-selected': 'advanced' === tab }
-							)}
+							) }
 							onClick={ () => setState({ tab: 'advanced' }) }
 						>
 							<span
@@ -2111,7 +2111,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 											</Tooltip>
 										</ButtonGroup>
 									</BaseControl>
-								)}
+								) }
 
 								<SelectControl
 									label={ __( 'Minimum Height' ) }
@@ -2137,7 +2137,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 											max={ 1000 }
 										/>
 									</ResponsiveControl>
-								)}
+								) }
 
 								{ 'auto' !== columnsHeight && (
 									<BaseControl
@@ -2184,7 +2184,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 											</Tooltip>
 										</ButtonGroup>
 									</BaseControl>
-								)}
+								) }
 							</PanelBody>
 						</Fragment>
 
@@ -2383,7 +2383,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 											/>
 										}
 									</Fragment>
-								)}
+								) }
 							</PanelBody>
 
 							<PanelBody
@@ -2587,7 +2587,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 											/>
 										}
 									</Fragment>
-								)}
+								) }
 
 								<ControlPanelControl
 									label={ 'CSS Filters' }
@@ -2840,7 +2840,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 
 										</ControlPanelControl>
 									</Fragment>
-								)}
+								) }
 							</PanelBody>
 
 							<PanelBody
@@ -2924,9 +2924,9 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 												checked={ getDividerInvert }
 												onChange={ changeDividerInvert }
 											/>
-										)}
+										) }
 									</Fragment>
-								)}
+								) }
 							</PanelBody>
 						</Fragment>
 
@@ -2978,7 +2978,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 							</PanelBody>
 						</Fragment>
 
-					)}
+					) }
 				</InspectorControls>
 
 				<Tag className={ classes } style={ style }>

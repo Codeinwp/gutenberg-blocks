@@ -79,17 +79,24 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				'themeisle-gutenberg-blocks-vendor',
 				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/vendor.js',
 				array( 'react', 'react-dom' ),
-				$version
+				$version,
+				true
 			);
 
 			wp_enqueue_script(
 				'themeisle-gutenberg-blocks',
 				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/block.js',
 				array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text' ,'wp-viewport', 'themeisle-gutenberg-blocks-vendor' ),
-				$version
+				$version,
+				true
 			);
 
+			wp_set_script_translations( 'themeisle-gutenberg-blocks', 'textdomain' );
+
 			wp_localize_script( 'themeisle-gutenberg-blocks', 'themeisleGutenberg', array(
+				'isCompatible' => $this->is_compatible(),
+				'assetsPath' => plugin_dir_url( $this->get_dir() ) . $this->slug . '/assets',
+				'updatePath' => admin_url( 'update-core.php' ),
 				'mapsAPI' => $api
 			) );
 
@@ -111,6 +118,12 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				return;
 			}
 
+			if ( THEMEISLE_GUTENBERG_BLOCKS_DEV ) {
+				$version = time();
+			} else {
+				$version = THEMEISLE_GUTENBERG_BLOCKS_VERSION;
+			}
+
 			wp_enqueue_style(
 				'themeisle-block_styles',
 				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/style.css'
@@ -119,6 +132,70 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 			if ( has_block( 'themeisle-blocks/chart-pie' ) ) {
 				wp_enqueue_script( 'google-charts', 'https://www.gstatic.com/charts/loader.js' );
 			}
+
+			if ( has_block( 'themeisle-blocks/google-map' ) ) {
+
+				// Get the API key
+				$apikey = get_option( 'themeisle_google_map_block_api_key' );
+		
+				// Don't output anything if there is no API key
+				if ( null === $apikey || empty( $apikey ) ) {
+					return;
+				}
+
+				wp_enqueue_script(
+					'themeisle-gutenberg-google-maps',
+					plugin_dir_url( $this->get_dir() ) . $this->slug . '/src/frontend/google-map/loader.js',
+					'',
+					$version,
+					true
+				);
+
+				wp_enqueue_script(
+					'google-maps',
+					'https://maps.googleapis.com/maps/api/js?key=' . $apikey . '&libraries=places&callback=initMapScript',
+					array( 'themeisle-gutenberg-google-maps' ),
+					'',
+					true
+				);
+			}
+		}
+
+		/**
+		 * Get if the version of plugin in latest.
+		 *
+		 * @since   1.2.0
+		 * @access  public
+		 */
+		public function is_compatible() {
+			if ( ! function_exists( 'plugins_api' ) ) {
+				require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
+			}
+
+			if ( ! OTTER_BLOCKS_VERSION ) {
+				return true;
+			}
+
+			$current = OTTER_BLOCKS_VERSION;
+
+			$args = array(
+				'slug' => 'otter-blocks',
+				'fields' => array(
+					'version' => true,
+				)
+			);
+			
+			$call_api = plugins_api( 'plugin_information', $args );
+			
+			if ( is_wp_error( $call_api ) ) {
+				return true;	
+			} else {
+				if ( ! empty( $call_api->version ) ) {
+					$latest = $call_api->version;
+				}
+			}
+
+			return version_compare( $current, $latest , '>=' );
 		}
 
 		/**
