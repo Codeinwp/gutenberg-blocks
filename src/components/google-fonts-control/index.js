@@ -156,7 +156,7 @@ class GoogleFontsControl extends Component {
 														<MenuItem
 															className={ classnames(
 																{ 'is-selected': ( i.family === this.props.value ) }
-															)}
+															) }
 															onClick={ () => {
 																onToggle();
 																this.props.onChangeFontFamily( i.family );
@@ -182,7 +182,7 @@ class GoogleFontsControl extends Component {
 														</MenuItem>
 													);
 												}
-											})}
+											}) }
 										</div>
 									</MenuGroup>
 								) }
@@ -190,7 +190,7 @@ class GoogleFontsControl extends Component {
 						)
 					) : (
 						__( 'Loading…' )
-					)}
+					) }
 				</BaseControl>
 
 				{ this.state.variants && (
@@ -200,7 +200,7 @@ class GoogleFontsControl extends Component {
 						options={ this.state.variants }
 						onChange={ this.props.onChangeFontVariant }
 					/>
-				)}
+				) }
 
 				<SelectControl
 					label={ __( 'Font Style' ) }
@@ -242,7 +242,7 @@ class GoogleFontsControl extends Component {
 						] }
 						onChange={ this.props.onChangeTextTransform }
 					/>
-				)}
+				) }
 			</div>
 		);
 	}

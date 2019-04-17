@@ -3,10 +3,6 @@
  */
 import { Chart } from 'react-google-charts';
 
-import { HotTable } from '@handsontable/react';
-
-import 'handsontable/dist/handsontable.full.css';
-
 /**
  * WordPress dependencies
  */
@@ -18,22 +14,15 @@ const {
 } = wp.element;
 
 const {
-	Button,
-	Dashicon,
 	ExternalLink,
 	FormToggle,
 	Notice,
 	PanelBody,
 	PanelRow,
-	TextControl,
-	Toolbar,
-	Tooltip
+	TextControl
 } = wp.components;
 
-const {
-	BlockControls,
-	InspectorControls
-} = wp.editor;
+const { InspectorControls } = wp.editor;
 
 class Editor extends Component {
 	constructor() {
@@ -41,16 +30,11 @@ class Editor extends Component {
 
 		this.changeChartTitle = this.changeChartTitle.bind( this );
 		this.toggle3d = this.toggle3d.bind( this );
-		this.saveChart = this.saveChart.bind( this );
 
 		if ( this.props.clientId && '' === this.props.attributes.id ) {
 			const id = this.props.clientId;
 			this.props.setAttributes({ id });
 		}
-
-		this.state = {
-			isOpen: false
-		};
 
 		this.data = JSON.parse( this.props.attributes.data );
 	}
@@ -67,28 +51,9 @@ class Editor extends Component {
 		this.props.setAttributes({ options });
 	}
 
-	saveChart() {
-		this.props.setAttributes({ data: JSON.stringify( this.data ) });
-		this.setState({ isOpen: ! this.state.isOpen });
-	}
-
 	render() {
 		return (
 			<Fragment>
-				<BlockControls key="toolbar-controls">
-					<Toolbar
-						className='components-toolbar'
-					>
-						<Tooltip text={ this.state.isOpen ? __( 'Save' ) : __( 'Edit Chart' ) }>
-							<Button
-								className="components-icon-button components-toolbar__control edit-pie-chart"
-								onClick={ this.saveChart }
-							>
-								<Dashicon icon={ this.state.isOpen ? 'yes' : 'edit' } />
-							</Button>
-						</Tooltip>
-					</Toolbar>
-				</BlockControls>
 
 				<InspectorControls>
 					<PanelBody
@@ -116,45 +81,14 @@ class Editor extends Component {
 				</InspectorControls>
 
 				<div className={ this.props.className }>
-					{ this.state.isOpen ?
-						<HotTable
-							data={ this.data }
-							allowInsertRow={ true }
-							cell={ [
-								{
-									row: 0,
-									col: 0,
-									readOnly: true
-								},
-								{
-									row: 0,
-									col: 1,
-									readOnly: true
-								}
-							] }
-							columns={ [
-								{
-									type: 'text'
-								},
-								{
-									type: 'numeric'
-								}
-							] }
-							contextMenu={ true }
-							className="htLeft"
-							height="200"
-							rowHeaders={ true }
-							stretchH="all"
-						/>					:
-						<Chart
-							chartType="PieChart"
-							data={ JSON.parse( this.props.attributes.data ) }
-							options={ this.props.attributes.options }
-							width="100%"
-							height="400px"
-							legendToggle
-						/>
-					}
+					<Chart
+						chartType="PieChart"
+						data={ JSON.parse( this.props.attributes.data ) }
+						options={ this.props.attributes.options }
+						width="100%"
+						height="400px"
+						legendToggle
+					/>
 				</div>
 				<Notice status="warning" isDismissible={ false }>{ __( 'We have deprecated Pie Chart Block and it will be removed soon. For advanced options and more charts, please install our Visualizer plugin:' ) } <ExternalLink href="http://wordpress.org/plugins/visualizer/">{ __( 'Visualizer: Tables and Charts Manager for WordPress' ) }</ExternalLink></Notice>
 			</Fragment>

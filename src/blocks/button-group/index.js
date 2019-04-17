@@ -396,7 +396,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 								{ 'margin-right': 'left' === data[i].iconType }
 							) }>
 							</i>
-						)}
+						) }
 
 						{ 'only' !== data[i].iconType && (
 							<RichText
@@ -408,11 +408,11 @@ registerBlockType( 'themeisle-blocks/button-group', {
 								tagName="span"
 								keepPlaceholderOnFocus
 							/>
-						)}
+						) }
 
 						{ 'right' === data[i].iconType && (
 							<i className={ `${ data[i].prefix } fa-fw fa-${ data[i].icon } margin-left` }></i>
-						)}
+						) }
 					</div>
 				</Fragment>
 			);
@@ -423,17 +423,17 @@ registerBlockType( 'themeisle-blocks/button-group', {
 		return (
 			<Fragment>
 				{ fontFamily && (
-					<GoogleFontLoader fonts={[ {
+					<GoogleFontLoader fonts={ [ {
 						font: fontFamily,
-						weights: fontVariant && [ `${fontVariant + ( 'italic' === fontStyle ? ':i' : '' )}` ]
-					} ]} />
-				)}
+						weights: fontVariant && [ `${fontVariant + ( 'italic' === fontStyle ? ':i' : '' ) }` ]
+					} ] } />
+				) }
 
 				<BlockControls>
 					<AlignmentToolbar
 						value={ align }
 						onChange={ changeAlignment }
-						alignmentControls={[
+						alignmentControls={ [
 							{
 								icon: 'editor-alignleft',
 								title: __( 'Align left' ),
@@ -449,7 +449,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 								title: __( 'Align right' ),
 								align: 'flex-end'
 							}
-						]}
+						] }
 					/>
 
 					<Toolbar
@@ -515,7 +515,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 							className={ classnames(
 								'header-tab',
 								{ 'is-selected': 'buttons' === tab }
-							)}
+							) }
 							onClick={ () => setState({ tab: 'buttons' }) }
 						>
 							<span
@@ -531,7 +531,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 							className={ classnames(
 								'header-tab',
 								{ 'is-selected': 'group' === tab }
-							)}
+							) }
 							onClick={ () => setState({ tab: 'group' }) }
 						>
 							<span
@@ -585,7 +585,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 															{ __( 'Button' ) + ' ' + ( n + 1 ) + ': ' + unescapeHTML( data[n].text ) }
 														</MenuItem>
 													);
-												})}
+												}) }
 											</MenuGroup>
 										) }
 									/>
@@ -626,7 +626,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 												isPrimary={ ! hover }
 												onClick={ () => setState({ hover: false }) }
 											>
-												{ __( 'Normal' )}
+												{ __( 'Normal' ) }
 											</Button>
 											<Button
 												isDefault
@@ -634,7 +634,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 												isPrimary={ hover }
 												onClick={ () => setState({ hover: true }) }
 											>
-												{ __( 'Hover' )}
+												{ __( 'Hover' ) }
 											</Button>
 										</ButtonGroup>
 
@@ -702,7 +702,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 													/>
 												</BaseControl>
 											</Fragment>
-										)}
+										) }
 
 										<RangeControl
 											label={ __( 'Border Width' ) }
@@ -743,7 +743,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 														isPrimary={ ! hover }
 														onClick={ () => setState({ hover: false }) }
 													>
-														{ __( 'Normal' )}
+														{ __( 'Normal' ) }
 													</Button>
 													<Button
 														isDefault
@@ -751,7 +751,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 														isPrimary={ hover }
 														onClick={ () => setState({ hover: true }) }
 													>
-														{ __( 'Hover' )}
+														{ __( 'Hover' ) }
 													</Button>
 												</ButtonGroup>
 
@@ -872,9 +872,9 @@ registerBlockType( 'themeisle-blocks/button-group', {
 
 														</ControlPanelControl>
 													</Fragment>
-												)}
+												) }
 											</Fragment>
-										)}
+										) }
 									</PanelBody>
 
 									<PanelBody
@@ -911,7 +911,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 													}}
 												/>
 											</Fragment>
-										)}
+										) }
 									</PanelBody>
 
 									<PanelBody
@@ -1001,7 +1001,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 								/>
 							</PanelBody>
 						</Fragment>
-					)}
+					) }
 				</InspectorControls>
 
 				<div
@@ -1009,7 +1009,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 					className={ classnames(
 						props.className,
 						collapseClass
-					)}
+					) }
 					style={ {
 						justifyContent: align,
 						alignItems: align ? align : 'flex-start'
@@ -1073,18 +1073,18 @@ registerBlockType( 'themeisle-blocks/button-group', {
 								{ 'margin-right': 'left' === data[i].iconType }
 							) }>
 							</i>
-						)}
+						) }
 
 						{ 'only' !== data[i].iconType && (
 							<RichText.Content
 								tagName="span"
 								value={ data[i].text }
 							/>
-						)}
+						) }
 
 						{ 'right' === data[i].iconType && (
 							<i className={ `${ data[i].prefix } fa-fw fa-${ data[i].icon } margin-left` }></i>
-						)}
+						) }
 					</a>
 				</Fragment>
 			);
@@ -1098,7 +1098,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 				className={ classnames(
 					props.className,
 					collapseClass
-				)}
+				) }
 				style={ {
 					justifyContent: align,
 					alignItems: align ? align : 'flex-start'

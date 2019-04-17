@@ -7,6 +7,10 @@
 
 	.components-popover__content {
 		overflow-y: hidden;
+
+		.components-menu-group {
+			padding: 7px;
+		}
 		
 		.components-popover__items {
 			max-height: 300px;

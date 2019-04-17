@@ -520,9 +520,11 @@
 
 .editor-block-list__block {
 	&[data-type="themeisle-blocks/advanced-columns"] {
-		> .editor-block-list__block-edit {
-			&:before {
-				outline: 2px dashed #d5dadf;
+		&:not(.is-selected) {
+			> .editor-block-list__block-edit {
+				&:before {
+					outline: 2px dashed #d5dadf;
+				}
 			}
 		}
 	}
@@ -619,14 +621,18 @@
 		width: 100% !important;
 
 		> span  > .components-resizable-box__handle-right {
-			background: #0085ba;
+			background: transparent;
 			display: none;
 			width: 2px;
 			height: 100%;
 			top: 0;
 			right: -15.5px;
 			padding: 0;
-			z-index: 9999;
+			z-index: 999;
+
+			&:hover {
+				background: #0085ba;
+			}
 
 			&:before {
 				background: #0085ba;

@@ -4,11 +4,6 @@
 import classnames from 'classnames';
 
 /**
- * Internal dependencies
- */
-import './editor.scss';
-
-/**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
@@ -22,8 +17,13 @@ const {
 
 const { withInstanceId } = wp.compose;
 
-function ResponsiveControl({ label, instanceId, changeViewType, view, children }) {
-	const id = `inspector-layout-control-${ instanceId }`;
+/**
+ * Internal dependencies
+ */
+import './editor.scss';
+
+const ResponsiveControl = ({ label, instanceId, changeViewType, view, children }) => {
+	const id = `inspector-responsive-control-${ instanceId }`;
 
 	return (
 		<div id={ id } className="wp-block-themeisle-blocks-responsive-control">
@@ -104,6 +104,6 @@ function ResponsiveControl({ label, instanceId, changeViewType, view, children }
 			</div>
 		</div>
 	);
-}
+};
 
 export default withInstanceId( ResponsiveControl );
