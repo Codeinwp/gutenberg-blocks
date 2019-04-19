@@ -66,11 +66,25 @@ class Options extends Component {
 			themeisle_blocks_settings_default_block: ! Boolean( this.state.isDefault )
 		});
 
-		model.save().then( response => {
+		const save = model.save();
+
+		save.success( ( response, status ) => {
+			if ( 'success' === status ) {
+				this.settings.fetch();
+				this.setState({
+					isDefault: Boolean( response.themeisle_blocks_settings_default_block )
+				});
+			}
+
+			if ( 'error' === status ) {
+				console.log( response );
+			}
+
 			this.settings.fetch();
-			this.setState({
-				isDefault: Boolean( response.themeisle_blocks_settings_default_block )
-			});
+		});
+
+		save.error( ( response, status ) => {
+			console.log( response );
 		});
 	}
 

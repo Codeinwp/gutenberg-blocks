@@ -362,24 +362,38 @@ class Editor extends Component {
 				themeisle_google_map_block_api_key: this.state.api
 			});
 
-			model.save().then( response => {
-				let status = false;
+			const save = model.save();
+
+			save.success( ( response, status ) => {
+				if ( 'success' === status ) {
+					let isAPISaved = false;
+
+					this.settings.fetch();
+
+					if ( '' !== response.themeisle_google_map_block_api_key ) {
+						isAPISaved = true;
+					}
+
+					this.setState({
+						isSaving: false,
+						isAPISaved
+					});
+
+					if ( '' !== response.themeisle_google_map_block_api_key ) {
+						window.isMapLoaded = false;
+						this.enqueueScript( response.themeisle_google_map_block_api_key );
+					}
+				}
+
+				if ( 'error' === status ) {
+					console.log( response );
+				}
 
 				this.settings.fetch();
+			});
 
-				if ( '' !== response.themeisle_google_map_block_api_key ) {
-					status = true;
-				}
-
-				this.setState({
-					isSaving: false,
-					isAPISaved: status
-				});
-
-				if ( '' !== response.themeisle_google_map_block_api_key ) {
-					window.isMapLoaded = false;
-					this.enqueueScript( response.themeisle_google_map_block_api_key );
-				}
+			save.error( ( response, status ) => {
+				console.log( response );
 			});
 		}
 	}
