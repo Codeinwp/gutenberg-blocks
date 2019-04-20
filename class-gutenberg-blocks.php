@@ -172,7 +172,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
 			}
 
-			if ( ! OTTER_BLOCKS_VERSION ) {
+			if ( ! defined( 'OTTER_BLOCKS_VERSION' ) ) {
 				return true;
 			}
 
