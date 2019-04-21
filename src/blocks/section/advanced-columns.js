@@ -25,7 +25,8 @@ const {
 	ToggleControl,
 	RangeControl,
 	ResizableBox,
-	SelectControl
+	SelectControl,
+	TextControl
 } = wp.components;
 
 const {
@@ -41,6 +42,7 @@ const {
 const {
 	ColorPalette,
 	InnerBlocks,
+	InspectorAdvancedControls,
 	InspectorControls,
 	MediaPlaceholder
 } = wp.editor;
@@ -1866,7 +1868,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 
 		return (
 			<Fragment>
-				<InspectorControls className="wp-block-themeisle-blocks-advanced-columns-inspector">
+				<InspectorControls>
 					<PanelBody className="wp-block-themeisle-blocks-advanced-columns-header-panel">
 						<Button
 							className={ classnames(
@@ -2980,6 +2982,16 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 
 					) }
 				</InspectorControls>
+
+				<InspectorAdvancedControls>
+					<TextControl
+						label={ __( 'HTML Anchor' ) }
+						help={ __( 'Anchors lets you link directly to a section on a page.' ) }
+						value={ id }
+						readonly="readonly"
+						onClick={ e => e.target.select() }
+					/>
+				</InspectorAdvancedControls>
 
 				<Tag className={ classes } style={ style }>
 					<div

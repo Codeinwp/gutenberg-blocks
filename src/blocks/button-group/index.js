@@ -509,7 +509,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 					</Toolbar>
 				</BlockControls>
 
-				<InspectorControls className="wp-block-themeisle-blocks-button-group-inspector">
+				<InspectorControls>
 					<PanelBody className="wp-block-themeisle-blocks-button-group-header-panel">
 						<Button
 							className={ classnames(

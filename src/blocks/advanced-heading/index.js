@@ -925,7 +925,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 					</Toolbar>
 				</BlockControls>
 
-				<InspectorControls className="wp-block-themeisle-blocks-advanced-heading-inspector">
+				<InspectorControls>
 					<PanelBody className="wp-block-themeisle-blocks-advanced-heading-header-panel">
 						<Button
 							className={ classnames(

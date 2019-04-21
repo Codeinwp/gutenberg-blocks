@@ -962,7 +962,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 
 		return (
 			<Fragment>
-				<InspectorControls className="wp-block-themeisle-blocks-advanced-columns-inspector">
+				<InspectorControls>
 					<PanelBody className="wp-block-themeisle-blocks-advanced-columns-header-panel">
 						<Button
 							className={ classnames(
