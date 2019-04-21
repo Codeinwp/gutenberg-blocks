@@ -29,7 +29,6 @@ const {
 	RangeControl,
 	SelectControl,
 	Spinner,
-	TextControl,
 	ToggleControl,
 	Toolbar
 } = wp.components;
@@ -66,6 +65,8 @@ import GoogleFontsControl from '../../components/google-fonts-control/index.js';
 import ControlPanelControl from '../../components/control-panel-control/index.js';
 
 import IconPickerControl from '../../components/icon-picker-control/index.js';
+
+import LinkControl from '../../components/link-control/index.js';
 
 import deprecated from './deprecated.js';
 
@@ -600,19 +601,18 @@ registerBlockType( 'themeisle-blocks/button-group', {
 									<PanelBody
 										title={ __( 'Link' ) }
 									>
-										<TextControl
+										<LinkControl
 											label={ 'Link' }
-											type="url"
 											placeholder={ __( 'https://…' ) }
 											value={ data[selectedButton].link }
 											onChange={ e => updateButton({ link: e }, selectedButton ) }
-										/>
-
-										<ToggleControl
-											label={ 'Open in New Tab?' }
-											checked={ data[selectedButton].newTab }
-											onChange={ () => updateButton({ newTab: ! data[selectedButton].newTab }, selectedButton ) }
-										/>
+										>
+											<ToggleControl
+												label={ 'Open in New Tab?' }
+												checked={ data[selectedButton].newTab }
+												onChange={ () => updateButton({ newTab: ! data[selectedButton].newTab }, selectedButton ) }
+											/>
+										</LinkControl>
 									</PanelBody>
 
 									<PanelBody

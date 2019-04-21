@@ -11,7 +11,6 @@ const {
 	ButtonGroup,
 	PanelBody,
 	RangeControl,
-	TextControl,
 	ToggleControl
 } = wp.components;
 
@@ -41,6 +40,8 @@ import './editor.scss';
 import { faIcon } from '../../helpers/icons.js';
 
 import IconPickerControl from '../../components/icon-picker-control/index.js';
+
+import LinkControl from '../../components/link-control/index.js';
 
 import deprecated from './deprecated.js';
 
@@ -258,19 +259,18 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 							onChange={ changeIcon }
 						/>
 
-						<TextControl
+						<LinkControl
 							label={ __( 'Link' ) }
-							type="url"
 							placeholder="https://…"
 							value={ props.attributes.link }
 							onChange={ changeLink }
-						/>
-
-						<ToggleControl
-							label={ 'Open in New Tab?' }
-							checked={ props.attributes.newTab }
-							onChange={ toggleNewTab }
-						/>
+						>
+							<ToggleControl
+								label={ 'Open in New Tab?' }
+								checked={ props.attributes.newTab }
+								onChange={ toggleNewTab }
+							/>
+						</LinkControl>
 					</PanelBody>
 
 					<PanelBody
