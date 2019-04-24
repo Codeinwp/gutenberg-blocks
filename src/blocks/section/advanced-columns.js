@@ -24,7 +24,6 @@ const {
 	Tooltip,
 	ToggleControl,
 	RangeControl,
-	ResizableBox,
 	SelectControl,
 	TextControl
 } = wp.components;
@@ -1081,54 +1080,6 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 			}
 
 			return value;
-		};
-
-		const setPadding = ( type, delta ) => {
-			if ( 'top' == type ) {
-				if ( isDesktop ) {
-					props.setAttributes({
-						paddingType: 'unlinked',
-						paddingTop: parseInt( ( 'linked' === paddingType ? padding : paddingTop ) + delta.height, 10 )
-					});
-				}
-
-				if ( isTablet ) {
-					props.setAttributes({
-						paddingTypeTablet: 'unlinked',
-						paddingTopTablet: parseInt( ( 'linked' === paddingTypeTablet ? paddingTablet : paddingTopTablet ) + delta.height, 10 )
-					});
-				}
-
-				if ( isMobile ) {
-					props.setAttributes({
-						paddingTypeMobile: 'unlinked',
-						paddingTopMobile: parseInt( ( 'linked' === paddingTypeMobile ? paddingMobile : paddingTopMobile ) + delta.height, 10 )
-					});
-				}
-			}
-
-			if ( 'bottom' == type ) {
-				if ( isDesktop ) {
-					props.setAttributes({
-						paddingType: 'unlinked',
-						paddingBottom: parseInt( ( 'linked' === paddingType ? padding : paddingBottom ) + delta.height, 10 )
-					});
-				}
-
-				if ( isTablet ) {
-					props.setAttributes({
-						paddingTypeTablet: 'unlinked',
-						paddingBottomTablet: parseInt( ( 'linked' === paddingTypeTablet ? paddingTablet : paddingBottomTablet ) + delta.height, 10 )
-					});
-				}
-
-				if ( isMobile ) {
-					props.setAttributes({
-						paddingTypeMobile: 'unlinked',
-						paddingBottomMobile: parseInt( ( 'linked' === paddingTypeMobile ? paddingMobile : paddingBottomMobile ) + delta.height, 10 )
-					});
-				}
-			}
 		};
 
 		const changePaddingType = value => {
@@ -3000,39 +2951,16 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 					>
 					</div>
 
-					<ResizableBox
-						className="block-library-spacer__resize-container wp-themeisle-block-advanced-columns-resize-container"
-						size={ {
-							height: getPadding( 'top' )
-						} }
-						minHeight="0"
-						maxHeight="500"
-						enable={ {
-							top: false,
-							right: false,
-							bottom: true,
-							left: false,
-							topRight: false,
-							bottomRight: false,
-							bottomLeft: false,
-							topLeft: false
-						} }
-						onResize={ ( event, direction, elt, delta ) => {
-							const el = document.getElementById( 'paddingTop' );
-							el.innerHTML = `${ getPadding( 'top' ) + delta.height }px`;
-						} }
-						onResizeStop={ ( event, direction, elt, delta ) => {
-							setPadding( 'top', delta );
-							props.toggleSelection( true );
-						} }
-						onResizeStart={ () => {
-							props.toggleSelection( false );
-						} }
+					<div
+						className="wp-themeisle-block-advanced-columns-padding-container"
+						style={{
+							height: `${ getPadding( 'top' ) }px`
+						}}
 					>
 						<div className="block-space-size">
 							<span id="paddingTop">{ `${ getPadding( 'top' ) }px` }</span>
 						</div>
-					</ResizableBox>
+					</div>
 
 					<Separators
 						type="top"
@@ -3063,39 +2991,16 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 						height={ getDividerBottomHeight }
 					/>
 
-					<ResizableBox
-						className="block-library-spacer__resize-container wp-themeisle-block-advanced-columns-resize-container"
-						size={ {
-							height: getPadding( 'bottom' )
-						} }
-						minHeight="0"
-						maxHeight="500"
-						enable={ {
-							top: false,
-							right: false,
-							bottom: true,
-							left: false,
-							topRight: false,
-							bottomRight: false,
-							bottomLeft: false,
-							topLeft: false
-						} }
-						onResize={ ( event, direction, elt, delta ) => {
-							const el = document.getElementById( 'paddingBottom' );
-							el.innerHTML = `${ getPadding( 'bottom' ) + delta.height }px`;
-						} }
-						onResizeStop={ ( event, direction, elt, delta ) => {
-							setPadding( 'bottom', delta );
-							props.toggleSelection( true );
-						} }
-						onResizeStart={ () => {
-							props.toggleSelection( false );
-						} }
+					<div
+						className="wp-themeisle-block-advanced-columns-padding-container"
+						style={{
+							height: `${ getPadding( 'bottom' ) }px`
+						}}
 					>
 						<div className="block-space-size">
 							<span id="paddingBottom">{ `${ getPadding( 'bottom' ) }px` }</span>
 						</div>
-					</ResizableBox>
+					</div>
 				</Tag>
 			</Fragment>
 		);
