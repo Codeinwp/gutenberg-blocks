@@ -153,7 +153,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 				wp_enqueue_script(
 					'google-maps',
-					'https://maps.googleapis.com/maps/api/js?key=' . $apikey . '&libraries=places&callback=initMapScript',
+					'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $apikey ) . '&libraries=places&callback=initMapScript',
 					array( 'themeisle-gutenberg-google-maps' ),
 					'',
 					true
