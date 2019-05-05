@@ -500,6 +500,21 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				if ( isset( $block['innerBlocks'] ) && ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
 					$style .= $this->cycle_through_blocks( $block['innerBlocks'] );
 				}
+
+				if ( $block['blockName'] === 'core/block' && ! empty( $block['attrs']['ref'] ) ) {
+					$reusable_block = get_post( $block['attrs']['ref'] );
+
+					if ( ! $reusable_block || 'wp_block' !== $reusable_block->post_type ) {
+						return;
+					}
+
+					if ( 'publish' !== $reusable_block->post_status || ! empty( $reusable_block->post_password ) ) {
+						return;
+					}
+
+					$blocks = $this->parse_blocks( $reusable_block->post_content );
+					$style .= $this->cycle_through_blocks( $blocks );
+				}
 			}
 			return $style;
 		}
