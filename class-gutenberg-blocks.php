@@ -446,15 +446,12 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 * @since   1.1.0
 		 * @access  public
 		 */
-		public function render_server_side_css() {
-			if ( function_exists( 'has_blocks' ) && has_blocks( get_the_ID() ) ) {
-				global $post;
+		public function render_server_side_css( $post_id  ) {
+			$post = $post_id ? $post_id : get_the_ID();
 
-				if ( ! is_object( $post ) ) {
-					return;
-				}
-
-				$blocks = $this->parse_blocks( $post->post_content );
+			if ( function_exists( 'has_blocks' ) && has_blocks( $post ) ) {
+				$content = get_post_field( 'post_content', $post );
+				$blocks = $this->parse_blocks( $content );
 
 				if ( ! is_array( $blocks ) || empty( $blocks ) ) {
 					return;
