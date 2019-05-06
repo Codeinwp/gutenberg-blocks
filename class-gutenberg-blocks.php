@@ -446,7 +446,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 * @since   1.1.0
 		 * @access  public
 		 */
-		public function render_server_side_css( $post_id  ) {
+		public function render_server_side_css( $post_id = '' ) {
 			$post = $post_id ? $post_id : get_the_ID();
 
 			if ( function_exists( 'has_blocks' ) && has_blocks( $post ) ) {
