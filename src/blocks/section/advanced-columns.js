@@ -62,19 +62,19 @@ import {
 
 import layouts from './layouts.js';
 
-import LayoutControl from './Components/layout-control/index.js';
+import LayoutControl from './components/layout-control/index.js';
 
 import SizingControl from '../../components/sizing-control/index.js';
 
 import ResponsiveControl from '../../components/responsive-control/index.js';
 
-import BackgroundControl from './Components/background-control/index.js';
+import BackgroundControl from './components/background-control/index.js';
 
 import ControlPanelControl from '../../components/control-panel-control/index.js';
 
-import Separators from './Components/separators/index.js';
+import Separators from './components/separators/index.js';
 
-import Onboarding from './Components/onboarding/index.js';
+import Onboarding from './components/onboarding/index.js';
 
 import deprecated from './deprecated.js';
 
