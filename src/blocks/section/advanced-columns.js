@@ -62,19 +62,19 @@ import {
 
 import layouts from './layouts.js';
 
-import LayoutControl from './layout-control/index.js';
+import LayoutControl from './Components/layout-control/index.js';
 
 import SizingControl from '../../components/sizing-control/index.js';
 
 import ResponsiveControl from '../../components/responsive-control/index.js';
 
-import BackgroundControl from './background-control/index.js';
+import BackgroundControl from './Components/background-control/index.js';
 
 import ControlPanelControl from '../../components/control-panel-control/index.js';
 
-import Separators from './separators/index.js';
+import Separators from './Components/separators/index.js';
 
-import Inboarding from './inboarding/index.js';
+import Onboarding from './Components/onboarding/index.js';
 
 import deprecated from './deprecated.js';
 
@@ -1971,7 +1971,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 
 		if ( ! columns ) {
 			return (
-				<Inboarding clientId={ props.clientId } setupColumns={ setupColumns } />
+				<Onboarding clientId={ props.clientId } setupColumns={ setupColumns } />
 			);
 		}
 
