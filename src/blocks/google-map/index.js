@@ -13,7 +13,7 @@ import './editor.scss';
 
 import { mapIcon } from '../../helpers/icons.js';
 
-import Editor from './Components/Editor.js';
+import Editor from './components/Editor.js';
 
 registerBlockType( 'themeisle-blocks/google-map', {
 	title: __( 'Google Map' ),

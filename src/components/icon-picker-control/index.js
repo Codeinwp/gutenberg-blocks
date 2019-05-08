@@ -8,6 +8,8 @@ import classnames from 'classnames';
  */
 const { __ } = wp.i18n;
 
+const { withInstanceId } = wp.compose;
+
 const {
 	Button,
 	BaseControl,
@@ -158,4 +160,4 @@ class IconPickerControl extends Component {
 	}
 }
 
-export default IconPickerControl;
+export default withInstanceId( IconPickerControl );

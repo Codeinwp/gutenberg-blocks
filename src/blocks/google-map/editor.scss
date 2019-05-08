@@ -7,6 +7,34 @@
 		font-size: 14px;
 		line-height: 1;
 	}
+
+	.gm-control-marker-ui {
+		background-color: #fff;
+		border: 2px solid #fff;
+		border-radius: 3px;
+		box-shadow: 0 2px 6px rgba(0,0,0,.3);
+		cursor: pointer;
+		margin-left: 10px;
+		padding: 8px;
+		text-align: center;
+
+		&:hover {
+			.dashicons {
+
+				&:before {
+					content: "\f109";
+				}
+			}
+		}
+
+		.dashicons {
+			color: #666666;
+
+			&:hover {
+				color: #000000;
+			}
+		}
+	}
 }
 
 .wp-block-themeisle-blocks-google-map-search {

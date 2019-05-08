@@ -1,6 +1,6 @@
 {
 	"name": "themeisle-gutenberg-blocks",
-	"version": "1.2.1",
+	"version": "1.2.2",
 	"description": "ThemeIsle Gutenberg Blocks",
 	"scripts": {
 		"build": "cross-env BABEL_ENV=default NODE_ENV=production webpack",
@@ -31,7 +31,7 @@
 		"babel-loader": "^8.0.4",
 		"cross-env": "3.2.4",
 		"css-loader": "^1.0.1",
-		"eslint": "^5.7.0",
+		"eslint": "^5.16.0",
 		"eslint-config-wordpress": "^2.0.0",
 		"eslint-loader": "^2.1.1",
 		"eslint-plugin-react": "^7.11.1",

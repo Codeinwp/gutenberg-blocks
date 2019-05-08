@@ -43,7 +43,7 @@ const { Component } = wp.element;
  */
 import './editor.scss';
 
-import { otterIcon } from '../../../helpers/icons.js';
+import { otterIcon } from '../../../../helpers/icons.js';
 
 class Library extends Component {
 	constructor() {
@@ -51,9 +51,11 @@ class Library extends Component {
 
 		this.changeTab = this.changeTab.bind( this );
 		this.removeError = this.removeError.bind( this );
+		this.removeMissing = this.removeMissing.bind( this );
 		this.selectCategory = this.selectCategory.bind( this );
 		this.changeSearch = this.changeSearch.bind( this );
 		this.changeClientId = this.changeClientId.bind( this );
+		this.validateBlocks = this.validateBlocks.bind( this );
 		this.importTemplate = this.importTemplate.bind( this );
 		this.getOptions = this.getOptions.bind( this );
 
@@ -61,13 +63,15 @@ class Library extends Component {
 			tab: 'block',
 			isLoaded: false,
 			isError: false,
+			isMissing: false,
 			selectedCategory: 'all',
 			search: '',
 			blocksCategories: [],
 			templateCategories: [],
 			data: [],
 			preview: false,
-			selectedTemplate: null
+			selectedTemplate: null,
+			missingBlocks: []
 		};
 	}
 
@@ -118,6 +122,12 @@ class Library extends Component {
 		});
 	}
 
+	removeMissing() {
+		this.setState({
+			isMissing: false
+		});
+	}
+
 	selectCategory( value ) {
 		this.setState({
 			selectedCategory: value
@@ -134,7 +144,7 @@ class Library extends Component {
 		if ( Array.isArray( data ) ) {
 			data.map( i => this.changeClientId( i ) );
 		} else if ( 'object' === typeof data ) {
-			Object.keys( data ).map( ( k ) => {
+			Object.keys( data ).map( k => {
 				if ( 'clientId' === k ) {
 					data[k] = uuidv4();
 				}
@@ -150,10 +160,45 @@ class Library extends Component {
 		return data;
 	}
 
+	validateBlocks( data ) {
+		let status = false;
+		let missingBlocks = [];
+
+		if ( Array.isArray( data ) ) {
+			data.map( i => this.validateBlocks( i ) );
+		} else if ( 'object' === typeof data ) {
+			Object.keys( data ).some( k => {
+				if ( 'name' === k ) {
+					const exists = this.props.availableBlocks.find( i => {
+						return i.name === data.name;
+					});
+
+					if ( undefined === exists ) {
+						missingBlocks.push( data.name );
+						status = true;
+					}
+				}
+
+				if ( 'innerBlocks' === k ) {
+					data[k].map( i => this.validateBlocks( i  ) );
+				}
+			});
+		}
+
+		missingBlocks = this.state.missingBlocks
+			.concat( missingBlocks )
+			.filter( ( v, i, a ) => a.indexOf( v ) === i );
+
+		this.setState({ missingBlocks });
+
+		return status;
+	}
+
 	async importTemplate( url ) {
 		this.setState({
 			preview: false,
-			isLoaded: false
+			isLoaded: false,
+			missingBlocks: []
 		});
 
 		let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ url }` });
@@ -165,7 +210,13 @@ class Library extends Component {
 				isLoaded: true
 			});
 
-			this.props.import( data );
+			if ( ! this.validateBlocks( data ) ) {
+				this.props.import( data );
+			} else {
+				this.setState({
+					isMissing: true
+				});
+			}
 		} else {
 			this.setState({
 				isLoaded: true,
@@ -322,6 +373,25 @@ class Library extends Component {
 					</div>
 				) }
 
+				{ this.state.isMissing && (
+					<div className="library-modal-error">
+						<Notice
+							status="warning"
+							className="library-modal-missing"
+							onRemove={ this.removeMissing }
+						>
+							{ __( 'You seem to be missing some blocks that are required by your selected template.' ) }
+							<details>
+								<summary>{ __( 'View Missing Blocks' ) }</summary>
+
+								<ul>
+									{ this.state.missingBlocks.map( i => <li>{ i }</li> ) }
+								</ul>
+							</details>
+						</Notice>
+					</div>
+				) }
+
 				{ this.state.preview ? (
 					<div className="library-modal-preview">
 						<iframe src={ this.state.selectedTemplate.demo_url }/>
@@ -367,7 +437,7 @@ class Library extends Component {
 															className="library-modal-overlay__actions"
 															onClick={ () => this.setState({
 																preview: true,
-																selectedTemplate: value
+																selectedTemplate: i
 															}) }
 															tabindex="0"
 														>
@@ -414,9 +484,12 @@ class Library extends Component {
 export default compose(
 	withSelect( ( select, { clientId }) => {
 		const { getBlock } = select( 'core/editor' );
+		const { getBlockTypes } = select( 'core/blocks' );
 		const block = getBlock( clientId );
+		const availableBlocks = getBlockTypes();
 		return {
-			block
+			block,
+			availableBlocks
 		};
 	}),
 

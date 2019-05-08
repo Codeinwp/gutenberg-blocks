@@ -1,4 +1,4 @@
-.themeisle-inboarding-component {
+.themeisle-onboarding-component {
 	background: #ffffff;
 	border: 1px solid #e7e7e7;
 	padding: 50px;
@@ -239,14 +239,38 @@
 			.components-notice {
 				display: flex;
 				align-items: center;
+				margin: 20px 40px -20px;
+
+				&.library-modal-missing {
+					details {
+						margin-top: 5px;
+	
+						summary {
+							color: #0073aa;
+							text-decoration: underline;
+							cursor: pointer;
+						}
+					}
+	
+					ul {
+						list-style: disc;
+						margin: 10px 0 0 12px;
+					}
+
+					.components-button {
+						margin: 10px 5px;
+						top: 0;
+	
+						&.components-notice__action {
+							color: #0073aa;
+							text-decoration: underline;
+						}
+					}
+				}
 
 				.components-button {
 					top: unset;
 				}
-			}
-
-			.version-warning {
-				margin: 20px 40px -20px;
 			}
 		}
 
@@ -389,7 +413,7 @@
 }
 
 @media ( max-width: 782px )  {
-	.themeisle-inboarding-component {
+	.themeisle-onboarding-component {
 		padding: 5em 1em;
 
 		.themeisle-layout-picker {

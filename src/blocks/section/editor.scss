@@ -532,7 +532,7 @@
 
 [data-type="themeisle-blocks/advanced-columns"] {
 
-	.wp-themeisle-block-advanced-columns-resize-container {
+	.wp-themeisle-block-advanced-columns-padding-container {
 		width: 100% !important;
 
 		.block-space-size {
@@ -580,11 +580,15 @@
 			position: absolute;
 			background: transparent;
 			padding: 0;
-			cursor: se-resize;
+			cursor: row-resize;
 			left: 0px;
 			margin-left: 0px;
 	
 			&:before {
+				display: none;
+			}
+	
+			&:after {
 				display: none;
 			}
 		}
@@ -602,11 +606,15 @@
 			position: absolute;
 			background: transparent;
 			padding: 0;
-			cursor: se-resize;
+			cursor: row-resize;
 			left: 0px;
 			margin-left: 0px;
 	
 			&:before {
+				display: none;
+			}
+	
+			&:after {
 				display: none;
 			}
 		}
@@ -635,10 +643,21 @@
 			}
 
 			&:before {
+				display: none;
+			}
+
+			&:after {
+				display: block;
+				content: "";
+				width: 15px;
+				height: 15px;
+				border: 2px solid #fff;
+				border-radius: 50%;
 				background: #0085ba;
+				cursor: inherit;
 				position: absolute;
 				top: calc(50% - 8px);
-				left: -7px;
+				right: calc(50% - 8px);
 			}
 
 			.resizable-tooltip {

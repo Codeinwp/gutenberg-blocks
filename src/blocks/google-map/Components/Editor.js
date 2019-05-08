@@ -43,6 +43,7 @@ class Editor extends Component {
 		this.changeAPI = this.changeAPI.bind( this );
 		this.saveAPIKey = this.saveAPIKey.bind( this );
 		this.changeLocation = this.changeLocation.bind( this );
+		this.markerButton = this.markerButton.bind( this );
 		this.addMarker = this.addMarker.bind( this );
 		this.addInfoWindow = this.addInfoWindow.bind( this );
 		this.removeMarker = this.removeMarker.bind( this );
@@ -60,6 +61,7 @@ class Editor extends Component {
 		this.changeMarkerProp = this.changeMarkerProp.bind( this );
 
 		window.isMapLoaded = window.isMapLoaded || false;
+		window.addMarker = this.addMarker;
 		window.removeMarker = this.removeMarker;
 
 		this.state = {
@@ -220,6 +222,11 @@ class Editor extends Component {
 				this.setState({ isPlaceAPIAvailable: false });
 			}
 		});
+
+		const centerControlDiv = document.createElement( 'div' );
+		new this.markerButton( centerControlDiv );
+		centerControlDiv.index = 1;
+		this.map.controls[ google.maps.ControlPosition.LEFT_BOTTOM ].push( centerControlDiv );
 	}
 
 	initSearch( e ) {
@@ -242,6 +249,21 @@ class Editor extends Component {
 					});
 				});
 			}
+		});
+	}
+
+	markerButton( controlDiv ) {
+		const controlUI = document.createElement( 'button' );
+		controlUI.className = 'gm-control-marker-ui';
+		controlUI.title = __( 'Add Marker' );
+		controlDiv.appendChild( controlUI );
+
+		const controlText = document.createElement( 'span' );
+		controlText.className = 'dashicons dashicons-sticky';
+		controlUI.appendChild( controlText );
+
+		controlUI.addEventListener( 'click', () => {
+			window.addMarker();
 		});
 	}
 

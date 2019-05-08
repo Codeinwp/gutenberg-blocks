@@ -20,11 +20,11 @@ const { Component } = wp.element;
  */
 import './editor.scss';
 
-import { columnsIcon } from '../../../helpers/icons.js';
+import { columnsIcon } from '../../../../helpers/icons.js';
 
 import Library from './library.js';
 
-class Inboarding extends Component {
+class Onboarding extends Component {
 	constructor() {
 		super( ...arguments );
 
@@ -44,7 +44,7 @@ class Inboarding extends Component {
 			<Placeholder
 				label={ __( 'Select Layout' ) }
 				icon={ <Icon icon={ columnsIcon } /> }
-				className="themeisle-inboarding-component"
+				className="themeisle-onboarding-component"
 			>
 				<div className="themeisle-layout-picker">
 					<Tooltip text={ __( 'Single Row' ) } >
@@ -198,4 +198,4 @@ class Inboarding extends Component {
 	}
 }
 
-export default Inboarding;
+export default Onboarding;
