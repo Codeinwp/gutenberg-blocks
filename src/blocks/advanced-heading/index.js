@@ -62,7 +62,7 @@ import ControlPanelControl from '../../components/control-panel-control/index.js
 
 import ResponsiveControl from '../../components/responsive-control/index.js';
 
-import SizeControl from '../../components/size-control/index.js';
+import SizingControl from '../../components/sizing-control/index.js';
 
 registerBlockType( 'themeisle-blocks/advanced-heading', {
 	title: __( 'Advanced Heading' ),
@@ -611,6 +611,115 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 			props.setAttributes({ textShadowVertical: value });
 		};
 
+		const getPadding = type => {
+			let value;
+
+			if ( 'top' == type ) {
+				if ( 'desktop' === paddingViewType ) {
+					value = 'linked' === paddingType ? padding : paddingTop;
+				}
+
+				if ( 'tablet' === paddingViewType ) {
+					value = 'linked' === paddingTypeTablet ? paddingTablet : paddingTopTablet;
+				}
+
+				if ( 'mobile' === paddingViewType ) {
+					value = 'linked' === paddingTypeMobile ? paddingMobile : paddingTopMobile;
+				}
+			}
+
+			if ( 'right' == type ) {
+				if ( 'desktop' === paddingViewType ) {
+					value = 'linked' === paddingType ? padding : paddingRight;
+				}
+
+				if ( 'tablet' === paddingViewType ) {
+					value = 'linked' === paddingTypeTablet ? paddingTablet : paddingRightTablet;
+				}
+
+				if ( 'mobile' === paddingViewType ) {
+					value = 'linked' === paddingTypeMobile ? paddingMobile : paddingRightMobile;
+				}
+			}
+
+			if ( 'bottom' == type ) {
+				if ( 'desktop' === paddingViewType ) {
+					value = 'linked' === paddingType ? padding : paddingBottom;
+				}
+
+				if ( 'tablet' === paddingViewType ) {
+					value = 'linked' === paddingTypeTablet ? paddingTablet : paddingBottomTablet;
+				}
+
+				if ( 'mobile' === paddingViewType ) {
+					value = 'linked' === paddingTypeMobile ? paddingMobile : paddingBottomMobile;
+				}
+			}
+
+			if ( 'left' == type ) {
+				if ( 'desktop' === paddingViewType ) {
+					value = 'linked' === paddingType ? padding : paddingLeft;
+				}
+
+				if ( 'tablet' === paddingViewType ) {
+					value = 'linked' === paddingTypeTablet ? paddingTablet : paddingLeftTablet;
+				}
+
+				if ( 'mobile' === paddingViewType ) {
+					value = 'linked' === paddingTypeMobile ? paddingMobile : paddingLeftMobile;
+				}
+			}
+
+			return value;
+		};
+
+		const desktopPaddingType = {
+			top: 'paddingTop',
+			right: 'paddingRight',
+			bottom: 'paddingBottom',
+			left: 'paddingLeft'
+		};
+
+		const tabletPaddingType = {
+			top: 'paddingTopTablet',
+			right: 'paddingRightTablet',
+			bottom: 'paddingBottomTablet',
+			left: 'paddingLeftTablet'
+		};
+
+		const mobilePaddingType = {
+			top: 'paddingTopMobile',
+			right: 'paddingRightMobile',
+			bottom: 'paddingBottomMobile',
+			left: 'paddingLeftMobile'
+		};
+
+		const changePadding = ( type, value ) => {
+			if ( 'desktop' === paddingViewType ) {
+				if ( 'linked' === paddingType ) {
+					props.setAttributes({ padding: value });
+				} else {
+					props.setAttributes({ [desktopPaddingType[type]]: value });
+				}
+			}
+
+			if ( 'tablet' === paddingViewType ) {
+				if ( 'linked' === paddingTypeTablet ) {
+					props.setAttributes({ paddingTablet: value });
+				} else {
+					props.setAttributes({ [tabletPaddingType[type]]: value });
+				}
+			}
+
+			if ( 'mobile' === paddingViewType ) {
+				if ( 'linked' === paddingTypeMobile ) {
+					props.setAttributes({ paddingMobile: value });
+				} else {
+					props.setAttributes({ [mobilePaddingType[type]]: value });
+				}
+			}
+		};
+
 		const changePaddingType = value => {
 			if ( 'desktop' === paddingViewType ) {
 				props.setAttributes({ paddingType: value });
@@ -623,63 +732,96 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 			}
 		};
 
-		const changePadding = value => {
+		let getPaddingType = () => {
+			let value;
+
 			if ( 'desktop' === paddingViewType ) {
-				props.setAttributes({ padding: value });
+				value = paddingType;
 			}
 			if ( 'tablet' === paddingViewType ) {
-				props.setAttributes({ paddingTablet: value });
+				value = paddingTypeTablet;
 			}
 			if ( 'mobile' === paddingViewType ) {
-				props.setAttributes({ paddingMobile: value });
+				value = paddingTypeMobile;
 			}
+
+			return value;
 		};
 
-		const changePaddingTop = value => {
-			if ( 'desktop' === paddingViewType ) {
-				props.setAttributes({ paddingTop: value });
+		getPaddingType = getPaddingType();
+
+		const getMargin = type => {
+			let value;
+
+			if ( 'top' == type ) {
+				if ( 'desktop' === marginViewType ) {
+					value = 'linked' === marginType ? margin : marginTop;
+				}
+
+				if ( 'tablet' === marginViewType ) {
+					value = 'linked' === marginTypeTablet ? marginTablet : marginTopTablet;
+				}
+
+				if ( 'mobile' === marginViewType ) {
+					value = 'linked' === marginTypeMobile ? marginMobile : marginTopMobile;
+				}
 			}
-			if ( 'tablet' === paddingViewType ) {
-				props.setAttributes({ paddingTopTablet: value });
+
+			if ( 'bottom' == type ) {
+				if ( 'desktop' === marginViewType ) {
+					value = 'linked' === marginType ? margin : marginBottom;
+				}
+
+				if ( 'tablet' === marginViewType ) {
+					value = 'linked' === marginTypeTablet ? marginTablet : marginBottomTablet;
+				}
+
+				if ( 'mobile' === marginViewType ) {
+					value = 'linked' === marginTypeMobile ? marginMobile : marginBottomMobile;
+				}
 			}
-			if ( 'mobile' === paddingViewType ) {
-				props.setAttributes({ paddingTopMobile: value });
-			}
+
+			return value;
 		};
 
-		const changePaddingRight = value => {
-			if ( 'desktop' === paddingViewType ) {
-				props.setAttributes({ paddingRight: value });
-			}
-			if ( 'tablet' === paddingViewType ) {
-				props.setAttributes({ paddingRightTablet: value });
-			}
-			if ( 'mobile' === paddingViewType ) {
-				props.setAttributes({ paddingRightMobile: value });
-			}
+		const desktopMarginType = {
+			top: 'marginTop',
+			bottom: 'marginBottom'
 		};
 
-		const changePaddingBottom = value => {
-			if ( 'desktop' === paddingViewType ) {
-				props.setAttributes({ paddingBottom: value });
-			}
-			if ( 'tablet' === paddingViewType ) {
-				props.setAttributes({ paddingBottomTablet: value });
-			}
-			if ( 'mobile' === paddingViewType ) {
-				props.setAttributes({ paddingBottomMobile: value });
-			}
+		const tabletMarginType = {
+			top: 'marginTopTablet',
+			bottom: 'marginBottomTablet'
 		};
 
-		const changePaddingLeft = value => {
-			if ( 'desktop' === paddingViewType ) {
-				props.setAttributes({ paddingLeft: value });
+		const mobileMarginType = {
+			top: 'marginTopMobile',
+			bottom: 'marginBottomMobile'
+		};
+
+		const changeMargin = ( type, value ) => {
+			if ( 'desktop' === marginViewType ) {
+				if ( 'linked' === marginType ) {
+					props.setAttributes({ margin: value });
+				} else {
+					props.setAttributes({ [desktopMarginType[type]]: value });
+				}
 			}
-			if ( 'tablet' === paddingViewType ) {
-				props.setAttributes({ paddingLeftTablet: value });
+
+			if ( 'tablet' === marginViewType ) {
+				if ( 'linked' === marginTypeTablet ) {
+					props.setAttributes({ marginTablet: value });
+				} else {
+					props.setAttributes({ [tabletMarginType[type]]: value });
+				}
 			}
-			if ( 'mobile' === paddingViewType ) {
-				props.setAttributes({ paddingLeftMobile: value });
+
+			if ( 'mobile' === marginViewType ) {
+				if ( 'linked' === marginTypeMobile ) {
+					props.setAttributes({ marginMobile: value });
+				} else {
+					props.setAttributes({ [mobileMarginType[type]]: value });
+				}
 			}
 		};
 
@@ -695,41 +837,23 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 			}
 		};
 
-		const changeMargin = value => {
+		let getMarginType = () => {
+			let value;
+
 			if ( 'desktop' === marginViewType ) {
-				props.setAttributes({ margin: value });
+				value = marginType;
 			}
 			if ( 'tablet' === marginViewType ) {
-				props.setAttributes({ marginTablet: value });
+				value = marginTypeTablet;
 			}
 			if ( 'mobile' === marginViewType ) {
-				props.setAttributes({ marginMobile: value });
+				value = marginTypeMobile;
 			}
+
+			return value;
 		};
 
-		const changeMarginTop = value => {
-			if ( 'desktop' === marginViewType ) {
-				props.setAttributes({ marginTop: value });
-			}
-			if ( 'tablet' === marginViewType ) {
-				props.setAttributes({ marginTopTablet: value });
-			}
-			if ( 'mobile' === marginViewType ) {
-				props.setAttributes({ marginTopMobile: value });
-			}
-		};
-
-		const changeMarginBottom = value => {
-			if ( 'desktop' === marginViewType ) {
-				props.setAttributes({ marginBottom: value });
-			}
-			if ( 'tablet' === marginViewType ) {
-				props.setAttributes({ marginBottomTablet: value });
-			}
-			if ( 'mobile' === marginViewType ) {
-				props.setAttributes({ marginBottomMobile: value });
-			}
-		};
+		getMarginType = getMarginType();
 
 		let fontSizeStyle, stylesheet, textShadowStyle;
 
@@ -925,7 +1049,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 					</Toolbar>
 				</BlockControls>
 
-				<InspectorControls className="wp-block-themeisle-blocks-advanced-heading-inspector">
+				<InspectorControls>
 					<PanelBody className="wp-block-themeisle-blocks-advanced-heading-header-panel">
 						<Button
 							className={ classnames(
@@ -1120,115 +1244,75 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 								title={ __( 'Padding & Margin' ) }
 								initialOpen={ false }
 							>
-								<SizeControl
-									label={ __( 'Padding Control' ) }
-									minus={ false }
-									responsive={ true }
-									changeViewType={ changePaddingViewType }
-									changeType={ changePaddingType }
-									changeValue={ changePadding }
+								<ResponsiveControl
+									label={ 'Padding' }
 									view={ paddingViewType }
-									typeDesktop={ paddingType }
-									typeTablet={ paddingTypeTablet }
-									typeMobile={ paddingTypeMobile }
-									valueDesktop={ padding }
-									valueTablet={ paddingTablet }
-									valueMobile={ paddingMobile }
+									changeViewType={ changePaddingViewType }
 								>
-									<RangeControl
-										label={ __( 'Padding Top' ) }
-										beforeIcon="arrow-up"
-										value={
-											( 'desktop' === paddingViewType ) && paddingTop ||
-											( 'tablet' === paddingViewType ) && paddingTopTablet ||
-											( 'mobile' === paddingViewType ) && paddingTopMobile
-										}
-										onChange={ changePaddingTop }
+									<SizingControl
+										type={ getPaddingType }
 										min={ 0 }
 										max={ 500 }
+										changeType={ changePaddingType }
+										onChange={ changePadding }
+										options={ [
+											{
+												label: __( 'Top' ),
+												type: 'top',
+												value: getPadding( 'top' )
+											},
+											{
+												label: __( 'Right' ),
+												type: 'right',
+												value: getPadding( 'right' )
+											},
+											{
+												label: __( 'Bottom' ),
+												type: 'bottom',
+												value: getPadding( 'bottom' )
+											},
+											{
+												label: __( 'Left' ),
+												type: 'left',
+												value: getPadding( 'left' )
+											}
+										] }
 									/>
+								</ResponsiveControl>
 
-									<RangeControl
-										label={ __( 'Padding Right' ) }
-										beforeIcon="arrow-right"
-										value={
-											( 'desktop' === paddingViewType ) && paddingRight ||
-											( 'tablet' === paddingViewType ) && paddingRightTablet ||
-											( 'mobile' === paddingViewType ) && paddingRightMobile
-										}
-										onChange={ changePaddingRight }
-										min={ 0 }
-										max={ 500 }
-									/>
-
-									<RangeControl
-										label={ __( 'Padding Bottom' ) }
-										beforeIcon="arrow-down"
-										value={
-											( 'desktop' === paddingViewType ) && paddingBottom ||
-											( 'tablet' === paddingViewType ) && paddingBottomTablet ||
-											( 'mobile' === paddingViewType ) && paddingBottomMobile
-										}
-										onChange={ changePaddingBottom }
-										min={ 0 }
-										max={ 500 }
-									/>
-
-									<RangeControl
-										label={ __( 'Padding Left' ) }
-										beforeIcon="arrow-left"
-										value={
-											( 'desktop' === paddingViewType ) && paddingLeft ||
-											( 'tablet' === paddingViewType ) && paddingLeftTablet ||
-											( 'mobile' === paddingViewType ) && paddingLeftMobile
-										}
-										onChange={ changePaddingLeft }
-										min={ 0 }
-										max={ 500 }
-									/>
-								</SizeControl>
-
-								<SizeControl
-									label={ __( 'Margin Control' ) }
-									minus={ true }
-									responsive={ true }
-									changeViewType={ changeMarginViewType }
-									changeType={ changeMarginType }
-									changeValue={ changeMargin }
+								<ResponsiveControl
+									label={ 'Margin' }
 									view={ marginViewType }
-									typeDesktop={ marginType }
-									typeTablet={ marginTypeTablet }
-									typeMobile={ marginTypeMobile }
-									valueDesktop={ margin }
-									valueTablet={ marginTablet }
-									valueMobile={ marginMobile }
+									changeViewType={ changeMarginViewType }
 								>
-									<RangeControl
-										label={ __( 'Margin Top' ) }
-										beforeIcon="arrow-up"
-										value={
-											( 'desktop' === marginViewType ) && marginTop ||
-											( 'tablet' === marginViewType ) && marginTopTablet ||
-											( 'mobile' === marginViewType ) && marginTopMobile
-										}
-										onChange={ changeMarginTop }
+									<SizingControl
+										type={ getMarginType }
 										min={ -500 }
 										max={ 500 }
+										changeType={ changeMarginType }
+										onChange={ changeMargin }
+										options={ [
+											{
+												label: __( 'Top' ),
+												type: 'top',
+												value: getMargin( 'top' )
+											},
+											{
+												label: __( 'Right' ),
+												disabled: true
+											},
+											{
+												label: __( 'Bottom' ),
+												type: 'bottom',
+												value: getMargin( 'bottom' )
+											},
+											{
+												label: __( 'Left' ),
+												disabled: true
+											}
+										] }
 									/>
-
-									<RangeControl
-										label={ __( 'Margin Bottom' ) }
-										beforeIcon="arrow-down"
-										value={
-											( 'desktop' === marginViewType ) && marginBottom ||
-											( 'tablet' === marginViewType ) && marginBottomTablet ||
-											( 'mobile' === marginViewType ) && marginBottomMobile
-										}
-										onChange={ changeMarginBottom }
-										min={ -500 }
-										max={ 500 }
-									/>
-								</SizeControl>
+								</ResponsiveControl>
 							</PanelBody>
 						</Fragment>
 					) }

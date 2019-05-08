@@ -153,7 +153,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 				wp_enqueue_script(
 					'google-maps',
-					'https://maps.googleapis.com/maps/api/js?key=' . $apikey . '&libraries=places&callback=initMapScript',
+					'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $apikey ) . '&libraries=places&callback=initMapScript',
 					array( 'themeisle-gutenberg-google-maps' ),
 					'',
 					true
@@ -446,15 +446,12 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 * @since   1.1.0
 		 * @access  public
 		 */
-		public function render_server_side_css() {
-			if ( function_exists( 'has_blocks' ) && has_blocks( get_the_ID() ) ) {
-				global $post;
+		public function render_server_side_css( $post_id = '' ) {
+			$post = $post_id ? $post_id : get_the_ID();
 
-				if ( ! is_object( $post ) ) {
-					return;
-				}
-
-				$blocks = $this->parse_blocks( $post->post_content );
+			if ( function_exists( 'has_blocks' ) && has_blocks( $post ) ) {
+				$content = get_post_field( 'post_content', $post );
+				$blocks = $this->parse_blocks( $content );
 
 				if ( ! is_array( $blocks ) || empty( $blocks ) ) {
 					return;
@@ -499,6 +496,21 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 				if ( isset( $block['innerBlocks'] ) && ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
 					$style .= $this->cycle_through_blocks( $block['innerBlocks'] );
+				}
+
+				if ( $block['blockName'] === 'core/block' && ! empty( $block['attrs']['ref'] ) ) {
+					$reusable_block = get_post( $block['attrs']['ref'] );
+
+					if ( ! $reusable_block || 'wp_block' !== $reusable_block->post_type ) {
+						return;
+					}
+
+					if ( 'publish' !== $reusable_block->post_status || ! empty( $reusable_block->post_password ) ) {
+						return;
+					}
+
+					$blocks = $this->parse_blocks( $reusable_block->post_content );
+					$style .= $this->cycle_through_blocks( $blocks );
 				}
 			}
 			return $style;

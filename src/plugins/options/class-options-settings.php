@@ -37,7 +37,7 @@ class Options_Settings {
 				'description'       => __( 'Make Section block your default block for Pages?', 'textdomain' ),
 				'sanitize_callback' => 'rest_sanitize_boolean',
 				'show_in_rest'      => true,
-				'default'           => false
+				'default'           => true
 			)
 		);
 	}
@@ -49,7 +49,7 @@ class Options_Settings {
 	 * @access  public
 	 */
 	public function default_block() {
-		if ( ! get_option( 'themeisle_blocks_settings_default_block', false ) ) {
+		if ( ! get_option( 'themeisle_blocks_settings_default_block', true ) ) {
 			return;
 		}
 
