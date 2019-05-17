@@ -380,16 +380,19 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 				getBlock,
 				getBlockRootClientId
 			} = select( 'core/editor' );
+			const { getBlockOrder } = select( 'core/block-editor' );
 			const adjacentBlockClientId = getAdjacentBlockClientId( clientId );
 			const adjacentBlock = getBlock( adjacentBlockClientId );
 			const parentClientId = getBlockRootClientId( clientId );
 			const parentBlock = getBlock( parentClientId );
+			const hasChildBlocks = 0 < getBlockOrder( clientId ).length;
 
 			return {
 				adjacentBlockClientId,
 				adjacentBlock,
 				parentClientId,
 				parentBlock,
+				hasChildBlocks,
 				props
 			};
 		}),
@@ -425,6 +428,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 		adjacentBlock,
 		parentClientId,
 		parentBlock,
+		hasChildBlocks,
 		updateBlockAttributes
 	}) => {
 		const {
@@ -1683,7 +1687,14 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 						id={ id }
 						style={ style }
 					>
-						<InnerBlocks templateLock={ false } />
+						<InnerBlocks
+							templateLock={ false }
+							renderAppender={ (
+								hasChildBlocks ?
+									undefined :
+									() => <InnerBlocks.ButtonBlockAppender />
+							) }
+						/>
 					</Tag>
 				</ResizableBox>
 			</Fragment>
