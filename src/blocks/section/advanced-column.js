@@ -380,12 +380,11 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 				getBlock,
 				getBlockRootClientId
 			} = select( 'core/editor' );
-			const { getBlockOrder } = select( 'core/block-editor' );
 			const adjacentBlockClientId = getAdjacentBlockClientId( clientId );
 			const adjacentBlock = getBlock( adjacentBlockClientId );
 			const parentClientId = getBlockRootClientId( clientId );
 			const parentBlock = getBlock( parentClientId );
-			const hasChildBlocks = 0 < getBlockOrder( clientId ).length;
+			const hasChildBlocks = 0 < getBlock( clientId ).innerBlocks.length;
 
 			return {
 				adjacentBlockClientId,
