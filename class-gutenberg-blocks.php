@@ -103,7 +103,8 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 			wp_enqueue_style(
 				'themeisle-gutenberg-blocks-editor',
 				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/edit-blocks.css',
-				array( 'wp-edit-blocks' )
+				array( 'wp-edit-blocks' ),
+				$version
 			);
 		}
 
