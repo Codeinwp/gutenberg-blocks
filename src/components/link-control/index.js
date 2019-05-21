@@ -2,6 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames';
+import scrollIntoView from 'dom-scroll-into-view';
 
 /**
  * WordPress dependencies
@@ -10,12 +11,28 @@ const { __ } = wp.i18n;
 
 const {
 	BaseControl,
-	IconButton
+	IconButton,
+	Popover
 } = wp.components;
 
-const { withInstanceId } = wp.compose;
+const {
+	compose,
+	withInstanceId
+} = wp.compose;
 
-const { Component } = wp.element;
+const { withSelect } = wp.data;
+
+const {
+	Component,
+	createRef
+} = wp.element;
+
+const {
+	DOWN,
+	ENTER,
+	TAB,
+	UP
+} = wp.keycodes;
 
 /**
  * Internal dependencies
@@ -25,15 +42,128 @@ import './editor.scss';
 class LinkControl extends Component {
 	constructor() {
 		super( ...arguments );
+		this.bindSuggestionNode = this.bindSuggestionNode.bind( this );
+		this.updateSuggestions = this.updateSuggestions.bind( this );
+		this.onChangeValue = this.onChangeValue.bind( this );
+		this.clickSuggestion = this.clickSuggestion.bind( this );
+		this.onKeyDown = this.onKeyDown.bind( this );
+		this.autocompleteRef = this.autocompleteRef || createRef();
+
+		this.scrollingIntoView = false;
+		this.suggestionNodes = [];
 
 		this.state = {
-			isOpen: false
+			isOpen: false,
+			showSuggestions: false,
+			selectedSuggestion: null,
+			suggestions: []
 		};
+	}
+
+	componentDidUpdate() {
+		if ( this.state.showSuggestions && null !== this.state.selectedSuggestion && ! this.scrollingIntoView && null !== this.autocompleteRef.current ) {
+			this.scrollingIntoView = true;
+
+			scrollIntoView( this.suggestionNodes[ this.state.selectedSuggestion ], this.autocompleteRef.current, {
+				onlyScrollIfNeeded: true
+			});
+
+			setTimeout( () => {
+				this.scrollingIntoView = false;
+			}, 100 );
+		}
+	}
+
+	componentWillUnmount() {
+		delete this.suggestionsRequest;
+	}
+
+	bindSuggestionNode( index ) {
+		return ( ref ) => {
+			this.suggestionNodes[ index ] = ref;
+		};
+	}
+
+	updateSuggestions( value ) {
+		const { fetchLinkSuggestions } = this.props;
+
+		if ( ! fetchLinkSuggestions ) {
+			return;
+		}
+
+		if ( 1 >= value.length || /^https?:/.test( value ) ) {
+			this.setState({ showSuggestions: false });
+
+			return;
+		}
+
+		this.setState({ showSuggestions: true });
+
+		const request = fetchLinkSuggestions( value );
+
+		request.then( ( suggestions ) => {
+			if ( this.suggestionsRequest !== request ) {
+				return;
+			}
+
+			this.setState({ suggestions });
+		});
+
+		this.suggestionsRequest = request;
+	}
+
+	onChangeValue( event ) {
+		this.props.onChange( event.target.value );
+		if ( ! this.props.suggestions ) {
+			this.updateSuggestions( event.target.value );
+		}
+	}
+
+	clickSuggestion( value ) {
+		this.props.onChange( value );
+		this.setState({ showSuggestions: false });
+	}
+
+	onKeyDown( event ) {
+		if ( this.state.showSuggestions && 1 <= this.state.suggestions.length ) {
+
+			const suggestion = this.state.suggestions[ this.state.selectedSuggestion ];
+
+			switch ( event.keyCode ) {
+			case UP: {
+				event.stopPropagation();
+				event.preventDefault();
+				const previousIndex = ! this.state.selectedSuggestion ? this.state.suggestions.length - 1 : this.state.selectedSuggestion - 1;
+				this.setState({ selectedSuggestion: previousIndex });
+				break;
+			}
+			case DOWN: {
+				event.stopPropagation();
+				event.preventDefault();
+				const nextIndex = null === this.state.selectedSuggestion || ( this.state.selectedSuggestion === this.state.suggestions.length - 1 ) ? 0 : this.state.selectedSuggestion + 1;
+				this.setState({ selectedSuggestion: nextIndex });
+				break;
+			}
+			case TAB: {
+				if ( null !== this.state.selectedSuggestion ) {
+					event.stopPropagation();
+					this.clickSuggestion( suggestion.url );
+				}
+				break;
+			}
+			case ENTER: {
+				if ( null !== this.state.selectedSuggestion ) {
+					event.stopPropagation();
+					this.clickSuggestion( suggestion.url );
+				}
+				break;
+			}
+			}
+		}
 	}
 
 	render() {
 		const id = `inspector-link-control-${ this.props.instanceId }`;
-		const onChangeValue = ( event ) => this.props.onChange( event.target.value );
 
 		return (
 			<BaseControl
@@ -52,12 +182,43 @@ class LinkControl extends Component {
 						type="url"
 						placeholder={ this.props.placeholder }
 						value={ this.props.value }
-						onChange={ onChangeValue }
+						onChange={ this.onChangeValue }
+						onKeyDown={ this.onKeyDown }
 						className={ classnames(
 							'components-text-control__input',
 							{ 'is-full': undefined === this.props.children }
 						) }
 					/>
+
+					{ ( this.state.showSuggestions && 0 < this.state.suggestions.length ) && (
+						<Popover
+							position="bottom"
+							noArrow
+							focusOnMount={ false }
+							className="wp-block-themeisle-blocks-link-control-popover"
+						>
+							<div
+								ref={ this.autocompleteRef }
+								className="wp-block-themeisle-blocks-link-control-popover-container"
+							>
+								{ this.state.suggestions.map( ( suggestion, index ) => (
+									<button
+										key={ suggestion.id }
+										role="option"
+										tabIndex="-1"
+										ref={ this.bindSuggestionNode( index ) }
+										className={ classnames(
+											'block-editor-url-input__suggestion',
+											{ 'is-selected': index === this.state.selectedSuggestion  }
+										) }
+										onClick={ () => this.clickSuggestion( suggestion.url ) }
+									>
+										{ suggestion.title }
+									</button>
+								) ) }
+							</div>
+						</Popover>
+					)}
 
 					{ undefined !== this.props.children && (
 						<IconButton
@@ -74,4 +235,12 @@ class LinkControl extends Component {
 	}
 }
 
-export default withInstanceId( LinkControl );
+export default compose(
+	withInstanceId,
+	withSelect( ( select ) => {
+		const { getSettings } = select( 'core/block-editor' );
+		return {
+			fetchLinkSuggestions: getSettings().__experimentalFetchLinkSuggestions
+		};
+	})
+)( LinkControl );
