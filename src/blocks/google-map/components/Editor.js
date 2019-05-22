@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import classnames from 'classnames';
 import uuidv4 from 'uuid';
 
 /**
@@ -714,7 +715,10 @@ class Editor extends Component {
 						});
 						this.props.toggleSelection( true );
 					} }
-					className="wp-block-themeisle-blocks-google-map-resizer"
+					className={ classnames(
+						'wp-block-themeisle-blocks-google-map-resizer',
+						{ 'is-focused': this.props.isSelected }
+					) }
 				>
 					<div
 						id={ this.props.attributes.id }

@@ -117,9 +117,12 @@
 }
 
 .wp-block-themeisle-blocks-google-map-resizer {
-	.components-resizable-box__handle {
-		display: block;
-		z-index: 1;
+
+	&.is-focused {
+		.components-resizable-box__handle {
+			display: block;
+			z-index: 1;
+		}
 	}
 
 	.wp-block-themeisle-blocks-google-map-center {
