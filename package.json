@@ -1,6 +1,6 @@
 {
 	"name": "themeisle-gutenberg-blocks",
-	"version": "1.2.2",
+	"version": "1.2.3",
 	"description": "ThemeIsle Gutenberg Blocks",
 	"scripts": {
 		"build": "cross-env BABEL_ENV=default NODE_ENV=production webpack",
@@ -14,6 +14,7 @@
 	"dependencies": {
 		"array-move": "^2.0.0",
 		"classnames": "^2.2.6",
+		"dom-scroll-into-view": "^1.2.1",
 		"hex-rgba": "^1.0.2",
 		"react-google-charts": "^3.0.5",
 		"react-google-font-loader": "^1.0.5",

@@ -4,6 +4,8 @@
 
 const { __ } = wp.i18n;
 
+const { apiFetch } = wp;
+
 const { registerBlockType } = wp.blocks;
 
 const {
@@ -113,7 +115,7 @@ registerBlockType( 'themeisle-blocks/plugin-cards', {
 
 		const searchPlugins = search => {
 			setState({ status: 1 });
-			wp.apiFetch({ path: `themeisle-gutenberg-blocks/v1/get_plugins?search='${ encodeURIComponent( search ) }` }).then( payload => {
+			apiFetch({ path: `themeisle-gutenberg-blocks/v1/get_plugins?search='${ encodeURIComponent( search ) }` }).then( payload => {
 				const data = payload.data.plugins;
 				setState({
 					status: 0,

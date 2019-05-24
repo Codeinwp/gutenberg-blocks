@@ -80,7 +80,7 @@ class SizingControl extends Component {
 													max={ this.props.max }
 													onFocus={ onToggle }
 													onFocusOut={ onToggle }
-													onChange={ e => this.props.onChange( i.type, e.target.value ) }
+													onChange={ e => this.props.onChange( i.type, parseInt( e.target.value ) ) }
 												/>
 											) }
 											renderContent={ ({ onToggle }) => (

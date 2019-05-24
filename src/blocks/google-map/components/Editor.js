@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import classnames from 'classnames';
 import uuidv4 from 'uuid';
 
 /**
@@ -15,6 +16,7 @@ const {
 	PanelBody,
 	Placeholder,
 	RangeControl,
+	ResizableBox,
 	SelectControl,
 	Spinner,
 	TextControl,
@@ -692,14 +694,43 @@ class Editor extends Component {
 					</PanelBody>
 				</InspectorControls>
 
-				<div
-					id={ this.props.attributes.id }
-					className={ this.props.className }
-					style={ {
-						height: this.props.attributes.height + 'px'
+				<ResizableBox
+					size={ {
+						height: this.props.attributes.height
 					} }
+					enable={ {
+						top: false,
+						right: false,
+						bottom: true,
+						left: false
+					} }
+					minHeight={ 100 }
+					maxHeight={ 1400 }
+					onResizeStart={ () => {
+						this.props.toggleSelection( false );
+					} }
+					onResizeStop={ ( event, direction, elt, delta ) => {
+						this.props.setAttributes({
+							height: parseInt( this.props.attributes.height + delta.height, 10 )
+						});
+						this.props.toggleSelection( true );
+					} }
+					className={ classnames(
+						'wp-block-themeisle-blocks-google-map-resizer',
+						{ 'is-focused': this.props.isSelected }
+					) }
 				>
-				</div>
+					<div
+						id={ this.props.attributes.id }
+						className={ this.props.className }
+						style={ {
+							height: this.props.attributes.height + 'px'
+						} }
+					>
+					</div>
+
+					<div className="wp-block-themeisle-blocks-google-map-center"></div>
+				</ResizableBox>
 			</Fragment>
 		);
 	}

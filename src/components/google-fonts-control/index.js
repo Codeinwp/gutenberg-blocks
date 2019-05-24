@@ -35,7 +35,6 @@ import './editor.scss';
 class GoogleFontsControl extends Component {
 	constructor() {
 		super( ...arguments );
-		this.search = React.createRef();
 
 		this.state = {
 			fonts: null,
