@@ -115,3 +115,24 @@
 		cursor: pointer;
 	}
 }
+
+.wp-block-themeisle-blocks-google-map-resizer {
+
+	&.is-focused {
+		.components-resizable-box__handle {
+			display: block;
+			z-index: 1;
+		}
+	}
+
+	.wp-block-themeisle-blocks-google-map-center {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 10px;
+		height: 10px;
+		margin: -5px 0 0 -5px;
+		background: rgba(255,48,48,0.5);
+		border-radius: 100%;
+	}
+}

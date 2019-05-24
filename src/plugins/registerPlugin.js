@@ -18,8 +18,9 @@ const Component = () => (
 	<Options />
 );
 
+const icon = <Icon icon={ otterIcon } />;
 
 registerPlugin( 'themeisle-blocks', {
-	icon: <Icon icon={ otterIcon } />,
+	icon,
 	render: Component
 });

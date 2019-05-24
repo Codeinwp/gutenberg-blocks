@@ -40,3 +40,24 @@
 		}
 	}
 }
+
+.components-popover {
+	&.is-bottom {
+		&.wp-block-themeisle-blocks-link-control-popover {
+			z-index: 1000000;
+		
+			.wp-block-themeisle-blocks-link-control-popover-container {
+				max-height: 200px;
+				overflow-y: auto;
+
+				.block-editor-url-input__suggestion {
+					&.is-selected {
+						background: #00719e;
+						color: #fff;
+						outline: none;
+					}
+				}
+			}
+		}
+	}
+}
