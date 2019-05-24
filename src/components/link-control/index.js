@@ -9,6 +9,8 @@ import scrollIntoView from 'dom-scroll-into-view';
  */
 const { __ } = wp.i18n;
 
+const { apiFetch } = wp;
+
 const {
 	BaseControl,
 	IconButton,
@@ -33,6 +35,8 @@ const {
 	TAB,
 	UP
 } = wp.keycodes;
+
+const { addQueryArgs } = wp.url;
 
 /**
  * Internal dependencies
@@ -87,10 +91,6 @@ class LinkControl extends Component {
 	updateSuggestions( value ) {
 		const { fetchLinkSuggestions } = this.props;
 
-		if ( ! fetchLinkSuggestions ) {
-			return;
-		}
-
 		if ( 1 >= value.length || /^https?:/.test( value ) ) {
 			this.setState({ showSuggestions: false });
 
@@ -99,7 +99,19 @@ class LinkControl extends Component {
 
 		this.setState({ showSuggestions: true });
 
-		const request = fetchLinkSuggestions( value );
+		let request;
+
+		if ( ! fetchLinkSuggestions ) {
+			request = apiFetch({
+				path: addQueryArgs( '/wp/v2/search', {
+					search: value,
+					per_page: 20, // eslint-disable-line camelcase
+					type: 'post'
+				})
+			});
+		} else {
+			request = fetchLinkSuggestions( value );
+		}
 
 		request.then( ( suggestions ) => {
 			if ( this.suggestionsRequest !== request ) {
@@ -213,7 +225,7 @@ class LinkControl extends Component {
 										) }
 										onClick={ () => this.clickSuggestion( suggestion.url ) }
 									>
-										{ suggestion.title }
+										{ suggestion.title || __( 'Untitled Post' ) }
 									</button>
 								) ) }
 							</div>
