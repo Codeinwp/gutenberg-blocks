@@ -85,7 +85,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 			wp_enqueue_script(
 				'themeisle-gutenberg-blocks',
-				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/block.js',
+				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/blocks.js',
 				array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor' ),
 				$version,
 				true
@@ -146,7 +146,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 				wp_enqueue_script(
 					'themeisle-gutenberg-google-maps',
-					plugin_dir_url( $this->get_dir() ) . $this->slug . '/src/frontend/google-map/loader.js',
+					plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/frontend.js',
 					'',
 					$version,
 					true
