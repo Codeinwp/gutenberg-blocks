@@ -71,7 +71,8 @@ class Editor extends Component {
 			isAPILoaded: false,
 			isAPISaved: false,
 			isSaving: false,
-			isPlaceAPIAvailable: true
+			isPlaceAPIAvailable: true,
+			isMarkerOpen: false
 		};
 
 		this.settings;
@@ -90,6 +91,7 @@ class Editor extends Component {
 		this.searchBox;
 		this.name;
 		this.markers = [];
+		this.lastInfoWindow;
 	}
 
 	componentDidMount() {
@@ -310,6 +312,12 @@ class Editor extends Component {
 
 		this.props.setAttributes({ markers });
 
+		google.maps.event.addListener( mark, 'click', event => {
+			if ( this.lastInfoWindow ) {
+				this.lastInfoWindow.close();
+			}
+		});
+
 		this.addInfoWindow( mark, marker.id, title );
 	}
 
@@ -321,7 +329,16 @@ class Editor extends Component {
 		});
 
 		marker.addListener( 'click', () => {
+			this.lastInfoWindow = infowindow;
 			infowindow.open( this.map, marker );
+		});
+
+		google.maps.event.addListener( infowindow, 'domready', () => {
+			this.setState({ isMarkerOpen: id });
+		});
+
+		google.maps.event.addListener( infowindow, 'closeclick', () => {
+			this.setState({ isMarkerOpen: false });
 		});
 	}
 
@@ -331,6 +348,7 @@ class Editor extends Component {
 		this.props.setAttributes({ markers });
 
 		this.removeMarkers();
+		this.setState({ isMarkerOpen: false });
 
 		if ( 0 < markers.length ) {
 			this.cycleMarkers( markers );
@@ -367,6 +385,12 @@ class Editor extends Component {
 			});
 
 			this.markers.push( mark );
+
+			google.maps.event.addListener( mark, 'click', event => {
+				if ( this.lastInfoWindow ) {
+					this.lastInfoWindow.close();
+				}
+			});
 
 			this.addInfoWindow( mark, marker.id, marker.title, marker.description );
 		});
@@ -662,6 +686,12 @@ class Editor extends Component {
 					<PanelBody
 						title={ __( 'Markers' ) }
 						initialOpen={ false }
+						opened={ false !== this.state.isMarkerOpen ? true : undefined }
+						onToggle={ () => {
+							if ( false !== this.state.isMarkerOpen ) {
+								this.setState({ isMarkerOpen: false });
+							}
+						} }
 					>
 						<MarkerWrapper
 							markers={ this.props.attributes.markers }
@@ -669,6 +699,7 @@ class Editor extends Component {
 							removeMarker={ this.removeMarker }
 							changeMarkerProp={ this.changeMarkerProp }
 							isPlaceAPIAvailable={ this.state.isPlaceAPIAvailable }
+							initialOpen={ this.state.isMarkerOpen }
 						/>
 					</PanelBody>
 
