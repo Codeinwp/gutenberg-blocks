@@ -281,7 +281,8 @@ class Editor extends Component {
 			position: latLng,
 			map: this.map,
 			title,
-			draggable: true
+			draggable: true,
+			icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
 		});
 
 		google.maps.event.addListener( mark, 'dragend', event => {
@@ -299,6 +300,7 @@ class Editor extends Component {
 			id,
 			location: '',
 			title,
+			icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
 			description: '',
 			latitude,
 			longitude
@@ -353,7 +355,8 @@ class Editor extends Component {
 				position,
 				map: this.map,
 				title: marker.title,
-				draggable: true
+				draggable: true,
+				icon: marker.icon || 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
 			});
 
 			google.maps.event.addListener( mark, 'dragend', event => {
