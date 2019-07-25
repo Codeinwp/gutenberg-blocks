@@ -34,6 +34,7 @@ const {
  * Internal dependencies
  */
 import MarkerWrapper from './MarkerWrapper.js';
+import MarkerModal from './MarkerModal.js';
 
 class Editor extends Component {
 	constructor() {
@@ -46,6 +47,7 @@ class Editor extends Component {
 		this.saveAPIKey = this.saveAPIKey.bind( this );
 		this.changeLocation = this.changeLocation.bind( this );
 		this.markerButton = this.markerButton.bind( this );
+		this.selectMarker = this.selectMarker.bind( this );
 		this.addMarker = this.addMarker.bind( this );
 		this.addInfoWindow = this.addInfoWindow.bind( this );
 		this.removeMarker = this.removeMarker.bind( this );
@@ -63,7 +65,7 @@ class Editor extends Component {
 		this.changeMarkerProp = this.changeMarkerProp.bind( this );
 
 		window.isMapLoaded = window.isMapLoaded || false;
-		window.addMarker = this.addMarker;
+		window.selectMarker = this.selectMarker;
 		window.removeMarker = this.removeMarker;
 
 		this.state = {
@@ -72,7 +74,10 @@ class Editor extends Component {
 			isAPISaved: false,
 			isSaving: false,
 			isPlaceAPIAvailable: true,
-			isMarkerOpen: false
+			isMarkerOpen: false,
+			isSelectingMarker: false,
+			isModalOpen: false,
+			selectedMarker: {}
 		};
 
 		this.settings;
@@ -141,6 +146,10 @@ class Editor extends Component {
 				streetViewControl: isSelected ? true : this.props.attributes.streetViewControl
 			});
 		}
+	}
+
+	componentDidUnmount() {
+		google.maps.event.clearInstanceListeners( this.map );
 	}
 
 	enqueueScript( api ) {
@@ -267,16 +276,44 @@ class Editor extends Component {
 		controlUI.appendChild( controlText );
 
 		controlUI.addEventListener( 'click', () => {
-			window.addMarker();
+			window.selectMarker();
 		});
 	}
 
-	addMarker() {
-		const latitude = this.props.attributes.latitude;
-		const longitude = this.props.attributes.longitude;
+	selectMarker() {
+		if ( ! this.state.isSelectingMarker ) {
+			this.map.addListener( 'click', e => {
+				google.maps.event.clearListeners( this.map, 'click' );
+
+				const id = uuidv4();
+				const title = __( 'Custom Marker' );
+				const latitude = e.latLng.lat();
+				const longitude = e.latLng.lng();
+
+				this.setState({
+					isSelectingMarker: ! this.state.isSelectingMarker,
+					isModalOpen: true,
+					selectedMarker: {
+						id,
+						location: '',
+						title,
+						icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
+						description: '',
+						latitude,
+						longitude
+					}
+				});
+			});
+		} else {
+			google.maps.event.clearListeners( this.map, 'click' );
+		}
+
+		this.setState({ isSelectingMarker: ! this.state.isSelectingMarker });
+	}
+
+	addMarker( title, icon, description, latitude, longitude  ) {
 		const latLng = new google.maps.LatLng( latitude, longitude );
 
-		const title = __( 'Custom Marker' );
 		const id = uuidv4();
 
 		let mark = new google.maps.Marker({
@@ -284,7 +321,7 @@ class Editor extends Component {
 			map: this.map,
 			title,
 			draggable: true,
-			icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
+			icon
 		});
 
 		google.maps.event.addListener( mark, 'dragend', event => {
@@ -302,8 +339,8 @@ class Editor extends Component {
 			id,
 			location: '',
 			title,
-			icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
-			description: '',
+			icon,
+			description,
 			latitude,
 			longitude
 		};
@@ -318,7 +355,9 @@ class Editor extends Component {
 			}
 		});
 
-		this.addInfoWindow( mark, marker.id, title );
+		this.addInfoWindow( mark, marker.id, title, description );
+
+		this.setState({ isModalOpen: false });
 	}
 
 	addInfoWindow( marker, id, title, description ) {
@@ -695,7 +734,6 @@ class Editor extends Component {
 					>
 						<MarkerWrapper
 							markers={ this.props.attributes.markers }
-							addMarker={ this.addMarker }
 							removeMarker={ this.removeMarker }
 							changeMarkerProp={ this.changeMarkerProp }
 							isPlaceAPIAvailable={ this.state.isPlaceAPIAvailable }
@@ -728,6 +766,15 @@ class Editor extends Component {
 					</PanelBody>
 				</InspectorControls>
 
+				{ this.state.isModalOpen && (
+					<MarkerModal
+						marker={ this.state.selectedMarker }
+						isPlaceAPIAvailable={ this.state.isPlaceAPIAvailable }
+						close={ () => this.setState({ isModalOpen: false }) }
+						addMarker={ this.addMarker }
+					/>
+				) }
+
 				<ResizableBox
 					size={ {
 						height: this.props.attributes.height
@@ -756,14 +803,15 @@ class Editor extends Component {
 				>
 					<div
 						id={ this.props.attributes.id }
-						className={ this.props.className }
+						className={ classnames(
+							this.props.className,
+							{ 'is-selecting-marker': this.state.isSelectingMarker }
+						) }
 						style={ {
 							height: this.props.attributes.height + 'px'
 						} }
 					>
 					</div>
-
-					<div className="wp-block-themeisle-blocks-google-map-center"></div>
 				</ResizableBox>
 			</Fragment>
 		);
