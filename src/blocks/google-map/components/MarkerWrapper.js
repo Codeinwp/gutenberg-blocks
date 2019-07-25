@@ -64,6 +64,15 @@ class MarkerWrapper extends Component {
 						);
 					}) }
 				</div>
+
+				<Button
+					isDefault
+					isLarge
+					className="wp-block-themeisle-blocks-google-map-marker-add"
+					onClick={ this.props.addMarker }
+				>
+					{ __( 'Add Marker' ) }
+				</Button>
 			</Fragment>
 		);
 	}

@@ -110,6 +110,12 @@
 	}
 }
 
+.wp-block-themeisle-blocks-google-map-marker-add {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
 .wp-block-themeisle-blocks-map-overview {
 
 	h6.wp-block-themeisle-blocks-map-overview-title {
@@ -134,4 +140,8 @@
 			z-index: 1;
 		}
 	}
+}
+
+.pac-container {
+	z-index: 999999;
 }

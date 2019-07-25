@@ -48,6 +48,7 @@ class Editor extends Component {
 		this.changeLocation = this.changeLocation.bind( this );
 		this.markerButton = this.markerButton.bind( this );
 		this.selectMarker = this.selectMarker.bind( this );
+		this.addMarkerManual = this.addMarkerManual.bind( this );
 		this.addMarker = this.addMarker.bind( this );
 		this.addInfoWindow = this.addInfoWindow.bind( this );
 		this.removeMarker = this.removeMarker.bind( this );
@@ -243,6 +244,10 @@ class Editor extends Component {
 	}
 
 	initSearch( e ) {
+		const elements = document.getElementsByClassName( 'pac-container' );
+
+		Object.keys( elements ).forEach( e => elements[e].remove() );
+
 		this.searchBox = new google.maps.places.SearchBox( e.target );
 
 		this.searchBox.addListener( 'places_changed', () => {
@@ -294,6 +299,7 @@ class Editor extends Component {
 					isSelectingMarker: ! this.state.isSelectingMarker,
 					isModalOpen: true,
 					selectedMarker: {
+						advanced: false,
 						id,
 						location: '',
 						title,
@@ -311,7 +317,29 @@ class Editor extends Component {
 		this.setState({ isSelectingMarker: ! this.state.isSelectingMarker });
 	}
 
-	addMarker( title, icon, description, latitude, longitude  ) {
+	addMarkerManual() {
+		const id = uuidv4();
+		const title = __( 'Custom Marker' );
+		const location = this.map.getCenter();
+		const latitude = location.lat();
+		const longitude = location.lng();
+
+		this.setState({
+			isModalOpen: true,
+			selectedMarker: {
+				advanced: true,
+				id,
+				location: '',
+				title,
+				icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
+				description: '',
+				latitude,
+				longitude
+			}
+		});
+	}
+
+	addMarker( location, title, icon, description, latitude, longitude  ) {
 		const latLng = new google.maps.LatLng( latitude, longitude );
 
 		const id = uuidv4();
@@ -337,7 +365,7 @@ class Editor extends Component {
 
 		const marker = {
 			id,
-			location: '',
+			location,
 			title,
 			icon,
 			description,
@@ -736,6 +764,7 @@ class Editor extends Component {
 							markers={ this.props.attributes.markers }
 							removeMarker={ this.removeMarker }
 							changeMarkerProp={ this.changeMarkerProp }
+							addMarker={ this.addMarkerManual }
 							isPlaceAPIAvailable={ this.state.isPlaceAPIAvailable }
 							initialOpen={ this.state.isMarkerOpen }
 						/>

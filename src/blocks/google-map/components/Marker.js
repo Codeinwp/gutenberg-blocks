@@ -28,6 +28,10 @@ class Marker extends Component {
 	}
 
 	initSearch( e ) {
+		const elements = document.getElementsByClassName( 'pac-container' );
+
+		Object.keys( elements ).forEach( e => elements[e].remove() );
+
 		this.searchBox = new google.maps.places.SearchBox( e.target );
 
 		this.searchBox.addListener( 'places_changed', () => {
