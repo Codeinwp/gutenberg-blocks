@@ -34,6 +34,7 @@ const {
  * Internal dependencies
  */
 import MarkerWrapper from './MarkerWrapper.js';
+import MarkerModal from './MarkerModal.js';
 
 class Editor extends Component {
 	constructor() {
@@ -46,6 +47,8 @@ class Editor extends Component {
 		this.saveAPIKey = this.saveAPIKey.bind( this );
 		this.changeLocation = this.changeLocation.bind( this );
 		this.markerButton = this.markerButton.bind( this );
+		this.selectMarker = this.selectMarker.bind( this );
+		this.addMarkerManual = this.addMarkerManual.bind( this );
 		this.addMarker = this.addMarker.bind( this );
 		this.addInfoWindow = this.addInfoWindow.bind( this );
 		this.removeMarker = this.removeMarker.bind( this );
@@ -63,7 +66,7 @@ class Editor extends Component {
 		this.changeMarkerProp = this.changeMarkerProp.bind( this );
 
 		window.isMapLoaded = window.isMapLoaded || false;
-		window.addMarker = this.addMarker;
+		window.selectMarker = this.selectMarker;
 		window.removeMarker = this.removeMarker;
 
 		this.state = {
@@ -71,14 +74,14 @@ class Editor extends Component {
 			isAPILoaded: false,
 			isAPISaved: false,
 			isSaving: false,
-			isPlaceAPIAvailable: true
+			isPlaceAPIAvailable: true,
+			isMarkerOpen: false,
+			isSelectingMarker: false,
+			isModalOpen: false,
+			selectedMarker: {}
 		};
 
 		this.settings;
-
-		wp.api.loadPromise.then( () => {
-			this.settings = new wp.api.models.Settings();
-		});
 
 		this.link = document.createElement( 'script' );
 		this.link.type = 'text/javascript';
@@ -90,13 +93,18 @@ class Editor extends Component {
 		this.searchBox;
 		this.name;
 		this.markers = [];
+		this.lastInfoWindow;
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		if ( this.props.attributes.id === undefined || this.props.attributes.id.substr( this.props.attributes.id.length - 8 ) !== this.props.clientId.substr( 0, 8 ) ) {
 			const instanceId = `wp-block-themeisle-blocks-google-map-${ this.props.clientId.substr( 0, 8 ) }`;
 			this.props.setAttributes({ id: instanceId });
 		}
+
+		await wp.api.loadPromise.then( () => {
+			this.settings = new wp.api.models.Settings();
+		});
 
 		if ( false === Boolean( themeisleGutenberg.mapsAPI ) ) {
 			if ( ! this.state.isAPILoaded ) {
@@ -232,6 +240,10 @@ class Editor extends Component {
 	}
 
 	initSearch( e ) {
+		const elements = document.getElementsByClassName( 'pac-container' );
+
+		Object.keys( elements ).forEach( e => elements[e].remove() );
+
 		this.searchBox = new google.maps.places.SearchBox( e.target );
 
 		this.searchBox.addListener( 'places_changed', () => {
@@ -265,23 +277,75 @@ class Editor extends Component {
 		controlUI.appendChild( controlText );
 
 		controlUI.addEventListener( 'click', () => {
-			window.addMarker();
+			window.selectMarker();
 		});
 	}
 
-	addMarker() {
-		const latitude = this.props.attributes.latitude;
-		const longitude = this.props.attributes.longitude;
+	selectMarker() {
+		if ( ! this.state.isSelectingMarker ) {
+			this.map.addListener( 'click', e => {
+				google.maps.event.clearListeners( this.map, 'click' );
+
+				const id = uuidv4();
+				const title = __( 'Custom Marker' );
+				const latitude = e.latLng.lat();
+				const longitude = e.latLng.lng();
+
+				this.setState({
+					isSelectingMarker: ! this.state.isSelectingMarker,
+					isModalOpen: true,
+					selectedMarker: {
+						advanced: false,
+						id,
+						location: '',
+						title,
+						icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
+						description: '',
+						latitude,
+						longitude
+					}
+				});
+			});
+		} else {
+			google.maps.event.clearListeners( this.map, 'click' );
+		}
+
+		this.setState({ isSelectingMarker: ! this.state.isSelectingMarker });
+	}
+
+	addMarkerManual() {
+		const id = uuidv4();
+		const title = __( 'Custom Marker' );
+		const location = this.map.getCenter();
+		const latitude = location.lat();
+		const longitude = location.lng();
+
+		this.setState({
+			isModalOpen: true,
+			selectedMarker: {
+				advanced: true,
+				id,
+				location: '',
+				title,
+				icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
+				description: '',
+				latitude,
+				longitude
+			}
+		});
+	}
+
+	addMarker( location, title, icon, description, latitude, longitude  ) {
 		const latLng = new google.maps.LatLng( latitude, longitude );
 
-		const title = __( 'Custom Marker' );
 		const id = uuidv4();
 
 		let mark = new google.maps.Marker({
 			position: latLng,
 			map: this.map,
 			title,
-			draggable: true
+			draggable: true,
+			icon
 		});
 
 		google.maps.event.addListener( mark, 'dragend', event => {
@@ -297,9 +361,10 @@ class Editor extends Component {
 
 		const marker = {
 			id,
-			location: '',
+			location,
 			title,
-			description: '',
+			icon,
+			description,
 			latitude,
 			longitude
 		};
@@ -308,7 +373,15 @@ class Editor extends Component {
 
 		this.props.setAttributes({ markers });
 
-		this.addInfoWindow( mark, marker.id, title );
+		google.maps.event.addListener( mark, 'click', event => {
+			if ( this.lastInfoWindow ) {
+				this.lastInfoWindow.close();
+			}
+		});
+
+		this.addInfoWindow( mark, marker.id, title, description );
+
+		this.setState({ isModalOpen: false });
 	}
 
 	addInfoWindow( marker, id, title, description ) {
@@ -319,7 +392,16 @@ class Editor extends Component {
 		});
 
 		marker.addListener( 'click', () => {
+			this.lastInfoWindow = infowindow;
 			infowindow.open( this.map, marker );
+		});
+
+		google.maps.event.addListener( infowindow, 'domready', () => {
+			this.setState({ isMarkerOpen: id });
+		});
+
+		google.maps.event.addListener( infowindow, 'closeclick', () => {
+			this.setState({ isMarkerOpen: false });
 		});
 	}
 
@@ -329,6 +411,7 @@ class Editor extends Component {
 		this.props.setAttributes({ markers });
 
 		this.removeMarkers();
+		this.setState({ isMarkerOpen: false });
 
 		if ( 0 < markers.length ) {
 			this.cycleMarkers( markers );
@@ -353,7 +436,8 @@ class Editor extends Component {
 				position,
 				map: this.map,
 				title: marker.title,
-				draggable: true
+				draggable: true,
+				icon: marker.icon || 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
 			});
 
 			google.maps.event.addListener( mark, 'dragend', event => {
@@ -364,6 +448,12 @@ class Editor extends Component {
 			});
 
 			this.markers.push( mark );
+
+			google.maps.event.addListener( mark, 'click', event => {
+				if ( this.lastInfoWindow ) {
+					this.lastInfoWindow.close();
+				}
+			});
 
 			this.addInfoWindow( mark, marker.id, marker.title, marker.description );
 		});
@@ -659,13 +749,20 @@ class Editor extends Component {
 					<PanelBody
 						title={ __( 'Markers' ) }
 						initialOpen={ false }
+						opened={ false !== this.state.isMarkerOpen ? true : undefined }
+						onToggle={ () => {
+							if ( false !== this.state.isMarkerOpen ) {
+								this.setState({ isMarkerOpen: false });
+							}
+						} }
 					>
 						<MarkerWrapper
 							markers={ this.props.attributes.markers }
-							addMarker={ this.addMarker }
 							removeMarker={ this.removeMarker }
 							changeMarkerProp={ this.changeMarkerProp }
+							addMarker={ this.addMarkerManual }
 							isPlaceAPIAvailable={ this.state.isPlaceAPIAvailable }
+							initialOpen={ this.state.isMarkerOpen }
 						/>
 					</PanelBody>
 
@@ -693,6 +790,15 @@ class Editor extends Component {
 						</Button>
 					</PanelBody>
 				</InspectorControls>
+
+				{ this.state.isModalOpen && (
+					<MarkerModal
+						marker={ this.state.selectedMarker }
+						isPlaceAPIAvailable={ this.state.isPlaceAPIAvailable }
+						close={ () => this.setState({ isModalOpen: false }) }
+						addMarker={ this.addMarker }
+					/>
+				) }
 
 				<ResizableBox
 					size={ {
@@ -722,14 +828,15 @@ class Editor extends Component {
 				>
 					<div
 						id={ this.props.attributes.id }
-						className={ this.props.className }
+						className={ classnames(
+							this.props.className,
+							{ 'is-selecting-marker': this.state.isSelectingMarker }
+						) }
 						style={ {
 							height: this.props.attributes.height + 'px'
 						} }
 					>
 					</div>
-
-					<div className="wp-block-themeisle-blocks-google-map-center"></div>
 				</ResizableBox>
 			</Fragment>
 		);

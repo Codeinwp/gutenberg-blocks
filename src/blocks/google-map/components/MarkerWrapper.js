@@ -25,6 +25,20 @@ class MarkerWrapper extends Component {
 		};
 	}
 
+	componentDidMount() {
+		if ( false !== this.props.initialOpen ) {
+			this.setState({ isOpen: this.props.initialOpen });
+		}
+	}
+
+	componentDidUpdate( prevProps ) {
+		if ( this.props.initialOpen !== prevProps.initialOpen ) {
+			if ( false !== this.props.initialOpen ) {
+				this.setState({ isOpen: this.props.initialOpen });
+			}
+		}
+	}
+
 	openMarker( id ) {
 		if ( this.state.isOpen === id ) {
 			id = null;

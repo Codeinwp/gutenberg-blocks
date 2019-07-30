@@ -45,7 +45,7 @@ class Options extends Component {
 		if ( data.capabilities.manage_options ) {
 			this.setState({ canUser: true });
 
-			wp.api.loadPromise.then( () => {
+			await wp.api.loadPromise.then( () => {
 				this.settings = new wp.api.models.Settings();
 			});
 
