@@ -83,10 +83,6 @@ class Editor extends Component {
 
 		this.settings;
 
-		wp.api.loadPromise.then( () => {
-			this.settings = new wp.api.models.Settings();
-		});
-
 		this.link = document.createElement( 'script' );
 		this.link.type = 'text/javascript';
 		this.link.async = true;
@@ -100,11 +96,15 @@ class Editor extends Component {
 		this.lastInfoWindow;
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		if ( this.props.attributes.id === undefined || this.props.attributes.id.substr( this.props.attributes.id.length - 8 ) !== this.props.clientId.substr( 0, 8 ) ) {
 			const instanceId = `wp-block-themeisle-blocks-google-map-${ this.props.clientId.substr( 0, 8 ) }`;
 			this.props.setAttributes({ id: instanceId });
 		}
+
+		await wp.api.loadPromise.then( () => {
+			this.settings = new wp.api.models.Settings();
+		});
 
 		if ( false === Boolean( themeisleGutenberg.mapsAPI ) ) {
 			if ( ! this.state.isAPILoaded ) {
@@ -147,10 +147,6 @@ class Editor extends Component {
 				streetViewControl: isSelected ? true : this.props.attributes.streetViewControl
 			});
 		}
-	}
-
-	componentDidUnmount() {
-		google.maps.event.clearInstanceListeners( this.map );
 	}
 
 	enqueueScript( api ) {
