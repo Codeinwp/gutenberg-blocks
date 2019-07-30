@@ -5,17 +5,22 @@ const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 
 module.exports = {
 	mode: NODE_ENV,
-	entry: [
-		...glob.sync( './src/**/**/index.js' ),
-		...glob.sync( './src/plugins/registerPlugin.js' )
-	],
+	entry: {
+		blocks: [
+			...glob.sync( './src/**/**/index.js' ),
+			...glob.sync( './src/plugins/registerPlugin.js' )
+		],
+		frontend: [
+			...glob.sync( './src/frontend/**/*.js' )
+		]
+	},
 	externals: {
 		'react': 'React',
 		'react-dom': 'ReactDOM'
 	},
 	output: {
 		path: __dirname,
-		filename: './build/block.js',
+		filename: './build/[name].js',
 		chunkFilename: './build/[name].js',
 		jsonpFunction: 'tiOtterWebpackJsonp'
 	},
@@ -38,8 +43,7 @@ module.exports = {
 						]
 					}
 				},
-				'eslint-loader' ],
-				exclude: /node_modules/
+				'eslint-loader' ]
 			},
 			{
 				test: /\.(css|scss)$/,

@@ -42,7 +42,8 @@ const initMapScript = () => {
 				const mark = new google.maps.Marker({
 					position,
 					map: googleMap,
-					title: marker.title
+					title: marker.title,
+					icon: marker.icon || 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
 				});
 
 				if ( marker.title || marker.description ) {
