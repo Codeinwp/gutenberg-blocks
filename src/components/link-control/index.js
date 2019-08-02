@@ -221,6 +221,7 @@ class LinkControl extends Component {
 										ref={ this.bindSuggestionNode( index ) }
 										className={ classnames(
 											'block-editor-url-input__suggestion',
+											'editor-url-input__suggestion',
 											{ 'is-selected': index === this.state.selectedSuggestion  }
 										) }
 										onClick={ () => this.clickSuggestion( suggestion.url ) }
@@ -250,7 +251,12 @@ class LinkControl extends Component {
 export default compose(
 	withInstanceId,
 	withSelect( ( select ) => {
+		if ( ! select( 'core/block-editor' ) ) {
+			return;
+		}
+
 		const { getSettings } = select( 'core/block-editor' );
+
 		return {
 			fetchLinkSuggestions: getSettings().__experimentalFetchLinkSuggestions
 		};
