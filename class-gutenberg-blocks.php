@@ -77,7 +77,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 			wp_enqueue_script(
 				'themeisle-gutenberg-blocks-vendor',
-				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/vendor.js',
+				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/chunk-vendor.js',
 				array( 'react', 'react-dom' ),
 				$version,
 				true
@@ -95,6 +95,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 			wp_localize_script( 'themeisle-gutenberg-blocks', 'themeisleGutenberg', array(
 				'isCompatible' => $this->is_compatible(),
+				'packagePath' => plugin_dir_url( $this->get_dir() ) . $this->slug . '/',
 				'assetsPath' => plugin_dir_url( $this->get_dir() ) . $this->slug . '/assets',
 				'updatePath' => admin_url( 'update-core.php' ),
 				'mapsAPI' => $api

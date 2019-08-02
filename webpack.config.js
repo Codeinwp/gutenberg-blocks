@@ -7,8 +7,9 @@ module.exports = {
 	mode: NODE_ENV,
 	entry: {
 		blocks: [
-			...glob.sync( './src/**/**/index.js' ),
-			...glob.sync( './src/plugins/registerPlugin.js' )
+			'./src/index.js',
+			'./src/plugins/registerPlugin.js',
+			...glob.sync( './src/blocks/**/index.js' )
 		],
 		frontend: [
 			...glob.sync( './src/frontend/**/*.js' )
@@ -21,7 +22,7 @@ module.exports = {
 	output: {
 		path: __dirname,
 		filename: './build/[name].js',
-		chunkFilename: './build/[name].js',
+		chunkFilename: './build/chunk-[name].js',
 		jsonpFunction: 'tiOtterWebpackJsonp'
 	},
 	module: {
@@ -35,6 +36,7 @@ module.exports = {
 						plugins: [
 							'@babel/plugin-transform-async-to-generator',
 							'@babel/plugin-proposal-object-rest-spread',
+							'@babel/plugin-syntax-dynamic-import',
 							[
 								'@babel/plugin-transform-react-jsx', {
 									'pragma': 'wp.element.createElement'

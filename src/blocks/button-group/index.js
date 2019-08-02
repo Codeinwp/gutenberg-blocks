@@ -64,7 +64,7 @@ import GoogleFontsControl from '../../components/google-fonts-control/index.js';
 
 import ControlPanelControl from '../../components/control-panel-control/index.js';
 
-import IconPickerControl from '../../components/icon-picker-control/index.js';
+const IconPickerControl = React.lazy( () => import( '../../components/icon-picker-control/index.js' ) );
 
 import LinkControl from '../../components/link-control/index.js';
 
@@ -907,21 +907,23 @@ registerBlockType( 'themeisle-blocks/button-group', {
 
 										{ 'none' !== data[selectedButton].iconType && (
 											<Fragment>
-												<IconPickerControl
-													label={ __( 'Icon Picker' ) }
-													prefix={ data[selectedButton].prefix }
-													icon={ data[selectedButton].icon }
-													onChange={ e => {
-														if ( 'object' === typeof e ) {
-															updateButton({
-																icon: e.name,
-																prefix: e.prefix
-															}, selectedButton );
-														} else {
-															updateButton({ icon: e }, selectedButton );
-														}
-													}}
-												/>
+												<React.Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
+													<IconPickerControl
+														label={ __( 'Icon Picker' ) }
+														prefix={ data[selectedButton].prefix }
+														icon={ data[selectedButton].icon }
+														onChange={ e => {
+															if ( 'object' === typeof e ) {
+																updateButton({
+																	icon: e.name,
+																	prefix: e.prefix
+																}, selectedButton );
+															} else {
+																updateButton({ icon: e }, selectedButton );
+															}
+														}}
+													/>
+												</React.Suspense>
 											</Fragment>
 										) }
 									</PanelBody>
