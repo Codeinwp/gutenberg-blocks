@@ -66,7 +66,7 @@ class About_Author_Block extends Base_Block {
 		}
 
 		return sprintf(
-			'<section class="%1$s"><div class="themeisle-author-image">%2$s</div><div class="themeisle-author-data">%3$s%4$s</div></section>',
+			'<section class="%1$s"><div class="wp-block-themeisle-author-image">%2$s</div><div class="wp-block-themeisle-author-data">%3$s%4$s</div></section>',
 			esc_attr( $class ),
 			$img_markup,
 			$title_markup,

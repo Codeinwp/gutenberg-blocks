@@ -69,7 +69,7 @@ class Plugin_Card_Block extends Base_Block {
 			}
 
 			$markup = '<div class="' . esc_attr( $class ) . '">
-				<div class="themeisle-plugin-card">
+				<div class="wp-block-themeisle-plugin-card">
 					<div class="card-header">
 						<div class="card-main">
 							<div class="card-logo">

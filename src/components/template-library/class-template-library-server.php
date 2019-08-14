@@ -3,28 +3,28 @@
 namespace ThemeIsle\GutenbergBlocks;
 
 /**
- * Class Advanced_Columns_Server
+ * Class Template_Library_Server
  */
-class Advanced_Columns_Server extends \WP_Rest_Controller {
+class Template_Library_Server extends \WP_Rest_Controller {
 
 	/**
 	 * The main instance var.
 	 *
-	 * @var Advanced_Columns_Server
+	 * @var Template_Library_Server
 	 */
 	public static $instance = null;
 
 	/**
 	 * Rest route namespace.
 	 *
-	 * @var Advanced_Columns_Server
+	 * @var Template_Library_Server
 	 */
 	public $namespace = 'themeisle-gutenberg-blocks/';
 
 	/**
 	 * Rest route version.
 	 *
-	 * @var Advanced_Columns_Server
+	 * @var Template_Library_Server
 	 */
 	public $version = 'v1';
 
@@ -193,7 +193,7 @@ class Advanced_Columns_Server extends \WP_Rest_Controller {
 	 * @static
 	 * @since 1.0.0
 	 * @access public
-	 * @return Advanced_Columns_Server
+	 * @return Template_Library_Server
 	 */
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {

@@ -183,7 +183,7 @@ registerBlockType( 'themeisle-blocks/plugin-cards', {
 			),
 			<div className={ className }>
 				{ ( props.attributes.pluginName ) ?
-					<div className="themeisle-plugin-card">
+					<div className="wp-block-themeisle-plugin-card">
 						<div className="card-header">
 							<div className="card-main">
 								<div className="card-logo">

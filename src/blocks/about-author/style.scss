@@ -8,7 +8,7 @@
     display: flex;
 	word-wrap: break-word;
 
-	.themeisle-author-image {
+	.wp-block-themeisle-author-image {
 		width: 16.66666667%;
 		float: left;
 		max-width: 130px;
@@ -27,7 +27,7 @@
 		}
 	}
 
-	.themeisle-author-data {
+	.wp-block-themeisle-author-data {
 		width: 83.33333333%;
 		float: left;
 		margin: 0 15px;
@@ -43,14 +43,14 @@
 		display: inline-block;
 		text-align: center;
 
-		.themeisle-author-image {
+		.wp-block-themeisle-author-image {
 			width: auto;
 			float: none;
 			max-width: 130px;
 			max-height: 130px;
 			margin: auto;
 		}
-		.themeisle-author-data {
+		.wp-block-themeisle-author-data {
 			width: auto;
 			float: none;
 		}

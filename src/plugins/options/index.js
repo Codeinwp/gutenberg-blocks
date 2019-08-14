@@ -102,7 +102,7 @@ class Options extends Component {
 				{ this.state.isOpen && (
 					<Modal
 						title={ __( 'Otter Options' ) }
-						overlayClassName="themeisle-blocks-options"
+						overlayClassName="wp-block-themeisle-blocks-options"
 						onRequestClose={ () => this.setState({ isOpen: false }) }
 					>
 						<BaseControl>

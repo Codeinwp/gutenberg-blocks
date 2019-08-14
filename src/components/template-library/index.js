@@ -43,7 +43,7 @@ const { Component } = wp.element;
  */
 import './editor.scss';
 
-import { otterIcon } from '../../../../helpers/icons.js';
+import { otterIcon } from '../../helpers/icons.js';
 
 class Library extends Component {
 	constructor() {
@@ -249,7 +249,7 @@ class Library extends Component {
 		return (
 			<Modal
 				className={ classnames(
-					'themeisle-library-modal',
+					'wp-block-themeisle-library-modal',
 					{ 'is-preview': this.state.preview }
 				) }
 				onRequestClose={ this.props.close }

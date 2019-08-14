@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 const {
-	G,
 	Path,
 	SVG
 } = wp.components;

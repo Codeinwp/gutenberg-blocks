@@ -22,7 +22,7 @@ import './editor.scss';
 
 import { columnsIcon } from '../../../../helpers/icons.js';
 
-import Library from './library.js';
+import Library from '../../../../components/template-library/index.js';
 
 class Onboarding extends Component {
 	constructor() {
@@ -44,9 +44,9 @@ class Onboarding extends Component {
 			<Placeholder
 				label={ __( 'Select Layout' ) }
 				icon={ <Icon icon={ columnsIcon } /> }
-				className="themeisle-onboarding-component"
+				className="wp-block-themeisle-onboarding-component"
 			>
-				<div className="themeisle-layout-picker">
+				<div className="wp-block-themeisle-layout-picker">
 					<Tooltip text={ __( 'Single Row' ) } >
 						<Button
 							className="wp-block-themeisle-blocks-advanced-column-layout"
@@ -184,7 +184,7 @@ class Onboarding extends Component {
 					<Button
 						isPrimary
 						isLarge
-						className="themeisle-template-library"
+						className="wp-block-themeisle-template-library"
 						onClick={ () => this.setState({ isLibraryOpen: true }) }
 					>
 						<Dashicon icon="category"/>
