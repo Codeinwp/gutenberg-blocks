@@ -1,7 +1,9 @@
 const webpack = require( 'webpack' );
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const glob = require( 'glob' );
+const path = require( 'path' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
+const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' );
 
 module.exports = {
 	mode: NODE_ENV,
@@ -20,9 +22,9 @@ module.exports = {
 		'react-dom': 'ReactDOM'
 	},
 	output: {
-		path: __dirname,
-		filename: './build/[name].js',
-		chunkFilename: './build/chunk-[name].js',
+		path: path.resolve( __dirname, 'build' ),
+		filename: '[name].js',
+		chunkFilename: 'chunk-[name].js',
 		jsonpFunction: 'tiOtterWebpackJsonp'
 	},
 	module: {
@@ -94,8 +96,9 @@ module.exports = {
 			'process.env.NODE_ENV': JSON.stringify( NODE_ENV )
 		}),
 		new MiniCssExtractPlugin({
-			filename: './build/style.css',
-			chunkFilename: './build/edit-blocks.css'
-		})
+			filename: 'style.css',
+			chunkFilename: 'edit-blocks.css'
+		}),
+		new CleanWebpackPlugin()
 	]
 };

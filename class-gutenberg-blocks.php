@@ -95,7 +95,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 			wp_localize_script( 'themeisle-gutenberg-blocks', 'themeisleGutenberg', array(
 				'isCompatible' => $this->is_compatible(),
-				'packagePath' => plugin_dir_url( $this->get_dir() ) . $this->slug . '/',
+				'packagePath' => plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/',
 				'assetsPath' => plugin_dir_url( $this->get_dir() ) . $this->slug . '/assets',
 				'updatePath' => admin_url( 'update-core.php' ),
 				'mapsAPI' => $api
