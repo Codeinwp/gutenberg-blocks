@@ -11,10 +11,6 @@ const { withSelect } = wp.data;
 const { Component } = wp.element;
 
 class Thumbnail extends Component {
-	constructor() {
-		super( ...arguments );
-	}
-
 	render() {
 		const { alt, id, thumbnail, link } = this.props;
 

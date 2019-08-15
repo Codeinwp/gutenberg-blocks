@@ -26,7 +26,6 @@ import './editor.scss';
 class Options extends Component {
 	constructor() {
 		super( ...arguments );
-
 		this.changeOptions = this.changeOptions.bind( this );
 
 		this.settings;

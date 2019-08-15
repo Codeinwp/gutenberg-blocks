@@ -27,7 +27,6 @@ const { InspectorControls } = wp.editor;
 class Editor extends Component {
 	constructor() {
 		super( ...arguments );
-
 		this.changeChartTitle = this.changeChartTitle.bind( this );
 		this.toggle3d = this.toggle3d.bind( this );
 

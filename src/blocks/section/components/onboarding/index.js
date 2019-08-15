@@ -27,7 +27,6 @@ import Library from '../../../../components/template-library/index.js';
 class Onboarding extends Component {
 	constructor() {
 		super( ...arguments );
-
 		this.closeModal = this.closeModal.bind( this );
 
 		this.state = {

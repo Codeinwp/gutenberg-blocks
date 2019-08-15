@@ -24,10 +24,6 @@ const { Component } = wp.element;
 import './editor.scss';
 
 class SizingControl extends Component {
-	constructor() {
-		super( ...arguments );
-	}
-
 	render() {
 		const id = `inspector-sizing-control-${ this.props.instanceId }`;
 
