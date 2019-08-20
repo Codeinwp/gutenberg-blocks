@@ -30,7 +30,7 @@ const {
  */
 import LayoutBuilder from './LayoutBuilder.js';
 
-import StyleSwitcherControl from '../../../components/style-switcher-control/index.js';
+import { StyleSwitcherBlockControl, StyleSwitcherInspectorControl } from '../../../components/style-switcher-control/index.js';
 
 import Layout from './Layout/index.js';
 
@@ -117,12 +117,30 @@ class Editor extends Component {
 
 		return (
 			<Fragment>
+				<StyleSwitcherBlockControl
+					label={ __( 'Block Styles' ) }
+					value={ this.props.attributes.style }
+					options={ [
+						{
+							label: __( 'Grid' ),
+							value: 'grid',
+							image: themeisleGutenberg.assetsPath + '/icons/posts-grid.jpg'
+						},
+						{
+							label: __( 'List' ),
+							value: 'list',
+							image: themeisleGutenberg.assetsPath + '/icons/posts-list.jpg'
+						}
+					] }
+					onChange={ this.changeStyle }
+				/>
+
 				<InspectorControls>
 					<PanelBody
 						title={ __( 'Styles' ) }
 						initialOpen={ false }
 					>
-						<StyleSwitcherControl
+						<StyleSwitcherInspectorControl
 							value={ this.props.attributes.style }
 							options={ [
 								{
