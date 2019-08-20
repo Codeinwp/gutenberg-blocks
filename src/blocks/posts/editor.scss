@@ -137,13 +137,29 @@
 		}
 	}
 
+	&.hidden {
+		color: #e5e5e5;
+
+		.wp-block-themeisle-blocks-posts-grid-builder-handle {
+			span {
+				background: linear-gradient(180deg,#e5e5e5,#e5e5e5 20%,#fff 0,#fff 40%,#e5e5e5 0,#e5e5e5 60%,#fff 0,#fff 80%,#e5e5e5 0,#e5e5e5);
+			}
+		}
+
+		.wp-block-themeisle-blocks-posts-grid-builder-button {
+			svg {
+				fill :#e5e5e5;
+			}
+		}
+	}
+
 	.wp-block-themeisle-blocks-posts-grid-builder-handle {
 		display: flex;
 		justify-content: center;
 		align-self: center;
 		flex-basis: 20%;
 		padding: 15px 0;
-		cursor: grabbing;
+		cursor: move;
 
 		span {
 			display: flex;
@@ -155,6 +171,7 @@
 	}
 
 	.wp-block-themeisle-blocks-posts-grid-builder-label {
+		cursor: default;
 		flex-basis: 60%;
 		display: flex;
 		align-items: center;
