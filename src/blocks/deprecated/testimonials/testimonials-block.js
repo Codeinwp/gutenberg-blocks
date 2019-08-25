@@ -12,9 +12,6 @@ const {
 	PanelColorSettings
 } = wp.editor;
 
-/**
- * Internal dependencies
- */
 registerBlockType( 'themeisle-blocks/testimonials-block', {
 	title: __( 'Testimonials Block' ),
 	description: __( 'Display kudos from customers and clients and display them on your website.' ),

@@ -28,9 +28,7 @@ const { Component } = wp.element;
 import './editor.scss';
 
 import Header from './components/Header.js';
-
 import Notices from './components/Notices.js';
-
 import TemplatesList from './components/TemplatesList.js';
 
 class Library extends Component {

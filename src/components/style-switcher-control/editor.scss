@@ -1,5 +1,7 @@
 .wp-block-themeisle-blocks-style-switcher {
-	display: flex;
+	display: grid;
+	grid-template-columns: 50% 50%;
+	grid-row-gap: 5px;
 
 	.blocks-style-switcher-item {
 		display: block;

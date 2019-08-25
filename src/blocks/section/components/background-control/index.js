@@ -4,13 +4,6 @@
 import classnames from 'classnames';
 
 /**
- * Internal dependencies
- */
-import './editor.scss';
-
-import { barcodeIcon } from '../../../../helpers/icons.js';
-
-/**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
@@ -24,6 +17,13 @@ const {
 } = wp.components;
 
 const { withInstanceId } = wp.compose;
+
+/**
+ * Internal dependencies
+ */
+import './editor.scss';
+
+import { barcodeIcon } from '../../../../helpers/icons.js';
 
 const BackgroundControl = ({ label, instanceId, backgroundType, changeBackgroundType }) => {
 	const id = `inspector-background-control-${ instanceId }`;

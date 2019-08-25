@@ -29,9 +29,7 @@ const {
  * Internal dependencies
  */
 import LayoutBuilder from './LayoutBuilder.js';
-
 import { StyleSwitcherBlockControl, StyleSwitcherInspectorControl } from '../../../components/style-switcher-control/index.js';
-
 import Layout from './Layout/index.js';
 
 class Editor extends Component {

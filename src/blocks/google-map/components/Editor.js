@@ -33,8 +33,10 @@ const {
 /**
  * Internal dependencies
  */
+import { StyleSwitcherBlockControl, StyleSwitcherInspectorControl } from '../../../components/style-switcher-control/index.js';
 import MarkerWrapper from './MarkerWrapper.js';
 import MarkerModal from './MarkerModal.js';
+import styles from './styles.js';
 
 class Editor extends Component {
 	constructor() {
@@ -45,6 +47,7 @@ class Editor extends Component {
 		this.cycleMarkers = this.cycleMarkers.bind( this );
 		this.changeAPI = this.changeAPI.bind( this );
 		this.saveAPIKey = this.saveAPIKey.bind( this );
+		this.changeStyle = this.changeStyle.bind( this );
 		this.changeLocation = this.changeLocation.bind( this );
 		this.markerButton = this.markerButton.bind( this );
 		this.selectMarker = this.selectMarker.bind( this );
@@ -176,7 +179,8 @@ class Editor extends Component {
 			},
 			gestureHandling: 'cooperative',
 			zoom: this.props.attributes.zoom,
-			mapTypeId: this.props.attributes.type
+			mapTypeId: this.props.attributes.type,
+			styles: styles[ this.props.attributes.style ]
 		});
 
 		if ( this.props.attributes.location && ( undefined === this.props.attributes.latitude && undefined === this.props.attributes.longitude ) ) {
@@ -512,6 +516,11 @@ class Editor extends Component {
 		}
 	}
 
+	changeStyle( value ) {
+		this.props.setAttributes({ style: value });
+		this.map.setOptions({ styles: styles[ value ] });
+	}
+
 	changeLocation( value ) {
 		this.props.setAttributes({ location: value.target.value });
 	}
@@ -628,7 +637,87 @@ class Editor extends Component {
 
 		return (
 			<Fragment>
+				<StyleSwitcherBlockControl
+					label={ __( 'Block Styles' ) }
+					value={ this.props.attributes.style }
+					options={ [
+						{
+							label: __( 'Standard' ),
+							value: 'standard',
+							image: themeisleGutenberg.assetsPath + '/icons/map-standard.png'
+						},
+						{
+							label: __( 'Silver' ),
+							value: 'silver',
+							image: themeisleGutenberg.assetsPath + '/icons/map-silver.png'
+						},
+						{
+							label: __( 'Retro' ),
+							value: 'retro',
+							image: themeisleGutenberg.assetsPath + '/icons/map-retro.png'
+						},
+						{
+							label: __( 'Dark' ),
+							value: 'dark',
+							image: themeisleGutenberg.assetsPath + '/icons/map-dark.png'
+						},
+						{
+							label: __( 'Night' ),
+							value: 'night',
+							image: themeisleGutenberg.assetsPath + '/icons/map-night.png'
+						},
+						{
+							label: __( 'Aubergine' ),
+							value: 'aubergine',
+							image: themeisleGutenberg.assetsPath + '/icons/map-aubergine.png'
+						}
+					] }
+					onChange={ this.changeStyle }
+				/>
+
 				<InspectorControls>
+					<PanelBody
+						title={ __( 'Styles' ) }
+						initialOpen={ false }
+					>
+						<StyleSwitcherInspectorControl
+							value={ this.props.attributes.style }
+							options={ [
+								{
+									label: __( 'Standard' ),
+									value: 'standard',
+									image: themeisleGutenberg.assetsPath + '/icons/map-standard.png'
+								},
+								{
+									label: __( 'Silver' ),
+									value: 'silver',
+									image: themeisleGutenberg.assetsPath + '/icons/map-silver.png'
+								},
+								{
+									label: __( 'Retro' ),
+									value: 'retro',
+									image: themeisleGutenberg.assetsPath + '/icons/map-retro.png'
+								},
+								{
+									label: __( 'Dark' ),
+									value: 'dark',
+									image: themeisleGutenberg.assetsPath + '/icons/map-dark.png'
+								},
+								{
+									label: __( 'Night' ),
+									value: 'night',
+									image: themeisleGutenberg.assetsPath + '/icons/map-night.png'
+								},
+								{
+									label: __( 'Aubergine' ),
+									value: 'aubergine',
+									image: themeisleGutenberg.assetsPath + '/icons/map-aubergine.png'
+								}
+							] }
+							onChange={ this.changeStyle }
+						/>
+					</PanelBody>
+
 					<PanelBody
 						title={ __( 'Location' ) }
 					>

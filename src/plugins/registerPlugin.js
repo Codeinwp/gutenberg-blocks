@@ -11,7 +11,6 @@ const { registerPlugin } = wp.plugins;
 import './editor.scss';
 
 import { otterIcon } from '../helpers/icons.js';
-
 import Options from './options/index.js';
 
 const Component = () => (

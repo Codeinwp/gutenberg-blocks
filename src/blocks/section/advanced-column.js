@@ -46,15 +46,10 @@ const { withViewportMatch } = wp.viewport;
  * Internal dependencies
  */
 import { columnIcon } from '../../helpers/icons.js';
-
 import layouts from './layouts.js';
-
 import SizingControl from '../../components/sizing-control/index.js';
-
 import ResponsiveControl from '../../components/responsive-control/index.js';
-
 import BackgroundControl from './components/background-control/index.js';
-
 import ControlPanelControl from '../../components/control-panel-control/index.js';
 
 registerBlockType( 'themeisle-blocks/advanced-column', {

@@ -40,11 +40,8 @@ import './style.scss';
 import './editor.scss';
 
 import { faIcon } from '../../helpers/icons.js';
-
 const IconPickerControl = React.lazy( () => import( '../../components/icon-picker-control/index.js' ) );
-
 import LinkControl from '../../components/link-control/index.js';
-
 import deprecated from './deprecated.js';
 
 registerBlockType( 'themeisle-blocks/font-awesome-icons', {

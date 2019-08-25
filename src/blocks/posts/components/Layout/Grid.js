@@ -15,7 +15,6 @@ const {
  * Internal dependencies
  */
 import { unescapeHTML, formatDate } from '../../../../helpers/helper-functions.js';
-
 import Thumbnail from '../Thumbnail.js';
 
 const Grid = ({ className, attributes, posts, categoriesList, authors }) => {

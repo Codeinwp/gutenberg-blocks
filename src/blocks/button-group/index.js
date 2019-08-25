@@ -57,19 +57,12 @@ import './editor.scss';
 import './style.scss';
 
 import { buttonsIcon } from '../../helpers/icons.js';
-
 import { unescapeHTML } from '../../helpers/helper-functions.js';
-
 import GoogleFontsControl from '../../components/google-fonts-control/index.js';
-
 import ControlPanelControl from '../../components/control-panel-control/index.js';
-
 const IconPickerControl = React.lazy( () => import( '../../components/icon-picker-control/index.js' ) );
-
 import LinkControl from '../../components/link-control/index.js';
-
 import SizingControl from '../../components/sizing-control/index.js';
-
 import deprecated from './deprecated.js';
 
 registerBlockType( 'themeisle-blocks/button-group', {

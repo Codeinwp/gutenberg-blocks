@@ -21,7 +21,6 @@ const { Component } = wp.element;
 import './editor.scss';
 
 import { columnsIcon } from '../../../../helpers/icons.js';
-
 import Library from '../../../../components/template-library/index.js';
 
 class Onboarding extends Component {

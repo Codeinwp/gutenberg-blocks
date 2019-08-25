@@ -24,9 +24,6 @@ const {
 	Tooltip
 } = wp.components;
 
-/**
- * Internal dependencies
- */
 registerBlockType( 'themeisle-blocks/pricing-block', {
 	title: __( 'Pricing Block' ),
 	description: __( 'Pricing tables are a critical part in showcasing your services, prices and overall offerings.' ),
