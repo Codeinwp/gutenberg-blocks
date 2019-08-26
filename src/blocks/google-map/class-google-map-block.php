@@ -94,6 +94,10 @@ class Google_Map_Block extends Base_Block {
 	 * @return mixed|string
 	 */
 	function render( $attributes ) {
+		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			return;
+		}
+
 		$id = isset( $attributes['id'] ) ? $attributes['id'] : 'wp-block-themeisle-blocks-google-map-' . rand( 10,100 );
 		$class = 'wp-block-themeisle-blocks-google-map';
 

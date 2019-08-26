@@ -141,7 +141,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				$apikey = get_option( 'themeisle_google_map_block_api_key' );
 		
 				// Don't output anything if there is no API key
-				if ( null === $apikey || empty( $apikey ) ) {
+				if ( null === $apikey || empty( $apikey ) || ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) ) {
 					return;
 				}
 
