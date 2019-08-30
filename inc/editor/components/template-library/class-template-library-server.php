@@ -5,7 +5,7 @@ namespace ThemeIsle\GutenbergBlocks;
 /**
  * Class Template_Library_Server
  */
-class Template_Library_Server extends \WP_Rest_Controller {
+class Template_Library_Server {
 
 	/**
 	 * The main instance var.

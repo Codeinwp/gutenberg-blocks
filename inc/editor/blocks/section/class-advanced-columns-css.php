@@ -1,4 +1,5 @@
 <?php
+
 namespace ThemeIsle\BlockCSS;
 
 use ThemeIsle\BlockCSS;
@@ -27,7 +28,7 @@ class Advanced_Columns_CSS extends BlockCSS {
 	/**
 	 * Generate Advanced Columns CSS
 	 * 
-	 * @since   1.1.0
+	 * @since   1.2.5
 	 * @access  public
 	 */
 	public function render_css( $block ) {

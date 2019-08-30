@@ -20,28 +20,79 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		 *
 		 * @var string
 		 */
-		private $library_prefix = 'themeisle-blocks';
+		protected $library_prefix = 'themeisle-blocks';
+
+		/**
+		 * The namespace under which the block classees are saved.
+		 *
+		 * @var string
+		 */
+		protected $blocks_classes = array();
 
 		/**
 		 * The namespace under which the fonts are saved.
 		 *
-		 * @var string
+		 * @var array
 		 */
-		private static $google_fonts = array();
+		protected $google_fonts = array();
 
 		/**
 		 * BlockCSS constructor.
 		 */
 		public function __construct() {
+			add_action( 'wp', array( $this, 'autoload_block_classes' ) );
+			add_action( 'init', array( $this, 'load_css_handler' ), 99 );
 			add_action( 'wp_head', array( $this, 'render_server_side_css' ) );
 			add_action( 'wp_head', array( $this, 'enqueue_google_fonts' ) );
 			add_filter( 'safe_style_css', array( $this, 'used_css_properties' ), 99 );
 		}
 
 		/**
+		 * Autoload classes for each block.
+		 *
+		 * @since   1.2.5
+		 * @access  public
+		 */
+		public function autoload_block_classes() {
+			$paths = glob( $this->get_dir() . '/../editor/*/*/*-css.php' );
+			foreach ( $paths as $path ) {
+				require_once $path;
+				// remove the class prefix and the extension
+				$classname = str_replace( array( 'class-', '.php' ), '', basename( $path ) );
+				// get an array of words from class names and we'll make them capitalized.
+				$classname = explode( '-', $classname );
+				$classname = array_map( 'ucfirst', $classname );
+				// rebuild the classname string as capitalized and separated by underscores.
+				$classname = implode( '_', $classname );
+				$classname = str_replace( 'Css', 'CSS', $classname );
+				$classname = 'ThemeIsle\BlockCSS\\' . $classname;
+
+				if ( ! class_exists( $classname ) ) {
+					continue;
+				}
+
+				$this->blocks_classes[] = $classname;
+			}
+		}
+
+		/**
+		 * Load CSS Handler
+		 *
+		 * @since   1.2.5
+		 * @access  public
+		 */
+		public function load_css_handler() {
+			require_once( $this->get_dir() . '/class-css-handler.php' );
+
+			if ( class_exists( '\ThemeIsle\BlockCSS\CSS_Handler' ) ) {
+				\ThemeIsle\BlockCSS\CSS_Handler::instance();
+			}
+		}
+
+		/**
 		 * Parse Blocks for Gutenberg and WordPress 5.0
 		 * 
-		 * @since   1.1.0
+		 * @since   1.2.5
 		 * @access  public
 		 */
 		public function parse_blocks( $content ) {
@@ -55,7 +106,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Get block attribute value with default
 		 * 
-		 * @since   1.1.0
+		 * @since   1.2.5
 		 * @access  public
 		 */
 		public function get_attr_value( $attr, $default = 'unset' ) {
@@ -69,14 +120,14 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Method to define hooks needed.
 		 *
-		 * @since   1.1.0
+		 * @since   1.2.5
 		 * @access  public
 		 */
 		public function enqueue_google_fonts() {
 			$fonts = array();
 
-			if ( sizeof( self::$google_fonts ) > 0 ) {
-				foreach( self::$google_fonts as $font ) {
+			if ( sizeof( $this->google_fonts ) > 0 ) {
+				foreach( $this->google_fonts as $font ) {
 					$item = str_replace( ' ', '+', $font['fontfamily'] );
 					if ( sizeof( $font['fontvariant'] ) > 0 ) {
 						$item .= ':' . implode( ',', $font['fontvariant'] );
@@ -91,19 +142,19 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Get Google Fonts
 		 * 
-		 * @since   1.1.0
+		 * @since   1.2.5
 		 * @access  public
 		 */
 		public function get_google_fonts( $attr ) {
 			if ( isset( $attr['fontFamily'] ) ) {
-				if ( ! array_key_exists( $attr['fontFamily'], self::$google_fonts ) ) {
-					self::$google_fonts[ $attr['fontFamily'] ] = array(
+				if ( ! array_key_exists( $attr['fontFamily'], $this->google_fonts ) ) {
+					$this->google_fonts[ $attr['fontFamily'] ] = array(
 						'fontfamily' => $attr['fontFamily'],
 						'fontvariant' => ( isset( $attr['fontVariant'] ) && ! empty( $attr['fontVariant'] ) ? array( $attr['fontVariant'] ) : array() )
 					);
 				} else {
-					if ( ! in_array( $attr['fontVariant'], self::$google_fonts[ $attr['fontFamily'] ]['fontvariant'], true ) ) {
-						array_push( self::$google_fonts[ $attr['fontFamily'] ]['fontvariant'], ( isset( $attr['fontStyle'] ) && $attr['fontStyle'] === 'italic' ) ? $attr['fontVariant'] . ':i' : $attr['fontVariant'] );
+					if ( ! in_array( $attr['fontVariant'], $this->google_fonts[ $attr['fontFamily'] ]['fontvariant'], true ) ) {
+						array_push( $this->google_fonts[ $attr['fontFamily'] ]['fontvariant'], ( isset( $attr['fontStyle'] ) && $attr['fontStyle'] === 'italic' ) ? $attr['fontVariant'] . ':i' : $attr['fontVariant'] );
 					}
 				}
 			}
@@ -112,7 +163,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Convert HEX to RGBA
 		 * 
-		 * @since   1.1.0
+		 * @since   1.2.5
 		 * @access  public
 		 */
 		public function hex2rgba( $color, $opacity = false ) {
@@ -151,7 +202,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Used CSS properties
 		 * 
-		 * @since   1.2.0
+		 * @since   1.2.5
 		 * @access  public
 		 */
 		public function used_css_properties( $attr ) {
@@ -181,9 +232,28 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		}
 
 		/**
+		 * Get Blocks CSS
+		 * 
+		 * @since   1.2.5
+		 * @access  public
+		 */
+		public function get_blocks_css( $post_id ) {
+			if ( function_exists( 'has_blocks' ) ) {
+				$content = get_post_field( 'post_content', $post_id );
+				$blocks = $this->parse_blocks( $content );
+
+				if ( ! is_array( $blocks ) || empty( $blocks ) ) {
+					return;
+				}
+
+				return $this->cycle_through_blocks( $blocks );
+			}
+		}
+
+		/**
 		 * Render server-side CSS
 		 * 
-		 * @since   1.1.0
+		 * @since   1.2.5
 		 * @access  public
 		 */
 		public function render_server_side_css( $post_id = '' ) {
@@ -197,8 +267,14 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 					return;
 				}
 
+				$css = $this->cycle_through_blocks( $blocks );
+
+				if ( empty( $css ) ) {
+					return;
+				}
+
 				$style = "\n" . '<style type="text/css" media="all">' . "\n";
-				$style .= $this->cycle_through_blocks( $blocks );
+				$style .= $css;
 				$style .= "\n" . '</style>' . "\n";
 
 				echo $style;
@@ -208,25 +284,13 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Cycle thorugh innerBlocks
 		 * 
-		 * @since   1.1.0
+		 * @since   1.2.5
 		 * @access  public
 		 */
 		public function cycle_through_blocks( $blocks ) {
 			$style = '';
-			$paths = glob( $this->get_dir() . '/src/*/*/*-css.php' );
 			foreach ( $blocks as $block ) {
-				foreach ( $paths as $path ) {
-					require_once $path;
-					// remove the class prefix and the extension
-					$classname = str_replace( array( 'class-', '.php' ), '', basename( $path ) );
-					// get an array of words from class names and we'll make them capitalized.
-					$classname = explode( '-', $classname );
-					$classname = array_map( 'ucfirst', $classname );
-					// rebuild the classname string as capitalized and separated by underscores.
-					$classname = implode( '_', $classname );
-					$classname = str_replace( 'Css', 'CSS', $classname );
-					$classname = 'ThemeIsle\BlockCSS\\' . $classname;
-
+				foreach ( $this->blocks_classes as $classname ) {
 					if ( ! class_exists( $classname ) ) {
 						continue;
 					}
@@ -265,7 +329,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Method to return path to child class in a Reflective Way.
 		 *
-		 * @since   1.0.0
+		 * @since   1.2.5
 		 * @access  protected
 		 * @return  string
 		 */
@@ -275,7 +339,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 
 		/**
 		 * @static
-		 * @since   1.0.0
+		 * @since   1.2.5
 		 * @access  public
 		 * @return  BlockCSS
 		 */
@@ -293,7 +357,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		 * object therefore, we don't want the object to be cloned.
 		 *
 		 * @access  public
-		 * @since   1.0.0
+		 * @since   1.2.5
 		 * @return  void
 		 */
 		public function __clone() {
@@ -305,7 +369,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		 * Disable unserializing of the class
 		 *
 		 * @access  public
-		 * @since   1.0.0
+		 * @since   1.2.5
 		 * @return  void
 		 */
 		public function __wakeup() {

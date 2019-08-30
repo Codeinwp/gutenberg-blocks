@@ -3,6 +3,8 @@
  */
 const { Icon } = wp.components;
 
+const { Fragment } = wp.element;
+
 const { registerPlugin } = wp.plugins;
 
 /**
@@ -12,9 +14,12 @@ import './editor.scss';
 
 import { otterIcon } from '../helpers/icons.js';
 import Options from './options/index.js';
+import './css-handler/index.js';
 
 const Component = () => (
-	<Options />
+	<Fragment>
+		<Options />
+	</Fragment>
 );
 
 const icon = <Icon icon={ otterIcon } />;

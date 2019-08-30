@@ -16,7 +16,7 @@ add_action(
 	function () {
 		// call this only if Gutenberg is active
 		if ( function_exists( 'register_block_type' ) ) {
-			require_once( dirname( __FILE__ ) . '/class-gutenberg-blocks.php' );
+			require_once( dirname( __FILE__ ) . '/inc/class-gutenberg-blocks.php' );
 		}
 	}
 );

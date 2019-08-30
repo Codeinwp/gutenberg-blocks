@@ -13,8 +13,6 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 */
 		protected static $instance = null;
 
-		protected $blocks_classes = array();
-
 		/**
 		 * Holds the module slug.
 		 *
@@ -23,6 +21,13 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 * @var     string $slug The module slug.
 		 */
 		protected $slug = 'gutenberg-blocks';
+
+		/**
+		 * The namespace under which the block classees are saved.
+		 *
+		 * @var string
+		 */
+		protected $blocks_classes = array();
 
 		/**
 		 * GutenbergBlocks constructor.
@@ -71,7 +76,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 			wp_enqueue_script(
 				'themeisle-gutenberg-blocks-vendor',
-				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/chunk-vendor.js',
+				plugin_dir_url( $this->get_dir() ) . $this->slug . '/../build/chunk-vendor.js',
 				array( 'react', 'react-dom' ),
 				$version,
 				true
@@ -79,7 +84,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 			wp_enqueue_script(
 				'themeisle-gutenberg-blocks',
-				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/blocks.js',
+				plugin_dir_url( $this->get_dir() ) . $this->slug . '/../build/blocks.js',
 				array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor' ),
 				$version,
 				true
@@ -89,15 +94,15 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 			wp_localize_script( 'themeisle-gutenberg-blocks', 'themeisleGutenberg', array(
 				'isCompatible' => $this->is_compatible(),
-				'packagePath' => plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/',
-				'assetsPath' => plugin_dir_url( $this->get_dir() ) . $this->slug . '/assets',
+				'packagePath' => plugin_dir_url( $this->get_dir() ) . 'build/',
+				'assetsPath' => plugin_dir_url( $this->get_dir() ) . 'assets',
 				'updatePath' => admin_url( 'update-core.php' ),
 				'mapsAPI' => $api
 			) );
 
 			wp_enqueue_style(
 				'themeisle-gutenberg-blocks-editor',
-				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/edit-blocks.css',
+				plugin_dir_url( $this->get_dir() ) . $this->slug . '/../build/edit-blocks.css',
 				array( 'wp-edit-blocks' ),
 				$version
 			);
@@ -122,7 +127,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 			wp_enqueue_style(
 				'themeisle-block_styles',
-				plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/style.css'
+				plugin_dir_url( $this->get_dir() ) . $this->slug . '/../build/style.css'
 			);
 
 			if ( has_block( 'themeisle-blocks/chart-pie' ) ) {
@@ -141,7 +146,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 
 				wp_enqueue_script(
 					'themeisle-gutenberg-google-maps',
-					plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/frontend.js',
+					plugin_dir_url( $this->get_dir() ) . $this->slug . '/../build/frontend.js',
 					'',
 					$version,
 					true
@@ -223,8 +228,8 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		public function autoload_block_classes() {
 			// load the base class
 			require_once( $this->get_dir() .  '/class-base-block.php' );
-			require_once( $this->get_dir() .  '/class-block-css.php' );
-			$paths = glob( $this->get_dir() . '/src/*/*/*.php' );
+			require_once( $this->get_dir() .  '/css/class-block-css.php' );
+			$paths = glob( $this->get_dir() . '/editor/*/*/*.php' );
 
 			foreach ( $paths as $path ) {
 				if ( preg_match(  '/-css.php/', $path ) ) {

@@ -1,4 +1,5 @@
 <?php
+
 namespace ThemeIsle\BlockCSS;
 
 use ThemeIsle\BlockCSS;
@@ -27,7 +28,7 @@ class Advanced_Heading_CSS extends BlockCSS {
 	/**
 	 * Generate Advanced Heading CSS
 	 * 
-	 * @since   1.1.0
+	 * @since   1.2.5
 	 * @access  private
 	 */
 	public function render_css( $block ) {
@@ -70,16 +71,17 @@ class Advanced_Heading_CSS extends BlockCSS {
 			}
 			$style .= '}' . "\n \n";
 
+			if ( isset( $attr['highlightColor'] ) || isset( $attr['highlightBackground'] ) ) {
+				$style .= '#' . $attr['id'] . ' mark {' . "\n";
+					if ( isset( $attr['highlightColor'] ) ) {
+						$style .= '		color: ' . $this->get_attr_value( ( isset( $attr['highlightColor'] ) ? $attr['highlightColor'] : null ) ) . ';' . "\n";
+					}
 
-			$style .= '#' . $attr['id'] . ' mark {' . "\n";
-				if ( isset( $attr['highlightColor'] ) ) {
-					$style .= '		color: ' . $this->get_attr_value( ( isset( $attr['highlightColor'] ) ? $attr['highlightColor'] : null ) ) . ';' . "\n";
-				}
-
-				if ( isset( $attr['highlightBackground'] ) ) {
-					$style .= '		background: ' . $this->get_attr_value( ( isset( $attr['highlightBackground'] ) ? $attr['highlightBackground'] : null ) ) . ';' . "\n";
-				}
-			$style .= '}' . "\n \n";
+					if ( isset( $attr['highlightBackground'] ) ) {
+						$style .= '		background: ' . $this->get_attr_value( ( isset( $attr['highlightBackground'] ) ? $attr['highlightBackground'] : null ) ) . ';' . "\n";
+					}
+				$style .= '}' . "\n \n";
+			}
 
 			$style .= '@media ( min-width: 600px ) and ( max-width: 960px )  {' . "\n";
 
