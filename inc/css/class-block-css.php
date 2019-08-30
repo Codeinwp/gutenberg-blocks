@@ -34,16 +34,15 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		 *
 		 * @var array
 		 */
-		protected $google_fonts = array();
+		protected static $google_fonts = array();
 
 		/**
 		 * BlockCSS constructor.
 		 */
 		public function __construct() {
-			add_action( 'wp', array( $this, 'autoload_block_classes' ) );
-			add_action( 'init', array( $this, 'load_css_handler' ), 99 );
+			add_action( 'init', array( $this, 'autoload_block_classes' ), 99 );
 			add_action( 'wp_head', array( $this, 'render_server_side_css' ) );
-			add_action( 'wp_head', array( $this, 'enqueue_google_fonts' ) );
+			add_action( 'wp_head', array( $this, 'enqueue_google_fonts' ), 19 );
 			add_filter( 'safe_style_css', array( $this, 'used_css_properties' ), 99 );
 		}
 
@@ -72,20 +71,6 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 				}
 
 				$this->blocks_classes[] = $classname;
-			}
-		}
-
-		/**
-		 * Load CSS Handler
-		 *
-		 * @since   1.2.5
-		 * @access  public
-		 */
-		public function load_css_handler() {
-			require_once( $this->get_dir() . '/class-css-handler.php' );
-
-			if ( class_exists( '\ThemeIsle\BlockCSS\CSS_Handler' ) ) {
-				\ThemeIsle\BlockCSS\CSS_Handler::instance();
 			}
 		}
 
@@ -123,11 +108,19 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		 * @since   1.2.5
 		 * @access  public
 		 */
-		public function enqueue_google_fonts() {
+		public function enqueue_google_fonts( $post_id = '' ) {
+			$post = $post_id ? $post_id : get_the_ID();
+
+			$fonts_list = get_post_meta( $post, '_themeisle_gutenberg_block_fonts', true );
+
+			if ( empty( $fonts_list ) ) {
+				$fonts_list = self::$google_fonts;
+			}
+
 			$fonts = array();
 
-			if ( sizeof( $this->google_fonts ) > 0 ) {
-				foreach( $this->google_fonts as $font ) {
+			if ( sizeof( $fonts_list ) > 0 ) {
+				foreach( $fonts_list as $font ) {
 					$item = str_replace( ' ', '+', $font['fontfamily'] );
 					if ( sizeof( $font['fontvariant'] ) > 0 ) {
 						$item .= ':' . implode( ',', $font['fontvariant'] );
@@ -147,14 +140,14 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		 */
 		public function get_google_fonts( $attr ) {
 			if ( isset( $attr['fontFamily'] ) ) {
-				if ( ! array_key_exists( $attr['fontFamily'], $this->google_fonts ) ) {
-					$this->google_fonts[ $attr['fontFamily'] ] = array(
+				if ( ! array_key_exists( $attr['fontFamily'], self::$google_fonts ) ) {
+					self::$google_fonts[ $attr['fontFamily'] ] = array(
 						'fontfamily' => $attr['fontFamily'],
 						'fontvariant' => ( isset( $attr['fontVariant'] ) && ! empty( $attr['fontVariant'] ) ? array( $attr['fontVariant'] ) : array() )
 					);
 				} else {
-					if ( ! in_array( $attr['fontVariant'], $this->google_fonts[ $attr['fontFamily'] ]['fontvariant'], true ) ) {
-						array_push( $this->google_fonts[ $attr['fontFamily'] ]['fontvariant'], ( isset( $attr['fontStyle'] ) && $attr['fontStyle'] === 'italic' ) ? $attr['fontVariant'] . ':i' : $attr['fontVariant'] );
+					if ( ! in_array( $attr['fontVariant'], self::$google_fonts[ $attr['fontFamily'] ]['fontvariant'], true ) ) {
+						array_push( self::$google_fonts[ $attr['fontFamily'] ]['fontvariant'], ( isset( $attr['fontStyle'] ) && $attr['fontStyle'] === 'italic' ) ? $attr['fontVariant'] . ':i' : $attr['fontVariant'] );
 					}
 				}
 			}
@@ -260,14 +253,18 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 			$post = $post_id ? $post_id : get_the_ID();
 
 			if ( function_exists( 'has_blocks' ) && has_blocks( $post ) ) {
-				$content = get_post_field( 'post_content', $post );
-				$blocks = $this->parse_blocks( $content );
+				$css = get_post_meta( $post, '_themeisle_gutenberg_block_styles', true );
 
-				if ( ! is_array( $blocks ) || empty( $blocks ) ) {
-					return;
+				if ( empty( $css ) ) {
+					$content = get_post_field( 'post_content', $post );
+					$blocks = $this->parse_blocks( $content );
+	
+					if ( ! is_array( $blocks ) || empty( $blocks ) ) {
+						return;
+					}
+
+					$css = $this->cycle_through_blocks( $blocks );
 				}
-
-				$css = $this->cycle_through_blocks( $blocks );
 
 				if ( empty( $css ) ) {
 					return;

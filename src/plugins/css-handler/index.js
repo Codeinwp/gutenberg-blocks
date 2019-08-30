@@ -14,7 +14,7 @@ const publish = debounce( async() => {
 	const { getCurrentPostId } = select( 'core/editor' );
 	const postId = getCurrentPostId();
 
-	let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/save_metabox?id=${ postId }` });
+	await apiFetch({ path: `themeisle-gutenberg-blocks/v1/save_metabox?id=${ postId }` });
 }, 1000 );
 
 subscribe( () => {

@@ -4,6 +4,8 @@ namespace ThemeIsle\BlockCSS;
 
 use ThemeIsle\BlockCSS;
 
+use tubalmartin\CssMin\Minifier as CSSmin;
+
 /**
  * Class CSS_Handler
  */
@@ -44,6 +46,7 @@ class CSS_Handler extends BlockCSS {
 	 */
 	public function init() {
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
+		add_action( 'rest_api_init', array( $this, 'autoload_block_classes' ) );
 	}
 
 	/**
@@ -84,15 +87,34 @@ class CSS_Handler extends BlockCSS {
 		$post_id = $request->get_param( 'id' );
 
 		$css = $this->get_blocks_css( $post_id );
-		update_post_meta( $post_id, '_themeisle_gutenberg_block_styles', $css );
+		
+		if ( ! empty( $css ) ) {
+			$compressor = new CSSmin;
 
-		// if ( ! empty( $css ) ) {
-		// 	return 'WORKS';
-		// }
+			// Override any PHP configuration options before calling run()
+			$compressor->setMemoryLimit('256M');
+			$compressor->setMaxExecutionTime(120);
+			$compressor->setPcreBacktrackLimit(3000000);
+			$compressor->setPcreRecursionLimit(150000);
 
-		return $css;
+			$css = $compressor->run( $css );
+			
+			update_post_meta( $post_id, '_themeisle_gutenberg_block_styles', $css );
+		} else {
+			if ( get_post_meta( $post_id, '_themeisle_gutenberg_block_styles', true ) ) {
+				delete_post_meta( $post_id, '_themeisle_gutenberg_block_styles' );
+			}
+		}
 
-		// return rest_ensure_response( array( 'message' => __( 'CSS updated.', 'textdomain' ) ) );
+		if ( sizeof( self::$google_fonts ) > 0 ) {
+			update_post_meta( $post_id, '_themeisle_gutenberg_block_fonts', self::$google_fonts );
+		} else {
+			if ( get_post_meta( $post_id, '_themeisle_gutenberg_block_fonts', true ) ) {
+				delete_post_meta( $post_id, '_themeisle_gutenberg_block_fonts' );
+			}
+		}
+
+		return rest_ensure_response( array( 'message' => __( 'CSS updated.', 'textdomain' ) ) );
 	}
 
 	/**
