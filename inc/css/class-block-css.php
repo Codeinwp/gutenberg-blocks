@@ -38,9 +38,21 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 
 		/**
 		 * BlockCSS constructor.
+		 *
+		 * @since   1.2.5
+		 * @access  public
 		 */
 		public function __construct() {
 			add_action( 'init', array( $this, 'autoload_block_classes' ), 99 );
+		}
+
+		/**
+		 * Method to define hooks needed.
+		 *
+		 * @since   1.2.5
+		 * @access  public
+		 */
+		public function init() {
 			add_action( 'wp_head', array( $this, 'render_server_side_css' ) );
 			add_action( 'wp_head', array( $this, 'enqueue_google_fonts' ), 19 );
 			add_filter( 'safe_style_css', array( $this, 'used_css_properties' ), 99 );
@@ -99,36 +111,6 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 				return $attr;
 			} else {
 				return $default;
-			}
-		}
-
-		/**
-		 * Method to define hooks needed.
-		 *
-		 * @since   1.2.5
-		 * @access  public
-		 */
-		public function enqueue_google_fonts( $post_id = '' ) {
-			$post = $post_id ? $post_id : get_the_ID();
-
-			$fonts_list = get_post_meta( $post, '_themeisle_gutenberg_block_fonts', true );
-
-			if ( empty( $fonts_list ) ) {
-				$fonts_list = self::$google_fonts;
-			}
-
-			$fonts = array();
-
-			if ( sizeof( $fonts_list ) > 0 ) {
-				foreach( $fonts_list as $font ) {
-					$item = str_replace( ' ', '+', $font['fontfamily'] );
-					if ( sizeof( $font['fontvariant'] ) > 0 ) {
-						$item .= ':' . implode( ',', $font['fontvariant'] );
-					}
-					array_push( $fonts, $item );
-				}
-
-				echo '<link href="//fonts.googleapis.com/css?family=' . implode( '|', $fonts ) . '" rel="stylesheet">';
 			}
 		}
 
@@ -225,6 +207,36 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		}
 
 		/**
+		 * Method to define hooks needed.
+		 *
+		 * @since   1.2.5
+		 * @access  public
+		 */
+		public function enqueue_google_fonts( $post_id = '' ) {
+			$post_id = $post_id ? $post_id : get_the_ID();
+
+			$fonts_list = get_post_meta( $post_id, '_themeisle_gutenberg_block_fonts', true );
+
+			if ( empty( $fonts_list ) ) {
+				$fonts_list = self::$google_fonts;
+			}
+
+			$fonts = array();
+
+			if ( sizeof( $fonts_list ) > 0 ) {
+				foreach( $fonts_list as $font ) {
+					$item = str_replace( ' ', '+', $font['fontfamily'] );
+					if ( sizeof( $font['fontvariant'] ) > 0 ) {
+						$item .= ':' . implode( ',', $font['fontvariant'] );
+					}
+					array_push( $fonts, $item );
+				}
+
+				echo '<link href="//fonts.googleapis.com/css?family=' . implode( '|', $fonts ) . '" rel="stylesheet">';
+			}
+		}
+
+		/**
 		 * Get Blocks CSS
 		 * 
 		 * @since   1.2.5
@@ -250,13 +262,19 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		 * @access  public
 		 */
 		public function render_server_side_css( $post_id = '' ) {
-			$post = $post_id ? $post_id : get_the_ID();
+			global $post;
 
-			if ( function_exists( 'has_blocks' ) && has_blocks( $post ) ) {
-				$css = get_post_meta( $post, '_themeisle_gutenberg_block_styles', true );
+			$post_id = $post_id ? $post_id : get_the_ID();
+			if ( function_exists( 'has_blocks' ) && has_blocks( $post_id ) ) {
+				$css = get_post_meta( $post_id, '_themeisle_gutenberg_block_styles', true );
 
-				if ( empty( $css ) ) {
-					$content = get_post_field( 'post_content', $post );
+				if ( empty( $css ) || is_preview() ) {
+					if ( is_preview() && ( $post_id === $post->ID ) ) {
+						$content = $post->post_content;
+					} else {
+						$content = get_post_field( 'post_content', $post_id );
+					}
+
 					$blocks = $this->parse_blocks( $content );
 	
 					if ( ! is_array( $blocks ) || empty( $blocks ) ) {
@@ -343,6 +361,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		public static function instance() {
 			if ( is_null( self::$instance ) ) {
 				self::$instance = new self();
+				self::$instance->init();
 			}
 			return self::$instance;
 		}
