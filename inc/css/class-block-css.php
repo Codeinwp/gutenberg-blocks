@@ -208,7 +208,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 
 		/**
 		 * Method to define hooks needed.
-		 *
+		 * 
 		 * @since   1.2.5
 		 * @access  public
 		 */
@@ -234,6 +234,105 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 
 				echo '<link href="//fonts.googleapis.com/css?family=' . implode( '|', $fonts ) . '" rel="stylesheet">';
 			}
+		}
+
+		/**
+		 * Render server-side CSS
+		 * 
+		 * @since   1.2.5
+		 * @access  public
+		 */
+		public function render_server_side_css( $post_id = '' ) {
+			$post_id = $post_id ? $post_id : get_the_ID();
+
+			if ( function_exists( 'has_blocks' ) && has_blocks( $post_id ) ) {
+				$css = $this->get_page_css_meta( $post_id );
+
+				if ( empty( $css ) || is_preview() ) {
+					$css = $this->get_page_css_inline( $post_id );
+				}
+
+				if ( empty( $css ) ) {
+					return;
+				}
+
+				$style = "\n" . '<style type="text/css" media="all">' . "\n";
+				$style .= $css;
+				$style .= "\n" . '</style>' . "\n";
+
+				echo $style;
+			}
+		}
+
+		/**
+		 * Get Blocks CSS Inline
+		 * 
+		 * @since   1.2.5
+		 * @access  public
+		 */
+		public function get_page_css_inline( $post_id ) {
+			global $post;
+
+			if ( function_exists( 'has_blocks' ) && has_blocks( $post_id ) ) {
+				if ( is_preview() && ( $post_id === $post->ID ) ) {
+					$content = $post->post_content;
+				} else {
+					$content = get_post_field( 'post_content', $post_id );
+				}
+
+				$blocks = $this->parse_blocks( $content );
+
+				if ( ! is_array( $blocks ) || empty( $blocks ) ) {
+					return;
+				}
+
+				$css = $this->cycle_through_blocks( $blocks );
+			}
+			return $css;
+		}
+
+		/**
+		 * Get Blocks CSS from Meta
+		 * 
+		 * @since   1.2.5
+		 * @access  public
+		 */
+		public function get_page_css_meta( $post_id ) {
+			$style = '';
+			if ( function_exists( 'has_blocks' ) && has_blocks( $post_id ) ) {
+				$style .= get_post_meta( $post_id, '_themeisle_gutenberg_block_styles', true );
+
+				$content = get_post_field( 'post_content', $post_id );
+
+				$blocks = $this->parse_blocks( $content );
+
+				if ( ! is_array( $blocks ) || empty( $blocks ) ) {
+					return;
+				}
+
+				$style .= $this->get_reusable_block_meta( $blocks );
+			}
+			return $style;
+		}
+
+		/**
+		 * Get Reusable Block Meta
+		 * 
+		 * @since   1.2.5
+		 * @access  public
+		 */
+		public function get_reusable_block_meta( $blocks ) {
+			$style = '';
+			foreach ( $blocks as $block ) {
+				if ( $block['blockName'] === 'core/block' && ! empty( $block['attrs']['ref'] ) ) {
+					$style .= get_post_meta( $block['attrs']['ref'], '_themeisle_gutenberg_block_styles', true );
+				}
+
+				if ( isset( $block['innerBlocks'] ) && ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
+					$style .= $this->get_reusable_block_meta( $block['innerBlocks'] );
+				}
+			}
+			return $style;
 		}
 
 		/**
@@ -273,48 +372,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 			}
 
 			$blocks = $this->parse_blocks( $reusable_block->post_content );
-			return $this->cycle_through_blocks( $blocks );
-		}
-
-		/**
-		 * Render server-side CSS
-		 * 
-		 * @since   1.2.5
-		 * @access  public
-		 */
-		public function render_server_side_css( $post_id = '' ) {
-			global $post;
-
-			$post_id = $post_id ? $post_id : get_the_ID();
-			if ( function_exists( 'has_blocks' ) && has_blocks( $post_id ) ) {
-				$css = get_post_meta( $post_id, '_themeisle_gutenberg_block_styles', true );
-
-				if ( empty( $css ) || is_preview() ) {
-					if ( is_preview() && ( $post_id === $post->ID ) ) {
-						$content = $post->post_content;
-					} else {
-						$content = get_post_field( 'post_content', $post_id );
-					}
-
-					$blocks = $this->parse_blocks( $content );
-	
-					if ( ! is_array( $blocks ) || empty( $blocks ) ) {
-						return;
-					}
-
-					$css = $this->cycle_through_blocks( $blocks );
-				}
-
-				if ( empty( $css ) ) {
-					return;
-				}
-
-				$style = "\n" . '<style type="text/css" media="all">' . "\n";
-				$style .= $css;
-				$style .= "\n" . '</style>' . "\n";
-
-				echo $style;
-			}
+			return $this->cycle_through_static_blocks( $blocks );
 		}
 
 		/**
@@ -331,7 +389,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		}
 
 		/**
-		 * Cycle thorugh Blocks
+		 * Cycle thorugh Static Blocks
 		 * 
 		 * @since   1.2.5
 		 * @access  public
@@ -354,14 +412,14 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 				}
 
 				if ( isset( $block['innerBlocks'] ) && ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
-					$style .= $this->cycle_through_blocks( $block['innerBlocks'] );
+					$style .= $this->cycle_through_static_blocks( $block['innerBlocks'] );
 				}
 			}
 			return $style;
 		}
 
 		/**
-		 * Cycle thorugh Blocks
+		 * Cycle thorugh Reusable Blocks
 		 * 
 		 * @since   1.2.5
 		 * @access  public
@@ -372,13 +430,17 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 				if ( $block['blockName'] === 'core/block' && ! empty( $block['attrs']['ref'] ) ) {
 					$style .= $this->get_reusable_block_css( $block['attrs']['ref'] );
 				}
+
+				if ( isset( $block['innerBlocks'] ) && ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
+					$style .= $this->cycle_through_reusable_blocks( $block['innerBlocks'] );
+				}
 			}
 			return $style;
 		}
 
 		/**
 		 * Method to return path to child class in a Reflective Way.
-		 *
+		 * 
 		 * @since   1.2.5
 		 * @access  protected
 		 * @return  string
