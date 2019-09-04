@@ -57,16 +57,40 @@ class CSS_Handler extends BlockCSS {
 
 		register_rest_route(
 			$namespace,
-			'/save_metabox',
+			'/save_post_meta/(?P<id>\d+)',
 			array(
 				array(
-					'methods'	=> \WP_REST_Server::READABLE,
-					'callback'	=> array( $this, 'save_metabox' ),
+					'methods'	=> \WP_REST_Server::EDITABLE,
+					'callback'	=> array( $this, 'save_post_meta' ),
 					'args'		=> array(
 						'id'	=> array(
 							'type'        => 'intval',
 							'required'    => true,
 							'description' => __( 'ID of the Post.', 'textdomain' ),
+							'validate_callback' => function( $param, $request, $key ) {
+								return is_numeric( $param );
+							}
+						),
+					),
+				),
+			)
+		);
+
+		register_rest_route(
+			$namespace,
+			'/save_block_meta/(?P<id>\d+)',
+			array(
+				array(
+					'methods'	=> \WP_REST_Server::EDITABLE,
+					'callback'	=> array( $this, 'save_block_meta' ),
+					'args'		=> array(
+						'id'	=> array(
+							'type'        => 'intval',
+							'required'    => true,
+							'description' => __( 'ID of the Reusable Block.', 'textdomain' ),
+							'validate_callback' => function( $param, $request, $key ) {
+								return is_numeric( $param );
+							}
 						),
 					),
 				),
@@ -75,17 +99,16 @@ class CSS_Handler extends BlockCSS {
 	}
 
 	/**
-	 * Function to fetch templates.
+	 * Function to save post CSS.
 	 *
 	 * @return array|bool|\WP_Error
 	 */
-	public function save_metabox( \WP_REST_Request $request ) {
+	public function save_post_meta( \WP_REST_Request $request ) {
 		if ( ! current_user_can( 'edit_posts' ) ) {
 			return false;
 		}
 
 		$post_id = $request->get_param( 'id' );
-
 		$css = $this->get_blocks_css( $post_id );
 		
 		if ( ! empty( $css ) ) {
@@ -99,6 +122,48 @@ class CSS_Handler extends BlockCSS {
 
 			$css = $compressor->run( $css );
 			
+			update_post_meta( $post_id, '_themeisle_gutenberg_block_styles', $css );
+		} else {
+			if ( get_post_meta( $post_id, '_themeisle_gutenberg_block_styles', true ) ) {
+				delete_post_meta( $post_id, '_themeisle_gutenberg_block_styles' );
+			}
+		}
+
+		if ( sizeof( self::$google_fonts ) > 0 ) {
+			update_post_meta( $post_id, '_themeisle_gutenberg_block_fonts', self::$google_fonts );
+		} else {
+			if ( get_post_meta( $post_id, '_themeisle_gutenberg_block_fonts', true ) ) {
+				delete_post_meta( $post_id, '_themeisle_gutenberg_block_fonts' );
+			}
+		}
+
+		return rest_ensure_response( array( 'message' => __( 'CSS updated.', 'textdomain' ) ) );
+	}
+
+	/**
+	 * Function to save reusable block CSS.
+	 *
+	 * @return array|bool|\WP_Error
+	 */
+	public function save_block_meta( \WP_REST_Request $request ) {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return false;
+		}
+
+		$post_id = $request->get_param( 'id' );
+		$css = $this->get_reusable_block_css( $post_id );
+		
+		if ( ! empty( $css ) ) {
+			$compressor = new CSSmin;
+
+			// Override any PHP configuration options before calling run()
+			$compressor->setMemoryLimit('256M');
+			$compressor->setMaxExecutionTime(120);
+			$compressor->setPcreBacktrackLimit(3000000);
+			$compressor->setPcreRecursionLimit(150000);
+
+			$css = $compressor->run( $css );
+
 			update_post_meta( $post_id, '_themeisle_gutenberg_block_styles', $css );
 		} else {
 			if ( get_post_meta( $post_id, '_themeisle_gutenberg_block_styles', true ) ) {
