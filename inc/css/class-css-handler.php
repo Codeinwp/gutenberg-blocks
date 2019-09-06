@@ -110,22 +110,24 @@ class CSS_Handler extends BlockCSS {
 
 		$post_id = $request->get_param( 'id' );
 		$css = $this->get_blocks_css( $post_id );
-		
+
 		if ( ! empty( $css ) ) {
 			$compressor = new CSSmin;
 
 			// Override any PHP configuration options before calling run()
-			$compressor->setMemoryLimit('256M');
-			$compressor->setMaxExecutionTime(120);
-			$compressor->setPcreBacktrackLimit(3000000);
-			$compressor->setPcreRecursionLimit(150000);
+			$compressor->setMemoryLimit( '256M' );
+			$compressor->setMaxExecutionTime( 120 );
+			$compressor->setPcreBacktrackLimit( 3000000 );
+			$compressor->setPcreRecursionLimit( 150000 );
 
 			$css = $compressor->run( $css );
-			
+
 			update_post_meta( $post_id, '_themeisle_gutenberg_block_styles', $css );
+			$this->save_css_file( $post_id, $css );
 		} else {
 			if ( get_post_meta( $post_id, '_themeisle_gutenberg_block_styles', true ) ) {
 				delete_post_meta( $post_id, '_themeisle_gutenberg_block_styles' );
+				$this->delete_css_file( $post_id );
 			}
 		}
 
@@ -152,22 +154,24 @@ class CSS_Handler extends BlockCSS {
 
 		$post_id = $request->get_param( 'id' );
 		$css = $this->get_reusable_block_css( $post_id );
-		
+
 		if ( ! empty( $css ) ) {
 			$compressor = new CSSmin;
 
 			// Override any PHP configuration options before calling run()
-			$compressor->setMemoryLimit('256M');
-			$compressor->setMaxExecutionTime(120);
-			$compressor->setPcreBacktrackLimit(3000000);
-			$compressor->setPcreRecursionLimit(150000);
+			$compressor->setMemoryLimit( '256M' );
+			$compressor->setMaxExecutionTime( 120 );
+			$compressor->setPcreBacktrackLimit( 3000000 );
+			$compressor->setPcreRecursionLimit( 150000 );
 
 			$css = $compressor->run( $css );
 
 			update_post_meta( $post_id, '_themeisle_gutenberg_block_styles', $css );
+			$this->save_css_file( $post_id, $css );
 		} else {
 			if ( get_post_meta( $post_id, '_themeisle_gutenberg_block_styles', true ) ) {
 				delete_post_meta( $post_id, '_themeisle_gutenberg_block_styles' );
+				$this->delete_css_file( $post_id );
 			}
 		}
 
@@ -180,6 +184,83 @@ class CSS_Handler extends BlockCSS {
 		}
 
 		return rest_ensure_response( array( 'message' => __( 'CSS updated.', 'textdomain' ) ) );
+	}
+
+	/**
+	 * Function to save CSS into WordPress Filesystem.
+	 *
+	 * @return string
+	 */
+	public function save_css_file( $post_id, $css ) {
+		global $wp_filesystem;
+
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return false;
+		}
+
+		require_once( ABSPATH . '/wp-admin/includes/file.php' );
+		WP_Filesystem();
+
+		$file_name = 'post-' . $post_id;
+		$wp_upload_dir = wp_upload_dir( null, false );
+		$upload_dir = $wp_upload_dir['basedir'] . '/themeisle-gutenberg/';
+		$file_path = $upload_dir . $file_name . '.css';
+		$target_dir = $wp_filesystem->is_dir( $upload_dir );
+
+		if ( ! $wp_filesystem->is_writable( $wp_upload_dir['basedir'] ) ) {
+			return;
+		}
+
+		if ( ! $target_dir ) {
+			wp_mkdir_p( $upload_dir );
+		}
+
+		$wp_filesystem->put_contents( $file_path, $css, FS_CHMOD_FILE );
+
+		if ( file_exists( $file_path ) ) {
+			update_post_meta( $post_id, '_themeisle_gutenberg_block_stylesheet', $file_name );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Function to delete CSS from WordPress Filesystem.
+	 *
+	 * @return string
+	 */
+	public function delete_css_file( $post_id ) {
+		global $wp_filesystem;
+
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return false;
+		}
+
+		require_once( ABSPATH . '/wp-admin/includes/file.php' );
+		WP_Filesystem();
+
+		$wp_upload_dir = wp_upload_dir( null, false );
+
+		if ( ! $wp_filesystem->is_writable( $wp_upload_dir['basedir'] ) ) {
+			return;
+		}
+
+		$file_name = get_post_meta( $post_id, '_themeisle_gutenberg_block_stylesheet', true );
+
+		if ( $file_name ) {
+			delete_post_meta( $post_id, '_themeisle_gutenberg_block_stylesheet' );
+		}
+
+		$upload_dir = $wp_upload_dir['basedir'] . '/themeisle-gutenberg/';
+		$file_path = $upload_dir . $file_name . '.css';
+
+		if ( ! file_exists( $file_path ) ) {
+			return;
+		}
+
+		$wp_filesystem->delete( $file_path, true );
+
+		return true;
 	}
 
 	/**
