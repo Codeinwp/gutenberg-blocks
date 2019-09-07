@@ -47,6 +47,7 @@ class CSS_Handler extends BlockCSS {
 	public function init() {
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 		add_action( 'rest_api_init', array( $this, 'autoload_block_classes' ) );
+		add_action( 'before_delete_post', array( $this, 'delete_css_file' ) );
 	}
 
 	/**
