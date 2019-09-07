@@ -115,6 +115,8 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 * @access  public
 		 */
 		public function enqueue_block_frontend_assets() {
+			global $wp_query;
+
 			if ( is_admin() ) {
 				return;
 			}
@@ -130,12 +132,36 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				plugin_dir_url( $this->get_dir() ) . $this->slug . '/../build/style.css'
 			);
 
-			if ( has_block( 'themeisle-blocks/chart-pie' ) ) {
+			$has_map = false;
+			$has_chart = false;
+
+			if ( is_singular() ) {
+				if ( has_block( 'themeisle-blocks/google-map' ) ) {
+					$has_map = true;
+				}
+
+				if ( has_block( 'themeisle-blocks/chart-pie' ) ) {
+					$has_chart = true;
+				}
+			} else {
+				$posts = wp_list_pluck( $wp_query->posts, 'ID' );
+
+				foreach( $posts as $post ) {
+					if ( has_block( 'themeisle-blocks/google-map', $post ) ) {
+						$has_map = true;
+					}
+
+					if ( has_block( 'themeisle-blocks/chart-pie' ) ) {
+						$has_chart = true;
+					}
+				}
+			}
+
+			if ( $has_chart ) {
 				wp_enqueue_script( 'google-charts', 'https://www.gstatic.com/charts/loader.js' );
 			}
 
-			if ( has_block( 'themeisle-blocks/google-map' ) ) {
-
+			if ( $has_map ) {
 				// Get the API key
 				$apikey = get_option( 'themeisle_google_map_block_api_key' );
 		

@@ -53,9 +53,9 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		 * @access  public
 		 */
 		public function init() {
-			add_action( 'wp_head', array( $this, 'render_server_side_css' ) );
 			add_action( 'wp_head', array( $this, 'enqueue_google_fonts' ), 19 );
 			add_filter( 'safe_style_css', array( $this, 'used_css_properties' ), 99 );
+			add_action( 'wp_head', array( $this, 'render_post_css' ) );
 		}
 
 		/**
@@ -242,9 +242,28 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		 * @since   1.2.5
 		 * @access  public
 		 */
-		public function render_server_side_css( $post_id = '' ) {
-			$post_id = $post_id ? $post_id : get_the_ID();
+		public function render_post_css() {
+			global $wp_query;
 
+			if ( is_singular() ) {
+				return $this->get_post_css();
+			}
+
+			$posts = wp_list_pluck( $wp_query->posts, 'ID' );
+
+			foreach( $posts as $post ) {
+				$this->get_post_css( $post );
+			}
+		}
+
+		/**
+		 * Get Post CSS
+		 * 
+		 * @since   1.2.5
+		 * @access  public
+		 */
+		public function get_post_css( $post_id = '' ) {
+			$post_id = $post_id ? $post_id : get_the_ID();
 			if ( function_exists( 'has_blocks' ) && has_blocks( $post_id ) ) {
 				$css = $this->get_page_css_meta( $post_id );
 
