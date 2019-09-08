@@ -255,6 +255,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 			// load the base class
 			require_once( $this->get_dir() .  '/class-base-block.php' );
 			require_once( $this->get_dir() .  '/css/class-block-css.php' );
+			require_once( $this->get_dir() .  '/css/class-block-frontend.php' );
 			require_once( $this->get_dir() .  '/css/class-css-handler.php' );
 			$paths = glob( $this->get_dir() . '/editor/*/*/*.php' );
 
@@ -290,12 +291,12 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				}
 			}
 
-			if ( class_exists( '\ThemeIsle\BlockCSS' ) ) {
-				\ThemeIsle\BlockCSS::instance();
-			}
-
 			if ( class_exists( '\ThemeIsle\BlockCSS\CSS_Handler' ) ) {
 				\ThemeIsle\BlockCSS\CSS_Handler::instance();
+			}
+
+			if ( class_exists( '\ThemeIsle\BlockCSS\Block_Frontend' ) ) {
+				\ThemeIsle\BlockCSS\Block_Frontend::instance();
 			}
 		}
 
