@@ -36,9 +36,9 @@ class Block_Frontend extends BlockCSS {
 	 * Initialize the class
 	 */
 	public function init() {
-		add_action( 'enqueue_block_assets', array( $this, 'enqueue_google_fonts' ), 19 );
-		add_action( 'wp', array( $this, 'render_post_css' ), 10 );
 		add_filter( 'get_the_excerpt', array( $this, 'get_excerpt_start' ), 1 );
+		add_action( 'wp', array( $this, 'render_post_css' ), 10 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_google_fonts' ), 19 );
 		add_filter( 'get_the_excerpt', array( $this, 'get_excerpt_end' ), 20 );
 	}
 
@@ -71,9 +71,23 @@ class Block_Frontend extends BlockCSS {
 	 * @access  public
 	 */
 	public function enqueue_google_fonts( $post_id = '' ) {
+		global $wp_query;
 		$post_id = $post_id ? $post_id : get_the_ID();
 
-		$fonts_list = get_post_meta( $post_id, '_themeisle_gutenberg_block_fonts', true );
+		if ( is_singular() ) {
+			$fonts_list = get_post_meta( $post_id, '_themeisle_gutenberg_block_fonts', true );
+		} else {
+			$fonts_list = array();
+
+			$posts = wp_list_pluck( $wp_query->posts, 'ID' );
+
+			foreach( $posts as $post ) {
+				$fonts = get_post_meta( $post, '_themeisle_gutenberg_block_fonts', true );
+				if ( ! empty( $fonts ) ) {
+					$fonts_list = array_merge( $fonts_list, $fonts );
+				}
+			}
+		}
 
 		if ( empty( $fonts_list ) ) {
 			$fonts_list = self::$google_fonts;
