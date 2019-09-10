@@ -72,10 +72,19 @@ class Block_Frontend extends BlockCSS {
 	 */
 	public function enqueue_google_fonts( $post_id = '' ) {
 		global $wp_query;
-		$post_id = $post_id ? $post_id : get_the_ID();
 
-		if ( is_singular() ) {
+		if ( is_singular() || $post_id ) {
+			$post_id = $post_id ? $post_id : get_the_ID();
+
 			$fonts_list = get_post_meta( $post_id, '_themeisle_gutenberg_block_fonts', true );
+
+			$content = get_post_field( 'post_content', $post_id );
+
+			$blocks = $this->parse_blocks( $content );
+
+			if ( is_array( $blocks ) || ! empty( $blocks ) ) {
+				$this->enqueue_reusable_fonts( $blocks );
+			}
 		} else {
 			$fonts_list = array();
 
@@ -83,8 +92,17 @@ class Block_Frontend extends BlockCSS {
 
 			foreach( $posts as $post ) {
 				$fonts = get_post_meta( $post, '_themeisle_gutenberg_block_fonts', true );
+
 				if ( ! empty( $fonts ) ) {
 					$fonts_list = array_merge( $fonts_list, $fonts );
+				}
+
+				$content = get_post_field( 'post_content', $post );
+
+				$blocks = $this->parse_blocks( $content );
+
+				if ( is_array( $blocks ) || ! empty( $blocks ) ) {
+					$this->enqueue_reusable_fonts( $blocks );
 				}
 			}
 		}
@@ -105,6 +123,24 @@ class Block_Frontend extends BlockCSS {
 			}
 
 			wp_enqueue_style( 'themeisle-gutenberg-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ) );
+		}
+	}
+
+	/**
+	 * Get Google Fonts for Reusable Blocks
+	 * 
+	 * @since   1.2.5
+	 * @access  public
+	 */
+	public function enqueue_reusable_fonts( $blocks ) {
+		foreach ( $blocks as $block ) {
+			if ( $block['blockName'] === 'core/block' && ! empty( $block['attrs']['ref'] ) ) {
+				$this->enqueue_google_fonts( $block['attrs']['ref'] );
+			}
+
+			if ( isset( $block['innerBlocks'] ) && ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
+				$this->enqueue_reusable_fonts( $block['innerBlocks'] );
+			}
 		}
 	}
 
