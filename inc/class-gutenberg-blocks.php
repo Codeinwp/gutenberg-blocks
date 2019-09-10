@@ -301,6 +301,23 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		}
 
 		/**
+		 * Render server-side CSS
+		 * 
+		 * @since   1.1.0
+		 * @access  public
+		 */
+		public function render_server_side_css( $post_id = '' ) {
+			$post = $post_id ? $post_id : get_the_ID();
+			if ( function_exists( 'has_blocks' ) && has_blocks( $post ) ) {
+				if ( class_exists( '\ThemeIsle\BlockCSS\Block_Frontend' ) ) {
+					$class = '\ThemeIsle\BlockCSS\Block_Frontend';
+					$path = new $class();
+					return $path->enqueue_styles( $post, true );
+				}
+			}
+		}
+
+		/**
 		 * Register our custom block category.
 		 *
 		 * @since   1.0.0

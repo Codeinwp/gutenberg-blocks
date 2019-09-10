@@ -22,7 +22,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		 *
 		 * @var string
 		 */
-		protected $blocks_classes = array();
+		protected static $blocks_classes = array();
 
 		/**
 		 * The namespace under which the fonts are saved.
@@ -66,7 +66,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 					continue;
 				}
 
-				$this->blocks_classes[] = $classname;
+				self::$blocks_classes[] = $classname;
 			}
 		}
 
@@ -240,7 +240,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		public function cycle_through_static_blocks( $blocks ) {
 			$style = '';
 			foreach ( $blocks as $block ) {
-				foreach ( $this->blocks_classes as $classname ) {
+				foreach ( self::$blocks_classes as $classname ) {
 					if ( ! class_exists( $classname ) ) {
 						continue;
 					}
