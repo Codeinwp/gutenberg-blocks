@@ -176,12 +176,17 @@ class Block_Frontend extends BlockCSS {
 	 */
 	public function enqueue_styles( $post_id = '', $footer = false ) {
 		$post_id = $post_id ? $post_id : get_the_ID();
+		$location = 'wp_head';
 
 		if ( function_exists( 'has_blocks' ) && has_blocks( $post_id ) ) {
 			$file_name = get_post_meta( $post_id, '_themeisle_gutenberg_block_stylesheet', true );
 
+			if ( $footer ) {
+				$location = 'wp_footer';
+			}
+
 			if ( empty( $file_name ) || is_preview() ) {
-				return add_action( 'wp_footer', function() use( $post_id ) {
+				return add_action( $location, function() use( $post_id ) {
 					return $this->get_post_css( $post_id );
 				} );
 			}
@@ -193,7 +198,7 @@ class Block_Frontend extends BlockCSS {
 			$file_url = $baseurl . $file_name . '.css';
 
 			if ( ! file_exists( $file_path ) ) {
-				return add_action( 'wp_footer', function() use( $post_id ) {
+				return add_action( $location, function() use( $post_id ) {
 					return $this->get_post_css( $post_id );
 				} );
 			}

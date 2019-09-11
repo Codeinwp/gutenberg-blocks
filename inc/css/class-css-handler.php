@@ -111,6 +111,7 @@ class CSS_Handler extends BlockCSS {
 
 		$post_id = $request->get_param( 'id' );
 		$css = $this->get_blocks_css( $post_id );
+		$css = wp_filter_nohtml_kses( $css );
 
 		if ( ! empty( $css ) ) {
 			$compressor = new CSSmin;
@@ -155,6 +156,7 @@ class CSS_Handler extends BlockCSS {
 
 		$post_id = $request->get_param( 'id' );
 		$css = $this->get_reusable_block_css( $post_id );
+		$css = wp_filter_nohtml_kses( $css );
 
 		if ( ! empty( $css ) ) {
 			$compressor = new CSSmin;
