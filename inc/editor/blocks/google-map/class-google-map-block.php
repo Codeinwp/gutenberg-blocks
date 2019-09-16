@@ -21,7 +21,7 @@ class Google_Map_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_block_slug() {
+	protected function set_block_slug() {
 		$this->block_slug = 'google-map';
 	}
 
@@ -30,7 +30,7 @@ class Google_Map_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_attributes() {
+	protected function set_attributes() {
 		$this->attributes = array(
 			'id'				=> array(
 				'type'    => 'string',
@@ -94,7 +94,7 @@ class Google_Map_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	function render( $attributes ) {
+	protected function render( $attributes ) {
 		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
 			return;
 		}

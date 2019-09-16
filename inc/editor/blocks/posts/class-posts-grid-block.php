@@ -21,7 +21,7 @@ class Posts_Grid_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_block_slug() {
+	protected function set_block_slug() {
 		$this->block_slug = 'posts-grid';
 	}
 
@@ -30,7 +30,7 @@ class Posts_Grid_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_attributes() {
+	protected function set_attributes() {
 		$this->attributes = array(
 			'style'					=> array(
 				'type' => 'string',
@@ -103,7 +103,7 @@ class Posts_Grid_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	function render( $attributes ) {
+	protected function render( $attributes ) {
 		$recent_posts = wp_get_recent_posts(
 			array(
 				'numberposts' => $attributes['postsToShow'],
@@ -223,7 +223,7 @@ class Posts_Grid_Block extends Base_Block {
 	 *
 	 * @return string
 	 */
-	function get_excerpt_by_id( $post_id, $excerpt_length = 200 ) {
+	protected function get_excerpt_by_id( $post_id, $excerpt_length = 200 ) {
 		$the_post = get_post( $post_id );
 		$the_excerpt = $the_post->post_content;
 		$the_excerpt = strip_tags( strip_shortcodes( $the_excerpt ) );

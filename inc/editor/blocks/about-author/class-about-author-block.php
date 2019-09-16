@@ -21,7 +21,7 @@ class About_Author_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_block_slug() {
+	protected function set_block_slug() {
 		$this->block_slug = 'about-author';
 	}
 
@@ -30,7 +30,7 @@ class About_Author_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_attributes() {
+	protected function set_attributes() {
 		$this->attributes = array();
 	}
 
@@ -42,7 +42,7 @@ class About_Author_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	function render( $attributes ) {
+	protected function render( $attributes ) {
 		$img_markup = sprintf(
 			'<a href="%1$s"><img src="%2$s" class="author-image" /></a>',
 			esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),

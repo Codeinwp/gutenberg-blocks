@@ -21,7 +21,7 @@ class Plugin_Card_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_block_slug() {
+	protected function set_block_slug() {
 		$this->block_slug = 'plugin-cards';
 	}
 
@@ -30,7 +30,7 @@ class Plugin_Card_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_attributes() {
+	protected function set_attributes() {
 		$this->attributes = array(
 			'slug' => array(
 				'type' => 'string',
@@ -46,7 +46,7 @@ class Plugin_Card_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	function render( $attributes ) {
+	protected function render( $attributes ) {
 		$results = $this->search( $attributes['slug'] );
 
 		if ( ! is_wp_error( $results['data'] ) ) {
@@ -123,7 +123,7 @@ class Plugin_Card_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function search( $request ) {
+	protected function search( $request ) {
 		$return = array(
 			'success' => false,
 			'data'     => esc_html__( 'Something went wrong', 'textdomain' ),
@@ -178,7 +178,7 @@ class Plugin_Card_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	function get_ratings( $rating ) {
+	protected function get_ratings( $rating ) {
 		$rating = round( $rating / 10, 0 ) / 2;
 		$full_stars = floor( $rating );
 		$half_stars = ceil( $rating - $full_stars );
