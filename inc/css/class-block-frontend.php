@@ -24,6 +24,13 @@ class Block_Frontend extends BlockCSS {
 	private $has_excerpt = false;
 
 	/**
+	 * The namespace to check if fonts exists.
+	 *
+	 * @var bool
+	 */
+	private $has_fonts = true;
+
+	/**
 	 * Constructor function for the module.
 	 *
 	 * @method __construct
@@ -39,6 +46,7 @@ class Block_Frontend extends BlockCSS {
 		add_filter( 'get_the_excerpt', array( $this, 'get_excerpt_start' ), 1 );
 		add_action( 'wp', array( $this, 'render_post_css' ), 10 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_google_fonts' ), 19 );
+		add_action( 'wp_head', array( $this, 'enqueue_google_fonts_backward' ), 19 );
 		add_filter( 'get_the_excerpt', array( $this, 'get_excerpt_end' ), 20 );
 	}
 
@@ -108,13 +116,40 @@ class Block_Frontend extends BlockCSS {
 		}
 
 		if ( empty( $fonts_list ) ) {
-			$fonts_list = self::$google_fonts;
+			$this->has_fonts = false;
+			return;
 		}
 
 		$fonts = array();
 
 		if ( sizeof( $fonts_list ) > 0 ) {
 			foreach( $fonts_list as $font ) {
+				$item = str_replace( ' ', '+', $font['fontfamily'] );
+				if ( sizeof( $font['fontvariant'] ) > 0 ) {
+					$item .= ':' . implode( ',', $font['fontvariant'] );
+				}
+				array_push( $fonts, $item );
+			}
+
+			wp_enqueue_style( 'themeisle-gutenberg-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ) );
+		}
+	}
+
+	/**
+	 * Method to define hooks needed.
+	 * 
+	 * @since   1.2.5
+	 * @access  public
+	 */
+	public function enqueue_google_fonts_backward() {
+		if ( $this->has_fonts ) {
+			return;
+		}
+
+		$fonts = array();
+
+		if ( sizeof( self::$google_fonts ) > 0 ) {
+			foreach( self::$google_fonts as $font ) {
 				$item = str_replace( ' ', '+', $font['fontfamily'] );
 				if ( sizeof( $font['fontvariant'] ) > 0 ) {
 					$item .= ':' . implode( ',', $font['fontvariant'] );
