@@ -16,7 +16,7 @@ const {
 
 const { withInstanceId } = wp.compose;
 
-const { BlockControls } = wp.editor;
+const { BlockControls } = wp.blockEditor || wp.editor;
 
 const { Fragment } = wp.element;
 

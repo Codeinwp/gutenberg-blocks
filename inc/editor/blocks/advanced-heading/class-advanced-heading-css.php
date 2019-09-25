@@ -28,7 +28,7 @@ class Advanced_Heading_CSS extends BlockCSS {
 	/**
 	 * Generate Advanced Heading CSS
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  private
 	 */
 	public function render_css( $block ) {

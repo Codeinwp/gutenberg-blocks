@@ -10,7 +10,7 @@ const {
 	InnerBlocks,
 	InspectorControls,
 	PanelColorSettings
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 registerBlockType( 'themeisle-blocks/testimonials-block', {
 	title: __( 'Testimonials Block' ),

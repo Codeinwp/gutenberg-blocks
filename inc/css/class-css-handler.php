@@ -271,7 +271,7 @@ class CSS_Handler extends BlockCSS {
 	 * Defines and returns the instance of the static class.
 	 *
 	 * @static
-	 * @since 1.2.5
+	 * @since 1.3.0
 	 * @access public
 	 * @return CSS_Handler
 	 */
@@ -290,7 +290,7 @@ class CSS_Handler extends BlockCSS {
 	 * object therefore, we don't want the object to be cloned.
 	 *
 	 * @access public
-	 * @since 1.2.5
+	 * @since 1.3.0
 	 * @return void
 	 */
 	public function __clone() {
@@ -302,7 +302,7 @@ class CSS_Handler extends BlockCSS {
 	 * Disable unserializing of the class
 	 *
 	 * @access public
-	 * @since 1.2.5
+	 * @since 1.3.0
 	 * @return void
 	 */
 	public function __wakeup() {

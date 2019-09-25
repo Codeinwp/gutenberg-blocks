@@ -23,7 +23,7 @@ const {
 	ToggleControl
 } = wp.components;
 
-const { InspectorControls } = wp.editor;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 
 const {
 	Component,

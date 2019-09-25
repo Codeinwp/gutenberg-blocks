@@ -10,9 +10,7 @@ const {
 	registerBlockType
 } = wp.blocks;
 
-const {
-	BlockControls
-} = wp.editor;
+const { BlockControls } = wp.blockEditor || wp.editor;
 
 const {
 	Toolbar,

@@ -41,7 +41,7 @@ const {
 	ColorPalette,
 	InspectorControls,
 	RichText
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const { Fragment } = wp.element;
 
@@ -1324,6 +1324,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 					placeholder={ __( 'Write heading…' ) }
 					tagName={ tag }
 					formattingControls={ [ 'bold', 'italic', 'link', 'strikethrough', 'mark' ] }
+					allowedFormats={ [ 'core/bold', 'core/italic', 'core/link', 'core/strikethrough', 'themeisle-blocks/mark' ] }
 					onMerge={ props.mergeBlocks }
 					unstableOnSplit={
 						props.insertBlocksAfter ?

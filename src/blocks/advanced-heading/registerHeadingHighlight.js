@@ -11,11 +11,11 @@ const {
 const {
 	RichTextShortcut,
 	RichTextToolbarButton
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const { Fragment } = wp.element;
 
-const name = 'themeisle-blocks/heading-highlight';
+const name = 'themeisle-blocks/mark';
 
 registerFormatType( name, {
 	name,
@@ -35,7 +35,6 @@ registerFormatType( name, {
 				/>
 
 				<RichTextToolbarButton
-					name="mark"
 					icon="admin-customizer"
 					title={ __( 'Highlight' ) }
 					onClick={ onToggle }

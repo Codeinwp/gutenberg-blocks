@@ -29,7 +29,7 @@ const {
 	ColorPalette,
 	ContrastChecker,
 	InspectorControls
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const { Fragment } = wp.element;
 

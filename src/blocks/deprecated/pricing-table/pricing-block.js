@@ -15,7 +15,7 @@ const {
 	BlockControls,
 	InspectorControls,
 	PanelColorSettings
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const {
 	Dashicon,

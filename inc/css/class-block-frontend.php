@@ -53,7 +53,7 @@ class Block_Frontend extends BlockCSS {
 	/**
 	 * Method to start checking if excerpt exists.
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function get_excerpt_start( $excerpt ) {
@@ -64,7 +64,7 @@ class Block_Frontend extends BlockCSS {
 	/**
 	 * Method to stop checking if excerpt exists.
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function get_excerpt_end( $excerpt ) {
@@ -75,7 +75,7 @@ class Block_Frontend extends BlockCSS {
 	/**
 	 * Method to define hooks needed.
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function enqueue_google_fonts( $post_id = '' ) {
@@ -138,7 +138,7 @@ class Block_Frontend extends BlockCSS {
 	/**
 	 * Method to define hooks needed.
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function enqueue_google_fonts_backward() {
@@ -164,7 +164,7 @@ class Block_Frontend extends BlockCSS {
 	/**
 	 * Get Google Fonts for Reusable Blocks
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function enqueue_reusable_fonts( $blocks ) {
@@ -182,7 +182,7 @@ class Block_Frontend extends BlockCSS {
 	/**
 	 * Render server-side CSS
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function render_post_css() {
@@ -206,7 +206,7 @@ class Block_Frontend extends BlockCSS {
 	/**
 	 * Enqueue CSS file
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function enqueue_styles( $post_id = '', $footer = false ) {
@@ -261,7 +261,7 @@ class Block_Frontend extends BlockCSS {
 	/**
 	 * Enqueue CSS file for Reusable Blocks
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function enqueue_reusable_styles( $blocks, $footer = false ) {
@@ -279,7 +279,7 @@ class Block_Frontend extends BlockCSS {
 	/**
 	 * Get Post CSS
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function get_post_css( $post_id = '' ) {
@@ -306,7 +306,7 @@ class Block_Frontend extends BlockCSS {
 	/**
 	 * Get Blocks CSS from Meta
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function get_page_css_meta( $post_id ) {
@@ -330,7 +330,7 @@ class Block_Frontend extends BlockCSS {
 	/**
 	 * Get Reusable Block Meta
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function get_reusable_block_meta( $blocks ) {
@@ -350,7 +350,7 @@ class Block_Frontend extends BlockCSS {
 	/**
 	 * Get Blocks CSS Inline
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function get_page_css_inline( $post_id ) {
@@ -377,7 +377,7 @@ class Block_Frontend extends BlockCSS {
 	/**
 	 * Cycle thorugh Blocks
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function cycle_through_blocks( $blocks ) {
@@ -392,7 +392,7 @@ class Block_Frontend extends BlockCSS {
 	 * Defines and returns the instance of the static class.
 	 *
 	 * @static
-	 * @since 1.2.5
+	 * @since 1.3.0
 	 * @access public
 	 * @return Block_Frontend
 	 */
@@ -411,7 +411,7 @@ class Block_Frontend extends BlockCSS {
 	 * object therefore, we don't want the object to be cloned.
 	 *
 	 * @access public
-	 * @since 1.2.5
+	 * @since 1.3.0
 	 * @return void
 	 */
 	public function __clone() {
@@ -423,7 +423,7 @@ class Block_Frontend extends BlockCSS {
 	 * Disable unserializing of the class
 	 *
 	 * @access public
-	 * @since 1.2.5
+	 * @since 1.3.0
 	 * @return void
 	 */
 	public function __wakeup() {

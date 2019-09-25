@@ -16,7 +16,7 @@ const {
 	InnerBlocks,
 	InspectorControls,
 	MediaPlaceholder
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const {
 	Button,

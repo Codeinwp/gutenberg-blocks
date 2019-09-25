@@ -271,7 +271,7 @@ class Library extends Component {
 
 export default compose(
 	withSelect( ( select, { clientId }) => {
-		const { getBlock } = select( 'core/editor' );
+		const { getBlock } = select( 'core/block-editor' ) || select( 'core/editor' );
 		const { getBlockTypes } = select( 'core/blocks' );
 		const block = getBlock( clientId );
 		const availableBlocks = getBlockTypes();
@@ -281,10 +281,13 @@ export default compose(
 		};
 	}),
 
-	withDispatch( ( dispatch, { block }) => ({
-		import: ( content ) => dispatch( 'core/editor' ).replaceBlocks(
-			block.clientId,
-			content,
-		)
-	}) ),
+	withDispatch( ( dispatch, { block }) => {
+		const { replaceBlocks } = dispatch( 'core/block-editor' ) || dispatch( 'core/editor' );
+		return {
+			import: ( content ) => replaceBlocks(
+				block.clientId,
+				content,
+			)
+		};
+	}),
 )( Library );

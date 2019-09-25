@@ -28,7 +28,7 @@ class Advanced_Columns_CSS extends BlockCSS {
 	/**
 	 * Generate Advanced Columns CSS
 	 * 
-	 * @since   1.2.5
+	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function render_css( $block ) {

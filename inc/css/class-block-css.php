@@ -34,7 +34,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * BlockCSS constructor.
 		 *
-		 * @since   1.2.5
+		 * @since   1.3.0
 		 * @access  public
 		 */
 		public function __construct() {
@@ -45,7 +45,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Autoload classes for each block.
 		 *
-		 * @since   1.2.5
+		 * @since   1.3.0
 		 * @access  public
 		 */
 		public function autoload_block_classes() {
@@ -73,7 +73,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Parse Blocks for Gutenberg and WordPress 5.0
 		 * 
-		 * @since   1.2.5
+		 * @since   1.3.0
 		 * @access  public
 		 */
 		public function parse_blocks( $content ) {
@@ -87,7 +87,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Get block attribute value with default
 		 * 
-		 * @since   1.2.5
+		 * @since   1.3.0
 		 * @access  public
 		 */
 		public function get_attr_value( $attr, $default = 'unset' ) {
@@ -101,7 +101,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Get Google Fonts
 		 * 
-		 * @since   1.2.5
+		 * @since   1.3.0
 		 * @access  public
 		 */
 		public function get_google_fonts( $attr ) {
@@ -122,7 +122,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Convert HEX to RGBA
 		 * 
-		 * @since   1.2.5
+		 * @since   1.3.0
 		 * @access  public
 		 */
 		public function hex2rgba( $color, $opacity = false ) {
@@ -161,7 +161,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Used CSS properties
 		 * 
-		 * @since   1.2.5
+		 * @since   1.3.0
 		 * @access  public
 		 */
 		public function used_css_properties( $attr ) {
@@ -193,7 +193,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Get Blocks CSS
 		 * 
-		 * @since   1.2.5
+		 * @since   1.3.0
 		 * @access  public
 		 */
 		public function get_blocks_css( $post_id ) {
@@ -212,7 +212,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Get Reusable Blocks CSS
 		 * 
-		 * @since   1.2.5
+		 * @since   1.3.0
 		 * @access  public
 		 */
 		public function get_reusable_block_css( $post_id ) {
@@ -234,7 +234,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Cycle thorugh Static Blocks
 		 * 
-		 * @since   1.2.5
+		 * @since   1.3.0
 		 * @access  public
 		 */
 		public function cycle_through_static_blocks( $blocks ) {
@@ -264,7 +264,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Cycle thorugh Reusable Blocks
 		 * 
-		 * @since   1.2.5
+		 * @since   1.3.0
 		 * @access  public
 		 */
 		public function cycle_through_reusable_blocks( $blocks ) {
@@ -284,7 +284,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		/**
 		 * Method to return path to child class in a Reflective Way.
 		 * 
-		 * @since   1.2.5
+		 * @since   1.3.0
 		 * @access  protected
 		 * @return  string
 		 */
@@ -299,7 +299,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		 * object therefore, we don't want the object to be cloned.
 		 *
 		 * @access  public
-		 * @since   1.2.5
+		 * @since   1.3.0
 		 * @return  void
 		 */
 		public function __clone() {
@@ -311,7 +311,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		 * Disable unserializing of the class
 		 *
 		 * @access  public
-		 * @since   1.2.5
+		 * @since   1.3.0
 		 * @return  void
 		 */
 		public function __wakeup() {

@@ -46,7 +46,7 @@ const {
 	ColorPalette,
 	InspectorControls,
 	RichText
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const { Fragment } = wp.element;
 
@@ -411,6 +411,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 								aria-label={ unescapeHTML( data[i].text ) }
 								onChange={ e => updateButton({ text: e }, i ) }
 								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+								allowedFormats={ [ 'core/bold', 'core/italic', 'core/strikethrough' ] }
 								tagName="span"
 								keepPlaceholderOnFocus
 							/>

@@ -18,7 +18,7 @@ const {
 
 const { withSelect } = wp.data;
 
-const { InspectorControls } = wp.editor;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 
 const {
 	Component,

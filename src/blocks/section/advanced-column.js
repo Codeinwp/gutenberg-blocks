@@ -36,7 +36,7 @@ const {
 	InnerBlocks,
 	InspectorControls,
 	MediaPlaceholder
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const { Fragment } = wp.element;
 
@@ -361,7 +361,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 	edit: compose([
 
 		withDispatch( ( dispatch ) => {
-			const { updateBlockAttributes } = dispatch( 'core/editor' );
+			const { updateBlockAttributes } = dispatch( 'core/block-editor' ) || dispatch( 'core/editor' );
 
 			return {
 				updateBlockAttributes
@@ -374,7 +374,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 				getAdjacentBlockClientId,
 				getBlock,
 				getBlockRootClientId
-			} = select( 'core/editor' );
+			} = select( 'core/block-editor' ) || select( 'core/editor' );
 			const adjacentBlockClientId = getAdjacentBlockClientId( clientId );
 			const adjacentBlock = getBlock( adjacentBlockClientId );
 			const parentClientId = getBlockRootClientId( clientId );
