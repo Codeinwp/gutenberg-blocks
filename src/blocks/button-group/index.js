@@ -412,7 +412,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 								onChange={ e => updateButton({ text: e }, i ) }
 								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
 								allowedFormats={ [ 'core/bold', 'core/italic', 'core/strikethrough' ] }
-								tagName="span"
+								tagName="div"
 								keepPlaceholderOnFocus
 							/>
 						) }
@@ -1035,6 +1035,15 @@ registerBlockType( 'themeisle-blocks/button-group', {
 					} }
 				>
 					{ times( buttons, i => button( i ) ) }
+
+					{ ( props.isSelected && 4 >= buttons ) && (
+						<IconButton
+							className="wp-block-themeisle-blocks-button-inserter"
+							icon="plus-alt"
+							onClick={ () => changeButtons( buttons + 1 ) }
+							label={ __( 'Add Button' ) }
+						/>
+					) }
 				</div>
 			</Fragment>
 		);
