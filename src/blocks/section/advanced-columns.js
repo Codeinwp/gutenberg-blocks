@@ -39,6 +39,7 @@ const {
 } = wp.data;
 
 const {
+	__experimentalBlockNavigationList,
 	ColorPalette,
 	InnerBlocks,
 	InspectorAdvancedControls,
@@ -65,6 +66,7 @@ import SizingControl from '../../components/sizing-control/index.js';
 import ResponsiveControl from '../../components/responsive-control/index.js';
 import BackgroundControl from './components/background-control/index.js';
 import ControlPanelControl from '../../components/control-panel-control/index.js';
+import BlockNavigatorControl from '../../components/block-navigator-control/index.js';
 import Separators from './components/separators/index.js';
 import Onboarding from './components/onboarding/index.js';
 import deprecated from './deprecated.js';
@@ -1968,6 +1970,8 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 
 		return (
 			<Fragment>
+				{ __experimentalBlockNavigationList && <BlockNavigatorControl clientId={ props.clientId } /> }
+
 				<InspectorControls>
 					<PanelBody className="wp-block-themeisle-blocks-advanced-columns-header-panel">
 						<Button
