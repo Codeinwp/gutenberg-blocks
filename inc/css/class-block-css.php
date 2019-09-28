@@ -91,7 +91,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		 * @access  public
 		 */
 		public function get_attr_value( $attr, $default = 'unset' ) {
-			if ( isset( $attr ) ) {
+			if ( ! empty( $attr ) ) {
 				return $attr;
 			} else {
 				return $default;

@@ -52,6 +52,9 @@ class CSS_Handler extends BlockCSS {
 
 	/**
 	 * Register REST API route
+	 * 
+	 * @since   1.3.0
+	 * @access  public
 	 */
 	public function register_routes() {
 		$namespace = $this->namespace . $this->version;
@@ -101,8 +104,9 @@ class CSS_Handler extends BlockCSS {
 
 	/**
 	 * Function to save post CSS.
-	 *
-	 * @return array|bool|\WP_Error
+	 * 
+	 * @since   1.3.0
+	 * @access  public
 	 */
 	public function save_post_meta( \WP_REST_Request $request ) {
 		if ( ! current_user_can( 'edit_posts' ) ) {
@@ -114,15 +118,7 @@ class CSS_Handler extends BlockCSS {
 		$css = wp_filter_nohtml_kses( $css );
 
 		if ( ! empty( $css ) ) {
-			$compressor = new CSSmin;
-
-			// Override any PHP configuration options before calling run()
-			$compressor->setMemoryLimit( '256M' );
-			$compressor->setMaxExecutionTime( 120 );
-			$compressor->setPcreBacktrackLimit( 3000000 );
-			$compressor->setPcreRecursionLimit( 150000 );
-
-			$css = $compressor->run( $css );
+			$css = $this->compress( $css );
 
 			update_post_meta( $post_id, '_themeisle_gutenberg_block_styles', $css );
 			$this->save_css_file( $post_id, $css );
@@ -146,8 +142,9 @@ class CSS_Handler extends BlockCSS {
 
 	/**
 	 * Function to save reusable block CSS.
-	 *
-	 * @return array|bool|\WP_Error
+	 * 
+	 * @since   1.3.0
+	 * @access  public
 	 */
 	public function save_block_meta( \WP_REST_Request $request ) {
 		if ( ! current_user_can( 'edit_posts' ) ) {
@@ -159,15 +156,7 @@ class CSS_Handler extends BlockCSS {
 		$css = wp_filter_nohtml_kses( $css );
 
 		if ( ! empty( $css ) ) {
-			$compressor = new CSSmin;
-
-			// Override any PHP configuration options before calling run()
-			$compressor->setMemoryLimit( '256M' );
-			$compressor->setMaxExecutionTime( 120 );
-			$compressor->setPcreBacktrackLimit( 3000000 );
-			$compressor->setPcreRecursionLimit( 150000 );
-
-			$css = $compressor->run( $css );
+			$css = $this->compress( $css );
 
 			update_post_meta( $post_id, '_themeisle_gutenberg_block_styles', $css );
 			$this->save_css_file( $post_id, $css );
@@ -191,8 +180,9 @@ class CSS_Handler extends BlockCSS {
 
 	/**
 	 * Function to save CSS into WordPress Filesystem.
-	 *
-	 * @return string
+	 * 
+	 * @since   1.3.0
+	 * @access  public
 	 */
 	public function save_css_file( $post_id, $css ) {
 		global $wp_filesystem;
@@ -229,8 +219,9 @@ class CSS_Handler extends BlockCSS {
 
 	/**
 	 * Function to delete CSS from WordPress Filesystem.
-	 *
-	 * @return string
+	 * 
+	 * @since   1.3.0
+	 * @access  public
 	 */
 	public function delete_css_file( $post_id ) {
 		global $wp_filesystem;
@@ -264,6 +255,25 @@ class CSS_Handler extends BlockCSS {
 		$wp_filesystem->delete( $file_path, true );
 
 		return true;
+	}
+
+	/**
+	 * Compress CSS
+	 * 
+	 * @since   1.3.0
+	 * @access  public
+	 */
+	public function compress( $css ) {
+		$compressor = new CSSmin;
+
+		// Override any PHP configuration options before calling run()
+		$compressor->setMemoryLimit( '256M' );
+		$compressor->setMaxExecutionTime( 120 );
+		$compressor->setPcreBacktrackLimit( 3000000 );
+		$compressor->setPcreRecursionLimit( 150000 );
+
+		$css = $compressor->run( $css );
+		return $css;
 	}
 
 	/**
