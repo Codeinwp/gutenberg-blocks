@@ -224,10 +224,18 @@ class Posts_Grid_Block extends Base_Block {
 	 * @return string
 	 */
 	protected function get_excerpt_by_id( $post_id, $excerpt_length = 200 ) {
-		$the_post = get_post( $post_id );
-		$the_excerpt = $the_post->post_content;
-		$the_excerpt = strip_tags( strip_shortcodes( $the_excerpt ) );
-		$the_excerpt = substr( $the_excerpt, 0, $excerpt_length ) . '…';
-		return $the_excerpt;
+		if ( has_excerpt( $post_id ) ) {
+			$excerpt = get_the_excerpt( $post_id );
+		} else {
+			$post = get_post( $post_id );
+			$excerpt = $post->post_content;
+			$excerpt = strip_tags( strip_shortcodes( $excerpt ) );
+		}
+
+		if ( strlen( $excerpt ) > $excerpt_length ) {
+			$excerpt = substr( $excerpt, 0, $excerpt_length ) . '…';
+		}
+
+		return $excerpt;
 	}
 }
