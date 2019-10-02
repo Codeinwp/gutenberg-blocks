@@ -49,6 +49,7 @@ class LayoutBuilder extends Component {
 						disabled={ true }
 						getFields={ this.props.getFields }
 						toggleFields={ this.props.toggleFields }
+						imageSize={ this.props.imageSize }
 					/>
 
 					<SortableList
@@ -56,6 +57,7 @@ class LayoutBuilder extends Component {
 						onSortEnd={ this.onSortEnd }
 						getFields={ this.props.getFields }
 						toggleFields={ this.props.toggleFields }
+						excerptLimit={ this.props.excerptLimit }
 						useDragHandle
 					/>
 				</div>

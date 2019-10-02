@@ -84,6 +84,14 @@ registerBlockType( 'themeisle-blocks/posts-grid', {
 		excerptLength: {
 			type: 'number',
 			default: 100
+		},
+		displayDate: {
+			type: 'boolean',
+			default: true
+		},
+		displayAuthor: {
+			type: 'boolean',
+			default: true
 		}
 	},
 

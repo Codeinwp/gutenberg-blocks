@@ -92,6 +92,14 @@ class Posts_Grid_Block extends Base_Block {
 				'type'    => 'number',
 				'default' => '200',
 			),
+			'displayDate'			=> array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
+			'displayAuthor'			=> array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
 		);
 	}
 
@@ -158,18 +166,26 @@ class Posts_Grid_Block extends Base_Block {
 				}
 
 				if ( $element === 'meta' ) {
-					if ( ( isset( $attributes['displayMeta'] ) && $attributes['displayMeta'] )  ) {
+					if ( ( isset( $attributes['displayMeta'] ) && $attributes['displayMeta'] ) && ( ( isset( $attributes['displayDate'] ) && $attributes['displayDate'] ) || ( isset( $attributes['displayAuthor'] ) && $attributes['displayAuthor'] ) ) ) {
 						$list_items_markup .= '<p class="posts-grid-post-meta">';
-		
-						$list_items_markup .= sprintf(
-							'%1$s <time datetime="%2$s">%3$s</time> %4$s %5$s',
-							__( 'on', 'textdomain' ),
-							esc_attr( get_the_date( 'c', $id ) ),
-							esc_html( get_the_date( 'j F, Y', $id ) ),
-							__( 'by', 'textdomain' ),
-							get_the_author_meta( 'display_name', get_post_field( 'post_author', $id ) )
-						);
-		
+
+						if ( isset( $attributes['displayDate'] ) && $attributes['displayDate'] ) {
+							$list_items_markup .= sprintf(
+								'%1$s <time datetime="%2$s">%3$s</time> ',
+								__( 'on', 'textdomain' ),
+								esc_attr( get_the_date( 'c', $id ) ),
+								esc_html( get_the_date( 'j F, Y', $id ) )
+							);
+						}
+
+						if ( isset( $attributes['displayAuthor'] ) && $attributes['displayAuthor'] ) {
+							$list_items_markup .= sprintf(
+								'%1$s %2$s',
+								__( 'by', 'textdomain' ),
+								get_the_author_meta( 'display_name', get_post_field( 'post_author', $id ) )
+							);
+						}
+
 						$list_items_markup .= '</p>';
 					}
 				}

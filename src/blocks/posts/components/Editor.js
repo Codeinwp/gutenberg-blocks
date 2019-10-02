@@ -11,9 +11,7 @@ const {
 	QueryControls,
 	RangeControl,
 	Placeholder,
-	SelectControl,
-	Spinner,
-	TextControl
+	Spinner
 } = wp.components;
 
 const { withSelect } = wp.data;
@@ -75,6 +73,14 @@ class Editor extends Component {
 		if ( 'description' === field ) {
 			return this.props.attributes.displayDescription;
 		}
+
+		if ( 'date' === field ) {
+			return this.props.attributes.displayDate;
+		}
+
+		if ( 'author' === field ) {
+			return this.props.attributes.displayAuthor;
+		}
 	}
 
 	toggleFields( field ) {
@@ -96,6 +102,14 @@ class Editor extends Component {
 
 		if ( 'description' === field ) {
 			this.props.setAttributes({ displayDescription: ! this.props.attributes.displayDescription });
+		}
+
+		if ( 'date' === field ) {
+			this.props.setAttributes({ displayDate: ! this.props.attributes.displayDate });
+		}
+
+		if ( 'author' === field ) {
+			this.props.setAttributes({ displayAuthor: ! this.props.attributes.displayAuthor });
 		}
 	}
 
@@ -180,30 +194,6 @@ class Editor extends Component {
 							onCategoryChange={ value => this.props.setAttributes({ categories: '' !== value ? value : undefined }) }
 							onNumberOfItemsChange={ value => this.props.setAttributes({ postsToShow: value }) }
 						/>
-
-						{ this.props.attributes.displayFeaturedImage && (
-							<SelectControl
-								label={ __( 'Image Size' ) }
-								value={ this.props.attributes.imageSize }
-								options={ [
-									{ label: __( 'Thumbnail' ), value: 'thumbnail' },
-									{ label: __( 'Medium' ), value: 'medium' },
-									{ label: __( 'Medium Large' ), value: 'medium_large' },
-									{ label: __( 'Large' ), value: 'large' },
-									{ label: __( 'Full' ), value: 'full' }
-								] }
-								onChange={ this.changeImageSize }
-							/>
-						) }
-
-						{ this.props.attributes.displayDescription && (
-							<TextControl
-								label={ __( 'Excerpt Limit' ) }
-								type="number"
-								value={ this.props.attributes.excerptLength }
-								onChange={ this.changeExcerptLength }
-							/>
-						) }
 					</PanelBody>
 
 					<PanelBody
@@ -215,6 +205,14 @@ class Editor extends Component {
 							getFields={ this.getFields }
 							toggleFields={ this.toggleFields }
 							setAttributes={ this.props.setAttributes }
+							imageSize={ {
+								value: this.props.attributes.imageSize,
+								onChange: this.changeImageSize
+							} }
+							excerptLimit={ {
+								value: this.props.attributes.excerptLength,
+								onChange: this.changeExcerptLength
+							} }
 						/>
 					</PanelBody>
 				</InspectorControls>
