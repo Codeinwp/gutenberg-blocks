@@ -90,7 +90,7 @@ const SortableItemArea = ({ value, disabled, getFields, toggleFields, isOpen, se
 
 				{ edit && (
 					<IconButton
-						icon={ isOpen ? 'arrow-up-alt2' : 'edit' }
+						icon={ isOpen ? 'arrow-up-alt2' : 'arrow-down-alt2' }
 						label={ isOpen ? __( 'Close Settings' ) : __( 'Open Settings' ) }
 						className="wp-block-themeisle-blocks-posts-grid-builder-button"
 						onClick={ () => setState({ isOpen: ! isOpen }) }
