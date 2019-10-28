@@ -51,7 +51,6 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 			add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 			add_action( 'init', array( $this, 'autoload_block_classes' ), 11 );
 			add_action( 'wp', array( $this, 'load_server_side_blocks' ), 11 );
-			add_action( 'init', array( $this, 'register_settings' ), 99 );
 			add_action( 'block_categories', array( $this, 'block_categories' ) );
 		}
 
@@ -252,35 +251,37 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 * @access  public
 		 */
 		public function autoload_block_classes() {
-			// load the base class
-			require_once( $this->get_dir() .  '/class-base-block.php' );
-			require_once( $this->get_dir() .  '/css/class-block-css.php' );
-			require_once( $this->get_dir() .  '/css/class-block-frontend.php' );
-			require_once( $this->get_dir() .  '/css/class-css-handler.php' );
-			$paths = glob( $this->get_dir() . '/editor/*/*/*.php' );
+			$paths = glob( $this->get_dir() . '/*/*.php' );
 
 			foreach ( $paths as $path ) {
 				if ( preg_match(  '/-css.php/', $path ) ) {
 					continue;
 				}
 
-				require_once $path;
-
 				// remove the class prefix and the extension
 				$classname = str_replace( array( 'class-', '.php' ), '', basename( $path ) );
+
 				// get an array of words from class names and we'll make them capitalized.
 				$classname = explode( '-', $classname );
 				$classname = array_map( 'ucfirst', $classname );
+
+				if ( strpos( $path, '/render/' ) ) {
+					// rebuild the classname string as capitalized and separated by underscores.
+					$classname = 'ThemeIsle\GutenbergBlocks\Base_Block\\' . implode( '_', $classname );
+	
+					if ( ! class_exists( $classname ) ) {
+						continue;
+					}
+
+					// we need to init these blocks on a hook later than "init". See `load_server_side_blocks`
+					$this->blocks_classes[] = $classname;
+					continue;
+				}
+
 				// rebuild the classname string as capitalized and separated by underscores.
 				$classname = 'ThemeIsle\GutenbergBlocks\\' . implode( '_', $classname );
 
 				if ( ! class_exists( $classname ) ) {
-					continue;
-				}
-
-				if ( strpos( $path, '-block.php' ) ) {
-					// we need to init these blocks on a hook later than "init". See `load_server_side_blocks`
-					$this->blocks_classes[] = $classname;
 					continue;
 				}
 
@@ -291,12 +292,12 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 				}
 			}
 
-			if ( class_exists( '\ThemeIsle\BlockCSS\CSS_Handler' ) ) {
-				\ThemeIsle\BlockCSS\CSS_Handler::instance();
+			if ( class_exists( '\ThemeIsle\GutenbergBlocks\Base_CSS\CSS_Handler' ) ) {
+				\ThemeIsle\GutenbergBlocks\Base_CSS\CSS_Handler::instance();
 			}
 
-			if ( class_exists( '\ThemeIsle\BlockCSS\Block_Frontend' ) ) {
-				\ThemeIsle\BlockCSS\Block_Frontend::instance();
+			if ( class_exists( '\ThemeIsle\GutenbergBlocks\Base_CSS\Block_Frontend' ) ) {
+				\ThemeIsle\GutenbergBlocks\Base_CSS\Block_Frontend::instance();
 			}
 		}
 
@@ -309,8 +310,8 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		public function render_server_side_css( $post_id = '' ) {
 			$post = $post_id ? $post_id : get_the_ID();
 			if ( function_exists( 'has_blocks' ) && has_blocks( $post ) ) {
-				if ( class_exists( '\ThemeIsle\BlockCSS\Block_Frontend' ) ) {
-					$class = '\ThemeIsle\BlockCSS\Block_Frontend';
+				if ( class_exists( '\ThemeIsle\GutenbergBlocks\Base_CSS\Block_Frontend' ) ) {
+					$class = '\ThemeIsle\GutenbergBlocks\Base_CSS\Block_Frontend';
 					$path = new $class();
 					return $path->enqueue_styles( $post, true );
 				}
@@ -333,26 +334,6 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 						'slug'  => 'themeisle-blocks',
 						'title' => $this->name,
 					),
-				)
-			);
-		}
-
-		/**
-		 * Register Settings for Google Maps Block
-		 * 
-		 * @since   1.0.0
-		 * @access  public
-		 */
-		public function register_settings() {
-			register_setting(
-				'themeisle_google_map_block_api_key',
-				'themeisle_google_map_block_api_key',
-				array(
-					'type'              => 'string',
-					'description'       => __( 'Google Map API key for the Google Maps Gutenberg Block.', 'textdomain' ),
-					'sanitize_callback' => 'sanitize_text_field',
-					'show_in_rest'      => true,
-					'default'           => ''
 				)
 			);
 		}

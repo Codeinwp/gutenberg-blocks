@@ -11,6 +11,17 @@
 define( 'THEMEISLE_GUTENBERG_BLOCKS_VERSION', '1.3.0' );
 define( 'THEMEISLE_GUTENBERG_BLOCKS_DEV', false );
 
+require_once( dirname( __FILE__ ) . '/autoloader.php' );
+
+$autoloader = new \ThemeIsle\GutenbergBlocks\Autoloader();
+$autoloader->add_namespace( 'ThemeIsle\GutenbergBlocks', dirname( __FILE__ ) . '/inc/' );
+$autoloader->add_namespace( 'ThemeIsle\GutenbergBlocks', dirname( __FILE__ ) . '/inc/plugins/' );
+$autoloader->add_namespace( 'ThemeIsle\GutenbergBlocks', dirname( __FILE__ ) . '/inc/server/' );
+$autoloader->add_namespace( 'ThemeIsle\GutenbergBlocks\Base_CSS', dirname( __FILE__ ) . '/inc/css/' );
+$autoloader->add_namespace( 'ThemeIsle\GutenbergBlocks\Base_CSS', dirname( __FILE__ ) . '/inc/css/blocks/' );
+$autoloader->add_namespace( 'ThemeIsle\GutenbergBlocks\Base_Block', dirname( __FILE__ ) . '/inc/render/' );
+$autoloader->register();
+
 add_action(
 	'plugins_loaded',
 	function () {

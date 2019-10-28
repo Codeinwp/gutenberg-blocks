@@ -1,13 +1,13 @@
 <?php
 
-namespace ThemeIsle\BlockCSS;
+namespace ThemeIsle\GutenbergBlocks\Base_CSS;
 
-use ThemeIsle\BlockCSS;
+use ThemeIsle\GutenbergBlocks\Base_CSS;
 
 /**
  * Class Button_Group_CSS
  */
-class Button_Group_CSS extends BlockCSS {
+class Button_Group_CSS extends Base_CSS {
 
 	/**
 	 * The namespace under which the blocks are registered.

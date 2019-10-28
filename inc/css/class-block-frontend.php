@@ -1,13 +1,13 @@
 <?php
 
-namespace ThemeIsle\BlockCSS;
+namespace ThemeIsle\GutenbergBlocks\Base_CSS;
 
-use ThemeIsle\BlockCSS;
+use ThemeIsle\GutenbergBlocks\Base_CSS;
 
 /**
  * Class Block_Frontend
  */
-class Block_Frontend extends BlockCSS {
+class Block_Frontend extends Base_CSS {
 
 	/**
 	 * The main instance var.

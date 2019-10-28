@@ -1,15 +1,15 @@
 <?php
 
-namespace ThemeIsle\BlockCSS;
+namespace ThemeIsle\GutenbergBlocks\Base_CSS;
 
-use ThemeIsle\BlockCSS;
+use ThemeIsle\GutenbergBlocks\Base_CSS;
 
 use tubalmartin\CssMin\Minifier as CSSmin;
 
 /**
  * Class CSS_Handler
  */
-class CSS_Handler extends BlockCSS {
+class CSS_Handler extends Base_CSS {
 
 	/**
 	 * The main instance var.

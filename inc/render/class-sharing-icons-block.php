@@ -1,6 +1,8 @@
 <?php
 
-namespace ThemeIsle\GutenbergBlocks;
+namespace ThemeIsle\GutenbergBlocks\Base_Block;
+
+use ThemeIsle\GutenbergBlocks\Base_Block;
 
 /**
  * Class Sharing_Icons_Block

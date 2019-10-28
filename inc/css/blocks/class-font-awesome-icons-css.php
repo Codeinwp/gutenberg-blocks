@@ -1,13 +1,13 @@
 <?php
 
-namespace ThemeIsle\BlockCSS;
+namespace ThemeIsle\GutenbergBlocks\Base_CSS;
 
-use ThemeIsle\BlockCSS;
+use ThemeIsle\GutenbergBlocks\Base_CSS;
 
 /**
  * Class Font_Awesome_Icons_CSS
  */
-class Font_Awesome_Icons_CSS extends BlockCSS {
+class Font_Awesome_Icons_CSS extends Base_CSS {
 
 	/**
 	 * The namespace under which the blocks are registered.

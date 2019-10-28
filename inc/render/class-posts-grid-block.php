@@ -1,6 +1,8 @@
 <?php
 
-namespace ThemeIsle\GutenbergBlocks;
+namespace ThemeIsle\GutenbergBlocks\Base_Block;
+
+use ThemeIsle\GutenbergBlocks\Base_Block;
 
 /**
  * Class Posts_Grid_Block

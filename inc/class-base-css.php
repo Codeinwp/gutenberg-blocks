@@ -1,14 +1,14 @@
 <?php
 
-namespace ThemeIsle;
+namespace ThemeIsle\GutenbergBlocks;
 
-if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
+if ( ! class_exists( '\ThemeIsle\GutenbergBlocks\Base_CSS' ) ) {
 	/**
-	 * Class BlockCSS
+	 * Class Base_CSS
 	 *
-	 * @package BlockCSS
+	 * @package Base_CSS
 	 */
-	class BlockCSS {
+	class Base_CSS {
 
 		/**
 		 * The namespace under which the blocks are registered.
@@ -32,7 +32,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		protected static $google_fonts = array();
 
 		/**
-		 * BlockCSS constructor.
+		 * Base_CSS constructor.
 		 *
 		 * @since   1.3.0
 		 * @access  public
@@ -49,9 +49,8 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 		 * @access  public
 		 */
 		public function autoload_block_classes() {
-			$paths = glob( $this->get_dir() . '/../editor/*/*/*-css.php' );
+			$paths = glob( $this->get_dir() . '/css/blocks/*-css.php' );
 			foreach ( $paths as $path ) {
-				require_once $path;
 				// remove the class prefix and the extension
 				$classname = str_replace( array( 'class-', '.php' ), '', basename( $path ) );
 				// get an array of words from class names and we'll make them capitalized.
@@ -60,7 +59,7 @@ if ( ! class_exists( '\ThemeIsle\BlockCSS' ) ) {
 				// rebuild the classname string as capitalized and separated by underscores.
 				$classname = implode( '_', $classname );
 				$classname = str_replace( 'Css', 'CSS', $classname );
-				$classname = 'ThemeIsle\BlockCSS\\' . $classname;
+				$classname = 'ThemeIsle\GutenbergBlocks\Base_CSS\\' . $classname;
 
 				if ( ! class_exists( $classname ) ) {
 					continue;

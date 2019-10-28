@@ -1,13 +1,13 @@
 <?php
 
-namespace ThemeIsle\BlockCSS;
+namespace ThemeIsle\GutenbergBlocks\Base_CSS;
 
-use ThemeIsle\BlockCSS;
+use ThemeIsle\GutenbergBlocks\Base_CSS;
 
 /**
  * Class Advanced_Heading_CSS
  */
-class Advanced_Heading_CSS extends BlockCSS {
+class Advanced_Heading_CSS extends Base_CSS {
 
 	/**
 	 * The namespace under which the blocks are registered.

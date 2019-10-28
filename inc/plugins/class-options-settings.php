@@ -31,6 +31,18 @@ class Options_Settings {
 	public function register_settings() {
 		register_setting(
 			'themeisle_blocks_settings',
+			'themeisle_google_map_block_api_key',
+			array(
+				'type'              => 'string',
+				'description'       => __( 'Google Map API key for the Google Maps Gutenberg Block.', 'textdomain' ),
+				'sanitize_callback' => 'sanitize_text_field',
+				'show_in_rest'      => true,
+				'default'           => ''
+			)
+		);
+
+		register_setting(
+			'themeisle_blocks_settings',
 			'themeisle_blocks_settings_default_block',
 			array(
 				'type'              => 'boolean',
