@@ -225,12 +225,12 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 */
 		public function load_server_side_blocks() {
 			$classnames = array(
-				'ThemeIsle\GutenbergBlocks\Render\About_Author_Block',
-				'ThemeIsle\GutenbergBlocks\Render\Chart_Pie_Block',
-				'ThemeIsle\GutenbergBlocks\Render\Google_Map_Block',
-				'ThemeIsle\GutenbergBlocks\Render\Plugin_Card_Block',
-				'ThemeIsle\GutenbergBlocks\Render\Posts_Grid_Block',
-				'ThemeIsle\GutenbergBlocks\Render\Sharing_Icons_Block'
+				'\ThemeIsle\GutenbergBlocks\Render\About_Author_Block',
+				'\ThemeIsle\GutenbergBlocks\Render\Chart_Pie_Block',
+				'\ThemeIsle\GutenbergBlocks\Render\Google_Map_Block',
+				'\ThemeIsle\GutenbergBlocks\Render\Plugin_Card_Block',
+				'\ThemeIsle\GutenbergBlocks\Render\Posts_Grid_Block',
+				'\ThemeIsle\GutenbergBlocks\Render\Sharing_Icons_Block'
 			);
 
 			foreach ( $classnames as $classname ) {
@@ -254,11 +254,11 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 */
 		public function autoload_classes() {
 			$classnames = array(
-				'ThemeIsle\GutenbergBlocks\CSS\Block_Frontend',
-				'ThemeIsle\GutenbergBlocks\CSS\CSS_Handler',
-				'ThemeIsle\GutenbergBlocks\Plugins\Options_Settings',
-				'ThemeIsle\GutenbergBlocks\Server\Plugin_Card_Server',
-				'ThemeIsle\GutenbergBlocks\Server\Template_Library_Server'
+				'\ThemeIsle\GutenbergBlocks\CSS\Block_Frontend',
+				'\ThemeIsle\GutenbergBlocks\CSS\CSS_Handler',
+				'\ThemeIsle\GutenbergBlocks\Plugins\Options_Settings',
+				'\ThemeIsle\GutenbergBlocks\Server\Plugin_Card_Server',
+				'\ThemeIsle\GutenbergBlocks\Server\Template_Library_Server'
 			);
 
 			foreach ( $classnames as $classname ) {

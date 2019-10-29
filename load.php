@@ -14,7 +14,7 @@ define( 'THEMEISLE_GUTENBERG_BLOCKS_DEV', false );
 require_once( dirname( __FILE__ ) . '/autoloader.php' );
 
 $autoloader = new \ThemeIsle\GutenbergBlocks\Autoloader();
-$autoloader->add_namespace( 'ThemeIsle\GutenbergBlocks', dirname( __FILE__ ) . '/inc/' );
+$autoloader->add_namespace( '\ThemeIsle\GutenbergBlocks', dirname( __FILE__ ) . '/inc/' );
 $autoloader->register();
 
 add_action(

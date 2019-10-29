@@ -50,11 +50,11 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks\Base_CSS' ) ) {
 		 */
 		public function autoload_block_classes() {
 			$classnames = array(
-				'ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Column_CSS',
-				'ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Columns_CSS',
-				'ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Heading_CSS',
-				'ThemeIsle\GutenbergBlocks\CSS\Blocks\Button_Group_CSS',
-				'ThemeIsle\GutenbergBlocks\CSS\Blocks\Font_Awesome_Icons_CSS'
+				'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Column_CSS',
+				'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Columns_CSS',
+				'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Heading_CSS',
+				'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Button_Group_CSS',
+				'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Font_Awesome_Icons_CSS'
 			);
 
 			foreach ( $classnames as $classname ) {
