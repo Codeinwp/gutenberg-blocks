@@ -254,8 +254,8 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 */
 		public function autoload_classes() {
 			$classnames = array(
-				'\ThemeIsle\GutenbergBlocks\CSS\Block_Frontend',
-				'\ThemeIsle\GutenbergBlocks\CSS\CSS_Handler',
+				'ThemeIsle\GutenbergBlocks\CSS\Block_Frontend',
+				'ThemeIsle\GutenbergBlocks\CSS\CSS_Handler',
 				'ThemeIsle\GutenbergBlocks\Plugins\Options_Settings',
 				'ThemeIsle\GutenbergBlocks\Server\Plugin_Card_Server',
 				'ThemeIsle\GutenbergBlocks\Server\Template_Library_Server'
