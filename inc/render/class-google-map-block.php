@@ -1,6 +1,6 @@
 <?php
 
-namespace ThemeIsle\GutenbergBlocks\Base_Block;
+namespace ThemeIsle\GutenbergBlocks\Render;
 
 use ThemeIsle\GutenbergBlocks\Base_Block;
 

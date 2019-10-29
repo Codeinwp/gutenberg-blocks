@@ -1,6 +1,6 @@
 <?php
 
-namespace ThemeIsle\GutenbergBlocks;
+namespace ThemeIsle\GutenbergBlocks\Plugins;
 
 /**
  * Class Options_Settings

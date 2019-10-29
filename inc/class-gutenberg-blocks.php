@@ -23,13 +23,6 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		protected $slug = 'gutenberg-blocks';
 
 		/**
-		 * The namespace under which the block classees are saved.
-		 *
-		 * @var string
-		 */
-		protected $blocks_classes = array();
-
-		/**
 		 * GutenbergBlocks constructor.
 		 *
 		 * @since   1.0.0
@@ -49,7 +42,7 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		public function init() {
 			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 			add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
-			add_action( 'init', array( $this, 'autoload_block_classes' ), 11 );
+			add_action( 'init', array( $this, 'autoload_classes' ), 11 );
 			add_action( 'wp', array( $this, 'load_server_side_blocks' ), 11 );
 			add_action( 'block_categories', array( $this, 'block_categories' ) );
 		}
@@ -231,7 +224,16 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 * @access  public
 		 */
 		public function load_server_side_blocks() {
-			foreach ( $this->blocks_classes as $classname ) {
+			$classnames = array(
+				'ThemeIsle\GutenbergBlocks\Render\About_Author_Block',
+				'ThemeIsle\GutenbergBlocks\Render\Chart_Pie_Block',
+				'ThemeIsle\GutenbergBlocks\Render\Google_Map_Block',
+				'ThemeIsle\GutenbergBlocks\Render\Plugin_Card_Block',
+				'ThemeIsle\GutenbergBlocks\Render\Posts_Grid_Block',
+				'ThemeIsle\GutenbergBlocks\Render\Sharing_Icons_Block'
+			);
+
+			foreach ( $classnames as $classname ) {
 				if ( ! class_exists( $classname ) ) {
 					continue;
 				}
@@ -250,54 +252,25 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		 * @since   1.0.0
 		 * @access  public
 		 */
-		public function autoload_block_classes() {
-			$paths = glob( $this->get_dir() . '/*/*.php' );
+		public function autoload_classes() {
+			$classnames = array(
+				'\ThemeIsle\GutenbergBlocks\CSS\Block_Frontend',
+				'\ThemeIsle\GutenbergBlocks\CSS\CSS_Handler',
+				'ThemeIsle\GutenbergBlocks\Plugins\Options_Settings',
+				'ThemeIsle\GutenbergBlocks\Server\Plugin_Card_Server',
+				'ThemeIsle\GutenbergBlocks\Server\Template_Library_Server'
+			);
 
-			foreach ( $paths as $path ) {
-				if ( preg_match(  '/-css.php/', $path ) ) {
-					continue;
-				}
-
-				// remove the class prefix and the extension
-				$classname = str_replace( array( 'class-', '.php' ), '', basename( $path ) );
-
-				// get an array of words from class names and we'll make them capitalized.
-				$classname = explode( '-', $classname );
-				$classname = array_map( 'ucfirst', $classname );
-
-				if ( strpos( $path, '/render/' ) ) {
-					// rebuild the classname string as capitalized and separated by underscores.
-					$classname = 'ThemeIsle\GutenbergBlocks\Base_Block\\' . implode( '_', $classname );
-	
-					if ( ! class_exists( $classname ) ) {
-						continue;
-					}
-
-					// we need to init these blocks on a hook later than "init". See `load_server_side_blocks`
-					$this->blocks_classes[] = $classname;
-					continue;
-				}
-
-				// rebuild the classname string as capitalized and separated by underscores.
-				$classname = 'ThemeIsle\GutenbergBlocks\\' . implode( '_', $classname );
-
+			foreach ( $classnames as $classname ) {
 				if ( ! class_exists( $classname ) ) {
 					continue;
 				}
 
-				$path = new $classname();
+				$classname = new $classname();
 
-				if ( method_exists( $path, 'instance' ) ) {
-					$path->instance();
+				if ( method_exists( $classname, 'instance' ) ) {
+					$classname->instance();
 				}
-			}
-
-			if ( class_exists( '\ThemeIsle\GutenbergBlocks\Base_CSS\CSS_Handler' ) ) {
-				\ThemeIsle\GutenbergBlocks\Base_CSS\CSS_Handler::instance();
-			}
-
-			if ( class_exists( '\ThemeIsle\GutenbergBlocks\Base_CSS\Block_Frontend' ) ) {
-				\ThemeIsle\GutenbergBlocks\Base_CSS\Block_Frontend::instance();
 			}
 		}
 
@@ -310,8 +283,8 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
 		public function render_server_side_css( $post_id = '' ) {
 			$post = $post_id ? $post_id : get_the_ID();
 			if ( function_exists( 'has_blocks' ) && has_blocks( $post ) ) {
-				if ( class_exists( '\ThemeIsle\GutenbergBlocks\Base_CSS\Block_Frontend' ) ) {
-					$class = '\ThemeIsle\GutenbergBlocks\Base_CSS\Block_Frontend';
+				if ( class_exists( '\ThemeIsle\GutenbergBlocks\CSS\Block_Frontend' ) ) {
+					$class = '\ThemeIsle\GutenbergBlocks\CSS\Block_Frontend';
 					$path = new $class();
 					return $path->enqueue_styles( $post, true );
 				}

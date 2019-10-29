@@ -15,11 +15,6 @@ require_once( dirname( __FILE__ ) . '/autoloader.php' );
 
 $autoloader = new \ThemeIsle\GutenbergBlocks\Autoloader();
 $autoloader->add_namespace( 'ThemeIsle\GutenbergBlocks', dirname( __FILE__ ) . '/inc/' );
-$autoloader->add_namespace( 'ThemeIsle\GutenbergBlocks', dirname( __FILE__ ) . '/inc/plugins/' );
-$autoloader->add_namespace( 'ThemeIsle\GutenbergBlocks', dirname( __FILE__ ) . '/inc/server/' );
-$autoloader->add_namespace( 'ThemeIsle\GutenbergBlocks\Base_CSS', dirname( __FILE__ ) . '/inc/css/' );
-$autoloader->add_namespace( 'ThemeIsle\GutenbergBlocks\Base_CSS', dirname( __FILE__ ) . '/inc/css/blocks/' );
-$autoloader->add_namespace( 'ThemeIsle\GutenbergBlocks\Base_Block', dirname( __FILE__ ) . '/inc/render/' );
 $autoloader->register();
 
 add_action(

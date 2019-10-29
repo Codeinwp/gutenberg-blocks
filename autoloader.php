@@ -114,7 +114,13 @@ class Autoloader {
 			// in the relative class name, append with .php
 			$relative_class = strtolower( str_replace( '\\', '/', $relative_class ) );
 			$relative_class = str_replace( '_', '-', $relative_class );
-			$file = $base_dir . 'class-' . $relative_class . '.php';
+
+			if ( strpos( $relative_class, '/' ) !== false ) {
+				$relative_class = strrev( implode( strrev( '/class-' ), explode( strrev( '/' ), strrev( $relative_class ), 2 ) ) );
+			} else {
+				$relative_class = 'class-' . $relative_class;
+			}
+			$file = $base_dir . $relative_class . '.php';
 
 			// if the mapped file exists, require it
 			if ( $this->require_file( $file ) ) {
@@ -134,7 +140,7 @@ class Autoloader {
 	 * @return bool True if the file exists, false if not.
 	 */
 	protected function require_file( $file ) {
-		if ( file_exists( $file ) ) {
+		if ( file_exists( $file ) || THEMEISLE_GUTENBERG_BLOCKS_DEV ) {
 			require $file;
 			return true;
 		}

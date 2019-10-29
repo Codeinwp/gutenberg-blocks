@@ -1,6 +1,6 @@
 <?php
 
-namespace ThemeIsle\GutenbergBlocks;
+namespace ThemeIsle\GutenbergBlocks\Server;
 
 /**
  * Class Plugin_Card_Server

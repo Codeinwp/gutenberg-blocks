@@ -1,6 +1,6 @@
 <?php
 
-namespace ThemeIsle\GutenbergBlocks;
+namespace ThemeIsle\GutenbergBlocks\Server;
 
 /**
  * Class Template_Library_Server

@@ -1,6 +1,6 @@
 <?php
 
-namespace ThemeIsle\GutenbergBlocks\Base_CSS;
+namespace ThemeIsle\GutenbergBlocks\CSS\Blocks;
 
 use ThemeIsle\GutenbergBlocks\Base_CSS;
 

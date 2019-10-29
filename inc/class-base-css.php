@@ -49,18 +49,15 @@ if ( ! class_exists( '\ThemeIsle\GutenbergBlocks\Base_CSS' ) ) {
 		 * @access  public
 		 */
 		public function autoload_block_classes() {
-			$paths = glob( $this->get_dir() . '/css/blocks/*-css.php' );
-			foreach ( $paths as $path ) {
-				// remove the class prefix and the extension
-				$classname = str_replace( array( 'class-', '.php' ), '', basename( $path ) );
-				// get an array of words from class names and we'll make them capitalized.
-				$classname = explode( '-', $classname );
-				$classname = array_map( 'ucfirst', $classname );
-				// rebuild the classname string as capitalized and separated by underscores.
-				$classname = implode( '_', $classname );
-				$classname = str_replace( 'Css', 'CSS', $classname );
-				$classname = 'ThemeIsle\GutenbergBlocks\Base_CSS\\' . $classname;
+			$classnames = array(
+				'ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Column_CSS',
+				'ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Columns_CSS',
+				'ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Heading_CSS',
+				'ThemeIsle\GutenbergBlocks\CSS\Blocks\Button_Group_CSS',
+				'ThemeIsle\GutenbergBlocks\CSS\Blocks\Font_Awesome_Icons_CSS'
+			);
 
+			foreach ( $classnames as $classname ) {
 				if ( ! class_exists( $classname ) ) {
 					continue;
 				}
