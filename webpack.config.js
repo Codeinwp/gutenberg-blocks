@@ -41,7 +41,8 @@ module.exports = {
 							'@babel/plugin-syntax-dynamic-import',
 							[
 								'@babel/plugin-transform-react-jsx', {
-									'pragma': 'wp.element.createElement'
+									pragma: 'wp.element.createElement',
+									pragmaFrag: 'wp.element.Fragment'
 								}
 							]
 						]
