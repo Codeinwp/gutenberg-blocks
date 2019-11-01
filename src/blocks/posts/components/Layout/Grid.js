@@ -22,7 +22,7 @@ const Grid = ({ className, attributes, posts, categoriesList, authors }) => {
 		<div className={ classnames(
 			className,
 			'is-grid',
-			`posts-grid-columns-${ attributes.columns }`,
+			`posts-grid-columns-${ attributes.columns }`
 		) }>
 			{ posts.map( post => {
 				let category, author;

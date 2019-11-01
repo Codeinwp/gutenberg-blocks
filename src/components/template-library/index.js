@@ -286,8 +286,8 @@ export default compose(
 		return {
 			import: ( content ) => replaceBlocks(
 				block.clientId,
-				content,
+				content
 			)
 		};
-	}),
+	})
 )( Library );

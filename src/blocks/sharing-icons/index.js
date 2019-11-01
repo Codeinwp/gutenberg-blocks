@@ -93,7 +93,7 @@ registerBlockType( 'themeisle-blocks/sharing-icons', {
 									className={ classnames(
 										'components-icon-button',
 										'components-toolbar__control',
-										{ 'is-active': prop },
+										{ 'is-active': prop }
 									) }
 									onClick={ ( e ) => toggleIcons( item ) }
 								>
@@ -108,7 +108,7 @@ registerBlockType( 'themeisle-blocks/sharing-icons', {
 			<div
 				className={ classnames(
 					props.className,
-					{ 'has-label': ( props.attributes.className ? ! props.attributes.className.includes( 'is-style-icons' ) : true ) },
+					{ 'has-label': ( props.attributes.className ? ! props.attributes.className.includes( 'is-style-icons' ) : true ) }
 				) }
 			>
 				{ Object.keys( socialList ).map( ( item, i ) => {

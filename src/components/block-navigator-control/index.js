@@ -100,5 +100,5 @@ export default compose(
 		return {
 			selectBlock
 		};
-	}),
+	})
 )( BlockNavigatorControl );
