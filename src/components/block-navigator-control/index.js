@@ -6,7 +6,7 @@ const { __ } = wp.i18n;
 const {
 	__experimentalBlockNavigationList,
 	BlockControls
-} = wp.blockEditor;
+} = wp.blockEditor || wp.editor;
 
 const {
 	IconButton,
@@ -87,7 +87,7 @@ export default compose(
 		const {
 			getSelectedBlockClientId,
 			getBlock
-		} = select( 'core/block-editor' );
+		} = select( 'core/block-editor' ) || select( 'core/editor' );
 
 		return {
 			block: getBlock( clientId ),
@@ -96,7 +96,7 @@ export default compose(
 	}),
 
 	withDispatch( ( dispatch, { block }) => {
-		const { selectBlock } = dispatch( 'core/block-editor' );
+		const { selectBlock } = dispatch( 'core/block-editor' ) || dispatch( 'core/editor' );
 		return {
 			selectBlock
 		};
