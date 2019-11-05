@@ -10,7 +10,9 @@ const {
 	Button,
 	ButtonGroup,
 	PanelBody,
+	Placeholder,
 	RangeControl,
+	Spinner,
 	ToggleControl
 } = wp.components;
 
@@ -27,7 +29,7 @@ const {
 	ColorPalette,
 	ContrastChecker,
 	InspectorControls
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const { Fragment } = wp.element;
 
@@ -38,11 +40,8 @@ import './style.scss';
 import './editor.scss';
 
 import { faIcon } from '../../helpers/icons.js';
-
-import IconPickerControl from '../../components/icon-picker-control/index.js';
-
+const IconPickerControl = React.lazy( () => import( '../../components/icon-picker-control/index.js' ) );
 import LinkControl from '../../components/link-control/index.js';
-
 import deprecated from './deprecated.js';
 
 registerBlockType( 'themeisle-blocks/font-awesome-icons', {
@@ -252,12 +251,14 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 					<PanelBody
 						title={ __( 'Icon Settings' ) }
 					>
-						<IconPickerControl
-							label={ __( 'Icon Picker' ) }
-							prefix={ props.attributes.prefix }
-							icon={ props.attributes.icon }
-							onChange={ changeIcon }
-						/>
+						<React.Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
+							<IconPickerControl
+								label={ __( 'Icon Picker' ) }
+								prefix={ props.attributes.prefix }
+								icon={ props.attributes.icon }
+								onChange={ changeIcon }
+							/>
+						</React.Suspense>
 
 						<LinkControl
 							label={ __( 'Link' ) }

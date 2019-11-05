@@ -8,15 +8,21 @@
  * @since       1.0.0
  */
 
-define( 'THEMEISLE_GUTENBERG_BLOCKS_VERSION', '1.2.4' );
+define( 'THEMEISLE_GUTENBERG_BLOCKS_VERSION', '1.3.0' );
 define( 'THEMEISLE_GUTENBERG_BLOCKS_DEV', false );
+
+require_once( dirname( __FILE__ ) . '/autoloader.php' );
+
+$autoloader = new \ThemeIsle\GutenbergBlocks\Autoloader();
+$autoloader->add_namespace( '\ThemeIsle\GutenbergBlocks', dirname( __FILE__ ) . '/inc/' );
+$autoloader->register();
 
 add_action(
 	'plugins_loaded',
 	function () {
 		// call this only if Gutenberg is active
 		if ( function_exists( 'register_block_type' ) ) {
-			require_once( dirname( __FILE__ ) . '/class-gutenberg-blocks.php' );
+			require_once( dirname( __FILE__ ) . '/inc/class-gutenberg-blocks.php' );
 		}
 	}
 );

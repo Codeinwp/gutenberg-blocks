@@ -41,7 +41,7 @@ const {
 	ColorPalette,
 	InspectorControls,
 	RichText
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const { Fragment } = wp.element;
 
@@ -52,16 +52,12 @@ const { withViewportMatch } = wp.viewport;
  */
 import './editor.scss';
 import './style.scss';
+
 import './registerHeadingHighlight.js';
-
 import { headingIcon } from '../../helpers/icons.js';
-
 import GoogleFontsControl from '../../components/google-fonts-control/index.js';
-
 import ControlPanelControl from '../../components/control-panel-control/index.js';
-
 import ResponsiveControl from '../../components/responsive-control/index.js';
-
 import SizingControl from '../../components/sizing-control/index.js';
 
 registerBlockType( 'themeisle-blocks/advanced-heading', {
@@ -1328,6 +1324,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 					placeholder={ __( 'Write heading…' ) }
 					tagName={ tag }
 					formattingControls={ [ 'bold', 'italic', 'link', 'strikethrough', 'mark' ] }
+					allowedFormats={ [ 'core/bold', 'core/italic', 'core/link', 'core/strikethrough', 'themeisle-blocks/mark' ] }
 					onMerge={ props.mergeBlocks }
 					unstableOnSplit={
 						props.insertBlocksAfter ?

@@ -77,10 +77,10 @@ registerBlockType( 'themeisle-blocks/about-author', {
 		return (
 			( 1 === status && postAuthor && authors ) ? (
 				<section className={ className }>
-					<div className="themeisle-author-image">
+					<div className="wp-block-themeisle-author-image">
 						<img className="author-image" src={ authorDetails.avatar_urls[ '96' ] } alt={ authorDetails.name }/>
 					</div>
-					<div className="themeisle-author-data">
+					<div className="wp-block-themeisle-author-data">
 						<h4>{ authorDetails.name }</h4>
 						<p>{ authorDetails.description }</p>
 					</div>

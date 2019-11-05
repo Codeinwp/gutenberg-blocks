@@ -15,7 +15,7 @@ const {
 	BlockControls,
 	InspectorControls,
 	PanelColorSettings
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const {
 	Dashicon,
@@ -24,9 +24,6 @@ const {
 	Tooltip
 } = wp.components;
 
-/**
- * Internal dependencies
- */
 registerBlockType( 'themeisle-blocks/pricing-block', {
 	title: __( 'Pricing Block' ),
 	description: __( 'Pricing tables are a critical part in showcasing your services, prices and overall offerings.' ),
@@ -113,7 +110,7 @@ registerBlockType( 'themeisle-blocks/pricing-block', {
 							className={ classnames(
 								'components-icon-button',
 								'components-toolbar__control',
-								{ 'is-active': props.attributes.featured },
+								{ 'is-active': props.attributes.featured }
 							) }
 							onClick={ toggleFeatured }
 						>
@@ -141,7 +138,7 @@ registerBlockType( 'themeisle-blocks/pricing-block', {
 			<div
 				className={ classnames(
 					'wp-block-column',
-					{ 'raised': props.attributes.featured },
+					{ 'raised': props.attributes.featured }
 				) }
 				style={ {
 					backgroundColor: props.attributes.backgroundColor
@@ -159,7 +156,7 @@ registerBlockType( 'themeisle-blocks/pricing-block', {
 			<div
 				className={ classnames(
 					'wp-block-column',
-					{ 'raised': props.attributes.featured },
+					{ 'raised': props.attributes.featured }
 				) }
 				style={ {
 					backgroundColor: props.attributes.backgroundColor

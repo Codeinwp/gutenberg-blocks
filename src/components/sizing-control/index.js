@@ -24,10 +24,6 @@ const { Component } = wp.element;
 import './editor.scss';
 
 class SizingControl extends Component {
-	constructor() {
-		super( ...arguments );
-	}
-
 	render() {
 		const id = `inspector-sizing-control-${ this.props.instanceId }`;
 
@@ -74,12 +70,11 @@ class SizingControl extends Component {
 												<input
 													type="number"
 													className="wp-block-themeisle-blocks-sizing-control-item-input"
-													id={ `wp-block-themeisle-blocks-sizing-control-item-input-${ n }` }
+													id={ `wp-block-themeisle-blocks-sizing-control-item-input-${ n }-${ this.props.instanceId }` }
 													value={ i.value }
 													min={ this.props.min }
 													max={ this.props.max }
 													onFocus={ onToggle }
-													onFocusOut={ onToggle }
 													onChange={ e => this.props.onChange( i.type, parseInt( e.target.value ) ) }
 												/>
 											) }
@@ -102,7 +97,7 @@ class SizingControl extends Component {
 									{ i.label && (
 										<label
 											className="wp-block-themeisle-blocks-sizing-control-item-label"
-											htmlFor={ `wp-block-themeisle-blocks-sizing-control-item-input-${ n }` }
+											htmlFor={ `wp-block-themeisle-blocks-sizing-control-item-input-${ n }-${ this.props.instanceId }` }
 										>
 											{ i.label }
 										</label>

@@ -4,7 +4,9 @@
         "es6": true
     },
     "extends": "wordpress",
+    "parser": "babel-eslint",
     "parserOptions": {
+        "allowImportExportEverywhere": true,
         "ecmaFeatures": {
             "jsx": true
         },

@@ -1,6 +1,8 @@
 <?php
 
-namespace ThemeIsle\GutenbergBlocks;
+namespace ThemeIsle\GutenbergBlocks\Render;
+
+use ThemeIsle\GutenbergBlocks\Base_Block;
 
 /**
  * Class Sharing_Icons_Block
@@ -28,7 +30,7 @@ class Sharing_Icons_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_block_slug() {
+	protected function set_block_slug() {
 		$this->block_slug = 'sharing-icons';
 	}
 
@@ -37,7 +39,7 @@ class Sharing_Icons_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_attributes() {
+	protected function set_attributes() {
 		$this->social_attributes = array(
 			'facebook' => array(
 				'label'   => esc_html__( 'Facebook', 'textdomain' ),
@@ -119,7 +121,7 @@ class Sharing_Icons_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	function render( $attributes ) {
+	protected function render( $attributes ) {
 		if ( isset( $attributes['className'] ) && strpos( $attributes['className'], 'is-style-icons' ) !== false ) {
 			$class = 'wp-block-themeisle-blocks-sharing-icons';
 		} else {

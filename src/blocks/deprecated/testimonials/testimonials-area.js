@@ -16,7 +16,7 @@ const {
 	InnerBlocks,
 	InspectorControls,
 	MediaPlaceholder
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const {
 	Button,
@@ -160,7 +160,7 @@ registerBlockType( 'themeisle-blocks/testimonials-area', {
 				className={ classnames(
 					props.className,
 					{ 'is-dim': 'image' === props.attributes.backgroundType && props.attributes.backgroundDimmed },
-					{ 'is-parallax': 'image' === props.attributes.backgroundType && props.attributes.backgroundParallax },
+					{ 'is-parallax': 'image' === props.attributes.backgroundType && props.attributes.backgroundParallax }
 				) }
 				style={ style }
 			>
@@ -181,7 +181,7 @@ registerBlockType( 'themeisle-blocks/testimonials-area', {
 				className={ classnames(
 					'wp-block-themeisle-blocks-testimonials-area',
 					{ 'is-dim': 'image' === props.attributes.backgroundType && props.attributes.backgroundDimmed },
-					{ 'is-parallax': 'image' === props.attributes.backgroundType && props.attributes.backgroundParallax },
+					{ 'is-parallax': 'image' === props.attributes.backgroundType && props.attributes.backgroundParallax }
 				) }
 				style={ style }
 			>

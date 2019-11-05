@@ -36,7 +36,7 @@ const {
 	InnerBlocks,
 	InspectorControls,
 	MediaPlaceholder
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const { Fragment } = wp.element;
 
@@ -46,15 +46,11 @@ const { withViewportMatch } = wp.viewport;
  * Internal dependencies
  */
 import { columnIcon } from '../../helpers/icons.js';
-
 import layouts from './layouts.js';
-
 import SizingControl from '../../components/sizing-control/index.js';
-
 import ResponsiveControl from '../../components/responsive-control/index.js';
-
 import BackgroundControl from './components/background-control/index.js';
-
+import GradientPickerControl from '../../components/gradient-picker-control/index.js';
 import ControlPanelControl from '../../components/control-panel-control/index.js';
 
 registerBlockType( 'themeisle-blocks/advanced-column', {
@@ -366,7 +362,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 	edit: compose([
 
 		withDispatch( ( dispatch ) => {
-			const { updateBlockAttributes } = dispatch( 'core/editor' );
+			const { updateBlockAttributes } = dispatch( 'core/block-editor' ) || dispatch( 'core/editor' );
 
 			return {
 				updateBlockAttributes
@@ -379,19 +375,20 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 				getAdjacentBlockClientId,
 				getBlock,
 				getBlockRootClientId
-			} = select( 'core/editor' );
+			} = select( 'core/block-editor' ) || select( 'core/editor' );
+			const block = getBlock( clientId );
 			const adjacentBlockClientId = getAdjacentBlockClientId( clientId );
 			const adjacentBlock = getBlock( adjacentBlockClientId );
 			const parentClientId = getBlockRootClientId( clientId );
 			const parentBlock = getBlock( parentClientId );
-			const hasChildBlocks = 0 < getBlock( clientId ).innerBlocks.length;
+			const hasInnerBlocks = !! ( block && block.innerBlocks.length );
 
 			return {
 				adjacentBlockClientId,
 				adjacentBlock,
 				parentClientId,
 				parentBlock,
-				hasChildBlocks,
+				hasInnerBlocks,
 				props
 			};
 		}),
@@ -427,7 +424,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 		adjacentBlock,
 		parentClientId,
 		parentBlock,
-		hasChildBlocks,
+		hasInnerBlocks,
 		updateBlockAttributes
 	}) => {
 		const {
@@ -987,32 +984,16 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 			props.setAttributes({ backgroundSize: value });
 		};
 
-		const changeBackgroundGradientFirstColor = value => {
-			props.setAttributes({ backgroundGradientFirstColor: value });
-		};
-
-		const changeBackgroundGradientFirstLocation = value => {
-			props.setAttributes({ backgroundGradientFirstLocation: value });
-		};
-
-		const changeBackgroundGradientSecondColor = value => {
-			props.setAttributes({ backgroundGradientSecondColor: value });
-		};
-
-		const changeBackgroundGradientSecondLocation = value => {
-			props.setAttributes({ backgroundGradientSecondLocation: value });
-		};
-
-		const changeBackgroundGradientType = value => {
-			props.setAttributes({ backgroundGradientType: value });
-		};
-
-		const changeBackgroundGradientAngle = value => {
-			props.setAttributes({ backgroundGradientAngle: value });
-		};
-
-		const changeBackgroundGradientPosition = value => {
-			props.setAttributes({ backgroundGradientPosition: value });
+		const changeBackgroundGradient = ( firstColor, firstLocation, secondColor, secondLocation, type, angle, position ) => {
+			props.setAttributes({
+				backgroundGradientFirstColor: firstColor,
+				backgroundGradientFirstLocation: firstLocation,
+				backgroundGradientSecondColor: secondColor,
+				backgroundGradientSecondLocation: secondLocation,
+				backgroundGradientType: type,
+				backgroundGradientAngle: angle,
+				backgroundGradientPosition: position
+			});
 		};
 
 		const getBorder = type => {
@@ -1386,75 +1367,19 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 										/>
 
 								) || 'gradient' === backgroundType && (
-									<Fragment>
-										<p>{ __( 'First Color' ) }</p>
-
-										<ColorPalette
-											label={ __( 'Color' ) }
-											value={ backgroundGradientFirstColor }
-											onChange={ changeBackgroundGradientFirstColor }
-										/>
-
-										<RangeControl
-											label={ __( 'Location' ) }
-											value={ backgroundGradientFirstLocation }
-											onChange={ changeBackgroundGradientFirstLocation }
-											min={ 0 }
-											max={ 100 }
-										/>
-
-										<p>{ __( 'Second Color' ) }</p>
-
-										<ColorPalette
-											label={ __( 'Color' ) }
-											value={ backgroundGradientSecondColor }
-											onChange={ changeBackgroundGradientSecondColor }
-										/>
-
-										<RangeControl
-											label={ __( 'Location' ) }
-											value={ backgroundGradientSecondLocation }
-											onChange={ changeBackgroundGradientSecondLocation }
-											min={ 0 }
-											max={ 100 }
-										/>
-
-										<SelectControl
-											label={ __( 'Type' ) }
-											value={ backgroundGradientType }
-											options={ [
-												{ label: 'Linear', value: 'linear' },
-												{ label: 'Radial', value: 'radial' }
-											] }
-											onChange={ changeBackgroundGradientType }
-										/>
-
-										{ 'linear' === backgroundGradientType ?
-											<RangeControl
-												label={ __( 'Angle' ) }
-												value={ backgroundGradientAngle }
-												onChange={ changeBackgroundGradientAngle }
-												min={ 0 }
-												max={ 360 }
-											/>	:
-											<SelectControl
-												label={ __( 'Position' ) }
-												value={ backgroundGradientPosition }
-												options={ [
-													{ label: 'Top Left', value: 'top left' },
-													{ label: 'Top Center', value: 'top center' },
-													{ label: 'Top Right', value: 'top right' },
-													{ label: 'Center Left', value: 'center left' },
-													{ label: 'Center Center', value: 'center center' },
-													{ label: 'Center Right', value: 'center right' },
-													{ label: 'Bottom Left', value: 'bottom left' },
-													{ label: 'Bottom Center', value: 'bottom center' },
-													{ label: 'Bottom Right', value: 'bottom right' }
-												] }
-												onChange={ changeBackgroundGradientPosition }
-											/>
-										}
-									</Fragment>
+									<GradientPickerControl
+										label={ 'Background Gradient' }
+										value={ {
+											firstColor: backgroundGradientFirstColor,
+											firstLocation: backgroundGradientFirstLocation,
+											secondColor: backgroundGradientSecondColor,
+											secondLocation: backgroundGradientSecondLocation,
+											type: backgroundGradientType,
+											angle: backgroundGradientAngle,
+											position: backgroundGradientPosition
+										} }
+										onChange={ changeBackgroundGradient }
+									/>
 								) }
 							</PanelBody>
 
@@ -1688,11 +1613,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 					>
 						<InnerBlocks
 							templateLock={ false }
-							renderAppender={ (
-								hasChildBlocks ?
-									undefined :
-									() => <InnerBlocks.ButtonBlockAppender />
-							) }
+							renderAppender={ ! hasInnerBlocks && InnerBlocks.ButtonBlockAppender }
 						/>
 					</Tag>
 				</ResizableBox>

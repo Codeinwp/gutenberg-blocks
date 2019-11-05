@@ -8,7 +8,7 @@ const { registerBlockType } = wp.blocks;
 const {
 	RichText,
 	InnerBlocks
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 registerBlockType( 'themeisle-blocks/accordion-block', {
 	title: __( 'Accordion Item' ),

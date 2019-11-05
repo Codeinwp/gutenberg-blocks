@@ -12,7 +12,6 @@ import './style.scss';
 import './editor.scss';
 
 import { mapIcon } from '../../helpers/icons.js';
-
 import Editor from './components/Editor.js';
 
 registerBlockType( 'themeisle-blocks/google-map', {
@@ -26,6 +25,10 @@ registerBlockType( 'themeisle-blocks/google-map', {
 		'orbitfox'
 	],
 	attributes: {
+		style: {
+			type: 'string',
+			default: 'standard'
+		},
 		id: {
 			type: 'string'
 		},

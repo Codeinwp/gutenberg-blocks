@@ -39,12 +39,13 @@ const {
 } = wp.data;
 
 const {
+	__experimentalBlockNavigationList,
 	ColorPalette,
 	InnerBlocks,
 	InspectorAdvancedControls,
 	InspectorControls,
 	MediaPlaceholder
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const { Fragment } = wp.element;
 
@@ -59,23 +60,16 @@ import {
 	middleIcon,
 	bottomIcon
 } from '../../helpers/icons.js';
-
 import layouts from './layouts.js';
-
 import LayoutControl from './components/layout-control/index.js';
-
 import SizingControl from '../../components/sizing-control/index.js';
-
 import ResponsiveControl from '../../components/responsive-control/index.js';
-
 import BackgroundControl from './components/background-control/index.js';
-
+import GradientPickerControl from '../../components/gradient-picker-control/index.js';
 import ControlPanelControl from '../../components/control-panel-control/index.js';
-
+import BlockNavigatorControl from '../../components/block-navigator-control/index.js';
 import Separators from './components/separators/index.js';
-
 import Onboarding from './components/onboarding/index.js';
-
 import deprecated from './deprecated.js';
 
 registerBlockType( 'themeisle-blocks/advanced-columns', {
@@ -580,7 +574,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 	edit: compose([
 
 		withDispatch( ( dispatch ) => {
-			const { updateBlockAttributes } = dispatch( 'core/editor' );
+			const { updateBlockAttributes } = dispatch( 'core/block-editor' ) || dispatch( 'core/editor' );
 
 			return {
 				updateBlockAttributes
@@ -589,7 +583,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 
 		withSelect( ( select, props ) => {
 			const { clientId } = props;
-			const { getBlock } = select( 'core/editor' );
+			const { getBlock } = select( 'core/block-editor' ) || select( 'core/editor' );
 			const sectionBlock = getBlock( clientId );
 
 			return {
@@ -1420,32 +1414,16 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 			props.setAttributes({ backgroundSize: value });
 		};
 
-		const changeBackgroundGradientFirstColor = value => {
-			props.setAttributes({ backgroundGradientFirstColor: value });
-		};
-
-		const changeBackgroundGradientFirstLocation = value => {
-			props.setAttributes({ backgroundGradientFirstLocation: value });
-		};
-
-		const changeBackgroundGradientSecondColor = value => {
-			props.setAttributes({ backgroundGradientSecondColor: value });
-		};
-
-		const changeBackgroundGradientSecondLocation = value => {
-			props.setAttributes({ backgroundGradientSecondLocation: value });
-		};
-
-		const changeBackgroundGradientType = value => {
-			props.setAttributes({ backgroundGradientType: value });
-		};
-
-		const changeBackgroundGradientAngle = value => {
-			props.setAttributes({ backgroundGradientAngle: value });
-		};
-
-		const changeBackgroundGradientPosition = value => {
-			props.setAttributes({ backgroundGradientPosition: value });
+		const changeBackgroundGradient = ( firstColor, firstLocation, secondColor, secondLocation, type, angle, position ) => {
+			props.setAttributes({
+				backgroundGradientFirstColor: firstColor,
+				backgroundGradientFirstLocation: firstLocation,
+				backgroundGradientSecondColor: secondColor,
+				backgroundGradientSecondLocation: secondLocation,
+				backgroundGradientType: type,
+				backgroundGradientAngle: angle,
+				backgroundGradientPosition: position
+			});
 		};
 
 		const changeBackgroundOverlayOpacity = value => {
@@ -1490,32 +1468,16 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 			props.setAttributes({ backgroundOverlaySize: value });
 		};
 
-		const changeBackgroundOverlayGradientFirstColor = value => {
-			props.setAttributes({ backgroundOverlayGradientFirstColor: value });
-		};
-
-		const changeBackgroundOverlayGradientFirstLocation = value => {
-			props.setAttributes({ backgroundOverlayGradientFirstLocation: value });
-		};
-
-		const changeBackgroundOverlayGradientSecondColor = value => {
-			props.setAttributes({ backgroundOverlayGradientSecondColor: value });
-		};
-
-		const changeBackgroundOverlayGradientSecondLocation = value => {
-			props.setAttributes({ backgroundOverlayGradientSecondLocation: value });
-		};
-
-		const changeBackgroundOverlayGradientType = value => {
-			props.setAttributes({ backgroundOverlayGradientType: value });
-		};
-
-		const changeBackgroundOverlayGradientAngle = value => {
-			props.setAttributes({ backgroundOverlayGradientAngle: value });
-		};
-
-		const changeBackgroundOverlayGradientPosition = value => {
-			props.setAttributes({ backgroundOverlayGradientPosition: value });
+		const changeBackgroundOverlayGradient = ( firstColor, firstLocation, secondColor, secondLocation, type, angle, position ) => {
+			props.setAttributes({
+				backgroundOverlayGradientFirstColor: firstColor,
+				backgroundOverlayGradientFirstLocation: firstLocation,
+				backgroundOverlayGradientSecondColor: secondColor,
+				backgroundOverlayGradientSecondLocation: secondLocation,
+				backgroundOverlayGradientType: type,
+				backgroundOverlayGradientAngle: angle,
+				backgroundOverlayGradientPosition: position
+			});
 		};
 
 		const changebackgroundOverlayFilterBlur = value => {
@@ -1977,6 +1939,8 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 
 		return (
 			<Fragment>
+				{ __experimentalBlockNavigationList && <BlockNavigatorControl clientId={ props.clientId } /> }
+
 				<InspectorControls>
 					<PanelBody className="wp-block-themeisle-blocks-advanced-columns-header-panel">
 						<Button
@@ -2385,75 +2349,19 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 										/>
 
 								) || 'gradient' === backgroundType && (
-									<Fragment>
-										<p>{ __( 'First Color' ) }</p>
-
-										<ColorPalette
-											label={ __( 'Color' ) }
-											value={ backgroundGradientFirstColor }
-											onChange={ changeBackgroundGradientFirstColor }
-										/>
-
-										<RangeControl
-											label={ __( 'Location' ) }
-											value={ backgroundGradientFirstLocation }
-											onChange={ changeBackgroundGradientFirstLocation }
-											min={ 0 }
-											max={ 100 }
-										/>
-
-										<p>{ __( 'Second Color' ) }</p>
-
-										<ColorPalette
-											label={ __( 'Color' ) }
-											value={ backgroundGradientSecondColor }
-											onChange={ changeBackgroundGradientSecondColor }
-										/>
-
-										<RangeControl
-											label={ __( 'Location' ) }
-											value={ backgroundGradientSecondLocation }
-											onChange={ changeBackgroundGradientSecondLocation }
-											min={ 0 }
-											max={ 100 }
-										/>
-
-										<SelectControl
-											label={ __( 'Type' ) }
-											value={ backgroundGradientType }
-											options={ [
-												{ label: 'Linear', value: 'linear' },
-												{ label: 'Radial', value: 'radial' }
-											] }
-											onChange={ changeBackgroundGradientType }
-										/>
-
-										{ 'linear' === backgroundGradientType ?
-											<RangeControl
-												label={ __( 'Angle' ) }
-												value={ backgroundGradientAngle }
-												onChange={ changeBackgroundGradientAngle }
-												min={ 0 }
-												max={ 360 }
-											/>	:
-											<SelectControl
-												label={ __( 'Position' ) }
-												value={ backgroundGradientPosition }
-												options={ [
-													{ label: 'Top Left', value: 'top left' },
-													{ label: 'Top Center', value: 'top center' },
-													{ label: 'Top Right', value: 'top right' },
-													{ label: 'Center Left', value: 'center left' },
-													{ label: 'Center Center', value: 'center center' },
-													{ label: 'Center Right', value: 'center right' },
-													{ label: 'Bottom Left', value: 'bottom left' },
-													{ label: 'Bottom Center', value: 'bottom center' },
-													{ label: 'Bottom Right', value: 'bottom right' }
-												] }
-												onChange={ changeBackgroundGradientPosition }
-											/>
-										}
-									</Fragment>
+									<GradientPickerControl
+										label={ 'Background Gradient' }
+										value={ {
+											firstColor: backgroundGradientFirstColor,
+											firstLocation: backgroundGradientFirstLocation,
+											secondColor: backgroundGradientSecondColor,
+											secondLocation: backgroundGradientSecondLocation,
+											type: backgroundGradientType,
+											angle: backgroundGradientAngle,
+											position: backgroundGradientPosition
+										} }
+										onChange={ changeBackgroundGradient }
+									/>
 								) }
 							</PanelBody>
 
@@ -2589,75 +2497,19 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 										/>
 
 								) || 'gradient' === backgroundOverlayType && (
-									<Fragment>
-										<p>{ __( 'First Color' ) }</p>
-
-										<ColorPalette
-											label={ __( 'Color' ) }
-											value={ backgroundOverlayGradientFirstColor }
-											onChange={ changeBackgroundOverlayGradientFirstColor }
-										/>
-
-										<RangeControl
-											label={ __( 'Location' ) }
-											value={ backgroundOverlayGradientFirstLocation }
-											onChange={ changeBackgroundOverlayGradientFirstLocation }
-											min={ 0 }
-											max={ 100 }
-										/>
-
-										<p>{ __( 'Second Color' ) }</p>
-
-										<ColorPalette
-											label={ __( 'Color' ) }
-											value={ backgroundOverlayGradientSecondColor }
-											onChange={ changeBackgroundOverlayGradientSecondColor }
-										/>
-
-										<RangeControl
-											label={ __( 'Location' ) }
-											value={ backgroundOverlayGradientSecondLocation }
-											onChange={ changeBackgroundOverlayGradientSecondLocation }
-											min={ 0 }
-											max={ 100 }
-										/>
-
-										<SelectControl
-											label={ __( 'Type' ) }
-											value={ backgroundOverlayGradientType }
-											options={ [
-												{ label: 'Linear', value: 'linear' },
-												{ label: 'Radial', value: 'radial' }
-											] }
-											onChange={ changeBackgroundOverlayGradientType }
-										/>
-
-										{ 'linear' === backgroundOverlayGradientType ?
-											<RangeControl
-												label={ __( 'Angle' ) }
-												value={ backgroundOverlayGradientAngle }
-												onChange={ changeBackgroundOverlayGradientAngle }
-												min={ 0 }
-												max={ 360 }
-											/>	:
-											<SelectControl
-												label={ __( 'Position' ) }
-												value={ backgroundOverlayGradientPosition }
-												options={ [
-													{ label: 'Top Left', value: 'top left' },
-													{ label: 'Top Center', value: 'top center' },
-													{ label: 'Top Right', value: 'top right' },
-													{ label: 'Center Left', value: 'center left' },
-													{ label: 'Center Center', value: 'center center' },
-													{ label: 'Center Right', value: 'center right' },
-													{ label: 'Bottom Left', value: 'bottom left' },
-													{ label: 'Bottom Center', value: 'bottom center' },
-													{ label: 'Bottom Right', value: 'bottom right' }
-												] }
-												onChange={ changeBackgroundOverlayGradientPosition }
-											/>
-										}
-									</Fragment>
+									<GradientPickerControl
+										label={ 'Background Gradient' }
+										value={ {
+											firstColor: backgroundOverlayGradientFirstColor,
+											firstLocation: backgroundOverlayGradientFirstLocation,
+											secondColor: backgroundOverlayGradientSecondColor,
+											secondLocation: backgroundOverlayGradientSecondLocation,
+											type: backgroundOverlayGradientType,
+											angle: backgroundOverlayGradientAngle,
+											position: backgroundOverlayGradientPosition
+										} }
+										onChange={ changeBackgroundOverlayGradient }
+									/>
 								) }
 
 								<ControlPanelControl

@@ -13,7 +13,7 @@
 		float: right;
 	}
 
-	.themeisle-plugin-card {
+	.wp-block-themeisle-plugin-card {
 		border: 1px #EAEAEA solid;
 		display: inline-block;
 		width: 350px;
@@ -128,7 +128,7 @@
 
 @media ( max-width:415px ) {
 	.wp-block-themeisle-blocks-plugin-cards {
-		.themeisle-plugin-card {
+		.wp-block-themeisle-plugin-card {
 			width: auto;
 
 			.card-details {

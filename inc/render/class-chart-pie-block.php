@@ -1,5 +1,8 @@
 <?php
-namespace ThemeIsle\GutenbergBlocks;
+
+namespace ThemeIsle\GutenbergBlocks\Render;
+
+use ThemeIsle\GutenbergBlocks\Base_Block;
 
 /**
  * Class Chart_Pie_Block
@@ -20,7 +23,7 @@ class Chart_Pie_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_block_slug() {
+	protected function set_block_slug() {
 		$this->block_slug = 'chart-pie';
 	}
 
@@ -29,7 +32,7 @@ class Chart_Pie_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_attributes() {
+	protected function set_attributes() {
 		$this->attributes = array(
 			'data' => array(
 				'type'    => 'string',
@@ -56,7 +59,7 @@ class Chart_Pie_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	function render( $attributes ) {
+	protected function render( $attributes ) {
 		$chart_markup = "<div class='wp-block-themeisle-blocks-chart-pie' id='" . $attributes['id'] . "' style='width: 100%; min-height: 450px;'></div>";
 
 		$script = "<script>

@@ -15,7 +15,6 @@ const {
  * Internal dependencies
  */
 import { unescapeHTML, formatDate } from '../../../../helpers/helper-functions.js';
-
 import Thumbnail from '../Thumbnail.js';
 
 const Grid = ({ className, attributes, posts, categoriesList, authors }) => {
@@ -23,7 +22,7 @@ const Grid = ({ className, attributes, posts, categoriesList, authors }) => {
 		<div className={ classnames(
 			className,
 			'is-grid',
-			`posts-grid-columns-${ attributes.columns }`,
+			`posts-grid-columns-${ attributes.columns }`
 		) }>
 			{ posts.map( post => {
 				let category, author;
@@ -69,14 +68,14 @@ const Grid = ({ className, attributes, posts, categoriesList, authors }) => {
 									}
 
 									if ( 'meta' === element ) {
-										if ( attributes.displayMeta ) {
+										if ( attributes.displayMeta && ( attributes.displayDate || attributes.displayAuthor ) ) {
 											return (
 												<p className="posts-grid-post-meta">
-													{ __( 'on ' ) }
+													{ ( attributes.displayDate ) && (
+														sprintf( __( 'on %s' ), formatDate( post.date ) )
+													) }
 
-													<time datetime={ post.date }>{ formatDate( post.date ) }</time>
-
-													{ ( undefined !== author && authors ) && (
+													{ ( attributes.displayAuthor && undefined !== author && authors ) && (
 														sprintf( __( ' by %s' ), author.name )
 													) }
 												</p>

@@ -1,5 +1,8 @@
 <?php
-namespace ThemeIsle\GutenbergBlocks;
+
+namespace ThemeIsle\GutenbergBlocks\Render;
+
+use ThemeIsle\GutenbergBlocks\Base_Block;
 
 /**
  * Class Posts_Grid_Block
@@ -20,7 +23,7 @@ class Posts_Grid_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_block_slug() {
+	protected function set_block_slug() {
 		$this->block_slug = 'posts-grid';
 	}
 
@@ -29,7 +32,7 @@ class Posts_Grid_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_attributes() {
+	protected function set_attributes() {
 		$this->attributes = array(
 			'style'					=> array(
 				'type' => 'string',
@@ -91,6 +94,14 @@ class Posts_Grid_Block extends Base_Block {
 				'type'    => 'number',
 				'default' => '200',
 			),
+			'displayDate'			=> array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
+			'displayAuthor'			=> array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
 		);
 	}
 
@@ -102,7 +113,7 @@ class Posts_Grid_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	function render( $attributes ) {
+	protected function render( $attributes ) {
 		$recent_posts = wp_get_recent_posts(
 			array(
 				'numberposts' => $attributes['postsToShow'],
@@ -157,18 +168,26 @@ class Posts_Grid_Block extends Base_Block {
 				}
 
 				if ( $element === 'meta' ) {
-					if ( ( isset( $attributes['displayMeta'] ) && $attributes['displayMeta'] )  ) {
+					if ( ( isset( $attributes['displayMeta'] ) && $attributes['displayMeta'] ) && ( ( isset( $attributes['displayDate'] ) && $attributes['displayDate'] ) || ( isset( $attributes['displayAuthor'] ) && $attributes['displayAuthor'] ) ) ) {
 						$list_items_markup .= '<p class="posts-grid-post-meta">';
-		
-						$list_items_markup .= sprintf(
-							'%1$s <time datetime="%2$s">%3$s</time> %4$s %5$s',
-							__( 'on', 'textdomain' ),
-							esc_attr( get_the_date( 'c', $id ) ),
-							esc_html( get_the_date( 'j F, Y', $id ) ),
-							__( 'by', 'textdomain' ),
-							get_the_author_meta( 'display_name', get_post_field( 'post_author', $id ) )
-						);
-		
+
+						if ( isset( $attributes['displayDate'] ) && $attributes['displayDate'] ) {
+							$list_items_markup .= sprintf(
+								'%1$s <time datetime="%2$s">%3$s</time> ',
+								__( 'on', 'textdomain' ),
+								esc_attr( get_the_date( 'c', $id ) ),
+								esc_html( get_the_date( 'j F, Y', $id ) )
+							);
+						}
+
+						if ( isset( $attributes['displayAuthor'] ) && $attributes['displayAuthor'] ) {
+							$list_items_markup .= sprintf(
+								'%1$s %2$s',
+								__( 'by', 'textdomain' ),
+								get_the_author_meta( 'display_name', get_post_field( 'post_author', $id ) )
+							);
+						}
+
 						$list_items_markup .= '</p>';
 					}
 				}
@@ -222,11 +241,19 @@ class Posts_Grid_Block extends Base_Block {
 	 *
 	 * @return string
 	 */
-	function get_excerpt_by_id( $post_id, $excerpt_length = 200 ) {
-		$the_post = get_post( $post_id );
-		$the_excerpt = $the_post->post_content;
-		$the_excerpt = strip_tags( strip_shortcodes( $the_excerpt ) );
-		$the_excerpt = substr( $the_excerpt, 0, $excerpt_length ) . '…';
-		return $the_excerpt;
+	protected function get_excerpt_by_id( $post_id, $excerpt_length = 200 ) {
+		if ( has_excerpt( $post_id ) ) {
+			$excerpt = get_the_excerpt( $post_id );
+		} else {
+			$post = get_post( $post_id );
+			$excerpt = $post->post_content;
+			$excerpt = strip_tags( strip_shortcodes( $excerpt ) );
+		}
+
+		if ( strlen( $excerpt ) > $excerpt_length ) {
+			$excerpt = substr( $excerpt, 0, $excerpt_length ) . '…';
+		}
+
+		return $excerpt;
 	}
 }
