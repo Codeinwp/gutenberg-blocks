@@ -1,3 +1,8 @@
+/**
+ * Internal dependencies
+ */
+import styles from './styles.js';
+
 const initMapScript = () => {
 	let maps = [];
 	maps = window.themeisleGoogleMaps;
@@ -15,7 +20,8 @@ const initMapScript = () => {
 			mapTypeControl: map.attributes.mapTypeControl,
 			zoomControl: map.attributes.zoomControl,
 			fullscreenControl: map.attributes.fullscreenControl,
-			streetViewControl: map.attributes.streetViewControl
+			streetViewControl: map.attributes.streetViewControl,
+			styles: styles[ map.attributes.style || 'standard' ]
 		});
 
 		if ( ! map.attributes.id && map.attributes.location ) {

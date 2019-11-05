@@ -1,19 +1,14 @@
 /**
- * External dependencies
- */
-import Editor from './Editor.js';
-
-/**
  * WordPress dependencies.
  */
 const { __ } = wp.i18n;
 
 const { registerBlockType } = wp.blocks;
 
-/**
- * Internal dependencies
- */
-import './editor.scss';
+const {
+	ExternalLink,
+	Notice
+} = wp.components;
 
 registerBlockType( 'themeisle-blocks/chart-pie', {
 	title: __( 'Pie Chart' ),
@@ -47,7 +42,13 @@ registerBlockType( 'themeisle-blocks/chart-pie', {
 		inserter: false
 	},
 
-	edit: Editor,
+	edit: props => {
+		return (
+			<div className={ props.className }>
+				<Notice status="warning" isDismissible={ false }>{ __( 'We have deprecated Pie Chart Block and it will be removed soon. For advance options and more charts, please install our Visualizer plugin:' ) } <ExternalLink href="http://wordpress.org/plugins/visualizer/">{ __( 'Visualizer: Tables and Charts Manager for WordPress' ) }</ExternalLink></Notice>
+			</div>
+		);
+	},
 
 	save: () => {
 		return null;

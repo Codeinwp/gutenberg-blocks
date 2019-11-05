@@ -11,14 +11,12 @@ const {
 	QueryControls,
 	RangeControl,
 	Placeholder,
-	SelectControl,
-	Spinner,
-	TextControl
+	Spinner
 } = wp.components;
 
 const { withSelect } = wp.data;
 
-const { InspectorControls } = wp.editor;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 
 const {
 	Component,
@@ -29,9 +27,7 @@ const {
  * Internal dependencies
  */
 import LayoutBuilder from './LayoutBuilder.js';
-
-import StyleSwitcherControl from '../../../components/style-switcher-control/index.js';
-
+import { StyleSwitcherBlockControl, StyleSwitcherInspectorControl } from '../../../components/style-switcher-control/index.js';
 import Layout from './Layout/index.js';
 
 class Editor extends Component {
@@ -77,6 +73,14 @@ class Editor extends Component {
 		if ( 'description' === field ) {
 			return this.props.attributes.displayDescription;
 		}
+
+		if ( 'date' === field ) {
+			return this.props.attributes.displayDate;
+		}
+
+		if ( 'author' === field ) {
+			return this.props.attributes.displayAuthor;
+		}
 	}
 
 	toggleFields( field ) {
@@ -99,6 +103,14 @@ class Editor extends Component {
 		if ( 'description' === field ) {
 			this.props.setAttributes({ displayDescription: ! this.props.attributes.displayDescription });
 		}
+
+		if ( 'date' === field ) {
+			this.props.setAttributes({ displayDate: ! this.props.attributes.displayDate });
+		}
+
+		if ( 'author' === field ) {
+			this.props.setAttributes({ displayAuthor: ! this.props.attributes.displayAuthor });
+		}
 	}
 
 	changeExcerptLength( value ) {
@@ -117,12 +129,30 @@ class Editor extends Component {
 
 		return (
 			<Fragment>
+				<StyleSwitcherBlockControl
+					label={ __( 'Block Styles' ) }
+					value={ this.props.attributes.style }
+					options={ [
+						{
+							label: __( 'Grid' ),
+							value: 'grid',
+							image: themeisleGutenberg.assetsPath + '/icons/posts-grid.jpg'
+						},
+						{
+							label: __( 'List' ),
+							value: 'list',
+							image: themeisleGutenberg.assetsPath + '/icons/posts-list.jpg'
+						}
+					] }
+					onChange={ this.changeStyle }
+				/>
+
 				<InspectorControls>
 					<PanelBody
 						title={ __( 'Styles' ) }
 						initialOpen={ false }
 					>
-						<StyleSwitcherControl
+						<StyleSwitcherInspectorControl
 							value={ this.props.attributes.style }
 							options={ [
 								{
@@ -164,30 +194,6 @@ class Editor extends Component {
 							onCategoryChange={ value => this.props.setAttributes({ categories: '' !== value ? value : undefined }) }
 							onNumberOfItemsChange={ value => this.props.setAttributes({ postsToShow: value }) }
 						/>
-
-						{ this.props.attributes.displayFeaturedImage && (
-							<SelectControl
-								label={ __( 'Image Size' ) }
-								value={ this.props.attributes.imageSize }
-								options={ [
-									{ label: __( 'Thumbnail' ), value: 'thumbnail' },
-									{ label: __( 'Medium' ), value: 'medium' },
-									{ label: __( 'Medium Large' ), value: 'medium_large' },
-									{ label: __( 'Large' ), value: 'large' },
-									{ label: __( 'Full' ), value: 'full' }
-								] }
-								onChange={ this.changeImageSize }
-							/>
-						) }
-
-						{ this.props.attributes.displayDescription && (
-							<TextControl
-								label={ __( 'Excerpt Limit' ) }
-								type="number"
-								value={ this.props.attributes.excerptLength }
-								onChange={ this.changeExcerptLength }
-							/>
-						) }
 					</PanelBody>
 
 					<PanelBody
@@ -199,6 +205,14 @@ class Editor extends Component {
 							getFields={ this.getFields }
 							toggleFields={ this.toggleFields }
 							setAttributes={ this.props.setAttributes }
+							imageSize={ {
+								value: this.props.attributes.imageSize,
+								onChange: this.changeImageSize
+							} }
+							excerptLimit={ {
+								value: this.props.attributes.excerptLength,
+								onChange: this.changeExcerptLength
+							} }
 						/>
 					</PanelBody>
 				</InspectorControls>

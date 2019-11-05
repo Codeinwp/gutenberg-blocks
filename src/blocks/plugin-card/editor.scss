@@ -116,7 +116,7 @@
 		}
 	}
 
-	.themeisle-plugin-card {
+	.wp-block-themeisle-plugin-card {
 		border: 1px #EAEAEA solid;
 		display: inline-block;
 		width: 350px;
@@ -228,7 +228,7 @@
 	}
 }
 
-[data-type="themeisle-blocks/plugin-cards"] {
+[data-type="wp-block-themeisle-blocks/plugin-cards"] {
 	.edit-plugin-card{
 		&:hover {
 			svg {
@@ -241,7 +241,7 @@
 
 @media ( max-width:415px ) {
 	.wp-block-themeisle-blocks-plugin-cards {
-		.themeisle-plugin-card {
+		.wp-block-themeisle-plugin-card {
 			width: auto;
 
 			.card-details {

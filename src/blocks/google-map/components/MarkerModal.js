@@ -74,6 +74,7 @@ class MarkerModal extends Component {
 			<Modal
 				title={ __( 'Add Marker' ) }
 				onRequestClose={ this.props.close }
+				shouldCloseOnClickOutside={ false }
 			>
 				{ this.state.advanced && (
 					<Fragment>

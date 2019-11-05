@@ -20,7 +20,7 @@ const { withSelect } = wp.data;
 const {
 	BlockControls,
 	RichText
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 /**
  * Internal dependencies

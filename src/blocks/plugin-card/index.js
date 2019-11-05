@@ -23,7 +23,7 @@ const {
 	withState
 } = wp.compose;
 
-const { BlockControls } = wp.editor;
+const { BlockControls } = wp.blockEditor || wp.editor;
 
 const { withSelect } = wp.data;
 
@@ -43,8 +43,8 @@ const starRating = stars => {
  */
 import './editor.scss';
 import './style.scss';
-import { pluginsIcon } from '../../helpers/icons.js';
 
+import { pluginsIcon } from '../../helpers/icons.js';
 import { unescapeHTML } from '../../helpers/helper-functions.js';
 
 registerBlockType( 'themeisle-blocks/plugin-cards', {
@@ -183,7 +183,7 @@ registerBlockType( 'themeisle-blocks/plugin-cards', {
 			),
 			<div className={ className }>
 				{ ( props.attributes.pluginName ) ?
-					<div className="themeisle-plugin-card">
+					<div className="wp-block-themeisle-plugin-card">
 						<div className="card-header">
 							<div className="card-main">
 								<div className="card-logo">

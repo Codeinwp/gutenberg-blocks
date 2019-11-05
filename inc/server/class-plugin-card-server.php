@@ -1,11 +1,11 @@
 <?php
 
-namespace ThemeIsle\GutenbergBlocks;
+namespace ThemeIsle\GutenbergBlocks\Server;
 
 /**
  * Class Plugin_Card_Server
  */
-class Plugin_Card_Server extends \WP_Rest_Controller {
+class Plugin_Card_Server {
 
 	/**
 	 * The main instance var.

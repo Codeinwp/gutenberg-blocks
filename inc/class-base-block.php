@@ -14,7 +14,7 @@ abstract class Base_Block {
 	 *
 	 * @var string
 	 */
-	private $block_prefix = 'themeisle-blocks';
+	protected $block_prefix = 'themeisle-blocks';
 
 	/**
 	 * The slug of the block.
@@ -35,14 +35,14 @@ abstract class Base_Block {
 	 *
 	 * @return mixed
 	 */
-	abstract function set_block_slug();
+	abstract protected function set_block_slug();
 
 	/**
 	 * Set the attributes required on the server side.
 	 *
 	 * @return mixed
 	 */
-	abstract function set_attributes();
+	abstract protected function set_attributes();
 
 	/**
 	 * This method will pe passed to the render_callback parameter and it will output
@@ -50,7 +50,7 @@ abstract class Base_Block {
 	 *
 	 * @return mixed
 	 */
-	abstract function render( $attributes );
+	abstract protected function render( $attributes );
 
 	/**
 	 * Base_Block constructor.

@@ -12,7 +12,6 @@ import './style.scss';
 import './editor.scss';
 
 import { postsIcon } from '../../helpers/icons.js';
-
 import Editor from './components/Editor.js';
 
 registerBlockType( 'themeisle-blocks/posts-grid', {
@@ -85,6 +84,14 @@ registerBlockType( 'themeisle-blocks/posts-grid', {
 		excerptLength: {
 			type: 'number',
 			default: 100
+		},
+		displayDate: {
+			type: 'boolean',
+			default: true
+		},
+		displayAuthor: {
+			type: 'boolean',
+			default: true
 		}
 	},
 

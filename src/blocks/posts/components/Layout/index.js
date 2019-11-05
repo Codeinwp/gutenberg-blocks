@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import Grid from './Grid.js';
-
 import List from './List.js';
 
 const Layout = ({ className, attributes, posts, categoriesList, authors }) => {

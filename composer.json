@@ -19,5 +19,8 @@
 	},
 	"support": {
 		"issues": "https://github.com/Codeinwp/gutenberg-blocks/issues"
+	},
+	"require": {
+		"tubalmartin/cssmin": "^4.1"
 	}
 }

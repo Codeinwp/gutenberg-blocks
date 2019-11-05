@@ -1,6 +1,8 @@
 <?php
 
-namespace ThemeIsle\GutenbergBlocks;
+namespace ThemeIsle\GutenbergBlocks\Render;
+
+use ThemeIsle\GutenbergBlocks\Base_Block;
 
 /**
  * Class About_Author_Block
@@ -21,7 +23,7 @@ class About_Author_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_block_slug() {
+	protected function set_block_slug() {
 		$this->block_slug = 'about-author';
 	}
 
@@ -30,7 +32,7 @@ class About_Author_Block extends Base_Block {
 	 *
 	 * @return mixed
 	 */
-	function set_attributes() {
+	protected function set_attributes() {
 		$this->attributes = array();
 	}
 
@@ -42,7 +44,7 @@ class About_Author_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	function render( $attributes ) {
+	protected function render( $attributes ) {
 		$img_markup = sprintf(
 			'<a href="%1$s"><img src="%2$s" class="author-image" /></a>',
 			esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
@@ -66,7 +68,7 @@ class About_Author_Block extends Base_Block {
 		}
 
 		return sprintf(
-			'<section class="%1$s"><div class="themeisle-author-image">%2$s</div><div class="themeisle-author-data">%3$s%4$s</div></section>',
+			'<section class="%1$s"><div class="wp-block-themeisle-author-image">%2$s</div><div class="wp-block-themeisle-author-data">%3$s%4$s</div></section>',
 			esc_attr( $class ),
 			$img_markup,
 			$title_markup,

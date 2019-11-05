@@ -9,7 +9,7 @@ const {
 	InnerBlocks,
 	InspectorControls,
 	PanelColorSettings
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 registerBlockType( 'themeisle-blocks/service-block', {
 	title: __( 'Service Block' ),

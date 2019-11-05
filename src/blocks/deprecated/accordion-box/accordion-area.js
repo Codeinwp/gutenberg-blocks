@@ -9,7 +9,7 @@ const {
 
 const {
 	InnerBlocks
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 registerBlockType( 'themeisle-blocks/accordion-area', {
 	title: __( 'Accordion' ),

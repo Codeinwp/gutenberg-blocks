@@ -46,7 +46,7 @@ const {
 	ColorPalette,
 	InspectorControls,
 	RichText
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const { Fragment } = wp.element;
 
@@ -57,19 +57,12 @@ import './editor.scss';
 import './style.scss';
 
 import { buttonsIcon } from '../../helpers/icons.js';
-
 import { unescapeHTML } from '../../helpers/helper-functions.js';
-
 import GoogleFontsControl from '../../components/google-fonts-control/index.js';
-
 import ControlPanelControl from '../../components/control-panel-control/index.js';
-
-import IconPickerControl from '../../components/icon-picker-control/index.js';
-
+const IconPickerControl = React.lazy( () => import( '../../components/icon-picker-control/index.js' ) );
 import LinkControl from '../../components/link-control/index.js';
-
 import SizingControl from '../../components/sizing-control/index.js';
-
 import deprecated from './deprecated.js';
 
 registerBlockType( 'themeisle-blocks/button-group', {
@@ -418,7 +411,8 @@ registerBlockType( 'themeisle-blocks/button-group', {
 								aria-label={ unescapeHTML( data[i].text ) }
 								onChange={ e => updateButton({ text: e }, i ) }
 								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
-								tagName="span"
+								allowedFormats={ [ 'core/bold', 'core/italic', 'core/strikethrough' ] }
+								tagName="div"
 								keepPlaceholderOnFocus
 							/>
 						) }
@@ -907,21 +901,23 @@ registerBlockType( 'themeisle-blocks/button-group', {
 
 										{ 'none' !== data[selectedButton].iconType && (
 											<Fragment>
-												<IconPickerControl
-													label={ __( 'Icon Picker' ) }
-													prefix={ data[selectedButton].prefix }
-													icon={ data[selectedButton].icon }
-													onChange={ e => {
-														if ( 'object' === typeof e ) {
-															updateButton({
-																icon: e.name,
-																prefix: e.prefix
-															}, selectedButton );
-														} else {
-															updateButton({ icon: e }, selectedButton );
-														}
-													}}
-												/>
+												<React.Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
+													<IconPickerControl
+														label={ __( 'Icon Picker' ) }
+														prefix={ data[selectedButton].prefix }
+														icon={ data[selectedButton].icon }
+														onChange={ e => {
+															if ( 'object' === typeof e ) {
+																updateButton({
+																	icon: e.name,
+																	prefix: e.prefix
+																}, selectedButton );
+															} else {
+																updateButton({ icon: e }, selectedButton );
+															}
+														}}
+													/>
+												</React.Suspense>
 											</Fragment>
 										) }
 									</PanelBody>
@@ -1039,6 +1035,15 @@ registerBlockType( 'themeisle-blocks/button-group', {
 					} }
 				>
 					{ times( buttons, i => button( i ) ) }
+
+					{ ( props.isSelected && 4 >= buttons ) && (
+						<IconButton
+							className="wp-block-themeisle-blocks-button-inserter"
+							icon="plus-alt"
+							onClick={ () => changeButtons( buttons + 1 ) }
+							label={ __( 'Add Button' ) }
+						/>
+					) }
 				</div>
 			</Fragment>
 		);
