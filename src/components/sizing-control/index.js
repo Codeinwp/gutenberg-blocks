@@ -75,7 +75,6 @@ class SizingControl extends Component {
 													min={ this.props.min }
 													max={ this.props.max }
 													onFocus={ onToggle }
-													onBlur={ onToggle }
 													onChange={ e => this.props.onChange( i.type, parseInt( e.target.value ) ) }
 												/>
 											) }
