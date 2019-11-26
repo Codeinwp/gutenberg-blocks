@@ -49,7 +49,7 @@ const List = ({ className, attributes, posts, categoriesList, authors }) => {
 							<div className={ classnames(
 								'posts-grid-post-body',
 								{ 'is-full': ! attributes.displayFeaturedImage }
-							)}>
+							) }>
 								{ attributes.template.map( element => {
 									if ( 'category' === element ) {
 										if ( undefined !== category && ( attributes.displayCategory && categoriesList ) ) {
