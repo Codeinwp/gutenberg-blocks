@@ -72,13 +72,23 @@ class Base_CSS {
 	}
 
 	/**
+	 * Check if string is empty without accepting zero
+	 * 
+	 * @since   1.3.1
+	 * @access  public
+	 */
+	public function is_empty( $var ) {
+		return empty( $var ) && $var !== 0;
+	}
+
+	/**
 	 * Get block attribute value with default
 	 * 
 	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function get_attr_value( $attr, $default = 'unset' ) {
-		if ( ! empty( $attr ) ) {
+		if ( ! $this->is_empty( $attr ) ) {
 			return $attr;
 		} else {
 			return $default;
