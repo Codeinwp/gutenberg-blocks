@@ -10,11 +10,10 @@ domReady( () => {
 	sliders.forEach( slider => {
 		const options = omit({ ...slider.dataset }, [ 'autoplay' ]);
 		Object.keys( options ).map( option => options[option] = Number( options[option]) );
-
 		new Glide( `#${ slider.id }`, {
 			type: 'carousel',
 			keyboard: true,
-			autoplay: slider.dataset.autoplay ? 2000 : false,
+			autoplay: 'true' === slider.dataset.autoplay ? 2000 : false,
 			hoverpause: true,
 			...options,
 			breakpoints: {
