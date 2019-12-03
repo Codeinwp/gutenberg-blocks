@@ -92,7 +92,7 @@ class SizingControl extends Component {
 												</div>
 											) }
 										/>
-									)}
+									) }
 
 									{ i.label && (
 										<label

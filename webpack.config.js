@@ -13,8 +13,11 @@ module.exports = {
 			'./src/plugins/registerPlugin.js',
 			...glob.sync( './src/blocks/**/index.js' )
 		],
-		frontend: [
-			...glob.sync( './src/frontend/**/*.js' )
+		maps: [
+			...glob.sync( './src/frontend/google-map/index.js' )
+		],
+		slider: [
+			...glob.sync( './src/frontend/slider/index.js' )
 		]
 	},
 	externals: {
