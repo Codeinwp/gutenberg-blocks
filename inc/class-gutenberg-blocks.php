@@ -76,7 +76,15 @@ class GutenbergBlocks {
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
-			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor' ),
+			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs' ),
+			$version,
+			true
+		);
+
+		wp_enqueue_script(
+			'glidejs',
+			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.min.js',
+			array(),
 			$version,
 			true
 		);
@@ -96,6 +104,16 @@ class GutenbergBlocks {
 			plugin_dir_url( $this->get_dir() ) . 'build/edit-blocks.css',
 			array( 'wp-edit-blocks' ),
 			$version
+		);
+
+		wp_enqueue_style(
+			'glidejs-core',
+			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.core.min.css'
+		);
+
+		wp_enqueue_style(
+			'glidejs-theme',
+			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.theme.min.css'
 		);
 	}
 
@@ -125,6 +143,7 @@ class GutenbergBlocks {
 
 		$has_map = false;
 		$has_chart = false;
+		$has_slider = false;
 
 		if ( is_singular() ) {
 			if ( has_block( 'themeisle-blocks/google-map' ) ) {
@@ -133,6 +152,10 @@ class GutenbergBlocks {
 
 			if ( has_block( 'themeisle-blocks/chart-pie' ) ) {
 				$has_chart = true;
+			}
+
+			if ( has_block( 'themeisle-blocks/slider' ) ) {
+				$has_slider = true;
 			}
 		} else {
 			$posts = wp_list_pluck( $wp_query->posts, 'ID' );
@@ -144,6 +167,10 @@ class GutenbergBlocks {
 
 				if ( has_block( 'themeisle-blocks/chart-pie' ) ) {
 					$has_chart = true;
+				}
+
+				if ( has_block( 'themeisle-blocks/slider' ) ) {
+					$has_slider = true;
 				}
 			}
 		}
@@ -163,7 +190,7 @@ class GutenbergBlocks {
 
 			wp_enqueue_script(
 				'themeisle-gutenberg-google-maps',
-				plugin_dir_url( $this->get_dir() ) . 'build/frontend.js',
+				plugin_dir_url( $this->get_dir() ) . 'build/maps.js',
 				'',
 				$version,
 				true
@@ -175,6 +202,34 @@ class GutenbergBlocks {
 				array( 'themeisle-gutenberg-google-maps' ),
 				'',
 				true
+			);
+		}
+
+		if ( $has_slider ) {
+			wp_enqueue_script(
+				'glidejs',
+				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.min.js',
+				array(),
+				$version,
+				true
+			);
+	
+			wp_enqueue_script(
+				'themeisle-gutenberg-slider',
+				plugin_dir_url( $this->get_dir() ) . 'build/slider.js',
+				array( 'glidejs', 'wp-dom-ready', 'lodash' ),
+				$version,
+				true
+			);
+	
+			wp_enqueue_style(
+				'glidejs-core',
+				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.core.min.css'
+			);
+	
+			wp_enqueue_style(
+				'glidejs-theme',
+				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.theme.min.css'
 			);
 		}
 	}

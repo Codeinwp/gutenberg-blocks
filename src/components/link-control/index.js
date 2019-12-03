@@ -231,7 +231,7 @@ class LinkControl extends Component {
 								) ) }
 							</div>
 						</Popover>
-					)}
+					) }
 
 					{ undefined !== this.props.children && (
 						<IconButton

@@ -124,6 +124,9 @@ class Block_Frontend extends Base_CSS {
 
 		if ( sizeof( $fonts_list ) > 0 ) {
 			foreach( $fonts_list as $font ) {
+				if ( empty( $font['fontfamily'] ) ) {
+					continue;
+				}
 				$item = str_replace( ' ', '+', $font['fontfamily'] );
 				if ( sizeof( $font['fontvariant'] ) > 0 ) {
 					$item .= ':' . implode( ',', $font['fontvariant'] );
@@ -131,7 +134,9 @@ class Block_Frontend extends Base_CSS {
 				array_push( $fonts, $item );
 			}
 
-			wp_enqueue_style( 'themeisle-gutenberg-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ) );
+			if ( sizeof( $fonts ) > 0 ) {
+				wp_enqueue_style( 'themeisle-gutenberg-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ) );
+			}
 		}
 	}
 
