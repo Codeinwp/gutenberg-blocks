@@ -61,10 +61,10 @@ class Editor extends Component {
 		};
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		if ( this.props.attributes.id === undefined || this.props.attributes.id.substr( this.props.attributes.id.length - 8 ) !== this.props.clientId.substr( 0, 8 ) ) {
 			const instanceId = `wp-block-themeisle-blocks-slider-${ this.props.clientId.substr( 0, 8 ) }`;
-			this.props.setAttributes({ id: instanceId });
+			await this.props.setAttributes({ id: instanceId });
 		}
 
 		if ( this.props.attributes.images.length ) {
