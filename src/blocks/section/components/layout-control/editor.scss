@@ -31,7 +31,7 @@
 
 	.wp-block-themeisle-blocks-advanced-column-layout {
 		cursor: pointer;
-		width: 50%;
+		width: calc( 100% / 3 );
 		display: inline-block;
 		padding: 5px 5px 0px;
 
@@ -42,7 +42,7 @@
 		&:hover {
 
 			svg {
-				fill: #6d7882;
+				fill: #0075af;
 			}
 		}
 
