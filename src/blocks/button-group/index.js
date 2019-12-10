@@ -923,7 +923,7 @@ registerBlockType( 'themeisle-blocks/button-group', {
 									</PanelBody>
 
 									<PanelBody
-										title={ __( 'Padding' ) }
+										title={ __( 'Spacing' ) }
 										initialOpen={ false }
 									>
 										<SizingControl

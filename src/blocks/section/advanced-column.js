@@ -1165,7 +1165,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 
 						<Fragment>
 							<PanelBody
-								title={ __( 'Padding & Margin' ) }
+								title={ __( 'Spacing' ) }
 							>
 								<ResponsiveControl
 									label={ 'Padding' }

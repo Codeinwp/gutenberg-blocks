@@ -1237,7 +1237,7 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 							</PanelBody>
 
 							<PanelBody
-								title={ __( 'Padding & Margin' ) }
+								title={ __( 'Spacing' ) }
 								initialOpen={ false }
 							>
 								<ResponsiveControl

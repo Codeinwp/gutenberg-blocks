@@ -140,7 +140,7 @@ class Editor extends Component {
 	}
 
 	componentDidUpdate( prevProps ) {
-		if ( this.props.isSelected !== prevProps.isSelected && false !== this.state.isAPISaved ) {
+		if ( this.props.isSelected !== prevProps.isSelected && false !== this.state.isAPISaved && undefined !== window.google ) {
 			const isSelected = this.props.isSelected;
 
 			this.map.setOptions({

@@ -2027,7 +2027,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 							</PanelBody>
 
 							<PanelBody
-								title={ __( 'Padding & Margin' ) }
+								title={ __( 'Spacing' ) }
 								initialOpen={ false }
 							>
 								<ResponsiveControl
@@ -2827,7 +2827,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 
 						<Fragment>
 							<PanelBody
-								title={ __( 'Section Visibility' ) }
+								title={ __( 'Responsive' ) }
 							>
 								<ToggleControl
 									label={ 'Hide this section in Desktop devices?' }
