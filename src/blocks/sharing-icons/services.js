@@ -3,7 +3,7 @@
  */
 const { __ } = wp.i18n;
 
-const socialList = {
+const SERVICES = {
 	facebook: {
 		label: __( 'Facebook' ),
 		icon: 'facebook-f'
@@ -30,4 +30,4 @@ const socialList = {
 	}
 };
 
-export default socialList;
+export default SERVICES;

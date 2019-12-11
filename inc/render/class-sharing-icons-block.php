@@ -132,13 +132,11 @@ class Sharing_Icons_Block extends Base_Block {
 			$class .=  ' ' . esc_attr( $attributes['className'] );
 		}
 
-		$style = '';
-
 		if ( isset( $attributes['align'] ) ) {
-			$style .= 'style="text-align: ' . $attributes['align'] .';"';
+			$class .= ' align' . esc_attr( $attributes['align'] );
 		}
 
-		$html = '<div class="' . esc_attr( $class ) . '" ' . $style . '>';
+		$html = '<div class="' . esc_attr( $class ) . '">';
 		foreach ( $this->social_attributes as $key => $icon ) {
 			if ( $key !== 'className' && $attributes[ $key ] == 1 ) {
 				$html .= '<a class="social-icon is-' . esc_html( $key ) . '" href="' . esc_url( $icon['url'] ) . '" target="_blank">';
