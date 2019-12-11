@@ -11,7 +11,13 @@ const {
 	Tooltip
 } = wp.components;
 
-const GradientButton = ({ title, firstColor, secondColor, isSelected, onChange }) => {
+const GradientButton = ({
+	title,
+	firstColor,
+	secondColor,
+	isSelected,
+	onChange
+}) => {
 	const optionButton = (
 		<button
 			type="button"

@@ -7,7 +7,7 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies
  */
-const { InnerBlocks } = wp.blockEditor || wp.editor;
+const { InnerBlocks } = wp.blockEditor;
 
 /**
  * Internal dependencies

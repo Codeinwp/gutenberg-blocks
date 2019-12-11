@@ -12,6 +12,10 @@
 		}
 	}
 
+	.components-placeholder__fieldset {
+		flex-direction: column;
+	}
+
 	.wp-block-themeisle-layout-picker {
 		display: flex;
 		justify-content: center;

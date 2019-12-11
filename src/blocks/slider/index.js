@@ -23,7 +23,7 @@ const {
 	SVG
 } = wp.components;
 
-const { RichText } = wp.blockEditor || wp.editor;
+const { RichText } = wp.blockEditor;
 
 /**
  * Internal dependencies

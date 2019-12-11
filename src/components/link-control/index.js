@@ -25,8 +25,9 @@ const {
 const { withSelect } = wp.data;
 
 const {
-	Component,
-	createRef
+	useEffect,
+	useRef,
+	useState
 } = wp.element;
 
 const {
@@ -43,61 +44,54 @@ const { addQueryArgs } = wp.url;
  */
 import './editor.scss';
 
-class LinkControl extends Component {
-	constructor() {
-		super( ...arguments );
-		this.bindSuggestionNode = this.bindSuggestionNode.bind( this );
-		this.updateSuggestions = this.updateSuggestions.bind( this );
-		this.onChangeValue = this.onChangeValue.bind( this );
-		this.clickSuggestion = this.clickSuggestion.bind( this );
-		this.onKeyDown = this.onKeyDown.bind( this );
-		this.autocompleteRef = this.autocompleteRef || createRef();
+const LinkControl = ({
+	instanceId,
+	label,
+	help,
+	placeholder,
+	value,
+	className,
+	onChange,
+	children,
+	fetchLinkSuggestions
+}) => {
+	useEffect( () => {
+		if ( showSuggestions && null !== selectedSuggestion && undefined !== suggestionNodes[ selectedSuggestion ] && ! scrollingIntoView && null !== autocompleteRef.current ) {
+			scrollingIntoView = true;
 
-		this.scrollingIntoView = false;
-		this.suggestionNodes = [];
-
-		this.state = {
-			isOpen: false,
-			showSuggestions: false,
-			selectedSuggestion: null,
-			suggestions: []
-		};
-	}
-
-	componentDidUpdate() {
-		if ( this.state.showSuggestions && null !== this.state.selectedSuggestion && ! this.scrollingIntoView && null !== this.autocompleteRef.current ) {
-			this.scrollingIntoView = true;
-
-			scrollIntoView( this.suggestionNodes[ this.state.selectedSuggestion ], this.autocompleteRef.current, {
+			scrollIntoView( suggestionNodes[ selectedSuggestion ], autocompleteRef.current, {
 				onlyScrollIfNeeded: true
 			});
 
 			setTimeout( () => {
-				this.scrollingIntoView = false;
+				scrollingIntoView = false;
 			}, 100 );
 		}
-	}
+	});
 
-	componentWillUnmount() {
-		delete this.suggestionsRequest;
-	}
+	const autocompleteRef = useRef( null );
+	let scrollingIntoView = false;
+	let suggestionNodes = [];
+	let suggestionsRequest = [];
 
-	bindSuggestionNode( index ) {
+	const [ isOpen, setOpen ] = useState( false );
+	const [ showSuggestions, setShowSuggestions ] = useState( false );
+	const [ selectedSuggestion, setSelectedSuggestion ] = useState( null );
+	const [ suggestions, setSuggestions ] = useState([]);
+
+	const bindSuggestionNode = index => {
 		return ( ref ) => {
-			this.suggestionNodes[ index ] = ref;
+			suggestionNodes[ index ] = ref;
 		};
-	}
+	};
 
-	updateSuggestions( value ) {
-		const { fetchLinkSuggestions } = this.props;
-
+	const updateSuggestions = value => {
 		if ( 1 >= value.length || /^https?:/.test( value ) ) {
-			this.setState({ showSuggestions: false });
-
+			setShowSuggestions( false );
 			return;
 		}
 
-		this.setState({ showSuggestions: true });
+		setShowSuggestions( true );
 
 		let request;
 
@@ -114,139 +108,136 @@ class LinkControl extends Component {
 		}
 
 		request.then( ( suggestions ) => {
-			if ( this.suggestionsRequest !== request ) {
+			if ( suggestionsRequest !== request ) {
 				return;
 			}
 
-			this.setState({ suggestions });
+			setSuggestions( suggestions );
+			setSelectedSuggestion( null );
 		});
 
-		this.suggestionsRequest = request;
-	}
+		suggestionsRequest = request;
+	};
 
-	onChangeValue( event ) {
-		this.props.onChange( event.target.value );
-		if ( ! this.props.suggestions ) {
-			this.updateSuggestions( event.target.value );
-		}
-	}
+	const onChangeValue = event => {
+		onChange( event.target.value );
+		updateSuggestions( event.target.value );
+	};
 
-	clickSuggestion( value ) {
-		this.props.onChange( value );
-		this.setState({ showSuggestions: false });
-	}
+	const clickSuggestion = value => {
+		onChange( value );
+		setShowSuggestions( false );
+	};
 
-	onKeyDown( event ) {
-		if ( this.state.showSuggestions && 1 <= this.state.suggestions.length ) {
+	const onKeyDown = event => {
+		if ( showSuggestions && 1 <= suggestions.length ) {
 
-			const suggestion = this.state.suggestions[ this.state.selectedSuggestion ];
+			const suggestion = suggestions[ selectedSuggestion ];
 
 			switch ( event.keyCode ) {
 			case UP: {
 				event.stopPropagation();
 				event.preventDefault();
-				const previousIndex = ! this.state.selectedSuggestion ? this.state.suggestions.length - 1 : this.state.selectedSuggestion - 1;
-				this.setState({ selectedSuggestion: previousIndex });
+				const previousIndex = ! selectedSuggestion ? suggestions.length - 1 : selectedSuggestion - 1;
+				setSelectedSuggestion( previousIndex );
 				break;
 			}
 			case DOWN: {
 				event.stopPropagation();
 				event.preventDefault();
-				const nextIndex = null === this.state.selectedSuggestion || ( this.state.selectedSuggestion === this.state.suggestions.length - 1 ) ? 0 : this.state.selectedSuggestion + 1;
-				this.setState({ selectedSuggestion: nextIndex });
+				const nextIndex = null === selectedSuggestion || ( selectedSuggestion === suggestions.length - 1 ) ? 0 : selectedSuggestion + 1;
+				setSelectedSuggestion( nextIndex );
 				break;
 			}
 			case TAB: {
-				if ( null !== this.state.selectedSuggestion ) {
+				if ( null !== selectedSuggestion ) {
 					event.stopPropagation();
-					this.clickSuggestion( suggestion.url );
+					clickSuggestion( suggestion.url );
 				}
 				break;
 			}
 			case ENTER: {
-				if ( null !== this.state.selectedSuggestion ) {
+				if ( null !== selectedSuggestion ) {
 					event.stopPropagation();
-					this.clickSuggestion( suggestion.url );
+					clickSuggestion( suggestion.url );
 				}
 				break;
 			}
 			}
 		}
-	}
+	};
 
-	render() {
-		const id = `inspector-link-control-${ this.props.instanceId }`;
+	const id = `inspector-link-control-${ instanceId }`;
 
-		return (
-			<BaseControl
-				id={ id }
-				label={ this.props.label }
-				help={ this.props.help }
-				className={ this.props.className }
+	return (
+		<BaseControl
+			label={ label }
+			id={ id }
+			help={ help }
+			className={ className }
+		>
+			<div
+				className={ classnames(
+					'wp-block-themeisle-blocks-link-control-wrapper',
+					{ 'is-open': isOpen }
+				) }
 			>
-				<div
+				<input
+					type="url"
+					placeholder={ placeholder }
+					value={ value }
+					onChange={ onChangeValue }
+					onKeyDown={ onKeyDown }
 					className={ classnames(
-						'wp-block-themeisle-blocks-link-control-wrapper',
-						{ 'is-open': this.state.isOpen }
+						'components-text-control__input',
+						{ 'is-full': undefined === children }
 					) }
-				>
-					<input
-						type="url"
-						placeholder={ this.props.placeholder }
-						value={ this.props.value }
-						onChange={ this.onChangeValue }
-						onKeyDown={ this.onKeyDown }
-						className={ classnames(
-							'components-text-control__input',
-							{ 'is-full': undefined === this.props.children }
-						) }
-					/>
+				/>
 
-					{ ( this.state.showSuggestions && 0 < this.state.suggestions.length ) && (
-						<Popover
-							position="bottom"
-							noArrow
-							focusOnMount={ false }
-							className="wp-block-themeisle-blocks-link-control-popover"
+				{ ( showSuggestions && 0 < suggestions.length ) && (
+					<Popover
+						position="bottom"
+						noArrow
+						focusOnMount={ false }
+						className="wp-block-themeisle-blocks-link-control-popover"
+					>
+						<div
+							ref={ autocompleteRef }
+							className="wp-block-themeisle-blocks-link-control-popover-container"
 						>
-							<div
-								ref={ this.autocompleteRef }
-								className="wp-block-themeisle-blocks-link-control-popover-container"
-							>
-								{ this.state.suggestions.map( ( suggestion, index ) => (
-									<button
-										key={ suggestion.id }
-										role="option"
-										tabIndex="-1"
-										ref={ this.bindSuggestionNode( index ) }
-										className={ classnames(
-											'block-editor-url-input__suggestion',
-											'editor-url-input__suggestion',
-											{ 'is-selected': index === this.state.selectedSuggestion  }
-										) }
-										onClick={ () => this.clickSuggestion( suggestion.url ) }
-									>
-										{ suggestion.title || __( 'Untitled Post' ) }
-									</button>
-								) ) }
-							</div>
-						</Popover>
-					) }
+							{ suggestions.map( ( suggestion, index ) => (
+								<button
+									key={ suggestion.id }
+									role="option"
+									tabIndex="-1"
+									ref={ bindSuggestionNode( index ) }
+									className={ classnames(
+										'block-editor-url-input__suggestion',
+										'editor-url-input__suggestion',
+										{ 'is-selected': index === selectedSuggestion  }
+									) }
+									onClick={ () => clickSuggestion( suggestion.url ) }
+								>
+									{ suggestion.title || __( 'Untitled Post' ) }
+								</button>
+							) ) }
+						</div>
+					</Popover>
+				) }
 
-					{ undefined !== this.props.children && (
-						<IconButton
-							icon="admin-generic"
-							tooltip={ __( 'Link Options' ) }
-							onClick={ () => this.setState({ isOpen: ! this.state.isOpen }) }
-						/>
-					) }
-				</div>
+				{ undefined !== children && (
+					<IconButton
+						icon="admin-generic"
+						tooltip={ __( 'Link Options' ) }
+						onClick={ () => setOpen( ! isOpen ) }
+					/>
+				) }
+			</div>
 
-				{ this.state.isOpen && this.props.children }
-			</BaseControl>
-		);
-	}
-}
+			{ isOpen && children }
+		</BaseControl>
+	);
+};
 
 export default compose(
 	withInstanceId,

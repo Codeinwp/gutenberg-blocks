@@ -46,7 +46,7 @@ const {
 	ColorPalette,
 	InspectorControls,
 	RichText
-} = wp.blockEditor || wp.editor;
+} = wp.blockEditor;
 
 const { Fragment } = wp.element;
 
@@ -495,8 +495,6 @@ registerBlockType( 'themeisle-blocks/button-group', {
 										isSelect={ true }
 										valueVariant={ fontVariant }
 										onChangeFontVariant={ changeFontVariant }
-										valueStyle={ fontStyle }
-										onChangeFontStyle={ changeFontStyle }
 										valueStyle={ fontStyle }
 										onChangeFontStyle={ changeFontStyle }
 										valueTransform={ textTransform }
@@ -1003,8 +1001,6 @@ registerBlockType( 'themeisle-blocks/button-group', {
 									onChangeFontFamily={ changeFontFamily }
 									valueVariant={ fontVariant }
 									onChangeFontVariant={ changeFontVariant }
-									valueStyle={ fontStyle }
-									onChangeFontStyle={ changeFontStyle }
 									valueStyle={ fontStyle }
 									onChangeFontStyle={ changeFontStyle }
 									valueTransform={ textTransform }

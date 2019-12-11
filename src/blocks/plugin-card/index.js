@@ -23,7 +23,7 @@ const {
 	withState
 } = wp.compose;
 
-const { BlockControls } = wp.blockEditor || wp.editor;
+const { BlockControls } = wp.blockEditor;
 
 const { withSelect } = wp.data;
 

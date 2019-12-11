@@ -13,7 +13,7 @@ const {
 
 const { withInstanceId } = wp.compose;
 
-const { ColorPalette } = wp.blockEditor || wp.editor;
+const { ColorPalette } = wp.blockEditor;
 
 const { Fragment } = wp.element;
 
@@ -21,11 +21,16 @@ const { Fragment } = wp.element;
  * Internal dependencies
  */
 import './editor.scss';
-
 import GradientButton from './gradient-button.js';
 import gradients from './gradients.js';
 
-const GradientPickerControl = ({ label, instanceId, value, customGradient = true, onChange }) => {
+const GradientPickerControl = ({
+	label,
+	instanceId,
+	value,
+	customGradient = true,
+	onChange
+}) => {
 	const id = `inspector-gradient-picker-control-${ instanceId }`;
 
 	const onChangeValue = ({ firstColor = value.firstColor, firstLocation = value.firstLocation, secondColor = value.secondColor, secondLocation = value.secondLocation, type = value.type, angle = value.angle, position = value.position }) => {

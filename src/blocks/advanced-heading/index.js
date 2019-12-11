@@ -41,7 +41,7 @@ const {
 	ColorPalette,
 	InspectorControls,
 	RichText
-} = wp.blockEditor || wp.editor;
+} = wp.blockEditor;
 
 const { Fragment } = wp.element;
 

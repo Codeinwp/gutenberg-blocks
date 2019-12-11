@@ -22,7 +22,13 @@ const { withInstanceId } = wp.compose;
  */
 import './editor.scss';
 
-const ResponsiveControl = ({ label, instanceId, changeViewType, view, children }) => {
+const ResponsiveControl = ({
+	instanceId,
+	label,
+	changeViewType,
+	view,
+	children
+}) => {
 	const id = `inspector-responsive-control-${ instanceId }`;
 
 	return (

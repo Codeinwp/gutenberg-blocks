@@ -45,7 +45,7 @@ const {
 	InspectorAdvancedControls,
 	InspectorControls,
 	MediaPlaceholder
-} = wp.blockEditor || wp.editor;
+} = wp.blockEditor;
 
 const { Fragment } = wp.element;
 
@@ -574,7 +574,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 	edit: compose([
 
 		withDispatch( ( dispatch ) => {
-			const { updateBlockAttributes } = dispatch( 'core/block-editor' ) || dispatch( 'core/editor' );
+			const { updateBlockAttributes } = dispatch( 'core/block-editor' );
 
 			return {
 				updateBlockAttributes
@@ -583,7 +583,7 @@ registerBlockType( 'themeisle-blocks/advanced-columns', {
 
 		withSelect( ( select, props ) => {
 			const { clientId } = props;
-			const { getBlock } = select( 'core/block-editor' ) || select( 'core/editor' );
+			const { getBlock } = select( 'core/block-editor' );
 			const sectionBlock = getBlock( clientId );
 
 			return {

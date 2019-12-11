@@ -20,121 +20,86 @@ const {
 	withDispatch
 } = wp.data;
 
-const { Component } = wp.element;
+const {
+	useEffect,
+	useState
+} = wp.element;
 
 /**
  * Internal dependencies
  */
 import './editor.scss';
-
 import Header from './components/Header.js';
 import Notices from './components/Notices.js';
 import TemplatesList from './components/TemplatesList.js';
 
-class Library extends Component {
-	constructor() {
-		super( ...arguments );
-		this.changeTab = this.changeTab.bind( this );
-		this.togglePreview = this.togglePreview.bind( this );
-		this.removeError = this.removeError.bind( this );
-		this.removeMissing = this.removeMissing.bind( this );
-		this.selectCategory = this.selectCategory.bind( this );
-		this.changeSearch = this.changeSearch.bind( this );
-		this.changeClientId = this.changeClientId.bind( this );
-		this.validateBlocks = this.validateBlocks.bind( this );
-		this.importTemplate = this.importTemplate.bind( this );
+const Library = ({
+	close,
+	availableBlocks,
+	importBlocks
+}) => {
+	useEffect( () => {
+		const fetchData = async() => {
+			let data = await apiFetch({ path: 'themeisle-gutenberg-blocks/v1/fetch_templates' });
 
-		this.state = {
-			tab: 'block',
-			isLoaded: false,
-			isError: false,
-			isMissing: false,
-			selectedCategory: 'all',
-			search: '',
-			blocksCategories: [],
-			templateCategories: [],
-			data: [],
-			preview: false,
-			selectedTemplate: null,
-			missingBlocks: []
+			let blocksCategories = [];
+			let templateCategories = [];
+
+			data.map( i => {
+				if ( i.categories && i.template_url ) {
+					if ( 'block' === i.type ) {
+						i.categories.map( o => {
+							blocksCategories.push( o );
+						});
+					}
+
+					if ( 'template' === i.type ) {
+						i.categories.map( o => {
+							templateCategories.push( o );
+						});
+					}
+				}
+			});
+
+			blocksCategories = blocksCategories.filter( ( item, i, ar ) => ar.indexOf( item ) === i ).sort();
+			templateCategories = templateCategories.filter( ( item, i, ar ) => ar.indexOf( item ) === i ).sort();
+
+			setBlocksCategories( blocksCategories );
+			setTemplateCategories( templateCategories );
+			setData( data );
+			setLoaded( true );
 		};
-	}
 
-	async componentDidMount() {
-		let data = await apiFetch({ path: 'themeisle-gutenberg-blocks/v1/fetch_templates' });
+		fetchData();
+	}, []);
 
-		let blocksCategories = [];
-		let templateCategories = [];
+	const [ tab, setTab ] = useState( 'block' );
+	const [ isLoaded, setLoaded ] = useState( false );
+	const [ isError, setError ] = useState( false );
+	const [ isMissing, setMissing ] = useState( false );
+	const [ selectedCategory, setSelectedCategory ] = useState( 'all' );
+	const [ search, setSearch ] = useState( '' );
+	const [ blocksCategories, setBlocksCategories ] = useState([]);
+	const [ templateCategories, setTemplateCategories ] = useState([]);
+	const [ data, setData ] = useState([]);
+	const [ preview, setPreview ] = useState( false );
+	const [ selectedTemplate, setSelectedTemplate ] = useState( null );
+	const [ missingBlocks, setMissingBlocks ] = useState([]);
 
-		data.map( i => {
-			if ( i.categories && i.template_url ) {
-				if ( 'block' === i.type ) {
-					i.categories.map( o => {
-						blocksCategories.push( o );
-					});
-				}
+	const changeTab = value => {
+		setTab( value );
+		setSelectedCategory( 'all' );
+		setSearch( '' );
+	};
 
-				if ( 'template' === i.type ) {
-					i.categories.map( o => {
-						templateCategories.push( o );
-					});
-				}
-			}
-		});
+	const togglePreview = ( template = null ) => {
+		setPreview( ! preview );
+		setSelectedTemplate( template );
+	};
 
-		blocksCategories = blocksCategories.filter( ( item, i, ar ) => ar.indexOf( item ) === i ).sort();
-		templateCategories = templateCategories.filter( ( item, i, ar ) => ar.indexOf( item ) === i ).sort();
-
-		this.setState({
-			blocksCategories,
-			templateCategories,
-			data,
-			isLoaded: true
-		});
-	}
-
-	changeTab( value ) {
-		this.setState({
-			tab: value,
-			selectedCategory: 'all',
-			search: ''
-		});
-	}
-
-	togglePreview( template = null ) {
-		this.setState({
-			preview: ! this.state.preview,
-			selectedTemplate: template
-		});
-	}
-
-	removeError() {
-		this.setState({
-			isError: false
-		});
-	}
-
-	removeMissing() {
-		this.setState({
-			isMissing: false
-		});
-	}
-
-	selectCategory( value ) {
-		this.setState({
-			selectedCategory: value
-		});
-	}
-
-	changeSearch( value ) {
-		this.setState({
-			search: value
-		});
-	}
-
-	changeClientId( data ) {
+	const changeClientId = data => {
 		if ( Array.isArray( data ) ) {
-			data.map( i => this.changeClientId( i ) );
+			data.map( i => changeClientId( i ) );
 		} else if ( 'object' === typeof data ) {
 			Object.keys( data ).map( k => {
 				if ( 'clientId' === k ) {
@@ -143,25 +108,25 @@ class Library extends Component {
 
 				if ( 'innerBlocks' === k ) {
 					data[k].map( i => {
-						this.changeClientId( i );
+						changeClientId( i );
 					});
 				}
 			});
 		}
 
 		return data;
-	}
+	};
 
-	validateBlocks( data ) {
+	const validateBlocks = data => {
 		let status = false;
 		let missingBlocks = [];
 
 		if ( Array.isArray( data ) ) {
-			data.map( i => this.validateBlocks( i ) );
+			data.map( i => validateBlocks( i ) );
 		} else if ( 'object' === typeof data ) {
 			Object.keys( data ).some( k => {
 				if ( 'name' === k ) {
-					const exists = this.props.availableBlocks.find( i => {
+					const exists = availableBlocks.find( i => {
 						return i.name === data.name;
 					});
 
@@ -172,106 +137,95 @@ class Library extends Component {
 				}
 
 				if ( 'innerBlocks' === k ) {
-					data[k].map( i => this.validateBlocks( i  ) );
+					data[k].map( i => validateBlocks( i  ) );
 				}
 			});
 		}
 
-		missingBlocks = this.state.missingBlocks
+		missingBlocks = missingBlocks
 			.concat( missingBlocks )
 			.filter( ( v, i, a ) => a.indexOf( v ) === i );
 
-		this.setState({ missingBlocks });
+		setMissingBlocks( missingBlocks );
 
 		return status;
-	}
+	};
 
-	async importTemplate( url ) {
-		this.setState({
-			preview: false,
-			isLoaded: false,
-			missingBlocks: []
-		});
+	const importTemplate = async url => {
+		setPreview( false );
+		setLoaded( false );
+		setMissingBlocks([]);
 
 		let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ url }` });
 
-		data = this.changeClientId( data );
+		data = changeClientId( data );
 
 		if ( null !== data ) {
-			this.setState({
-				isLoaded: true
-			});
+			setLoaded( true );
 
-			if ( ! this.validateBlocks( data ) ) {
-				this.props.import( data );
+			if ( ! validateBlocks( data ) ) {
+				importBlocks( data );
 			} else {
-				this.setState({
-					isMissing: true
-				});
+				setMissing( true );
 			}
 		} else {
-			this.setState({
-				isLoaded: true,
-				isError: true
-			});
+			setLoaded( true );
+			setError( true );
 		}
-	}
+	};
 
-	render() {
+	return (
+		<Modal
+			className={ classnames(
+				'wp-block-themeisle-library-modal',
+				{ 'is-preview': preview }
+			) }
+			onRequestClose={ close }
+			isDismissable={ false }
+			shouldCloseOnClickOutside={ false }
+		>
+			<Header
+				preview={ preview }
+				tab={ tab }
+				changeTab={ changeTab }
+				blocksCategories={ blocksCategories }
+				templateCategories={ templateCategories }
+				selectedTemplate={ selectedTemplate }
+				selectedCategory={ selectedCategory }
+				search={ search }
+				togglePreview={ togglePreview }
+				close={ close }
+				importTemplate={ importTemplate }
+				selectCategory={ e => setSelectedCategory( e ) }
+				changeSearch={ e => setSearch( e ) }
+			/>
 
-		return (
-			<Modal
-				className={ classnames(
-					'wp-block-themeisle-library-modal',
-					{ 'is-preview': this.state.preview }
-				) }
-				onRequestClose={ this.props.close }
-				isDismissable={ false }
-				shouldCloseOnClickOutside={ false }
-			>
-				<Header
-					preview={ this.state.preview }
-					tab={ this.state.tab }
-					changeTab={ this.changeTab }
-					blocksCategories={ this.state.blocksCategories }
-					templateCategories={ this.state.templateCategories }
-					selectedTemplate={ this.state.selectedTemplate }
-					selectedCategory={ this.state.selectedCategory }
-					search={ this.state.search }
-					togglePreview={ this.togglePreview }
-					close={ this.props.close }
-					importTemplate={ this.importTemplate }
-					selectCategory={ this.selectCategory }
-					changeSearch={ this.changeSearch }
-				/>
+			<Notices
+				isError={ isError }
+				isMissing={ isMissing }
+				missingBlocks={ missingBlocks }
+				removeError={ () => setError( false ) }
+				removeMissing={ () => setMissing( false ) }
+			/>
 
-				<Notices
-					isError={ this.state.isError }
-					isMissing={ this.state.isMissing }
-					missingBlocks={ this.state.missingBlocks }
-					removeError={ this.removeError }
-					removeMissing={ this.removeMissing }
-				/>
-
-				<TemplatesList
-					preview={ this.state.preview }
-					isLoaded={ this.state.isLoaded }
-					data={ this.state.data }
-					tab={ this.state.tab }
-					selectedTemplate={ this.state.selectedTemplate }
-					selectedCategory={ this.state.selectedCategory }
-					search={ this.state.search }
-					togglePreview={ this.togglePreview }
-					importTemplate={ this.importTemplate }
-				/>
-			</Modal>
-		);
-	}
-}
+			<TemplatesList
+				preview={ preview }
+				isLoaded={ isLoaded }
+				data={ data }
+				tab={ tab }
+				selectedTemplate={ selectedTemplate }
+				selectedCategory={ selectedCategory }
+				search={ search }
+				togglePreview={ togglePreview }
+				importTemplate={ importTemplate }
+			/>
+		</Modal>
+	);
+};
 
 export default compose(
 	withSelect( ( select, { clientId }) => {
-		const { getBlock } = select( 'core/block-editor' ) || select( 'core/editor' );
+		const { getBlock } = select( 'core/block-editor' );
 		const { getBlockTypes } = select( 'core/blocks' );
 		const block = getBlock( clientId );
 		const availableBlocks = getBlockTypes();
@@ -282,9 +236,9 @@ export default compose(
 	}),
 
 	withDispatch( ( dispatch, { block }) => {
-		const { replaceBlocks } = dispatch( 'core/block-editor' ) || dispatch( 'core/editor' );
+		const { replaceBlocks } = dispatch( 'core/block-editor' );
 		return {
-			import: ( content ) => replaceBlocks(
+			importBlocks: ( content ) => replaceBlocks(
 				block.clientId,
 				content
 			)

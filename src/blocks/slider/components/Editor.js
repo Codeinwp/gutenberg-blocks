@@ -17,7 +17,7 @@ const {
 const {
 	InspectorControls,
 	MediaPlaceholder
-} = wp.blockEditor || wp.editor;
+} = wp.blockEditor;
 
 const {
 	PanelBody,

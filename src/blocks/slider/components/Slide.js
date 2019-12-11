@@ -8,7 +8,7 @@ import classnames from 'classnames';
  */
 const { __ } = wp.i18n;
 
-const { RichText } = wp.blockEditor || wp.editor;
+const { RichText } = wp.blockEditor;
 
 const { IconButton } = wp.components;
 
