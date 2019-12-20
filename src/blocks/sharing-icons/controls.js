@@ -28,8 +28,8 @@ const Controls = ({ attributes, setAttributes }) => {
 	};
 
 	return (
-		<BlockControls key="toolbar-controls">
-			<Toolbar className="components-toolbar">
+		<BlockControls>
+			<Toolbar>
 				{ Object.keys( socialList ).map( ( item, i ) => {
 					let prop = attributes[item];
 
