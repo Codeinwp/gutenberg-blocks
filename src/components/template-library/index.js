@@ -29,9 +29,9 @@ const {
  * Internal dependencies
  */
 import './editor.scss';
-import Header from './components/Header.js';
-import Notices from './components/Notices.js';
-import TemplatesList from './components/TemplatesList.js';
+import Header from './components/header.js';
+import Notices from './components/notices.js';
+import TemplatesList from './components/templates-list.js';
 
 const Library = ({
 	close,

@@ -13,7 +13,7 @@ const { Spinner } = wp.components;
 /**
  * Internal dependencies
  */
-import Template from './Template.js';
+import Template from './template.js';
 
 const TemplatesList = ({
 	preview,
