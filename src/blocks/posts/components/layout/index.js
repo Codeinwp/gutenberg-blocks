@@ -4,7 +4,13 @@
 import Grid from './grid.js';
 import List from './list.js';
 
-const Layout = ({ className, attributes, posts, categoriesList, authors }) => {
+const Layout = ({
+	className,
+	attributes,
+	posts,
+	categoriesList,
+	authors
+}) => {
 	if ( 'grid' === attributes.style ) {
 		return (
 			<Grid
