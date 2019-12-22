@@ -36,10 +36,6 @@ const Edit = ({
 	useEffect( () => {
 		initBlock();
 
-		if ( attributes.images.length ) {
-			initSlider();
-		}
-
 		return () => {
 			if ( attributes.images.length ) {
 				slider.destroy();
@@ -70,6 +66,10 @@ const Edit = ({
 		if ( attributes.id === undefined || attributes.id.substr( attributes.id.length - 8 ) !== clientId.substr( 0, 8 ) ) {
 			const instanceId = `wp-block-themeisle-blocks-slider-${ clientId.substr( 0, 8 ) }`;
 			await setAttributes({ id: instanceId });
+		}
+
+		if ( attributes.images.length ) {
+			initSlider();
 		}
 	};
 
