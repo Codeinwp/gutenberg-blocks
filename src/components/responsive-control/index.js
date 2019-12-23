@@ -49,14 +49,14 @@ const ResponsiveControl = ({
 								/>
 							) }
 							renderContent={ ({ onToggle }) => (
-								<div className="wp-block-themeisle-responsiveness-settings">
-									<div className="responsiveness-title">
+								<div className="wp-block-themeisle-blocks-responsive-control-settings">
+									<div className="wp-block-themeisle-blocks-responsive-control-settings-title">
 										{ __( 'Responsiveness Settings' ) }
 									</div>
 
 									<Button
 										className={ classnames(
-											'responsiveness-item',
+											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'desktop' === view }
 										) }
 										onClick={ () => {
@@ -72,7 +72,7 @@ const ResponsiveControl = ({
 
 									<Button
 										className={ classnames(
-											'responsiveness-item',
+											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'tablet' === view }
 										) }
 										onClick={ () => {
@@ -88,7 +88,7 @@ const ResponsiveControl = ({
 
 									<Button
 										className={ classnames(
-											'responsiveness-item',
+											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'mobile' === view }
 										) }
 										onClick={ () => {

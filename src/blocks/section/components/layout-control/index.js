@@ -58,14 +58,14 @@ const LayoutControl = ({ label, instanceId, onClick, layout, layoutTablet, layou
 								/>
 							) }
 							renderContent={ ({ onToggle }) => (
-								<div className="wp-block-themeisle-responsiveness-settings">
-									<div className="responsiveness-title">
+								<div className="wp-block-themeisle-blocks-responsive-control-settings">
+									<div className="wp-block-themeisle-blocks-responsive-control-settings-title">
 										{ __( 'Responsiveness Settings' ) }
 									</div>
 
 									<Button
 										className={ classnames(
-											'responsiveness-item',
+											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'desktop' === view }
 										) }
 										onClick={ () => {
@@ -81,7 +81,7 @@ const LayoutControl = ({ label, instanceId, onClick, layout, layoutTablet, layou
 
 									<Button
 										className={ classnames(
-											'responsiveness-item',
+											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'tablet' === view }
 										) }
 										onClick={ () => {
@@ -97,7 +97,7 @@ const LayoutControl = ({ label, instanceId, onClick, layout, layoutTablet, layou
 
 									<Button
 										className={ classnames(
-											'responsiveness-item',
+											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'mobile' === view }
 										) }
 										onClick={ () => {

@@ -72,7 +72,6 @@ const GoogleFontsControl = ({
 	}, []);
 
 	const [ fonts, setFonts ] = useState( null );
-	const [ font, setFont ] = useState([]);
 	const [ variants, setVariants ] = useState( null );
 	const [ search, setSearch ] = useState( '' );
 
@@ -102,12 +101,30 @@ const GoogleFontsControl = ({
 								})
 							] }
 							onChange={ e => {
+								let variants = [];
+
+								if ( '' === e ) {
+									variants = [
+										{
+											'label': __( 'Regular' ),
+											'value': 'regular'
+										},
+										{
+											'label': __( 'Italic' ),
+											'value': 'italic'
+										}
+									];
+									onChangeFontFamily( undefined );
+									onChangeFontVariant( undefined );
+									setVariants( variants );
+									return;
+								}
 								onChangeFontFamily( e );
 								onChangeFontVariant( 'regular' );
 
 								const font = fonts.find( i => e === i.family );
 
-								const variants = ( font.variants )
+								variants = ( font.variants )
 									.filter( o => false === o.includes( 'italic' ) )
 									.map( o => {
 										return o = {
@@ -116,7 +133,6 @@ const GoogleFontsControl = ({
 										};
 									});
 
-								setFont( font );
 								setVariants( variants );
 							} }
 						/>
@@ -146,8 +162,8 @@ const GoogleFontsControl = ({
 										<MenuItem
 											onClick={ () => {
 												onToggle();
-												onChangeFontFamily( '' );
-												setFont([]);
+												onChangeFontFamily( undefined );
+												onChangeFontVariant( undefined );
 												setVariants([]);
 												setSearch( '' );
 											}}
@@ -176,7 +192,6 @@ const GoogleFontsControl = ({
 																	};
 																});
 
-															setFont( i );
 															setVariants( variants );
 															setSearch( '' );
 														}}

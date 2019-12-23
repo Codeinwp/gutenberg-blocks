@@ -52,7 +52,7 @@ const GradientPickerControl = ({
 	return (
 		<div
 			id={ id }
-			className="wp-block-themeisle-blocks-responsive-control"
+			className="wp-block-themeisle-blocks-gradient-picker-control"
 		>
 			<div className="components-base-control__field">
 				{ label && (
@@ -64,7 +64,7 @@ const GradientPickerControl = ({
 					</div>
 				) }
 
-				<div className="wp-block-themeisle-blocks-responsive-control-presets">
+				<div className="wp-block-themeisle-blocks-gradient-picker-control-presets">
 					{ gradients.map( gradient => (
 						<GradientButton
 							title={ gradient.title }
@@ -75,11 +75,11 @@ const GradientPickerControl = ({
 						/>
 					) ) }
 
-					<div className="wp-block-themeisle-blocks-responsive-control-custom-wrapper">
+					<div className="wp-block-themeisle-blocks-gradient-picker-control-custom-wrapper">
 						{ customGradient && (
 							<Dropdown
-								className="wp-block-themeisle-blocks-responsive-control-dropdown-link-action"
-								contentClassName="wp-block-themeisle-blocks-responsive-control-dropdown-content"
+								className="wp-block-themeisle-blocks-gradient-picker-control-dropdown-link-action"
+								contentClassName="wp-block-themeisle-blocks-gradient-picker-control-dropdown-content"
 								renderToggle={ ({ isOpen, onToggle }) => (
 									<Button
 										aria-expanded={ isOpen }
@@ -166,7 +166,7 @@ const GradientPickerControl = ({
 						) }
 
 						<Button
-							className="wp-block-themeisle-blocks-responsive-control-clear"
+							className="wp-block-themeisle-blocks-gradient-picker-control-clear"
 							type="button"
 							isSmall
 							isDefault

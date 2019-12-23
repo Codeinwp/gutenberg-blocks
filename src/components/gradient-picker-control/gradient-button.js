@@ -23,7 +23,7 @@ const GradientButton = ({
 			type="button"
 			aria-pressed={ isSelected }
 			className={ classnames(
-				'wp-block-themeisle-blocks-responsive-control-option',
+				'wp-block-themeisle-blocks-gradient-picker-control-option',
 				{ 'is-active': isSelected }
 			) }
 			style={ {
@@ -34,7 +34,7 @@ const GradientButton = ({
 	);
 
 	return (
-		<div className="wp-block-themeisle-blocks-responsive-control-option-wrapper">
+		<div className="wp-block-themeisle-blocks-gradient-picker-control-option-wrapper">
 			{ title ?
 				( <Tooltip text={ title }>{ optionButton }</Tooltip> ) :
 				optionButton
