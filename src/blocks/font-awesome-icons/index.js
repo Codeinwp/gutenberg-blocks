@@ -10,7 +10,7 @@ const { registerBlockType } = wp.blocks;
  */
 import './style.scss';
 import './editor.scss';
-import { faIcon } from '../../helpers/icons.js';
+import { faIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
 import deprecated from './deprecated.js';
 import edit from './edit.js';
@@ -19,7 +19,7 @@ import save from './save.js';
 registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 	title: __( 'Font Awesome Icons' ),
 	description: __( 'Share buttons for your website visitors to share content on any social sharing service.' ),
-	icon: faIcon,
+	icon,
 	category: 'themeisle-blocks',
 	keywords: [
 		'font awesome',

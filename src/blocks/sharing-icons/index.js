@@ -12,14 +12,14 @@ const {
  */
 import './style.scss';
 import './editor.scss';
-import { sharingIcon } from '../../helpers/icons.js';
+import { sharingIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
 
 registerBlockType( 'themeisle-blocks/sharing-icons', {
 	title: __( 'Sharing Icons' ),
 	description: __( 'Share buttons for your website visitors to share content on any social sharing service.' ),
-	icon: sharingIcon,
+	icon,
 	category: 'themeisle-blocks',
 	keywords: [
 		'social media',
