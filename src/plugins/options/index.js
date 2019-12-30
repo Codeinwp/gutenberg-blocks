@@ -14,6 +14,7 @@ const {
 const {
 	Fragment,
 	useEffect,
+	useRef,
 	useState
 } = wp.element;
 
@@ -24,8 +25,6 @@ const { PluginMoreMenuItem } = wp.editPost;
  */
 import './editor.scss';
 
-let settings = null;
-
 const Options = () => {
 	useEffect( async() => {
 		let data = await apiFetch({ path: 'wp/v2/users/me?context=edit' });
@@ -34,17 +33,19 @@ const Options = () => {
 			setCanUser( true );
 
 			await wp.api.loadPromise.then( () => {
-				settings = new wp.api.models.Settings();
+				settingsRef.current = new wp.api.models.Settings();
 			});
 
 			if ( false === isAPILoaded ) {
-				settings.fetch().then( response => {
+				settingsRef.current.fetch().then( response => {
 					setDefault( Boolean( response.themeisle_blocks_settings_default_block ) );
 					setAPILoaded( false );
 				});
 			}
 		}
 	}, []);
+
+	const settingsRef = useRef( null );
 
 	const [ canUser, setCanUser ] = useState( false );
 	const [ isAPILoaded, setAPILoaded ] = useState( false );
@@ -61,7 +62,7 @@ const Options = () => {
 
 		save.success( ( response, status ) => {
 			if ( 'success' === status ) {
-				settings.fetch();
+				settingsRef.current.fetch();
 				setDefault( Boolean( response.themeisle_blocks_settings_default_block ) );
 			}
 
@@ -69,7 +70,7 @@ const Options = () => {
 				console.log( response );
 			}
 
-			settings.fetch();
+			settingsRef.current.fetch();
 		});
 
 		save.error( ( response, status ) => {

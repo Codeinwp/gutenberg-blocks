@@ -15,6 +15,7 @@ const { ResizableBox } = wp.components;
 const {
 	Fragment,
 	useEffect,
+	useRef,
 	useState
 } = wp.element;
 
@@ -22,8 +23,6 @@ import Placeholder from './placeholder.js';
 import Inspector from './inspector.js';
 import Slide from './components/slide.js';
 import SliderControls from './components/slider-controls.js';
-
-let slider;
 
 const Edit = ({
 	attributes,
@@ -38,7 +37,7 @@ const Edit = ({
 
 		return () => {
 			if ( attributes.images.length ) {
-				slider.destroy();
+				sliderRef.current.destroy();
 			}
 		};
 	}, []);
@@ -47,8 +46,8 @@ const Edit = ({
 		if ( attributes.images.length ) {
 			setSelectedImage( null );
 
-			if ( undefined !== slider ) {
-				slider.destroy();
+			if ( null !== sliderRef.current ) {
+				sliderRef.current.destroy();
 				initSlider();
 			}
 		}
@@ -59,6 +58,8 @@ const Edit = ({
 			changePerView( max([ Math.round( attributes.images.length / 2 ), 1 ]) );
 		}
 	}, [ attributes.images ]);
+
+	const sliderRef = useRef( null );
 
 	const [ selectedImage, setSelectedImage ] = useState( null );
 
@@ -74,7 +75,7 @@ const Edit = ({
 	};
 
 	const initSlider = () => {
-		slider = new Glide( `#${ attributes.id }`, {
+		sliderRef.current = new Glide( `#${ attributes.id }`, {
 			type: 'carousel',
 			keyboard: false,
 			perView: attributes.perView,
@@ -101,8 +102,8 @@ const Edit = ({
 			}) )
 		});
 
-		if ( undefined !== slider ) {
-			slider.destroy();
+		if ( null !== sliderRef.current ) {
+			sliderRef.current.destroy();
 		}
 
 		initSlider();
@@ -110,14 +111,14 @@ const Edit = ({
 
 	const changePerView = value => {
 		setAttributes({ perView: Number( value ) });
-		slider.update({ perView: Number( value ) });
+		sliderRef.current.update({ perView: Number( value ) });
 		if ( 1 === value ) {
 			setAttributes({
 				gap: 0,
 				peek: 0
 			});
 
-			slider.update({
+			sliderRef.current.update({
 				gap: 0,
 				peek: 0
 			});
@@ -142,7 +143,7 @@ const Edit = ({
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
-				slider={ slider }
+				slider={ sliderRef.current }
 				changePerView={ changePerView }
 			/>
 
