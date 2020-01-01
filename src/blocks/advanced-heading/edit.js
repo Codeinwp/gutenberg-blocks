@@ -12,8 +12,6 @@ const { __ } = wp.i18n;
 
 const { createBlock } = wp.blocks;
 
-const { withSelect } = wp.data;
-
 const { RichText } = wp.blockEditor;
 
 const {

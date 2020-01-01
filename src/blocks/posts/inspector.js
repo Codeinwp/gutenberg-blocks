@@ -11,10 +11,7 @@ const {
 
 const { InspectorControls } = wp.blockEditor;
 
-const {
-	Component,
-	Fragment
-} = wp.element;
+const { Fragment } = wp.element;
 
 /**
  * Internal dependencies
