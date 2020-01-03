@@ -28,8 +28,19 @@ const { Fragment } = wp.element;
  */
 import './editor.scss';
 
-const LayoutControl = ({ label, instanceId, onClick, layout, layoutTablet, layoutMobile, columns, changeViewType, view }) => {
+const LayoutControl = ({
+	label,
+	instanceId,
+	onClick,
+	layout,
+	layoutTablet,
+	layoutMobile,
+	columns,
+	changeViewType,
+	view
+}) => {
 	const id = `inspector-layout-control-${ instanceId }`;
+
 	let value;
 
 	if ( 'desktop' === view ) {

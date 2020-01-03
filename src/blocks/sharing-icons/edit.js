@@ -16,7 +16,11 @@ const { Fragment } = wp.element;
 import Controls from './controls.js';
 import socialList from './services.js';
 
-const Edit = ({ attributes, setAttributes, className }) => {
+const Edit = ({
+	attributes,
+	setAttributes,
+	className
+}) => {
 	return (
 		<Fragment>
 			<Controls

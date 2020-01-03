@@ -4,4 +4,4 @@
 import './style.scss';
 import './editor.scss';
 import './advanced-columns';
-import './advanced-column';
+import './column/index.js';
