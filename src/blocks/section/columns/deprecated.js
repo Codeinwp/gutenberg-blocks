@@ -12,7 +12,7 @@ const { InnerBlocks } = wp.blockEditor;
 /**
  * Internal dependencies
  */
-import Separators from './components/separators/index.js';
+import Separators from '../components/separators/index.js';
 
 const deprecated = [ {
 	attributes: {

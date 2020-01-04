@@ -3,5 +3,5 @@
  */
 import './style.scss';
 import './editor.scss';
-import './advanced-columns';
+import './columns/index.js';
 import './column/index.js';
