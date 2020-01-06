@@ -94,6 +94,10 @@ const Inspector = ({
 		setAttributes({ imageSize: value });
 	};
 
+	const changeTitleTag = value => {
+		setAttributes({ titleTag: value });
+	};
+
 	const changeExcerptLength = value => {
 		setAttributes({ excerptLength: value });
 	};
@@ -161,6 +165,10 @@ const Inspector = ({
 					imageSize={ {
 						value: attributes.imageSize,
 						onChange: changeImageSize
+					} }
+					titleTag={ {
+						value: attributes.titleTag,
+						onChange: changeTitleTag
 					} }
 					excerptLimit={ {
 						value: attributes.excerptLength,

@@ -47,6 +47,10 @@ const attributes = {
 		type: 'boolean',
 		default: true
 	},
+	titleTag: {
+		type: 'string',
+		default: 'h5'
+	},
 	displayMeta: {
 		type: 'boolean',
 		default: true

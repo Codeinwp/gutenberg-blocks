@@ -82,6 +82,10 @@ class Posts_Grid_Block extends Base_Block {
 				'type'    => 'boolean',
 				'default' => true,
 			),
+			'titleTag'				=> array(
+				'type'    => 'string',
+				'default' => 'h5',
+			),
 			'displayMeta'			=> array(
 				'type'    => 'boolean',
 				'default' => true,
@@ -132,12 +136,12 @@ class Posts_Grid_Block extends Base_Block {
 			$thumbnail = wp_get_attachment_image_src( get_post_thumbnail_id( $id ), $size );
 			$category = get_the_category( $id );
 
-			$list_items_markup .= '<div class="posts-grid-post-blog posts-grid-post-plain"><div class="posts-grid-post">';
+			$list_items_markup .= '<div class="wp-block-themeisle-blocks-posts-grid-post-blog wp-block-themeisle-blocks-posts-grid-post-plain"><div class="wp-block-themeisle-blocks-posts-grid-post">';
 
 			if ( isset( $attributes['displayFeaturedImage'] ) && $attributes['displayFeaturedImage'] ) {
 				if ( $thumbnail ) {
 					$list_items_markup .= sprintf(
-						'<div class="posts-grid-post-image"><a href="%1$s"><img src="%2$s" alt="%3$s" /></a></div>',
+						'<div class="wp-block-themeisle-blocks-posts-grid-post-image"><a href="%1$s"><img src="%2$s" alt="%3$s" /></a></div>',
 						esc_url( get_the_permalink( $id ) ),
 						esc_url( $thumbnail[0] ),
 						esc_html( get_the_title( $id ) )
@@ -145,13 +149,13 @@ class Posts_Grid_Block extends Base_Block {
 				}
 			}
 
-			$list_items_markup .= '<div class="posts-grid-post-body' . ( $thumbnail && $attributes['displayFeaturedImage'] ? '' : ' is-full' ) . '">';
+			$list_items_markup .= '<div class="wp-block-themeisle-blocks-posts-grid-post-body' . ( $thumbnail && $attributes['displayFeaturedImage'] ? '' : ' is-full' ) . '">';
 
 			foreach( $attributes['template'] as $element ) {
 				if ( $element === 'category' ) {
 					if ( isset( $attributes['displayCategory'] ) && $attributes['displayCategory'] ) {
 						$list_items_markup .= sprintf(
-							'<h6 class="posts-grid-post-category">%1$s</h6>',
+							'<span class="wp-block-themeisle-blocks-posts-grid-post-category">%1$s</span>',
 							esc_html( $category[0]->cat_name )
 						);
 					}
@@ -160,7 +164,8 @@ class Posts_Grid_Block extends Base_Block {
 				if ( $element === 'title' ) {
 					if ( isset( $attributes['displayTitle'] ) && $attributes['displayTitle'] ) {
 						$list_items_markup .= sprintf(
-							'<h5 class="posts-grid-post-title"><a href="%1$s">%2$s</a></h5>',
+							'<%1$s class="wp-block-themeisle-blocks-posts-grid-post-title"><a href="%2$s">%3$s</a></%1$s>',
+							esc_attr( $attributes['titleTag'] ),
 							esc_url( get_the_permalink( $id ) ),
 							esc_html( get_the_title( $id ) )
 						);
@@ -169,7 +174,7 @@ class Posts_Grid_Block extends Base_Block {
 
 				if ( $element === 'meta' ) {
 					if ( ( isset( $attributes['displayMeta'] ) && $attributes['displayMeta'] ) && ( ( isset( $attributes['displayDate'] ) && $attributes['displayDate'] ) || ( isset( $attributes['displayAuthor'] ) && $attributes['displayAuthor'] ) ) ) {
-						$list_items_markup .= '<p class="posts-grid-post-meta">';
+						$list_items_markup .= '<p class="wp-block-themeisle-blocks-posts-grid-post-meta">';
 
 						if ( isset( $attributes['displayDate'] ) && $attributes['displayDate'] ) {
 							$list_items_markup .= sprintf(
@@ -195,7 +200,7 @@ class Posts_Grid_Block extends Base_Block {
 				if ( $element === 'description' ) {
 					if ( ( isset( $attributes['excerptLength'] ) && $attributes['excerptLength'] > 0 ) && ( isset( $attributes['displayDescription'] ) && $attributes['displayDescription'] ) ) {
 						$list_items_markup .= sprintf(
-							'<p class="posts-grid-post-description">%1$s</p>',
+							'<p class="wp-block-themeisle-blocks-posts-grid-post-description">%1$s</p>',
 							$this->get_excerpt_by_id( $id, $attributes['excerptLength'] )
 						);
 					}
@@ -224,7 +229,7 @@ class Posts_Grid_Block extends Base_Block {
 		}
 
 		if ( ( isset( $attributes['style'] ) && $attributes['style'] === 'grid' ) || ( isset( $attributes['grid'] ) && true === $attributes['grid'] ) ) {
-			$class .= ' posts-grid-columns-' . $attributes['columns'];
+			$class .= ' wp-block-themeisle-blocks-posts-grid-columns-' . $attributes['columns'];
 		}
 
 		$block_content = sprintf(

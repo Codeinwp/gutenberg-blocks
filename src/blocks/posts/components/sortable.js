@@ -45,6 +45,7 @@ export const SortableItem = ({
 	getFields,
 	toggleFields,
 	imageSize,
+	titleTag,
 	excerptLimit
 }) => {
 	const [ isOpen, setOpen ] = useState( false );
@@ -62,6 +63,9 @@ export const SortableItem = ({
 
 	switch ( value ) {
 	case 'image':
+		edit = true;
+		break;
+	case 'title':
 		edit = true;
 		break;
 	case 'meta':
@@ -140,6 +144,22 @@ export const SortableItem = ({
 						/>
 					) }
 
+					{ ( 'title' === value ) && (
+						<SelectControl
+							label={ __( 'Title Tag' ) }
+							value={ titleTag.value }
+							options={ [
+								{ label: __( 'H1' ), value: 'h1' },
+								{ label: __( 'H2' ), value: 'h2' },
+								{ label: __( 'H3' ), value: 'h3' },
+								{ label: __( 'H4' ), value: 'h4' },
+								{ label: __( 'H5' ), value: 'h5' },
+								{ label: __( 'H6' ), value: 'h6' }
+							] }
+							onChange={ titleTag.onChange }
+						/>
+					) }
+
 					{ ( 'description' === value ) && (
 						<TextControl
 							label={ __( 'Excerpt Limit' ) }
@@ -175,6 +195,7 @@ const SortableItemContainer = SortableElement( ({
 	disabled,
 	getFields,
 	toggleFields,
+	titleTag,
 	excerptLimit
 }) => {
 	return (
@@ -183,6 +204,7 @@ const SortableItemContainer = SortableElement( ({
 			disabled={ disabled }
 			getFields={ getFields }
 			toggleFields={ toggleFields }
+			titleTag={ titleTag }
 			excerptLimit={ excerptLimit }
 		/>
 	);
@@ -192,6 +214,7 @@ export const SortableList = SortableContainer( ({
 	template,
 	getFields,
 	toggleFields,
+	titleTag,
 	excerptLimit
 }) => {
 	return (
@@ -203,6 +226,7 @@ export const SortableList = SortableContainer( ({
 					value={ value }
 					getFields={ getFields }
 					toggleFields={ toggleFields }
+					titleTag={ titleTag }
 					excerptLimit={ excerptLimit }
 				/>
 			) ) }

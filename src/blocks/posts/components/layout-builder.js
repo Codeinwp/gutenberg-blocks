@@ -26,6 +26,7 @@ const LayoutBuilder = ({
 	getFields,
 	toggleFields,
 	imageSize,
+	titleTag,
 	excerptLimit
 }) => {
 	const [ isOpen, setOpen ] = useState( false );
@@ -56,6 +57,7 @@ const LayoutBuilder = ({
 					onSortEnd={ onSortEnd }
 					getFields={ getFields }
 					toggleFields={ toggleFields }
+					titleTag={ titleTag }
 					excerptLimit={ excerptLimit }
 					useDragHandle
 				/>

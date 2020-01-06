@@ -21,7 +21,7 @@ const Thumbnail = ({
 	}
 
 	return (
-		<div className="posts-grid-post-image">
+		<div className="wp-block-themeisle-blocks-posts-grid-post-image">
 			<a href={ link }>{ img }</a>
 		</div>
 	);

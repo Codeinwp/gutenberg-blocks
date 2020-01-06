@@ -24,11 +24,13 @@ const Grid = ({
 	categoriesList,
 	authors
 }) => {
+	const Tag = attributes.titleTag;
+
 	return (
 		<div className={ classnames(
 			className,
 			'is-grid',
-			`posts-grid-columns-${ attributes.columns }`
+			`wp-block-themeisle-blocks-posts-grid-columns-${ attributes.columns }`
 		) }>
 			{ posts.map( post => {
 				let category, author;
@@ -42,8 +44,8 @@ const Grid = ({
 				}
 
 				return (
-					<div className="posts-grid-post-blog posts-grid-post-plain">
-						<div className="posts-grid-post">
+					<div className="wp-block-themeisle-blocks-posts-grid-post-blog wp-block-themeisle-blocks-posts-grid-post-plain">
+						<div className="wp-block-themeisle-blocks-posts-grid-post">
 							{ ( 0 !== post.featured_media && attributes.displayFeaturedImage ) && (
 								<Thumbnail
 									id={ post.featured_media }
@@ -53,22 +55,22 @@ const Grid = ({
 								/>
 							) }
 
-							<div className="posts-grid-post-body">
+							<div className="wp-block-themeisle-blocks-posts-grid-post-body">
 								{ attributes.template.map( element => {
 									if ( 'category' === element ) {
 										if ( undefined !== category && ( attributes.displayCategory && categoriesList ) ) {
-											return <h6 class="posts-grid-post-category">{ category.name }</h6>;
+											return <span class="wp-block-themeisle-blocks-posts-grid-post-category">{ category.name }</span>;
 										}
 									}
 
 									if ( 'title' === element ) {
 										if ( attributes.displayTitle ) {
 											return (
-												<h5 className="posts-grid-post-title">
+												<Tag className="wp-block-themeisle-blocks-posts-grid-post-title">
 													<a href={ post.link }>
 														{ unescapeHTML( post.title.rendered ) }
 													</a>
-												</h5>
+												</Tag>
 											);
 										}
 									}
@@ -76,7 +78,7 @@ const Grid = ({
 									if ( 'meta' === element ) {
 										if ( attributes.displayMeta && ( attributes.displayDate || attributes.displayAuthor ) ) {
 											return (
-												<p className="posts-grid-post-meta">
+												<p className="wp-block-themeisle-blocks-posts-grid-post-meta">
 													{ ( attributes.displayDate ) && (
 														sprintf( __( 'on %s' ), formatDate( post.date ) )
 													) }
@@ -92,7 +94,7 @@ const Grid = ({
 									if ( 'description' === element ) {
 										if ( 0 < attributes.excerptLength && attributes.displayDescription ) {
 											return (
-												<p className="posts-grid-post-description">
+												<p className="wp-block-themeisle-blocks-posts-grid-post-description">
 													{ unescapeHTML( post.excerpt.rendered ).substring( 0, attributes.excerptLength ) + '…' }
 												</p>
 											);
