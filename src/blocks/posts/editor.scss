@@ -2,6 +2,18 @@
 	display: flex;
 	flex-wrap: wrap;
 
+	&.has-shadow {
+		.wp-block-themeisle-blocks-posts-grid-post-blog {
+			.wp-block-themeisle-blocks-posts-grid-post {	
+				.wp-block-themeisle-blocks-posts-grid-post-image {
+					img {
+						box-shadow: 0 10px 25px 0 rgba( 0, 0, 0, .2 );
+					}
+				}
+			}
+		}
+	}
+
 	&.is-grid {
 
 		&.wp-block-themeisle-blocks-posts-grid-columns-2 {
@@ -67,7 +79,6 @@
 				position: relative;
 	
 				img {
-					box-shadow: 0 10px 25px 0 rgba( 0, 0, 0, .2 );
 					max-width: 100%;
 					border-radius: 5px;
 				}

@@ -35,6 +35,10 @@ const attributes = {
 		type: 'string',
 		default: 'full'
 	},
+	imageBoxShadow: {
+		type: 'boolean',
+		default: true
+	},
 	displayFeaturedImage: {
 		type: 'boolean',
 		default: true

@@ -34,6 +34,9 @@ const Inspector = ({
 		if ( 'image' === field ) {
 			return attributes.displayFeaturedImage;
 		}
+		if ( 'imageBoxShadow' === field ) {
+			return attributes.imageBoxShadow;
+		}
 
 		if ( 'category' === field ) {
 			return attributes.displayCategory;
@@ -63,6 +66,10 @@ const Inspector = ({
 	const toggleFields = field => {
 		if ( 'image' === field ) {
 			setAttributes({ displayFeaturedImage: ! attributes.displayFeaturedImage });
+		}
+
+		if ( 'imageBoxShadow' === field ) {
+			setAttributes({ imageBoxShadow: ! attributes.imageBoxShadow });
 		}
 
 		if ( 'category' === field ) {

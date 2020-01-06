@@ -30,7 +30,8 @@ const Grid = ({
 		<div className={ classnames(
 			className,
 			'is-grid',
-			`wp-block-themeisle-blocks-posts-grid-columns-${ attributes.columns }`
+			`wp-block-themeisle-blocks-posts-grid-columns-${ attributes.columns }`,
+			{ 'has-shadow': attributes.imageBoxShadow }
 		) }>
 			{ posts.map( post => {
 				let category, author;

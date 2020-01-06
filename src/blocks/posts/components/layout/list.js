@@ -29,7 +29,8 @@ const List = ({
 	return (
 		<div className={ classnames(
 			className,
-			'is-list'
+			'is-list',
+			{ 'has-shadow': attributes.imageBoxShadow }
 		) }>
 			{ posts.map( post => {
 				let category, author;

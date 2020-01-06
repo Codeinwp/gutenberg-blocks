@@ -70,6 +70,10 @@ class Posts_Grid_Block extends Base_Block {
 				'type'    => 'string',
 				'default' => 'full',
 			),
+			'imageBoxShadow'		=> array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
 			'displayFeaturedImage'	=> array(
 				'type'    => 'boolean',
 				'default' => true,
@@ -230,6 +234,10 @@ class Posts_Grid_Block extends Base_Block {
 
 		if ( ( isset( $attributes['style'] ) && $attributes['style'] === 'grid' ) || ( isset( $attributes['grid'] ) && true === $attributes['grid'] ) ) {
 			$class .= ' wp-block-themeisle-blocks-posts-grid-columns-' . $attributes['columns'];
+		}
+
+		if ( isset( $attributes['imageBoxShadow' ] ) && true === $attributes['imageBoxShadow'] ) {
+			$class .= ' has-shadow';
 		}
 
 		$block_content = sprintf(

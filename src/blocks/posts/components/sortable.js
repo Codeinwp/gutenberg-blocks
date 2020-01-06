@@ -130,18 +130,26 @@ export const SortableItem = ({
 					) }
 				>
 					{ ( 'image' === value ) && (
-						<SelectControl
-							label={ __( 'Image Size' ) }
-							value={ imageSize.value }
-							options={ [
-								{ label: __( 'Thumbnail' ), value: 'thumbnail' },
-								{ label: __( 'Medium' ), value: 'medium' },
-								{ label: __( 'Medium Large' ), value: 'medium_large' },
-								{ label: __( 'Large' ), value: 'large' },
-								{ label: __( 'Full' ), value: 'full' }
-							] }
-							onChange={ imageSize.onChange }
-						/>
+						<Fragment>
+							<SelectControl
+								label={ __( 'Image Size' ) }
+								value={ imageSize.value }
+								options={ [
+									{ label: __( 'Thumbnail' ), value: 'thumbnail' },
+									{ label: __( 'Medium' ), value: 'medium' },
+									{ label: __( 'Medium Large' ), value: 'medium_large' },
+									{ label: __( 'Large' ), value: 'large' },
+									{ label: __( 'Full' ), value: 'full' }
+								] }
+								onChange={ imageSize.onChange }
+							/>
+
+							<ToggleControl
+								label={ 'Display Box Shadow?' }
+								checked={ getFields( 'imageBoxShadow' ) }
+								onChange={ () => toggleFields( 'imageBoxShadow' ) }
+							/>
+						</Fragment>
 					) }
 
 					{ ( 'title' === value ) && (
