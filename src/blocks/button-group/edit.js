@@ -195,6 +195,7 @@ const Edit = ({
 					<Button
 						index={ i }
 						attributes={ attributes }
+						isSelected={ isSelected }
 						changeButton={ changeButton }
 						updateButton={ updateButton }
 					/>

@@ -16,7 +16,10 @@ const { __ } = wp.i18n;
 
 const { RichText } = wp.blockEditor;
 
-const { Fragment } = wp.element;
+const {
+	Fragment,
+	useState
+} = wp.element;
 
 const Button = ({
 	index,
@@ -24,6 +27,8 @@ const Button = ({
 	changeButton,
 	updateButton
 }) => {
+	const [ isSelected, setSelected ] = useState( () => 0 === index ? true : false );
+
 	let boxShadowStyle = {};
 
 	if ( attributes.data[index].boxShadow ) {
@@ -53,19 +58,24 @@ const Button = ({
 		<Fragment>
 			<style>
 				{ `#${ attributes.id } .wp-block-themeisle-blocks-button-${ index }:hover {
-							color: ${ attributes.data[index].hoverColor ? attributes.data[index].hoverColor : attributes.data[index].color } !important;
-							background: ${ attributes.data[index].hoverBackground ? attributes.data[index].hoverBackground : attributes.data[index].background } !important;
-							border: ${ attributes.data[index].borderSize }px solid ${ attributes.data[index].hoverBorder ? attributes.data[index].hoverBorder : attributes.data[index].border } !important;
-							${ attributes.data[index].boxShadow && ( `box-shadow: ${ attributes.data[index].hoverBoxShadowHorizontal }px ${ attributes.data[index].hoverBoxShadowVertical }px ${ attributes.data[index].hoverBoxShadowBlur }px ${ attributes.data[index].hoverBoxShadowSpread }px ${  hexToRgba( ( attributes.data[index].hoverBoxShadowColor ? attributes.data[index].hoverBoxShadowColor : '#000000' ), attributes.data[index].hoverBoxShadowColorOpacity ) } !important;` ) }
-						}` }
+					color: ${ attributes.data[index].hoverColor ? attributes.data[index].hoverColor : attributes.data[index].color } !important;
+					background: ${ attributes.data[index].hoverBackground ? attributes.data[index].hoverBackground : attributes.data[index].background } !important;
+					border: ${ attributes.data[index].borderSize }px solid ${ attributes.data[index].hoverBorder ? attributes.data[index].hoverBorder : attributes.data[index].border } !important;
+					${ attributes.data[index].boxShadow && ( `box-shadow: ${ attributes.data[index].hoverBoxShadowHorizontal }px ${ attributes.data[index].hoverBoxShadowVertical }px ${ attributes.data[index].hoverBoxShadowBlur }px ${ attributes.data[index].hoverBoxShadowSpread }px ${  hexToRgba( ( attributes.data[index].hoverBoxShadowColor ? attributes.data[index].hoverBoxShadowColor : '#000000' ), attributes.data[index].hoverBoxShadowColorOpacity ) } !important;` ) }
+				}` }
 			</style>
+
 			<div
 				style={ buttonStyle }
 				className={ classnames(
 					'wp-block-themeisle-blocks-button',
 					`wp-block-themeisle-blocks-button-${ index }`
 				) }
-				onClick={ () => changeButton( index ) }
+				onClick={ () => {
+					setSelected( true );
+					changeButton( index );
+				} }
+				onBlur={ () => setSelected( false ) }
 			>
 				{ ( 'left' === attributes.data[index].iconType || 'only' === attributes.data[index].iconType ) && (
 					<i className={ classnames(
@@ -81,12 +91,10 @@ const Button = ({
 					<RichText
 						placeholder={ __( 'Add text…' ) }
 						value={ attributes.data[index].text }
-						aria-label={ unescapeHTML( attributes.data[index].text ) }
 						onChange={ e => updateButton({ text: e }, index ) }
-						formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
-						allowedFormats={ [ 'core/bold', 'core/italic', 'core/strikethrough' ] }
 						tagName="div"
-						keepPlaceholderOnFocus
+						keepPlaceholderOnFocus={ isSelected }
+						withoutInteractiveFormatting
 					/>
 				) }
 
