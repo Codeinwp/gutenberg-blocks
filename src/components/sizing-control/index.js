@@ -8,20 +8,15 @@ import classnames from 'classnames';
  */
 const { __ } = wp.i18n;
 
-const {
-	Dropdown,
-	IconButton,
-	RangeControl
-} = wp.components;
+const { IconButton } = wp.components;
 
 const { withInstanceId } = wp.compose;
-
-const { useState } = wp.element;
 
 /**
  * Internal dependencies
  */
 import './editor.scss';
+import Field from './field.js';
 
 const SizingControl = ({
 	instanceId,
@@ -60,59 +55,16 @@ const SizingControl = ({
 						{ 'linking': type }
 					) }
 				>
-					{ options.map( ( i, n ) => {
-						return (
-							<div className="wp-block-themeisle-blocks-sizing-control-item">
-								{ i.disabled ? (
-									<input
-										type="number"
-										disabled={ i.disabled }
-										className="wp-block-themeisle-blocks-sizing-control-item-input"
-										id={ `wp-block-themeisle-blocks-sizing-control-item-input-${ n }` }
-									/>
-								) : (
-									<Dropdown
-										position="top center"
-										focusOnMount={ false }
-										renderToggle={ ({ isOpen, onToggle }) => (
-											<input
-												type="number"
-												className="wp-block-themeisle-blocks-sizing-control-item-input"
-												id={ `wp-block-themeisle-blocks-sizing-control-item-input-${ n }-${ instanceId }` }
-												value={ i.value }
-												min={ min }
-												max={ max }
-												onFocus={ onToggle }
-												onChange={ e => onChange( i.type, parseInt( e.target.value ) ) }
-											/>
-										) }
-										renderContent={ ({ onToggle }) => (
-											<div className="wp-block-themeisle-blocks-sizing-control-overlay">
-												<RangeControl
-													value={ i.value }
-													initialPosition={ i.value }
-													beforeIcon="minus"
-													afterIcon="plus"
-													min={ min }
-													max={ max }
-													onChange={ e => onChange( i.type, e ) }
-												/>
-											</div>
-										) }
-									/>
-								) }
-
-								{ i.label && (
-									<label
-										className="wp-block-themeisle-blocks-sizing-control-item-label"
-										htmlFor={ `wp-block-themeisle-blocks-sizing-control-item-input-${ n }-${ instanceId }` }
-									>
-										{ i.label }
-									</label>
-								) }
-							</div>
-						);
-					}) }
+					{ options.map( ( i, n ) => (
+						<Field
+							id={ instanceId }
+							index={ i }
+							option={ n }
+							min={ min }
+							max={ max }
+							onChange={ onChange }
+						/>
+					) ) }
 
 					{ type && (
 						<div
