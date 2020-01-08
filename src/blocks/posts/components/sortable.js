@@ -155,7 +155,7 @@ export const SortableItem = ({
 					{ ( 'title' === value ) && (
 						<SelectControl
 							label={ __( 'Title Tag' ) }
-							value={ titleTag.value }
+							value={ titleTag.value || 'h5' }
 							options={ [
 								{ label: __( 'H1' ), value: 'h1' },
 								{ label: __( 'H2' ), value: 'h2' },

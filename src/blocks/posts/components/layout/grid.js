@@ -24,7 +24,7 @@ const Grid = ({
 	categoriesList,
 	authors
 }) => {
-	const Tag = attributes.titleTag;
+	const Tag = attributes.titleTag || 'h5';
 
 	return (
 		<div className={ classnames(
