@@ -13,7 +13,7 @@ composer.lock 	    export-ignore
 src	                export-ignore
 docs	            export-ignore
 .gitattributes 	    export-ignore
-.browserlistrc 	    export-ignore
+.browserslistrc	    export-ignore
 
 # Set the default behavior for all files.
 * text=auto
