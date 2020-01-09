@@ -1,3 +1,8 @@
+##### [Version 1.3.4](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.3.3...v1.3.4) (2020-01-09)
+
+Fix issue with icons not appearing in Chrome
+Fix issue with icons not appearing in Chrome
+
 ##### [Version 1.3.3](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.3.2...v1.3.3) (2020-01-09)
 
 Fix composer loading condition
