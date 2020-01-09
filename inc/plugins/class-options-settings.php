@@ -1,4 +1,9 @@
 <?php
+/**
+ * Options.
+ *
+ * @package ThemeIsle\GutenbergBlocks\Plugins
+ */
 
 namespace ThemeIsle\GutenbergBlocks\Plugins;
 
@@ -37,7 +42,7 @@ class Options_Settings {
 				'description'       => __( 'Google Map API key for the Google Maps Gutenberg Block.', 'textdomain' ),
 				'sanitize_callback' => 'sanitize_text_field',
 				'show_in_rest'      => true,
-				'default'           => ''
+				'default'           => '',
 			)
 		);
 
@@ -49,7 +54,7 @@ class Options_Settings {
 				'description'       => __( 'Make Section block your default block for Pages?', 'textdomain' ),
 				'sanitize_callback' => 'rest_sanitize_boolean',
 				'show_in_rest'      => true,
-				'default'           => true
+				'default'           => true,
 			)
 		);
 	}
@@ -65,7 +70,7 @@ class Options_Settings {
 			return;
 		}
 
-		$post_type_object = get_post_type_object( 'page' );
+		$post_type_object           = get_post_type_object( 'page' );
 		$post_type_object->template = array(
 			array( 'themeisle-blocks/advanced-columns' ),
 		);

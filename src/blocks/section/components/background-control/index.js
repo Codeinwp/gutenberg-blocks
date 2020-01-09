@@ -25,7 +25,12 @@ import './editor.scss';
 
 import { barcodeIcon } from '../../../../helpers/icons.js';
 
-const BackgroundControl = ({ label, instanceId, backgroundType, changeBackgroundType }) => {
+const BackgroundControl = ({
+	label,
+	instanceId,
+	backgroundType,
+	changeBackgroundType
+}) => {
 	const id = `inspector-background-control-${ instanceId }`;
 
 	return (

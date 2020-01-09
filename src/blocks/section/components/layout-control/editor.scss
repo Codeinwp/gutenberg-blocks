@@ -31,7 +31,7 @@
 
 	.wp-block-themeisle-blocks-advanced-column-layout {
 		cursor: pointer;
-		width: 50%;
+		width: calc( 100% / 3 );
 		display: inline-block;
 		padding: 5px 5px 0px;
 
@@ -42,7 +42,7 @@
 		&:hover {
 
 			svg {
-				fill: #6d7882;
+				fill: #0075af;
 			}
 		}
 
@@ -55,15 +55,15 @@
 	}
 }
 
-.wp-block-themeisle-responsiveness-settings {
+.wp-block-themeisle-blocks-responsive-control-settings {
 	padding: 10px;
 
-	.responsiveness-title {
+	.wp-block-themeisle-blocks-responsive-control-settings-title {
 		margin-bottom: 8px;
 		color: #6c7781;
 	}
 
-	.responsiveness-item {
+	.wp-block-themeisle-blocks-responsive-control-settings-item {
 		padding: 10px;
 		width: 100%;
 

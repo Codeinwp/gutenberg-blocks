@@ -1,5 +1,6 @@
 node_modules
 vendor
-composer.lock
-package-lock.json
+.idea
 .DS_Store
+notes.md
+changes.md

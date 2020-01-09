@@ -1,4 +1,9 @@
 <?php
+/**
+ * Card server logic.
+ *
+ * @package ThemeIsle\GutenbergBlocks\Server
+ */
 
 namespace ThemeIsle\GutenbergBlocks\Server;
 
@@ -46,13 +51,31 @@ class Plugin_Card_Server {
 			'/get_plugins',
 			array(
 				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'search' ),
-					'args'                => array(
-						'search'      => array(
+					'methods'  => \WP_REST_Server::READABLE,
+					'callback' => array( $this, 'search' ),
+					'args'     => array(
+						'search' => array(
 							'type'        => 'string',
 							'required'    => true,
-							'description' => __( 'The form must have data', 'textdomain' ),
+							'description' => __( 'Search query.', 'textdomain' ),
+						),
+					),
+				),
+			)
+		);
+
+		register_rest_route(
+			$namespace,
+			'/get_plugin',
+			array(
+				array(
+					'methods'  => \WP_REST_Server::READABLE,
+					'callback' => array( $this, 'get' ),
+					'args'     => array(
+						'slug' => array(
+							'type'        => 'string',
+							'required'    => true,
+							'description' => __( 'Slug of the plugin.', 'textdomain' ),
 						),
 					),
 				),
@@ -65,6 +88,8 @@ class Plugin_Card_Server {
 	 *
 	 * Search WordPress plugin using WordPress.org API.
 	 *
+	 * @param mixed $request Search request.
+	 *
 	 * @return mixed|\WP_REST_Response
 	 */
 	public function search( $request ) {
@@ -74,33 +99,33 @@ class Plugin_Card_Server {
 
 		$return = array(
 			'success' => false,
-			'data'     => esc_html__( 'Something went wrong', 'textdomain' ),
+			'data'    => esc_html__( 'Something went wrong', 'textdomain' ),
 		);
 
-		$search   = $request->get_param( 'search' );
+		$search = $request->get_param( 'search' );
 
-		require_once( ABSPATH . 'wp-admin' . '/includes/plugin-install.php' );
+		require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 
 		$request = array(
 			'per_page' => 12,
-			'search' => $search,
-			'fields' => array(
-				'active_installs' => true,
-				'added' => false,
-				'donate_link' => false,
-				'downloadlink' => true,
-				'homepage' => true,
-				'icons' => true,
-				'last_updated' => false,
-				'requires' => true,
-				'requires_php' => false,
-				'screenshots' => false,
+			'search'   => $search,
+			'fields'   => array(
+				'active_installs'   => true,
+				'added'             => false,
+				'donate_link'       => false,
+				'downloadlink'      => true,
+				'homepage'          => true,
+				'icons'             => true,
+				'last_updated'      => false,
+				'requires'          => true,
+				'requires_php'      => false,
+				'screenshots'       => false,
 				'short_description' => true,
-				'slug' => false,
-				'sections' => false,
-				'requires' => false,
-				'rating' => true,
-				'ratings' => false,
+				'slug'              => false,
+				'sections'          => false,
+				'requires'          => false,
+				'rating'            => true,
+				'ratings'           => false,
 			),
 		);
 
@@ -113,7 +138,67 @@ class Plugin_Card_Server {
 
 		$return['success'] = true;
 
-		// Get data from API
+		// Get data from API.
+		$return['data'] = $results;
+
+		return rest_ensure_response( $return );
+	}
+
+	/**
+	 * Get WordPress Plugin Information
+	 *
+	 * Get WordPress plugin information using WordPress.org API.
+	 *
+	 * @param mixed $request Rest Request.
+	 *
+	 * @return mixed|\WP_REST_Response
+	 */
+	public function get( $request ) {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return false;
+		}
+
+		$return = array(
+			'success' => false,
+			'data'    => esc_html__( 'Something went wrong', 'textdomain' ),
+		);
+
+		$slug = $request->get_param( 'slug' );
+
+		require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+
+		$request = array(
+			'slug'   => $slug,
+			'fields' => array(
+				'active_installs'   => true,
+				'added'             => false,
+				'donate_link'       => false,
+				'downloadlink'      => true,
+				'homepage'          => true,
+				'icons'             => true,
+				'last_updated'      => false,
+				'requires'          => true,
+				'requires_php'      => false,
+				'screenshots'       => false,
+				'short_description' => true,
+				'slug'              => false,
+				'sections'          => false,
+				'requires'          => false,
+				'rating'            => true,
+				'ratings'           => false,
+			),
+		);
+
+		$results = plugins_api( 'plugin_information', $request );
+
+		if ( is_wp_error( $request ) ) {
+			$return['data'] = 'error';
+			return $return;
+		}
+
+		$return['success'] = true;
+
+		// Get data from API.
 		$return['data'] = $results;
 
 		return rest_ensure_response( $return );

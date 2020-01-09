@@ -20,28 +20,25 @@ const {
 } = wp.components;
 
 const {
-	Component,
-	Fragment
+	Fragment,
+	useEffect,
+	useState
 } = wp.element;
 
 /**
  * Internal dependencies
  */
 import './editor.scss';
-
 import data from './icons.json';
 
-class IconPickerControl extends Component {
-	constructor() {
-		super( ...arguments );
-
-		this.state = {
-			search: '',
-			icons: null
-		};
-	}
-
-	componentDidMount() {
+const IconPickerControl = ({
+	instanceId,
+	label,
+	prefix,
+	icon,
+	onChange
+}) => {
+	useEffect( () => {
 		let icons = [];
 
 		Object.keys( data ).forEach( i => {
@@ -78,86 +75,88 @@ class IconPickerControl extends Component {
 			});
 		});
 
-		this.setState({ icons });
-	}
+		setIcons( icons );
+	}, []);
 
-	render() {
-		const id = `inspector-icon-picker-control-${ this.props.instanceId }`;
-		return (
-			<BaseControl
-				label={ this.props.label }
-				id={ id }
-				className="wp-block-themeisle-blocks-icon-picker-control"
-			>
-				<Dropdown
-					contentClassName="wp-block-themeisle-blocks-icon-picker-popover"
-					position="bottom center"
-					renderToggle={ ({ isOpen, onToggle }) => (
-						<Button
-							isLarge
-							className="wp-block-themeisle-blocks-icon-picker-button"
-							onClick={ onToggle }
-							aria-expanded={ isOpen }
-						>
-							{ ( this.props.prefix && this.props.icon ) ?
-								<Fragment>
-									<i
-										className={ classnames(
-											this.props.prefix,
-											`fa-${ this.props.icon }`,
-											'fa-fw'
-										) }
-									>
-									</i>
-									{ this.props.icon }
-								</Fragment> : __( 'Select Icon' )
-							}
-						</Button>
-					) }
-					renderContent={ ({ onToggle }) => (
-						<MenuGroup label={ __( 'Font Awesome Icons' ) }>
-							<TextControl
-								value={ this.state.search }
-								onChange={ e => this.setState({ search: e }) }
-							/>
+	const [ search, setSearch ] = useState( '' );
+	const [ icons, setIcons ] = useState( null );
 
-							<div className="components-popover__items">
-								{ ( this.state.icons ).map( i => {
-									if ( ! this.state.search || i.search.some( o => o.toLowerCase().match( this.state.search.toLowerCase() ) ) ) {
-										return (
-											<MenuItem
-												label={ i.label }
+	const id = `inspector-icon-picker-control-${ instanceId }`;
+
+	return (
+		<BaseControl
+			label={ label }
+			id={ id }
+			className="wp-block-themeisle-blocks-icon-picker-control"
+		>
+			<Dropdown
+				contentClassName="wp-block-themeisle-blocks-icon-picker-popover"
+				position="bottom center"
+				renderToggle={ ({ isOpen, onToggle }) => (
+					<Button
+						isLarge
+						className="wp-block-themeisle-blocks-icon-picker-button"
+						onClick={ onToggle }
+						aria-expanded={ isOpen }
+					>
+						{ ( prefix && icon ) ?
+							<Fragment>
+								<i
+									className={ classnames(
+										prefix,
+										`fa-${ icon }`,
+										'fa-fw'
+									) }
+								>
+								</i>
+								{ icon }
+							</Fragment> : __( 'Select Icon' )
+						}
+					</Button>
+				) }
+				renderContent={ ({ onToggle }) => (
+					<MenuGroup label={ __( 'Font Awesome Icons' ) }>
+						<TextControl
+							value={ search }
+							onChange={ e => setSearch( e ) }
+						/>
+
+						<div className="components-popover__items">
+							{ ( icons ).map( i => {
+								if ( ! search || i.search.some( o => o.toLowerCase().match( search.toLowerCase() ) ) ) {
+									return (
+										<MenuItem
+											label={ i.label }
+											className={ classnames(
+												{ 'is-selected': ( i.name === icon && i.prefix === prefix ) }
+											) }
+											onClick={ () => {
+												onToggle();
+												onChange({
+													name: i.name,
+													prefix: i.prefix
+												});
+											}}
+										>
+											<i
 												className={ classnames(
-													{ 'is-selected': ( i.name === this.props.icon && i.prefix === this.props.prefix ) }
+													i.prefix,
+													`fa-${ i.name }`,
+													'fa-fw'
 												) }
-												onClick={ () => {
-													onToggle();
-													this.props.onChange({
-														name: i.name,
-														prefix: i.prefix
-													});
-												}}
 											>
-												<i
-													className={ classnames(
-														i.prefix,
-														`fa-${ i.name }`,
-														'fa-fw'
-													) }
-												>
-												</i>
-												{ i.name }
-											</MenuItem>
-										);
-									}
-								}) }
-							</div>
-						</MenuGroup>
-					) }
-				/>
-			</BaseControl>
-		);
-	}
-}
+											</i>
+											{ i.name }
+										</MenuItem>
+									);
+								}
+							}) }
+						</div>
+					</MenuGroup>
+				) }
+			/>
+		</BaseControl>
+	);
+};
 
 export default withInstanceId( IconPickerControl );

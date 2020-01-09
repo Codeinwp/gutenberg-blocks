@@ -1,16 +1,16 @@
-.wp-block-themeisle-blocks-responsive-control {
+.wp-block-themeisle-blocks-gradient-picker-control {
 	.components-base-control__label {
 		.component-color-indicator {
 			vertical-align: text-bottom;
 		}
 	}
 
-	.wp-block-themeisle-blocks-responsive-control-presets {
+	.wp-block-themeisle-blocks-gradient-picker-control-presets {
 		display: inline-block;
 		margin-right: -14px;
 		width: calc(100% + 14px);
 	
-		.wp-block-themeisle-blocks-responsive-control-option-wrapper {
+		.wp-block-themeisle-blocks-gradient-picker-control-option-wrapper {
 			display: inline-block;
 			height: 28px;
 			width: 28px;
@@ -35,7 +35,7 @@
 				transform: scale(1.2);
 			}
 	
-			.wp-block-themeisle-blocks-responsive-control-option {
+			.wp-block-themeisle-blocks-gradient-picker-control-option {
 				color: transparent;
 				display: inline-block;
 				vertical-align: top;
@@ -98,12 +98,12 @@
 			}
 		}
 
-		.wp-block-themeisle-blocks-responsive-control-custom-wrapper {
+		.wp-block-themeisle-blocks-gradient-picker-control-custom-wrapper {
 			width: calc(100% - 14px);
 			display: flex;
 			justify-content: flex-end;
 	
-			.wp-block-themeisle-blocks-responsive-control-dropdown-link-action {
+			.wp-block-themeisle-blocks-gradient-picker-control-dropdown-link-action {
 				margin-right: 16px;
 	
 				button {
@@ -114,7 +114,7 @@
 	}
 }
 
-.wp-block-themeisle-blocks-responsive-control-dropdown-content {
+.wp-block-themeisle-blocks-gradient-picker-control-dropdown-content {
 	.components-popover__content {
 		padding: 10px 20px;
 	}

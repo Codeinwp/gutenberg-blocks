@@ -13,7 +13,11 @@ const { withInstanceId } = wp.compose;
  */
 import './editor.scss';
 
-const ControlPanelControl = ({ label, instanceId, children }) => {
+const ControlPanelControl = ({
+	label,
+	instanceId,
+	children
+}) => {
 	const id = `inspector-control-panel-control-${ instanceId }`;
 
 	return (
@@ -26,6 +30,7 @@ const ControlPanelControl = ({ label, instanceId, children }) => {
 					>
 						{ label }
 					</label>
+
 					<div className="floating-controls">
 						<Dropdown
 							position="top left"

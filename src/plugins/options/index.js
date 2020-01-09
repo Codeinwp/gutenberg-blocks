@@ -12,8 +12,10 @@ const {
 } = wp.components;
 
 const {
-	Component,
-	Fragment
+	Fragment,
+	useEffect,
+	useRef,
+	useState
 } = wp.element;
 
 const { PluginMoreMenuItem } = wp.editPost;
@@ -23,99 +25,86 @@ const { PluginMoreMenuItem } = wp.editPost;
  */
 import './editor.scss';
 
-class Options extends Component {
-	constructor() {
-		super( ...arguments );
-		this.changeOptions = this.changeOptions.bind( this );
-
-		this.settings;
-
-		this.state = {
-			canUser: false,
-			isAPILoaded: false,
-			isDefault: false,
-			isOpen: false
-		};
-	}
-
-	async componentDidMount() {
+const Options = () => {
+	useEffect( async() => {
 		let data = await apiFetch({ path: 'wp/v2/users/me?context=edit' });
 
 		if ( data.capabilities.manage_options ) {
-			this.setState({ canUser: true });
+			setCanUser( true );
 
 			await wp.api.loadPromise.then( () => {
-				this.settings = new wp.api.models.Settings();
+				settingsRef.current = new wp.api.models.Settings();
 			});
 
-			if ( false === this.state.isAPILoaded ) {
-				this.settings.fetch().then( response => {
-					this.setState({
-						isDefault: Boolean( response.themeisle_blocks_settings_default_block ),
-						isAPILoaded: true
-					});
+			if ( false === isAPILoaded ) {
+				settingsRef.current.fetch().then( response => {
+					setDefault( Boolean( response.themeisle_blocks_settings_default_block ) );
+					setAPILoaded( false );
 				});
 			}
 		}
-	}
+	}, []);
 
-	changeOptions() {
+	const settingsRef = useRef( null );
+
+	const [ canUser, setCanUser ] = useState( false );
+	const [ isAPILoaded, setAPILoaded ] = useState( false );
+	const [ isDefault, setDefault ] = useState( false );
+	const [ isOpen, setOpen ] = useState( false );
+
+	const changeOptions = () => {
 		const model = new wp.api.models.Settings({
 			// eslint-disable-next-line camelcase
-			themeisle_blocks_settings_default_block: ! Boolean( this.state.isDefault )
+			themeisle_blocks_settings_default_block: ! Boolean( isDefault )
 		});
 
 		const save = model.save();
 
 		save.success( ( response, status ) => {
 			if ( 'success' === status ) {
-				this.settings.fetch();
-				this.setState({
-					isDefault: Boolean( response.themeisle_blocks_settings_default_block )
-				});
+				settingsRef.current.fetch();
+				setDefault( Boolean( response.themeisle_blocks_settings_default_block ) );
 			}
 
 			if ( 'error' === status ) {
 				console.log( response );
 			}
 
-			this.settings.fetch();
+			settingsRef.current.fetch();
 		});
 
 		save.error( ( response, status ) => {
 			console.log( response );
 		});
-	}
+	};
 
-	render() {
-		return (
-			<Fragment>
-				{ ( this.state.canUser && undefined !== PluginMoreMenuItem ) && (
-					<PluginMoreMenuItem
-						onClick={ () => this.setState({ isOpen: true }) }
-					>
-						{ __( 'Otter Options' ) }
-					</PluginMoreMenuItem>
-				) }
+	return (
+		<Fragment>
+			{ ( canUser ) && (
+				<PluginMoreMenuItem
+					onClick={ () => setOpen( true ) }
+				>
+					{ __( 'Otter Options' ) }
+				</PluginMoreMenuItem>
+			) }
 
-				{ this.state.isOpen && (
-					<Modal
-						title={ __( 'Otter Options' ) }
-						overlayClassName="wp-block-themeisle-blocks-options"
-						onRequestClose={ () => this.setState({ isOpen: false }) }
-					>
-						<BaseControl>
-							<CheckboxControl
-								label={ __( 'Make Section block your default block for Pages?' ) }
-								checked={ this.state.isDefault }
-								onChange={ this.changeOptions }
-							/>
-						</BaseControl>
-					</Modal>
-				) }
-			</Fragment>
-		);
-	}
-}
+			{ isOpen && (
+				<Modal
+					title={ __( 'Otter Options' ) }
+					overlayClassName="wp-block-themeisle-blocks-options"
+					onRequestClose={ () => setOpen( false ) }
+				>
+					<BaseControl>
+						<CheckboxControl
+							label={ __( 'Make Section block your default block for Pages?' ) }
+							checked={ isDefault }
+							onChange={ changeOptions }
+						/>
+					</BaseControl>
+				</Modal>
+			) }
+		</Fragment>
+	);
+};
 
 export default Options;

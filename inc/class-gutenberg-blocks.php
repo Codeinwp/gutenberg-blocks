@@ -1,4 +1,9 @@
 <?php
+/**
+ * Loader.
+ *
+ * @package ThemeIsle
+ */
 
 namespace ThemeIsle;
 
@@ -8,7 +13,9 @@ namespace ThemeIsle;
 class GutenbergBlocks {
 
 	/**
-	 * @var GutenbergBlocks
+	 * Singleton.
+	 *
+	 * @var GutenbergBlocks Class object.
 	 */
 	protected static $instance = null;
 
@@ -24,12 +31,13 @@ class GutenbergBlocks {
 	/**
 	 * GutenbergBlocks constructor.
 	 *
+	 * @param string $name Colection name.
 	 * @since   1.0.0
 	 * @access  public
 	 */
 	public function __construct( $name ) {
-		$this->name           = $name;
-		$this->description    = __( 'A set of awesome Gutenberg Blocks!', 'textdomain' );
+		$this->name        = $name;
+		$this->description = __( 'A set of awesome Gutenberg Blocks!', 'textdomain' );
 	}
 
 	/**
@@ -91,13 +99,17 @@ class GutenbergBlocks {
 
 		wp_set_script_translations( 'themeisle-gutenberg-blocks', 'textdomain' );
 
-		wp_localize_script( 'themeisle-gutenberg-blocks', 'themeisleGutenberg', array(
-			'isCompatible' => $this->is_compatible(),
-			'packagePath' => plugin_dir_url( $this->get_dir() ) . 'build/',
-			'assetsPath' => plugin_dir_url( $this->get_dir() ) . 'assets',
-			'updatePath' => admin_url( 'update-core.php' ),
-			'mapsAPI' => $api
-		) );
+		wp_localize_script(
+			'themeisle-gutenberg-blocks',
+			'themeisleGutenberg',
+			array(
+				'isCompatible' => $this->is_compatible(),
+				'packagePath'  => plugin_dir_url( $this->get_dir() ) . 'build/',
+				'assetsPath'   => plugin_dir_url( $this->get_dir() ) . 'assets',
+				'updatePath'   => admin_url( 'update-core.php' ),
+				'mapsAPI'      => $api,
+			) 
+		);
 
 		wp_enqueue_style(
 			'themeisle-gutenberg-blocks-editor',
@@ -108,12 +120,16 @@ class GutenbergBlocks {
 
 		wp_enqueue_style(
 			'glidejs-core',
-			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.core.min.css'
+			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.core.min.css',
+			[],
+			$version
 		);
 
 		wp_enqueue_style(
 			'glidejs-theme',
-			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.theme.min.css'
+			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.theme.min.css',
+			[],
+			$version
 		);
 	}
 
@@ -138,20 +154,17 @@ class GutenbergBlocks {
 
 		wp_enqueue_style(
 			'themeisle-block_styles',
-			plugin_dir_url( $this->get_dir() ) . 'build/style.css'
+			plugin_dir_url( $this->get_dir() ) . 'build/style.css',
+			[],
+			$version
 		);
 
-		$has_map = false;
-		$has_chart = false;
+		$has_map    = false;
 		$has_slider = false;
 
 		if ( is_singular() ) {
 			if ( has_block( 'themeisle-blocks/google-map' ) ) {
 				$has_map = true;
-			}
-
-			if ( has_block( 'themeisle-blocks/chart-pie' ) ) {
-				$has_chart = true;
 			}
 
 			if ( has_block( 'themeisle-blocks/slider' ) ) {
@@ -160,13 +173,9 @@ class GutenbergBlocks {
 		} else {
 			$posts = wp_list_pluck( $wp_query->posts, 'ID' );
 
-			foreach( $posts as $post ) {
+			foreach ( $posts as $post ) {
 				if ( has_block( 'themeisle-blocks/google-map', $post ) ) {
 					$has_map = true;
-				}
-
-				if ( has_block( 'themeisle-blocks/chart-pie' ) ) {
-					$has_chart = true;
 				}
 
 				if ( has_block( 'themeisle-blocks/slider' ) ) {
@@ -175,15 +184,11 @@ class GutenbergBlocks {
 			}
 		}
 
-		if ( $has_chart ) {
-			wp_enqueue_script( 'google-charts', 'https://www.gstatic.com/charts/loader.js' );
-		}
-
 		if ( $has_map ) {
-			// Get the API key
+			// Get the API key.
 			$apikey = get_option( 'themeisle_google_map_block_api_key' );
 
-			// Don't output anything if there is no API key
+			// Don't output anything if there is no API key.
 			if ( null === $apikey || empty( $apikey ) || ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) ) {
 				return;
 			}
@@ -196,7 +201,7 @@ class GutenbergBlocks {
 				true
 			);
 
-			wp_enqueue_script(
+			wp_enqueue_script( //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion
 				'google-maps',
 				'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $apikey ) . '&libraries=places&callback=initMapScript',
 				array( 'themeisle-gutenberg-google-maps' ),
@@ -224,12 +229,16 @@ class GutenbergBlocks {
 	
 			wp_enqueue_style(
 				'glidejs-core',
-				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.core.min.css'
+				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.core.min.css',
+				[],
+				$version
 			);
 	
 			wp_enqueue_style(
 				'glidejs-theme',
-				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.theme.min.css'
+				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.theme.min.css',
+				[],
+				$version
 			);
 		}
 	}
@@ -242,7 +251,7 @@ class GutenbergBlocks {
 	 */
 	public function is_compatible() {
 		if ( ! function_exists( 'plugins_api' ) ) {
-			require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
+			require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 		}
 
 		if ( ! defined( 'OTTER_BLOCKS_VERSION' ) ) {
@@ -252,23 +261,23 @@ class GutenbergBlocks {
 		$current = OTTER_BLOCKS_VERSION;
 
 		$args = array(
-			'slug' => 'otter-blocks',
+			'slug'   => 'otter-blocks',
 			'fields' => array(
 				'version' => true,
-			)
+			),
 		);
 
 		$call_api = plugins_api( 'plugin_information', $args );
 
 		if ( is_wp_error( $call_api ) ) {
-			return true;	
+			return true;    
 		} else {
 			if ( ! empty( $call_api->version ) ) {
 				$latest = $call_api->version;
 			}
 		}
 
-		return version_compare( $current, $latest , '>=' );
+		return version_compare( $current, $latest, '>=' );
 	}
 
 	/**
@@ -280,11 +289,10 @@ class GutenbergBlocks {
 	public function load_server_side_blocks() {
 		$classnames = array(
 			'\ThemeIsle\GutenbergBlocks\Render\About_Author_Block',
-			'\ThemeIsle\GutenbergBlocks\Render\Chart_Pie_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Google_Map_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Plugin_Card_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Posts_Grid_Block',
-			'\ThemeIsle\GutenbergBlocks\Render\Sharing_Icons_Block'
+			'\ThemeIsle\GutenbergBlocks\Render\Sharing_Icons_Block',
 		);
 
 		foreach ( $classnames as $classname ) {
@@ -308,7 +316,7 @@ class GutenbergBlocks {
 			'\ThemeIsle\GutenbergBlocks\CSS\CSS_Handler',
 			'\ThemeIsle\GutenbergBlocks\Plugins\Options_Settings',
 			'\ThemeIsle\GutenbergBlocks\Server\Plugin_Card_Server',
-			'\ThemeIsle\GutenbergBlocks\Server\Template_Library_Server'
+			'\ThemeIsle\GutenbergBlocks\Server\Template_Library_Server',
 		);
 
 		foreach ( $classnames as $classname ) {
@@ -322,7 +330,9 @@ class GutenbergBlocks {
 
 	/**
 	 * Render server-side CSS
-	 * 
+	 *
+	 * @param string $post_id Post id.
+	 *
 	 * @since   1.1.0
 	 * @access  public
 	 */
@@ -331,7 +341,7 @@ class GutenbergBlocks {
 		if ( function_exists( 'has_blocks' ) && has_blocks( $post ) ) {
 			if ( class_exists( '\ThemeIsle\GutenbergBlocks\CSS\Block_Frontend' ) ) {
 				$class = '\ThemeIsle\GutenbergBlocks\CSS\Block_Frontend';
-				$path = new $class();
+				$path  = new $class();
 				return $path->enqueue_styles( $post, true );
 			}
 		}
@@ -342,6 +352,7 @@ class GutenbergBlocks {
 	 *
 	 * @since   1.0.0
 	 * @access public
+	 * @return mixed
 	 * @param array $categories All categories.
 	 * @link   https://wordpress.org/gutenberg/handbook/extensibility/extending-blocks/#managing-block-categories
 	 */
@@ -369,6 +380,8 @@ class GutenbergBlocks {
 	}
 
 	/**
+	 * Singleton method.
+	 *
 	 * @static
 	 * @since   1.0.0
 	 * @access  public

@@ -6,7 +6,7 @@ const { __ } = wp.i18n;
 const {
 	__experimentalBlockNavigationList,
 	BlockControls
-} = wp.blockEditor || wp.editor;
+} = wp.blockEditor;
 
 const {
 	IconButton,
@@ -22,8 +22,8 @@ const {
 } = wp.data;
 
 const {
-	Component,
-	Fragment
+	Fragment,
+	useState
 } = wp.element;
 
 /**
@@ -31,63 +31,53 @@ const {
  */
 import { navigatorIcon } from '../../helpers/icons.js';
 
-class BlockNavigatorControl extends Component {
-	constructor() {
-		super( ...arguments );
-		this.toggleNavigator = this.toggleNavigator.bind( this );
+const BlockNavigatorControl = ({
+	clientId,
+	block,
+	selectedBlockClientId,
+	selectBlock
+}) => {
+	const [ isOpen, setOpen ] = useState( false );
 
-		this.state = {
-			isNavigationListOpen: false
-		};
-	}
+	return (
+		<Fragment>
+			<BlockControls>
+				<Toolbar
+					className="wp-themesiel-blocks-block-navigator-components-toolbar"
+				>
+					<IconButton
+						className="components-toolbar__control"
+						label={ __( 'Open block navigator' ) }
+						onClick={ () => setOpen( true ) }
+						icon={ navigatorIcon }
+					/>
+				</Toolbar>
+			</BlockControls>
 
-	toggleNavigator( e ) {
-		this.setState({ isNavigationListOpen: e });
-	}
-
-	render() {
-		return (
-			<Fragment>
-				<BlockControls>
-					<Toolbar
-						className="wp-themesiel-blocks-block-navigator-components-toolbar"
-					>
-						<IconButton
-							className="components-toolbar__control"
-							label={ __( 'Open block navigator' ) }
-							onClick={ () => this.toggleNavigator( true ) }
-							icon={ navigatorIcon }
-						/>
-					</Toolbar>
-				</BlockControls>
-
-				{ this.state.isNavigationListOpen && (
-					<Modal
-						title={ __( 'Block Navigator' ) }
-						closeLabel={ __( 'Close' ) }
-						onRequestClose={ () => {
-							this.toggleNavigator( false );
-						} }
-					>
-						<__experimentalBlockNavigationList
-							blocks={ [ this.props.block ] }
-							selectedBlockClientId={ this.props.selectedBlockClientId }
-							selectBlock={ this.props.selectBlock }
-							showNestedBlocks
-						/>
-					</Modal>
-				) }
-			</Fragment>
-		);
-	}
-}
+			{ isOpen && (
+				<Modal
+					title={ __( 'Block Navigator' ) }
+					closeLabel={ __( 'Close' ) }
+					onRequestClose={ () => setOpen( false ) }
+				>
+					<__experimentalBlockNavigationList
+						blocks={ [ block ] }
+						selectedBlockClientId={ selectedBlockClientId }
+						selectBlock={ selectBlock }
+						showNestedBlocks
+					/>
+				</Modal>
+			) }
+		</Fragment>
+	);
+};
 
 export default compose(
 	withSelect( ( select, { clientId }) => {
 		const {
 			getSelectedBlockClientId,
 			getBlock
-		} = select( 'core/block-editor' ) || select( 'core/editor' );
+		} = select( 'core/block-editor' );
 
 		return {
 			block: getBlock( clientId ),
@@ -96,7 +86,7 @@ export default compose(
 	}),
 
 	withDispatch( ( dispatch, { block }) => {
-		const { selectBlock } = dispatch( 'core/block-editor' ) || dispatch( 'core/editor' );
+		const { selectBlock } = dispatch( 'core/block-editor' );
 		return {
 			selectBlock
 		};

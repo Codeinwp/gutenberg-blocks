@@ -1,4 +1,9 @@
 <?php
+/**
+ * Library server logic.
+ *
+ * @package ThemeIsle\GutenbergBlocks\Server
+ */
 
 namespace ThemeIsle\GutenbergBlocks\Server;
 
@@ -46,8 +51,8 @@ class Template_Library_Server {
 			'/fetch_templates',
 			array(
 				array(
-					'methods'	=> \WP_REST_Server::READABLE,
-					'callback'	=> array( $this, 'fetch_templates' ),
+					'methods'  => \WP_REST_Server::READABLE,
+					'callback' => array( $this, 'fetch_templates' ),
 				),
 			)
 		);
@@ -57,10 +62,10 @@ class Template_Library_Server {
 			'/import_template',
 			array(
 				array(
-					'methods'	=> \WP_REST_Server::READABLE,
-					'callback'	=> array( $this, 'import_template' ),
-					'args'		=> array(
-						'url'	=> array(
+					'methods'  => \WP_REST_Server::READABLE,
+					'callback' => array( $this, 'import_template' ),
+					'args'     => array(
+						'url' => array(
 							'type'        => 'string',
 							'required'    => true,
 							'description' => __( 'URL of the JSON file.', 'textdomain' ),
@@ -74,6 +79,8 @@ class Template_Library_Server {
 	/**
 	 * Function to fetch templates.
 	 *
+	 * @param \WP_REST_Request $request Rest request.
+	 *
 	 * @return array|bool|\WP_Error
 	 */
 	public function fetch_templates( \WP_REST_Request $request ) {
@@ -83,85 +90,85 @@ class Template_Library_Server {
 
 		$templates_list = array(
 			array(
-				'title'				=> __( 'Header with Video', 'textdomain' ),
-				'type'				=> 'block',
-				'author'			=> __( 'Otter', 'textdomain' ),
-				'keywords'			=> array( 'header', 'video' ),
-				'categories'		=> array( 'header' ),
-				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/header-video/template.json',
-				'screenshot_url'    => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/header-video/screenshot.png',
+				'title'          => __( 'Header with Video', 'textdomain' ),
+				'type'           => 'block',
+				'author'         => __( 'Otter', 'textdomain' ),
+				'keywords'       => array( 'header', 'video' ),
+				'categories'     => array( 'header' ),
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/header-video/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/header-video/screenshot.png',
 			),
 			array(
-				'title'				=> __( 'Services Simple', 'textdomain' ),
-				'type'				=> 'block',
-				'author'			=> __( 'Otter', 'textdomain' ),
-				'keywords'			=> array( 'services', 'features' ),
-				'categories'		=> array( 'services' ),
-				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-simple/template.json',
-				'screenshot_url'    => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-simple/screenshot.png',
+				'title'          => __( 'Services Simple', 'textdomain' ),
+				'type'           => 'block',
+				'author'         => __( 'Otter', 'textdomain' ),
+				'keywords'       => array( 'services', 'features' ),
+				'categories'     => array( 'services' ),
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-simple/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-simple/screenshot.png',
 			),
 			array(
-				'title'				=> __( 'Services Round Icons', 'textdomain' ),
-				'type'				=> 'block',
-				'author'			=> __( 'Otter', 'textdomain' ),
-				'keywords'			=> array( 'services', 'features', 'icons' ),
-				'categories'		=> array( 'services' ),
-				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-round-icons/template.json',
-				'screenshot_url'    => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-round-icons/screenshot.png',
+				'title'          => __( 'Services Round Icons', 'textdomain' ),
+				'type'           => 'block',
+				'author'         => __( 'Otter', 'textdomain' ),
+				'keywords'       => array( 'services', 'features', 'icons' ),
+				'categories'     => array( 'services' ),
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-round-icons/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-round-icons/screenshot.png',
 			),
 			array(
-				'title'				=> __( 'Services Image Background', 'textdomain' ),
-				'type'				=> 'block',
-				'author'			=> __( 'Otter', 'textdomain' ),
-				'keywords'			=> array( 'services', 'features' ),
-				'categories'		=> array( 'services' ),
-				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-image-background/template.json',
-				'screenshot_url'    => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-image-background/screenshot.png',
+				'title'          => __( 'Services Image Background', 'textdomain' ),
+				'type'           => 'block',
+				'author'         => __( 'Otter', 'textdomain' ),
+				'keywords'       => array( 'services', 'features' ),
+				'categories'     => array( 'services' ),
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-image-background/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-image-background/screenshot.png',
 			),
 			array(
-				'title'				=> __( 'Pricing Boxed', 'textdomain' ),
-				'type'				=> 'block',
-				'author'			=> __( 'Otter', 'textdomain' ),
-				'keywords'			=> array( 'pricing' ),
-				'categories'		=> array( 'pricing' ),
-				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/pricing-boxed/template.json',
-				'screenshot_url'    => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/pricing-boxed/screenshot.png',
+				'title'          => __( 'Pricing Boxed', 'textdomain' ),
+				'type'           => 'block',
+				'author'         => __( 'Otter', 'textdomain' ),
+				'keywords'       => array( 'pricing' ),
+				'categories'     => array( 'pricing' ),
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/pricing-boxed/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/pricing-boxed/screenshot.png',
 			),
 			array(
-				'title'				=> __( 'Pricing Hestia', 'textdomain' ),
-				'type'				=> 'block',
-				'author'			=> __( 'Otter', 'textdomain' ),
-				'keywords'			=> array( 'pricing', 'hestia' ),
-				'categories'		=> array( 'pricing' ),
-				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/pricing-hestia/template.json',
-				'screenshot_url'    => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/pricing-hestia/screenshot.png',
+				'title'          => __( 'Pricing Hestia', 'textdomain' ),
+				'type'           => 'block',
+				'author'         => __( 'Otter', 'textdomain' ),
+				'keywords'       => array( 'pricing', 'hestia' ),
+				'categories'     => array( 'pricing' ),
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/pricing-hestia/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/pricing-hestia/screenshot.png',
 			),
 			array(
-				'title'				=> __( 'Testimonials Simple', 'textdomain' ),
-				'type'				=> 'block',
-				'author'			=> __( 'Otter', 'textdomain' ),
-				'keywords'			=> array( 'testimonials', 'quote' ),
-				'categories'		=> array( 'testimonials' ),
-				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/testimonials-simple/template.json',
-				'screenshot_url'    => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/testimonials-simple/screenshot.png',
+				'title'          => __( 'Testimonials Simple', 'textdomain' ),
+				'type'           => 'block',
+				'author'         => __( 'Otter', 'textdomain' ),
+				'keywords'       => array( 'testimonials', 'quote' ),
+				'categories'     => array( 'testimonials' ),
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/testimonials-simple/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/testimonials-simple/screenshot.png',
 			),
 			array(
-				'title'				=> __( 'Testimonials Boxed', 'textdomain' ),
-				'type'				=> 'block',
-				'author'			=> __( 'Otter', 'textdomain' ),
-				'keywords'			=> array( 'testimonials', 'quote', 'boxed' ),
-				'categories'		=> array( 'testimonials' ),
-				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/testimonials-boxed/template.json',
-				'screenshot_url'    => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/testimonials-boxed/screenshot.png',
+				'title'          => __( 'Testimonials Boxed', 'textdomain' ),
+				'type'           => 'block',
+				'author'         => __( 'Otter', 'textdomain' ),
+				'keywords'       => array( 'testimonials', 'quote', 'boxed' ),
+				'categories'     => array( 'testimonials' ),
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/testimonials-boxed/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/testimonials-boxed/screenshot.png',
 			),
 			array(
-				'title'				=> __( 'About with Map', 'textdomain' ),
-				'type'				=> 'block',
-				'author'			=> __( 'Otter', 'textdomain' ),
-				'keywords'			=> array( 'about', 'social', 'maps', 'footer' ),
-				'categories'		=> array( 'about', 'footer' ),
-				'template_url'		=> 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/about-with-map/template.json',
-				'screenshot_url'    => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/about-with-map/screenshot.png',
+				'title'          => __( 'About with Map', 'textdomain' ),
+				'type'           => 'block',
+				'author'         => __( 'Otter', 'textdomain' ),
+				'keywords'       => array( 'about', 'social', 'maps', 'footer' ),
+				'categories'     => array( 'about', 'footer' ),
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/about-with-map/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/about-with-map/screenshot.png',
 			),
 		);
 
@@ -173,6 +180,8 @@ class Template_Library_Server {
 	/**
 	 * Function to fetch template JSON.
 	 *
+	 * @param \WP_REST_Request $request Rest request.
+	 *
 	 * @return array|bool|\WP_Error
 	 */
 	public function import_template( $request ) {
@@ -181,7 +190,12 @@ class Template_Library_Server {
 		}
 
 		$url = $request->get_param( 'url' );
-		$json = file_get_contents( $url );
+		if ( function_exists( 'wpcom_vip_file_get_contents' ) ) {
+			$json = wpcom_vip_file_get_contents( $url );
+		} else {
+			$json = file_get_contents( $url ); //phpcs:ignore WordPressVIPMinimum.VIP.FetchingRemoteData.fileGetContentsUknown
+		}
+
 		$obj = json_decode( $json );
 		return rest_ensure_response( $obj );
 	}
