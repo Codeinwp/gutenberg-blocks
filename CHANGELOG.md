@@ -1,3 +1,7 @@
+##### [Version 1.3.3](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.3.2...v1.3.3) (2020-01-09)
+
+Fix composer loading condition
+
 ##### [Version 1.3.2](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.3.1...v1.3.2) (2020-01-09)
 
 - Add Slider Transforms [#142](https://github.com/Codeinwp/gutenberg-blocks/issues/142)
