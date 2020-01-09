@@ -22,7 +22,6 @@ jobs:
       - name: Release new version
         run: |
           npm ci
-          npm run build
           npm run release
         env:
           CI: true
