@@ -8,125 +8,84 @@ import classnames from 'classnames';
  */
 const { __ } = wp.i18n;
 
-const {
-	Dropdown,
-	IconButton,
-	RangeControl
-} = wp.components;
+const { IconButton } = wp.components;
 
 const { withInstanceId } = wp.compose;
-
-const { Component } = wp.element;
 
 /**
  * Internal dependencies
  */
 import './editor.scss';
+import Field from './field.js';
 
-class SizingControl extends Component {
-	render() {
-		const id = `inspector-sizing-control-${ this.props.instanceId }`;
+const SizingControl = ({
+	instanceId,
+	label,
+	type,
+	min,
+	max,
+	changeType,
+	options,
+	onChange
+}) => {
+	const id = `inspector-sizing-control-${ instanceId }`;
 
-		if ( this.props.options && 1 > this.props.options.length ) {
-			return __( 'Please specify more options.' );
-		}
+	if ( options && 1 > options.length ) {
+		return __( 'Please specify more options.' );
+	}
 
-		return (
-			<div
-				id={ id }
-				className="wp-block-themeisle-blocks-sizing-control"
-			>
-				<div className="components-base-control__field">
-					{ this.props.label && (
-						<label
-							className="components-base-control__label"
-							htmlFor={ id }
-						>
-							{ this.props.label }
-						</label>
-					) }
-
-					<div
-						className={ classnames(
-							'wp-block-themeisle-blocks-sizing-control-wrapper',
-							{ 'linking': this.props.type }
-						) }
+	return (
+		<div
+			id={ id }
+			className="wp-block-themeisle-blocks-sizing-control"
+		>
+			<div className="components-base-control__field">
+				{ label && (
+					<label
+						className="components-base-control__label"
+						htmlFor={ id }
 					>
-						{ this.props.options.map( ( i, n ) => {
-							return (
-								<div className="wp-block-themeisle-blocks-sizing-control-item">
-									{ i.disabled ? (
-										<input
-											type="number"
-											disabled={ i.disabled }
-											className="wp-block-themeisle-blocks-sizing-control-item-input"
-											id={ `wp-block-themeisle-blocks-sizing-control-item-input-${ n }` }
-										/>
-									) : (
-										<Dropdown
-											position="top center"
-											focusOnMount={ false }
-											renderToggle={ ({ isOpen, onToggle }) => (
-												<input
-													type="number"
-													className="wp-block-themeisle-blocks-sizing-control-item-input"
-													id={ `wp-block-themeisle-blocks-sizing-control-item-input-${ n }-${ this.props.instanceId }` }
-													value={ i.value }
-													min={ this.props.min }
-													max={ this.props.max }
-													onFocus={ onToggle }
-													onChange={ e => this.props.onChange( i.type, parseInt( e.target.value ) ) }
-												/>
-											) }
-											renderContent={ ({ onToggle }) => (
-												<div className="wp-block-themeisle-blocks-sizing-control-overlay">
-													<RangeControl
-														value={ i.value }
-														initialPosition={ i.value }
-														beforeIcon="minus"
-														afterIcon="plus"
-														min={ this.props.min }
-														max={ this.props.max }
-														onChange={ e => this.props.onChange( i.type, e ) }
-													/>
-												</div>
-											) }
-										/>
-									) }
+						{ label }
+					</label>
+				) }
 
-									{ i.label && (
-										<label
-											className="wp-block-themeisle-blocks-sizing-control-item-label"
-											htmlFor={ `wp-block-themeisle-blocks-sizing-control-item-input-${ n }-${ this.props.instanceId }` }
-										>
-											{ i.label }
-										</label>
-									) }
-								</div>
-							);
-						}) }
+				<div
+					className={ classnames(
+						'wp-block-themeisle-blocks-sizing-control-wrapper',
+						{ 'linking': type }
+					) }
+				>
+					{ options.map( ( i, n ) => (
+						<Field
+							id={ instanceId }
+							index={ i }
+							option={ n }
+							min={ min }
+							max={ max }
+							onChange={ onChange }
+						/>
+					) ) }
 
-						{ this.props.type && (
-							<div
-								className={ classnames(
-									'wp-block-themeisle-blocks-sizing-control-item',
-									'toggle-linking',
-									{ 'is-linked': 'linked' === this.props.type }
-								) }
-							>
-								<IconButton
-									icon={ 'linked' === this.props.type ? 'admin-links' : 'editor-unlink' }
-									tooltip={ 'linked' === this.props.type ? __( 'Unlink Values' ) : __( 'Link Values' ) }
-									className="wp-block-themeisle-blocks-sizing-control-item-input"
-									onClick={ () => this.props.changeType( 'linked' === this.props.type ? 'unlinked' : 'linked' ) }
-								/>
-							</div>
-						) }
-					</div>
+					{ type && (
+						<div
+							className={ classnames(
+								'wp-block-themeisle-blocks-sizing-control-item',
+								'toggle-linking',
+								{ 'is-linked': 'linked' === type }
+							) }
+						>
+							<IconButton
+								icon={ 'linked' === type ? 'admin-links' : 'editor-unlink' }
+								tooltip={ 'linked' === type ? __( 'Unlink Values' ) : __( 'Link Values' ) }
+								className="wp-block-themeisle-blocks-sizing-control-item-input"
+								onClick={ () => changeType( 'linked' === type ? 'unlinked' : 'linked' ) }
+							/>
+						</div>
+					) }
 				</div>
 			</div>
-		);
-	}
-}
+		</div>
+	);
+};
 
 export default withInstanceId( SizingControl );

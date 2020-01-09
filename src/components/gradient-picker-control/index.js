@@ -13,7 +13,7 @@ const {
 
 const { withInstanceId } = wp.compose;
 
-const { ColorPalette } = wp.blockEditor || wp.editor;
+const { ColorPalette } = wp.blockEditor;
 
 const { Fragment } = wp.element;
 
@@ -21,11 +21,16 @@ const { Fragment } = wp.element;
  * Internal dependencies
  */
 import './editor.scss';
-
 import GradientButton from './gradient-button.js';
 import gradients from './gradients.js';
 
-const GradientPickerControl = ({ label, instanceId, value, customGradient = true, onChange }) => {
+const GradientPickerControl = ({
+	label,
+	instanceId,
+	value,
+	customGradient = true,
+	onChange
+}) => {
 	const id = `inspector-gradient-picker-control-${ instanceId }`;
 
 	const onChangeValue = ({ firstColor = value.firstColor, firstLocation = value.firstLocation, secondColor = value.secondColor, secondLocation = value.secondLocation, type = value.type, angle = value.angle, position = value.position }) => {
@@ -47,7 +52,7 @@ const GradientPickerControl = ({ label, instanceId, value, customGradient = true
 	return (
 		<div
 			id={ id }
-			className="wp-block-themeisle-blocks-responsive-control"
+			className="wp-block-themeisle-blocks-gradient-picker-control"
 		>
 			<div className="components-base-control__field">
 				{ label && (
@@ -59,7 +64,7 @@ const GradientPickerControl = ({ label, instanceId, value, customGradient = true
 					</div>
 				) }
 
-				<div className="wp-block-themeisle-blocks-responsive-control-presets">
+				<div className="wp-block-themeisle-blocks-gradient-picker-control-presets">
 					{ gradients.map( gradient => (
 						<GradientButton
 							title={ gradient.title }
@@ -70,11 +75,11 @@ const GradientPickerControl = ({ label, instanceId, value, customGradient = true
 						/>
 					) ) }
 
-					<div className="wp-block-themeisle-blocks-responsive-control-custom-wrapper">
+					<div className="wp-block-themeisle-blocks-gradient-picker-control-custom-wrapper">
 						{ customGradient && (
 							<Dropdown
-								className="wp-block-themeisle-blocks-responsive-control-dropdown-link-action"
-								contentClassName="wp-block-themeisle-blocks-responsive-control-dropdown-content"
+								className="wp-block-themeisle-blocks-gradient-picker-control-dropdown-link-action"
+								contentClassName="wp-block-themeisle-blocks-gradient-picker-control-dropdown-content"
 								renderToggle={ ({ isOpen, onToggle }) => (
 									<Button
 										aria-expanded={ isOpen }
@@ -161,7 +166,7 @@ const GradientPickerControl = ({ label, instanceId, value, customGradient = true
 						) }
 
 						<Button
-							className="wp-block-themeisle-blocks-responsive-control-clear"
+							className="wp-block-themeisle-blocks-gradient-picker-control-clear"
 							type="button"
 							isSmall
 							isDefault

@@ -17,7 +17,15 @@ const {
 import './style.scss';
 import './editor.scss';
 
-const Separators = ({ type, front, style, fill, invert, width, height }) => {
+const Separators = ({
+	type,
+	front,
+	style,
+	fill,
+	invert,
+	width,
+	height
+}) => {
 	if ( 'none' === style ) {
 		return false;
 	}

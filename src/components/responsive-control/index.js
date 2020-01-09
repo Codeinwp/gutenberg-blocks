@@ -22,7 +22,13 @@ const { withInstanceId } = wp.compose;
  */
 import './editor.scss';
 
-const ResponsiveControl = ({ label, instanceId, changeViewType, view, children }) => {
+const ResponsiveControl = ({
+	instanceId,
+	label,
+	changeViewType,
+	view,
+	children
+}) => {
 	const id = `inspector-responsive-control-${ instanceId }`;
 
 	return (
@@ -43,14 +49,14 @@ const ResponsiveControl = ({ label, instanceId, changeViewType, view, children }
 								/>
 							) }
 							renderContent={ ({ onToggle }) => (
-								<div className="wp-block-themeisle-responsiveness-settings">
-									<div className="responsiveness-title">
+								<div className="wp-block-themeisle-blocks-responsive-control-settings">
+									<div className="wp-block-themeisle-blocks-responsive-control-settings-title">
 										{ __( 'Responsiveness Settings' ) }
 									</div>
 
 									<Button
 										className={ classnames(
-											'responsiveness-item',
+											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'desktop' === view }
 										) }
 										onClick={ () => {
@@ -66,7 +72,7 @@ const ResponsiveControl = ({ label, instanceId, changeViewType, view, children }
 
 									<Button
 										className={ classnames(
-											'responsiveness-item',
+											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'tablet' === view }
 										) }
 										onClick={ () => {
@@ -82,7 +88,7 @@ const ResponsiveControl = ({ label, instanceId, changeViewType, view, children }
 
 									<Button
 										className={ classnames(
-											'responsiveness-item',
+											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'mobile' === view }
 										) }
 										onClick={ () => {

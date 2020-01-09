@@ -142,16 +142,11 @@ class GutenbergBlocks {
 		);
 
 		$has_map = false;
-		$has_chart = false;
 		$has_slider = false;
 
 		if ( is_singular() ) {
 			if ( has_block( 'themeisle-blocks/google-map' ) ) {
 				$has_map = true;
-			}
-
-			if ( has_block( 'themeisle-blocks/chart-pie' ) ) {
-				$has_chart = true;
 			}
 
 			if ( has_block( 'themeisle-blocks/slider' ) ) {
@@ -165,18 +160,10 @@ class GutenbergBlocks {
 					$has_map = true;
 				}
 
-				if ( has_block( 'themeisle-blocks/chart-pie' ) ) {
-					$has_chart = true;
-				}
-
 				if ( has_block( 'themeisle-blocks/slider' ) ) {
 					$has_slider = true;
 				}
 			}
-		}
-
-		if ( $has_chart ) {
-			wp_enqueue_script( 'google-charts', 'https://www.gstatic.com/charts/loader.js' );
 		}
 
 		if ( $has_map ) {
@@ -280,7 +267,6 @@ class GutenbergBlocks {
 	public function load_server_side_blocks() {
 		$classnames = array(
 			'\ThemeIsle\GutenbergBlocks\Render\About_Author_Block',
-			'\ThemeIsle\GutenbergBlocks\Render\Chart_Pie_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Google_Map_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Plugin_Card_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Posts_Grid_Block',

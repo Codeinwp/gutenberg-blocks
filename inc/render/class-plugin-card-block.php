@@ -72,42 +72,42 @@ class Plugin_Card_Block extends Base_Block {
 			}
 
 			$markup = '<div class="' . esc_attr( $class ) . '">
-				<div class="wp-block-themeisle-plugin-card">
-					<div class="card-header">
-						<div class="card-main">
-							<div class="card-logo">
+				<div class="wp-block-themeisle-blocks-plugin-cards-wrapper">
+					<div class="wp-block-themeisle-blocks-plugin-cards-header">
+						<div class="wp-block-themeisle-blocks-plugin-cards-main">
+							<div class="wp-block-themeisle-blocks-plugin-cards-logo">
 								<img src="' . esc_url( $icon ) . '" alt="' . esc_attr( $results->name ) . '" title="' . esc_attr( $results->name ) . '"/>
 							</div>
-							<div class="card-info">
+							<div class="wp-block-themeisle-blocks-plugin-cards-info">
 								<h4>' . esc_html( $results->name ) . '</h4>
 								<h5>' . $results->author . '</h5>
 							</div>
-							<div class="card-ratings">
+							<div class="wp-block-themeisle-blocks-plugin-cards-ratings">
 								' . $this->get_ratings( $results->rating ) . '
 							</div>
 						</div>
 					</div>
-					<div class="card-details">
-						<div class="card-description">' . esc_html( $results->short_description ) . '</div>
-						<div class="card-stats">
+					<div class="wp-block-themeisle-blocks-plugin-cards-details">
+						<div class="wp-block-themeisle-blocks-plugin-cards-description">' . esc_html( $results->short_description ) . '</div>
+						<div class="wp-block-themeisle-blocks-plugin-cards-stats">
 							<h5>' . __( 'Plugin Stats', 'textdomain' ) . '</h5>
-							<div class="card-stats-list">
-								<div class="card-stat">
-									<span class="card-text-large">' . number_format( $results->active_installs ) . '+</span>
+							<div class="wp-block-themeisle-blocks-plugin-cards-stats-list">
+								<div class="wp-block-themeisle-blocks-plugin-cards-stat">
+									<span class="wp-block-themeisle-blocks-plugin-cards-text-large">' . number_format( $results->active_installs ) . '+</span>
 									' . __( 'active installs', 'textdomain' ) . '
 								</div>
-								<div class="card-stat">
-									<span class="card-text-large">' . floatval( $results ->version ) . '+</span>
+								<div class="wp-block-themeisle-blocks-plugin-cards-stat">
+									<span class="wp-block-themeisle-blocks-plugin-cards-text-large">' . floatval( $results ->version ) . '+</span>
 									' . __( 'version', 'textdomain' ) . '
 								</div>
-								<div class="card-stat">
-									<span class="card-text-large">' . floatval( $results ->tested ) . '+</span>
+								<div class="wp-block-themeisle-blocks-plugin-cards-stat">
+									<span class="wp-block-themeisle-blocks-plugin-cards-text-large">' . floatval( $results ->tested ) . '+</span>
 									' . __( 'tested up to', 'textdomain' ) . '
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="card-download">
+					<div class="wp-block-themeisle-blocks-plugin-cards-download">
 						<a href="' . esc_url( $results->download_link ) . '">' . __( 'Download', 'textdomain' ) . '</a>
 					</div>
 				</div>

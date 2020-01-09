@@ -11,7 +11,7 @@ const {
 const {
 	RichTextShortcut,
 	RichTextToolbarButton
-} = wp.blockEditor || wp.editor;
+} = wp.blockEditor;
 
 const { Fragment } = wp.element;
 

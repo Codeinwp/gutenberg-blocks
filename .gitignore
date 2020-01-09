@@ -3,3 +3,5 @@ vendor
 composer.lock
 package-lock.json
 .DS_Store
+notes.md
+changes.md

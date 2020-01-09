@@ -1,11 +1,11 @@
 .wp-block-themeisle-blocks-google-map {
-	.components-placeholder {
+	&.components-placeholder {
 		padding: 40px 20px;
-	}
 
-	.components-placeholder__text {
-		font-size: 14px;
-		line-height: 1;
+		.components-placeholder__text {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
 	}
 
 	.gmnoprint {
@@ -16,41 +16,45 @@
 		}
 	}
 
-	.gm-control-marker-ui {
-		background-color: #fff;
-		border: 2px solid #fff;
-		border-radius: 3px;
-		box-shadow: 0 2px 6px rgba(0,0,0,.3);
-		margin-left: 10px;
-		padding: 8px;
-		text-align: center;
+	&.is-selecting-marker * {
+		cursor: crosshair;
+	}
+}
 
-		&:hover {
+.wp-block-themeisle-blocks-google-map-marker-button {
+	background-color: #fff;
+	border: 2px solid #fff;
+	border-radius: 3px;
+	box-shadow: 0 2px 6px rgba(0,0,0,.3);
+	margin-left: 10px;
+	padding: 8px;
+	text-align: center;
+	z-index: 0;
+	position: absolute;
+	bottom: 26px;
+	left: 0px;
+
+	&:hover {
+		cursor: pointer;
+
+		* {
 			cursor: pointer;
-
-			* {
-				cursor: pointer;
-			}
-
-			.dashicons {
-
-				&:before {
-					content: "\f109";
-				}
-			}
 		}
 
 		.dashicons {
-			color: #666666;
 
-			&:hover {
-				color: #000000;
+			&:before {
+				content: "\f109";
 			}
 		}
 	}
 
-	&.is-selecting-marker * {
-		cursor: crosshair;
+	.dashicons {
+		color: #666666;
+
+		&:hover {
+			color: #000000;
+		}
 	}
 }
 
