@@ -1,4 +1,9 @@
 <?php
+/**
+ * Css handling logic for heading.
+ *
+ * @package ThemeIsle\GutenbergBlocks\CSS\Blocks
+ */
 
 namespace ThemeIsle\GutenbergBlocks\CSS\Blocks;
 
@@ -16,23 +21,18 @@ class Advanced_Heading_CSS extends Base_CSS {
 	 */
 	public $block_prefix = 'advanced-heading';
 
-	/**
-	 * Constructor function for the module.
-	 *
-	 * @method __construct
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
 
 	/**
 	 * Generate Advanced Heading CSS
-	 * 
+	 *
+	 * @param mixed $block Block.
+	 *
+	 * @return string Style.
 	 * @since   1.3.0
 	 * @access  private
 	 */
 	public function render_css( $block ) {
-		$attr = $block['attrs'];
+		$attr  = $block['attrs'];
 		$style = '';
 
 		if ( isset( $attr['id'] ) ) {
@@ -73,83 +73,83 @@ class Advanced_Heading_CSS extends Base_CSS {
 
 			if ( isset( $attr['highlightColor'] ) || isset( $attr['highlightBackground'] ) ) {
 				$style .= '#' . $attr['id'] . ' mark {' . "\n";
-					if ( isset( $attr['highlightColor'] ) ) {
-						$style .= '		color: ' . $this->get_attr_value( ( isset( $attr['highlightColor'] ) ? $attr['highlightColor'] : null ) ) . ';' . "\n";
-					}
+				if ( isset( $attr['highlightColor'] ) ) {
+					$style .= '		color: ' . $this->get_attr_value( ( isset( $attr['highlightColor'] ) ? $attr['highlightColor'] : null ) ) . ';' . "\n";
+				}
 
-					if ( isset( $attr['highlightBackground'] ) ) {
-						$style .= '		background: ' . $this->get_attr_value( ( isset( $attr['highlightBackground'] ) ? $attr['highlightBackground'] : null ) ) . ';' . "\n";
-					}
+				if ( isset( $attr['highlightBackground'] ) ) {
+					$style .= '		background: ' . $this->get_attr_value( ( isset( $attr['highlightBackground'] ) ? $attr['highlightBackground'] : null ) ) . ';' . "\n";
+				}
 				$style .= '}' . "\n \n";
 			}
 
 			$style .= '@media ( min-width: 600px ) and ( max-width: 960px )  {' . "\n";
 
-				$style .= '	#' . $attr['id'] . ' {' . "\n";
-				if ( isset( $attr['alignTablet'] ) ) {
-					$style .= '		text-align: ' . $this->get_attr_value( ( isset( $attr['alignTablet'] ) ? $attr['alignTablet'] : 'unset' ) ) . ';' . "\n";
-				}
+			$style .= '	#' . $attr['id'] . ' {' . "\n";
+			if ( isset( $attr['alignTablet'] ) ) {
+				$style .= '		text-align: ' . $this->get_attr_value( ( isset( $attr['alignTablet'] ) ? $attr['alignTablet'] : 'unset' ) ) . ';' . "\n";
+			}
 
-				if ( isset( $attr['fontSizeTablet'] ) ) {
-					$style .= '		font-size: ' . $this->get_attr_value( ( isset( $attr['fontSizeTablet'] ) ? $attr['fontSizeTablet'] : null ) ) . 'px;' . "\n";
-				}
+			if ( isset( $attr['fontSizeTablet'] ) ) {
+				$style .= '		font-size: ' . $this->get_attr_value( ( isset( $attr['fontSizeTablet'] ) ? $attr['fontSizeTablet'] : null ) ) . 'px;' . "\n";
+			}
 
-				if ( 'linked' === $this->get_attr_value( ( isset( $attr['paddingTypeTablet'] ) ? $attr['paddingTypeTablet'] : null ), 'linked' ) ) {
-					$style .= '		padding: ' . $this->get_attr_value( ( isset( $attr['paddingTablet'] ) ? $attr['paddingTablet'] : null ), 0 ) . 'px;' . "\n";
-				}
+			if ( 'linked' === $this->get_attr_value( ( isset( $attr['paddingTypeTablet'] ) ? $attr['paddingTypeTablet'] : null ), 'linked' ) ) {
+				$style .= '		padding: ' . $this->get_attr_value( ( isset( $attr['paddingTablet'] ) ? $attr['paddingTablet'] : null ), 0 ) . 'px;' . "\n";
+			}
 
-				if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['paddingTypeTablet'] ) ? $attr['paddingTypeTablet'] : null ), 'linked' ) ) {
-					$style .= '		padding-top: ' . $this->get_attr_value( ( isset( $attr['paddingTopTablet'] ) ? $attr['paddingTopTablet'] : null ), 0 ) . 'px;' . "\n";
-					$style .= '		padding-right: ' . $this->get_attr_value( ( isset( $attr['paddingRightTablet'] ) ? $attr['paddingRightTablet'] : null ), 0 ) . 'px;' . "\n";
-					$style .= '		padding-bottom: ' . $this->get_attr_value( ( isset( $attr['paddingBottomTablet'] ) ? $attr['paddingBottomTablet'] : null ), 0 ) . 'px;' . "\n";
-					$style .= '		padding-left: ' . $this->get_attr_value( ( isset( $attr['paddingLeftTablet'] ) ? $attr['paddingLeftTablet'] : null ), 0 ) . 'px;' . "\n";
-				}
+			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['paddingTypeTablet'] ) ? $attr['paddingTypeTablet'] : null ), 'linked' ) ) {
+				$style .= '		padding-top: ' . $this->get_attr_value( ( isset( $attr['paddingTopTablet'] ) ? $attr['paddingTopTablet'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '		padding-right: ' . $this->get_attr_value( ( isset( $attr['paddingRightTablet'] ) ? $attr['paddingRightTablet'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '		padding-bottom: ' . $this->get_attr_value( ( isset( $attr['paddingBottomTablet'] ) ? $attr['paddingBottomTablet'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '		padding-left: ' . $this->get_attr_value( ( isset( $attr['paddingLeftTablet'] ) ? $attr['paddingLeftTablet'] : null ), 0 ) . 'px;' . "\n";
+			}
 
-				if ( 'linked' === $this->get_attr_value( ( isset( $attr['marginTypeTablet'] ) ? $attr['marginTypeTablet'] : null ), 'unlinked' ) ) {
-					$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTablet'] ) ? $attr['marginTablet'] : null ), 0 ) . 'px;' . "\n";
-					$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginTablet'] ) ? $attr['marginTablet'] : null ), 0 ) . 'px;' . "\n";
-				}
-	
-				if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeTablet'] ) ? $attr['marginTypeTablet'] : null ), 'unlinked' ) ) {
-					$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTopTablet'] ) ? $attr['marginTopTablet'] : null ), 0 ) . 'px;' . "\n";
-					$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginBottomTablet'] ) ? $attr['marginBottomTablet'] : null ), 20 ) . 'px;' . "\n";
-				}
-				$style .= '	}' . "\n \n";
+			if ( 'linked' === $this->get_attr_value( ( isset( $attr['marginTypeTablet'] ) ? $attr['marginTypeTablet'] : null ), 'unlinked' ) ) {
+				$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTablet'] ) ? $attr['marginTablet'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginTablet'] ) ? $attr['marginTablet'] : null ), 0 ) . 'px;' . "\n";
+			}
+
+			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeTablet'] ) ? $attr['marginTypeTablet'] : null ), 'unlinked' ) ) {
+				$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTopTablet'] ) ? $attr['marginTopTablet'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginBottomTablet'] ) ? $attr['marginBottomTablet'] : null ), 20 ) . 'px;' . "\n";
+			}
+			$style .= '	}' . "\n \n";
 
 			$style .= '}' . "\n \n";
 
 			$style .= '@media ( max-width: 600px )  {' . "\n";
 
-				$style .= '	#' . $attr['id'] . ' {' . "\n";
-				if ( isset( $attr['alignMobile'] ) ) {
-					$style .= '		text-align: ' . $this->get_attr_value( ( isset( $attr['alignMobile'] ) ? $attr['alignMobile'] : 'unset' ) ) . ';' . "\n";
-				}
+			$style .= '	#' . $attr['id'] . ' {' . "\n";
+			if ( isset( $attr['alignMobile'] ) ) {
+				$style .= '		text-align: ' . $this->get_attr_value( ( isset( $attr['alignMobile'] ) ? $attr['alignMobile'] : 'unset' ) ) . ';' . "\n";
+			}
 
-				if ( isset( $attr['fontSizeMobile'] ) ) {
-					$style .= '		font-size: ' . $this->get_attr_value( ( isset( $attr['fontSizeMobile'] ) ? $attr['fontSizeMobile'] : null ) ) . 'px;' . "\n";
-				}
+			if ( isset( $attr['fontSizeMobile'] ) ) {
+				$style .= '		font-size: ' . $this->get_attr_value( ( isset( $attr['fontSizeMobile'] ) ? $attr['fontSizeMobile'] : null ) ) . 'px;' . "\n";
+			}
 
-				if ( 'linked' === $this->get_attr_value( ( isset( $attr['paddingTypeMobile'] ) ? $attr['paddingTypeMobile'] : null ), 'linked' ) ) {
-					$style .= '		padding: ' . $this->get_attr_value( ( isset( $attr['paddingMobile'] ) ? $attr['paddingMobile'] : null ), 0 ) . 'px;' . "\n";
-				}
+			if ( 'linked' === $this->get_attr_value( ( isset( $attr['paddingTypeMobile'] ) ? $attr['paddingTypeMobile'] : null ), 'linked' ) ) {
+				$style .= '		padding: ' . $this->get_attr_value( ( isset( $attr['paddingMobile'] ) ? $attr['paddingMobile'] : null ), 0 ) . 'px;' . "\n";
+			}
 
-				if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['paddingTypeMobile'] ) ? $attr['paddingTypeMobile'] : null ), 'linked' ) ) {
-					$style .= '		padding-top: ' . $this->get_attr_value( ( isset( $attr['paddingTopMobile'] ) ? $attr['paddingTopMobile'] : null ), 0 ) . 'px;' . "\n";
-					$style .= '		padding-right: ' . $this->get_attr_value( ( isset( $attr['paddingRightMobile'] ) ? $attr['paddingRightMobile'] : null ), 0 ) . 'px;' . "\n";
-					$style .= '		padding-bottom: ' . $this->get_attr_value( ( isset( $attr['paddingBottomMobile'] ) ? $attr['paddingBottomMobile'] : null ), 0 ) . 'px;' . "\n";
-					$style .= '		padding-left: ' . $this->get_attr_value( ( isset( $attr['paddingLeftMobile'] ) ? $attr['paddingLeftMobile'] : null ), 0 ) . 'px;' . "\n";
-				}
+			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['paddingTypeMobile'] ) ? $attr['paddingTypeMobile'] : null ), 'linked' ) ) {
+				$style .= '		padding-top: ' . $this->get_attr_value( ( isset( $attr['paddingTopMobile'] ) ? $attr['paddingTopMobile'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '		padding-right: ' . $this->get_attr_value( ( isset( $attr['paddingRightMobile'] ) ? $attr['paddingRightMobile'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '		padding-bottom: ' . $this->get_attr_value( ( isset( $attr['paddingBottomMobile'] ) ? $attr['paddingBottomMobile'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '		padding-left: ' . $this->get_attr_value( ( isset( $attr['paddingLeftMobile'] ) ? $attr['paddingLeftMobile'] : null ), 0 ) . 'px;' . "\n";
+			}
 
-				if ( 'linked' === $this->get_attr_value( ( isset( $attr['marginTypeMobile'] ) ? $attr['marginTypeMobile'] : null ), 'unlinked' ) ) {
-					$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginMobile'] ) ? $attr['marginMobile'] : null ), 0 ) . 'px;' . "\n";
-					$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginMobile'] ) ? $attr['marginMobile'] : null ), 0 ) . 'px;' . "\n";
-				}
+			if ( 'linked' === $this->get_attr_value( ( isset( $attr['marginTypeMobile'] ) ? $attr['marginTypeMobile'] : null ), 'unlinked' ) ) {
+				$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginMobile'] ) ? $attr['marginMobile'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginMobile'] ) ? $attr['marginMobile'] : null ), 0 ) . 'px;' . "\n";
+			}
 
-				if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeMobile'] ) ? $attr['marginTypeMobile'] : null ), 'unlinked' ) ) {
-					$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTopMobile'] ) ? $attr['marginTopMobile'] : null ), 0 ) . 'px;' . "\n";
-					$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginBottomMobile'] ) ? $attr['marginBottomMobile'] : null ), 20 ) . 'px;' . "\n";
-				}
-				$style .= '	}' . "\n \n";
+			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeMobile'] ) ? $attr['marginTypeMobile'] : null ), 'unlinked' ) ) {
+				$style .= '		margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTopMobile'] ) ? $attr['marginTopMobile'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '		margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginBottomMobile'] ) ? $attr['marginBottomMobile'] : null ), 20 ) . 'px;' . "\n";
+			}
+			$style .= '	}' . "\n \n";
 
 			$style .= '}' . "\n \n";
 		}

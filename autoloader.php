@@ -7,6 +7,11 @@
 
 namespace ThemeIsle\GutenbergBlocks;
 
+/**
+ * Class Autoloader
+ *
+ * @package ThemeIsle\GutenbergBlocks
+ */
 class Autoloader {
 	/**
 	 * An associative array where the key is a namespace prefix and the value
@@ -31,24 +36,24 @@ class Autoloader {
 	 * @param string $prefix The namespace prefix.
 	 * @param string $base_dir A base directory for class files in the
 	 * namespace.
-	 * @param bool $prepend If true, prepend the base directory to the stack
-	 * instead of appending it; this causes it to be searched first rather
-	 * than last.
+	 * @param bool   $prepend If true, prepend the base directory to the stack
+	 *   instead of appending it; this causes it to be searched first rather
+	 *   than last.
 	 * @return void
 	 */
 	public function add_namespace( $prefix, $base_dir, $prepend = false ) {
-		// normalize namespace prefix
+		// normalize namespace prefix.
 		$prefix = trim( $prefix, '\\' ) . '\\';
 
-		// normalize the base directory with a trailing separator
+		// normalize the base directory with a trailing separator.
 		$base_dir = rtrim( $base_dir, DIRECTORY_SEPARATOR ) . '/';
 
-		// initialize the namespace prefix array
+		// initialize the namespace prefix array.
 		if ( isset( $this->prefixes[ $prefix ] ) === false ) {
 			$this->prefixes[ $prefix ] = array();
 		}
 
-		// retain the base directory for the namespace prefix
+		// retain the base directory for the namespace prefix.
 		if ( $prepend ) {
 			array_unshift( $this->prefixes[ $prefix ], $base_dir );
 		} else {
@@ -64,31 +69,31 @@ class Autoloader {
 	 * failure.
 	 */
 	public function load_class( $class ) {
-		// the current namespace prefix
+		// the current namespace prefix.
 		$prefix = $class;
 
-		// work backwards through the namespace names of the fully-qualified
-		// class name to find a mapped file name
-		while ( false !== $pos = strrpos( $prefix, '\\' ) ) {
+		// work backwards through the namespace names of the fully-qualified.
+		// class name to find a mapped file name.
+		while ( false !== $pos = strrpos( $prefix, '\\' ) ) { //phpcs:ignore WordPress.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition
 
-			// retain the trailing namespace separator in the prefix
+			// retain the trailing namespace separator in the prefix.
 			$prefix = substr( $class, 0, $pos + 1 );
 
-			// the rest is the relative class name
+			// the rest is the relative class name.
 			$relative_class = substr( $class, $pos + 1 );
 
-			// try to load a mapped file for the prefix and relative class
+			// try to load a mapped file for the prefix and relative class.
 			$mapped_file = $this->load_mapped_file( $prefix, $relative_class );
 			if ( $mapped_file ) {
 				return $mapped_file;
 			}
 
-			// remove the trailing namespace separator for the next iteration
-			// of strrpos()
+			// remove the trailing namespace separator for the next iteration.
+			// of strrpos().
 			$prefix = rtrim( $prefix, '\\' );
 		}
 
-		// never found a mapped file
+		// never found a mapped file.
 		return false;
 	}
 
@@ -106,12 +111,12 @@ class Autoloader {
 			return false;
 		}
 
-		// look through base directories for this namespace prefix
+		// look through base directories for this namespace prefix.
 		foreach ( $this->prefixes[ $prefix ] as $base_dir ) {
 
 			// replace the namespace prefix with the base directory,
 			// replace namespace separators with directory separators
-			// in the relative class name, append with .php
+			// in the relative class name, append with .php.
 			$relative_class = strtolower( str_replace( '\\', '/', $relative_class ) );
 			$relative_class = str_replace( '_', '-', $relative_class );
 
@@ -122,14 +127,14 @@ class Autoloader {
 			}
 			$file = $base_dir . $relative_class . '.php';
 
-			// if the mapped file exists, require it
+			// if the mapped file exists, require it.
 			if ( $this->require_file( $file ) ) {
-				// yes, we're done
+				// yes, we're done.
 				return $file;
 			}
 		}
 
-		// never found it
+		// never found it.
 		return false;
 	}
 

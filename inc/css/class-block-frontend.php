@@ -1,4 +1,9 @@
 <?php
+/**
+ * Css handling logic.
+ *
+ * @package ThemeIsle\GutenbergBlocks\CSS
+ */
 
 namespace ThemeIsle\GutenbergBlocks\CSS;
 
@@ -30,14 +35,6 @@ class Block_Frontend extends Base_CSS {
 	 */
 	private $has_fonts = true;
 
-	/**
-	 * Constructor function for the module.
-	 *
-	 * @method __construct
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
 
 	/**
 	 * Initialize the class
@@ -52,29 +49,39 @@ class Block_Frontend extends Base_CSS {
 
 	/**
 	 * Method to start checking if excerpt exists.
-	 * 
+	 *
+	 * @param string $excerpt Excerpt.
+	 *
+	 * @return string
 	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function get_excerpt_start( $excerpt ) {
 		$this->has_excerpt = true;
+
 		return $excerpt;
 	}
 
 	/**
 	 * Method to stop checking if excerpt exists.
-	 * 
+	 *
+	 * @param string $excerpt Excerpt.
+	 *
+	 * @return string
 	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function get_excerpt_end( $excerpt ) {
 		$this->has_excerpt = false;
+
 		return $excerpt;
 	}
 
 	/**
 	 * Method to define hooks needed.
-	 * 
+	 *
+	 * @param int $post_id Post id.
+	 *
 	 * @since   1.3.0
 	 * @access  public
 	 */
@@ -98,7 +105,7 @@ class Block_Frontend extends Base_CSS {
 
 			$posts = wp_list_pluck( $wp_query->posts, 'ID' );
 
-			foreach( $posts as $post ) {
+			foreach ( $posts as $post ) {
 				$fonts = get_post_meta( $post, '_themeisle_gutenberg_block_fonts', true );
 
 				if ( ! empty( $fonts ) ) {
@@ -117,32 +124,33 @@ class Block_Frontend extends Base_CSS {
 
 		if ( empty( $fonts_list ) ) {
 			$this->has_fonts = false;
+
 			return;
 		}
 
 		$fonts = array();
 
-		if ( sizeof( $fonts_list ) > 0 ) {
-			foreach( $fonts_list as $font ) {
+		if ( count( $fonts_list ) > 0 ) {
+			foreach ( $fonts_list as $font ) {
 				if ( empty( $font['fontfamily'] ) ) {
 					continue;
 				}
 				$item = str_replace( ' ', '+', $font['fontfamily'] );
-				if ( sizeof( $font['fontvariant'] ) > 0 ) {
+				if ( count( $font['fontvariant'] ) > 0 ) {
 					$item .= ':' . implode( ',', $font['fontvariant'] );
 				}
 				array_push( $fonts, $item );
 			}
 
-			if ( sizeof( $fonts ) > 0 ) {
-				wp_enqueue_style( 'themeisle-gutenberg-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ) );
+			if ( count( $fonts ) > 0 ) {
+				wp_enqueue_style( 'themeisle-gutenberg-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ), [], THEMEISLE_GUTENBERG_BLOCKS_VERSION );
 			}
 		}
 	}
 
 	/**
 	 * Method to define hooks needed.
-	 * 
+	 *
 	 * @since   1.3.0
 	 * @access  public
 	 */
@@ -153,28 +161,30 @@ class Block_Frontend extends Base_CSS {
 
 		$fonts = array();
 
-		if ( sizeof( self::$google_fonts ) > 0 ) {
-			foreach( self::$google_fonts as $font ) {
+		if ( count( self::$google_fonts ) > 0 ) {
+			foreach ( self::$google_fonts as $font ) {
 				$item = str_replace( ' ', '+', $font['fontfamily'] );
-				if ( sizeof( $font['fontvariant'] ) > 0 ) {
+				if ( count( $font['fontvariant'] ) > 0 ) {
 					$item .= ':' . implode( ',', $font['fontvariant'] );
 				}
 				array_push( $fonts, $item );
 			}
 
-			wp_enqueue_style( 'themeisle-gutenberg-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ) );
+			wp_enqueue_style( 'themeisle-gutenberg-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ), [], THEMEISLE_GUTENBERG_BLOCKS_VERSION );
 		}
 	}
 
 	/**
 	 * Get Google Fonts for Reusable Blocks
-	 * 
+	 *
+	 * @param array $blocks Blocks list.
+	 *
 	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function enqueue_reusable_fonts( $blocks ) {
 		foreach ( $blocks as $block ) {
-			if ( $block['blockName'] === 'core/block' && ! empty( $block['attrs']['ref'] ) ) {
+			if ( 'core/block' === $block['blockName'] && ! empty( $block['attrs']['ref'] ) ) {
 				$this->enqueue_google_fonts( $block['attrs']['ref'] );
 			}
 
@@ -186,7 +196,7 @@ class Block_Frontend extends Base_CSS {
 
 	/**
 	 * Render server-side CSS
-	 * 
+	 *
 	 * @since   1.3.0
 	 * @access  public
 	 */
@@ -195,27 +205,34 @@ class Block_Frontend extends Base_CSS {
 			return $this->enqueue_styles();
 		}
 
-		add_filter( 'the_content', function( $content ) {
-			if ( $this->has_excerpt ) {
+		add_filter(
+			'the_content',
+			function ( $content ) {
+				if ( $this->has_excerpt ) {
+					return $content;
+				}
+
+				$post_id = get_the_ID();
+
+				$this->enqueue_styles( $post_id, true );
+
 				return $content;
 			}
-
-			$post_id = get_the_ID();
-
-			$this->enqueue_styles( $post_id, true );
-
-			return $content;
-		} );
+		);
 	}
 
 	/**
 	 * Enqueue CSS file
-	 * 
+	 *
+	 * @param int  $post_id Post id.
+	 * @param bool $footer IN footer.
+	 *
+	 * @return string
 	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function enqueue_styles( $post_id = '', $footer = false ) {
-		$post_id = $post_id ? $post_id : get_the_ID();
+		$post_id  = $post_id ? $post_id : get_the_ID();
 		$location = 'wp_head';
 
 		if ( function_exists( 'has_blocks' ) && has_blocks( $post_id ) ) {
@@ -226,21 +243,27 @@ class Block_Frontend extends Base_CSS {
 			}
 
 			if ( empty( $file_name ) || is_preview() ) {
-				return add_action( $location, function() use( $post_id ) {
-					return $this->get_post_css( $post_id );
-				} );
+				return add_action(
+					$location,
+					function () use ( $post_id ) {
+						return $this->get_post_css( $post_id );
+					}
+				);
 			}
 
 			$wp_upload_dir = wp_upload_dir( null, false );
-			$basedir = $wp_upload_dir['basedir'] . '/themeisle-gutenberg/';
-			$baseurl = $wp_upload_dir['baseurl'] . '/themeisle-gutenberg/';
-			$file_path = $basedir . $file_name . '.css';
-			$file_url = $baseurl . $file_name . '.css';
+			$basedir       = $wp_upload_dir['basedir'] . '/themeisle-gutenberg/';
+			$baseurl       = $wp_upload_dir['baseurl'] . '/themeisle-gutenberg/';
+			$file_path     = $basedir . $file_name . '.css';
+			$file_url      = $baseurl . $file_name . '.css';
 
 			if ( ! file_exists( $file_path ) ) {
-				return add_action( $location, function() use( $post_id ) {
-					return $this->get_post_css( $post_id );
-				} );
+				return add_action(
+					$location,
+					function () use ( $post_id ) {
+						return $this->get_post_css( $post_id );
+					}
+				);
 			}
 
 			$content = get_post_field( 'post_content', $post_id );
@@ -252,26 +275,35 @@ class Block_Frontend extends Base_CSS {
 			}
 
 			if ( $footer ) {
-				return add_action( 'wp_footer', function() use( $post_id, $file_name, $file_url ) {
-					return wp_enqueue_style( 'themeisle-gutenberg-' . $file_name, $file_url, array( 'themeisle-block_styles' ), get_the_modified_time( 'U', $post_id ) );
-				} );
+				return add_action(
+					'wp_footer',
+					function () use ( $post_id, $file_name, $file_url ) {
+						return wp_enqueue_style( 'themeisle-gutenberg-' . $file_name, $file_url, array( 'themeisle-block_styles' ), get_the_modified_time( 'U', $post_id ) );
+					}
+				);
 			}
 
-			add_action( 'wp_enqueue_scripts', function() use( $post_id, $file_name, $file_url ) {
-				return wp_enqueue_style( 'themeisle-gutenberg-' . $file_name, $file_url, array( 'themeisle-block_styles' ), get_the_modified_time( 'U', $post_id ) );
-			} );
+			add_action(
+				'wp_enqueue_scripts',
+				function () use ( $post_id, $file_name, $file_url ) {
+					return wp_enqueue_style( 'themeisle-gutenberg-' . $file_name, $file_url, array( 'themeisle-block_styles' ), get_the_modified_time( 'U', $post_id ) );
+				}
+			);
 		}
 	}
 
 	/**
 	 * Enqueue CSS file for Reusable Blocks
-	 * 
+	 *
+	 * @param array $blocks List of blocks.
+	 * @param bool  $footer Should we load on footer.
+	 *
 	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function enqueue_reusable_styles( $blocks, $footer = false ) {
 		foreach ( $blocks as $block ) {
-			if ( $block['blockName'] === 'core/block' && ! empty( $block['attrs']['ref'] ) ) {
+			if ( 'core/block' === $block['blockName'] && ! empty( $block['attrs']['ref'] ) ) {
 				$this->enqueue_styles( $block['attrs']['ref'], $footer );
 			}
 
@@ -283,7 +315,9 @@ class Block_Frontend extends Base_CSS {
 
 	/**
 	 * Get Post CSS
-	 * 
+	 *
+	 * @param string $post_id Post id.
+	 *
 	 * @since   1.3.0
 	 * @access  public
 	 */
@@ -300,17 +334,20 @@ class Block_Frontend extends Base_CSS {
 				return;
 			}
 
-			$style = "\n" . '<style type="text/css" media="all">' . "\n";
+			$style  = "\n" . '<style type="text/css" media="all">' . "\n";
 			$style .= $css;
 			$style .= "\n" . '</style>' . "\n";
 
-			echo $style;
+			echo $style;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
 	/**
 	 * Get Blocks CSS from Meta
-	 * 
+	 *
+	 * @param int $post_id Post id.
+	 *
+	 * @return string
 	 * @since   1.3.0
 	 * @access  public
 	 */
@@ -324,24 +361,28 @@ class Block_Frontend extends Base_CSS {
 			$blocks = $this->parse_blocks( $content );
 
 			if ( ! is_array( $blocks ) || empty( $blocks ) ) {
-				return;
+				return '';
 			}
 
 			$style .= $this->get_reusable_block_meta( $blocks );
 		}
+
 		return $style;
 	}
 
 	/**
 	 * Get Reusable Block Meta
-	 * 
+	 *
+	 * @param array $blocks List of blocks.
+	 *
+	 * @return string
 	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function get_reusable_block_meta( $blocks ) {
 		$style = '';
 		foreach ( $blocks as $block ) {
-			if ( $block['blockName'] === 'core/block' && ! empty( $block['attrs']['ref'] ) ) {
+			if ( 'core/block' === $block['blockName'] && ! empty( $block['attrs']['ref'] ) ) {
 				$style .= get_post_meta( $block['attrs']['ref'], '_themeisle_gutenberg_block_styles', true );
 			}
 
@@ -349,12 +390,16 @@ class Block_Frontend extends Base_CSS {
 				$style .= $this->get_reusable_block_meta( $block['innerBlocks'] );
 			}
 		}
+
 		return $style;
 	}
 
 	/**
 	 * Get Blocks CSS Inline
-	 * 
+	 *
+	 * @param int $post_id Post id.
+	 *
+	 * @return string
 	 * @since   1.3.0
 	 * @access  public
 	 */
@@ -371,24 +416,29 @@ class Block_Frontend extends Base_CSS {
 			$blocks = $this->parse_blocks( $content );
 
 			if ( ! is_array( $blocks ) || empty( $blocks ) ) {
-				return;
+				return '';
 			}
 
 			$css = $this->cycle_through_blocks( $blocks );
 		}
+
 		return $css;
 	}
 
 	/**
 	 * Cycle thorugh Blocks
-	 * 
+	 *
+	 * @param array $blocks List of blocks.
+	 *
+	 * @return string Block styles.
 	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function cycle_through_blocks( $blocks ) {
-		$style = '';
+		$style  = '';
 		$style .= $this->cycle_through_static_blocks( $blocks );
 		$style .= $this->cycle_through_reusable_blocks( $blocks );
+
 		return $style;
 	}
 
@@ -397,15 +447,16 @@ class Block_Frontend extends Base_CSS {
 	 * Defines and returns the instance of the static class.
 	 *
 	 * @static
+	 * @return Block_Frontend
 	 * @since 1.3.0
 	 * @access public
-	 * @return Block_Frontend
 	 */
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 			self::$instance->init();
 		}
+
 		return self::$instance;
 	}
 
@@ -416,8 +467,8 @@ class Block_Frontend extends Base_CSS {
 	 * object therefore, we don't want the object to be cloned.
 	 *
 	 * @access public
-	 * @since 1.3.0
 	 * @return void
+	 * @since 1.3.0
 	 */
 	public function __clone() {
 		// Cloning instances of the class is forbidden.
@@ -428,8 +479,8 @@ class Block_Frontend extends Base_CSS {
 	 * Disable unserializing of the class
 	 *
 	 * @access public
-	 * @since 1.3.0
 	 * @return void
+	 * @since 1.3.0
 	 */
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden.

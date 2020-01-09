@@ -39,7 +39,7 @@
     "installer-disable": "true"
   },
   "scripts": {
-    "lint": "phpcs -i",
+    "lint": "phpcs",
     "format": "phpcbf"
   }
 }
