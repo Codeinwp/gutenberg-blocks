@@ -18,8 +18,7 @@ $autoloader->add_namespace( '\ThemeIsle\GutenbergBlocks', dirname( __FILE__ ) . 
 $autoloader->register();
 
 if ( function_exists(
-	'add_action(
-' 
+	'add_action'
 ) ) {
 	add_action(
 		'plugins_loaded',
