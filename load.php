@@ -17,12 +17,15 @@ $autoloader = new \ThemeIsle\GutenbergBlocks\Autoloader();
 $autoloader->add_namespace( '\ThemeIsle\GutenbergBlocks', dirname( __FILE__ ) . '/inc/' );
 $autoloader->register();
 
-add_action(
-	'plugins_loaded',
-	function () {
-		// call this only if Gutenberg is active
-		if ( function_exists( 'register_block_type' ) ) {
-			require_once( dirname( __FILE__ ) . '/inc/class-gutenberg-blocks.php' );
+if ( function_exists( 'add_action(
+' ) ) {
+	add_action(
+		'plugins_loaded',
+		function () {
+			// call this only if Gutenberg is active
+			if ( function_exists( 'register_block_type' ) ) {
+				require_once( dirname( __FILE__ ) . '/inc/class-gutenberg-blocks.php' );
+			}
 		}
-	}
-);
+	);
+}
