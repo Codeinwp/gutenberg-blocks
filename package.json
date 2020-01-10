@@ -17,7 +17,7 @@
 		"classnames": "^2.2.6",
 		"dom-scroll-into-view": "^2.0.1",
 		"hex-rgba": "^1.0.2",
-		"react-google-font-loader": "1.0.5",
+		"react-google-font-loader": "1.1.0",
 		"react-lazy-load": "^3.0.13",
 		"react-sortable-hoc": "^1.9.1",
 		"uuid": "^3.3.2"
