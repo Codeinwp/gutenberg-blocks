@@ -8,7 +8,7 @@
  * @since       1.0.0
  */
 
-define( 'THEMEISLE_GUTENBERG_BLOCKS_VERSION', '1.3.1' );
+define( 'THEMEISLE_GUTENBERG_BLOCKS_VERSION', '1.3.4' );
 define( 'THEMEISLE_GUTENBERG_BLOCKS_DEV', false );
 
 require_once dirname( __FILE__ ) . '/autoloader.php';
@@ -18,8 +18,7 @@ $autoloader->add_namespace( '\ThemeIsle\GutenbergBlocks', dirname( __FILE__ ) . 
 $autoloader->register();
 
 if ( function_exists(
-	'add_action(
-' 
+	'add_action'
 ) ) {
 	add_action(
 		'plugins_loaded',
