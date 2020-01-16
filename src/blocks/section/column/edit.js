@@ -37,6 +37,7 @@ const Edit = ({
 	attributes,
 	setAttributes,
 	className,
+	isSelected,
 	clientId,
 	toggleSelection,
 	updateBlockAttributes,
@@ -76,7 +77,7 @@ const Edit = ({
 				const columns = parentBlock.attributes.columns;
 				const layout = parentBlock.attributes.layout;
 				updateBlockAttributes( clientId, {
-					columnWidth: parseFloat( layouts[columns][layout][i])
+					columnWidth: layouts[columns][layout][i]
 				});
 			}
 		});
@@ -266,6 +267,12 @@ const Edit = ({
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
+				isSelected={ isSelected }
+				clientId={ clientId }
+				adjacentBlock={ adjacentBlock }
+				parentBlock={ parentBlock }
+				updateBlockAttributes={ updateBlockAttributes }
+				adjacentBlockClientId={ adjacentBlockClientId }
 			/>
 
 			<ResizableBox

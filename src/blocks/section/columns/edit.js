@@ -244,7 +244,7 @@ const Edit = ({
 	const updateColumnsWidth = ( columns, layout ) => {
 		( sectionBlock.innerBlocks ).map( ( innerBlock, i ) => {
 			updateBlockAttributes( innerBlock.clientId, {
-				columnWidth: parseFloat( layouts[columns][layout][i])
+				columnWidth: layouts[columns][layout][i]
 			});
 		});
 	};
@@ -382,7 +382,7 @@ const Edit = ({
 	getDividerBottomHeight = getDividerBottomHeight();
 
 	const getColumnsTemplate = columns => {
-		return times( columns, i => [ 'themeisle-blocks/advanced-column', { columnWidth: parseFloat( layouts[columns][attributes.layout][i]) } ]);
+		return times( columns, i => [ 'themeisle-blocks/advanced-column', { columnWidth: layouts[columns][attributes.layout][i] } ]);
 	};
 
 	if ( ! attributes.columns ) {
