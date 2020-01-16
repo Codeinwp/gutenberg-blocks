@@ -1,4 +1,9 @@
 <?php
+/**
+ * About_Author_Block
+ *
+ * @package ThemeIsle\GutenbergBlocks\Render
+ */
 
 namespace ThemeIsle\GutenbergBlocks\Render;
 
@@ -8,15 +13,6 @@ use ThemeIsle\GutenbergBlocks\Base_Block;
  * Class About_Author_Block
  */
 class About_Author_Block extends Base_Block {
-
-	/**
-	 * Constructor function for the module.
-	 *
-	 * @method __construct
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
 
 	/**
 	 * Every block needs a slug, so we need to define one and assign it to the `$this->block_slug` property
@@ -42,6 +38,8 @@ class About_Author_Block extends Base_Block {
 	 * This method will pe passed to the render_callback parameter and it will output
 	 * the server side output of the block.
 	 *
+	 * @param array $attributes Block attrs.
+	 *
 	 * @return mixed|string
 	 */
 	protected function render( $attributes ) {
@@ -58,13 +56,13 @@ class About_Author_Block extends Base_Block {
 
 		$content_markup = sprintf(
 			'<p>%1$s</p>',
-			esc_html( strip_tags( get_the_author_meta( 'description' ) ) )
+			esc_html( wp_strip_all_tags( get_the_author_meta( 'description' ) ) )
 		);
 
 		$class = 'wp-block-themeisle-blocks-about-author';
 
 		if ( isset( $attributes['className'] ) ) {
-			$class .=  ' ' . esc_attr( $attributes['className'] );
+			$class .= ' ' . esc_attr( $attributes['className'] );
 		}
 
 		return sprintf(

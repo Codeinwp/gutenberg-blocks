@@ -1,4 +1,9 @@
 <?php
+/**
+ * Grid block
+ *
+ * @package ThemeIsle\GutenbergBlocks\Render
+ */
 
 namespace ThemeIsle\GutenbergBlocks\Render;
 
@@ -9,19 +14,9 @@ use ThemeIsle\GutenbergBlocks\Base_Block;
  */
 class Posts_Grid_Block extends Base_Block {
 
-	/**
-	 * Constructor function for the module.
-	 *
-	 * @method __construct
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
 
 	/**
 	 * Every block needs a slug, so we need to define one and assign it to the `$this->block_slug` property
-	 *
-	 * @return mixed
 	 */
 	protected function set_block_slug() {
 		$this->block_slug = 'posts-grid';
@@ -29,84 +24,82 @@ class Posts_Grid_Block extends Base_Block {
 
 	/**
 	 * Set the attributes required on the server side.
-	 *
-	 * @return mixed
 	 */
 	protected function set_attributes() {
 		$this->attributes = array(
-			'style'					=> array(
-				'type' => 'string',
+			'style'                => array(
+				'type'    => 'string',
 				'default' => 'grid',
 			),
-			'columns'				=> array(
-				'type' => 'number',
+			'columns'              => array(
+				'type'    => 'number',
 				'default' => 3,
 			),
-			'template'				=> array(
-				'type' => 'object',
+			'template'             => array(
+				'type'    => 'object',
 				'default' => array(
 					'category',
 					'title',
 					'meta',
-					'description'
+					'description',
 				),
 			),
-			'categories'			=> array(
+			'categories'           => array(
 				'type' => 'string',
 			),
-			'postsToShow'			=> array(
+			'postsToShow'          => array(
 				'type'    => 'number',
 				'default' => 5,
 			),
-			'order'					=> array(
+			'order'                => array(
 				'type'    => 'string',
 				'default' => 'desc',
 			),
-			'orderBy'				=> array(
+			'orderBy'              => array(
 				'type'    => 'string',
 				'default' => 'date',
 			),
-			'imageSize'				=> array(
+			'imageSize'            => array(
 				'type'    => 'string',
 				'default' => 'full',
 			),
-			'imageBoxShadow'		=> array(
+			'imageBoxShadow'       => array(
 				'type'    => 'boolean',
 				'default' => true,
 			),
-			'displayFeaturedImage'	=> array(
+			'displayFeaturedImage' => array(
 				'type'    => 'boolean',
 				'default' => true,
 			),
-			'displayCategory'		=> array(
+			'displayCategory'      => array(
 				'type'    => 'boolean',
 				'default' => true,
 			),
-			'displayTitle'			=> array(
+			'displayTitle'         => array(
 				'type'    => 'boolean',
 				'default' => true,
 			),
-			'titleTag'				=> array(
+			'titleTag'             => array(
 				'type'    => 'string',
 				'default' => 'h5',
 			),
-			'displayMeta'			=> array(
+			'displayMeta'          => array(
 				'type'    => 'boolean',
 				'default' => true,
 			),
-			'displayDescription'	=> array(
+			'displayDescription'   => array(
 				'type'    => 'boolean',
 				'default' => true,
 			),
-			'excerptLength'			=> array(
+			'excerptLength'        => array(
 				'type'    => 'number',
 				'default' => '200',
 			),
-			'displayDate'			=> array(
+			'displayDate'          => array(
 				'type'    => 'boolean',
 				'default' => true,
 			),
-			'displayAuthor'			=> array(
+			'displayAuthor'        => array(
 				'type'    => 'boolean',
 				'default' => true,
 			),
@@ -118,6 +111,8 @@ class Posts_Grid_Block extends Base_Block {
 	 *
 	 * This method will pe passed to the render_callback parameter and it will output
 	 * the server side output of the block.
+	 *
+	 * @param array $attributes Blocks attrs.
 	 *
 	 * @return mixed|string
 	 */
@@ -135,10 +130,10 @@ class Posts_Grid_Block extends Base_Block {
 		$list_items_markup = '';
 
 		foreach ( $recent_posts as $post ) {
-			$id = $post['ID'];
-			$size = isset( $attributes['imageSize'] ) ? $attributes['imageSize'] : 'medium';
+			$id        = $post['ID'];
+			$size      = isset( $attributes['imageSize'] ) ? $attributes['imageSize'] : 'medium';
 			$thumbnail = wp_get_attachment_image_src( get_post_thumbnail_id( $id ), $size );
-			$category = get_the_category( $id );
+			$category  = get_the_category( $id );
 
 			$list_items_markup .= '<div class="wp-block-themeisle-blocks-posts-grid-post-blog wp-block-themeisle-blocks-posts-grid-post-plain"><div class="wp-block-themeisle-blocks-posts-grid-post">';
 
@@ -155,8 +150,8 @@ class Posts_Grid_Block extends Base_Block {
 
 			$list_items_markup .= '<div class="wp-block-themeisle-blocks-posts-grid-post-body' . ( $thumbnail && $attributes['displayFeaturedImage'] ? '' : ' is-full' ) . '">';
 
-			foreach( $attributes['template'] as $element ) {
-				if ( $element === 'category' ) {
+			foreach ( $attributes['template'] as $element ) {
+				if ( 'category' === $element ) {
 					if ( isset( $attributes['displayCategory'] ) && $attributes['displayCategory'] ) {
 						$list_items_markup .= sprintf(
 							'<span class="wp-block-themeisle-blocks-posts-grid-post-category">%1$s</span>',
@@ -165,7 +160,7 @@ class Posts_Grid_Block extends Base_Block {
 					}
 				}
 
-				if ( $element === 'title' ) {
+				if ( 'title' === $element ) {
 					if ( isset( $attributes['displayTitle'] ) && $attributes['displayTitle'] ) {
 						$list_items_markup .= sprintf(
 							'<%1$s class="wp-block-themeisle-blocks-posts-grid-post-title"><a href="%2$s">%3$s</a></%1$s>',
@@ -176,7 +171,7 @@ class Posts_Grid_Block extends Base_Block {
 					}
 				}
 
-				if ( $element === 'meta' ) {
+				if ( 'meta' === $element ) {
 					if ( ( isset( $attributes['displayMeta'] ) && $attributes['displayMeta'] ) && ( ( isset( $attributes['displayDate'] ) && $attributes['displayDate'] ) || ( isset( $attributes['displayAuthor'] ) && $attributes['displayAuthor'] ) ) ) {
 						$list_items_markup .= '<p class="wp-block-themeisle-blocks-posts-grid-post-meta">';
 
@@ -201,7 +196,7 @@ class Posts_Grid_Block extends Base_Block {
 					}
 				}
 
-				if ( $element === 'description' ) {
+				if ( 'description' === $element ) {
 					if ( ( isset( $attributes['excerptLength'] ) && $attributes['excerptLength'] > 0 ) && ( isset( $attributes['displayDescription'] ) && $attributes['displayDescription'] ) ) {
 						$list_items_markup .= sprintf(
 							'<p class="wp-block-themeisle-blocks-posts-grid-post-description">%1$s</p>',
@@ -217,7 +212,7 @@ class Posts_Grid_Block extends Base_Block {
 		$class = 'wp-block-themeisle-blocks-posts-grid';
 
 		if ( isset( $attributes['className'] ) ) {
-			$class .=  ' ' . esc_attr( $attributes['className'] );
+			$class .= ' ' . esc_attr( $attributes['className'] );
 		}
 
 		if ( isset( $attributes['align'] ) ) {
@@ -232,11 +227,11 @@ class Posts_Grid_Block extends Base_Block {
 			$class .= ' is-' . $attributes['style'];
 		}
 
-		if ( ( isset( $attributes['style'] ) && $attributes['style'] === 'grid' ) || ( isset( $attributes['grid'] ) && true === $attributes['grid'] ) ) {
+		if ( ( isset( $attributes['style'] ) && 'grid' === $attributes['style'] ) || ( isset( $attributes['grid'] ) && true === $attributes['grid'] ) ) {
 			$class .= ' wp-block-themeisle-blocks-posts-grid-columns-' . $attributes['columns'];
 		}
 
-		if ( isset( $attributes['imageBoxShadow' ] ) && true === $attributes['imageBoxShadow'] ) {
+		if ( isset( $attributes['imageBoxShadow'] ) && true === $attributes['imageBoxShadow'] ) {
 			$class .= ' has-shadow';
 		}
 
@@ -252,15 +247,18 @@ class Posts_Grid_Block extends Base_Block {
 	/**
 	 * Get post excerpt
 	 *
+	 * @param int $post_id Post id.
+	 * @param int $excerpt_length Excerpt size.
+	 *
 	 * @return string
 	 */
 	protected function get_excerpt_by_id( $post_id, $excerpt_length = 200 ) {
 		if ( has_excerpt( $post_id ) ) {
 			$excerpt = get_the_excerpt( $post_id );
 		} else {
-			$post = get_post( $post_id );
+			$post    = get_post( $post_id );
 			$excerpt = $post->post_content;
-			$excerpt = strip_tags( strip_shortcodes( $excerpt ) );
+			$excerpt = wp_strip_all_tags( strip_shortcodes( $excerpt ) );
 		}
 
 		if ( strlen( $excerpt ) > $excerpt_length ) {

@@ -1,11 +1,14 @@
 <?php
+/**
+ *  Common logic for CSS handling class.
+ *
+ * @package ThemeIsle\GutenbergBlocks
+ */
 
 namespace ThemeIsle\GutenbergBlocks;
 
 /**
  * Class Base_CSS
- *
- * @package Base_CSS
  */
 class Base_CSS {
 
@@ -53,13 +56,16 @@ class Base_CSS {
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Columns_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Heading_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Button_Group_CSS',
-			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Font_Awesome_Icons_CSS'
+			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Font_Awesome_Icons_CSS',
 		);
 	}
 
 	/**
 	 * Parse Blocks for Gutenberg and WordPress 5.0
-	 * 
+	 *
+	 * @param string $content Content.
+	 *
+	 * @return string
 	 * @since   1.3.0
 	 * @access  public
 	 */
@@ -73,17 +79,24 @@ class Base_CSS {
 
 	/**
 	 * Check if string is empty without accepting zero
-	 * 
+	 *
+	 * @param string $var Var to check.
+	 *
+	 * @return bool
 	 * @since   1.3.1
 	 * @access  public
 	 */
 	public function is_empty( $var ) {
-		return empty( $var ) && $var !== 0;
+		return empty( $var ) && 0 !== $var;
 	}
 
 	/**
 	 * Get block attribute value with default
-	 * 
+	 *
+	 * @param mixed $attr Attributes.
+	 * @param mixed $default Default value.
+	 *
+	 * @return mixed
 	 * @since   1.3.0
 	 * @access  public
 	 */
@@ -97,7 +110,9 @@ class Base_CSS {
 
 	/**
 	 * Get Google Fonts
-	 * 
+	 *
+	 * @param array $attr Attr values.
+	 *
 	 * @since   1.3.0
 	 * @access  public
 	 */
@@ -105,20 +120,24 @@ class Base_CSS {
 		if ( isset( $attr['fontFamily'] ) ) {
 			if ( ! array_key_exists( $attr['fontFamily'], self::$google_fonts ) ) {
 				self::$google_fonts[ $attr['fontFamily'] ] = array(
-					'fontfamily' => $attr['fontFamily'],
-					'fontvariant' => ( isset( $attr['fontVariant'] ) && ! empty( $attr['fontVariant'] ) ? array( $attr['fontVariant'] ) : array() )
+					'fontfamily'  => $attr['fontFamily'],
+					'fontvariant' => ( isset( $attr['fontVariant'] ) && ! empty( $attr['fontVariant'] ) ? array( $attr['fontVariant'] ) : array() ),
 				);
 			} else {
 				if ( ! in_array( $attr['fontVariant'], self::$google_fonts[ $attr['fontFamily'] ]['fontvariant'], true ) ) {
-					array_push( self::$google_fonts[ $attr['fontFamily'] ]['fontvariant'], ( isset( $attr['fontStyle'] ) && $attr['fontStyle'] === 'italic' ) ? $attr['fontVariant'] . ':i' : $attr['fontVariant'] );
+					array_push( self::$google_fonts[ $attr['fontFamily'] ]['fontvariant'], ( isset( $attr['fontStyle'] ) && 'italic' === $attr['fontStyle'] ) ? $attr['fontVariant'] . ':i' : $attr['fontVariant'] );
 				}
 			}
 		}
 	}
 
 	/**
-	 * Convert HEX to RGBA
-	 * 
+	 * Convert HEX to RGBA.
+	 *
+	 * @param string $color Color data.
+	 * @param bool   $opacity Opacity status.
+	 *
+	 * @return mixed
 	 * @since   1.3.0
 	 * @access  public
 	 */
@@ -126,10 +145,10 @@ class Base_CSS {
 		$default = 'rgb(0,0,0)';
 
 		if ( empty( $color ) ) {
-			return $default; 
+			return $default;
 		}
 
-		if ( $color[0] == '#' ) {
+		if ( '#' == $color[0] ) {
 			$color = substr( $color, 1 );
 		}
 
@@ -140,16 +159,16 @@ class Base_CSS {
 		} else {
 			return $default;
 		}
-		
+
 		$rgb = array_map( 'hexdec', $hex );
-		
+
 		if ( $opacity ) {
 			if ( abs( $opacity ) > 1 ) {
 				$opacity = 1.0;
 			}
-			$output = 'rgba( '.implode( ',', $rgb ) . ',' . $opacity . ' )';
+			$output = 'rgba( ' . implode( ',', $rgb ) . ',' . $opacity . ' )';
 		} else {
-			$output = 'rgb( ' .implode( ',', $rgb ) . ' )';
+			$output = 'rgb( ' . implode( ',', $rgb ) . ' )';
 		}
 
 		return $output;
@@ -157,7 +176,10 @@ class Base_CSS {
 
 	/**
 	 * Used CSS properties
-	 * 
+	 *
+	 * @param array $attr Array to check.
+	 *
+	 * @return array
 	 * @since   1.3.0
 	 * @access  public
 	 */
@@ -179,7 +201,7 @@ class Base_CSS {
 			'opacity',
 			'text-shadow',
 			'text-transform',
-			'transform'
+			'transform',
 		);
 
 		$list = array_merge( $props, $attr );
@@ -189,14 +211,16 @@ class Base_CSS {
 
 	/**
 	 * Get Blocks CSS
-	 * 
+	 *
+	 * @param int $post_id Post id.
+	 * @return string
 	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function get_blocks_css( $post_id ) {
 		if ( function_exists( 'has_blocks' ) ) {
 			$content = get_post_field( 'post_content', $post_id );
-			$blocks = $this->parse_blocks( $content );
+			$blocks  = $this->parse_blocks( $content );
 
 			if ( ! is_array( $blocks ) || empty( $blocks ) ) {
 				return;
@@ -208,7 +232,9 @@ class Base_CSS {
 
 	/**
 	 * Get Reusable Blocks CSS
-	 * 
+	 *
+	 * @param int $post_id Post id.
+	 * @return string
 	 * @since   1.3.0
 	 * @access  public
 	 */
@@ -230,7 +256,10 @@ class Base_CSS {
 
 	/**
 	 * Cycle thorugh Static Blocks
-	 * 
+	 *
+	 * @param array $blocks List of blocks.
+	 *
+	 * @return string Style.
 	 * @since   1.3.0
 	 * @access  public
 	 */
@@ -251,19 +280,23 @@ class Base_CSS {
 				$style .= $this->cycle_through_static_blocks( $block['innerBlocks'] );
 			}
 		}
+
 		return $style;
 	}
 
 	/**
 	 * Cycle thorugh Reusable Blocks
-	 * 
+	 *
+	 * @param array $blocks List of blocks.
+	 *
+	 * @return string Style.
 	 * @since   1.3.0
 	 * @access  public
 	 */
 	public function cycle_through_reusable_blocks( $blocks ) {
 		$style = '';
 		foreach ( $blocks as $block ) {
-			if ( $block['blockName'] === 'core/block' && ! empty( $block['attrs']['ref'] ) ) {
+			if ( 'core/block' === $block['blockName'] && ! empty( $block['attrs']['ref'] ) ) {
 				$style .= $this->get_reusable_block_css( $block['attrs']['ref'] );
 			}
 
@@ -271,15 +304,16 @@ class Base_CSS {
 				$style .= $this->cycle_through_reusable_blocks( $block['innerBlocks'] );
 			}
 		}
+
 		return $style;
 	}
 
 	/**
 	 * Method to return path to child class in a Reflective Way.
-	 * 
+	 *
+	 * @return  string
 	 * @since   1.3.0
 	 * @access  protected
-	 * @return  string
 	 */
 	protected function get_dir() {
 		return dirname( __FILE__ );
@@ -292,8 +326,8 @@ class Base_CSS {
 	 * object therefore, we don't want the object to be cloned.
 	 *
 	 * @access  public
-	 * @since   1.3.0
 	 * @return  void
+	 * @since   1.3.0
 	 */
 	public function __clone() {
 		// Cloning instances of the class is forbidden.
@@ -304,8 +338,8 @@ class Base_CSS {
 	 * Disable unserializing of the class
 	 *
 	 * @access  public
-	 * @since   1.3.0
 	 * @return  void
+	 * @since   1.3.0
 	 */
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden.
