@@ -11,6 +11,7 @@ const { registerBlockType } = wp.blocks;
 import './style.scss';
 import './editor.scss';
 import attributes from './attributes.js';
+import deprecated from './deprecated.js';
 import transforms from './transforms.js';
 import edit from './edit.js';
 import save from './save.js';
@@ -26,6 +27,7 @@ registerBlockType( 'themeisle-blocks/slider', {
 		'carousel'
 	],
 	attributes,
+	deprecated,
 	transforms,
 	supports: {
 		align: [ 'wide', 'full' ]
