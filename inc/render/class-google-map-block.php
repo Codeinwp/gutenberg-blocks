@@ -14,7 +14,6 @@ use ThemeIsle\GutenbergBlocks\Base_Block;
  */
 class Google_Map_Block extends Base_Block {
 
-
 	/**
 	 * Every block needs a slug, so we need to define one and assign it to the `$this->block_slug` property
 	 *
@@ -111,7 +110,7 @@ class Google_Map_Block extends Base_Block {
 			$class .= ' align' . esc_attr( $attributes['align'] );
 		}
 
-		$output  = '<div class="' . esc_attr( $class ) . '" id="' . esc_attr( $id ) . '" style="height:' . intval( $attributes['height'] ) . 'px;"></div>' . "\n";
+		$output  = '<div class="' . esc_attr( $class ) . '" id="' . esc_attr( $id ) . '"></div>' . "\n";
 		$output .= '<script type="text/javascript">' . "\n";
 		$output .= '	/* <![CDATA[ */' . "\n";
 		$output .= '		if ( ! window.themeisleGoogleMaps ) window.themeisleGoogleMaps =[];' . "\n";

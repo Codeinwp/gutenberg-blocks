@@ -8,7 +8,10 @@ const initMapScript = () => {
 	maps = window.themeisleGoogleMaps;
 
 	maps.forEach( map => {
-		const googleMap = new google.maps.Map( document.getElementById( map.container ), {
+		const mapContainer = document.getElementById( map.container );
+		mapContainer.style.height = `${ map.attributes.height }px`;
+
+		const googleMap = new google.maps.Map( mapContainer, {
 			center: {
 				lat: Number( map.attributes.latitude ),
 				lng: Number( map.attributes.longitude )
