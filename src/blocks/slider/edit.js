@@ -77,7 +77,7 @@ const Edit = ({
 	};
 
 	const initSlider = () => {
-		sliderRef.current = new Glide( `#${ attributes.id || instanceIdRef }`, {
+		sliderRef.current = new Glide( `#${ attributes.id || instanceIdRef.current }`, {
 			type: 'carousel',
 			keyboard: false,
 			perView: attributes.perView,
