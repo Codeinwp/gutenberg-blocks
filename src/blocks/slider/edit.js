@@ -60,12 +60,14 @@ const Edit = ({
 	}, [ attributes.images ]);
 
 	const sliderRef = useRef( null );
+	const instanceIdRef = useRef( null );
 
 	const [ selectedImage, setSelectedImage ] = useState( null );
 
 	const initBlock = async() => {
 		if ( attributes.id === undefined || attributes.id.substr( attributes.id.length - 8 ) !== clientId.substr( 0, 8 ) ) {
 			const instanceId = `wp-block-themeisle-blocks-slider-${ clientId.substr( 0, 8 ) }`;
+			instanceIdRef.current = instanceId;
 			await setAttributes({ id: instanceId });
 		}
 
@@ -75,7 +77,7 @@ const Edit = ({
 	};
 
 	const initSlider = () => {
-		sliderRef.current = new Glide( `#${ attributes.id }`, {
+		sliderRef.current = new Glide( `#${ attributes.id || instanceIdRef }`, {
 			type: 'carousel',
 			keyboard: false,
 			perView: attributes.perView,

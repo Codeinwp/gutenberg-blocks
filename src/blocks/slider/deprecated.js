@@ -73,6 +73,10 @@ const deprecated = [ {
 		}
 	},
 
+	supports: {
+		align: [ 'wide', 'full' ]
+	},
+
 	save: ({
 		attributes,
 		className
