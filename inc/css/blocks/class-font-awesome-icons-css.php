@@ -51,12 +51,12 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 				if ( isset( $attr['borderColor'] ) ) {
 					$style .= '	border-color: ' . $this->get_attr_value( $attr['borderColor'] ) . ';' . "\n";
 				}
-				if ( isset( $attr['borderRadius'] ) ) {
-					$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . '%;' . "\n";
-				}
 				if ( isset( $attr['borderSize'] ) ) {
-					$style .= '	border-width: ' . $this->get_attr_value( $attr['borderSize'] ) . 'px;' . "\n";
+					$style .= '	border-width: ' . $this->get_attr_value( $attr['borderSize'], 0 ) . 'px;' . "\n";
 					$style .= '	border-style: solid;' . "\n";
+				}
+				if ( isset( $attr['borderRadius'] ) ) {
+					$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'], 0 ) . '%;' . "\n";
 				}
 				if ( isset( $attr['margin'] ) ) {
 					$style .= '	margin: ' . $this->get_attr_value( $attr['margin'] ) . 'px;' . "\n";

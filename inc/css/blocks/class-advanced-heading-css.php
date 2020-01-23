@@ -45,8 +45,40 @@ class Advanced_Heading_CSS extends Base_CSS {
 				$style .= '	text-align: ' . $this->get_attr_value( ( isset( $attr['align'] ) ? $attr['align'] : 'unset' ) ) . ';' . "\n";
 			}
 
+			if ( isset( $attr['headingColor'] ) ) {
+				$style .= '	color: ' . $this->get_attr_value( $attr['headingColor'] ) . ';' . "\n";
+			}
+
 			if ( isset( $attr['fontSize'] ) ) {
 				$style .= '	font-size: ' . $this->get_attr_value( ( isset( $attr['fontSize'] ) ? $attr['fontSize'] : null ) ) . 'px;' . "\n";
+			}
+
+			if ( isset( $attr['fontFamily'] ) ) {
+				$style .= '	font-family: ' . $this->get_attr_value( ( isset( $attr['fontFamily'] ) ? $attr['fontFamily'] : null ) ) . ';' . "\n";
+			}
+
+			if ( isset( $attr['fontVariant'] ) ) {
+				$style .= '	font-weight: ' . ( 'regular' === $this->get_attr_value( ( isset( $attr['fontVariant'] ) ? $attr['fontVariant'] : null ) ) ? "normal" : $this->get_attr_value( ( isset( $attr['fontVariant'] ) ? $attr['fontVariant'] : null ) ) ) . ';' . "\n";
+			}
+
+			if ( isset( $attr['fontStyle'] ) ) {
+				$style .= '	font-style: ' . $this->get_attr_value( ( isset( $attr['fontStyle'] ) ? $attr['fontStyle'] : null ), 'normal' ) . ';' . "\n";
+			}
+
+			if ( isset( $attr['textTransform'] ) ) {
+				$style .= '	text-transform: ' . $this->get_attr_value( ( isset( $attr['textTransform'] ) ? $attr['textTransform'] : null ), 'none' ) . ';' . "\n";
+			}
+
+			if ( isset( $attr['lineHeight'] ) ) {
+				$style .= '	line-height: ' . $this->get_attr_value( ( isset( $attr['lineHeight'] ) ? $attr['lineHeight'] : null ) ) . 'px;' . "\n";
+			}
+
+			if ( isset( $attr['letterSpacing'] ) ) {
+				$style .= '	letter-spacing: ' . $this->get_attr_value( ( isset( $attr['letterSpacing'] ) ? $attr['letterSpacing'] : null ) ) . 'px;' . "\n";
+			}
+
+			if ( isset( $attr['textShadow'] ) ) {
+				$style .= '	text-shadow: ' . $this->get_attr_value( ( isset( $attr['textShadowHorizontal'] ) ? $attr['textShadowHorizontal'] : null ), 0 ) . 'px ' . $this->get_attr_value( ( isset( $attr['textShadowVertical'] ) ? $attr['textShadowVertical'] : null ), 0 ) . 'px ' . $this->get_attr_value( ( isset( $attr['textShadowBlur'] ) ? $attr['textShadowBlur'] : null ), 5 ) . 'px ' . $this->hex2rgba( $this->get_attr_value( ( isset( $attr['textShadowColor'] ) ? $attr['textShadowColor'] : null ), '#000' ), $this->get_attr_value( ( isset( $attr['textShadowColorOpacity'] ) ? $attr['textShadowColorOpacity'] : null ), '50' ) / 100 ) . ';' . "\n";
 			}
 
 			if ( 'linked' === $this->get_attr_value( ( isset( $attr['paddingType'] ) ? $attr['paddingType'] : null ), 'linked' ) ) {
@@ -74,11 +106,11 @@ class Advanced_Heading_CSS extends Base_CSS {
 			if ( isset( $attr['highlightColor'] ) || isset( $attr['highlightBackground'] ) ) {
 				$style .= '#' . $attr['id'] . ' mark {' . "\n";
 				if ( isset( $attr['highlightColor'] ) ) {
-					$style .= '		color: ' . $this->get_attr_value( ( isset( $attr['highlightColor'] ) ? $attr['highlightColor'] : null ) ) . ';' . "\n";
+					$style .= '	color: ' . $this->get_attr_value( ( isset( $attr['highlightColor'] ) ? $attr['highlightColor'] : null ) ) . ';' . "\n";
 				}
 
 				if ( isset( $attr['highlightBackground'] ) ) {
-					$style .= '		background: ' . $this->get_attr_value( ( isset( $attr['highlightBackground'] ) ? $attr['highlightBackground'] : null ) ) . ';' . "\n";
+					$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['highlightBackground'] ) ? $attr['highlightBackground'] : null ) ) . ';' . "\n";
 				}
 				$style .= '}' . "\n \n";
 			}
