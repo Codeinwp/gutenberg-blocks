@@ -14,18 +14,6 @@ const Button = ({
 	index,
 	attributes
 }) => {
-	const style = {
-		fontSize: `${ attributes.fontSize }px`,
-		fontFamily: attributes.fontFamily,
-		fontWeight: attributes.fontVariant,
-		fontStyle: attributes.fontStyle,
-		textTransform: attributes.textTransform,
-		lineHeight: attributes.lineHeight && `${ attributes.lineHeight }px`,
-		borderWidth: `${ attributes.data[index].borderSize }px`,
-		borderRadius: `${ attributes.data[index].borderRadius }px`,
-		padding: `${ attributes.data[index].paddingTopBottom }px ${ attributes.data[index].paddingLeftRight }px `
-	};
-
 	return (
 		<Fragment>
 			<a
@@ -35,7 +23,6 @@ const Button = ({
 					'wp-block-themeisle-blocks-button',
 					`wp-block-themeisle-blocks-button-${ index }`
 				) }
-				style={ style }
 				rel="noopener noreferrer"
 			>
 				{ ( 'left' === attributes.data[index].iconType || 'only' === attributes.data[index].iconType ) && (

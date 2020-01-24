@@ -49,7 +49,7 @@ const Button = ({
 		border: `${ attributes.data[index].borderSize }px solid ${ attributes.data[index].border }`,
 		borderRadius: `${ attributes.data[index].borderRadius }px`,
 		...boxShadowStyle,
-		padding: `${ attributes.data[index].paddingTopBottom }px ${ attributes.data[index].paddingLeftRight }px `,
+		padding: `${ attributes.data[index].paddingTopBottom }px ${ attributes.data[index].paddingLeftRight }px`,
 		marginLeft: 0 === index ? '0px' : `${ attributes.spacing / 2 }px`,
 		marginRight: attributes.buttons === index + 1 ? '0px' : `${ attributes.spacing / 2 }px`
 	};

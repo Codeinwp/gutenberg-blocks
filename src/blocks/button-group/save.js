@@ -17,7 +17,7 @@ const Save = ({
 	attributes,
 	className
 }) => {
-	const collapseClass = 'collapse-none' !== attributes.collapse ? attributes.collapse : '';
+	const collapseClass = 'collapse-none' !== attributes.collapse && attributes.collapse;
 
 	return (
 		<div
@@ -26,10 +26,6 @@ const Save = ({
 				className,
 				collapseClass
 			) }
-			style={ {
-				justifyContent: attributes.align,
-				alignItems: attributes.align ? attributes.align : 'flex-start'
-			} }
 		>
 			{ times( attributes.buttons, i => (
 				<Button
