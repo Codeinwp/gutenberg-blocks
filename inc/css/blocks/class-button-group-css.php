@@ -37,41 +37,41 @@ class Button_Group_CSS extends Base_CSS {
 		if ( isset( $attr['id'] ) && isset( $attr['data'] ) ) {
 			$this->get_google_fonts( $attr );
 
-			$style     .= '#' . $attr['id'] . ' {' . "\n";
-				if ( isset( $attr['align'] ) ) {
-					$style .= '	justify-content: ' . $this->get_attr_value( ( isset( $attr['align'] ) ? $attr['align'] : null ) ) . ';' . "\n";
-				}
+			$style .= '#' . $attr['id'] . ' {' . "\n";
+			if ( isset( $attr['align'] ) ) {
+				$style .= '	justify-content: ' . $this->get_attr_value( ( isset( $attr['align'] ) ? $attr['align'] : null ) ) . ';' . "\n";
+			}
 				$style .= '	align-items: ' . $this->get_attr_value( ( isset( $attr['align'] ) ? $attr['align'] : null ), 'flex-start' ) . ';' . "\n";
-			$style     .= '}' . "\n \n";
+			$style .= '}' . "\n \n";
 
 			$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button {' . "\n";
 				$style .= '	margin-left: ' . $this->get_attr_value( ( isset( $attr['spacing'] ) ? $attr['spacing'] : null ), 20 ) / 2 . 'px;' . "\n";
 				$style .= '	margin-right: ' . $this->get_attr_value( ( isset( $attr['spacing'] ) ? $attr['spacing'] : null ), 20 ) / 2 . 'px;' . "\n";
 
-				if ( isset( $attr['fontSize'] ) ) {
-					$style .= '	font-size: ' . $this->get_attr_value( ( isset( $attr['fontSize'] ) ? $attr['fontSize'] : null ) ) . 'px;' . "\n";
-				}
+			if ( isset( $attr['fontSize'] ) ) {
+				$style .= '	font-size: ' . $this->get_attr_value( ( isset( $attr['fontSize'] ) ? $attr['fontSize'] : null ) ) . 'px;' . "\n";
+			}
 	
-				if ( isset( $attr['fontFamily'] ) ) {
-					$style .= '	font-family: ' . $this->get_attr_value( ( isset( $attr['fontFamily'] ) ? $attr['fontFamily'] : null ) ) . ';' . "\n";
-				}
+			if ( isset( $attr['fontFamily'] ) ) {
+				$style .= '	font-family: ' . $this->get_attr_value( ( isset( $attr['fontFamily'] ) ? $attr['fontFamily'] : null ) ) . ';' . "\n";
+			}
 	
-				if ( isset( $attr['fontVariant'] ) ) {
-					$style .= '	font-weight: ' . ( 'regular' === $this->get_attr_value( ( isset( $attr['fontVariant'] ) ? $attr['fontVariant'] : null ) ) ? 'normal' : $this->get_attr_value( ( isset( $attr['fontVariant'] ) ? $attr['fontVariant'] : null ) ) ) . ';' . "\n";
-				}
+			if ( isset( $attr['fontVariant'] ) ) {
+				$style .= '	font-weight: ' . ( 'regular' === $this->get_attr_value( ( isset( $attr['fontVariant'] ) ? $attr['fontVariant'] : null ) ) ? 'normal' : $this->get_attr_value( ( isset( $attr['fontVariant'] ) ? $attr['fontVariant'] : null ) ) ) . ';' . "\n";
+			}
 	
-				if ( isset( $attr['textTransform'] ) ) {
-					$style .= '	text-transform: ' . $this->get_attr_value( ( isset( $attr['textTransform'] ) ? $attr['textTransform'] : null ), 'none' ) . ';' . "\n";
-				}
+			if ( isset( $attr['textTransform'] ) ) {
+				$style .= '	text-transform: ' . $this->get_attr_value( ( isset( $attr['textTransform'] ) ? $attr['textTransform'] : null ), 'none' ) . ';' . "\n";
+			}
 	
-				if ( isset( $attr['fontStyle'] ) ) {
-					$style .= '	font-style: ' . $this->get_attr_value( ( isset( $attr['fontStyle'] ) ? $attr['fontStyle'] : null ), 'normal' ) . ';' . "\n";
-				}
+			if ( isset( $attr['fontStyle'] ) ) {
+				$style .= '	font-style: ' . $this->get_attr_value( ( isset( $attr['fontStyle'] ) ? $attr['fontStyle'] : null ), 'normal' ) . ';' . "\n";
+			}
 	
-				if ( isset( $attr['lineHeight'] ) ) {
-					$style .= '	line-height: ' . $this->get_attr_value( ( isset( $attr['lineHeight'] ) ? $attr['lineHeight'] : null ) ) . 'px;' . "\n";
-				}
-			$style     .= '}' . "\n \n";
+			if ( isset( $attr['lineHeight'] ) ) {
+				$style .= '	line-height: ' . $this->get_attr_value( ( isset( $attr['lineHeight'] ) ? $attr['lineHeight'] : null ) ) . 'px;' . "\n";
+			}
+			$style .= '}' . "\n \n";
 
 			$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button:first-child {' . "\n";
 				$style .= '	margin-left: 0;' . "\n";
