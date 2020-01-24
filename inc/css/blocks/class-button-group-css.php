@@ -42,7 +42,7 @@ class Button_Group_CSS extends Base_CSS {
 				$style .= '	justify-content: ' . $this->get_attr_value( ( isset( $attr['align'] ) ? $attr['align'] : null ) ) . ';' . "\n";
 			}
 				$style .= '	align-items: ' . $this->get_attr_value( ( isset( $attr['align'] ) ? $attr['align'] : null ), 'flex-start' ) . ';' . "\n";
-			$style .= '}' . "\n \n";
+			$style     .= '}' . "\n \n";
 
 			$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button {' . "\n";
 				$style .= '	margin-left: ' . $this->get_attr_value( ( isset( $attr['spacing'] ) ? $attr['spacing'] : null ), 20 ) / 2 . 'px;' . "\n";
