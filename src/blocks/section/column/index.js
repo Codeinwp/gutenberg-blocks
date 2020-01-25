@@ -10,6 +10,7 @@ const { registerBlockType } = wp.blocks;
  */
 import { columnIcon as icon } from '../../../helpers/icons.js';
 import attributes from './attributes.js';
+import deprecated from './deprecated.js';
 import edit from './edit.js';
 import save from './save.js';
 
@@ -20,6 +21,7 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 	icon,
 	category: 'themeisle-blocks',
 	attributes,
+	deprecated,
 	supports: {
 		inserter: false,
 		reusable: false,

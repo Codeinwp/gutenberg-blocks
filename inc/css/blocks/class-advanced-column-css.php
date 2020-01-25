@@ -68,6 +68,76 @@ class Advanced_Column_CSS extends Base_CSS {
 					$style .= '	margin-left: ' . $this->get_attr_value( ( isset( $attr['marginLeft'] ) ? $attr['marginLeft'] : null ), 0 ) . 'px;' . "\n";
 				}
 			}
+
+			if ( 'color' === $this->get_attr_value( ( isset( $attr['backgroundType'] ) ? $attr['backgroundType'] : null ), 'color' ) ) {
+				if ( isset( $attr['backgroundColor'] ) ) {
+					$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundColor'] ) ? $attr['backgroundColor'] : null ) ) . ';' . "\n";
+				}
+			}
+
+			if ( 'image' === $this->get_attr_value( ( isset( $attr['backgroundType'] ) ? $attr['backgroundType'] : null ), 'color' ) ) {
+				if ( isset( $attr['backgroundImageURL'] ) ) {
+					$style .= '	background-image: url( \'' . $this->get_attr_value( ( isset( $attr['backgroundImageURL'] ) ? $attr['backgroundImageURL'] : null ) ) . '\' );' . "\n";
+				}
+
+				if ( isset( $attr['backgroundAttachment'] ) ) {
+					$style .= '	background-attachment: ' . $this->get_attr_value( ( isset( $attr['backgroundAttachment'] ) ? $attr['backgroundAttachment'] : null ), 'scroll' ) . ';' . "\n";
+				}
+
+				if ( isset( $attr['backgroundPosition'] ) ) {
+					$style .= '	background-position: ' . $this->get_attr_value( ( isset( $attr['backgroundPosition'] ) ? $attr['backgroundPosition'] : null ), 'top left' ) . ';' . "\n";
+				}
+
+				if ( isset( $attr['backgroundRepeat'] ) ) {
+					$style .= '	background-repeat: ' . $this->get_attr_value( ( isset( $attr['backgroundRepeat'] ) ? $attr['backgroundRepeat'] : null ), 'repeat' ) . ';' . "\n";
+				}
+
+				if ( isset( $attr['backgroundSize'] ) ) {
+					$style .= '	background-size: ' . $this->get_attr_value( ( isset( $attr['backgroundSize'] ) ? $attr['backgroundSize'] : null ), 'auto' ) . ';' . "\n";
+				}
+			}
+
+			if ( 'gradient' === $this->get_attr_value( ( isset( $attr['backgroundType'] ) ? $attr['backgroundType'] : null ), 'color' ) ) {
+				$direction;
+
+				if ( 'linear' === $this->get_attr_value( ( isset( $attr['backgroundGradientType'] ) ? $attr['backgroundGradientType'] : null ), 'linear' ) ) {
+					$direction = $this->get_attr_value( ( isset( $attr['backgroundGradientAngle'] ) ? $attr['backgroundGradientAngle'] : null ), 90 ) . 'deg';
+				} else {
+					$direction = 'at ' . $this->get_attr_value( ( isset( $attr['backgroundGradientPosition'] ) ? $attr['backgroundGradientPosition'] : null ), 'center center' );
+				}
+
+				$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundGradientType'] ) ? $attr['backgroundGradientType'] : null ), 'linear' ) . '-gradient( ' .  $direction . ', ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstColor'] ) ? $attr['backgroundGradientFirstColor'] : null ), 'rgba( 0, 0, 0, 0 )' ) . ' '  . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstLocation'] ) ? $attr['backgroundGradientFirstLocation'] : null ), 0 ) . '%, ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondColor'] ) ? $attr['backgroundGradientSecondColor'] : null ), 'rgba( 0, 0, 0, 0 )' ) . ' '  . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondLocation'] ) ? $attr['backgroundGradientSecondLocation'] : null ), 100 ) . '% );' . "\n";
+			}
+
+			if ( 'linked' === $this->get_attr_value( ( isset( $attr['borderType'] ) ? $attr['borderType'] : null ), 'linked' ) ) {
+				$style .= '	border-width: ' . $this->get_attr_value( ( isset( $attr['border'] ) ? $attr['border'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '	border-style: solid;' . "\n";
+				$style .= '	border-color: ' . $this->get_attr_value( ( isset( $attr['borderColor'] ) ? $attr['borderColor'] : null ), '#000000' ) . ';' . "\n";
+			}
+
+			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['borderType'] ) ? $attr['borderType'] : null ), 'linked' ) ) {
+				$style .= '	border-top-width: ' . $this->get_attr_value( ( isset( $attr['borderTop'] ) ? $attr['borderTop'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '	border-right-width: ' . $this->get_attr_value( ( isset( $attr['borderRight'] ) ? $attr['borderRight'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '	border-bottom-width: ' . $this->get_attr_value( ( isset( $attr['borderBottom'] ) ? $attr['borderBottom'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '	border-left-width: ' . $this->get_attr_value( ( isset( $attr['borderLeft'] ) ? $attr['borderLeft'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '	border-style: solid;' . "\n";
+				$style .= '	border-color: ' . $this->get_attr_value( ( isset( $attr['borderColor'] ) ? $attr['borderColor'] : null ), '#000000' ) . ';' . "\n";
+			}
+
+			if ( 'linked' === $this->get_attr_value( ( isset( $attr['borderRadiusType'] ) ? $attr['borderRadiusType'] : null ), 'linked' ) ) {
+				$style .= '	border-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadius'] ) ? $attr['borderRadius'] : null ), 0 ) . 'px;' . "\n";
+			}
+
+			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['borderRadiusType'] ) ? $attr['borderRadiusType'] : null ), 'linked' ) ) {
+				$style .= '	border-top-left-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadiusTop'] ) ? $attr['borderRadiusTop'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '	border-top-right-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadiusRight'] ) ? $attr['borderRadiusRight'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '	border-bottom-right-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadiusBottom'] ) ? $attr['borderRadiusBottom'] : null ), 0 ) . 'px;' . "\n";
+				$style .= '	border-bottom-left-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadiusLeft'] ) ? $attr['borderRadiusLeft'] : null ), 0 ) . 'px;' . "\n";
+			}
+
+			if ( isset( $attr['boxShadow'] ) && true === $attr['boxShadow'] ) {
+				$style .= '	box-shadow: ' . $this->get_attr_value( ( isset( $attr['boxShadowHorizontal'] ) ? $attr['boxShadowHorizontal'] : null ), 0 ) . 'px ' . $this->get_attr_value( ( isset( $attr['boxShadowVertical'] ) ? $attr['boxShadowVertical'] : null ), 0 ) . 'px ' . $this->get_attr_value( ( isset( $attr['boxShadowBlur'] ) ? $attr['boxShadowBlur'] : null ), 5 ) . 'px ' . $this->get_attr_value( ( isset( $attr['boxShadowSpread'] ) ? $attr['boxShadowSpread'] : null ), 1 ) . 'px ' . $this->hex2rgba( $this->get_attr_value( ( isset( $attr['boxShadowColor'] ) ? $attr['boxShadowColor'] : null ), '#000' ), $this->get_attr_value( ( isset( $attr['boxShadowColorOpacity'] ) ? $attr['boxShadowColorOpacity'] : null ), '50' ) / 100 ) . ';' . "\n";
+			}
 			$style .= '}' . "\n \n";
 
 			if ( isset( $attr['columnWidth'] ) ) {
