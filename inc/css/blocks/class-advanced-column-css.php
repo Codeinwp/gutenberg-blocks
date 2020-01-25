@@ -106,7 +106,7 @@ class Advanced_Column_CSS extends Base_CSS {
 					$direction = 'at ' . $this->get_attr_value( ( isset( $attr['backgroundGradientPosition'] ) ? $attr['backgroundGradientPosition'] : null ), 'center center' );
 				}
 
-				$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundGradientType'] ) ? $attr['backgroundGradientType'] : null ), 'linear' ) . '-gradient( ' .  $direction . ', ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstColor'] ) ? $attr['backgroundGradientFirstColor'] : null ), 'rgba( 0, 0, 0, 0 )' ) . ' '  . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstLocation'] ) ? $attr['backgroundGradientFirstLocation'] : null ), 0 ) . '%, ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondColor'] ) ? $attr['backgroundGradientSecondColor'] : null ), 'rgba( 0, 0, 0, 0 )' ) . ' '  . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondLocation'] ) ? $attr['backgroundGradientSecondLocation'] : null ), 100 ) . '% );' . "\n";
+				$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundGradientType'] ) ? $attr['backgroundGradientType'] : null ), 'linear' ) . '-gradient( ' . $direction . ', ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstColor'] ) ? $attr['backgroundGradientFirstColor'] : null ), 'rgba( 0, 0, 0, 0 )' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstLocation'] ) ? $attr['backgroundGradientFirstLocation'] : null ), 0 ) . '%, ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondColor'] ) ? $attr['backgroundGradientSecondColor'] : null ), 'rgba( 0, 0, 0, 0 )' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondLocation'] ) ? $attr['backgroundGradientSecondLocation'] : null ), 100 ) . '% );' . "\n";
 			}
 
 			if ( 'linked' === $this->get_attr_value( ( isset( $attr['borderType'] ) ? $attr['borderType'] : null ), 'linked' ) ) {
@@ -141,14 +141,14 @@ class Advanced_Column_CSS extends Base_CSS {
 			$style .= '}' . "\n \n";
 
 			if ( isset( $attr['columnWidth'] ) ) {
-				$style         .= '@media ( min-width: 960px )  {' . "\n";
+				$style         .= '@media ( min-width: 960px ) {' . "\n";
 					$style     .= '	#' . $attr['id'] . ' {' . "\n";
 						$style .= '		flex-basis: ' . $this->get_attr_value( floatval( $attr['columnWidth'] ) ) . '%;' . "\n";
 					$style     .= '	}' . "\n \n";
 				$style         .= '}' . "\n \n";
 			}
 
-			$style .= '@media ( min-width: 600px ) and ( max-width: 960px )  {' . "\n";
+			$style .= '@media ( min-width: 600px ) and ( max-width: 960px ) {' . "\n";
 
 				$style .= '	#' . $attr['id'] . ' {' . "\n";
 			if ( 'linked' === $this->get_attr_value( ( isset( $attr['paddingTypeTablet'] ) ? $attr['paddingTypeTablet'] : null ), 'linked' ) ) {
@@ -187,7 +187,7 @@ class Advanced_Column_CSS extends Base_CSS {
 
 			$style .= '}' . "\n \n";
 
-			$style .= '@media ( max-width: 600px )  {' . "\n";
+			$style .= '@media ( max-width: 600px ) {' . "\n";
 
 				$style .= '	#' . $attr['id'] . ' {' . "\n";
 			if ( 'linked' === $this->get_attr_value( ( isset( $attr['paddingTypeMobile'] ) ? $attr['paddingTypeMobile'] : null ), 'linked' ) ) {

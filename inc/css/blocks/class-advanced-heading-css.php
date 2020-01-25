@@ -115,7 +115,7 @@ class Advanced_Heading_CSS extends Base_CSS {
 				$style .= '}' . "\n \n";
 			}
 
-			$style .= '@media ( min-width: 600px ) and ( max-width: 960px )  {' . "\n";
+			$style .= '@media ( min-width: 600px ) and ( max-width: 960px ) {' . "\n";
 
 			$style .= '	#' . $attr['id'] . ' {' . "\n";
 			if ( isset( $attr['alignTablet'] ) ) {
@@ -150,7 +150,7 @@ class Advanced_Heading_CSS extends Base_CSS {
 
 			$style .= '}' . "\n \n";
 
-			$style .= '@media ( max-width: 600px )  {' . "\n";
+			$style .= '@media ( max-width: 600px ) {' . "\n";
 
 			$style .= '	#' . $attr['id'] . ' {' . "\n";
 			if ( isset( $attr['alignMobile'] ) ) {

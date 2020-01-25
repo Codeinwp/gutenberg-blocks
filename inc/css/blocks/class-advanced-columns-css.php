@@ -94,7 +94,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 				$style .= '	filter: blur( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterBlur'] ) ? ( $attr['backgroundOverlayFilterBlur'] / 10 ) : 0 ) ) . 'px ) brightness( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterBrightness'] ) ? ( $attr['backgroundOverlayFilterBrightness'] / 10 ) : 1 ) ) . ' ) contrast( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterContrast'] ) ? ( $attr['backgroundOverlayFilterContrast'] / 10 ) : 1 ) ) . ' ) grayscale( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterGrayscale'] ) ? ( $attr['backgroundOverlayFilterGrayscale'] / 100 ) : 0 ) ) . ' ) hue-rotate( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterHue'] ) ? $attr['backgroundOverlayFilterHue'] : 0 ) ) . 'deg ) saturate( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterSaturate'] ) ? ( $attr['backgroundOverlayFilterSaturate'] / 10 ) : 1 ) ) . ' )' . "\n";
 			$style     .= '}' . "\n \n";
 
-			$style .= '@media ( min-width: 600px ) and ( max-width: 960px )  {' . "\n";
+			$style .= '@media ( min-width: 600px ) and ( max-width: 960px ) {' . "\n";
 
 				$style .= '	#' . $attr['id'] . ' {' . "\n";
 			if ( 'linked' === $this->get_attr_value( ( isset( $attr['paddingTypeTablet'] ) ? $attr['paddingTypeTablet'] : null ), 'linked' ) ) {
@@ -149,7 +149,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 
 			$style .= '}' . "\n \n";
 
-			$style .= '@media ( max-width: 600px )  {' . "\n";
+			$style .= '@media ( max-width: 600px ) {' . "\n";
 
 				$style .= '	#' . $attr['id'] . ' {' . "\n";
 			if ( 'linked' === $this->get_attr_value( ( isset( $attr['paddingTypeMobile'] ) ? $attr['paddingTypeMobile'] : null ), 'linked' ) ) {
