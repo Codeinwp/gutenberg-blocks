@@ -139,59 +139,58 @@ class Advanced_Columns_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n";
 
-			$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-overlay {' . "\n";
-				if ( 'color' === $this->get_attr_value( ( isset( $attr['backgroundOverlayType'] ) ? $attr['backgroundOverlayType'] : null ), 'color' ) ) {
-					if ( isset( $attr['backgroundOverlayColor'] ) ) {
-						$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayColor'] ) ? $attr['backgroundOverlayColor'] : null ) ) . ';' . "\n";
-						$style .= '	opacity: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayOpacity'] ) ? $attr['backgroundOverlayOpacity'] : null ), 50 ) / 100 . ';' . "\n";
-					}
-				}
-	
-				if ( 'image' === $this->get_attr_value( ( isset( $attr['backgroundOverlayType'] ) ? $attr['backgroundOverlayType'] : null ), 'color' ) ) {
-					if ( isset( $attr['backgroundOverlayImageURL'] ) ) {
-						$style .= '	background-image: url( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayImageURL'] ) ? $attr['backgroundOverlayImageURL'] : null ) ) . ' );' . "\n";
-						$style .= '	opacity: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayOpacity'] ) ? $attr['backgroundOverlayOpacity'] : null ), 50 ) / 100 . ';' . "\n";
-					}
-	
-					if ( isset( $attr['backgroundOverlayAttachment'] ) ) {
-						$style .= '	background-attachment: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayAttachment'] ) ? $attr['backgroundOverlayAttachment'] : null ), 'scroll' ) . ';' . "\n";
-					}
-	
-					if ( isset( $attr['backgroundOverlayPosition'] ) ) {
-						$style .= '	background-position: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayPosition'] ) ? $attr['backgroundOverlayPosition'] : null ), 'top left' ) . ';' . "\n";
-					}
-	
-					if ( isset( $attr['backgroundOverlayRepeat'] ) ) {
-						$style .= '	background-repeat: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayRepeat'] ) ? $attr['backgroundOverlayRepeat'] : null ), 'repeat' ) . ';' . "\n";
-					}
-	
-					if ( isset( $attr['backgroundOverlaySize'] ) ) {
-						$style .= '	background-size: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlaySize'] ) ? $attr['backgroundOverlaySize'] : null ), 'auto' ) . ';' . "\n";
-					}
-
-				}
-	
-				if ( 'gradient' === $this->get_attr_value( ( isset( $attr['backgroundOverlayType'] ) ? $attr['backgroundOverlayType'] : null ), 'color' ) ) {
-					$direction;
-	
-					if ( 'linear' === $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientType'] ) ? $attr['backgroundOverlayGradientType'] : null ), 'linear' ) ) {
-						$direction = $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientAngle'] ) ? $attr['backgroundOverlayGradientAngle'] : null ), 90 ) . 'deg';
-					} else {
-						$direction = 'at ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientPosition'] ) ? $attr['backgroundOverlayGradientPosition'] : null ), 'center center' );
-					}
-	
-					$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientType'] ) ? $attr['backgroundOverlayGradientType'] : null ), 'linear' ) . '-gradient( ' . $direction . ', ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstColor'] ) ? $attr['backgroundGradientFirstColor'] : null ), 'rgba( 0, 0, 0, 0 )' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstLocation'] ) ? $attr['backgroundGradientFirstLocation'] : null ), 0 ) . '%, ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondColor'] ) ? $attr['backgroundGradientSecondColor'] : null ), 'rgba( 0, 0, 0, 0 )' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondLocation'] ) ? $attr['backgroundGradientSecondLocation'] : null ), 100 ) . '% );' . "\n";
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-overlay {' . "\n";
+			if ( 'color' === $this->get_attr_value( ( isset( $attr['backgroundOverlayType'] ) ? $attr['backgroundOverlayType'] : null ), 'color' ) ) {
+				if ( isset( $attr['backgroundOverlayColor'] ) ) {
+					$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayColor'] ) ? $attr['backgroundOverlayColor'] : null ) ) . ';' . "\n";
 					$style .= '	opacity: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayOpacity'] ) ? $attr['backgroundOverlayOpacity'] : null ), 50 ) / 100 . ';' . "\n";
 				}
-
-				if ( isset( $attr['backgroundOverlayOverlayFilterBlur'] ) ) {
-					$style .= '	filter: blur( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayOverlayFilterBlur'] ) ? ( $attr['backgroundOverlayOverlayFilterBlur'] / 10 ) : 0 ) ) . 'px ) brightness( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterBrightness'] ) ? ( $attr['backgroundOverlayFilterBrightness'] / 10 ) : 1 ) ) . ' ) contrast( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterContrast'] ) ? ( $attr['backgroundOverlayFilterContrast'] / 10 ) : 1 ) ) . ' ) grayscale( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterGrayscale'] ) ? ( $attr['backgroundOverlayFilterGrayscale'] / 100 ) : 0 ) ) . ' ) hue-rotate( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterHue'] ) ? $attr['backgroundOverlayFilterHue'] : 0 ) ) . 'deg ) saturate( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterSaturate'] ) ? ( $attr['backgroundOverlayFilterSaturate'] / 10 ) : 1 ) ) . ' );' . "\n";
+			}
+	
+			if ( 'image' === $this->get_attr_value( ( isset( $attr['backgroundOverlayType'] ) ? $attr['backgroundOverlayType'] : null ), 'color' ) ) {
+				if ( isset( $attr['backgroundOverlayImageURL'] ) ) {
+					$style .= '	background-image: url( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayImageURL'] ) ? $attr['backgroundOverlayImageURL'] : null ) ) . ' );' . "\n";
+					$style .= '	opacity: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayOpacity'] ) ? $attr['backgroundOverlayOpacity'] : null ), 50 ) / 100 . ';' . "\n";
 				}
-
-				if ( isset( $attr['backgroundOverlayBlend'] ) ) {
-					$style .= '	mix-blend-mode: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayBlend'] ) ? $attr['backgroundOverlayBlend'] : null ), 'normal' ) . ';' . "\n";
+	
+				if ( isset( $attr['backgroundOverlayAttachment'] ) ) {
+					$style .= '	background-attachment: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayAttachment'] ) ? $attr['backgroundOverlayAttachment'] : null ), 'scroll' ) . ';' . "\n";
 				}
-			$style     .= '}' . "\n \n";
+	
+				if ( isset( $attr['backgroundOverlayPosition'] ) ) {
+					$style .= '	background-position: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayPosition'] ) ? $attr['backgroundOverlayPosition'] : null ), 'top left' ) . ';' . "\n";
+				}
+	
+				if ( isset( $attr['backgroundOverlayRepeat'] ) ) {
+					$style .= '	background-repeat: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayRepeat'] ) ? $attr['backgroundOverlayRepeat'] : null ), 'repeat' ) . ';' . "\n";
+				}
+	
+				if ( isset( $attr['backgroundOverlaySize'] ) ) {
+					$style .= '	background-size: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlaySize'] ) ? $attr['backgroundOverlaySize'] : null ), 'auto' ) . ';' . "\n";
+				}
+			}
+	
+			if ( 'gradient' === $this->get_attr_value( ( isset( $attr['backgroundOverlayType'] ) ? $attr['backgroundOverlayType'] : null ), 'color' ) ) {
+				$direction;
+	
+				if ( 'linear' === $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientType'] ) ? $attr['backgroundOverlayGradientType'] : null ), 'linear' ) ) {
+					$direction = $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientAngle'] ) ? $attr['backgroundOverlayGradientAngle'] : null ), 90 ) . 'deg';
+				} else {
+					$direction = 'at ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientPosition'] ) ? $attr['backgroundOverlayGradientPosition'] : null ), 'center center' );
+				}
+	
+				$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientType'] ) ? $attr['backgroundOverlayGradientType'] : null ), 'linear' ) . '-gradient( ' . $direction . ', ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstColor'] ) ? $attr['backgroundGradientFirstColor'] : null ), 'rgba( 0, 0, 0, 0 )' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstLocation'] ) ? $attr['backgroundGradientFirstLocation'] : null ), 0 ) . '%, ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondColor'] ) ? $attr['backgroundGradientSecondColor'] : null ), 'rgba( 0, 0, 0, 0 )' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondLocation'] ) ? $attr['backgroundGradientSecondLocation'] : null ), 100 ) . '% );' . "\n";
+				$style .= '	opacity: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayOpacity'] ) ? $attr['backgroundOverlayOpacity'] : null ), 50 ) / 100 . ';' . "\n";
+			}
+
+			if ( isset( $attr['backgroundOverlayOverlayFilterBlur'] ) ) {
+				$style .= '	filter: blur( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayOverlayFilterBlur'] ) ? ( $attr['backgroundOverlayOverlayFilterBlur'] / 10 ) : 0 ) ) . 'px ) brightness( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterBrightness'] ) ? ( $attr['backgroundOverlayFilterBrightness'] / 10 ) : 1 ) ) . ' ) contrast( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterContrast'] ) ? ( $attr['backgroundOverlayFilterContrast'] / 10 ) : 1 ) ) . ' ) grayscale( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterGrayscale'] ) ? ( $attr['backgroundOverlayFilterGrayscale'] / 100 ) : 0 ) ) . ' ) hue-rotate( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterHue'] ) ? $attr['backgroundOverlayFilterHue'] : 0 ) ) . 'deg ) saturate( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterSaturate'] ) ? ( $attr['backgroundOverlayFilterSaturate'] / 10 ) : 1 ) ) . ' );' . "\n";
+			}
+
+			if ( isset( $attr['backgroundOverlayBlend'] ) ) {
+				$style .= '	mix-blend-mode: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayBlend'] ) ? $attr['backgroundOverlayBlend'] : null ), 'normal' ) . ';' . "\n";
+			}
+			$style .= '}' . "\n \n";
 
 			if ( isset( $attr['dividerTopWidth'] ) ) {
 				$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-separators.top {' . "\n";
