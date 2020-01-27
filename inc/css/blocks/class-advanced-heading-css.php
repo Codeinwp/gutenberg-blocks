@@ -21,15 +21,13 @@ class Advanced_Heading_CSS extends Base_CSS {
 	 */
 	public $block_prefix = 'advanced-heading';
 
-
 	/**
 	 * Generate Advanced Heading CSS
 	 *
-	 * @param mixed $block Block.
-	 *
-	 * @return string Style.
+	 * @param mixed $block Block data.
+	 * @return string
 	 * @since   1.3.0
-	 * @access  private
+	 * @access  public
 	 */
 	public function render_css( $block ) {
 		$attr  = $block['attrs'];

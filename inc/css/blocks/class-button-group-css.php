@@ -21,7 +21,6 @@ class Button_Group_CSS extends Base_CSS {
 	 */
 	public $block_prefix = 'button-group';
 
-
 	/**
 	 * Generate Button Group CSS
 	 *

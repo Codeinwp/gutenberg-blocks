@@ -412,7 +412,7 @@ const Edit = ({
 				style={ style }
 			>
 				<div
-					className="wp-themeisle-block-overlay"
+					className="wp-block-themeisle-blocks-advanced-columns-overlay"
 					style={ overlayStyle }
 				>
 				</div>

@@ -21,7 +21,6 @@ class Advanced_Column_CSS extends Base_CSS {
 	 */
 	public $block_prefix = 'advanced-column';
 
-
 	/**
 	 * Generate Advanced Column CSS
 	 *
@@ -77,7 +76,7 @@ class Advanced_Column_CSS extends Base_CSS {
 
 			if ( 'image' === $this->get_attr_value( ( isset( $attr['backgroundType'] ) ? $attr['backgroundType'] : null ), 'color' ) ) {
 				if ( isset( $attr['backgroundImageURL'] ) ) {
-					$style .= '	background-image: url( \'' . $this->get_attr_value( ( isset( $attr['backgroundImageURL'] ) ? $attr['backgroundImageURL'] : null ) ) . '\' );' . "\n";
+					$style .= '	background-image: url( ' . $this->get_attr_value( ( isset( $attr['backgroundImageURL'] ) ? $attr['backgroundImageURL'] : null ) ) . ' );' . "\n";
 				}
 
 				if ( isset( $attr['backgroundAttachment'] ) ) {
