@@ -28,6 +28,8 @@ import MarkerModal from './components/marker-modal.js';
 import Map from './components/map.js';
 import styles from './components/styles.js';
 
+const IDs = [];
+
 const Edit = ({
 	attributes,
 	setAttributes,
@@ -85,9 +87,16 @@ const Edit = ({
 	const [ selectedMarker, setSelectedMarker ] = useState({});
 
 	const initBlock = async() => {
-		if ( attributes.id === undefined || attributes.id.substr( attributes.id.length - 8 ) !== clientId.substr( 0, 8 ) ) {
+		if ( attributes.id === undefined ) {
 			const instanceId = `wp-block-themeisle-blocks-google-map-${ clientId.substr( 0, 8 ) }`;
 			await setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+		} else if ( IDs.includes( attributes.id ) ) {
+			const instanceId = `wp-block-themeisle-blocks-google-map-${ clientId.substr( 0, 8 ) }`;
+			await setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+		} else {
+			IDs.push( attributes.id );
 		}
 
 		await wp.api.loadPromise.then( () => {

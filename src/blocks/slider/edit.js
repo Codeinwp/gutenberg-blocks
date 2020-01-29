@@ -24,6 +24,8 @@ import Inspector from './inspector.js';
 import Slide from './components/slide.js';
 import SliderControls from './components/slider-controls.js';
 
+const IDs = [];
+
 const Edit = ({
 	attributes,
 	setAttributes,
@@ -65,10 +67,19 @@ const Edit = ({
 	const [ selectedImage, setSelectedImage ] = useState( null );
 
 	const initBlock = async() => {
-		if ( attributes.id === undefined || attributes.id.substr( attributes.id.length - 8 ) !== clientId.substr( 0, 8 ) ) {
+		if ( attributes.id === undefined ) {
 			const instanceId = `wp-block-themeisle-blocks-slider-${ clientId.substr( 0, 8 ) }`;
-			instanceIdRef.current = instanceId;
 			await setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+			instanceIdRef.current = instanceId;
+		} else if ( IDs.includes( attributes.id ) ) {
+			const instanceId = `wp-block-themeisle-blocks-slider-${ clientId.substr( 0, 8 ) }`;
+			await setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+			instanceIdRef.current = instanceId;
+		} else {
+			IDs.push( attributes.id );
+			instanceIdRef.current = attributes.id;
 		}
 
 		if ( attributes.images.length ) {

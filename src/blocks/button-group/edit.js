@@ -26,6 +26,8 @@ import Controls from './controls.js';
 import Inspector from './inspector.js';
 import Button from './components/button-edit.js';
 
+const IDs = [];
+
 const Edit = ({
 	attributes,
 	setAttributes,
@@ -38,9 +40,16 @@ const Edit = ({
 	}, []);
 
 	const initBlock = () => {
-		if ( attributes.id === undefined || attributes.id.substr( attributes.id.length - 8 ) !== clientId.substr( 0, 8 ) ) {
+		if ( attributes.id === undefined ) {
 			const instanceId = `wp-block-themeisle-blocks-button-group-${ clientId.substr( 0, 8 ) }`;
 			setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+		} else if ( IDs.includes( attributes.id ) ) {
+			const instanceId = `wp-block-themeisle-blocks-button-group-${ clientId.substr( 0, 8 ) }`;
+			setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+		} else {
+			IDs.push( attributes.id );
 		}
 	};
 
