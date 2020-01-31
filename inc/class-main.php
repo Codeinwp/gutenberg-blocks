@@ -47,9 +47,9 @@ class Main {
 	 * @access  public
 	 */
 	public function init() {
-		if ( ! defined( 'THEMEISLE_GUTENBERG_BLOCKS_VERSION' ) ) {
-			define( 'THEMEISLE_GUTENBERG_BLOCKS_VERSION', '1.3.4' );
-			define( 'THEMEISLE_GUTENBERG_BLOCKS_DEV', false );
+		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
+			define( 'THEMEISLE_BLOCKS_VERSION', '1.3.4' );
+			define( 'THEMEISLE_BLOCKS_DEV', false );
 		}
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
@@ -65,10 +65,10 @@ class Main {
 	 * @access  public
 	 */
 	public function enqueue_block_editor_assets() {
-		if ( THEMEISLE_GUTENBERG_BLOCKS_DEV ) {
+		if ( THEMEISLE_BLOCKS_DEV ) {
 			$version = time();
 		} else {
-			$version = THEMEISLE_GUTENBERG_BLOCKS_VERSION;
+			$version = THEMEISLE_BLOCKS_VERSION;
 		}
 
 		if ( defined( 'THEMEISLE_GUTENBERG_GOOGLE_MAPS_API' ) ) {
@@ -150,10 +150,10 @@ class Main {
 			return;
 		}
 
-		if ( THEMEISLE_GUTENBERG_BLOCKS_DEV ) {
+		if ( THEMEISLE_BLOCKS_DEV ) {
 			$version = time();
 		} else {
-			$version = THEMEISLE_GUTENBERG_BLOCKS_VERSION;
+			$version = THEMEISLE_BLOCKS_VERSION;
 		}
 
 		wp_enqueue_style(
