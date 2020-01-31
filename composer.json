@@ -13,9 +13,9 @@
     }
   ],
   "autoload": {
-    "psr-4": {
-      "ThemeIsle\\GutenbergBlocks\\": "inc/"
-    }
+    "files": [
+      "load.php"
+    ]
   },
   "support": {
     "issues": "https://github.com/Codeinwp/gutenberg-blocks/issues"
