@@ -10,14 +10,14 @@ namespace ThemeIsle\GutenbergBlocks;
 define( 'THEMEISLE_GUTENBERG_BLOCKS_VERSION', '1.3.4' );
 define( 'THEMEISLE_GUTENBERG_BLOCKS_DEV', false );
 /**
- * Class GutenbergBlocks
+ * Class Main
  */
 class Main {
 
 	/**
 	 * Singleton.
 	 *
-	 * @var GutenbergBlocks Class object.
+	 * @var Main Class object.
 	 */
 	protected static $instance = null;
 
