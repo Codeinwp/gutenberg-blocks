@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 					prefix: 'THEMEISLE_GUTENBERG_BLOCKS_VERSION\', \'',
 					flags: ''
 				},
-				src: [ 'load.php' ]
+				src: [ 'inc/class-main.php' ]
 
 			}
 
