@@ -47,8 +47,10 @@ class Main {
 	 * @access  public
 	 */
 	public function init() {
-		define( 'THEMEISLE_GUTENBERG_BLOCKS_VERSION', '1.3.4' );
-		define( 'THEMEISLE_GUTENBERG_BLOCKS_DEV', false );
+		if ( ! defined( 'THEMEISLE_GUTENBERG_BLOCKS_VERSION' ) ) {
+			define( 'THEMEISLE_GUTENBERG_BLOCKS_VERSION', '1.3.4' );
+			define( 'THEMEISLE_GUTENBERG_BLOCKS_DEV', false );
+		}
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
