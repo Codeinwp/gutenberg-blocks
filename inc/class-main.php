@@ -5,17 +5,17 @@
  * @package ThemeIsle
  */
 
-namespace ThemeIsle;
+namespace ThemeIsle\GutenbergBlocks;
 
 /**
- * Class GutenbergBlocks
+ * Class Main
  */
-class GutenbergBlocks {
+class Main {
 
 	/**
 	 * Singleton.
 	 *
-	 * @var GutenbergBlocks Class object.
+	 * @var Main Class object.
 	 */
 	protected static $instance = null;
 
@@ -47,6 +47,10 @@ class GutenbergBlocks {
 	 * @access  public
 	 */
 	public function init() {
+		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
+			define( 'THEMEISLE_BLOCKS_VERSION', '1.3.4' );
+			define( 'THEMEISLE_BLOCKS_DEV', false );
+		}
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
@@ -61,10 +65,10 @@ class GutenbergBlocks {
 	 * @access  public
 	 */
 	public function enqueue_block_editor_assets() {
-		if ( THEMEISLE_GUTENBERG_BLOCKS_DEV ) {
+		if ( THEMEISLE_BLOCKS_DEV ) {
 			$version = time();
 		} else {
-			$version = THEMEISLE_GUTENBERG_BLOCKS_VERSION;
+			$version = THEMEISLE_BLOCKS_VERSION;
 		}
 
 		if ( defined( 'THEMEISLE_GUTENBERG_GOOGLE_MAPS_API' ) ) {
@@ -146,10 +150,10 @@ class GutenbergBlocks {
 			return;
 		}
 
-		if ( THEMEISLE_GUTENBERG_BLOCKS_DEV ) {
+		if ( THEMEISLE_BLOCKS_DEV ) {
 			$version = time();
 		} else {
-			$version = THEMEISLE_GUTENBERG_BLOCKS_VERSION;
+			$version = THEMEISLE_BLOCKS_VERSION;
 		}
 
 		wp_enqueue_style(
