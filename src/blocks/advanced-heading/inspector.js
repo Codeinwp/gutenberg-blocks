@@ -45,17 +45,13 @@ const Inspector = ({
 	changeFontStyle,
 	changeTextTransform,
 	changeLineHeight,
-	changeLetterSpacing,
-	fontSizeViewType,
-	setFontSizeViewType,
-	alignmentViewType,
-	setAlignmentViewType,
-	paddingViewType,
-	setPaddingViewType,
-	marginViewType,
-	setMarginViewType
+	changeLetterSpacing
 }) => {
 	const [ tab, setTab ] = useState( 'style' );
+	const [ fontSizeViewType, setFontSizeViewType ] = useState( 'desktop' );
+	const [ alignmentViewType, setAlignmentViewType ] = useState( 'desktop' );
+	const [ paddingViewType, setPaddingViewType ] = useState( 'desktop' );
+	const [ marginViewType, setMarginViewType ] = useState( 'desktop' );
 
 	const changeHeadingColor = value => {
 		setAttributes({ headingColor: value });
@@ -85,9 +81,11 @@ const Inspector = ({
 		if ( 'desktop' === fontSizeViewType ) {
 			setAttributes({ fontSize: value });
 		}
+
 		if ( 'tablet' === fontSizeViewType ) {
 			setAttributes({ fontSizeTablet: value });
 		}
+
 		if ( 'mobile' === fontSizeViewType ) {
 			setAttributes({ fontSizeMobile: value });
 		}
@@ -117,9 +115,11 @@ const Inspector = ({
 		if ( 'desktop' === alignmentViewType ) {
 			setAttributes({ align: value });
 		}
+
 		if ( 'tablet' === alignmentViewType ) {
 			setAttributes({ alignTablet: value });
 		}
+
 		if ( 'mobile' === alignmentViewType ) {
 			setAttributes({ alignMobile: value });
 		}
@@ -156,7 +156,6 @@ const Inspector = ({
 	const changeHighlightBackground = value => {
 		setAttributes({ highlightBackground: value });
 	};
-
 
 	let getPaddingType = () => {
 		let value;

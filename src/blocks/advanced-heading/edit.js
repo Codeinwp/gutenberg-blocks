@@ -10,6 +10,8 @@ import GoogleFontLoader from 'react-google-font-loader';
  */
 const { __ } = wp.i18n;
 
+const { merge } = lodash;
+
 const { createBlock } = wp.blocks;
 
 const { RichText } = wp.blockEditor;
@@ -36,6 +38,7 @@ const Edit = ({
 	className,
 	clientId,
 	mergeBlocks,
+	name,
 	insertBlocksAfter,
 	onReplace,
 	isLarger,
@@ -50,6 +53,13 @@ const Edit = ({
 	const initBlock = () => {
 		if ( attributes.id === undefined ) {
 			const instanceId = `wp-block-themeisle-blocks-advanced-heading-${ clientId.substr( 0, 8 ) }`;
+
+			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
+
+			if ( undefined !== globalDefaults ) {
+				const newAttributes = merge( attributes, window.themeisleGutenberg.globalDefaults[ name ]);
+			}
+
 			setAttributes({ id: instanceId });
 			IDs.push( instanceId );
 		} else if ( IDs.includes( attributes.id ) ) {
@@ -60,11 +70,6 @@ const Edit = ({
 			IDs.push( attributes.id );
 		}
 	};
-
-	const [ fontSizeViewType, setFontSizeViewType ] = useState( 'desktop' );
-	const [ alignmentViewType, setAlignmentViewType ] = useState( 'desktop' );
-	const [ paddingViewType, setPaddingViewType ] = useState( 'desktop' );
-	const [ marginViewType, setMarginViewType ] = useState( 'desktop' );
 
 	const isDesktop = ( isLarger && ! isLarge && isSmall && ! isSmaller );
 
@@ -209,14 +214,6 @@ const Edit = ({
 				changeTextTransform={ changeTextTransform }
 				changeLineHeight={ changeLineHeight }
 				changeLetterSpacing={ changeLetterSpacing }
-				fontSizeViewType={ fontSizeViewType }
-				setFontSizeViewType={ setFontSizeViewType }
-				alignmentViewType={ alignmentViewType }
-				setAlignmentViewType={ setAlignmentViewType }
-				paddingViewType={ paddingViewType }
-				setPaddingViewType={ setPaddingViewType }
-				marginViewType={ marginViewType }
-				setMarginViewType={ setMarginViewType }
 			/>
 
 			<RichText

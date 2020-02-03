@@ -3,13 +3,20 @@
  */
 const { __ } = wp.i18n;
 
+const {
+	cloneDeep,
+	merge
+} = lodash;
+
 const { apiFetch } = wp;
 
 const {
-	BaseControl,
-	CheckboxControl,
-	Modal
+	PanelBody,
+	Snackbar,
+	ToggleControl
 } = wp.components;
+
+const { withDispatch } = wp.data;
 
 const {
 	Fragment,
@@ -18,14 +25,19 @@ const {
 	useState
 } = wp.element;
 
-const { PluginMoreMenuItem } = wp.editPost;
+const {
+	PluginSidebar,
+	PluginSidebarMoreMenuItem
+} = wp.editPost;
 
 /**
  * Internal dependencies
  */
 import './editor.scss';
+import GlobalDefaults from './global-defaults/index.js';
+import defaultsAttrs from './global-defaults/defaults.js';
 
-const Options = () => {
+const Options = ({ createNotice }) => {
 	useEffect( async() => {
 		let data = await apiFetch({ path: 'wp/v2/users/me?context=edit' });
 
@@ -39,18 +51,43 @@ const Options = () => {
 			if ( false === isAPILoaded ) {
 				settingsRef.current.fetch().then( response => {
 					setDefault( Boolean( response.themeisle_blocks_settings_default_block ) );
+					if ( '' !== response.themeisle_blocks_settings_global_defaults ) {
+						const defaults = cloneDeep( defaultsAttrs );
+						const defaultValues = merge( defaults, JSON.parse( response.themeisle_blocks_settings_global_defaults ) );
+						window.themeisleGutenberg.globalDefaults = defaultValues;
+						setBlockDefaults( defaultValues );
+					} else {
+						const defaults = cloneDeep( defaultsAttrs );
+						window.themeisleGutenberg.globalDefaults = defaultsAttrs;
+						setBlockDefaults( defaults );
+					}
 					setAPILoaded( false );
 				});
 			}
 		}
 	}, []);
 
-	const settingsRef = useRef( null );
-
 	const [ canUser, setCanUser ] = useState( false );
 	const [ isAPILoaded, setAPILoaded ] = useState( false );
+	const [ blockDefaults, setBlockDefaults ] = useState({});
 	const [ isDefault, setDefault ] = useState( false );
-	const [ isOpen, setOpen ] = useState( false );
+
+	const settingsRef = useRef( null );
+
+	const dispatchNotice = value => {
+		if ( ! wp.components.Snackbar ) {
+			return;
+		}
+
+		createNotice(
+			'info',
+			value,
+			{
+				isDismissible: true,
+				type: 'snackbar'
+			}
+		);
+	};
 
 	const changeOptions = () => {
 		const model = new wp.api.models.Settings({
@@ -58,53 +95,84 @@ const Options = () => {
 			themeisle_blocks_settings_default_block: ! Boolean( isDefault )
 		});
 
-		const save = model.save();
+		model.save().then( response => {
+			setDefault( Boolean( response.themeisle_blocks_settings_default_block ) );
+			dispatchNotice( __( 'Option updated.' ) );
+		});
+	};
 
-		save.success( ( response, status ) => {
-			if ( 'success' === status ) {
-				settingsRef.current.fetch();
-				setDefault( Boolean( response.themeisle_blocks_settings_default_block ) );
-			}
+	const changeConfig = ( block, option, value ) => {
+		const defaultValues = cloneDeep( blockDefaults );
+		defaultValues[ block ][ option ] = value;
+		setBlockDefaults( defaultValues );
+	};
 
-			if ( 'error' === status ) {
-				console.log( response );
-			}
+	const resetConfig = block => {
+		const defaultValues = cloneDeep( blockDefaults );
+		const blockConfig = { ...defaultsAttrs[ block ]};
+		defaultValues[ block ] = blockConfig;
+		setBlockDefaults( defaultValues );
+	};
 
-			settingsRef.current.fetch();
+	const saveConfig = async() => {
+		const filterDefault = cloneDeep( blockDefaults );
+
+		Object.keys( filterDefault ).forEach( i => {
+			Object.keys( filterDefault[i]).forEach( k => {
+				if ( undefined !== defaultsAttrs[i][k] && filterDefault[i][k] === defaultsAttrs[i][k]) {
+					delete filterDefault[i][k];
+				}
+			});
 		});
 
-		save.error( ( response, status ) => {
-			console.log( response );
+		const model = new wp.api.models.Settings({
+			// eslint-disable-next-line camelcase
+			themeisle_blocks_settings_global_defaults: JSON.stringify( filterDefault )
+		});
+
+		await model.save().then( response => {
+			window.themeisleGutenberg.globalDefaults = filterDefault;
+			dispatchNotice( __( 'Option updated.' ) );
 		});
 	};
 
 	return (
 		<Fragment>
 			{ ( canUser ) && (
-				<PluginMoreMenuItem
-					onClick={ () => setOpen( true ) }
+				<PluginSidebarMoreMenuItem
+					target="wp-block-themeisle-blocks-options"
 				>
 					{ __( 'Otter Options' ) }
-				</PluginMoreMenuItem>
+				</PluginSidebarMoreMenuItem>
 			) }
 
-			{ isOpen && (
-				<Modal
-					title={ __( 'Otter Options' ) }
-					overlayClassName="wp-block-themeisle-blocks-options"
-					onRequestClose={ () => setOpen( false ) }
-				>
-					<BaseControl>
-						<CheckboxControl
-							label={ __( 'Make Section block your default block for Pages?' ) }
-							checked={ isDefault }
-							onChange={ changeOptions }
-						/>
-					</BaseControl>
-				</Modal>
-			) }
+			<PluginSidebar
+				title={ __( 'Otter Options' ) }
+				name="wp-block-themeisle-blocks-options"
+			>
+				<PanelBody className="wp-block-themeisle-blocks-options-general">
+					<ToggleControl
+						label={ __( 'Make Section block your default block for Pages?' ) }
+						checked={ isDefault }
+						onChange={ changeOptions }
+					/>
+				</PanelBody>
+
+				<GlobalDefaults
+					blockDefaults={ blockDefaults }
+					changeConfig={ changeConfig }
+					resetConfig={ resetConfig }
+					saveConfig={ saveConfig }
+				/>
+			</PluginSidebar>
 		</Fragment>
 	);
 };
 
-export default Options;
+export default withDispatch( ( dispatch ) => {
+	const { createNotice } = dispatch( 'core/notices' );
+
+	return {
+		createNotice
+	};
+})( Options );
