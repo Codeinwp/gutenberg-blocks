@@ -143,7 +143,7 @@ class Block_Frontend extends Base_CSS {
 			}
 
 			if ( count( $fonts ) > 0 ) {
-				wp_enqueue_style( 'themeisle-gutenberg-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ), [], THEMEISLE_GUTENBERG_BLOCKS_VERSION );
+				wp_enqueue_style( 'themeisle-gutenberg-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ), [], THEMEISLE_BLOCKS_VERSION );
 			}
 		}
 	}
@@ -170,7 +170,7 @@ class Block_Frontend extends Base_CSS {
 				array_push( $fonts, $item );
 			}
 
-			wp_enqueue_style( 'themeisle-gutenberg-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ), [], THEMEISLE_GUTENBERG_BLOCKS_VERSION );
+			wp_enqueue_style( 'themeisle-gutenberg-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ), [], THEMEISLE_BLOCKS_VERSION );
 		}
 	}
 
