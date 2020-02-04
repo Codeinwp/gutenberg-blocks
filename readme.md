@@ -11,8 +11,8 @@ General structure of this module should be as the following:
 You can include this library like this::
 
 ```
-if ( class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
-	\ThemeIsle\GutenbergBlocks::instance( __( 'Orbit Fox', 'textdomain' ) );
+if ( class_exists( '\ThemeIsle\GutenbergBlocks\Main' ) ) {
+	\ThemeIsle\GutenbergBlocks\Main::instance( __( 'Orbit Fox', 'textdomain' ) );
 }
 ```
 

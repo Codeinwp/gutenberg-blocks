@@ -15,7 +15,7 @@ plugins:
         - CHANGELOG.md
         - composer.json
         - composer.lock
-        - load.php
+        - inc/class-main.php
         - package-lock.json
         - package.json
   - - "@semantic-release/github"

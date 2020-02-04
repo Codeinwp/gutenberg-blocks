@@ -1,3 +1,7 @@
+##### [Version 1.3.5](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.3.4...v1.3.5) (2020-02-03)
+
+ * Fix issue with library autoloading in different plugins
+
 ##### [Version 1.3.4](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.3.3...v1.3.4) (2020-01-09)
 
 Fix issue with icons not appearing in Chrome
