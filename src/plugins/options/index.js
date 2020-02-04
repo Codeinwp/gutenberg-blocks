@@ -5,6 +5,7 @@ const { __ } = wp.i18n;
 
 const {
 	cloneDeep,
+	isEqual,
 	merge
 } = lodash;
 
@@ -101,9 +102,11 @@ const Options = ({ createNotice }) => {
 		});
 	};
 
-	const changeConfig = ( block, option, value ) => {
+	const changeConfig = ( block, object ) => {
 		const defaultValues = cloneDeep( blockDefaults );
-		defaultValues[ block ][ option ] = value;
+		for ( const option in object ) {
+			defaultValues[ block ][ option ] = object[ option ];
+		}
 		setBlockDefaults( defaultValues );
 	};
 
@@ -121,6 +124,10 @@ const Options = ({ createNotice }) => {
 			Object.keys( filterDefault[i]).forEach( k => {
 				if ( undefined !== defaultsAttrs[i][k] && filterDefault[i][k] === defaultsAttrs[i][k]) {
 					delete filterDefault[i][k];
+				} else if ( 'object' === typeof filterDefault[i][k]) {
+					if ( isEqual( filterDefault[i][k], defaultsAttrs[i][k]) ) {
+						delete filterDefault[i][k];
+					}
 				}
 			});
 		});

@@ -5,6 +5,7 @@ const { __ } = wp.i18n;
 
 const defaultsAttrs = {
 	'themeisle-blocks/advanced-heading': {
+		tag: 'h2',
 		headingColor: '#000000',
 		fontStyle: 'normal',
 		textTransform: 'none',
@@ -38,6 +39,18 @@ const defaultsAttrs = {
 		marginBottom: 25,
 		marginBottomTablet: 25,
 		marginBottomMobile: 20
+	},
+	'themeisle-blocks/button-group': {
+		spacing: 20,
+		collapse: 'collapse-none',
+		fontSize: 18,
+		fontStyle: 'normal',
+		data: {
+			color: '#ffffff',
+			background: '#32373c',
+			paddingTopBottom: 12,
+			paddingLeftRight: 24
+		}
 	}
 };
 

@@ -89,6 +89,13 @@
 				margin: 0;
 			}
 
+			div:not( .components-base-control__field ) {
+				 > .wp-block-themeisle-blocks-sizing-control {
+					padding: 10px;
+					margin: 0;
+				}
+			}
+
 			.components-base-control {
 				.components-base-control__label {
 					margin-bottom: 1em;

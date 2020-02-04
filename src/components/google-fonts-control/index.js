@@ -115,12 +115,11 @@ const GoogleFontsControl = ({
 										}
 									];
 									onChangeFontFamily( undefined );
-									onChangeFontVariant( undefined );
 									setVariants( variants );
 									return;
 								}
+
 								onChangeFontFamily( e );
-								onChangeFontVariant( 'regular' );
 
 								const font = fonts.find( i => e === i.family );
 
@@ -163,7 +162,6 @@ const GoogleFontsControl = ({
 											onClick={ () => {
 												onToggle();
 												onChangeFontFamily( undefined );
-												onChangeFontVariant( undefined );
 												setVariants([]);
 												setSearch( '' );
 											}}
@@ -181,7 +179,6 @@ const GoogleFontsControl = ({
 														onClick={ () => {
 															onToggle();
 															onChangeFontFamily( i.family );
-															onChangeFontVariant( 'regular' );
 
 															const variants = ( i.variants )
 																.filter( o => false === o.includes( 'italic' ) )

@@ -12,7 +12,8 @@ const {
 	BaseControl,
 	HorizontalRule,
 	PanelBody,
-	RangeControl
+	RangeControl,
+	SelectControl
 } = wp.components;
 
 const {
@@ -33,7 +34,6 @@ const AdvancedHeading = ({
 	changeConfig
 }) => {
 	const [ fontSizeViewType, setFontSizeViewType ] = useState( 'desktop' );
-	const [ alignmentViewType, setAlignmentViewType ] = useState( 'desktop' );
 	const [ paddingViewType, setPaddingViewType ] = useState( 'desktop' );
 	const [ marginViewType, setMarginViewType ] = useState( 'desktop' );
 
@@ -59,56 +59,37 @@ const AdvancedHeading = ({
 
 	const changeFontSize = value => {
 		if ( 'desktop' === fontSizeViewType ) {
-			changeConfig( blockName, 'fontSize', value );
+			changeConfig( blockName, {
+				fontSize: value
+			});
 		}
 
 		if ( 'tablet' === fontSizeViewType ) {
-			changeConfig( blockName, 'fontSizeTablet', value );
+			changeConfig( blockName, {
+				fontSizeTablet: value
+			});
 		}
 
 		if ( 'mobile' === fontSizeViewType ) {
-			changeConfig( blockName, 'fontSizeMobile', value );
-		}
-	};
-
-	let getAlignment = () => {
-		let value;
-
-		if ( 'desktop' === alignmentViewType ) {
-			value = defaults.align;
-		}
-
-		if ( 'tablet' === alignmentViewType ) {
-			value = defaults.alignTablet;
-		}
-
-		if ( 'mobile' === alignmentViewType ) {
-			value = defaults.alignMobile;
-		}
-
-		return value;
-	};
-
-	getAlignment = getAlignment();
-
-	const changeAlignment = value => {
-		if ( 'desktop' === alignmentViewType ) {
-			changeConfig( blockName, 'align', value );
-		}
-
-		if ( 'tablet' === alignmentViewType ) {
-			changeConfig( blockName, 'alignTablet', value );
-		}
-
-		if ( 'mobile' === alignmentViewType ) {
-			changeConfig( blockName, 'alignMobile', value );
+			changeConfig( blockName, {
+				fontSizeMobile: value
+			});
 		}
 	};
 
 	const changeFontFamily = value => {
-		changeConfig( blockName, 'fontFamily', value );
-		changeConfig( blockName, 'fontVariant', 'normal' );
-		changeConfig( blockName, 'fontStyle', 'normal' );
+		if ( ! value ) {
+			changeConfig( blockName, {
+				fontFamily: value,
+				fontVariant: value
+			});
+		} else {
+			changeConfig( blockName, {
+				fontFamily: value,
+				fontVariant: 'normal',
+				fontStyle: 'normal'
+			});
+		}
 	};
 
 	let getPaddingType = () => {
@@ -131,13 +112,19 @@ const AdvancedHeading = ({
 
 	const changePaddingType = value => {
 		if ( 'desktop' === paddingViewType ) {
-			changeConfig( blockName, 'paddingType', value );
+			changeConfig( blockName, {
+				paddingType: value
+			});
 		}
 		if ( 'tablet' === paddingViewType ) {
-			changeConfig( blockName, 'paddingTypeTablet', value );
+			changeConfig( blockName, {
+				paddingTypeTablet: value
+			});
 		}
 		if ( 'mobile' === paddingViewType ) {
-			changeConfig( blockName, 'paddingTypeMobile', value );
+			changeConfig( blockName, {
+				paddingTypeMobile: value
+			});
 		}
 	};
 
@@ -165,25 +152,37 @@ const AdvancedHeading = ({
 	const changePadding = ( type, value ) => {
 		if ( 'desktop' === paddingViewType ) {
 			if ( 'linked' === defaults.paddingType ) {
-				changeConfig( blockName, 'padding', value );
+				changeConfig( blockName, {
+					padding: value
+				});
 			} else {
-				changeConfig( blockName, desktopPaddingType[type], value );
+				changeConfig( blockName, {
+					[desktopPaddingType[type]]: value
+				});
 			}
 		}
 
 		if ( 'tablet' === paddingViewType ) {
 			if ( 'linked' === defaults.paddingTypeTablet ) {
-				changeConfig( blockName, 'paddingTablet', value );
+				changeConfig( blockName, {
+					paddingTablet: value
+				});
 			} else {
-				changeConfig( blockName, tabletPaddingType[type], value );
+				changeConfig( blockName, {
+					[tabletPaddingType[type]]: value
+				});
 			}
 		}
 
 		if ( 'mobile' === paddingViewType ) {
 			if ( 'linked' === defaults.paddingTypeMobile ) {
-				changeConfig( blockName, 'paddingMobile', value );
+				changeConfig( blockName, {
+					paddingMobile: value
+				});
 			} else {
-				changeConfig( blockName, mobilePaddingType[type], value );
+				changeConfig( blockName, {
+					[mobilePaddingType[type]]: value
+				});
 			}
 		}
 	};
@@ -270,13 +269,19 @@ const AdvancedHeading = ({
 
 	const changeMarginType = value => {
 		if ( 'desktop' === marginViewType ) {
-			changeConfig( blockName, 'marginType', value );
+			changeConfig( blockName, {
+				marginType: value
+			});
 		}
 		if ( 'tablet' === marginViewType ) {
-			changeConfig( blockName, 'marginTypeTablet', value );
+			changeConfig( blockName, {
+				marginTypeTablet: value
+			});
 		}
 		if ( 'mobile' === marginViewType ) {
-			changeConfig( blockName, 'marginTypeMobile', value );
+			changeConfig( blockName, {
+				marginTypeMobile: value
+			});
 		}
 	};
 
@@ -298,25 +303,37 @@ const AdvancedHeading = ({
 	const changeMargin = ( type, value ) => {
 		if ( 'desktop' === marginViewType ) {
 			if ( 'linked' === defaults.marginType ) {
-				changeConfig( blockName, 'margin', value );
+				changeConfig( blockName, {
+					margin: value
+				});
 			} else {
-				changeConfig( blockName, desktopMarginType[type], value );
+				changeConfig( blockName, {
+					[desktopMarginType[type]]: value
+				});
 			}
 		}
 
 		if ( 'tablet' === marginViewType ) {
 			if ( 'linked' === defaults.marginTypeTablet ) {
-				changeConfig( blockName, 'marginTablet', value );
+				changeConfig( blockName, {
+					marginTablet: value
+				});
 			} else {
-				changeConfig( blockName, tabletMarginType[type], value );
+				changeConfig( blockName, {
+					[tabletMarginType[type]]: value
+				});
 			}
 		}
 
 		if ( 'mobile' === marginViewType ) {
 			if ( 'linked' === defaults.marginTypeMobile ) {
-				changeConfig( blockName, 'marginMobile', value );
+				changeConfig( blockName, {
+					marginMobile: value
+				});
 			} else {
-				changeConfig( blockName, mobileMarginType[type], value );
+				changeConfig( blockName, {
+					[mobileMarginType[type]]: value
+				});
 			}
 		}
 	};
@@ -360,12 +377,29 @@ const AdvancedHeading = ({
 			<PanelBody
 				title={ __( 'General Settings' ) }
 			>
+				<SelectControl
+					label={ __( 'HTML Tag' ) }
+					value={ defaults.tag }
+					options={ [
+						{ label: __( 'Heading 1' ), value: 'h1' },
+						{ label: __( 'Heading 2' ), value: 'h2' },
+						{ label: __( 'Heading 3' ), value: 'h3' },
+						{ label: __( 'Heading 4' ), value: 'h4' },
+						{ label: __( 'Heading 5' ), value: 'h5' },
+						{ label: __( 'Heading 6' ), value: 'h6' },
+						{ label: __( 'Division' ), value: 'div' },
+						{ label: __( 'Paragraph' ), value: 'p' },
+						{ label: __( 'Span' ), value: 'span' }
+					] }
+					onChange={ value => changeConfig( blockName, { tag: value }) }
+				/>
+
 				<BaseControl
 					label={ 'Heading Color' }
 				>
 					<ColorPalette
 						value={ defaults.headingColor }
-						onChange={ value => changeConfig( blockName, 'headingColor', value ) }
+						onChange={ value => changeConfig( blockName, { headingColor: value }) }
 					/>
 				</BaseControl>
 
@@ -383,20 +417,6 @@ const AdvancedHeading = ({
 						max={ 500 }
 					/>
 				</ResponsiveControl>
-
-				<HorizontalRule/>
-
-				<ResponsiveControl
-					label={ 'Alignment' }
-					view={ alignmentViewType }
-					changeViewType={ setAlignmentViewType }
-				>
-					<AlignmentToolbar
-						value={ getAlignment }
-						onChange={ changeAlignment }
-						isCollapsed={ false }
-					/>
-				</ResponsiveControl>
 			</PanelBody>
 
 			<PanelBody
@@ -408,19 +428,19 @@ const AdvancedHeading = ({
 					value={ defaults.fontFamily }
 					onChangeFontFamily={ changeFontFamily }
 					valueVariant={ defaults.fontVariant }
-					onChangeFontVariant={ value => changeConfig( blockName, 'fontVariant', value ) }
+					onChangeFontVariant={ value => changeConfig( blockName, { fontVariant: value }) }
 					valueStyle={ defaults.fontStyle }
-					onChangeFontStyle={ value => changeConfig( blockName, 'fontStyle', value ) }
+					onChangeFontStyle={ value => changeConfig( blockName, { fontStyle: value }) }
 					valueTransform={ defaults.textTransform }
-					onChangeTextTransform={ value => changeConfig( blockName, 'textTransform', value ) }
+					onChangeTextTransform={ value => changeConfig( blockName, { textTransform: value }) }
 				/>
 
 				<HorizontalRule/>
 
 				<RangeControl
 					label={ __( 'Line Height' ) }
-					value={ defaults.lineHeight }
-					onChange={ value => changeConfig( blockName, 'lineHeight', value ) }
+					value={ defaults.lineHeight || '' }
+					onChange={ value => changeConfig( blockName, { lineHeight: value }) }
 					min={ 0 }
 					max={ 200 }
 				/>
@@ -429,8 +449,8 @@ const AdvancedHeading = ({
 
 				<RangeControl
 					label={ __( 'Letter Spacing' ) }
-					value={ defaults.letterSpacing }
-					onChange={ value => changeConfig( blockName, 'letterSpacing', value ) }
+					value={ defaults.letterSpacing || '' }
+					onChange={ value => changeConfig( blockName, { letterSpacing: value }) }
 					min={ -50 }
 					max={ 100 }
 				/>
@@ -475,6 +495,8 @@ const AdvancedHeading = ({
 						] }
 					/>
 				</ResponsiveControl>
+
+				<HorizontalRule/>
 
 				<ResponsiveControl
 					label={ 'Margin' }

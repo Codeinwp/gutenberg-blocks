@@ -10,6 +10,7 @@ const { PanelBody } = wp.components;
  */
 import ButtomItem from './block-item.js';
 import AdvancedHeading from './controls/advanced-heading.js';
+import ButtonGroup from './controls/button-group.js';
 
 const GlobalDefaults = ({
 	blockDefaults,
@@ -21,12 +22,12 @@ const GlobalDefaults = ({
 		{
 			name: 'themeisle-blocks/advanced-heading',
 			control: AdvancedHeading
+		},
+		{
+			name: 'themeisle-blocks/button-group',
+			control: ButtonGroup
 		}
 
-		// {
-		// 	name: 'themeisle-blocks/button-group',
-		// 	control: AdvancedHeading
-		// },
 		// {
 		// 	name: 'themeisle-blocks/font-awesome-icons',
 		// 	control: AdvancedHeading

@@ -10,8 +10,6 @@ import GoogleFontLoader from 'react-google-font-loader';
  */
 const { __ } = wp.i18n;
 
-const { merge } = lodash;
-
 const { createBlock } = wp.blocks;
 
 const { RichText } = wp.blockEditor;
@@ -52,15 +50,20 @@ const Edit = ({
 
 	const initBlock = () => {
 		if ( attributes.id === undefined ) {
+			let attrs;
 			const instanceId = `wp-block-themeisle-blocks-advanced-heading-${ clientId.substr( 0, 8 ) }`;
 
 			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
 
 			if ( undefined !== globalDefaults ) {
-				const newAttributes = merge( attributes, window.themeisleGutenberg.globalDefaults[ name ]);
+				attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
 			}
 
-			setAttributes({ id: instanceId });
+			setAttributes({
+				...attrs,
+				id: instanceId
+			});
+
 			IDs.push( instanceId );
 		} else if ( IDs.includes( attributes.id ) ) {
 			const instanceId = `wp-block-themeisle-blocks-advanced-heading-${ clientId.substr( 0, 8 ) }`;
@@ -82,11 +85,18 @@ const Edit = ({
 	};
 
 	const changeFontFamily = value => {
-		setAttributes({
-			fontFamily: value,
-			fontVariant: 'normal',
-			fontStyle: 'normal'
-		});
+		if ( ! value ) {
+			setAttributes({
+				fontFamily: value,
+				fontVariant: value
+			});
+		} else {
+			setAttributes({
+				fontFamily: value,
+				fontVariant: 'normal',
+				fontStyle: 'normal'
+			});
+		}
 	};
 
 	const changeFontVariant = value => {
