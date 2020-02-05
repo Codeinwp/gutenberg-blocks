@@ -24,7 +24,7 @@
 	},
 	"devDependencies": {
 		"@semantic-release/changelog": "^5.0.0",
-		"@semantic-release/exec": "^4.0.0",
+		"@semantic-release/exec": "^5.0.0",
 		"@semantic-release/git": "^8.0.0",
 		"conventional-changelog-simple-preset": "^1.0.13",
 		"grunt": "^1.0.4",
