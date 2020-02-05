@@ -20,7 +20,8 @@ const Edit = ({
 	attributes,
 	setAttributes,
 	className,
-	clientId
+	clientId,
+	name
 }) => {
 	useEffect( () => {
 		initBlock();
@@ -28,8 +29,20 @@ const Edit = ({
 
 	const initBlock = () => {
 		if ( attributes.id === undefined ) {
+			let attrs;
 			const instanceId = `wp-block-themeisle-blocks-font-awesome-icons-${ clientId.substr( 0, 8 ) }`;
-			setAttributes({ id: instanceId });
+
+			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
+
+			if ( undefined !== globalDefaults ) {
+				attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+			}
+
+			setAttributes({
+				...attrs,
+				id: instanceId
+			});
+
 			IDs.push( instanceId );
 		} else if ( IDs.includes( attributes.id ) ) {
 			const instanceId = `wp-block-themeisle-blocks-font-awesome-icons-${ clientId.substr( 0, 8 ) }`;

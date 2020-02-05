@@ -51,6 +51,11 @@ const defaultsAttrs = {
 			paddingTopBottom: 12,
 			paddingLeftRight: 24
 		}
+	},
+	'themeisle-blocks/font-awesome-icons': {
+		fontSize: 16,
+		padding: 5,
+		margin: 5
 	}
 };
 

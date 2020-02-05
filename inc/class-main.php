@@ -51,6 +51,7 @@ class Main {
 			define( 'THEMEISLE_BLOCKS_VERSION', '1.3.5' );
 			define( 'THEMEISLE_BLOCKS_DEV', false );
 		}
+
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );

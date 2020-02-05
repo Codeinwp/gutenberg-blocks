@@ -165,6 +165,8 @@ const ButtonGroupBlock = ({
 					] }
 				/>
 
+				<HorizontalRule/>
+
 				<RangeControl
 					label={ __( 'Group Spacing' ) }
 					value={ defaults.spacing }
@@ -172,6 +174,8 @@ const ButtonGroupBlock = ({
 					min={ 0 }
 					max={ 50 }
 				/>
+
+				<HorizontalRule/>
 
 				<SelectControl
 					label={ __( 'Collapse On' ) }
@@ -198,6 +202,8 @@ const ButtonGroupBlock = ({
 					max={ 50 }
 				/>
 
+				<HorizontalRule/>
+
 				<GoogleFontsControl
 					label={ __( 'Font Family' ) }
 					value={ defaults.fontFamily }
@@ -209,6 +215,8 @@ const ButtonGroupBlock = ({
 					valueTransform={ defaults.textTransform }
 					onChangeTextTransform={ value => changeConfig( blockName, { textTransform: value }) }
 				/>
+
+				<HorizontalRule/>
 
 				<RangeControl
 					label={ __( 'Line Height' ) }
