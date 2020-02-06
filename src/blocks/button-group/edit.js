@@ -27,6 +27,7 @@ const {
 /**
  * Internal dependencies
  */
+import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Controls from './controls.js';
 import Inspector from './inspector.js';
 import Button from './components/button-edit.js';
@@ -53,19 +54,21 @@ const Edit = ({
 			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
 
 			if ( undefined !== globalDefaults ) {
-				attrs = omit({ ...window.themeisleGutenberg.globalDefaults[ name ] }, 'data' );
-				const data = pick({ ...window.themeisleGutenberg.globalDefaults[ name ] }, 'data' );
-				const buttonAttrs = [];
+				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
+					attrs = omit({ ...window.themeisleGutenberg.globalDefaults[ name ] }, 'data' );
+					const data = pick({ ...window.themeisleGutenberg.globalDefaults[ name ] }, 'data' );
+					const buttonAttrs = [];
 
-				attributes.data.forEach( i => {
-					buttonAttrs.push({
-						...i,
-						...data.data
+					attributes.data.forEach( i => {
+						buttonAttrs.push({
+							...i,
+							...data.data
+						});
 					});
-				});
 
-				if ( ! isEqual( buttonAttrs, attributes.data ) ) {
-					attrs.data = buttonAttrs;
+					if ( ! isEqual( buttonAttrs, attributes.data ) ) {
+						attrs.data = buttonAttrs;
+					}
 				}
 			}
 

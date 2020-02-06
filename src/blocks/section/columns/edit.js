@@ -7,7 +7,10 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies
  */
-const { times } = lodash;
+const {
+	isEqual,
+	times
+} = lodash;
 
 const { compose } = wp.compose;
 
@@ -32,6 +35,7 @@ const { withViewportMatch } = wp.viewport;
 /**
  * Internal dependencies
  */
+import defaults from '../../../plugins/options/global-defaults/defaults.js';
 import layouts from '../layouts.js';
 import Inspector from './inspector.js';
 import BlockNavigatorControl from '../../../components/block-navigator-control/index.js';
@@ -65,7 +69,10 @@ const Edit = ({
 			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
 
 			if ( undefined !== globalDefaults ) {
-				attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
+					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+				}
+
 			}
 
 			setAttributes({

@@ -1,6 +1,8 @@
 /**
  * WordPress dependencies...
  */
+const { isEqual } = lodash;
+
 const {
 	Fragment,
 	useEffect
@@ -9,6 +11,7 @@ const {
 /**
  * Internal dependencies
  */
+import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Controls from './controls.js';
 import Inspector from './inspector.js';
 
@@ -33,7 +36,9 @@ const Edit = ({
 			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
 
 			if ( undefined !== globalDefaults ) {
-				attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
+					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+				}
 			}
 
 			setAttributes({
