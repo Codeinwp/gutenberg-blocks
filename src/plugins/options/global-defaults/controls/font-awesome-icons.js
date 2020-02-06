@@ -22,31 +22,12 @@ const {
 	useState
 } = wp.element;
 
-/**
- * Internal dependencies
- */
-const IconPickerControl = React.lazy( () => import( '../../../../components/icon-picker-control/index.js' ) );
-
 const ButtonGroupBlock = ({
 	blockName,
 	defaults,
 	changeConfig
 }) => {
 	const [ hover, setHover ] = useState( false );
-
-	const changeIcon = value => {
-		if ( 'object' === typeof value ) {
-			changeConfig( blockName, {
-				icon: value.name,
-				prefix: value.prefix
-			});
-		} else {
-			changeConfig( blockName, {
-				icon:
-				value
-			});
-		}
-	};
 
 	return (
 		<Fragment>

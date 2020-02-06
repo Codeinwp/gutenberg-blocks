@@ -16,8 +16,7 @@ const { RichText } = wp.blockEditor;
 
 const {
 	Fragment,
-	useEffect,
-	useState
+	useEffect
 } = wp.element;
 
 const { withViewportMatch } = wp.viewport;

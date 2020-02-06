@@ -11,14 +11,11 @@ const {
 
 const { InspectorControls } = wp.blockEditor;
 
-const { Fragment } = wp.element;
-
 /**
  * Internal dependencies
  */
 import LayoutBuilder from './components/layout-builder.js';
 import { StyleSwitcherInspectorControl } from '../../components/style-switcher-control/index.js';
-import Layout from './components/layout/index.js';
 
 const Inspector = ({
 	attributes,

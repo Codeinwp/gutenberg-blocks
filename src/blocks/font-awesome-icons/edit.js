@@ -1,8 +1,6 @@
 /**
  * WordPress dependencies...
  */
-const { __ } = wp.i18n;
-
 const {
 	Fragment,
 	useEffect

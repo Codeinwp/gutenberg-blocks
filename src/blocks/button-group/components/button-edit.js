@@ -5,11 +5,6 @@ import classnames from 'classnames';
 import hexToRgba from 'hex-rgba';
 
 /**
- * Internal dependencies
- */
-import { unescapeHTML } from '../../../helpers/helper-functions.js';
-
-/**
  * WordPress dependencies.
  */
 const { __ } = wp.i18n;

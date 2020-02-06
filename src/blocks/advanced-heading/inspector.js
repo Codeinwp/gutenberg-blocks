@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import hexToRgba from 'hex-rgba';
 
 /**
  * WordPress dependencies.
@@ -14,8 +13,7 @@ const {
 	Dashicon,
 	PanelBody,
 	RangeControl,
-	ToggleControl,
-	Toolbar
+	ToggleControl
 } = wp.components;
 
 const {

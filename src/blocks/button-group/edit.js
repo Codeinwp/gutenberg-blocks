@@ -100,7 +100,7 @@ const Edit = ({
 		if ( 1 <= value && 5 >= value ) {
 			if ( attributes.data.length < value ) {
 				const data = [ ...attributes.data ];
-				times( value - attributes.data.length, i => {
+				times( value - attributes.data.length, () => {
 					data.push({
 						text: attributes.data[0].text,
 						link: attributes.data[0].link,

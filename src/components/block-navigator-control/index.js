@@ -32,7 +32,6 @@ const {
 import { navigatorIcon } from '../../helpers/icons.js';
 
 const BlockNavigatorControl = ({
-	clientId,
 	block,
 	selectedBlockClientId,
 	selectBlock
@@ -85,7 +84,7 @@ export default compose(
 		};
 	}),
 
-	withDispatch( ( dispatch, { block }) => {
+	withDispatch( dispatch => {
 		const { selectBlock } = dispatch( 'core/block-editor' );
 		return {
 			selectBlock

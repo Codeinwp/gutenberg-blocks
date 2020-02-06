@@ -76,7 +76,7 @@ const Options = ({ createNotice }) => {
 	const settingsRef = useRef( null );
 
 	const dispatchNotice = value => {
-		if ( ! wp.components.Snackbar ) {
+		if ( ! Snackbar ) {
 			return;
 		}
 
@@ -137,7 +137,7 @@ const Options = ({ createNotice }) => {
 			themeisle_blocks_settings_global_defaults: JSON.stringify( filterDefault )
 		});
 
-		await model.save().then( response => {
+		await model.save().then( () => {
 			window.themeisleGutenberg.globalDefaults = filterDefault;
 			dispatchNotice( __( 'Option updated.' ) );
 		});

@@ -23,8 +23,6 @@ const {
 	SelectControl
 } = wp.components;
 
-const { withDispatch } = wp.data;
-
 const {
 	Fragment,
 	useEffect,
@@ -971,8 +969,7 @@ const Inspector = ({
 						label={ __( 'HTML Tag' ) }
 						value={ attributes.columnsHTMLTag }
 						options={ [
-							{ label: 'Default', value: 'div' },
-							{ label: 'div', value: 'div' },
+							{ label: 'Default (div)', value: 'div' },
 							{ label: 'section', value: 'section' },
 							{ label: 'header', value: 'header' },
 							{ label: 'footer', value: 'footer' },

@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import hexToRgba from 'hex-rgba';
 
 /**
  * WordPress dependencies

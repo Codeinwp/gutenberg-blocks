@@ -6,8 +6,6 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
-
 const { ResizableBox } = wp.components;
 
 const { compose } = wp.compose;
@@ -41,6 +39,7 @@ const Edit = ({
 	className,
 	isSelected,
 	clientId,
+	name,
 	toggleSelection,
 	updateBlockAttributes,
 	adjacentBlockClientId,
@@ -59,8 +58,20 @@ const Edit = ({
 
 	const initBlock = () => {
 		if ( attributes.id === undefined ) {
+			let attrs;
 			const instanceId = `wp-block-themeisle-blocks-advanced-column-${ clientId.substr( 0, 8 ) }`;
-			setAttributes({ id: instanceId });
+
+			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
+
+			if ( undefined !== globalDefaults ) {
+				attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+			}
+
+			setAttributes({
+				...attrs,
+				id: instanceId
+			});
+
 			IDs.push( instanceId );
 		} else if ( IDs.includes( attributes.id ) ) {
 			const instanceId = `wp-block-themeisle-blocks-advanced-column-${ clientId.substr( 0, 8 ) }`;
@@ -102,7 +113,7 @@ const Edit = ({
 		}
 	}
 
-	const onResizeStart = ( event, direction, elt, delta ) => {
+	const onResizeStart = () => {
 		const handle = document.querySelector( `#block-${ clientId } .wp-themeisle-block-advanced-column-resize-container-handle .components-resizable-box__handle` );
 		const handleTooltipLeft = document.createElement( 'div' );
 		const handleTooltipRight = document.createElement( 'div' );
@@ -139,7 +150,7 @@ const Edit = ({
 		}
 	};
 
-	const onResizeStop = ( event, direction, elt, delta ) => {
+	const onResizeStop = () => {
 		const handleTooltipLeft = document.querySelector( '.resizable-tooltip-left' );
 		const handleTooltipRight = document.querySelector( '.resizable-tooltip-right' );
 

@@ -13,6 +13,7 @@ import AdvancedHeading from './controls/advanced-heading.js';
 import ButtonGroup from './controls/button-group.js';
 import FontAwesomeIcons from './controls/font-awesome-icons.js';
 import SectionColumns from './controls/section-columns.js';
+import SectionColumn from './controls/section-column.js';
 
 const GlobalDefaults = ({
 	blockDefaults,
@@ -36,12 +37,11 @@ const GlobalDefaults = ({
 		{
 			name: 'themeisle-blocks/advanced-columns',
 			control: SectionColumns
+		},
+		{
+			name: 'themeisle-blocks/advanced-column',
+			control: SectionColumn
 		}
-
-		// {
-		// 	name: 'themeisle-blocks/advanced-column',
-		// 	control: AdvancedHeading
-		// }
 	];
 
 	return (

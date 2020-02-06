@@ -306,7 +306,7 @@ const Inspector = ({
 								<ToggleControl
 									label={ 'Box Shadow' }
 									checked={ attributes.data[selectedButton].boxShadow }
-									onChange={ e => updateButton({ boxShadow: ! attributes.data[selectedButton].boxShadow }, selectedButton ) }
+									onChange={ () => updateButton({ boxShadow: ! attributes.data[selectedButton].boxShadow }, selectedButton ) }
 								/>
 
 								{ attributes.data[selectedButton].boxShadow && (

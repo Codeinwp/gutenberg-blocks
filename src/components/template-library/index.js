@@ -7,8 +7,6 @@ import uuidv4 from 'uuid';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
-
 const { apiFetch } = wp;
 
 const { Modal } = wp.components;

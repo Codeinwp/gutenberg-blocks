@@ -16,11 +16,6 @@ const {
 	useState
 } = wp.element;
 
-const {
-	PanelBody,
-	ToggleControl
-} = wp.components;
-
 const BlockItem = ({
 	blockName,
 	saveConfig,

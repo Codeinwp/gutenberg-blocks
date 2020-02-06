@@ -33,7 +33,7 @@ import {
 import ResponsiveControl from '../../../../components/responsive-control/index.js';
 import SizingControl from '../../../../components/sizing-control/index.js';
 
-const ButtonGroupBlock = ({
+const SectionColumns = ({
 	blockName,
 	defaults,
 	changeConfig
@@ -645,4 +645,4 @@ const ButtonGroupBlock = ({
 	);
 };
 
-export default ButtonGroupBlock;
+export default SectionColumns;

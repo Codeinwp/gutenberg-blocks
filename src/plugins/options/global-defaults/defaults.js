@@ -1,8 +1,3 @@
-/**
- * WordPress dependencies
- */
-const { __ } = wp.i18n;
-
 const defaultsAttrs = {
 	'themeisle-blocks/advanced-heading': {
 		tag: 'h2',
@@ -95,6 +90,45 @@ const defaultsAttrs = {
 		hide: false,
 		hideTablet: false,
 		hideMobile: false
+	},
+	'themeisle-blocks/advanced-column': {
+		paddingType: 'linked',
+		paddingTypeTablet: 'linked',
+		paddingTypeMobile: 'linked',
+		padding: 20,
+		paddingTablet: 20,
+		paddingMobile: 20,
+		paddingTop: 20,
+		paddingTopTablet: 20,
+		paddingTopMobile: 20,
+		paddingRight: 20,
+		paddingRightTablet: 20,
+		paddingRightMobile: 20,
+		paddingBottom: 20,
+		paddingBottomTablet: 20,
+		paddingBottomMobile: 20,
+		paddingLeft: 20,
+		paddingLeftTablet: 20,
+		paddingLeftMobile: 20,
+		marginType: 'unlinked',
+		marginTypeTablet: 'unlinked',
+		marginTypeMobile: 'unlinked',
+		margin: 20,
+		marginTablet: 20,
+		marginMobile: 20,
+		marginTop: 20,
+		marginTopTablet: 20,
+		marginTopMobile: 20,
+		marginRight: 0,
+		marginRightTablet: 0,
+		marginRightMobile: 0,
+		marginBottom: 20,
+		marginBottomTablet: 20,
+		marginBottomMobile: 20,
+		marginLeft: 0,
+		marginLeftTablet: 0,
+		marginLeftMobile: 0,
+		columnsHTMLTag: 'div'
 	}
 };
 

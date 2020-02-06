@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import hexToRgba from 'hex-rgba';
 
 /**
  * WordPress dependencies
@@ -44,7 +43,6 @@ import {
 	middleIcon,
 	bottomIcon
 } from '../../../helpers/icons.js';
-import layouts from '../layouts.js';
 import LayoutControl from './../components/layout-control/index.js';
 import SizingControl from '../../../components/sizing-control/index.js';
 import ResponsiveControl from '../../../components/responsive-control/index.js';

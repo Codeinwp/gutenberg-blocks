@@ -30,7 +30,7 @@ const Controls = ({ attributes, setAttributes }) => {
 	return (
 		<BlockControls>
 			<Toolbar>
-				{ Object.keys( socialList ).map( ( item, i ) => {
+				{ Object.keys( socialList ).map( ( item ) => {
 					let prop = attributes[item];
 
 					return (
@@ -41,7 +41,7 @@ const Controls = ({ attributes, setAttributes }) => {
 									'components-toolbar__control',
 									{ 'is-active': prop }
 								) }
-								onClick={ ( e ) => toggleIcons( item ) }
+								onClick={ () => toggleIcons( item ) }
 							>
 								<SocialIcons icon={ item }/>
 							</Button>

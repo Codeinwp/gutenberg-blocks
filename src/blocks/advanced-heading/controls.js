@@ -4,7 +4,6 @@
 const { __ } = wp.i18n;
 
 const {
-	Button,
 	Dropdown,
 	DropdownMenu,
 	IconButton,

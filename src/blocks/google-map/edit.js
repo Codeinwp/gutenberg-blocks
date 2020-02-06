@@ -254,7 +254,7 @@ const Edit = ({
 
 		setAttributes({ markers });
 
-		google.maps.event.addListener( mark, 'click', event => {
+		google.maps.event.addListener( mark, 'click', () => {
 			if ( lastInfoWindowRef.current ) {
 				lastInfoWindowRef.current.close();
 			}
@@ -310,7 +310,7 @@ const Edit = ({
 
 			markersRef.current.push( mark );
 
-			google.maps.event.addListener( mark, 'click', event => {
+			google.maps.event.addListener( mark, 'click', () => {
 				if ( lastInfoWindowRef.current ) {
 					lastInfoWindowRef.current.close();
 				}
