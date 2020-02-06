@@ -369,18 +369,17 @@ const Inspector = ({
 		}
 	};
 
-
 	const changeHorizontalAlign = value => {
 		if ( attributes.horizontalAlign === value ) {
 			return setAttributes({ horizontalAlign: 'unset' });
 		}
+
 		setAttributes({ horizontalAlign: value });
 	};
 
 	const changeColumnsHeight = value => {
 		setAttributes({ columnsHeight: value });
 	};
-
 
 	let getColumnsHeightCustom = () => {
 		let value;
@@ -418,6 +417,7 @@ const Inspector = ({
 		if ( attributes.verticalAlign === value ) {
 			return setAttributes({ verticalAlign: 'unset' });
 		}
+
 		setAttributes({ verticalAlign: value });
 	};
 
@@ -1805,13 +1805,11 @@ const Inspector = ({
 							title={ __( 'Section Settings' ) }
 							initialOpen={ false }
 						>
-
 							<SelectControl
 								label={ __( 'HTML Tag' ) }
 								value={ attributes.columnsHTMLTag }
 								options={ [
-									{ label: 'Default', value: 'div' },
-									{ label: 'div', value: 'div' },
+									{ label: 'Default (div)', value: 'div' },
 									{ label: 'section', value: 'section' },
 									{ label: 'header', value: 'header' },
 									{ label: 'footer', value: 'footer' },
@@ -1820,7 +1818,6 @@ const Inspector = ({
 								] }
 								onChange={ changeColumnsHTMLTag }
 							/>
-
 						</PanelBody>
 					</Fragment>
 
