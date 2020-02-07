@@ -61,7 +61,6 @@ const Edit = ({
 				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
 					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
 				}
-
 			}
 
 			setAttributes({
