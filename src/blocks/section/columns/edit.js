@@ -209,8 +209,7 @@ const Edit = ({
 		...borderStyle,
 		...borderRadiusStyle,
 		...boxShadowStyle,
-		alignItems: attributes.horizontalAlign,
-		justifyContent: attributes.verticalAlign
+		alignItems: attributes.horizontalAlign
 	};
 
 	if ( 'color' === attributes.backgroundOverlayType ) {
@@ -266,7 +265,8 @@ const Edit = ({
 		`has-desktop-${ attributes.layout }-layout`,
 		`has-tablet-${ attributes.layoutTablet }-layout`,
 		`has-mobile-${ attributes.layoutMobile }-layout`,
-		`has-${ attributes.columnsGap }-gap`
+		`has-${ attributes.columnsGap }-gap`,
+		`has-vertical-${ attributes.verticalAlign }`
 	);
 
 	const updateColumnsWidth = ( columns, layout ) => {

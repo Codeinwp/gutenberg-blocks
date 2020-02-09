@@ -571,52 +571,50 @@ const SectionColumns = ({
 					</Fragment>
 				) }
 
-				{ 'auto' !== defaults.columnsHeight && (
-					<BaseControl
-						label={ 'Vertical Align' }
-					>
-						<ButtonGroup className="icon-buttom-group">
-							<Tooltip text={ __( 'Top' ) } >
-								<Button
-									className="components-icon-button is-button is-large"
-									isPrimary={ 'flex-start' === defaults.verticalAlign }
-									onClick={ () => changeVerticalAlign( 'flex-start' ) }
-								>
-									<Icon
-										icon={ topIcon }
-										size={ 20 }
-									/>
-								</Button>
-							</Tooltip>
+				<BaseControl
+					label={ 'Vertical Align' }
+				>
+					<ButtonGroup className="icon-buttom-group">
+						<Tooltip text={ __( 'Top' ) } >
+							<Button
+								className="components-icon-button is-button is-large"
+								isPrimary={ 'flex-start' === defaults.verticalAlign }
+								onClick={ () => changeVerticalAlign( 'flex-start' ) }
+							>
+								<Icon
+									icon={ topIcon }
+									size={ 20 }
+								/>
+							</Button>
+						</Tooltip>
 
-							<Tooltip text={ __( 'Middle' ) } >
-								<Button
-									className="components-icon-button is-button is-large"
-									isPrimary={ 'center' === defaults.verticalAlign }
-									onClick={ () => changeVerticalAlign( 'center' ) }
-								>
-									<Icon
-										icon={ middleIcon }
-										size={ 20 }
-									/>
-								</Button>
-							</Tooltip>
+						<Tooltip text={ __( 'Middle' ) } >
+							<Button
+								className="components-icon-button is-button is-large"
+								isPrimary={ 'center' === defaults.verticalAlign }
+								onClick={ () => changeVerticalAlign( 'center' ) }
+							>
+								<Icon
+									icon={ middleIcon }
+									size={ 20 }
+								/>
+							</Button>
+						</Tooltip>
 
-							<Tooltip text={ __( 'Bottom' ) } >
-								<Button
-									className="components-icon-button is-button is-large"
-									isPrimary={ 'flex-end' === defaults.verticalAlign }
-									onClick={ () => changeVerticalAlign( 'flex-end' ) }
-								>
-									<Icon
-										icon={ bottomIcon }
-										size={ 20 }
-									/>
-								</Button>
-							</Tooltip>
-						</ButtonGroup>
-					</BaseControl>
-				) }
+						<Tooltip text={ __( 'Bottom' ) } >
+							<Button
+								className="components-icon-button is-button is-large"
+								isPrimary={ 'flex-end' === defaults.verticalAlign }
+								onClick={ () => changeVerticalAlign( 'flex-end' ) }
+							>
+								<Icon
+									icon={ bottomIcon }
+									size={ 20 }
+								/>
+							</Button>
+						</Tooltip>
+					</ButtonGroup>
+				</BaseControl>
 			</PanelBody>
 
 			<PanelBody

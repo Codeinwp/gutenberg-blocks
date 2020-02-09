@@ -52,6 +52,46 @@
 	}
 }
 
+.wp-block-themeisle-blocks-advanced-columns {
+	&.has-vertical-flex-start {
+		.wp-themeisle-block-advanced-column-resize-container {
+			align-items: flex-start;
+		}
+	}
+
+	&.has-vertical-center {
+		.wp-themeisle-block-advanced-column-resize-container {
+			align-items: center;
+		}
+	}
+
+	&.has-vertical-flex-end {
+		.wp-themeisle-block-advanced-column-resize-container {
+			align-items: flex-end;
+		}
+	}
+
+	[data-type="themeisle-blocks/advanced-column"] {
+		> .editor-block-list__block-edit {
+			display: flex;
+			flex-direction: column;
+
+			> div[data-block] {
+				display: flex;
+				flex-basis: 100%;
+
+				.wp-themeisle-block-advanced-column-resize-container {
+					display: flex;
+
+					.wp-block-themeisle-blocks-advanced-column {
+						flex-grow: 1;
+					}
+				}
+			}
+		}
+	}
+}
+
 @media ( min-width: 960px ) {
 	.wp-block-themeisle-blocks-advanced-columns {
 		display: flex;
