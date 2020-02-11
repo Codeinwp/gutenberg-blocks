@@ -51,6 +51,14 @@ const attributes = {
 		type: 'boolean',
 		default: true
 	},
+	hideArrows: {
+		type: 'boolean',
+		default: false
+	},
+	hideBullets: {
+		type: 'boolean',
+		default: false
+	},
 	height: {
 		type: 'number',
 		default: 400

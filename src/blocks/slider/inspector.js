@@ -35,9 +35,17 @@ const Inspector = ({
 		setAttributes({ height: Number( value ) });
 	};
 
-	const changeAutoplay = value => {
+	const toggleAutoplay = value => {
 		setAttributes({ autoplay: value });
 		slider.update({ autoplay: value ? 2000 : false });
+	};
+
+	const toggleArrows = value => {
+		setAttributes({ hideArrows: value });
+	};
+
+	const toggleBullets = value => {
+		setAttributes({ hideBullets: value });
 	};
 
 	return (
@@ -91,7 +99,21 @@ const Inspector = ({
 							label={ __( 'Autoplay' ) }
 							help={ __( 'Autoplay slider in the front.' ) }
 							checked={ attributes.autoplay }
-							onChange={ changeAutoplay }
+							onChange={ toggleAutoplay }
+						/>
+
+						<ToggleControl
+							label={ __( 'Hide Arrows' ) }
+							help={ __( 'Hide navigation arrows.' ) }
+							checked={ attributes.hideArrows }
+							onChange={ toggleArrows }
+						/>
+
+						<ToggleControl
+							label={ __( 'Hide Bullets' ) }
+							help={ __( 'Hide navigation bullets.' ) }
+							checked={ attributes.hideBullets }
+							onChange={ toggleBullets }
 						/>
 					</Fragment>
 				) }
