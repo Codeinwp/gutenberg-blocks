@@ -7,7 +7,6 @@ const {
 	BaseControl,
 	Button,
 	ButtonGroup,
-	HorizontalRule,
 	Icon,
 	IconButton,
 	PanelBody,
@@ -433,7 +432,7 @@ const SectionColumns = ({
 					/>
 				</ResponsiveControl>
 
-				<HorizontalRule/>
+				<hr/>
 
 				<ResponsiveControl
 					label={ 'Margin' }
@@ -488,7 +487,7 @@ const SectionColumns = ({
 					onChange={ value => changeConfig( blockName, { columnsHTMLTag: value }) }
 				/>
 
-				<HorizontalRule/>
+				<hr/>
 
 				<RangeControl
 					label={ __( 'Maximum Content Width' ) }
@@ -498,7 +497,7 @@ const SectionColumns = ({
 					max={ 1200 }
 				/>
 
-				<HorizontalRule/>
+				<hr/>
 
 				{ defaults.columnsWidth && (
 					<Fragment>
@@ -535,7 +534,7 @@ const SectionColumns = ({
 							</ButtonGroup>
 						</BaseControl>
 
-						<HorizontalRule/>
+						<hr/>
 					</Fragment>
 				) }
 
@@ -550,7 +549,7 @@ const SectionColumns = ({
 					onChange={ value => changeConfig( blockName, { columnsHeight: value }) }
 				/>
 
-				<HorizontalRule/>
+				<hr/>
 
 				{ 'custom' === defaults.columnsHeight && (
 					<Fragment>
@@ -567,7 +566,7 @@ const SectionColumns = ({
 							/>
 						</ResponsiveControl>
 
-						<HorizontalRule/>
+						<hr/>
 					</Fragment>
 				) }
 

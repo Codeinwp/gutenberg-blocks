@@ -474,6 +474,14 @@ const attributes = {
 		type: 'boolean',
 		default: false
 	},
+	reverseColumnsTablet: {
+		type: 'boolean',
+		default: false
+	},
+	reverseColumnsTablet: {
+		type: 'boolean',
+		default: false
+	},
 	columnsHTMLTag: {
 		type: 'string',
 		default: 'div'

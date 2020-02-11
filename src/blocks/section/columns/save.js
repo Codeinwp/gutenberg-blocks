@@ -32,6 +32,8 @@ const Save = ({
 		{ 'hide-in-desktop': attributes.hide },
 		{ 'hide-in-tablet': attributes.hideTablet },
 		{ 'hide-in-mobile': attributes.hideMobile },
+		{ 'has-reverse-columns-tablet': ( attributes.reverseColumnsTablet && ! attributes.hideTablet && 'collapsedRows' === attributes.layoutTablet ) },
+		{ 'has-reverse-columns-mobile': ( attributes.reverseColumnsMobile && ! attributes.hideMobile && 'collapsedRows' === attributes.layoutMobile ) },
 		`has-${ attributes.columnsGap }-gap`,
 		`has-vertical-${ attributes.verticalAlign }`
 	);

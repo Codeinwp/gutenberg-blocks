@@ -886,6 +886,15 @@ const Inspector = ({
 		}
 	};
 
+	const changeReverseColumns = ( value, type ) => {
+		if ( 'tablet' === type ) {
+			setAttributes({ reverseColumnsTablet: value });
+		}
+		if ( 'mobile' === type ) {
+			setAttributes({ reverseColumnsMobile: value });
+		}
+	};
+
 	const changeColumnsHTMLTag = value => {
 		setAttributes({ columnsHTMLTag: value });
 	};
@@ -1796,6 +1805,24 @@ const Inspector = ({
 								checked={ attributes.hideMobile }
 								onChange={ e => changeHideStatus( e, 'mobile' ) }
 							/>
+
+							<hr/>
+
+							{ ( ! attributes.hideTablet && 'collapsedRows' === attributes.layoutTablet ) && (
+								<ToggleControl
+									label={ 'Reverse Columns in Tablet devices?' }
+									checked={ attributes.reverseColumnsTablet }
+									onChange={ e => changeReverseColumns( e, 'tablet' ) }
+								/>
+							) }
+
+							{ ( ! attributes.hideMobile && 'collapsedRows' === attributes.layoutMobile ) && (
+								<ToggleControl
+									label={ 'Reverse Columns in Mobile devices?' }
+									checked={ attributes.reverseColumnsMobile }
+									onChange={ e => changeReverseColumns( e, 'mobile' ) }
+								/>
+							) }
 						</PanelBody>
 
 						<PanelBody

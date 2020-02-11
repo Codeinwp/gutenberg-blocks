@@ -373,6 +373,12 @@
 			> .innerblocks-wrap {
 				flex-direction: column;
 			}
+
+			&.has-reverse-columns-tablet {
+				> .innerblocks-wrap {
+					flex-direction: column-reverse;
+				}
+			}
 		}
 
 		&.has-tablet-twoColumnGrid-layout {
@@ -510,6 +516,12 @@
 		&.has-mobile-collapsedRows-layout {
 			> .innerblocks-wrap {
 				flex-direction: column;
+			}
+
+			&.has-reverse-columns-mobile {
+				> .innerblocks-wrap {
+					flex-direction: column-reverse;
+				}
 			}
 		}
 

@@ -7,7 +7,6 @@ const {
 	BaseControl,
 	Button,
 	ButtonGroup,
-	HorizontalRule,
 	PanelBody,
 	RangeControl
 } = wp.components;
@@ -45,7 +44,7 @@ const ButtonGroupBlock = ({
 					afterIcon="plus"
 				/>
 
-				<HorizontalRule />
+				<hr/>
 
 				<RangeControl
 					label={ __( 'Padding' ) }
@@ -58,7 +57,7 @@ const ButtonGroupBlock = ({
 					afterIcon="plus"
 				/>
 
-				<HorizontalRule />
+				<hr/>
 
 				<RangeControl
 					label={ __( 'Margin' ) }

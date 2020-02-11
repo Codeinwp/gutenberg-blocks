@@ -400,7 +400,13 @@
 
 		&.has-tablet-collapsedRows-layout {
 			> .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout {
-				display: block;
+				flex-direction: column;
+			}
+
+			&.has-reverse-columns-tablet {
+				> .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout {
+					flex-direction: column-reverse;
+				}
 			}
 		}
 
@@ -537,7 +543,13 @@
 
 		&.has-mobile-collapsedRows-layout {
 			> .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout {
-				display: block;
+				flex-direction: column;
+			}
+
+			&.has-reverse-columns-mobile {
+				> .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout {
+					flex-direction: column-reverse;
+				}
 			}
 		}
 

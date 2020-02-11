@@ -4,7 +4,6 @@
 const { __ } = wp.i18n;
 
 const {
-	HorizontalRule,
 	PanelBody,
 	SelectControl
 } = wp.components;
@@ -383,7 +382,7 @@ const SectionColumn = ({
 					/>
 				</ResponsiveControl>
 
-				<HorizontalRule/>
+				<hr/>
 
 				<ResponsiveControl
 					label={ 'Margin' }

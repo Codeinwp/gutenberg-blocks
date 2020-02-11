@@ -7,7 +7,6 @@ const { ColorPalette } = wp.blockEditor;
 
 const {
 	BaseControl,
-	HorizontalRule,
 	PanelBody,
 	RangeControl,
 	SelectControl
@@ -400,7 +399,7 @@ const AdvancedHeading = ({
 					/>
 				</BaseControl>
 
-				<HorizontalRule/>
+				<hr/>
 
 				<ResponsiveControl
 					label={ 'Font Size' }
@@ -432,7 +431,7 @@ const AdvancedHeading = ({
 					onChangeTextTransform={ value => changeConfig( blockName, { textTransform: value }) }
 				/>
 
-				<HorizontalRule/>
+				<hr/>
 
 				<RangeControl
 					label={ __( 'Line Height' ) }
@@ -442,7 +441,7 @@ const AdvancedHeading = ({
 					max={ 200 }
 				/>
 
-				<HorizontalRule/>
+				<hr/>
 
 				<RangeControl
 					label={ __( 'Letter Spacing' ) }
@@ -493,7 +492,7 @@ const AdvancedHeading = ({
 					/>
 				</ResponsiveControl>
 
-				<HorizontalRule/>
+				<hr/>
 
 				<ResponsiveControl
 					label={ 'Margin' }

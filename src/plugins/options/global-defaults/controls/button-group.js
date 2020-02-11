@@ -9,7 +9,6 @@ const {
 	BaseControl,
 	Button,
 	ButtonGroup,
-	HorizontalRule,
 	PanelBody,
 	RangeControl,
 	SelectControl
@@ -93,7 +92,7 @@ const ButtonGroupBlock = ({
 							/>
 						</BaseControl>
 
-						<HorizontalRule/>
+						<hr/>
 
 						<BaseControl
 							label={ 'Hover Background' }
@@ -117,7 +116,7 @@ const ButtonGroupBlock = ({
 							/>
 						</BaseControl>
 
-						<HorizontalRule/>
+						<hr/>
 
 						<BaseControl
 							label={ 'Background' }
@@ -165,7 +164,7 @@ const ButtonGroupBlock = ({
 					] }
 				/>
 
-				<HorizontalRule/>
+				<hr/>
 
 				<RangeControl
 					label={ __( 'Group Spacing' ) }
@@ -175,7 +174,7 @@ const ButtonGroupBlock = ({
 					max={ 50 }
 				/>
 
-				<HorizontalRule/>
+				<hr/>
 
 				<SelectControl
 					label={ __( 'Collapse On' ) }
@@ -202,7 +201,7 @@ const ButtonGroupBlock = ({
 					max={ 50 }
 				/>
 
-				<HorizontalRule/>
+				<hr/>
 
 				<GoogleFontsControl
 					label={ __( 'Font Family' ) }
@@ -216,7 +215,7 @@ const ButtonGroupBlock = ({
 					onChangeTextTransform={ value => changeConfig( blockName, { textTransform: value }) }
 				/>
 
-				<HorizontalRule/>
+				<hr/>
 
 				<RangeControl
 					label={ __( 'Line Height' ) }
