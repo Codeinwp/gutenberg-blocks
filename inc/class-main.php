@@ -108,12 +108,12 @@ class Main {
 			'themeisle-gutenberg-blocks',
 			'themeisleGutenberg',
 			array(
-				'isCompatible'		=> $this->is_compatible(),
-				'packagePath'		=> plugin_dir_url( $this->get_dir() ) . 'build/',
-				'assetsPath'		=> plugin_dir_url( $this->get_dir() ) . 'assets',
-				'updatePath'		=> admin_url( 'update-core.php' ),
-				'mapsAPI'			=> $api,
-				'themeDefaults'		=> $this->get_global_defaults()
+				'isCompatible'  => $this->is_compatible(),
+				'packagePath'   => plugin_dir_url( $this->get_dir() ) . 'build/',
+				'assetsPath'    => plugin_dir_url( $this->get_dir() ) . 'assets',
+				'updatePath'    => admin_url( 'update-core.php' ),
+				'mapsAPI'       => $api,
+				'themeDefaults' => $this->get_global_defaults()
 			) 
 		);
 
