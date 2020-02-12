@@ -108,11 +108,12 @@ class Main {
 			'themeisle-gutenberg-blocks',
 			'themeisleGutenberg',
 			array(
-				'isCompatible' => $this->is_compatible(),
-				'packagePath'  => plugin_dir_url( $this->get_dir() ) . 'build/',
-				'assetsPath'   => plugin_dir_url( $this->get_dir() ) . 'assets',
-				'updatePath'   => admin_url( 'update-core.php' ),
-				'mapsAPI'      => $api,
+				'isCompatible'		=> $this->is_compatible(),
+				'packagePath'		=> plugin_dir_url( $this->get_dir() ) . 'build/',
+				'assetsPath'		=> plugin_dir_url( $this->get_dir() ) . 'assets',
+				'updatePath'		=> admin_url( 'update-core.php' ),
+				'mapsAPI'			=> $api,
+				'themeDefaults'		=> $this->get_global_defaults()
 			) 
 		);
 
@@ -283,6 +284,21 @@ class Main {
 		}
 
 		return version_compare( $current, $latest, '>=' );
+	}
+
+	/**
+	 * Get global defaults.
+	 *
+	 * @since   1.4.0
+	 * @access  public
+	 */
+	public function get_global_defaults() {
+		$defaults = get_theme_support( 'otter_global_defaults' );
+		if ( ! is_array( $defaults ) ) {
+			return false;
+		}
+
+		return current( $defaults );
 	}
 
 	/**

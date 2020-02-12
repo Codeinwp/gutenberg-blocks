@@ -53,13 +53,19 @@ const Options = ({ createNotice }) => {
 				settingsRef.current.fetch().then( response => {
 					setDefault( Boolean( response.themeisle_blocks_settings_default_block ) );
 					if ( '' !== response.themeisle_blocks_settings_global_defaults ) {
-						const defaults = cloneDeep( defaultsAttrs );
-						const defaultValues = merge( defaults, JSON.parse( response.themeisle_blocks_settings_global_defaults ) );
-						window.themeisleGutenberg.globalDefaults = defaultValues;
-						setBlockDefaults( defaultValues );
+						let defaults = cloneDeep( defaultsAttrs );
+						if ( 'object' === typeof window.themeisleGutenberg.themeDefaults ) {
+							defaults = merge( defaults, window.themeisleGutenberg.themeDefaults );
+						}
+						defaults = merge( defaults, JSON.parse( response.themeisle_blocks_settings_global_defaults ) );
+						window.themeisleGutenberg.globalDefaults = defaults;
+						setBlockDefaults( defaults );
 					} else {
-						const defaults = cloneDeep( defaultsAttrs );
-						window.themeisleGutenberg.globalDefaults = defaultsAttrs;
+						let defaults = cloneDeep( defaultsAttrs );
+						if ( 'object' === typeof window.themeisleGutenberg.themeDefaults ) {
+							defaults = merge( defaults, window.themeisleGutenberg.themeDefaults );
+						}
+						window.themeisleGutenberg.globalDefaults = defaults;
 						setBlockDefaults( defaults );
 					}
 					setAPILoaded( false );
