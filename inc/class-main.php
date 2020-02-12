@@ -113,7 +113,7 @@ class Main {
 				'assetsPath'    => plugin_dir_url( $this->get_dir() ) . 'assets',
 				'updatePath'    => admin_url( 'update-core.php' ),
 				'mapsAPI'       => $api,
-				'themeDefaults' => $this->get_global_defaults()
+				'themeDefaults' => $this->get_global_defaults(),
 			) 
 		);
 
