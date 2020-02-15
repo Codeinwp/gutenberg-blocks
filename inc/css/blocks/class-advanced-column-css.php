@@ -178,7 +178,6 @@ class Advanced_Column_CSS extends Base_CSS {
 				if ( isset( $attr['marginTablet'] ) ) {
 					$style .= '		margin: ' . $this->get_attr_value( $attr['marginTablet'] ) . 'px;' . "\n";
 				}
-
 			}
 	
 			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeTablet'] ) ? $attr['marginTypeTablet'] : null ), 'unlinked' ) ) {

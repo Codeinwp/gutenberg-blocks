@@ -164,7 +164,6 @@ class Advanced_Heading_CSS extends Base_CSS {
 				if ( isset( $attr['marginBottomTablet'] ) ) {
 					$style .= '		margin-bottom: ' . $this->get_attr_value( $attr['marginBottomTablet'] ) . 'px;' . "\n";
 				}
-
 			}
 			$style .= '	}' . "\n \n";
 
