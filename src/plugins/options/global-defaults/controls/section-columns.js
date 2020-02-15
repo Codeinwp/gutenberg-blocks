@@ -396,6 +396,20 @@ const SectionColumns = ({
 			<PanelBody
 				title={ __( 'Sizing' ) }
 			>
+				<SelectControl
+					label={ __( 'Columns Gap' ) }
+					value={ defaults.columnsGap }
+					options={ [
+						{ label: 'Default (10px)', value: 'default' },
+						{ label: 'No Gap', value: 'nogap' },
+						{ label: 'Narrow (5px)', value: 'narrow' },
+						{ label: 'Extended (15px)', value: 'extended' },
+						{ label: 'Wide (20px)', value: 'wide' },
+						{ label: 'Wider (30px)', value: 'wider' }
+					] }
+					onChange={ value => changeConfig( blockName, { columnsGap: value }) }
+				/>
+
 				<ResponsiveControl
 					label={ 'Padding' }
 					view={ paddingViewType }

@@ -53,6 +53,7 @@ const defaultsAttrs = {
 		margin: 5
 	},
 	'themeisle-blocks/advanced-columns': {
+		columnsGap: 'default',
 		paddingType: 'linked',
 		paddingTypeTablet: 'linked',
 		paddingTypeMobile: 'linked',
