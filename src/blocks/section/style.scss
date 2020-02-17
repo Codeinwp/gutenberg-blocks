@@ -52,22 +52,19 @@
 	}
 
 	&.has-vertical-flex-start {
-		.wp-block-themeisle-blocks-advanced-column {
-			display: flex;
+		.innerblocks-wrap {
 			align-items: flex-start;
 		}
 	}
 
 	&.has-vertical-center {
-		.wp-block-themeisle-blocks-advanced-column {
-			display: flex;
+		.innerblocks-wrap {
 			align-items: center;
 		}
 	}	
 
 	&.has-vertical-flex-end {
-		.wp-block-themeisle-blocks-advanced-column {
-			display: flex;
+		.innerblocks-wrap {
 			align-items: flex-end;
 		}
 	}
