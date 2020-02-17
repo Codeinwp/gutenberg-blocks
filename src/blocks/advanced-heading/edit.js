@@ -26,6 +26,7 @@ const { withViewportMatch } = wp.viewport;
 /**
  * Internal dependencies
  */
+import defaultAttributes from './attributes.js';
 import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Controls from './controls.js';
 import Inspector from './inspector.js';
@@ -60,6 +61,12 @@ const Edit = ({
 			if ( undefined !== globalDefaults ) {
 				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
 					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+
+					Object.keys( attrs ).map( i => {
+						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
+							return delete attrs[i];
+						}
+					});
 				}
 			}
 

@@ -58,14 +58,14 @@ const Options = ({ createNotice }) => {
 							defaults = merge( defaults, window.themeisleGutenberg.themeDefaults );
 						}
 						defaults = merge( defaults, JSON.parse( response.themeisle_blocks_settings_global_defaults ) );
-						window.themeisleGutenberg.globalDefaults = defaults;
+						window.themeisleGutenberg.globalDefaults = JSON.parse( response.themeisle_blocks_settings_global_defaults );
 						setBlockDefaults( defaults );
 					} else {
 						let defaults = cloneDeep( defaultsAttrs );
 						if ( 'object' === typeof window.themeisleGutenberg.themeDefaults ) {
 							defaults = merge( defaults, window.themeisleGutenberg.themeDefaults );
 						}
-						window.themeisleGutenberg.globalDefaults = defaults;
+						window.themeisleGutenberg.globalDefaults = {};
 						setBlockDefaults( defaults );
 					}
 					setAPILoaded( false );
