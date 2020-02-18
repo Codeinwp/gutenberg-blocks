@@ -250,7 +250,8 @@ const Edit = ({
 				id={ attributes.id }
 				className={ classnames(
 					className,
-					collapseClass
+					collapseClass,
+					'wp-block-button'
 				) }
 				style={ {
 					justifyContent: attributes.align,

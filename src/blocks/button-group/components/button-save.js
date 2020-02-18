@@ -21,7 +21,8 @@ const Button = ({
 				target={ attributes.data[index].newTab ? '_blank' : '_self' }
 				className={ classnames(
 					'wp-block-themeisle-blocks-button',
-					`wp-block-themeisle-blocks-button-${ index }`
+					`wp-block-themeisle-blocks-button-${ index }`,
+					'wp-block-button__link'
 				) }
 				rel="noopener noreferrer"
 			>

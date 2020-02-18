@@ -56,7 +56,7 @@ const Button = ({
 					color: ${ attributes.data[index].hoverColor ? attributes.data[index].hoverColor : attributes.data[index].color } !important;
 					background: ${ attributes.data[index].hoverBackground ? attributes.data[index].hoverBackground : attributes.data[index].background } !important;
 					border: ${ attributes.data[index].borderSize }px solid ${ attributes.data[index].hoverBorder ? attributes.data[index].hoverBorder : attributes.data[index].border } !important;
-					${ attributes.data[index].boxShadow && ( `box-shadow: ${ attributes.data[index].hoverBoxShadowHorizontal }px ${ attributes.data[index].hoverBoxShadowVertical }px ${ attributes.data[index].hoverBoxShadowBlur }px ${ attributes.data[index].hoverBoxShadowSpread }px ${  hexToRgba( ( attributes.data[index].hoverBoxShadowColor ? attributes.data[index].hoverBoxShadowColor : '#000000' ), attributes.data[index].hoverBoxShadowColorOpacity ) } !important;` ) }
+					${ attributes.data[index].boxShadow ? ( `box-shadow: ${ attributes.data[index].hoverBoxShadowHorizontal }px ${ attributes.data[index].hoverBoxShadowVertical }px ${ attributes.data[index].hoverBoxShadowBlur }px ${ attributes.data[index].hoverBoxShadowSpread }px ${  hexToRgba( ( attributes.data[index].hoverBoxShadowColor ? attributes.data[index].hoverBoxShadowColor : '#000000' ), attributes.data[index].hoverBoxShadowColorOpacity ) } !important;` ) : '' }
 				}` }
 			</style>
 
@@ -64,7 +64,8 @@ const Button = ({
 				style={ buttonStyle }
 				className={ classnames(
 					'wp-block-themeisle-blocks-button',
-					`wp-block-themeisle-blocks-button-${ index }`
+					`wp-block-themeisle-blocks-button-${ index }`,
+					'wp-block-button__link'
 				) }
 				onClick={ () => {
 					setSelected( true );

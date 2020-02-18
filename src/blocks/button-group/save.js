@@ -24,7 +24,8 @@ const Save = ({
 			id={ attributes.id }
 			className={ classnames(
 				className,
-				collapseClass
+				collapseClass,
+				'wp-block-button'
 			) }
 		>
 			{ times( attributes.buttons, i => (

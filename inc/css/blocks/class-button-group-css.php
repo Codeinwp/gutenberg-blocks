@@ -84,7 +84,7 @@ class Button_Group_CSS extends Base_CSS {
 
 			foreach ( $attr['data'] as $button ) {
 				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button-' . $i . ' {' . "\n";
-				if ( isset( $button['color'] ) ) {
+				if ( isset( $button['color'] ) && '' !== $button['color'] ) {
 					$style .= '	color: ' . $button['color'] . ';' . "\n";
 				}
 
@@ -109,7 +109,15 @@ class Button_Group_CSS extends Base_CSS {
 					$style .= '	box-shadow: ' . $this->get_attr_value( ( isset( $button['boxShadowHorizontal'] ) ? $button['boxShadowHorizontal'] : null ), 0 ) . 'px ' . $this->get_attr_value( ( isset( $button['boxShadowVertical'] ) ? $button['boxShadowVertical'] : null ), 0 ) . 'px ' . $this->get_attr_value( ( isset( $button['boxShadowBlur'] ) ? $button['boxShadowBlur'] : null ), 5 ) . 'px ' . $this->get_attr_value( ( isset( $button['boxShadowSpread'] ) ? $button['boxShadowSpread'] : null ), 1 ) . 'px ' . $this->hex2rgba( $this->get_attr_value( ( isset( $button['boxShadowColor'] ) ? $button['boxShadowColor'] : null ), '#000' ), $this->get_attr_value( ( isset( $button['boxShadowColorOpacity'] ) ? $button['boxShadowColorOpacity'] : null ), '50' ) / 100 ) . ';' . "\n";
 				}
 
-				$style .= '	padding: ' . $this->get_attr_value( ( isset( $button['paddingTopBottom'] ) ? $button['paddingTopBottom'] : null ), 12 ) . 'px ' . $this->get_attr_value( ( isset( $button['paddingLeftRight'] ) ? $button['paddingLeftRight'] : null ), 24 ) . 'px;' . "\n";
+				if ( isset( $button['paddingTopBottom'] ) && '' !== $button['paddingTopBottom'] ) {
+					$style .= '	padding-top: ' . $button['paddingTopBottom'] . 'px;' . "\n";
+					$style .= '	padding-bottom: ' . $button['paddingTopBottom'] . 'px;' . "\n";
+				}
+
+				if ( isset( $button['paddingLeftRight'] ) && '' !== $button['paddingLeftRight'] ) {
+					$style .= '	padding-left: ' . $button['paddingLeftRight'] . 'px;' . "\n";
+					$style .= '	padding-right: ' . $button['paddingLeftRight'] . 'px;' . "\n";
+				}
 				$style .= '}' . "\n \n";
 
 				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button-' . $i . ':hover {' . "\n";
