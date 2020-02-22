@@ -9,6 +9,12 @@ import classnames from 'classnames';
 const { __ } = wp.i18n;
 
 const {
+	ColorPalette,
+	InspectorControls,
+	MediaPlaceholder
+} = wp.blockEditor;
+
+const {
 	Button,
 	Dashicon,
 	PanelBody,
@@ -18,13 +24,9 @@ const {
 } = wp.components;
 
 const {
-	ColorPalette,
-	InspectorControls,
-	MediaPlaceholder
-} = wp.blockEditor;
-
-const {
 	Fragment,
+	useEffect,
+	useRef,
 	useState
 } = wp.element;
 
@@ -39,11 +41,59 @@ import ControlPanelControl from '../../../components/control-panel-control/index
 
 const Inspector = ({
 	attributes,
-	setAttributes
+	setAttributes,
+	isSelected,
+	clientId,
+	adjacentBlock,
+	parentBlock,
+	updateBlockAttributes,
+	adjacentBlockClientId
 }) => {
+	useEffect( () => {
+		if ( 1 < parentBlock.innerBlocks.length ) {
+			if ( ! adjacentBlockClientId ) {
+				const blockId = parentBlock.innerBlocks.findIndex( e => e.clientId === clientId );
+				const previousBlock = parentBlock.innerBlocks[ blockId - 1 ];
+				nextBlock.current = previousBlock.clientId;
+				nextBlockWidth.current = previousBlock.attributes.columnWidth;
+			}
+		}
+	}, []);
+
+	useEffect( () => {
+		if ( 1 < parentBlock.innerBlocks.length ) {
+			if ( ! adjacentBlockClientId ) {
+				const blockId = parentBlock.innerBlocks.findIndex( e => e.clientId === clientId );
+				const previousBlock = parentBlock.innerBlocks[ blockId - 1 ];
+				nextBlockWidth.current = previousBlock.attributes.columnWidth;
+				nextBlock.current = previousBlock.clientId;
+				currentBlockWidth.current = attributes.columnWidth;
+			} else {
+				nextBlockWidth.current = adjacentBlock.attributes.columnWidth;
+				nextBlock.current = adjacentBlockClientId;
+				currentBlockWidth.current = attributes.columnWidth;
+			}
+		}
+	}, [ isSelected, attributes.columnWidth, parentBlock.innerBlocks.length ]);
+
 	const [ tab, setTab ] = useState( 'layout' );
 	const [ paddingViewType, setPaddingViewType ] = useState( 'desktop' );
 	const [ marginViewType, setMarginViewType ] = useState( 'desktop' );
+
+	const currentBlockWidth = useRef( attributes.columnWidth );
+	const nextBlock = useRef( adjacentBlockClientId && adjacentBlockClientId );
+	const nextBlockWidth = useRef( adjacentBlock && adjacentBlock.attributes.columnWidth );
+
+	const changeColumnWidth = value => {
+		const width = value || 10;
+		const nextWidth = ( Number( currentBlockWidth.current ) - width ) + Number( nextBlockWidth.current );
+		currentBlockWidth.current = width;
+		nextBlockWidth.current = nextWidth;
+		setAttributes({ columnWidth: width.toFixed( 2 ) });
+		updateBlockAttributes( nextBlock.current, {
+			columnWidth: nextWidth.toFixed( 2 )
+		});
+	};
 
 	let getPaddingType = () => {
 		let value;
@@ -540,6 +590,16 @@ const Inspector = ({
 					<PanelBody
 						title={ __( 'Spacing' ) }
 					>
+						{ ( 1 < parentBlock.innerBlocks.length ) && (
+							<RangeControl
+								label={ __( 'Column Width' ) }
+								value={ Number( attributes.columnWidth ) }
+								onChange={ changeColumnWidth }
+								min={ 10 }
+								max={ ( Number( attributes.columnWidth ) + Number( nextBlockWidth.current ) ) - 10 }
+							/>
+						) }
+
 						<ResponsiveControl
 							label={ 'Padding' }
 							view={ paddingViewType }
@@ -855,7 +915,6 @@ const Inspector = ({
 								<ControlPanelControl
 									label={ 'Shadow Properties' }
 								>
-
 									<RangeControl
 										label={ __( 'Opacity' ) }
 										value={ attributes.boxShadowColorOpacity }
@@ -895,13 +954,13 @@ const Inspector = ({
 										min={ -100 }
 										max={ 100 }
 									/>
-
 								</ControlPanelControl>
 
 							</Fragment>
 						) }
 					</PanelBody>
 				</Fragment>
+
 			) || 'advanced' === tab && (
 
 				<PanelBody
@@ -911,8 +970,7 @@ const Inspector = ({
 						label={ __( 'HTML Tag' ) }
 						value={ attributes.columnsHTMLTag }
 						options={ [
-							{ label: 'Default', value: 'div' },
-							{ label: 'div', value: 'div' },
+							{ label: 'Default (div)', value: 'div' },
 							{ label: 'section', value: 'section' },
 							{ label: 'header', value: 'header' },
 							{ label: 'footer', value: 'footer' },

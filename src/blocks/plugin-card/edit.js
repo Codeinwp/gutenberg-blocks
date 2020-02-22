@@ -6,23 +6,10 @@ const { __ } = wp.i18n;
 const { apiFetch } = wp;
 
 const {
-	Dashicon,
-	TextControl,
-	Spinner,
-	Button,
-	Toolbar,
-	Tooltip
-} = wp.components;
-
-const { BlockControls } = wp.blockEditor;
-
-const {
 	Fragment,
 	useEffect,
 	useState
 } = wp.element;
-
-const { ENTER } = wp.keycodes;
 
 /**
  * Internal dependencies

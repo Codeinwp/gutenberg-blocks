@@ -2,14 +2,13 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import uuidv4 from 'uuid';
 
+/**
+ * WordPress dependencies
+ */
 const { __ } = wp.i18n;
 
-const {
-	Button,
-	Dashicon
-} = wp.components;
+const { Button } = wp.components;
 
 const {
 	Fragment,

@@ -93,7 +93,6 @@ const BlockPlaceholder = ({
 		if ( Object.keys( results ).length ) {
 			event.stopPropagation();
 			event.preventDefault();
-			const suggestion = results[ selectedSuggestion ];
 			const previousIndex = ! selectedSuggestion ? Object.keys( results ).length - 1 : selectedSuggestion - 1;
 			setSelectedSuggestion( previousIndex );
 		}
@@ -103,7 +102,6 @@ const BlockPlaceholder = ({
 		if ( Object.keys( results ).length ) {
 			event.stopPropagation();
 			event.preventDefault();
-			const suggestion = results[ selectedSuggestion ];
 			const nextIndex = null === selectedSuggestion || ( selectedSuggestion === Object.keys( results ).length - 1 ) ? 0 : selectedSuggestion + 1;
 			setSelectedSuggestion( nextIndex );
 		}

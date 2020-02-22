@@ -10,10 +10,7 @@ import classnames from 'classnames';
  */
 const { __ } = wp.i18n;
 
-const {
-	Fragment,
-	useState
-} = wp.element;
+const { Fragment } = wp.element;
 
 /**
  * Internal dependencies
@@ -29,8 +26,6 @@ const LayoutBuilder = ({
 	titleTag,
 	excerptLimit
 }) => {
-	const [ isOpen, setOpen ] = useState( false );
-
 	const onSortEnd = ({ oldIndex, newIndex })  => {
 		const template = arrayMove( attributes.template, oldIndex, newIndex );
 		setAttributes({ template });

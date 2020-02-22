@@ -130,18 +130,17 @@ const Inspector = ({
 
 			<PanelBody
 				title={ __( 'Icon Sizes' ) }
-				className="blocks-font-size"
 				initialOpen={ false }
 			>
 				<RangeControl
-					label={ __( 'Text Size' ) }
+					label={ __( 'Icon Size' ) }
 					value={ attributes.fontSize || '' }
 					initialPosition={ 16 }
 					onChange={ changeFontSize }
 					min={ 12 }
 					max={ 140 }
-					beforeIcon="editor-textcolor"
-					afterIcon="editor-textcolor"
+					beforeIcon="minus"
+					afterIcon="plus"
 				/>
 
 				<RangeControl
@@ -180,6 +179,7 @@ const Inspector = ({
 					>
 						{ __( 'Normal' ) }
 					</Button>
+
 					<Button
 						isDefault
 						isLarge

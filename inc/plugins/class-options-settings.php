@@ -57,6 +57,18 @@ class Options_Settings {
 				'default'           => true,
 			)
 		);
+
+		register_setting(
+			'themeisle_blocks_settings',
+			'themeisle_blocks_settings_global_defaults',
+			array(
+				'type'              => 'string',
+				'description'       => __( 'Global defaults for Gutenberg Blocks.', 'textdomain' ),
+				'sanitize_callback' => 'sanitize_text_field',
+				'show_in_rest'      => true,
+				'default'           => '',
+			)
+		);
 	}
 
 	/**

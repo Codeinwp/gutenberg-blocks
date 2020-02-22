@@ -9,12 +9,13 @@ const TEMPLATE =  [
 	[ 'themeisle-blocks/advanced-heading', {
 		content: __( 'Basic' ),
 		align: 'center',
-		tag: 'h5'
+		tag: 'h3',
+		fontSize: 24
 	} ],
 	[ 'themeisle-blocks/advanced-heading', {
 		content: __( '$9.99' ),
 		align: 'center',
-		tag: 'h3',
+		tag: 'h4',
 		fontSize: 36,
 		fontFamily: 'Roboto Slab',
 		fontVariant: 'normal'

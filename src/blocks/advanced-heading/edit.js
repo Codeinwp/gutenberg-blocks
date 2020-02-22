@@ -10,14 +10,15 @@ import GoogleFontLoader from 'react-google-font-loader';
  */
 const { __ } = wp.i18n;
 
+const { isEqual } = lodash;
+
 const { createBlock } = wp.blocks;
 
 const { RichText } = wp.blockEditor;
 
 const {
 	Fragment,
-	useEffect,
-	useState
+	useEffect
 } = wp.element;
 
 const { withViewportMatch } = wp.viewport;
@@ -25,8 +26,12 @@ const { withViewportMatch } = wp.viewport;
 /**
  * Internal dependencies
  */
+import defaultAttributes from './attributes.js';
+import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Controls from './controls.js';
 import Inspector from './inspector.js';
+
+const IDs = [];
 
 const Edit = ({
 	attributes,
@@ -34,6 +39,7 @@ const Edit = ({
 	className,
 	clientId,
 	mergeBlocks,
+	name,
 	insertBlocksAfter,
 	onReplace,
 	isLarger,
@@ -46,16 +52,38 @@ const Edit = ({
 	}, []);
 
 	const initBlock = () => {
-		if ( attributes.id === undefined || attributes.id.substr( attributes.id.length - 8 ) !== clientId.substr( 0, 8 ) ) {
+		if ( attributes.id === undefined ) {
+			let attrs;
+			const instanceId = `wp-block-themeisle-blocks-advanced-heading-${ clientId.substr( 0, 8 ) }`;
+
+			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
+
+			if ( undefined !== globalDefaults ) {
+				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
+					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+
+					Object.keys( attrs ).map( i => {
+						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
+							return delete attrs[i];
+						}
+					});
+				}
+			}
+
+			setAttributes({
+				...attrs,
+				id: instanceId
+			});
+
+			IDs.push( instanceId );
+		} else if ( IDs.includes( attributes.id ) ) {
 			const instanceId = `wp-block-themeisle-blocks-advanced-heading-${ clientId.substr( 0, 8 ) }`;
 			setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+		} else {
+			IDs.push( attributes.id );
 		}
 	};
-
-	const [ fontSizeViewType, setFontSizeViewType ] = useState( 'desktop' );
-	const [ alignmentViewType, setAlignmentViewType ] = useState( 'desktop' );
-	const [ paddingViewType, setPaddingViewType ] = useState( 'desktop' );
-	const [ marginViewType, setMarginViewType ] = useState( 'desktop' );
 
 	const isDesktop = ( isLarger && ! isLarge && isSmall && ! isSmaller );
 
@@ -68,11 +96,18 @@ const Edit = ({
 	};
 
 	const changeFontFamily = value => {
-		setAttributes({
-			fontFamily: value,
-			fontVariant: 'normal',
-			fontStyle: 'normal'
-		});
+		if ( ! value ) {
+			setAttributes({
+				fontFamily: value,
+				fontVariant: value
+			});
+		} else {
+			setAttributes({
+				fontFamily: value,
+				fontVariant: 'normal',
+				fontStyle: 'normal'
+			});
+		}
 	};
 
 	const changeFontVariant = value => {
@@ -200,14 +235,6 @@ const Edit = ({
 				changeTextTransform={ changeTextTransform }
 				changeLineHeight={ changeLineHeight }
 				changeLetterSpacing={ changeLetterSpacing }
-				fontSizeViewType={ fontSizeViewType }
-				setFontSizeViewType={ setFontSizeViewType }
-				alignmentViewType={ alignmentViewType }
-				setAlignmentViewType={ setAlignmentViewType }
-				paddingViewType={ paddingViewType }
-				setPaddingViewType={ setPaddingViewType }
-				marginViewType={ marginViewType }
-				setMarginViewType={ setMarginViewType }
 			/>
 
 			<RichText

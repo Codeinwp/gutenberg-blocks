@@ -17,19 +17,16 @@ const Save = ({
 	attributes,
 	className
 }) => {
-	const collapseClass = 'collapse-none' !== attributes.collapse ? attributes.collapse : '';
+	const collapseClass = 'collapse-none' !== attributes.collapse && attributes.collapse;
 
 	return (
 		<div
 			id={ attributes.id }
 			className={ classnames(
 				className,
-				collapseClass
+				collapseClass,
+				'wp-block-button'
 			) }
-			style={ {
-				justifyContent: attributes.align,
-				alignItems: attributes.align ? attributes.align : 'flex-start'
-			} }
 		>
 			{ times( attributes.buttons, i => (
 				<Button

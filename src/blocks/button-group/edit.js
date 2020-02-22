@@ -9,7 +9,12 @@ import GoogleFontLoader from 'react-google-font-loader';
  */
 const { __ } = wp.i18n;
 
-const { times } = lodash;
+const {
+	isEqual,
+	omit,
+	pick,
+	times
+} = lodash;
 
 const { IconButton } = wp.components;
 
@@ -22,14 +27,19 @@ const {
 /**
  * Internal dependencies
  */
+import defaultAttributes from './attributes.js';
+import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Controls from './controls.js';
 import Inspector from './inspector.js';
 import Button from './components/button-edit.js';
+
+const IDs = [];
 
 const Edit = ({
 	attributes,
 	setAttributes,
 	className,
+	name,
 	isSelected,
 	clientId
 }) => {
@@ -38,9 +48,58 @@ const Edit = ({
 	}, []);
 
 	const initBlock = () => {
-		if ( attributes.id === undefined || attributes.id.substr( attributes.id.length - 8 ) !== clientId.substr( 0, 8 ) ) {
+		if ( attributes.id === undefined ) {
+			let attrs;
+			const instanceId = `wp-block-themeisle-blocks-button-group-${ clientId.substr( 0, 8 ) }`;
+
+			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
+
+			if ( undefined !== globalDefaults ) {
+				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
+					attrs = omit({ ...window.themeisleGutenberg.globalDefaults[ name ] }, 'data' );
+
+					Object.keys( attrs ).map( i => {
+						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default || ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) ) {
+							return delete attrs[i];
+						}
+					});
+
+					const data = pick({ ...window.themeisleGutenberg.globalDefaults[ name ] }, 'data' );
+					const buttonAttrs = [];
+
+					attributes.data.forEach( ( i, n ) => {
+						const currentData = { ...data.data };
+
+						Object.keys( currentData ).map( o => {
+							if ( i[o] !== currentData[o] && ( undefined !== defaultAttributes.data.default[n][o] || ( undefined !== defaultAttributes.data.default[n][o] && i[o] !== defaultAttributes.data.default[n][o]) ) ) {
+								return delete currentData[o];
+							}
+						});
+
+						buttonAttrs.push({
+							...i,
+							...currentData
+						});
+					});
+
+					if ( ! isEqual( buttonAttrs, attributes.data ) ) {
+						attrs.data = buttonAttrs;
+					}
+				}
+			}
+
+			setAttributes({
+				...attrs,
+				id: instanceId
+			});
+
+			IDs.push( instanceId );
+		} else if ( IDs.includes( attributes.id ) ) {
 			const instanceId = `wp-block-themeisle-blocks-button-group-${ clientId.substr( 0, 8 ) }`;
 			setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+		} else {
+			IDs.push( attributes.id );
 		}
 	};
 
@@ -60,7 +119,7 @@ const Edit = ({
 		if ( 1 <= value && 5 >= value ) {
 			if ( attributes.data.length < value ) {
 				const data = [ ...attributes.data ];
-				times( value - attributes.data.length, i => {
+				times( value - attributes.data.length, () => {
 					data.push({
 						text: attributes.data[0].text,
 						link: attributes.data[0].link,
@@ -106,11 +165,18 @@ const Edit = ({
 	};
 
 	const changeFontFamily = value => {
-		setAttributes({
-			fontFamily: value,
-			fontVariant: 'normal',
-			fontStyle: 'normal'
-		});
+		if ( ! value ) {
+			setAttributes({
+				fontFamily: value,
+				fontVariant: value
+			});
+		} else {
+			setAttributes({
+				fontFamily: value,
+				fontVariant: 'normal',
+				fontStyle: 'normal'
+			});
+		}
 	};
 
 	const changeFontVariant = value => {
@@ -184,7 +250,8 @@ const Edit = ({
 				id={ attributes.id }
 				className={ classnames(
 					className,
-					collapseClass
+					collapseClass,
+					'wp-block-button'
 				) }
 				style={ {
 					justifyContent: attributes.align,

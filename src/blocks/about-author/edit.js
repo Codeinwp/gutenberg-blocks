@@ -3,10 +3,7 @@
  */
 const { __ } = wp.i18n;
 
-const {
-	Placeholder,
-	Spinner
-} = wp.components;
+const { Spinner } = wp.components;
 
 const { withSelect } = wp.data;
 

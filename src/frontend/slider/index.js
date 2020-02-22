@@ -7,9 +7,13 @@ const domReady = wp.domReady;
 
 domReady( () => {
 	const sliders = document.querySelectorAll( '.wp-block-themeisle-blocks-slider' );
+
 	sliders.forEach( slider => {
-		const options = omit({ ...slider.dataset }, [ 'autoplay' ]);
+		const track = slider.querySelector( '.glide__slides' );
+		const options = omit({ ...slider.dataset }, [ 'autoplay', 'height' ]);
+
 		Object.keys( options ).map( option => options[option] = Number( options[option]) );
+
 		new Glide( `#${ slider.id }`, {
 			type: 'carousel',
 			keyboard: true,
@@ -24,5 +28,9 @@ domReady( () => {
 				}
 			}
 		}).mount();
+
+		if ( track ) {
+			track.style.height = slider.dataset.height;
+		}
 	});
 });

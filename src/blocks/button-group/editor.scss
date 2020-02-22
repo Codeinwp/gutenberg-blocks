@@ -128,7 +128,6 @@
 	.wp-block-themeisle-blocks-button {
 		cursor: text;
 		display: inline-block;
-		font-size: 18px;
 		margin: 0;
 		text-align: center;
 		text-decoration: none;
@@ -140,6 +139,12 @@
 			box-shadow: 0 0 0 1px #fff,0 0 0 3px #00a0d2;
 			outline: 2px solid transparent;
 			outline-offset: -2px;
+		}
+
+		.block-editor-rich-text__editable {
+			&:focus {
+				box-shadow: unset;
+			}
 		}
 	}
 
@@ -201,7 +206,7 @@
 }
 
 
-@media ( max-width: 960px )  {
+@media ( max-width: 960px ) {
 	.wp-block-themeisle-blocks-button-group {
 		&.collapse-tablet {
 			flex-direction: column;
@@ -213,7 +218,7 @@
 	}
 }
 
-@media ( max-width: 600px )  {
+@media ( max-width: 600px ) {
 	.wp-block-themeisle-blocks-button-group {
 		&.collapse-mobile {
 			flex-direction: column;

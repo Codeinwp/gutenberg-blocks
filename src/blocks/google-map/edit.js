@@ -28,6 +28,8 @@ import MarkerModal from './components/marker-modal.js';
 import Map from './components/map.js';
 import styles from './components/styles.js';
 
+const IDs = [];
+
 const Edit = ({
 	attributes,
 	setAttributes,
@@ -85,9 +87,16 @@ const Edit = ({
 	const [ selectedMarker, setSelectedMarker ] = useState({});
 
 	const initBlock = async() => {
-		if ( attributes.id === undefined || attributes.id.substr( attributes.id.length - 8 ) !== clientId.substr( 0, 8 ) ) {
+		if ( attributes.id === undefined ) {
 			const instanceId = `wp-block-themeisle-blocks-google-map-${ clientId.substr( 0, 8 ) }`;
 			await setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+		} else if ( IDs.includes( attributes.id ) ) {
+			const instanceId = `wp-block-themeisle-blocks-google-map-${ clientId.substr( 0, 8 ) }`;
+			await setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+		} else {
+			IDs.push( attributes.id );
 		}
 
 		await wp.api.loadPromise.then( () => {
@@ -245,7 +254,7 @@ const Edit = ({
 
 		setAttributes({ markers });
 
-		google.maps.event.addListener( mark, 'click', event => {
+		google.maps.event.addListener( mark, 'click', () => {
 			if ( lastInfoWindowRef.current ) {
 				lastInfoWindowRef.current.close();
 			}
@@ -301,7 +310,7 @@ const Edit = ({
 
 			markersRef.current.push( mark );
 
-			google.maps.event.addListener( mark, 'click', event => {
+			google.maps.event.addListener( mark, 'click', () => {
 				if ( lastInfoWindowRef.current ) {
 					lastInfoWindowRef.current.close();
 				}
@@ -402,36 +411,20 @@ const Edit = ({
 				themeisle_google_map_block_api_key: api
 			});
 
-			const save = model.save();
+			model.save().then( response => {
+				let saved = false;
 
-			save.success( ( response, status ) => {
-				if ( 'success' === status ) {
-					let saved = false;
-
-					settingsRef.current.fetch();
-
-					if ( '' !== response.themeisle_google_map_block_api_key ) {
-						saved = true;
-					}
-
-					setSaving( false );
-					setAPISaved( saved );
-
-					if ( '' !== response.themeisle_google_map_block_api_key ) {
-						window.isMapLoaded = false;
-						enqueueScript( response.themeisle_google_map_block_api_key );
-					}
+				if ( '' !== response.themeisle_google_map_block_api_key ) {
+					saved = true;
 				}
 
-				if ( 'error' === status ) {
-					console.log( response );
+				setSaving( false );
+				setAPISaved( saved );
+
+				if ( '' !== response.themeisle_google_map_block_api_key ) {
+					window.isMapLoaded = false;
+					enqueueScript( response.themeisle_google_map_block_api_key );
 				}
-
-				settingsRef.current.fetch();
-			});
-
-			save.error( ( response, status ) => {
-				console.log( response );
 			});
 		}
 	};

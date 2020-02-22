@@ -23,7 +23,7 @@ const TEMPLATE =  [
 		content: __( 'Jedi Master' ),
 		align: 'center',
 		fontSize: 14,
-		tag: 'h6',
+		tag: 'h4',
 		marginTop: 10,
 		marginBottom: 10
 	} ],
