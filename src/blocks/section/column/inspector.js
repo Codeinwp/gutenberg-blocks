@@ -85,10 +85,11 @@ const Inspector = ({
 	const nextBlockWidth = useRef( adjacentBlock && adjacentBlock.attributes.columnWidth );
 
 	const changeColumnWidth = value => {
-		const nextWidth = ( Number( currentBlockWidth.current ) - value ) + Number( nextBlockWidth.current );
-		currentBlockWidth.current = value;
+		const width = value || 10;
+		const nextWidth = ( Number( currentBlockWidth.current ) - width ) + Number( nextBlockWidth.current );
+		currentBlockWidth.current = width;
 		nextBlockWidth.current = nextWidth;
-		setAttributes({ columnWidth: value.toFixed( 2 ) });
+		setAttributes({ columnWidth: width.toFixed( 2 ) });
 		updateBlockAttributes( nextBlock.current, {
 			columnWidth: nextWidth.toFixed( 2 )
 		});
