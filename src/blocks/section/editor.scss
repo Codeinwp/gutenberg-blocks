@@ -9,6 +9,12 @@
 		left: 0;
 	}
 
+	.wp-block-themeisle-blocks-advanced-column {
+		.wp-block-themeisle-blocks-slider {
+			display: grid;
+		}
+	}
+
 	&.has-default-gap {
 		.wp-block-themeisle-blocks-advanced-column {
 			margin-left: 10px;
