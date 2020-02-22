@@ -21,7 +21,6 @@ class Sharing_Icons_Block extends Base_Block {
 	 */
 	protected $social_attributes = array();
 
-
 	/**
 	 * Every block needs a slug, so we need to define one and assign it to the `$this->block_slug` property
 	 *

@@ -6,7 +6,6 @@ const { debounce } = lodash;
 const { MediaPlaceholder } = wp.blockEditor;
 
 const BlockPlaceholder = ({
-	attributes,
 	labels,
 	icon,
 	isAppender = false,

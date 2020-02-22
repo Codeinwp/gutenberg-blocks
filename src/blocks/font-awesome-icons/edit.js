@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies...
  */
-const { __ } = wp.i18n;
+const { isEqual } = lodash;
 
 const {
 	Fragment,
@@ -11,23 +11,55 @@ const {
 /**
  * Internal dependencies
  */
+import defaultAttributes from './attributes.js';
+import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Controls from './controls.js';
 import Inspector from './inspector.js';
+
+const IDs = [];
 
 const Edit = ({
 	attributes,
 	setAttributes,
 	className,
-	clientId
+	clientId,
+	name
 }) => {
 	useEffect( () => {
 		initBlock();
 	}, []);
 
 	const initBlock = () => {
-		if ( attributes.id === undefined || attributes.id.substr( attributes.id.length - 8 ) !== clientId.substr( 0, 8 ) ) {
+		if ( attributes.id === undefined ) {
+			let attrs;
+			const instanceId = `wp-block-themeisle-blocks-font-awesome-icons-${ clientId.substr( 0, 8 ) }`;
+
+			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
+
+			if ( undefined !== globalDefaults ) {
+				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
+					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+
+					Object.keys( attrs ).map( i => {
+						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
+							return delete attrs[i];
+						}
+					});
+				}
+			}
+
+			setAttributes({
+				...attrs,
+				id: instanceId
+			});
+
+			IDs.push( instanceId );
+		} else if ( IDs.includes( attributes.id ) ) {
 			const instanceId = `wp-block-themeisle-blocks-font-awesome-icons-${ clientId.substr( 0, 8 ) }`;
 			setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+		} else {
+			IDs.push( attributes.id );
 		}
 	};
 

@@ -101,60 +101,50 @@ const attributes = {
 		default: 0
 	},
 	paddingTablet: {
-		type: 'number',
-		default: 0
+		type: 'number'
 	},
 	paddingMobile: {
-		type: 'number',
-		default: 0
+		type: 'number'
 	},
 	paddingTop: {
 		type: 'number',
 		default: 0
 	},
 	paddingTopTablet: {
-		type: 'number',
-		default: 0
+		type: 'number'
 	},
 	paddingTopMobile: {
-		type: 'number',
-		default: 0
+		type: 'number'
 	},
 	paddingRight: {
 		type: 'number',
 		default: 0
 	},
 	paddingRightTablet: {
-		type: 'number',
-		default: 0
+		type: 'number'
 	},
 	paddingRightMobile: {
-		type: 'number',
-		default: 0
+		type: 'number'
 	},
 	paddingBottom: {
 		type: 'number',
 		default: 0
 	},
 	paddingBottomTablet: {
-		type: 'number',
-		default: 0
+		type: 'number'
 	},
 	paddingBottomMobile: {
-		type: 'number',
-		default: 0
+		type: 'number'
 	},
 	paddingLeft: {
 		type: 'number',
 		default: 0
 	},
 	paddingLeftTablet: {
-		type: 'number',
-		default: 0
+		type: 'number'
 	},
 	paddingLeftMobile: {
-		type: 'number',
-		default: 0
+		type: 'number'
 	},
 	marginType: {
 		type: 'string',
@@ -173,36 +163,30 @@ const attributes = {
 		default: 0
 	},
 	marginTablet: {
-		type: 'number',
-		default: 0
+		type: 'number'
 	},
 	marginMobile: {
-		type: 'number',
-		default: 0
+		type: 'number'
 	},
 	marginTop: {
 		type: 'number',
 		default: 0
 	},
 	marginTopTablet: {
-		type: 'number',
-		default: 0
+		type: 'number'
 	},
 	marginTopMobile: {
-		type: 'number',
-		default: 0
+		type: 'number'
 	},
 	marginBottom: {
 		type: 'number',
 		default: 25
 	},
 	marginBottomTablet: {
-		type: 'number',
-		default: 25
+		type: 'number'
 	},
 	marginBottomMobile: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	}
 };
 

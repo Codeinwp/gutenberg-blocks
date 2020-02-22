@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import hexToRgba from 'hex-rgba';
 
 /**
  * WordPress dependencies
@@ -44,7 +43,6 @@ import {
 	middleIcon,
 	bottomIcon
 } from '../../../helpers/icons.js';
-import layouts from '../layouts.js';
 import LayoutControl from './../components/layout-control/index.js';
 import SizingControl from '../../../components/sizing-control/index.js';
 import ResponsiveControl from '../../../components/responsive-control/index.js';
@@ -369,18 +367,17 @@ const Inspector = ({
 		}
 	};
 
-
 	const changeHorizontalAlign = value => {
 		if ( attributes.horizontalAlign === value ) {
 			return setAttributes({ horizontalAlign: 'unset' });
 		}
+
 		setAttributes({ horizontalAlign: value });
 	};
 
 	const changeColumnsHeight = value => {
 		setAttributes({ columnsHeight: value });
 	};
-
 
 	let getColumnsHeightCustom = () => {
 		let value;
@@ -418,6 +415,7 @@ const Inspector = ({
 		if ( attributes.verticalAlign === value ) {
 			return setAttributes({ verticalAlign: 'unset' });
 		}
+
 		setAttributes({ verticalAlign: value });
 	};
 
@@ -888,6 +886,15 @@ const Inspector = ({
 		}
 	};
 
+	const changeReverseColumns = ( value, type ) => {
+		if ( 'tablet' === type ) {
+			setAttributes({ reverseColumnsTablet: value });
+		}
+		if ( 'mobile' === type ) {
+			setAttributes({ reverseColumnsMobile: value });
+		}
+	};
+
 	const changeColumnsHTMLTag = value => {
 		setAttributes({ columnsHTMLTag: value });
 	};
@@ -1127,52 +1134,51 @@ const Inspector = ({
 								</ResponsiveControl>
 							) }
 
-							{ 'auto' !== attributes.columnsHeight && (
-								<BaseControl
-									label={ 'Vertical Align' }
-								>
-									<ButtonGroup className="icon-buttom-group">
-										<Tooltip text={ __( 'Top' ) } >
-											<Button
-												className="components-icon-button is-button is-large"
-												isPrimary={ 'flex-start' === attributes.verticalAlign }
-												onClick={ () => changeVerticalAlign( 'flex-start' ) }
-											>
-												<Icon
-													icon={ topIcon }
-													size={ 20 }
-												/>
-											</Button>
-										</Tooltip>
 
-										<Tooltip text={ __( 'Middle' ) } >
-											<Button
-												className="components-icon-button is-button is-large"
-												isPrimary={ 'center' === attributes.verticalAlign }
-												onClick={ () => changeVerticalAlign( 'center' ) }
-											>
-												<Icon
-													icon={ middleIcon }
-													size={ 20 }
-												/>
-											</Button>
-										</Tooltip>
+							<BaseControl
+								label={ 'Vertical Align' }
+							>
+								<ButtonGroup className="icon-buttom-group">
+									<Tooltip text={ __( 'Top' ) } >
+										<Button
+											className="components-icon-button is-button is-large"
+											isPrimary={ 'flex-start' === attributes.verticalAlign }
+											onClick={ () => changeVerticalAlign( 'flex-start' ) }
+										>
+											<Icon
+												icon={ topIcon }
+												size={ 20 }
+											/>
+										</Button>
+									</Tooltip>
 
-										<Tooltip text={ __( 'Bottom' ) } >
-											<Button
-												className="components-icon-button is-button is-large"
-												isPrimary={ 'flex-end' === attributes.verticalAlign }
-												onClick={ () => changeVerticalAlign( 'flex-end' ) }
-											>
-												<Icon
-													icon={ bottomIcon }
-													size={ 20 }
-												/>
-											</Button>
-										</Tooltip>
-									</ButtonGroup>
-								</BaseControl>
-							) }
+									<Tooltip text={ __( 'Middle' ) } >
+										<Button
+											className="components-icon-button is-button is-large"
+											isPrimary={ 'center' === attributes.verticalAlign }
+											onClick={ () => changeVerticalAlign( 'center' ) }
+										>
+											<Icon
+												icon={ middleIcon }
+												size={ 20 }
+											/>
+										</Button>
+									</Tooltip>
+
+									<Tooltip text={ __( 'Bottom' ) } >
+										<Button
+											className="components-icon-button is-button is-large"
+											isPrimary={ 'flex-end' === attributes.verticalAlign }
+											onClick={ () => changeVerticalAlign( 'flex-end' ) }
+										>
+											<Icon
+												icon={ bottomIcon }
+												size={ 20 }
+											/>
+										</Button>
+									</Tooltip>
+								</ButtonGroup>
+							</BaseControl>
 						</PanelBody>
 					</Fragment>
 
@@ -1799,19 +1805,35 @@ const Inspector = ({
 								checked={ attributes.hideMobile }
 								onChange={ e => changeHideStatus( e, 'mobile' ) }
 							/>
+
+							<hr/>
+
+							{ ( ! attributes.hideTablet && 'collapsedRows' === attributes.layoutTablet ) && (
+								<ToggleControl
+									label={ 'Reverse Columns in Tablet devices?' }
+									checked={ attributes.reverseColumnsTablet }
+									onChange={ e => changeReverseColumns( e, 'tablet' ) }
+								/>
+							) }
+
+							{ ( ! attributes.hideMobile && 'collapsedRows' === attributes.layoutMobile ) && (
+								<ToggleControl
+									label={ 'Reverse Columns in Mobile devices?' }
+									checked={ attributes.reverseColumnsMobile }
+									onChange={ e => changeReverseColumns( e, 'mobile' ) }
+								/>
+							) }
 						</PanelBody>
 
 						<PanelBody
 							title={ __( 'Section Settings' ) }
 							initialOpen={ false }
 						>
-
 							<SelectControl
 								label={ __( 'HTML Tag' ) }
 								value={ attributes.columnsHTMLTag }
 								options={ [
-									{ label: 'Default', value: 'div' },
-									{ label: 'div', value: 'div' },
+									{ label: 'Default (div)', value: 'div' },
 									{ label: 'section', value: 'section' },
 									{ label: 'header', value: 'header' },
 									{ label: 'footer', value: 'footer' },
@@ -1820,7 +1842,6 @@ const Inspector = ({
 								] }
 								onChange={ changeColumnsHTMLTag }
 							/>
-
 						</PanelBody>
 					</Fragment>
 

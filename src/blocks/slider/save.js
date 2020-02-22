@@ -6,8 +6,6 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
-
 const { RichText } = wp.blockEditor;
 
 import SliderControls from './components/slider-controls.js';
@@ -28,14 +26,10 @@ const Save = ({
 			data-gap={ attributes.gap }
 			data-peek={ attributes.peek }
 			data-autoplay={ attributes.autoplay }
+			data-height={ `${ attributes.height }px` }
 		>
 			<div className="glide__track" data-glide-el="track">
-				<div
-					className="glide__slides"
-					style={{
-						height: `${ attributes.height }px`
-					}}
-				>
+				<div className="glide__slides">
 					{ attributes.images.map( image => {
 						return (
 							<div

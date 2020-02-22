@@ -7,7 +7,10 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies
  */
-const { times } = lodash;
+const {
+	isEqual,
+	times
+} = lodash;
 
 const { compose } = wp.compose;
 
@@ -32,17 +35,22 @@ const { withViewportMatch } = wp.viewport;
 /**
  * Internal dependencies
  */
+import defaultAttributes from './attributes.js';
+import defaults from '../../../plugins/options/global-defaults/defaults.js';
 import layouts from '../layouts.js';
 import Inspector from './inspector.js';
 import BlockNavigatorControl from '../../../components/block-navigator-control/index.js';
 import Separators from '../components/separators/index.js';
 import Onboarding from '../components/onboarding/index.js';
 
+const IDs = [];
+
 const Edit = ({
 	attributes,
 	setAttributes,
 	className,
 	clientId,
+	name,
 	updateBlockAttributes,
 	sectionBlock,
 	isLarger,
@@ -55,9 +63,36 @@ const Edit = ({
 	}, []);
 
 	const initBlock = () => {
-		if ( attributes.id === undefined || attributes.id.substr( attributes.id.length - 8 ) !== clientId.substr( 0, 8 ) ) {
+		if ( attributes.id === undefined ) {
+			let attrs;
+			const instanceId = `wp-block-themeisle-blocks-advanced-columns-${ clientId.substr( 0, 8 ) }`;
+
+			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
+
+			if ( undefined !== globalDefaults ) {
+				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
+					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+
+					Object.keys( attrs ).map( i => {
+						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
+							return delete attrs[i];
+						}
+					});
+				}
+			}
+
+			setAttributes({
+				...attrs,
+				id: instanceId
+			});
+
+			IDs.push( instanceId );
+		} else if ( IDs.includes( attributes.id ) ) {
 			const instanceId = `wp-block-themeisle-blocks-advanced-columns-${ clientId.substr( 0, 8 ) }`;
 			setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+		} else {
+			IDs.push( attributes.id );
 		}
 	};
 
@@ -181,8 +216,7 @@ const Edit = ({
 		...borderStyle,
 		...borderRadiusStyle,
 		...boxShadowStyle,
-		alignItems: attributes.horizontalAlign,
-		justifyContent: attributes.verticalAlign
+		alignItems: attributes.horizontalAlign
 	};
 
 	if ( 'color' === attributes.backgroundOverlayType ) {
@@ -238,13 +272,16 @@ const Edit = ({
 		`has-desktop-${ attributes.layout }-layout`,
 		`has-tablet-${ attributes.layoutTablet }-layout`,
 		`has-mobile-${ attributes.layoutMobile }-layout`,
-		`has-${ attributes.columnsGap }-gap`
+		`has-${ attributes.columnsGap }-gap`,
+		`has-vertical-${ attributes.verticalAlign }`,
+		{ 'has-reverse-columns-tablet': ( attributes.reverseColumnsTablet && ! attributes.hideTablet && 'collapsedRows' === attributes.layoutTablet ) },
+		{ 'has-reverse-columns-mobile': ( attributes.reverseColumnsMobile && ! attributes.hideMobile && 'collapsedRows' === attributes.layoutMobile ) }
 	);
 
 	const updateColumnsWidth = ( columns, layout ) => {
 		( sectionBlock.innerBlocks ).map( ( innerBlock, i ) => {
 			updateBlockAttributes( innerBlock.clientId, {
-				columnWidth: parseFloat( layouts[columns][layout][i])
+				columnWidth: layouts[columns][layout][i]
 			});
 		});
 	};
@@ -382,7 +419,7 @@ const Edit = ({
 	getDividerBottomHeight = getDividerBottomHeight();
 
 	const getColumnsTemplate = columns => {
-		return times( columns, i => [ 'themeisle-blocks/advanced-column', { columnWidth: parseFloat( layouts[columns][attributes.layout][i]) } ]);
+		return times( columns, i => [ 'themeisle-blocks/advanced-column', { columnWidth: layouts[columns][attributes.layout][i] } ]);
 	};
 
 	if ( ! attributes.columns ) {
@@ -412,7 +449,7 @@ const Edit = ({
 				style={ style }
 			>
 				<div
-					className="wp-themeisle-block-overlay"
+					className="wp-block-themeisle-blocks-advanced-columns-overlay"
 					style={ overlayStyle }
 				>
 				</div>

@@ -6,7 +6,7 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+const { isEqual } = lodash;
 
 const { ResizableBox } = wp.components;
 
@@ -30,14 +30,20 @@ const { withViewportMatch } = wp.viewport;
 /**
  * Internal dependencies
  */
+import defaultAttributes from './attributes.js';
+import defaults from '../../../plugins/options/global-defaults/defaults.js';
 import layouts from '../layouts.js';
 import Inspector from './inspector.js';
+
+const IDs = [];
 
 const Edit = ({
 	attributes,
 	setAttributes,
 	className,
+	isSelected,
 	clientId,
+	name,
 	toggleSelection,
 	updateBlockAttributes,
 	adjacentBlockClientId,
@@ -55,9 +61,36 @@ const Edit = ({
 	}, []);
 
 	const initBlock = () => {
-		if ( attributes.id === undefined || attributes.id.substr( attributes.id.length - 8 ) !== clientId.substr( 0, 8 ) ) {
+		if ( attributes.id === undefined ) {
+			let attrs;
+			const instanceId = `wp-block-themeisle-blocks-advanced-column-${ clientId.substr( 0, 8 ) }`;
+
+			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
+
+			if ( undefined !== globalDefaults ) {
+				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
+					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+
+					Object.keys( attrs ).map( i => {
+						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
+							return delete attrs[i];
+						}
+					});
+				}
+			}
+
+			setAttributes({
+				...attrs,
+				id: instanceId
+			});
+
+			IDs.push( instanceId );
+		} else if ( IDs.includes( attributes.id ) ) {
 			const instanceId = `wp-block-themeisle-blocks-advanced-column-${ clientId.substr( 0, 8 ) }`;
 			setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+		} else {
+			IDs.push( attributes.id );
 		}
 	};
 
@@ -76,7 +109,7 @@ const Edit = ({
 				const columns = parentBlock.attributes.columns;
 				const layout = parentBlock.attributes.layout;
 				updateBlockAttributes( clientId, {
-					columnWidth: parseFloat( layouts[columns][layout][i])
+					columnWidth: layouts[columns][layout][i]
 				});
 			}
 		});
@@ -92,7 +125,7 @@ const Edit = ({
 		}
 	}
 
-	const onResizeStart = ( event, direction, elt, delta ) => {
+	const onResizeStart = () => {
 		const handle = document.querySelector( `#block-${ clientId } .wp-themeisle-block-advanced-column-resize-container-handle .components-resizable-box__handle` );
 		const handleTooltipLeft = document.createElement( 'div' );
 		const handleTooltipRight = document.createElement( 'div' );
@@ -129,7 +162,7 @@ const Edit = ({
 		}
 	};
 
-	const onResizeStop = ( event, direction, elt, delta ) => {
+	const onResizeStop = () => {
 		const handleTooltipLeft = document.querySelector( '.resizable-tooltip-left' );
 		const handleTooltipRight = document.querySelector( '.resizable-tooltip-right' );
 
@@ -266,6 +299,12 @@ const Edit = ({
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
+				isSelected={ isSelected }
+				clientId={ clientId }
+				adjacentBlock={ adjacentBlock }
+				parentBlock={ parentBlock }
+				updateBlockAttributes={ updateBlockAttributes }
+				adjacentBlockClientId={ adjacentBlockClientId }
 			/>
 
 			<ResizableBox

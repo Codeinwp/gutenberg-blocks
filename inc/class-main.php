@@ -51,6 +51,7 @@ class Main {
 			define( 'THEMEISLE_BLOCKS_VERSION', '1.3.5' );
 			define( 'THEMEISLE_BLOCKS_DEV', false );
 		}
+
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
@@ -107,11 +108,12 @@ class Main {
 			'themeisle-gutenberg-blocks',
 			'themeisleGutenberg',
 			array(
-				'isCompatible' => $this->is_compatible(),
-				'packagePath'  => plugin_dir_url( $this->get_dir() ) . 'build/',
-				'assetsPath'   => plugin_dir_url( $this->get_dir() ) . 'assets',
-				'updatePath'   => admin_url( 'update-core.php' ),
-				'mapsAPI'      => $api,
+				'isCompatible'  => $this->is_compatible(),
+				'packagePath'   => plugin_dir_url( $this->get_dir() ) . 'build/',
+				'assetsPath'    => plugin_dir_url( $this->get_dir() ) . 'assets',
+				'updatePath'    => admin_url( 'update-core.php' ),
+				'mapsAPI'       => $api,
+				'themeDefaults' => $this->get_global_defaults(),
 			) 
 		);
 
@@ -282,6 +284,21 @@ class Main {
 		}
 
 		return version_compare( $current, $latest, '>=' );
+	}
+
+	/**
+	 * Get global defaults.
+	 *
+	 * @since   1.4.0
+	 * @access  public
+	 */
+	public function get_global_defaults() {
+		$defaults = get_theme_support( 'otter_global_defaults' );
+		if ( ! is_array( $defaults ) ) {
+			return false;
+		}
+
+		return current( $defaults );
 	}
 
 	/**

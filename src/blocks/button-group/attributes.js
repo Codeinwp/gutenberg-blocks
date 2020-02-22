@@ -18,8 +18,7 @@ const attributes = {
 		default: 'collapse-none'
 	},
 	fontSize: {
-		type: 'number',
-		default: 18
+		type: 'number'
 	},
 	fontFamily: {
 		type: 'string'
@@ -31,8 +30,7 @@ const attributes = {
 		type: 'string'
 	},
 	fontStyle: {
-		type: 'string',
-		default: 'normal'
+		type: 'string'
 	},
 	lineHeight: {
 		type: 'number'
@@ -44,14 +42,14 @@ const attributes = {
 				text: '',
 				link: '',
 				newTab: false,
-				color: '#ffffff',
-				background: '#32373c',
+				color: '',
+				background: '',
 				border: '',
 				hoverColor: '',
 				hoverBackground: '',
 				hoverBorder: '',
-				borderSize: 0,
-				borderRadius: 0,
+				borderSize: '',
+				borderRadius: '',
 				boxShadow: false,
 				boxShadowColor: '',
 				boxShadowColorOpacity: 50,
@@ -68,21 +66,21 @@ const attributes = {
 				iconType: 'none',
 				prefix: '',
 				icon: '',
-				paddingTopBottom: 12,
-				paddingLeftRight: 24
+				paddingTopBottom: '',
+				paddingLeftRight: ''
 			},
 			{
 				text: '',
 				link: '',
 				newTab: false,
-				color: '#ffffff',
-				background: '#32373c',
+				color: '',
+				background: '',
 				border: '',
 				hoverColor: '',
 				hoverBackground: '',
 				hoverBorder: '',
-				borderSize: 0,
-				borderRadius: 0,
+				borderSize: '',
+				borderRadius: '',
 				boxShadow: false,
 				boxShadowColor: '',
 				boxShadowColorOpacity: 50,
@@ -99,8 +97,8 @@ const attributes = {
 				iconType: 'none',
 				prefix: '',
 				icon: '',
-				paddingTopBottom: 12,
-				paddingLeftRight: 24
+				paddingTopBottom: '',
+				paddingLeftRight: ''
 			}
 		]
 	}

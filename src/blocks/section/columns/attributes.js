@@ -37,60 +37,50 @@ const attributes = {
 		default: 20
 	},
 	paddingTablet: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	paddingMobile: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	paddingTop: {
 		type: 'number',
 		default: 20
 	},
 	paddingTopTablet: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	paddingTopMobile: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	paddingRight: {
 		type: 'number',
 		default: 20
 	},
 	paddingRightTablet: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	paddingRightMobile: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	paddingBottom: {
 		type: 'number',
 		default: 20
 	},
 	paddingBottomTablet: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	paddingBottomMobile: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	paddingLeft: {
 		type: 'number',
 		default: 20
 	},
 	paddingLeftTablet: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	paddingLeftMobile: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	marginType: {
 		type: 'string',
@@ -109,36 +99,30 @@ const attributes = {
 		default: 20
 	},
 	marginTablet: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	marginMobile: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	marginTop: {
 		type: 'number',
 		default: 20
 	},
 	marginTopTablet: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	marginTopMobile: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	marginBottom: {
 		type: 'number',
 		default: 20
 	},
 	marginBottomTablet: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	marginBottomMobile: {
-		type: 'number',
-		default: 20
+		type: 'number'
 	},
 	columnsWidth: {
 		type: 'number'
@@ -471,6 +455,14 @@ const attributes = {
 		default: false
 	},
 	hideMobile: {
+		type: 'boolean',
+		default: false
+	},
+	reverseColumnsTablet: {
+		type: 'boolean',
+		default: false
+	},
+	reverseColumnsTablet: {
 		type: 'boolean',
 		default: false
 	},
