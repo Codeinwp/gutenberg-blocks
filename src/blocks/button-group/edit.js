@@ -59,7 +59,7 @@ const Edit = ({
 					attrs = omit({ ...window.themeisleGutenberg.globalDefaults[ name ] }, 'data' );
 
 					Object.keys( attrs ).map( i => {
-						if ( attributes[i] !== attrs[i] && ( undefined == defaultAttributes[i].default || ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) ) {
+						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default || ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) ) {
 							return delete attrs[i];
 						}
 					});
@@ -71,7 +71,7 @@ const Edit = ({
 						const currentData = { ...data.data };
 
 						Object.keys( currentData ).map( o => {
-							if ( i[o] !== currentData[o] && ( undefined == defaultAttributes.data.default[n][o] || ( undefined !== defaultAttributes.data.default[n][o] && i[o] !== defaultAttributes.data.default[n][o]) ) ) {
+							if ( i[o] !== currentData[o] && ( undefined !== defaultAttributes.data.default[n][o] || ( undefined !== defaultAttributes.data.default[n][o] && i[o] !== defaultAttributes.data.default[n][o]) ) ) {
 								return delete currentData[o];
 							}
 						});
