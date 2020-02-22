@@ -2,7 +2,7 @@
   "name": "codeinwp/gutenberg-blocks",
   "description": "A set of awesome Gutenberg Blocks!",
   "type": "library",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "license": "GPL-2.0-or-later",
   "homepage": "https://github.com/Codeinwp/gutenberg-blocks",
   "authors": [
@@ -12,11 +12,6 @@
       "homepage": "https://themeisle.com"
     }
   ],
-  "autoload": {
-    "psr-4": {
-      "ThemeIsle\\GutenbergBlocks\\": "inc/"
-    }
-  },
   "support": {
     "issues": "https://github.com/Codeinwp/gutenberg-blocks/issues"
   },
