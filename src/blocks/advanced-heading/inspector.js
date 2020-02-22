@@ -13,12 +13,14 @@ const {
 	Dashicon,
 	PanelBody,
 	RangeControl,
+	TextControl,
 	ToggleControl
 } = wp.components;
 
 const {
 	AlignmentToolbar,
 	ColorPalette,
+	InspectorAdvancedControls,
 	InspectorControls
 } = wp.blockEditor;
 
@@ -400,275 +402,287 @@ const Inspector = ({
 	};
 
 	return (
-		<InspectorControls>
-			<PanelBody className="wp-block-themeisle-blocks-advanced-heading-header-panel">
-				<Button
-					className={ classnames(
-						'header-tab',
-						{ 'is-selected': 'style' === tab }
-					) }
-					onClick={ () => setTab( 'style' ) }
-				>
-					<span
-					>
-						<Dashicon icon="admin-customizer"/>
-						{ __( 'Style' ) }
-					</span>
-				</Button>
-
-				<Button
-					className={ classnames(
-						'header-tab',
-						{ 'is-selected': 'advanced' === tab }
-					) }
-					onClick={ () => setTab( 'advanced' ) }
-				>
-					<span
-					>
-						<Dashicon icon="admin-generic"/>
-						{ __( 'Advanced' ) }
-					</span>
-				</Button>
-			</PanelBody>
-
-			{ 'style' === tab && (
-
-				<Fragment>
-					<PanelBody
-						title={ __( 'General Settings' ) }
-					>
-						<Fragment>
-							<p>{ __( 'Heading Color' ) }</p>
-
-							<ColorPalette
-								label={ 'Heading Color' }
-								value={ attributes.headingColor }
-								onChange={ changeHeadingColor }
-							/>
-						</Fragment>
-
-						<ResponsiveControl
-							label={ 'Font Size' }
-							view={ fontSizeViewType }
-							changeViewType={ setFontSizeViewType }
-						>
-							<RangeControl
-								value={ getFontSize || '' }
-								onChange={ changeFontSize }
-								min={ 1 }
-								max={ 500 }
-							/>
-						</ResponsiveControl>
-
-						<ResponsiveControl
-							label={ 'Alignment' }
-							view={ alignmentViewType }
-							changeViewType={ setAlignmentViewType }
-						>
-							<AlignmentToolbar
-								value={ getAlignment }
-								onChange={ changeAlignment }
-								isCollapsed={ false }
-							/>
-						</ResponsiveControl>
-					</PanelBody>
-
-					<PanelBody
-						title={ __( 'Typography Settings' ) }
-						initialOpen={ false }
-					>
-						<GoogleFontsControl
-							label={ __( 'Font Family' ) }
-							value={ attributes.fontFamily }
-							onChangeFontFamily={ changeFontFamily }
-							valueVariant={ attributes.fontVariant }
-							onChangeFontVariant={ changeFontVariant }
-							valueStyle={ attributes.fontStyle }
-							onChangeFontStyle={ changeFontStyle }
-							valueTransform={ attributes.textTransform }
-							onChangeTextTransform={ changeTextTransform }
-						/>
-
-						<RangeControl
-							label={ __( 'Line Height' ) }
-							value={ attributes.lineHeight }
-							onChange={ changeLineHeight }
-							min={ 0 }
-							max={ 200 }
-						/>
-
-						<RangeControl
-							label={ __( 'Letter Spacing' ) }
-							value={ attributes.letterSpacing }
-							onChange={ changeLetterSpacing }
-							min={ -50 }
-							max={ 100 }
-						/>
-
-						<ToggleControl
-							label={ 'Shadow Properties' }
-							checked={ attributes.textShadow }
-							onChange={ changeTextShadow }
-						/>
-
-						{ attributes.textShadow && (
-							<Fragment>
-
-								<Fragment>
-									<p>{ __( 'Color' ) }</p>
-
-									<ColorPalette
-										label={ __( 'Color' ) }
-										value={ attributes.textShadowColor }
-										onChange={ changeTextShadowColor }
-									/>
-								</Fragment>
-
-								<ControlPanelControl
-									label={ 'Shadow Properties' }
-								>
-									<RangeControl
-										label={ __( 'Opacity' ) }
-										value={ attributes.textShadowColorOpacity }
-										onChange={ changeTextShadowColorOpacity }
-										min={ 0 }
-										max={ 100 }
-									/>
-
-									<RangeControl
-										label={ __( 'Blur' ) }
-										value={ attributes.textShadowBlur }
-										onChange={ changeTextShadowBlur }
-										min={ 0 }
-										max={ 100 }
-									/>
-
-									<RangeControl
-										label={ __( 'Horizontal' ) }
-										value={ attributes.textShadowHorizontal }
-										onChange={ changeTextShadowHorizontal }
-										min={ -100 }
-										max={ 100 }
-									/>
-
-									<RangeControl
-										label={ __( 'Vertical' ) }
-										value={ attributes.textShadowVertical }
-										onChange={ changeTextShadowVertical }
-										min={ -100 }
-										max={ 100 }
-									/>
-								</ControlPanelControl>
-
-							</Fragment>
+		<Fragment>
+			<InspectorControls>
+				<PanelBody className="wp-block-themeisle-blocks-advanced-heading-header-panel">
+					<Button
+						className={ classnames(
+							'header-tab',
+							{ 'is-selected': 'style' === tab }
 						) }
-					</PanelBody>
-				</Fragment>
-
-			) || 'advanced' === tab && (
-
-				<Fragment>
-					<PanelBody
-						title={ __( 'Highlight Color' ) }
+						onClick={ () => setTab( 'style' ) }
 					>
-						<Fragment>
-							<p>{ __( 'Highlight Color' ) }</p>
-
-							<ColorPalette
-								label={ 'Highlight Color' }
-								value={ attributes.highlightColor }
-								onChange={ changeHighlightColor }
-							/>
-						</Fragment>
-
-						<Fragment>
-							<p>{ __( 'Highlight Background' ) }</p>
-
-							<ColorPalette
-								label={ 'Highlight Background' }
-								value={ attributes.highlightBackground }
-								onChange={ changeHighlightBackground }
-							/>
-						</Fragment>
-					</PanelBody>
-
-					<PanelBody
-						title={ __( 'Spacing' ) }
-						initialOpen={ false }
-					>
-						<ResponsiveControl
-							label={ 'Padding' }
-							view={ paddingViewType }
-							changeViewType={ setPaddingViewType }
+						<span
 						>
-							<SizingControl
-								type={ getPaddingType }
+							<Dashicon icon="admin-customizer"/>
+							{ __( 'Style' ) }
+						</span>
+					</Button>
+
+					<Button
+						className={ classnames(
+							'header-tab',
+							{ 'is-selected': 'advanced' === tab }
+						) }
+						onClick={ () => setTab( 'advanced' ) }
+					>
+						<span
+						>
+							<Dashicon icon="admin-generic"/>
+							{ __( 'Advanced' ) }
+						</span>
+					</Button>
+				</PanelBody>
+
+				{ 'style' === tab && (
+
+					<Fragment>
+						<PanelBody
+							title={ __( 'General Settings' ) }
+						>
+							<Fragment>
+								<p>{ __( 'Heading Color' ) }</p>
+
+								<ColorPalette
+									label={ 'Heading Color' }
+									value={ attributes.headingColor }
+									onChange={ changeHeadingColor }
+								/>
+							</Fragment>
+
+							<ResponsiveControl
+								label={ 'Font Size' }
+								view={ fontSizeViewType }
+								changeViewType={ setFontSizeViewType }
+							>
+								<RangeControl
+									value={ getFontSize || '' }
+									onChange={ changeFontSize }
+									min={ 1 }
+									max={ 500 }
+								/>
+							</ResponsiveControl>
+
+							<ResponsiveControl
+								label={ 'Alignment' }
+								view={ alignmentViewType }
+								changeViewType={ setAlignmentViewType }
+							>
+								<AlignmentToolbar
+									value={ getAlignment }
+									onChange={ changeAlignment }
+									isCollapsed={ false }
+								/>
+							</ResponsiveControl>
+						</PanelBody>
+
+						<PanelBody
+							title={ __( 'Typography Settings' ) }
+							initialOpen={ false }
+						>
+							<GoogleFontsControl
+								label={ __( 'Font Family' ) }
+								value={ attributes.fontFamily }
+								onChangeFontFamily={ changeFontFamily }
+								valueVariant={ attributes.fontVariant }
+								onChangeFontVariant={ changeFontVariant }
+								valueStyle={ attributes.fontStyle }
+								onChangeFontStyle={ changeFontStyle }
+								valueTransform={ attributes.textTransform }
+								onChangeTextTransform={ changeTextTransform }
+							/>
+
+							<RangeControl
+								label={ __( 'Line Height' ) }
+								value={ attributes.lineHeight }
+								onChange={ changeLineHeight }
 								min={ 0 }
-								max={ 500 }
-								changeType={ changePaddingType }
-								onChange={ changePadding }
-								options={ [
-									{
-										label: __( 'Top' ),
-										type: 'top',
-										value: getPadding( 'top' )
-									},
-									{
-										label: __( 'Right' ),
-										type: 'right',
-										value: getPadding( 'right' )
-									},
-									{
-										label: __( 'Bottom' ),
-										type: 'bottom',
-										value: getPadding( 'bottom' )
-									},
-									{
-										label: __( 'Left' ),
-										type: 'left',
-										value: getPadding( 'left' )
-									}
-								] }
+								max={ 200 }
 							/>
-						</ResponsiveControl>
 
-						<ResponsiveControl
-							label={ 'Margin' }
-							view={ marginViewType }
-							changeViewType={ setMarginViewType }
-						>
-							<SizingControl
-								type={ getMarginType }
-								min={ -500 }
-								max={ 500 }
-								changeType={ changeMarginType }
-								onChange={ changeMargin }
-								options={ [
-									{
-										label: __( 'Top' ),
-										type: 'top',
-										value: getMargin( 'top' )
-									},
-									{
-										label: __( 'Right' ),
-										disabled: true
-									},
-									{
-										label: __( 'Bottom' ),
-										type: 'bottom',
-										value: getMargin( 'bottom' )
-									},
-									{
-										label: __( 'Left' ),
-										disabled: true
-									}
-								] }
+							<RangeControl
+								label={ __( 'Letter Spacing' ) }
+								value={ attributes.letterSpacing }
+								onChange={ changeLetterSpacing }
+								min={ -50 }
+								max={ 100 }
 							/>
-						</ResponsiveControl>
-					</PanelBody>
-				</Fragment>
-			) }
-		</InspectorControls>
+
+							<ToggleControl
+								label={ 'Shadow Properties' }
+								checked={ attributes.textShadow }
+								onChange={ changeTextShadow }
+							/>
+
+							{ attributes.textShadow && (
+								<Fragment>
+
+									<Fragment>
+										<p>{ __( 'Color' ) }</p>
+
+										<ColorPalette
+											label={ __( 'Color' ) }
+											value={ attributes.textShadowColor }
+											onChange={ changeTextShadowColor }
+										/>
+									</Fragment>
+
+									<ControlPanelControl
+										label={ 'Shadow Properties' }
+									>
+										<RangeControl
+											label={ __( 'Opacity' ) }
+											value={ attributes.textShadowColorOpacity }
+											onChange={ changeTextShadowColorOpacity }
+											min={ 0 }
+											max={ 100 }
+										/>
+
+										<RangeControl
+											label={ __( 'Blur' ) }
+											value={ attributes.textShadowBlur }
+											onChange={ changeTextShadowBlur }
+											min={ 0 }
+											max={ 100 }
+										/>
+
+										<RangeControl
+											label={ __( 'Horizontal' ) }
+											value={ attributes.textShadowHorizontal }
+											onChange={ changeTextShadowHorizontal }
+											min={ -100 }
+											max={ 100 }
+										/>
+
+										<RangeControl
+											label={ __( 'Vertical' ) }
+											value={ attributes.textShadowVertical }
+											onChange={ changeTextShadowVertical }
+											min={ -100 }
+											max={ 100 }
+										/>
+									</ControlPanelControl>
+
+								</Fragment>
+							) }
+						</PanelBody>
+					</Fragment>
+
+				) || 'advanced' === tab && (
+
+					<Fragment>
+						<PanelBody
+							title={ __( 'Highlight Color' ) }
+						>
+							<Fragment>
+								<p>{ __( 'Highlight Color' ) }</p>
+
+								<ColorPalette
+									label={ 'Highlight Color' }
+									value={ attributes.highlightColor }
+									onChange={ changeHighlightColor }
+								/>
+							</Fragment>
+
+							<Fragment>
+								<p>{ __( 'Highlight Background' ) }</p>
+
+								<ColorPalette
+									label={ 'Highlight Background' }
+									value={ attributes.highlightBackground }
+									onChange={ changeHighlightBackground }
+								/>
+							</Fragment>
+						</PanelBody>
+
+						<PanelBody
+							title={ __( 'Spacing' ) }
+							initialOpen={ false }
+						>
+							<ResponsiveControl
+								label={ 'Padding' }
+								view={ paddingViewType }
+								changeViewType={ setPaddingViewType }
+							>
+								<SizingControl
+									type={ getPaddingType }
+									min={ 0 }
+									max={ 500 }
+									changeType={ changePaddingType }
+									onChange={ changePadding }
+									options={ [
+										{
+											label: __( 'Top' ),
+											type: 'top',
+											value: getPadding( 'top' )
+										},
+										{
+											label: __( 'Right' ),
+											type: 'right',
+											value: getPadding( 'right' )
+										},
+										{
+											label: __( 'Bottom' ),
+											type: 'bottom',
+											value: getPadding( 'bottom' )
+										},
+										{
+											label: __( 'Left' ),
+											type: 'left',
+											value: getPadding( 'left' )
+										}
+									] }
+								/>
+							</ResponsiveControl>
+
+							<ResponsiveControl
+								label={ 'Margin' }
+								view={ marginViewType }
+								changeViewType={ setMarginViewType }
+							>
+								<SizingControl
+									type={ getMarginType }
+									min={ -500 }
+									max={ 500 }
+									changeType={ changeMarginType }
+									onChange={ changeMargin }
+									options={ [
+										{
+											label: __( 'Top' ),
+											type: 'top',
+											value: getMargin( 'top' )
+										},
+										{
+											label: __( 'Right' ),
+											disabled: true
+										},
+										{
+											label: __( 'Bottom' ),
+											type: 'bottom',
+											value: getMargin( 'bottom' )
+										},
+										{
+											label: __( 'Left' ),
+											disabled: true
+										}
+									] }
+								/>
+							</ResponsiveControl>
+						</PanelBody>
+					</Fragment>
+				) }
+			</InspectorControls>
+
+			<InspectorAdvancedControls>
+				<TextControl
+					label={ __( 'HTML Anchor' ) }
+					help={ __( 'Anchors lets you link directly to a section on a page.' ) }
+					value={ attributes.id }
+					readonly="readonly"
+					onClick={ e => e.target.select() }
+				/>
+			</InspectorAdvancedControls>
+		</Fragment>
 	);
 };
 
