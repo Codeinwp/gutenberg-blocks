@@ -71,7 +71,7 @@ const Edit = ({
 						const currentData = { ...data.data };
 
 						Object.keys( currentData ).map( o => {
-							if ( i[o] !== currentData[o] && ( undefined !== defaultAttributes.data.default[n][o] || ( undefined !== defaultAttributes.data.default[n][o] && i[o] !== defaultAttributes.data.default[n][o]) ) ) {
+							if ( i[o] !== currentData[o] && ( undefined === defaultAttributes.data.default[n][o] || ( undefined !== defaultAttributes.data.default[n][o] && i[o] !== defaultAttributes.data.default[n][o]) ) ) {
 								return delete currentData[o];
 							}
 						});
