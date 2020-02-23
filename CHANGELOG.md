@@ -1,3 +1,17 @@
+#### [Version 1.4.0](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.3.6...v1.4.0) (2020-02-22)
+
+- Add Column Width control to Sidebar
+- Remove Inline CSS from Blocks
+- Fix Block ID Mechanism
+- Add Global Defaults
+- Improve Vertical Alignment to Section Block
+- Add option to disable Arrows/Bullets in Slider Block
+- Option to reverse columns in Section
+- Add theme_support for global defaults
+- Inherit Sizing values
+- Button Group consistency with Button Block
+- Add Anchor field to Advanced Heading Block
+
 ##### [Version 1.3.6](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.3.5...v1.3.6) (2020-02-13)
 
 * Fix library autoloading in multiple plugins
