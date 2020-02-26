@@ -13,14 +13,12 @@ const {
 	Dashicon,
 	PanelBody,
 	RangeControl,
-	TextControl,
 	ToggleControl
 } = wp.components;
 
 const {
 	AlignmentToolbar,
 	ColorPalette,
-	InspectorAdvancedControls,
 	InspectorControls
 } = wp.blockEditor;
 
@@ -36,6 +34,7 @@ import GoogleFontsControl from '../../components/google-fonts-control/index.js';
 import ControlPanelControl from '../../components/control-panel-control/index.js';
 import ResponsiveControl from '../../components/responsive-control/index.js';
 import SizingControl from '../../components/sizing-control/index.js';
+import HTMLAnchorControl from '../../components/html-anchor-control/index.js';
 
 const Inspector = ({
 	attributes,
@@ -401,6 +400,10 @@ const Inspector = ({
 		return value;
 	};
 
+	const changeID = value => {
+		setAttributes({ id: value });
+	};
+
 	return (
 		<Fragment>
 			<InspectorControls>
@@ -673,15 +676,10 @@ const Inspector = ({
 				) }
 			</InspectorControls>
 
-			<InspectorAdvancedControls>
-				<TextControl
-					label={ __( 'HTML Anchor' ) }
-					help={ __( 'Anchors lets you link directly to a section on a page.' ) }
-					value={ attributes.id }
-					readonly="readonly"
-					onClick={ e => e.target.select() }
-				/>
-			</InspectorAdvancedControls>
+			<HTMLAnchorControl
+				value={ attributes.id }
+				onChange={ changeID }
+			/>
 		</Fragment>
 	);
 };
