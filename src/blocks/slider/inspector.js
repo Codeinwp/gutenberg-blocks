@@ -37,7 +37,10 @@ const Inspector = ({
 
 	const toggleAutoplay = value => {
 		setAttributes({ autoplay: value });
-		slider.update({ autoplay: value ? 2000 : false });
+	};
+
+	const changeDelay = value => {
+		setAttributes({ delay: value });
 	};
 
 	const toggleArrows = value => {
@@ -101,6 +104,17 @@ const Inspector = ({
 							checked={ attributes.autoplay }
 							onChange={ toggleAutoplay }
 						/>
+
+						{ attributes.autoplay && (
+							<RangeControl
+								label={ __( 'Delay' ) }
+								help={ __( 'Delay in slide change (in seconds).' ) }
+								value={ attributes.delay }
+								onChange={ changeDelay }
+								min={ 1 }
+								max={ 10 }
+							/>
+						) }
 
 						<ToggleControl
 							label={ __( 'Hide Arrows' ) }

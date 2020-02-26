@@ -51,6 +51,10 @@ const attributes = {
 		type: 'boolean',
 		default: true
 	},
+	delay: {
+		type: 'number',
+		default: 2
+	},
 	hideArrows: {
 		type: 'boolean',
 		default: false

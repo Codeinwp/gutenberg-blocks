@@ -14,6 +14,8 @@ const Save = ({
 	attributes,
 	className
 }) => {
+	const autoplay = attributes.autoplay ? ( 2 !== attributes.delay ? attributes.delay * 1000 : attributes.autoplay ) : attributes.autoplay;
+
 	return (
 		<div
 			id={ attributes.id }
@@ -25,7 +27,7 @@ const Save = ({
 			data-per-view={ attributes.perView }
 			data-gap={ attributes.gap }
 			data-peek={ attributes.peek }
-			data-autoplay={ attributes.autoplay }
+			data-autoplay={ autoplay }
 			data-height={ `${ attributes.height }px` }
 		>
 			<div className="glide__track" data-glide-el="track">
