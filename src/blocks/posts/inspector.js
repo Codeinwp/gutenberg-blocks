@@ -6,7 +6,8 @@ const { __ } = wp.i18n;
 const {
 	PanelBody,
 	QueryControls,
-	RangeControl
+	RangeControl,
+	TextControl
 } = wp.components;
 
 const { InspectorControls } = wp.blockEditor;
@@ -140,8 +141,7 @@ const Inspector = ({
 						onChange={ changeColumns }
 						min={ 1 }
 						max={ 5 }
-					>
-					</RangeControl>
+					/>
 				) }
 
 				<QueryControls
@@ -154,6 +154,15 @@ const Inspector = ({
 					onOrderByChange={ value => setAttributes({ orderBy: value }) }
 					onCategoryChange={ value => setAttributes({ categories: '' !== value ? value : undefined }) }
 					onNumberOfItemsChange={ value => setAttributes({ postsToShow: value }) }
+				/>
+
+				<TextControl
+					label={ __( 'Offset' ) }
+					help={ __( 'Number of post to displace or pass over.' ) }
+					type="number"
+					value={ attributes.offset }
+					min={ 0 }
+					onChange={ value => setAttributes({ offset: value }) }
 				/>
 			</PanelBody>
 

@@ -52,6 +52,8 @@ const Edit = ({
 	}, []);
 
 	const initBlock = () => {
+		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
+
 		if ( attributes.id === undefined ) {
 			let attrs;
 			const instanceId = `wp-block-themeisle-blocks-advanced-heading-${ clientId.substr( 0, 8 ) }`;
@@ -76,13 +78,17 @@ const Edit = ({
 			});
 
 			IDs.push( instanceId );
+			blockIDs.push( instanceId );
 		} else if ( IDs.includes( attributes.id ) ) {
 			const instanceId = `wp-block-themeisle-blocks-advanced-heading-${ clientId.substr( 0, 8 ) }`;
 			setAttributes({ id: instanceId });
 			IDs.push( instanceId );
 		} else {
 			IDs.push( attributes.id );
+			blockIDs.push( attributes.id );
 		}
+
+		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
 	const isDesktop = ( isLarger && ! isLarge && isSmall && ! isSmaller );

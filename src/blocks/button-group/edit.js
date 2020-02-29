@@ -48,6 +48,8 @@ const Edit = ({
 	}, []);
 
 	const initBlock = () => {
+		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
+
 		if ( attributes.id === undefined ) {
 			let attrs;
 			const instanceId = `wp-block-themeisle-blocks-button-group-${ clientId.substr( 0, 8 ) }`;
@@ -71,7 +73,7 @@ const Edit = ({
 						const currentData = { ...data.data };
 
 						Object.keys( currentData ).map( o => {
-							if ( i[o] !== currentData[o] && ( undefined !== defaultAttributes.data.default[n][o] || ( undefined !== defaultAttributes.data.default[n][o] && i[o] !== defaultAttributes.data.default[n][o]) ) ) {
+							if ( i[o] !== currentData[o] && ( undefined === defaultAttributes.data.default[n][o] || ( undefined !== defaultAttributes.data.default[n][o] && i[o] !== defaultAttributes.data.default[n][o]) ) ) {
 								return delete currentData[o];
 							}
 						});
@@ -94,13 +96,17 @@ const Edit = ({
 			});
 
 			IDs.push( instanceId );
+			blockIDs.push( instanceId );
 		} else if ( IDs.includes( attributes.id ) ) {
 			const instanceId = `wp-block-themeisle-blocks-button-group-${ clientId.substr( 0, 8 ) }`;
 			setAttributes({ id: instanceId });
 			IDs.push( instanceId );
 		} else {
 			IDs.push( attributes.id );
+			blockIDs.push( attributes.id );
 		}
+
+		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
 	const [ selectedButton, setSelectedButton ] = useState( 0 );
