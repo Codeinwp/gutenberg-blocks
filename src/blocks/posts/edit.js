@@ -36,18 +36,40 @@ const Edit = ({
 
 	if ( ! posts || ! categoriesList || ! authors ) {
 		return (
-			<Placeholder>
-				<Spinner />
-				{ __( 'Loading Posts' ) }
-			</Placeholder>
+			<Fragment>
+				<Placeholder>
+					<Spinner />
+					{ __( 'Loading Posts' ) }
+				</Placeholder>
+
+				{ ( categoriesList && attributes.offset ) && (
+					<Inspector
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						changeStyle={ changeStyle }
+						categoriesList={ categoriesList }
+					/>
+				) }
+			</Fragment>
 		);
 	}
 
 	if ( 0 === posts.length ) {
 		return (
-			<Placeholder>
-				{ __( 'No Posts' ) }
-			</Placeholder>
+			<Fragment>
+				<Placeholder>
+					{ __( 'No Posts' ) }
+				</Placeholder>
+
+				{ ( categoriesList && attributes.offset ) && (
+					<Inspector
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						changeStyle={ changeStyle }
+						categoriesList={ categoriesList }
+					/>
+				) }
+			</Fragment>
 		);
 	}
 
@@ -92,13 +114,16 @@ const Edit = ({
 };
 
 export default withSelect( ( select, props ) => {
-	const { categories, order, orderBy, postsToShow } = props.attributes;
+	const { categories, order, orderBy, postsToShow, offset } = props.attributes;
+
 	const latestPostsQuery = pickBy({
 		categories,
 		order,
 		orderby: orderBy,
-		per_page: postsToShow // eslint-disable-line camelcase
+		per_page: postsToShow, // eslint-disable-line camelcase
+		offset
 	}, ( value ) => ! isUndefined( value ) );
+
 	return {
 		posts: select( 'core' ).getEntityRecords( 'postType', 'post', latestPostsQuery ),
 		// eslint-disable-next-line camelcase

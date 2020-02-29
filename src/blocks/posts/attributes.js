@@ -31,6 +31,10 @@ const attributes = {
 		type: 'string',
 		default: 'date'
 	},
+	offset: {
+		type: 'number',
+		default: 0
+	},
 	imageSize: {
 		type: 'string',
 		default: 'full'

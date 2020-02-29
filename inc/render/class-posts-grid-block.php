@@ -58,6 +58,10 @@ class Posts_Grid_Block extends Base_Block {
 				'type'    => 'string',
 				'default' => 'date',
 			),
+			'offset'               => array(
+				'type'    => 'number',
+				'default' => 0,
+			),
 			'imageSize'            => array(
 				'type'    => 'string',
 				'default' => 'full',
@@ -122,6 +126,7 @@ class Posts_Grid_Block extends Base_Block {
 				'post_status' => 'publish',
 				'order'       => $attributes['order'],
 				'orderby'     => $attributes['orderBy'],
+				'offset'      => $attributes['offset'],
 				'category'    => isset( $attributes['categories'] ) ? $attributes['categories'] : 0,
 			)
 		);

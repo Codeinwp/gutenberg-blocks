@@ -67,11 +67,14 @@ const Edit = ({
 	const [ selectedImage, setSelectedImage ] = useState( null );
 
 	const initBlock = async() => {
+		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
+
 		if ( attributes.id === undefined ) {
 			const instanceId = `wp-block-themeisle-blocks-slider-${ clientId.substr( 0, 8 ) }`;
 			await setAttributes({ id: instanceId });
 			IDs.push( instanceId );
 			instanceIdRef.current = instanceId;
+			blockIDs.push( instanceId );
 		} else if ( IDs.includes( attributes.id ) ) {
 			const instanceId = `wp-block-themeisle-blocks-slider-${ clientId.substr( 0, 8 ) }`;
 			await setAttributes({ id: instanceId });
@@ -80,7 +83,10 @@ const Edit = ({
 		} else {
 			IDs.push( attributes.id );
 			instanceIdRef.current = attributes.id;
+			blockIDs.push( attributes.id );
 		}
+
+		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 
 		if ( attributes.images.length ) {
 			initSlider();

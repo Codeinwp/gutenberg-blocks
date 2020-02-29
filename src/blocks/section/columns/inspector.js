@@ -19,13 +19,11 @@ const {
 	Tooltip,
 	ToggleControl,
 	RangeControl,
-	SelectControl,
-	TextControl
+	SelectControl
 } = wp.components;
 
 const {
 	ColorPalette,
-	InspectorAdvancedControls,
 	InspectorControls,
 	MediaPlaceholder
 } = wp.blockEditor;
@@ -49,6 +47,7 @@ import ResponsiveControl from '../../../components/responsive-control/index.js';
 import BackgroundControl from '../components/background-control/index.js';
 import GradientPickerControl from '../../../components/gradient-picker-control/index.js';
 import ControlPanelControl from '../../../components/control-panel-control/index.js';
+import HTMLAnchorControl from '../../../components/html-anchor-control/index.js';
 
 const Inspector = ({
 	attributes,
@@ -897,6 +896,10 @@ const Inspector = ({
 
 	const changeColumnsHTMLTag = value => {
 		setAttributes({ columnsHTMLTag: value });
+	};
+
+	const changeID = value => {
+		setAttributes({ id: value });
 	};
 
 	return (
@@ -1848,15 +1851,10 @@ const Inspector = ({
 				) }
 			</InspectorControls>
 
-			<InspectorAdvancedControls>
-				<TextControl
-					label={ __( 'HTML Anchor' ) }
-					help={ __( 'Anchors lets you link directly to a section on a page.' ) }
-					value={ attributes.id }
-					readonly="readonly"
-					onClick={ e => e.target.select() }
-				/>
-			</InspectorAdvancedControls>
+			<HTMLAnchorControl
+				value={ attributes.id }
+				onChange={ changeID }
+			/>
 		</Fragment>
 	);
 };
