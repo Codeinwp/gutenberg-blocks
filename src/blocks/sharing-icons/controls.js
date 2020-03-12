@@ -37,8 +37,8 @@ const Controls = ({ attributes, setAttributes }) => {
 						<Tooltip text={ __( `Display ${ socialList[item].label }` )	}>
 							<Button
 								className={ classnames(
-									'components-icon-button',
-									'components-toolbar__control',
+									'components-button',
+									'wp-block-themeisle-toolbar',
 									{ 'is-active': prop }
 								) }
 								onClick={ () => toggleIcons( item ) }

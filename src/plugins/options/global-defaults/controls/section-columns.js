@@ -518,7 +518,7 @@ const SectionColumns = ({
 						<BaseControl
 							label={ 'Horizontal Align' }
 						>
-							<ButtonGroup className="icon-buttom-group">
+							<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
 								<Tooltip text={ __( 'Left' ) } >
 									<IconButton
 										icon="editor-alignleft"
@@ -587,7 +587,7 @@ const SectionColumns = ({
 				<BaseControl
 					label={ 'Vertical Align' }
 				>
-					<ButtonGroup className="icon-buttom-group">
+					<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
 						<Tooltip text={ __( 'Top' ) } >
 							<Button
 								className="components-icon-button is-button is-large"

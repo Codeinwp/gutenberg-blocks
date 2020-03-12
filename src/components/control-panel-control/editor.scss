@@ -11,6 +11,10 @@
 
 		.floating-controls {
 			display: flex;
+
+			button {
+				border: 1px solid #555d66;
+			}
 		}
 	}
 }

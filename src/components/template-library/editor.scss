@@ -30,9 +30,14 @@
 						border: 0;
 
 						&.back-to-library {
+							height: auto;
+							box-shadow: none;
 	
 							&:hover {
-								background: #f2f2f3;
+								&:not(:disabled):not([aria-disabled="true"]):not(.is-secondary):not(.is-primary):not(.is-tertiary):not(.is-link) {
+									background: #f2f2f3;
+									box-shadow: none;
+								}
 							}
 		
 							&:focus {
@@ -62,6 +67,7 @@
 						align-items: center;
 						justify-content: center;
 						width: 115px;
+						height: auto;
 						padding: 17px 0;
 						background: transparent;
 						font-weight: 600;
@@ -73,7 +79,10 @@
 						}
 	
 						&:hover {
-							background: #f2f2f3;
+							&:not(:disabled):not([aria-disabled="true"]):not(.is-secondary):not(.is-primary):not(.is-tertiary):not(.is-link) {
+								background: #f2f2f3;
+								box-shadow: none;
+							}
 						}
 	
 						&:focus {
@@ -96,6 +105,7 @@
 						align-items: center;
 						justify-content: center;
 						padding: 17px;
+						height: auto;
 						background: transparent;
 						font-weight: 600;
 						cursor: pointer;
@@ -116,7 +126,10 @@
 						}
 	
 						&:hover {
-							background: #f2f2f3;
+							&:not(:disabled):not([aria-disabled="true"]):not(.is-secondary):not(.is-primary):not(.is-tertiary):not(.is-link) {
+								background: #f2f2f3;
+								box-shadow: none;
+							}
 						}
 	
 						&:focus {
@@ -282,6 +295,8 @@
 						button {
 							position: relative;
 							align-items: center;
+							height: auto;
+							padding: 0 12px 2px;
 
 							svg {
 								margin-right: 5px;
