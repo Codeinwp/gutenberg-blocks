@@ -126,7 +126,7 @@ class Main {
 
 		$wp_version = get_bloginfo( 'version' );
 
-		if ( version_compare( $wp_version, '5.4', '<' ) ) {
+		if ( version_compare( (float)$wp_version, '5.4', '<' ) ) {
 			wp_enqueue_style(
 				'themeisle-block_deprecated_styles',
 				plugin_dir_url( $this->get_dir() ) . 'assets/static/deprecated.css',

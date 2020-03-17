@@ -565,7 +565,8 @@
 	}
 }
 
-.branch-5-2 {
+.branch-5-2,
+.branch-5-3 {
 	.wp-block-themeisle-blocks-sizing-control {
 		.wp-block-themeisle-blocks-sizing-control-item {
 			&.toggle-linking {
@@ -573,7 +574,9 @@
 			}
 		}
 	}
+}
 
+.branch-5-2 {
 	.wp-block-themeisle-layout-skipper {
 		width: 100%;
 	}

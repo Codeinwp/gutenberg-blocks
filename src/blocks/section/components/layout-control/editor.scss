@@ -39,11 +39,11 @@
 		height: auto;
 		display: inline-block;
 		padding: 10px;
+		border-radius: 4px;
 
 		svg {
 			fill: #d5dadf;
 		}
-
 	
 		&:hover {
 			&:not(:disabled):not([aria-disabled="true"]):not(.is-secondary):not(.is-primary):not(.is-tertiary):not(.is-link) {
@@ -52,6 +52,10 @@
 				color: #005d8c;
 				text-decoration: none;
 
+				&:not(.selected) {
+					box-shadow: none;
+				}
+
 				svg {
 					fill: #0075af;
 				}
@@ -59,6 +63,7 @@
 		}
 
 		&.selected {
+			box-shadow: inset 0 0 0 1px #555d66,inset 0 0 0 2px #fff;
 
 			svg {
 				fill: #6d7882;
