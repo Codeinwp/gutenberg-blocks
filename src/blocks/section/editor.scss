@@ -385,7 +385,7 @@
 	}
 }
 
-@media ( min-width: 320px ) and ( max-width: 600px ) {
+@media ( max-width: 600px ) {
 	.wp-block-themeisle-blocks-advanced-columns {
 
 		&.has-2-columns {
@@ -555,7 +555,7 @@
 					cursor: inherit;
 					position: absolute;
 					top: calc(50% - 8px);
-					right: calc(50% -8px);
+					right: calc(50% - 8px);
 				}
 
 				.resizable-tooltip {
