@@ -27,12 +27,19 @@ const ResponsiveControl = ({
 	label,
 	changeViewType,
 	view,
+	className,
 	children
 }) => {
 	const id = `inspector-responsive-control-${ instanceId }`;
 
 	return (
-		<div id={ id } className="wp-block-themeisle-blocks-responsive-control">
+		<div
+			id={ id }
+			className={ classnames(
+				'wp-block-themeisle-blocks-responsive-control',
+				className
+			) }
+		>
 			<div className="components-base-control__field">
 				<div className="components-base-control__title">
 					<label className="components-base-control__label">{ label }</label>
