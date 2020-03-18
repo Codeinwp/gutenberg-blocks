@@ -49,7 +49,7 @@ class Main {
 	public function init() {
 		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
 			define( 'THEMEISLE_BLOCKS_VERSION', '1.4.0' );
-			define( 'THEMEISLE_BLOCKS_DEV', true );
+			define( 'THEMEISLE_BLOCKS_DEV', false );
 		}
 
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
