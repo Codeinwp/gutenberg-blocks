@@ -283,6 +283,7 @@ class CSS_Handler extends Base_CSS {
 		$compressor->setPcreRecursionLimit( 150000 );
 
 		$css = $compressor->run( $css );
+		$css = htmlspecialchars_decode( $css );
 
 		return $css;
 	}
