@@ -1,3 +1,7 @@
+##### [Version 1.4.2](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.4.1...v1.4.2) (2020-03-20)
+
+- Adds compatibility with WordPress 5.4
+
 ##### [Version 1.4.1](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.4.0...v1.4.1) (2020-02-29)
 
 - Fix issue with Button Group & Global Defaults
