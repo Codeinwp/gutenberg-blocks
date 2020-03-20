@@ -12,6 +12,7 @@ span {
 	.header-tab {
 		display: inline-block;
 		width: calc( 100% / 2 );
+		height: auto;
 		padding: 10px 20px;
 		text-align: center;
 		cursor: pointer;
@@ -22,7 +23,10 @@ span {
 		}
 
 		&:hover {
-			background: #f3f4f5;
+			&:not(:disabled):not([aria-disabled="true"]):not(.is-secondary):not(.is-primary):not(.is-tertiary):not(.is-link) {
+				background: #f3f4f5;
+				box-shadow: none;
+			}
 		}
 
 		span {

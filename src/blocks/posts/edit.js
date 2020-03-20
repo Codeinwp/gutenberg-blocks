@@ -37,19 +37,19 @@ const Edit = ({
 	if ( ! posts || ! categoriesList || ! authors ) {
 		return (
 			<Fragment>
-				<Placeholder>
-					<Spinner />
+				<Placeholder className="wp-themeisle-block-spinner">
+					<Spinner/>
 					{ __( 'Loading Posts' ) }
 				</Placeholder>
 
-				{ ( categoriesList && attributes.offset ) && (
+				{ ( categoriesList && attributes.offset ) ? (
 					<Inspector
 						attributes={ attributes }
 						setAttributes={ setAttributes }
 						changeStyle={ changeStyle }
 						categoriesList={ categoriesList }
 					/>
-				) }
+				) : null }
 			</Fragment>
 		);
 	}
@@ -61,14 +61,14 @@ const Edit = ({
 					{ __( 'No Posts' ) }
 				</Placeholder>
 
-				{ ( categoriesList && attributes.offset ) && (
+				{ ( categoriesList && attributes.offset ) ? (
 					<Inspector
 						attributes={ attributes }
 						setAttributes={ setAttributes }
 						changeStyle={ changeStyle }
 						categoriesList={ categoriesList }
 					/>
-				) }
+				) : null }
 			</Fragment>
 		);
 	}

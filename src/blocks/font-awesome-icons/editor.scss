@@ -9,5 +9,8 @@
 	.components-button {
 		width: calc( 100% / 2 );
 		justify-content: center;
+		border: 1px solid #000;
+		height: 30px;
+		line-height: 28px;
 	}
 }

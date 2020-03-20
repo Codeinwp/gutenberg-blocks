@@ -703,17 +703,17 @@ const Inspector = ({
 							attributes.backgroundImageURL ?
 
 								<Fragment>
-									<div className="image-body">
-										<div className="image-container">
+									<div className="wp-block-themeisle-image-container-body">
+										<div className="wp-block-themeisle-image-container-area">
 											<div
-												className="image-holder"
+												className="wp-block-themeisle-image-container-holder"
 												style={ {
 													backgroundImage: `url('${ attributes.backgroundImageURL }')`
 												} }
 											></div>
 
 											<div
-												className="image-delete"
+												className="wp-block-themeisle-image-container-delete"
 												onClick={ removeBackgroundImage }
 											>
 												<Dashicon icon="trash" />
@@ -724,7 +724,7 @@ const Inspector = ({
 
 									<Button
 										isDefault
-										className="image-delete-button"
+										className="wp-block-themeisle-image-container-delete-button"
 										onClick={ removeBackgroundImage }
 									>
 										{ __( 'Change or Remove Image' ) }

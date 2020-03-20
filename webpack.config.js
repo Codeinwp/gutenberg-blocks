@@ -95,7 +95,7 @@ module.exports = {
 		}),
 		new MiniCssExtractPlugin({
 			filename: 'style.css',
-			chunkFilename: 'edit-blocks.css'
+			chunkFilename: 'editor.css'
 		}),
 		new CleanWebpackPlugin()
 	]

@@ -6,12 +6,12 @@ on: [pull_request]
 jobs:
   run:
     runs-on: ubuntu-latest
-    name: PHP Test on 5.6
+    name: PHP Test on 7.0
     steps:
       - name: Setup PHP version
         uses: shivammathur/setup-php@v1
         with:
-          php-version: '5.6'
+          php-version: '7.0'
           extensions: simplexml
       - name: Checkout source code
         uses: actions/checkout@v2

@@ -6,6 +6,20 @@
 			margin-top: 10px;
 			margin-bottom: 10px;
 		}
+
+		.components-placeholder__actions {
+			display: flex;
+			flex-direction: row;
+			width: 100%;
+			flex-wrap: wrap;
+			z-index: 1;
+
+			.components-placeholder__input {
+				input[type="text"] {
+					min-height: 36px;
+				}
+			}
+		}
 	}
 
 	.gmnoprint {

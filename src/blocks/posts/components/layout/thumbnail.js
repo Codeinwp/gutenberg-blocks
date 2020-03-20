@@ -14,7 +14,7 @@ const Thumbnail = ({
 	thumbnail,
 	link
 }) => {
-	let img = <Placeholder><Spinner /></Placeholder>;
+	let img = <Placeholder className="wp-themeisle-block-spinner"><Spinner/></Placeholder>;
 
 	if ( thumbnail ) {
 		img = <img src={ thumbnail } alt={ alt } data-id={ id } />;

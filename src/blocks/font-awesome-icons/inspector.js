@@ -105,7 +105,7 @@ const Inspector = ({
 			<PanelBody
 				title={ __( 'Icon Settings' ) }
 			>
-				<React.Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
+				<React.Suspense fallback={<Placeholder className="wp-themeisle-block-spinner"><Spinner/></Placeholder>}>
 					<IconPickerControl
 						label={ __( 'Icon Picker' ) }
 						prefix={ attributes.prefix }

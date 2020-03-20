@@ -116,7 +116,9 @@ const Edit = ({
 
 	if ( isDesktop ) {
 		stylesheet = {
+			paddingTop: 'linked' === attributes.paddingType ? `${ attributes.padding }px` : `${ attributes.paddingTop }px`,
 			paddingRight: 'linked' === attributes.paddingType ? `${ attributes.padding }px` : `${ attributes.paddingRight }px`,
+			paddingBottom: 'linked' === attributes.paddingType ? `${ attributes.padding }px` : `${ attributes.paddingBottom }px`,
 			paddingLeft: 'linked' === attributes.paddingType ? `${ attributes.padding }px` : `${ attributes.paddingLeft }px`,
 			marginTop: 'linked' === attributes.marginType ? `${ attributes.margin }px` : `${ attributes.marginTop }px`,
 			marginBottom: 'linked' === attributes.marginType ? `${ attributes.margin }px` : `${ attributes.marginBottom }px`,
@@ -126,7 +128,9 @@ const Edit = ({
 
 	if ( isTablet ) {
 		stylesheet = {
+			paddingTop: 'linked' === attributes.paddingTypeTablet ? `${ attributes.paddingTablet }px` : `${ attributes.paddingTopTablet }px`,
 			paddingRight: 'linked' === attributes.paddingTypeTablet ? `${ attributes.paddingTablet }px` : `${ attributes.paddingRightTablet }px`,
+			paddingBottom: 'linked' === attributes.paddingTypeTablet ? `${ attributes.paddingTablet }px` : `${ attributes.paddingBottomTablet }px`,
 			paddingLeft: 'linked' === attributes.paddingTypeTablet ? `${ attributes.paddingTablet }px` : `${ attributes.paddingLeftTablet }px`,
 			marginTop: 'linked' === attributes.marginTypeTablet ? `${ attributes.marginTablet }px` : `${ attributes.marginTopTablet }px`,
 			marginBottom: 'linked' === attributes.marginTypeTablet ? `${ attributes.marginTablet }px` : `${ attributes.marginBottomTablet }px`,
@@ -136,7 +140,9 @@ const Edit = ({
 
 	if ( isMobile ) {
 		stylesheet = {
+			paddingTop: 'linked' === attributes.paddingTypeMobile ? `${ attributes.paddingMobile }px` : `${ attributes.paddingTopMobile }px`,
 			paddingRight: 'linked' === attributes.paddingTypeMobile ? `${ attributes.paddingMobile }px` : `${ attributes.paddingRightMobile }px`,
+			paddingBottom: 'linked' === attributes.paddingTypeMobile ? `${ attributes.paddingMobile }px` : `${ attributes.paddingBottomMobile }px`,
 			paddingLeft: 'linked' === attributes.paddingTypeMobile ? `${ attributes.paddingMobile }px` : `${ attributes.paddingLeftMobile }px`,
 			marginTop: 'linked' === attributes.marginTypeMobile ? `${ attributes.marginMobile }px` : `${ attributes.marginTopMobile }px`,
 			marginBottom: 'linked' === attributes.marginTypeMobile ? `${ attributes.marginMobile }px` : `${ attributes.marginBottomMobile }px`,
@@ -310,40 +316,6 @@ const Edit = ({
 		}
 	};
 
-	const getPaddingBasedOnScreen = type => {
-		let value;
-
-		if ( 'top' == type ) {
-			if ( isDesktop ) {
-				value = 'linked' === attributes.paddingType ? attributes.padding : attributes.paddingTop;
-			}
-
-			if ( isTablet ) {
-				value = 'linked' === attributes.paddingTypeTablet ? attributes.paddingTablet : attributes.paddingTopTablet;
-			}
-
-			if ( isMobile ) {
-				value = 'linked' === attributes.paddingTypeMobile ? attributes.paddingMobile : attributes.paddingTopMobile;
-			}
-		}
-
-		if ( 'bottom' == type ) {
-			if ( isDesktop ) {
-				value = 'linked' === attributes.paddingType ? attributes.padding : attributes.paddingBottom;
-			}
-
-			if ( isTablet ) {
-				value = 'linked' === attributes.paddingTypeTablet ? attributes.paddingTablet : attributes.paddingBottomTablet;
-			}
-
-			if ( isMobile ) {
-				value = 'linked' === attributes.paddingTypeMobile ? attributes.paddingMobile : attributes.paddingBottomMobile;
-			}
-		}
-
-		return value;
-	};
-
 	let getDividerTopWidth = () => {
 		let value;
 
@@ -460,17 +432,6 @@ const Edit = ({
 				>
 				</div>
 
-				<div
-					className="wp-themeisle-block-advanced-columns-padding-container"
-					style={{
-						height: `${ getPaddingBasedOnScreen( 'top' ) }px`
-					}}
-				>
-					<div className="block-space-size">
-						<span id="paddingTop">{ `${ getPaddingBasedOnScreen( 'top' ) }px` }</span>
-					</div>
-				</div>
-
 				<Separators
 					type="top"
 					style={ attributes.dividerTopType }
@@ -499,17 +460,6 @@ const Edit = ({
 					width={ getDividerBottomWidth }
 					height={ getDividerBottomHeight }
 				/>
-
-				<div
-					className="wp-themeisle-block-advanced-columns-padding-container"
-					style={{
-						height: `${ getPaddingBasedOnScreen( 'bottom' ) }px`
-					}}
-				>
-					<div className="block-space-size">
-						<span id="paddingBottom">{ `${ getPaddingBasedOnScreen( 'bottom' ) }px` }</span>
-					</div>
-				</div>
 			</Tag>
 		</Fragment>
 	);

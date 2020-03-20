@@ -58,7 +58,7 @@ const Edit = ({
 	} else {
 		return (
 			<div className="wp-block-themeisle-author-loading">
-				<Spinner />
+				<Spinner/>
 				<p className="wp-block-themeisle-author-loading-text">{ __( 'Loading…' ) }</p>
 			</div>
 		);

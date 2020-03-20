@@ -1,7 +1,11 @@
 .wp-block-themeisle-blocks-gradient-picker-control {
-	.components-base-control__label {
-		.component-color-indicator {
-			vertical-align: text-bottom;
+	.components-base-control__title {
+		margin-bottom: 1em;
+
+		.components-base-control__label {	
+			.component-color-indicator {
+				vertical-align: text-bottom;
+			}
 		}
 	}
 
