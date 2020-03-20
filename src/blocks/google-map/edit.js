@@ -2,7 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import uuidv4 from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies

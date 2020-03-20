@@ -19,6 +19,7 @@
 			flex-direction: column;
 			flex: 0 0 50%;
 			width: 50%;
+			height: auto;
 			font-size: 13px;
 			color: #32373c;
 			padding: 0 4px;
@@ -31,10 +32,6 @@
 			border: 1px solid transparent;
 			transition: all .05s ease-in-out;
 			position: relative;
-
-			&:hover {
-				background: #f3f4f5;
-			}
 
 			&:focus,
 			&:active {
@@ -112,8 +109,14 @@
 				align-items: center;
 				padding: 15px 24px;
 
-				.is-primary {
-					margin-left: 10px;
+				button {
+					height: auto;
+					line-height: 28px;
+					padding: 0 12px 2px;
+
+					&.is-primary {
+						margin-left: 10px;
+					}
 				}
 			}
 		}

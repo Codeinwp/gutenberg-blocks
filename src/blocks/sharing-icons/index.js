@@ -12,6 +12,7 @@ const {
  */
 import './style.scss';
 import './editor.scss';
+import './deprecated.scss';
 import { sharingIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';

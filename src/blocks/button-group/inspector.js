@@ -134,6 +134,7 @@ const Inspector = ({
 
 						<BaseControl
 							label={ __( 'Edit Button' ) }
+							className="wp-block-themeisle-blocks-select-button-container"
 						>
 							<Dropdown
 								contentClassName="wp-block-themeisle-blocks-select-button-popover"
@@ -169,7 +170,7 @@ const Inspector = ({
 					</PanelBody>
 
 					{ wait ?
-						<Placeholder>
+						<Placeholder className="wp-themeisle-block-spinner">
 							<Spinner/>
 						</Placeholder> :
 						<Fragment>
@@ -470,7 +471,7 @@ const Inspector = ({
 
 								{ 'none' !== attributes.data[selectedButton].iconType && (
 									<Fragment>
-										<React.Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
+										<React.Suspense fallback={<Placeholder className="wp-themeisle-block-spinner"><Spinner/></Placeholder>}>
 											<IconPickerControl
 												label={ __( 'Icon Picker' ) }
 												prefix={ attributes.data[selectedButton].prefix }

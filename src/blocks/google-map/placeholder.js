@@ -22,8 +22,8 @@ const BlockPlaceholder = ({
 }) => {
 	if ( ! isAPILoaded ) {
 		return (
-			<Placeholder>
-				<Spinner></Spinner>
+			<Placeholder className="wp-themeisle-block-spinner">
+				<Spinner/>
 				{ __( 'Loading…' ) }
 			</Placeholder>
 		);
@@ -37,30 +37,29 @@ const BlockPlaceholder = ({
 				instructions={ __( 'A Google Maps API key is required, please enter one below.' ) }
 				className={ className }
 			>
-				<TextControl
-					type="text"
-					placeholder={ __( 'Google Maps API Key' ) }
-					value={ api }
-					className="components-placeholder__input"
-					onChange={ changeAPI }
-				/>
+				<div className="components-placeholder__actions">
+					<TextControl
+						type="text"
+						placeholder={ __( 'Google Maps API Key' ) }
+						value={ api }
+						className="components-placeholder__input"
+						onChange={ changeAPI }
+					/>
 
-				<Button
-					isLarge
-					type="submit"
-					onClick={ saveAPIKey }
-					isBusy={ isSaving }
-					disabled={ '' === api }
-				>
-					{ __( 'Save API Key' ) }
-				</Button>
+					<Button
+						isLarge
+						isDefault
+						type="submit"
+						onClick={ saveAPIKey }
+						isBusy={ isSaving }
+						disabled={ '' === api }
+					>
+						{ __( 'Save' ) }
+					</Button>
+				</div>
 
-				<div className="components-placeholder__instructions">
-					<p className="components-placeholder__text">
-						{ __( 'Need an API key? Get one ' ) }
-						<ExternalLink href="https://developers.google.com/maps/documentation/javascript/get-api-key">{ __( 'here.' ) }</ExternalLink>
-					</p>
-					<p className="components-placeholder__text">{ __( 'You need to activate Maps and Places API.' ) }</p>
+				<div className="components-placeholder__learn-more">
+					{ __( 'You need to activate Maps and Places API.' ) } <ExternalLink href="https://developers.google.com/maps/documentation/javascript/get-api-key">{ __( 'Need an API key? Get one here.' ) }</ExternalLink>
 				</div>
 			</Placeholder>
 		);

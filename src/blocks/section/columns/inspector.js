@@ -1080,7 +1080,7 @@ const Inspector = ({
 								<BaseControl
 									label={ 'Horizontal Align' }
 								>
-									<ButtonGroup className="icon-buttom-group">
+									<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
 										<Tooltip text={ __( 'Left' ) } >
 											<IconButton
 												icon="editor-alignleft"
@@ -1141,7 +1141,7 @@ const Inspector = ({
 							<BaseControl
 								label={ 'Vertical Align' }
 							>
-								<ButtonGroup className="icon-buttom-group">
+								<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
 									<Tooltip text={ __( 'Top' ) } >
 										<Button
 											className="components-icon-button is-button is-large"
@@ -1214,17 +1214,17 @@ const Inspector = ({
 								attributes.backgroundImageURL ?
 
 									<Fragment>
-										<div className="image-body">
-											<div className="image-container">
+										<div className="wp-block-themeisle-image-container-body">
+											<div className="wp-block-themeisle-image-container-area">
 												<div
-													className="image-holder"
+													className="wp-block-themeisle-image-container-holder"
 													style={ {
 														backgroundImage: `url('${ attributes.backgroundImageURL }')`
 													} }
 												></div>
 
 												<div
-													className="image-delete"
+													className="wp-block-themeisle-image-container-delete"
 													onClick={ removeBackgroundImage }
 												>
 													<Dashicon icon="trash" />
@@ -1235,7 +1235,7 @@ const Inspector = ({
 
 										<Button
 											isDefault
-											className="image-delete-button"
+											className="wp-block-themeisle-image-container-delete-button"
 											onClick={ removeBackgroundImage }
 										>
 											{ __( 'Change or Remove Image' ) }
@@ -1362,17 +1362,17 @@ const Inspector = ({
 								attributes.backgroundOverlayImageURL ?
 
 									<Fragment>
-										<div className="image-body">
-											<div className="image-container">
+										<div className="wp-block-themeisle-image-container-body">
+											<div className="wp-block-themeisle-image-container-area">
 												<div
-													className="image-holder"
+													className="wp-block-themeisle-image-container-holder"
 													style={ {
 														backgroundImage: `url('${ attributes.backgroundOverlayImageURL }')`
 													} }
 												></div>
 
 												<div
-													className="image-delete"
+													className="wp-block-themeisle-image-container-delete"
 													onClick={ removeBackgroundOverlayImage }
 												>
 													<Dashicon icon="trash" />
@@ -1383,7 +1383,7 @@ const Inspector = ({
 
 										<Button
 											isDefault
-											className="image-delete-button"
+											className="wp-block-themeisle-image-container-delete-button"
 											onClick={ removeBackgroundOverlayImage }
 										>
 											{ __( 'Change or Remove Image' ) }

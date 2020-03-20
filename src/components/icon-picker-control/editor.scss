@@ -30,19 +30,26 @@
 }
 
 .wp-block-themeisle-blocks-icon-picker-control {
+	.components-dropdown {
+		display: flex;
+	}
+
 	.wp-block-themeisle-blocks-icon-picker-button {
 		background: transparent;
 		position: relative;
 		width: 100%;
+		height: auto;
+		line-height: 28px;
+		padding: 0 12px 2px;
 		box-shadow: 0 0 0 transparent;
 		transition: box-shadow .1s linear;
 		border-radius: 4px;
 		border: 1px solid #8d96a0;
-	
+
 		&.is-button {
 			background: transparent;
 		}
-	
+
 		&:hover {
 			background: #fafafa;
 			border-color: #999;
@@ -50,11 +57,11 @@
 			color: #23282d;
 			text-decoration: none;
 		}
-	
+
 		&:focus {
 			border: 1px solid black;
 		}
-	
+
 		&:after {
 			content: "";
 			pointer-events: none;
@@ -75,6 +82,18 @@
 			line-height: 1.8;
 			font-size: 15px;
 			margin-right: 5px;
+		}
+	}
+}
+
+@media ( max-width: 782px ) {
+	.wp-block-themeisle-blocks-icon-picker-control {
+		.wp-block-themeisle-blocks-icon-picker-button {
+			padding: 5px 24px 5px 8px;
+	
+			&:after {
+				top: 16px;
+			}
 		}
 	}
 }

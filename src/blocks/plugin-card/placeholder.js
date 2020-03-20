@@ -171,7 +171,7 @@ const BlockPlaceholder = ({
 
 	if ( isFetching ) {
 		return (
-			<Placeholder>
+			<Placeholder className="wp-themeisle-block-spinner">
 				<Spinner/>
 			</Placeholder>
 		);
