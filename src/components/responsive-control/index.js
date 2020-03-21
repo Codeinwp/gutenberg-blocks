@@ -15,7 +15,15 @@ const {
 	IconButton
 } = wp.components;
 
-const { withInstanceId } = wp.compose;
+const {
+	compose,
+	withInstanceId
+} = wp.compose;
+
+const {
+	withSelect,
+	withDispatch
+} = wp.data;
 
 /**
  * Internal dependencies
@@ -25,10 +33,10 @@ import './editor.scss';
 const ResponsiveControl = ({
 	instanceId,
 	label,
-	changeViewType,
-	view,
 	className,
-	children
+	children,
+	view,
+	updateView
 }) => {
 	const id = `inspector-responsive-control-${ instanceId }`;
 
@@ -48,7 +56,7 @@ const ResponsiveControl = ({
 							position="top left"
 							renderToggle={ ({ isOpen, onToggle }) => (
 								<IconButton
-									icon={ 'mobile' === view ? 'smartphone' : view }
+									icon={ 'Mobile' === view ? 'smartphone' : view.toLowerCase() }
 									label={ __( 'Responsiveness Settings' ) }
 									className="is-button"
 									onClick={ onToggle }
@@ -64,11 +72,11 @@ const ResponsiveControl = ({
 									<Button
 										className={ classnames(
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
-											{ 'is-selected': 'desktop' === view }
+											{ 'is-selected': 'Desktop' === view }
 										) }
 										onClick={ () => {
 											onToggle();
-											changeViewType( 'desktop' );
+											updateView( 'Desktop' );
 										}}
 									>
 										<Dashicon icon="desktop" />
@@ -80,11 +88,11 @@ const ResponsiveControl = ({
 									<Button
 										className={ classnames(
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
-											{ 'is-selected': 'tablet' === view }
+											{ 'is-selected': 'Tablet' === view }
 										) }
 										onClick={ () => {
 											onToggle();
-											changeViewType( 'tablet' );
+											updateView( 'Tablet' );
 										}}
 									>
 										<Dashicon icon="tablet" />
@@ -96,11 +104,11 @@ const ResponsiveControl = ({
 									<Button
 										className={ classnames(
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
-											{ 'is-selected': 'mobile' === view }
+											{ 'is-selected': 'Mobile' === view }
 										) }
 										onClick={ () => {
 											onToggle();
-											changeViewType( 'mobile' );
+											updateView( 'Mobile' );
 										}}
 									>
 										<Dashicon icon="smartphone" />
@@ -119,4 +127,24 @@ const ResponsiveControl = ({
 	);
 };
 
-export default withInstanceId( ResponsiveControl );
+export default compose(
+	withInstanceId,
+
+	withSelect( ( select ) => {
+		const { getView } = select( 'themeisle-gutenberg/data' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+
+		return {
+			view: __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : getView()
+		};
+	}),
+
+	withDispatch( dispatch => {
+		const { updateView } = dispatch( 'themeisle-gutenberg/data' );
+		const { __experimentalSetPreviewDeviceType } = dispatch( 'core/edit-post' );
+
+		return {
+			updateView: __experimentalSetPreviewDeviceType ? __experimentalSetPreviewDeviceType : updateView
+		};
+	})
+)( ResponsiveControl );

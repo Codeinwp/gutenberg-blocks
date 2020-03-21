@@ -23,6 +23,10 @@ const {
 	SelectControl
 } = wp.components;
 
+const { compose } = wp.compose;
+
+const { withSelect } = wp.data;
+
 const {
 	Fragment,
 	useEffect,
@@ -47,7 +51,8 @@ const Inspector = ({
 	adjacentBlock,
 	parentBlock,
 	updateBlockAttributes,
-	adjacentBlockClientId
+	adjacentBlockClientId,
+	view
 }) => {
 	useEffect( () => {
 		if ( 1 < parentBlock.innerBlocks.length ) {
@@ -77,8 +82,6 @@ const Inspector = ({
 	}, [ isSelected, attributes.columnWidth, parentBlock.innerBlocks.length ]);
 
 	const [ tab, setTab ] = useState( 'layout' );
-	const [ paddingViewType, setPaddingViewType ] = useState( 'desktop' );
-	const [ marginViewType, setMarginViewType ] = useState( 'desktop' );
 
 	const currentBlockWidth = useRef( attributes.columnWidth );
 	const nextBlock = useRef( adjacentBlockClientId && adjacentBlockClientId );
@@ -98,13 +101,13 @@ const Inspector = ({
 	let getPaddingType = () => {
 		let value;
 
-		if ( 'desktop' === paddingViewType ) {
+		if ( 'Desktop' === view ) {
 			value = attributes.paddingType;
 		}
-		if ( 'tablet' === paddingViewType ) {
+		if ( 'Tablet' === view ) {
 			value = attributes.paddingTypeTablet;
 		}
-		if ( 'mobile' === paddingViewType ) {
+		if ( 'Mobile' === view ) {
 			value = attributes.paddingTypeMobile;
 		}
 
@@ -114,13 +117,13 @@ const Inspector = ({
 	getPaddingType = getPaddingType();
 
 	const changePaddingType = value => {
-		if ( 'desktop' === paddingViewType ) {
+		if ( 'Desktop' === view ) {
 			setAttributes({ paddingType: value });
 		}
-		if ( 'tablet' === paddingViewType ) {
+		if ( 'Tablet' === view ) {
 			setAttributes({ paddingTypeTablet: value });
 		}
-		if ( 'mobile' === paddingViewType ) {
+		if ( 'Mobile' === view ) {
 			setAttributes({ paddingTypeMobile: value });
 		}
 	};
@@ -147,7 +150,7 @@ const Inspector = ({
 	};
 
 	const changePadding = ( type, value ) => {
-		if ( 'desktop' === paddingViewType ) {
+		if ( 'Desktop' === view ) {
 			if ( 'linked' === attributes.paddingType ) {
 				setAttributes({ padding: value });
 			} else {
@@ -155,7 +158,7 @@ const Inspector = ({
 			}
 		}
 
-		if ( 'tablet' === paddingViewType ) {
+		if ( 'Tablet' === view ) {
 			if ( 'linked' === attributes.paddingTypeTablet ) {
 				setAttributes({ paddingTablet: value });
 			} else {
@@ -163,7 +166,7 @@ const Inspector = ({
 			}
 		}
 
-		if ( 'mobile' === paddingViewType ) {
+		if ( 'Mobile' === view ) {
 			if ( 'linked' === attributes.paddingTypeMobile ) {
 				setAttributes({ paddingMobile: value });
 			} else {
@@ -176,57 +179,57 @@ const Inspector = ({
 		let value;
 
 		if ( 'top' == type ) {
-			if ( 'desktop' === paddingViewType ) {
+			if ( 'Desktop' === view ) {
 				value = 'linked' === attributes.paddingType ? attributes.padding : attributes.paddingTop;
 			}
 
-			if ( 'tablet' === paddingViewType ) {
+			if ( 'Tablet' === view ) {
 				value = 'linked' === attributes.paddingTypeTablet ? attributes.paddingTablet : attributes.paddingTopTablet;
 			}
 
-			if ( 'mobile' === paddingViewType ) {
+			if ( 'Mobile' === view ) {
 				value = 'linked' === attributes.paddingTypeMobile ? attributes.paddingMobile : attributes.paddingTopMobile;
 			}
 		}
 
 		if ( 'right' == type ) {
-			if ( 'desktop' === paddingViewType ) {
+			if ( 'Desktop' === view ) {
 				value = 'linked' === attributes.paddingType ? attributes.padding : attributes.paddingRight;
 			}
 
-			if ( 'tablet' === paddingViewType ) {
+			if ( 'Tablet' === view ) {
 				value = 'linked' === attributes.paddingTypeTablet ? attributes.paddingTablet : attributes.paddingRightTablet;
 			}
 
-			if ( 'mobile' === paddingViewType ) {
+			if ( 'Mobile' === view ) {
 				value = 'linked' === attributes.paddingTypeMobile ? attributes.paddingMobile : attributes.paddingRightMobile;
 			}
 		}
 
 		if ( 'bottom' == type ) {
-			if ( 'desktop' === paddingViewType ) {
+			if ( 'Desktop' === view ) {
 				value = 'linked' === attributes.paddingType ? attributes.padding : attributes.paddingBottom;
 			}
 
-			if ( 'tablet' === paddingViewType ) {
+			if ( 'Tablet' === view ) {
 				value = 'linked' === attributes.paddingTypeTablet ? attributes.paddingTablet : attributes.paddingBottomTablet;
 			}
 
-			if ( 'mobile' === paddingViewType ) {
+			if ( 'Mobile' === view ) {
 				value = 'linked' === attributes.paddingTypeMobile ? attributes.paddingMobile : attributes.paddingBottomMobile;
 			}
 		}
 
 		if ( 'left' == type ) {
-			if ( 'desktop' === paddingViewType ) {
+			if ( 'Desktop' === view ) {
 				value = 'linked' === attributes.paddingType ? attributes.padding : attributes.paddingLeft;
 			}
 
-			if ( 'tablet' === paddingViewType ) {
+			if ( 'Tablet' === view ) {
 				value = 'linked' === attributes.paddingTypeTablet ? attributes.paddingTablet : attributes.paddingLeftTablet;
 			}
 
-			if ( 'mobile' === paddingViewType ) {
+			if ( 'Mobile' === view ) {
 				value = 'linked' === attributes.paddingTypeMobile ? attributes.paddingMobile : attributes.paddingLeftMobile;
 			}
 		}
@@ -237,13 +240,13 @@ const Inspector = ({
 	let getMarginType = () => {
 		let value;
 
-		if ( 'desktop' === marginViewType ) {
+		if ( 'Desktop' === view ) {
 			value = attributes.marginType;
 		}
-		if ( 'tablet' === marginViewType ) {
+		if ( 'Tablet' === view ) {
 			value = attributes.marginTypeTablet;
 		}
-		if ( 'mobile' === marginViewType ) {
+		if ( 'Mobile' === view ) {
 			value = attributes.marginTypeMobile;
 		}
 
@@ -253,13 +256,13 @@ const Inspector = ({
 	getMarginType = getMarginType();
 
 	const changeMarginType = value => {
-		if ( 'desktop' === marginViewType ) {
+		if ( 'Desktop' === view ) {
 			setAttributes({ marginType: value });
 		}
-		if ( 'tablet' === marginViewType ) {
+		if ( 'Tablet' === view ) {
 			setAttributes({ marginTypeTablet: value });
 		}
-		if ( 'mobile' === marginViewType ) {
+		if ( 'Mobile' === view ) {
 			setAttributes({ marginTypeMobile: value });
 		}
 	};
@@ -286,7 +289,7 @@ const Inspector = ({
 	};
 
 	const changeMargin = ( type, value ) => {
-		if ( 'desktop' === marginViewType ) {
+		if ( 'Desktop' === view ) {
 			if ( 'linked' === attributes.marginType ) {
 				setAttributes({ margin: value });
 			} else {
@@ -294,7 +297,7 @@ const Inspector = ({
 			}
 		}
 
-		if ( 'tablet' === marginViewType ) {
+		if ( 'Tablet' === view ) {
 			if ( 'linked' === attributes.marginTypeTablet ) {
 				setAttributes({ marginTablet: value });
 			} else {
@@ -302,7 +305,7 @@ const Inspector = ({
 			}
 		}
 
-		if ( 'mobile' === marginViewType ) {
+		if ( 'Mobile' === view ) {
 			if ( 'linked' === attributes.marginTypeMobile ) {
 				setAttributes({ marginMobile: value });
 			} else {
@@ -315,57 +318,57 @@ const Inspector = ({
 		let value;
 
 		if ( 'top' == type ) {
-			if ( 'desktop' === marginViewType ) {
+			if ( 'Desktop' === view ) {
 				value = 'linked' === attributes.marginType ? attributes.margin : attributes.marginTop;
 			}
 
-			if ( 'tablet' === marginViewType ) {
+			if ( 'Tablet' === view ) {
 				value = 'linked' === attributes.marginTypeTablet ? attributes.marginTablet : attributes.marginTopTablet;
 			}
 
-			if ( 'mobile' === marginViewType ) {
+			if ( 'Mobile' === view ) {
 				value = 'linked' === attributes.marginTypeMobile ? attributes.marginMobile : attributes.marginTopMobile;
 			}
 		}
 
 		if ( 'right' == type ) {
-			if ( 'desktop' === marginViewType ) {
+			if ( 'Desktop' === view ) {
 				value = 'linked' === attributes.marginType ? attributes.margin : attributes.marginRight;
 			}
 
-			if ( 'tablet' === marginViewType ) {
+			if ( 'Tablet' === view ) {
 				value = 'linked' === attributes.marginTypeTablet ? attributes.marginTablet : attributes.marginRightTablet;
 			}
 
-			if ( 'mobile' === marginViewType ) {
+			if ( 'Mobile' === view ) {
 				value = 'linked' === attributes.marginTypeMobile ? attributes.marginMobile : attributes.marginRightMobile;
 			}
 		}
 
 		if ( 'bottom' == type ) {
-			if ( 'desktop' === marginViewType ) {
+			if ( 'Desktop' === view ) {
 				value = 'linked' === attributes.marginType ? attributes.margin : attributes.marginBottom;
 			}
 
-			if ( 'tablet' === marginViewType ) {
+			if ( 'Tablet' === view ) {
 				value = 'linked' === attributes.marginTypeTablet ? attributes.marginTablet : attributes.marginBottomTablet;
 			}
 
-			if ( 'mobile' === marginViewType ) {
+			if ( 'Mobile' === view ) {
 				value = 'linked' === attributes.marginTypeMobile ? attributes.marginMobile : attributes.marginBottomMobile;
 			}
 		}
 
 		if ( 'left' == type ) {
-			if ( 'desktop' === marginViewType ) {
+			if ( 'Desktop' === view ) {
 				value = 'linked' === attributes.marginType ? attributes.margin : attributes.marginLeft;
 			}
 
-			if ( 'tablet' === marginViewType ) {
+			if ( 'Tablet' === view ) {
 				value = 'linked' === attributes.marginTypeTablet ? attributes.marginTablet : attributes.marginLeftTablet;
 			}
 
-			if ( 'mobile' === marginViewType ) {
+			if ( 'Mobile' === view ) {
 				value = 'linked' === attributes.marginTypeMobile ? attributes.marginMobile : attributes.marginLeftMobile;
 			}
 		}
@@ -602,8 +605,6 @@ const Inspector = ({
 
 						<ResponsiveControl
 							label={ 'Padding' }
-							view={ paddingViewType }
-							changeViewType={ setPaddingViewType }
 						>
 							<SizingControl
 								type={ getPaddingType }
@@ -638,8 +639,6 @@ const Inspector = ({
 
 						<ResponsiveControl
 							label={ 'Margin' }
-							view={ marginViewType }
-							changeViewType={ setMarginViewType }
 						>
 							<SizingControl
 								type={ getMarginType }
@@ -986,4 +985,13 @@ const Inspector = ({
 	);
 };
 
-export default Inspector;
+export default compose(
+	withSelect( ( select ) => {
+		const { getView } = select( 'themeisle-gutenberg/data' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+
+		return {
+			view: __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : getView()
+		};
+	})
+)( Inspector );
