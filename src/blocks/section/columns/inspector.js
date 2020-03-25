@@ -9,6 +9,12 @@ import classnames from 'classnames';
 const { __ } = wp.i18n;
 
 const {
+	ColorPalette,
+	InspectorControls,
+	MediaPlaceholder
+} = wp.blockEditor;
+
+const {
 	BaseControl,
 	Button,
 	ButtonGroup,
@@ -22,11 +28,9 @@ const {
 	SelectControl
 } = wp.components;
 
-const {
-	ColorPalette,
-	InspectorControls,
-	MediaPlaceholder
-} = wp.blockEditor;
+const { compose } = wp.compose;
+
+const { withSelect } = wp.data;
 
 const {
 	Fragment,
@@ -54,15 +58,10 @@ const Inspector = ({
 	setAttributes,
 	updateColumnsWidth,
 	dividerViewType,
-	setDividerViewType
+	setDividerViewType,
+	view
 }) => {
 	const [ tab, setTab ] = useState( 'layout' );
-	const [ columnsViewType, setColumnsViewType ] = useState( 'desktop' );
-	const [ paddingViewType, setPaddingViewType ] = useState( 'desktop' );
-	const [ marginViewType, setMarginViewType ] = useState( 'desktop' );
-	const [ heightViewType, setHeightViewType ] = useState( 'desktop' );
-	const [ dividerWidthViewType, setDividerWidthViewType ] = useState( 'desktop' );
-	const [ dividerHeightViewType, setDividerHeightViewType ] = useState( 'desktop' );
 
 	const changeColumns = value => {
 		if ( 6 >= value ) {
@@ -98,14 +97,14 @@ const Inspector = ({
 
 
 	const changeLayout = value => {
-		if ( 'desktop' === columnsViewType ) {
+		if ( 'Desktop' === view ) {
 			setAttributes({ layout: value });
 			updateColumnsWidth( attributes.columns, value );
 		}
-		if ( 'tablet' === columnsViewType ) {
+		if ( 'Tablet' === view ) {
 			setAttributes({ layoutTablet: value });
 		}
-		if ( 'mobile' === columnsViewType ) {
+		if ( 'Mobile' === view ) {
 			setAttributes({ layoutMobile: value });
 		}
 	};
@@ -118,13 +117,13 @@ const Inspector = ({
 	let getPaddingType = () => {
 		let value;
 
-		if ( 'desktop' === paddingViewType ) {
+		if ( 'Desktop' === view ) {
 			value = attributes.paddingType;
 		}
-		if ( 'tablet' === paddingViewType ) {
+		if ( 'Tablet' === view ) {
 			value = attributes.paddingTypeTablet;
 		}
-		if ( 'mobile' === paddingViewType ) {
+		if ( 'Mobile' === view ) {
 			value = attributes.paddingTypeMobile;
 		}
 
@@ -135,13 +134,13 @@ const Inspector = ({
 
 
 	const changePaddingType = value => {
-		if ( 'desktop' === paddingViewType ) {
+		if ( 'Desktop' === view ) {
 			setAttributes({ paddingType: value });
 		}
-		if ( 'tablet' === paddingViewType ) {
+		if ( 'Tablet' === view ) {
 			setAttributes({ paddingTypeTablet: value });
 		}
-		if ( 'mobile' === paddingViewType ) {
+		if ( 'Mobile' === view ) {
 			setAttributes({ paddingTypeMobile: value });
 		}
 	};
@@ -168,7 +167,7 @@ const Inspector = ({
 	};
 
 	const changePadding = ( type, value ) => {
-		if ( 'desktop' === paddingViewType ) {
+		if ( 'Desktop' === view ) {
 			if ( 'linked' === attributes.paddingType ) {
 				setAttributes({ padding: value });
 			} else {
@@ -176,7 +175,7 @@ const Inspector = ({
 			}
 		}
 
-		if ( 'tablet' === paddingViewType ) {
+		if ( 'Tablet' === view ) {
 			if ( 'linked' === attributes.paddingTypeTablet ) {
 				setAttributes({ paddingTablet: value });
 			} else {
@@ -184,7 +183,7 @@ const Inspector = ({
 			}
 		}
 
-		if ( 'mobile' === paddingViewType ) {
+		if ( 'Mobile' === view ) {
 			if ( 'linked' === attributes.paddingTypeMobile ) {
 				setAttributes({ paddingMobile: value });
 			} else {
@@ -197,57 +196,57 @@ const Inspector = ({
 		let value;
 
 		if ( 'top' == type ) {
-			if ( 'desktop' === paddingViewType ) {
+			if ( 'Desktop' === view ) {
 				value = 'linked' === attributes.paddingType ? attributes.padding : attributes.paddingTop;
 			}
 
-			if ( 'tablet' === paddingViewType ) {
+			if ( 'Tablet' === view ) {
 				value = 'linked' === attributes.paddingTypeTablet ? attributes.paddingTablet : attributes.paddingTopTablet;
 			}
 
-			if ( 'mobile' === paddingViewType ) {
+			if ( 'Mobile' === view ) {
 				value = 'linked' === attributes.paddingTypeMobile ? attributes.paddingMobile : attributes.paddingTopMobile;
 			}
 		}
 
 		if ( 'right' == type ) {
-			if ( 'desktop' === paddingViewType ) {
+			if ( 'Desktop' === view ) {
 				value = 'linked' === attributes.paddingType ? attributes.padding : attributes.paddingRight;
 			}
 
-			if ( 'tablet' === paddingViewType ) {
+			if ( 'Tablet' === view ) {
 				value = 'linked' === attributes.paddingTypeTablet ? attributes.paddingTablet : attributes.paddingRightTablet;
 			}
 
-			if ( 'mobile' === paddingViewType ) {
+			if ( 'Mobile' === view ) {
 				value = 'linked' === attributes.paddingTypeMobile ? attributes.paddingMobile : attributes.paddingRightMobile;
 			}
 		}
 
 		if ( 'bottom' == type ) {
-			if ( 'desktop' === paddingViewType ) {
+			if ( 'Desktop' === view ) {
 				value = 'linked' === attributes.paddingType ? attributes.padding : attributes.paddingBottom;
 			}
 
-			if ( 'tablet' === paddingViewType ) {
+			if ( 'Tablet' === view ) {
 				value = 'linked' === attributes.paddingTypeTablet ? attributes.paddingTablet : attributes.paddingBottomTablet;
 			}
 
-			if ( 'mobile' === paddingViewType ) {
+			if ( 'Mobile' === view ) {
 				value = 'linked' === attributes.paddingTypeMobile ? attributes.paddingMobile : attributes.paddingBottomMobile;
 			}
 		}
 
 		if ( 'left' == type ) {
-			if ( 'desktop' === paddingViewType ) {
+			if ( 'Desktop' === view ) {
 				value = 'linked' === attributes.paddingType ? attributes.padding : attributes.paddingLeft;
 			}
 
-			if ( 'tablet' === paddingViewType ) {
+			if ( 'Tablet' === view ) {
 				value = 'linked' === attributes.paddingTypeTablet ? attributes.paddingTablet : attributes.paddingLeftTablet;
 			}
 
-			if ( 'mobile' === paddingViewType ) {
+			if ( 'Mobile' === view ) {
 				value = 'linked' === attributes.paddingTypeMobile ? attributes.paddingMobile : attributes.paddingLeftMobile;
 			}
 		}
@@ -258,13 +257,13 @@ const Inspector = ({
 	let getMarginType = () => {
 		let value;
 
-		if ( 'desktop' === marginViewType ) {
+		if ( 'Desktop' === view ) {
 			value = attributes.marginType;
 		}
-		if ( 'tablet' === marginViewType ) {
+		if ( 'Tablet' === view ) {
 			value = attributes.marginTypeTablet;
 		}
-		if ( 'mobile' === marginViewType ) {
+		if ( 'Mobile' === view ) {
 			value = attributes.marginTypeMobile;
 		}
 
@@ -274,13 +273,13 @@ const Inspector = ({
 	getMarginType = getMarginType();
 
 	const changeMarginType = value => {
-		if ( 'desktop' === marginViewType ) {
+		if ( 'Desktop' === view ) {
 			setAttributes({ marginType: value });
 		}
-		if ( 'tablet' === marginViewType ) {
+		if ( 'Tablet' === view ) {
 			setAttributes({ marginTypeTablet: value });
 		}
-		if ( 'mobile' === marginViewType ) {
+		if ( 'Mobile' === view ) {
 			setAttributes({ marginTypeMobile: value });
 		}
 	};
@@ -301,7 +300,7 @@ const Inspector = ({
 	};
 
 	const changeMargin = ( type, value ) => {
-		if ( 'desktop' === marginViewType ) {
+		if ( 'Desktop' === view ) {
 			if ( 'linked' === attributes.marginType ) {
 				setAttributes({ margin: value });
 			} else {
@@ -309,7 +308,7 @@ const Inspector = ({
 			}
 		}
 
-		if ( 'tablet' === marginViewType ) {
+		if ( 'Tablet' === view ) {
 			if ( 'linked' === attributes.marginTypeTablet ) {
 				setAttributes({ marginTablet: value });
 			} else {
@@ -317,7 +316,7 @@ const Inspector = ({
 			}
 		}
 
-		if ( 'mobile' === marginViewType ) {
+		if ( 'Mobile' === view ) {
 			if ( 'linked' === attributes.marginTypeMobile ) {
 				setAttributes({ marginMobile: value });
 			} else {
@@ -330,29 +329,29 @@ const Inspector = ({
 		let value;
 
 		if ( 'top' == type ) {
-			if ( 'desktop' === marginViewType ) {
+			if ( 'Desktop' === view ) {
 				value = 'linked' === attributes.marginType ? attributes.margin : attributes.marginTop;
 			}
 
-			if ( 'tablet' === marginViewType ) {
+			if ( 'Tablet' === view ) {
 				value = 'linked' === attributes.marginTypeTablet ? attributes.marginTablet : attributes.marginTopTablet;
 			}
 
-			if ( 'mobile' === marginViewType ) {
+			if ( 'Mobile' === view ) {
 				value = 'linked' === attributes.marginTypeMobile ? attributes.marginMobile : attributes.marginTopMobile;
 			}
 		}
 
 		if ( 'bottom' == type ) {
-			if ( 'desktop' === marginViewType ) {
+			if ( 'Desktop' === view ) {
 				value = 'linked' === attributes.marginType ? attributes.margin : attributes.marginBottom;
 			}
 
-			if ( 'tablet' === marginViewType ) {
+			if ( 'Tablet' === view ) {
 				value = 'linked' === attributes.marginTypeTablet ? attributes.marginTablet : attributes.marginBottomTablet;
 			}
 
-			if ( 'mobile' === marginViewType ) {
+			if ( 'Mobile' === view ) {
 				value = 'linked' === attributes.marginTypeMobile ? attributes.marginMobile : attributes.marginBottomMobile;
 			}
 		}
@@ -381,15 +380,15 @@ const Inspector = ({
 	let getColumnsHeightCustom = () => {
 		let value;
 
-		if ( 'desktop' === heightViewType ) {
+		if ( 'Desktop' === view ) {
 			value = attributes.columnsHeightCustom;
 		}
 
-		if ( 'tablet' === heightViewType ) {
+		if ( 'Tablet' === view ) {
 			value = attributes.columnsHeightCustomTablet;
 		}
 
-		if ( 'mobile' === heightViewType ) {
+		if ( 'Mobile' === view ) {
 			value = attributes.columnsHeightCustomMobile;
 		}
 
@@ -399,13 +398,13 @@ const Inspector = ({
 	getColumnsHeightCustom = getColumnsHeightCustom();
 
 	const changeColumnsHeightCustom = value => {
-		if ( 'desktop' === heightViewType ) {
+		if ( 'Desktop' === view ) {
 			setAttributes({ columnsHeightCustom: value });
 		}
-		if ( 'tablet' === heightViewType ) {
+		if ( 'Tablet' === view ) {
 			setAttributes({ columnsHeightCustomTablet: value });
 		}
-		if ( 'mobile' === heightViewType ) {
+		if ( 'Mobile' === view ) {
 			setAttributes({ columnsHeightCustomMobile: value });
 		}
 	};
@@ -719,29 +718,29 @@ const Inspector = ({
 		let value;
 
 		if ( 'top' == dividerViewType ) {
-			if ( 'desktop' == dividerWidthViewType ) {
+			if ( 'Desktop' == view ) {
 				value = attributes.dividerTopWidth;
 			}
 
-			if ( 'tablet' == dividerWidthViewType ) {
+			if ( 'Tablet' == view ) {
 				value = attributes.dividerTopWidthTablet;
 			}
 
-			if ( 'mobile' == dividerWidthViewType ) {
+			if ( 'Mobile' == view ) {
 				value = attributes.dividerTopWidthMobile;
 			}
 		}
 
 		if ( 'bottom' == dividerViewType ) {
-			if ( 'desktop' == dividerWidthViewType ) {
+			if ( 'Desktop' == view ) {
 				value = attributes.dividerBottomWidth;
 			}
 
-			if ( 'tablet' == dividerWidthViewType ) {
+			if ( 'Tablet' == view ) {
 				value = attributes.dividerBottomWidthTablet;
 			}
 
-			if ( 'mobile' == dividerWidthViewType ) {
+			if ( 'Mobile' == view ) {
 				value = attributes.dividerBottomWidthMobile;
 			}
 		}
@@ -753,29 +752,29 @@ const Inspector = ({
 
 	const changeDividerWidth = value => {
 		if ( 'top' == dividerViewType ) {
-			if ( 'desktop' == dividerWidthViewType ) {
+			if ( 'Desktop' == view ) {
 				setAttributes({ dividerTopWidth: value });
 			}
 
-			if ( 'tablet' == dividerWidthViewType ) {
+			if ( 'Tablet' == view ) {
 				setAttributes({ dividerTopWidthTablet: value });
 			}
 
-			if ( 'mobile' == dividerWidthViewType ) {
+			if ( 'Mobile' == view ) {
 				setAttributes({ dividerTopWidthMobile: value });
 			}
 		}
 
 		if ( 'bottom' == dividerViewType ) {
-			if ( 'desktop' == dividerWidthViewType ) {
+			if ( 'Desktop' == view ) {
 				setAttributes({ dividerBottomWidth: value });
 			}
 
-			if ( 'tablet' == dividerWidthViewType ) {
+			if ( 'Tablet' == view ) {
 				setAttributes({ dividerBottomWidthTablet: value });
 			}
 
-			if ( 'mobile' == dividerWidthViewType ) {
+			if ( 'Mobile' == view ) {
 				setAttributes({ dividerBottomWidthMobile: value });
 			}
 		}
@@ -785,29 +784,29 @@ const Inspector = ({
 		let value;
 
 		if ( 'top' == dividerViewType ) {
-			if ( 'desktop' == dividerHeightViewType ) {
+			if ( 'Desktop' == view ) {
 				value = attributes.dividerTopHeight;
 			}
 
-			if ( 'tablet' == dividerHeightViewType ) {
+			if ( 'Tablet' == view ) {
 				value = attributes.dividerTopHeightTablet;
 			}
 
-			if ( 'mobile' == dividerHeightViewType ) {
+			if ( 'Mobile' == view ) {
 				value = attributes.dividerTopHeightMobile;
 			}
 		}
 
 		if ( 'bottom' == dividerViewType ) {
-			if ( 'desktop' == dividerHeightViewType ) {
+			if ( 'Desktop' == view ) {
 				value = attributes.dividerBottomHeight;
 			}
 
-			if ( 'tablet' == dividerHeightViewType ) {
+			if ( 'Tablet' == view ) {
 				value = attributes.dividerBottomHeightTablet;
 			}
 
-			if ( 'mobile' == dividerHeightViewType ) {
+			if ( 'Mobile' == view ) {
 				value = attributes.dividerBottomHeightMobile;
 			}
 		}
@@ -819,29 +818,29 @@ const Inspector = ({
 
 	const changeDividerHeight = value => {
 		if ( 'top' == dividerViewType ) {
-			if ( 'desktop' == dividerHeightViewType ) {
+			if ( 'Desktop' == view ) {
 				setAttributes({ dividerTopHeight: value });
 			}
 
-			if ( 'tablet' == dividerHeightViewType ) {
+			if ( 'Tablet' == view ) {
 				setAttributes({ dividerTopHeightTablet: value });
 			}
 
-			if ( 'mobile' == dividerHeightViewType ) {
+			if ( 'Mobile' == view ) {
 				setAttributes({ dividerTopHeightMobile: value });
 			}
 		}
 
 		if ( 'bottom' == dividerViewType ) {
-			if ( 'desktop' == dividerHeightViewType ) {
+			if ( 'Desktop' == view ) {
 				setAttributes({ dividerBottomHeight: value });
 			}
 
-			if ( 'tablet' == dividerHeightViewType ) {
+			if ( 'Tablet' == view ) {
 				setAttributes({ dividerBottomHeightTablet: value });
 			}
 
-			if ( 'mobile' == dividerHeightViewType ) {
+			if ( 'Mobile' == view ) {
 				setAttributes({ dividerBottomHeightMobile: value });
 			}
 		}
@@ -874,22 +873,22 @@ const Inspector = ({
 	};
 
 	const changeHideStatus = ( value, type ) => {
-		if ( 'desktop' === type ) {
+		if ( 'Desktop' === type ) {
 			setAttributes({ hide: value });
 		}
-		if ( 'tablet' === type ) {
+		if ( 'Tablet' === type ) {
 			setAttributes({ hideTablet: value });
 		}
-		if ( 'mobile' === type ) {
+		if ( 'Mobile' === type ) {
 			setAttributes({ hideMobile: value });
 		}
 	};
 
 	const changeReverseColumns = ( value, type ) => {
-		if ( 'tablet' === type ) {
+		if ( 'Tablet' === type ) {
 			setAttributes({ reverseColumnsTablet: value });
 		}
-		if ( 'mobile' === type ) {
+		if ( 'Mobile' === type ) {
 			setAttributes({ reverseColumnsMobile: value });
 		}
 	};
@@ -969,8 +968,6 @@ const Inspector = ({
 								layout={ attributes.layout }
 								layoutTablet={ attributes.layoutTablet }
 								layoutMobile={ attributes.layoutMobile }
-								view={ columnsViewType }
-								changeViewType={ setColumnsViewType }
 								onClick={ changeLayout }
 							/>
 
@@ -995,8 +992,6 @@ const Inspector = ({
 						>
 							<ResponsiveControl
 								label={ 'Padding' }
-								view={ paddingViewType }
-								changeViewType={ setPaddingViewType }
 							>
 								<SizingControl
 									type={ getPaddingType }
@@ -1031,8 +1026,6 @@ const Inspector = ({
 
 							<ResponsiveControl
 								label={ 'Margin' }
-								view={ marginViewType }
-								changeViewType={ setMarginViewType }
 							>
 								<SizingControl
 									type={ getMarginType }
@@ -1125,8 +1118,6 @@ const Inspector = ({
 							{ 'custom' === attributes.columnsHeight && (
 								<ResponsiveControl
 									label={ 'Custom Height' }
-									view={ heightViewType }
-									changeViewType={ setHeightViewType }
 								>
 									<RangeControl
 										value={ getColumnsHeightCustom || '' }
@@ -1749,8 +1740,6 @@ const Inspector = ({
 
 									<ResponsiveControl
 										label={ 'Width' }
-										view={ dividerWidthViewType }
-										changeViewType={ setDividerWidthViewType }
 									>
 										<RangeControl
 											value={ getDividerWidth }
@@ -1762,8 +1751,6 @@ const Inspector = ({
 
 									<ResponsiveControl
 										label={ 'Height' }
-										view={ dividerHeightViewType }
-										changeViewType={ setDividerHeightViewType }
 									>
 										<RangeControl
 											value={ getDividerHeight }
@@ -1859,4 +1846,13 @@ const Inspector = ({
 	);
 };
 
-export default Inspector;
+export default compose(
+	withSelect( ( select ) => {
+		const { getView } = select( 'themeisle-gutenberg/data' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+
+		return {
+			view: __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : getView()
+		};
+	})
+)( Inspector );
