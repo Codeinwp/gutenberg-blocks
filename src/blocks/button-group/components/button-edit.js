@@ -43,10 +43,13 @@ const Button = ({
 		background: attributes.data[index].background,
 		border: `${ attributes.data[index].borderSize }px solid ${ attributes.data[index].border }`,
 		borderRadius: `${ attributes.data[index].borderRadius }px`,
-		...boxShadowStyle,
-		padding: `${ attributes.data[index].paddingTopBottom }px ${ attributes.data[index].paddingLeftRight }px`,
+		paddingTop: `${ attributes.data[index].paddingTopBottom }px`,
+		paddingBottom: `${ attributes.data[index].paddingTopBottom }px`,
+		paddingLeft: `${ attributes.data[index].paddingLeftRight }px`,
+		paddingRight: `${ attributes.data[index].paddingLeftRight }px`,
 		marginLeft: 0 === index ? '0px' : `${ attributes.spacing / 2 }px`,
-		marginRight: attributes.buttons === index + 1 ? '0px' : `${ attributes.spacing / 2 }px`
+		marginRight: attributes.buttons === index + 1 ? '0px' : `${ attributes.spacing / 2 }px`,
+		...boxShadowStyle
 	};
 
 	return (

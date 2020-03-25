@@ -105,7 +105,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 					$direction = 'at ' . $this->get_attr_value( ( isset( $attr['backgroundGradientPosition'] ) ? $attr['backgroundGradientPosition'] : null ), 'center center' );
 				}
 
-				$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundGradientType'] ) ? $attr['backgroundGradientType'] : null ), 'linear' ) . '-gradient( ' . $direction . ', ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstColor'] ) ? $attr['backgroundGradientFirstColor'] : null ), 'rgba( 0, 0, 0, 0 )' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstLocation'] ) ? $attr['backgroundGradientFirstLocation'] : null ), 0 ) . '%, ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondColor'] ) ? $attr['backgroundGradientSecondColor'] : null ), 'rgba( 0, 0, 0, 0 )' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondLocation'] ) ? $attr['backgroundGradientSecondLocation'] : null ), 100 ) . '% );' . "\n";
+				$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundGradientType'] ) ? $attr['backgroundGradientType'] : null ), 'linear' ) . '-gradient( ' . $direction . ', ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstColor'] ) ? $attr['backgroundGradientFirstColor'] : null ), '#36d1dc' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstLocation'] ) ? $attr['backgroundGradientFirstLocation'] : null ), 0 ) . '%, ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondColor'] ) ? $attr['backgroundGradientSecondColor'] : null ), '#5b86e5' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondLocation'] ) ? $attr['backgroundGradientSecondLocation'] : null ), 100 ) . '% );' . "\n";
 			}
 
 			if ( 'linked' === $this->get_attr_value( ( isset( $attr['borderType'] ) ? $attr['borderType'] : null ), 'linked' ) ) {
@@ -139,7 +139,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n";
 
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-overlay {' . "\n";
+			$style .= '#' . $attr['id'] . ' > .wp-block-themeisle-blocks-advanced-columns-overlay {' . "\n";
 			if ( 'color' === $this->get_attr_value( ( isset( $attr['backgroundOverlayType'] ) ? $attr['backgroundOverlayType'] : null ), 'color' ) ) {
 				if ( isset( $attr['backgroundOverlayColor'] ) ) {
 					$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayColor'] ) ? $attr['backgroundOverlayColor'] : null ) ) . ';' . "\n";
@@ -179,7 +179,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 					$direction = 'at ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientPosition'] ) ? $attr['backgroundOverlayGradientPosition'] : null ), 'center center' );
 				}
 	
-				$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientType'] ) ? $attr['backgroundOverlayGradientType'] : null ), 'linear' ) . '-gradient( ' . $direction . ', ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientFirstColor'] ) ? $attr['backgroundOverlayGradientFirstColor'] : null ), 'rgba( 0, 0, 0, 0 )' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientFirstLocation'] ) ? $attr['backgroundOverlayGradientFirstLocation'] : null ), 0 ) . '%, ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientSecondColor'] ) ? $attr['backgroundOverlayGradientSecondColor'] : null ), 'rgba( 0, 0, 0, 0 )' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientSecondLocation'] ) ? $attr['backgroundOverlayGradientSecondLocation'] : null ), 100 ) . '% );' . "\n";
+				$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientType'] ) ? $attr['backgroundOverlayGradientType'] : null ), 'linear' ) . '-gradient( ' . $direction . ', ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientFirstColor'] ) ? $attr['backgroundOverlayGradientFirstColor'] : null ), '#36d1dc' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientFirstLocation'] ) ? $attr['backgroundOverlayGradientFirstLocation'] : null ), 0 ) . '%, ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientSecondColor'] ) ? $attr['backgroundOverlayGradientSecondColor'] : null ), '#5b86e5' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientSecondLocation'] ) ? $attr['backgroundOverlayGradientSecondLocation'] : null ), 100 ) . '% );' . "\n";
 				$style .= '	opacity: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayOpacity'] ) ? $attr['backgroundOverlayOpacity'] : null ), 50 ) / 100 . ';' . "\n";
 			}
 
