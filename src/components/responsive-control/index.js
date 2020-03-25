@@ -10,8 +10,8 @@ const { __ } = wp.i18n;
 
 const {
 	Button,
-	Dashicon,
 	Dropdown,
+	Icon,
 	IconButton
 } = wp.components;
 
@@ -29,6 +29,8 @@ const {
  * Internal dependencies
  */
 import './editor.scss';
+
+import { checkIcon } from '../../helpers/icons.js';
 
 const ResponsiveControl = ({
 	instanceId,
@@ -63,10 +65,10 @@ const ResponsiveControl = ({
 									aria-expanded={ isOpen }
 								/>
 							) }
-							renderContent={ ({ onToggle }) => (
+							renderContent={ () => (
 								<div className="wp-block-themeisle-blocks-responsive-control-settings">
 									<div className="wp-block-themeisle-blocks-responsive-control-settings-title">
-										{ __( 'Responsiveness Settings' ) }
+										{ __( 'View' ) }
 									</div>
 
 									<Button
@@ -74,12 +76,9 @@ const ResponsiveControl = ({
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'Desktop' === view }
 										) }
-										onClick={ () => {
-											onToggle();
-											updateView( 'Desktop' );
-										}}
+										onClick={ () => updateView( 'Desktop' ) }
 									>
-										<Dashicon icon="desktop" />
+										{ 'Desktop' === view && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
 											{ __( 'Desktop' ) }
 										</span>
@@ -90,14 +89,11 @@ const ResponsiveControl = ({
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'Tablet' === view }
 										) }
-										onClick={ () => {
-											onToggle();
-											updateView( 'Tablet' );
-										}}
+										onClick={ () => updateView( 'Tablet' ) }
 									>
-										<Dashicon icon="tablet" />
+										{ 'Tablet' === view && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
-											{ __( 'Tablet Devices' ) }
+											{ __( 'Tablet' ) }
 										</span>
 									</Button>
 
@@ -106,14 +102,11 @@ const ResponsiveControl = ({
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'Mobile' === view }
 										) }
-										onClick={ () => {
-											onToggle();
-											updateView( 'Mobile' );
-										}}
+										onClick={ () => updateView( 'Mobile' ) }
 									>
-										<Dashicon icon="smartphone" />
+										{ 'Mobile' === view && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
-											{ __( 'Smartphones' ) }
+											{ __( 'Mobile' ) }
 										</span>
 									</Button>
 								</div>
