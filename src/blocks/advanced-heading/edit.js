@@ -16,6 +16,10 @@ const { createBlock } = wp.blocks;
 
 const { RichText } = wp.blockEditor;
 
+const { compose } = wp.compose;
+
+const { withSelect } = wp.data;
+
 const {
 	Fragment,
 	useEffect
@@ -45,7 +49,10 @@ const Edit = ({
 	isLarger,
 	isLarge,
 	isSmall,
-	isSmaller
+	isSmaller,
+	isPreviewDesktop,
+	isPreviewTablet,
+	isPreviewMobile
 }) => {
 	useEffect( () => {
 		initBlock();
@@ -91,11 +98,11 @@ const Edit = ({
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
-	const isDesktop = ( isLarger && ! isLarge && isSmall && ! isSmaller );
+	const isDesktop = isPreviewDesktop || ( isLarger && ! isLarge && isSmall && ! isSmaller );
 
-	const isTablet = ( ! isLarger && ! isLarge && isSmall && ! isSmaller );
+	const isTablet = isPreviewTablet || ( ! isLarger && ! isLarge && isSmall && ! isSmaller );
 
-	const isMobile = ( ! isLarger && ! isLarge && ! isSmall && ! isSmaller );
+	const isMobile = isPreviewMobile || ( ! isLarger && ! isLarge && ! isSmall && ! isSmaller );
 
 	const changeContent = value => {
 		setAttributes({ content: value });
@@ -274,9 +281,21 @@ const Edit = ({
 	);
 };
 
-export default withViewportMatch({
-	isLarger: '>= large',
-	isLarge: '<= large',
-	isSmall: '>= small',
-	isSmaller: '<= small'
-})( Edit );
+export default compose(
+	withViewportMatch({
+		isLarger: '>= large',
+		isLarge: '<= large',
+		isSmall: '>= small',
+		isSmaller: '<= small'
+	}),
+
+	withSelect( ( select ) => {
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+
+		return {
+			isPreviewDesktop: __experimentalGetPreviewDeviceType ? 'Desktop' === __experimentalGetPreviewDeviceType() : false,
+			isPreviewTablet: __experimentalGetPreviewDeviceType ? 'Tablet' === __experimentalGetPreviewDeviceType() : false,
+			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false
+		};
+	})
+)( Edit );

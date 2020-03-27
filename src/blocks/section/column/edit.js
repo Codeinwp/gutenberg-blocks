@@ -54,7 +54,11 @@ const Edit = ({
 	isLarger,
 	isLarge,
 	isSmall,
-	isSmaller
+	isSmaller,
+	isViewportAvailable,
+	isPreviewDesktop,
+	isPreviewTablet,
+	isPreviewMobile
 }) => {
 	useEffect( () => {
 		initBlock();
@@ -103,11 +107,11 @@ const Edit = ({
 	const [ currentWidth, setCurrentWidth ] = useState( 0 );
 	const [ nextWidth, setNextWidth ] = useState( 0 );
 
-	const isDesktop = ( isLarger && ! isLarge && isSmall && ! isSmaller );
+	const isDesktop = isViewportAvailable ? ( isPreviewDesktop && ! isPreviewTablet && ! isPreviewMobile ) : ( isLarger && ! isLarge && isSmall && ! isSmaller );
 
-	const isTablet = ( ! isLarger && ! isLarge && isSmall && ! isSmaller );
+	const isTablet = isViewportAvailable ? ( isPreviewTablet && ! isPreviewDesktop && ! isPreviewMobile ) : ( ! isLarger && ! isLarge && isSmall && ! isSmaller );
 
-	const isMobile = ( ! isLarger && ! isLarge && ! isSmall && ! isSmaller );
+	const isMobile = isViewportAvailable ? ( isPreviewMobile && ! isPreviewDesktop && ! isPreviewTablet ) : ( ! isLarger && ! isLarge && ! isSmall && ! isSmaller );
 
 	if ( attributes.columnWidth === undefined ) {
 		( parentBlock.innerBlocks ).map( ( innerBlock, i ) => {
@@ -354,6 +358,7 @@ export default compose(
 			getBlock,
 			getBlockRootClientId
 		} = select( 'core/block-editor' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
 		const block = getBlock( clientId );
 		const adjacentBlockClientId = getAdjacentBlockClientId( clientId );
 		const adjacentBlock = getBlock( adjacentBlockClientId );
@@ -366,7 +371,11 @@ export default compose(
 			adjacentBlock,
 			parentClientId,
 			parentBlock,
-			hasInnerBlocks
+			hasInnerBlocks,
+			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
+			isPreviewDesktop: __experimentalGetPreviewDeviceType ? 'Desktop' === __experimentalGetPreviewDeviceType() : false,
+			isPreviewTablet: __experimentalGetPreviewDeviceType ? 'Tablet' === __experimentalGetPreviewDeviceType() : false,
+			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false
 		};
 	}),
 
