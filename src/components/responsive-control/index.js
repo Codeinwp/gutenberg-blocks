@@ -25,6 +25,8 @@ const {
 	withDispatch
 } = wp.data;
 
+const { withViewportMatch } = wp.viewport;
+
 /**
  * Internal dependencies
  */
@@ -123,21 +125,30 @@ const ResponsiveControl = ({
 export default compose(
 	withInstanceId,
 
-	withSelect( ( select ) => {
+	withViewportMatch({
+		isLarger: '>= large',
+		isLarge: '<= large',
+		isSmall: '>= small',
+		isSmaller: '<= small'
+	}),
+
+	withSelect( ( select, props ) => {
 		const { getView } = select( 'themeisle-gutenberg/data' );
 		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+		const isMobile = ! props.isLarger && ! props.isLarge && ! props.isSmall && ! props.isSmaller;
 
 		return {
-			view: __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : getView()
+			view: __experimentalGetPreviewDeviceType && ! isMobile ? __experimentalGetPreviewDeviceType() : getView()
 		};
 	}),
 
-	withDispatch( dispatch => {
+	withDispatch( ( dispatch, props ) => {
 		const { updateView } = dispatch( 'themeisle-gutenberg/data' );
 		const { __experimentalSetPreviewDeviceType } = dispatch( 'core/edit-post' );
+		const isMobile = ! props.isLarger && ! props.isLarge && ! props.isSmall && ! props.isSmaller;
 
 		return {
-			updateView: __experimentalSetPreviewDeviceType ? __experimentalSetPreviewDeviceType : updateView
+			updateView: __experimentalSetPreviewDeviceType && ! isMobile ? __experimentalSetPreviewDeviceType : updateView
 		};
 	})
 )( ResponsiveControl );
