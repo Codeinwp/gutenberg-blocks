@@ -108,11 +108,17 @@ const Edit = ({
 
 	const [ dividerViewType, setDividerViewType ] = useState( 'top' );
 
-	const isDesktop = isViewportAvailable ? ( isPreviewDesktop && ! isPreviewTablet && ! isPreviewMobile ) : ( isLarger && ! isLarge && isSmall && ! isSmaller );
+	let isDesktop = isLarger && ! isLarge && isSmall && ! isSmaller;
 
-	const isTablet = isViewportAvailable ? ( isPreviewTablet && ! isPreviewDesktop && ! isPreviewMobile ) : ( ! isLarger && ! isLarge && isSmall && ! isSmaller );
+	let isTablet = ! isLarger && ! isLarge && isSmall && ! isSmaller;
 
-	const isMobile = isViewportAvailable ? ( isPreviewMobile && ! isPreviewDesktop && ! isPreviewTablet ) : ( ! isLarger && ! isLarge && ! isSmall && ! isSmaller );
+	let isMobile = ! isLarger && ! isLarge && ! isSmall && ! isSmaller;
+
+	if ( isViewportAvailable && ! isMobile ) {
+		isDesktop = isPreviewDesktop;
+		isTablet = isPreviewTablet;
+		isMobile = isPreviewMobile;
+	}
 
 	const Tag = attributes.columnsHTMLTag;
 
@@ -502,5 +508,4 @@ export default compose(
 		isSmall: '>= small',
 		isSmaller: '<= small'
 	})
-
 )( Edit );

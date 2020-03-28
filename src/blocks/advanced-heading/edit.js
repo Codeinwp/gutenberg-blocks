@@ -98,11 +98,17 @@ const Edit = ({
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
-	const isDesktop = isPreviewDesktop || ( isLarger && ! isLarge && isSmall && ! isSmaller );
+	let isDesktop = isLarger && ! isLarge && isSmall && ! isSmaller;
 
-	const isTablet = isPreviewTablet || ( ! isLarger && ! isLarge && isSmall && ! isSmaller );
+	let isTablet = ! isLarger && ! isLarge && isSmall && ! isSmaller;
 
-	const isMobile = isPreviewMobile || ( ! isLarger && ! isLarge && ! isSmall && ! isSmaller );
+	let isMobile = ! isLarger && ! isLarge && ! isSmall && ! isSmaller;
+
+	if ( isViewportAvailable && ! isMobile ) {
+		isDesktop = isPreviewDesktop;
+		isTablet = isPreviewTablet;
+		isMobile = isPreviewMobile;
+	}
 
 	const changeContent = value => {
 		setAttributes({ content: value });
