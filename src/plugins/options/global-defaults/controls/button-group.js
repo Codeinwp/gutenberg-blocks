@@ -58,7 +58,7 @@ const ButtonGroupBlock = ({
 	return (
 		<Fragment>
 			<PanelBody
-				title={ __( 'Color' ) }
+				title={ __( 'Color & Border' ) }
 			>
 				<ButtonGroup className="wp-block-themeisle-blocks-button-group-hover-control">
 					<Button
@@ -103,6 +103,18 @@ const ButtonGroupBlock = ({
 								onChange={ value => changeData( 'hoverBackground', value ) }
 							/>
 						</BaseControl>
+
+						<hr/>
+
+						<BaseControl
+							label={ 'Hover Border' }
+						>
+							<ColorPalette
+								label={ 'Hover Border' }
+								value={ defaults.data.hoverBorder }
+								onChange={ value => changeData( 'hoverBorder', value ) }
+							/>
+						</BaseControl>
 					</Fragment>
 				) : (
 					<Fragment>
@@ -127,8 +139,40 @@ const ButtonGroupBlock = ({
 								onChange={ value => changeData( 'background', value ) }
 							/>
 						</BaseControl>
+
+						<hr/>
+
+						<BaseControl
+							label={ 'Border' }
+						>
+							<ColorPalette
+								label={ 'Border' }
+								value={ defaults.data.border }
+								onChange={ value => changeData( 'border', value ) }
+							/>
+						</BaseControl>
 					</Fragment>
 				) }
+
+				<hr/>
+
+				<RangeControl
+					label={ __( 'Border Size' ) }
+					value={ defaults.data.borderSize || '' }
+					onChange={ value => changeData( 'borderSize', value ) }
+					min={ 0 }
+					max={ 10 }
+				/>
+
+				<hr/>
+
+				<RangeControl
+					label={ __( 'Border Radius' ) }
+					value={ defaults.data.borderRadius || '' }
+					onChange={ value => changeData( 'borderRadius', value ) }
+					min={ 0 }
+					max={ 100 }
+				/>
 			</PanelBody>
 
 			<PanelBody
