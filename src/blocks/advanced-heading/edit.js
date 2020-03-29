@@ -50,6 +50,7 @@ const Edit = ({
 	isLarge,
 	isSmall,
 	isSmaller,
+	isViewportAvailable,
 	isPreviewDesktop,
 	isPreviewTablet,
 	isPreviewMobile
@@ -299,6 +300,7 @@ export default compose(
 		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
 
 		return {
+			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
 			isPreviewDesktop: __experimentalGetPreviewDeviceType ? 'Desktop' === __experimentalGetPreviewDeviceType() : false,
 			isPreviewTablet: __experimentalGetPreviewDeviceType ? 'Tablet' === __experimentalGetPreviewDeviceType() : false,
 			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false
