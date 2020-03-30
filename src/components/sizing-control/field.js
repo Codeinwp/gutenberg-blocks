@@ -2,14 +2,8 @@
  * WordPress dependencies
  */
 const {
-	Popover,
-	RangeControl
-} = wp.components;
-
-const {
 	Fragment,
-	useRef,
-	useState
+	useRef
 } = wp.element;
 
 const Field = ({
@@ -20,15 +14,7 @@ const Field = ({
 	max,
 	onChange
 }) => {
-	const [ isOpen, setOpen ] = useState( false );
-
 	const fieldRef = useRef( null );
-
-	const onClose = () => {
-		if ( ! fieldRef.current.contains( document.activeElement ) ) {
-			setOpen( false );
-		}
-	};
 
 	return (
 		<div className="wp-block-themeisle-blocks-sizing-control-item">
@@ -45,29 +31,12 @@ const Field = ({
 						type="number"
 						className="wp-block-themeisle-blocks-sizing-control-item-input"
 						id={ `wp-block-themeisle-blocks-sizing-control-item-input-${ option }-${ id }` }
-						value={ index.value || '' }
+						value={ undefined !== index.value ? index.value : '' }
 						min={ min }
 						max={ max }
 						ref={ fieldRef }
-						onFocus={  () => setOpen( ! isOpen )  }
 						onChange={ e => onChange( index.type, parseInt( e.target.value ) ) }
 					/>
-
-					{ isOpen && (
-						<Popover onFocusOutside={ onClose }>
-							<div className="wp-block-themeisle-blocks-sizing-control-overlay">
-								<RangeControl
-									value={ index.value }
-									initialPosition={ index.value }
-									beforeIcon="minus"
-									afterIcon="plus"
-									min={ min }
-									max={ max }
-									onChange={ e => onChange( index.type, e ) }
-								/>
-							</div>
-						</Popover>
-					) }
 				</Fragment>
 			) }
 

@@ -16,6 +16,10 @@ const { createBlock } = wp.blocks;
 
 const { RichText } = wp.blockEditor;
 
+const { compose } = wp.compose;
+
+const { withSelect } = wp.data;
+
 const {
 	Fragment,
 	useEffect
@@ -45,7 +49,11 @@ const Edit = ({
 	isLarger,
 	isLarge,
 	isSmall,
-	isSmaller
+	isSmaller,
+	isViewportAvailable,
+	isPreviewDesktop,
+	isPreviewTablet,
+	isPreviewMobile
 }) => {
 	useEffect( () => {
 		initBlock();
@@ -91,11 +99,17 @@ const Edit = ({
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
-	const isDesktop = ( isLarger && ! isLarge && isSmall && ! isSmaller );
+	let isDesktop = isLarger && ! isLarge && isSmall && ! isSmaller;
 
-	const isTablet = ( ! isLarger && ! isLarge && isSmall && ! isSmaller );
+	let isTablet = ! isLarger && ! isLarge && isSmall && ! isSmaller;
 
-	const isMobile = ( ! isLarger && ! isLarge && ! isSmall && ! isSmaller );
+	let isMobile = ! isLarger && ! isLarge && ! isSmall && ! isSmaller;
+
+	if ( isViewportAvailable && ! isMobile ) {
+		isDesktop = isPreviewDesktop;
+		isTablet = isPreviewTablet;
+		isMobile = isPreviewMobile;
+	}
 
 	const changeContent = value => {
 		setAttributes({ content: value });
@@ -274,9 +288,22 @@ const Edit = ({
 	);
 };
 
-export default withViewportMatch({
-	isLarger: '>= large',
-	isLarge: '<= large',
-	isSmall: '>= small',
-	isSmaller: '<= small'
-})( Edit );
+export default compose(
+	withViewportMatch({
+		isLarger: '>= large',
+		isLarge: '<= large',
+		isSmall: '>= small',
+		isSmaller: '<= small'
+	}),
+
+	withSelect( ( select ) => {
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+
+		return {
+			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
+			isPreviewDesktop: __experimentalGetPreviewDeviceType ? 'Desktop' === __experimentalGetPreviewDeviceType() : false,
+			isPreviewTablet: __experimentalGetPreviewDeviceType ? 'Tablet' === __experimentalGetPreviewDeviceType() : false,
+			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false
+		};
+	})
+)( Edit );

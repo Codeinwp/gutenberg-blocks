@@ -34,7 +34,7 @@ const BlockItem = ({
 	return (
 		<Fragment>
 			<Button
-				className="wp-block-themeisle-blocks-options-global-defaults-list-item"
+				className="wp-block-themeisle-blocks-options-global-defaults-list-item block-editor-block-types-list__item"
 				onClick={ () => setOpen( true ) }
 			>
 				<div className="wp-block-themeisle-blocks-options-global-defaults-list-item-icon">
