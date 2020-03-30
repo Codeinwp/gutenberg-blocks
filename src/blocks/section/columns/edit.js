@@ -56,7 +56,11 @@ const Edit = ({
 	isLarger,
 	isLarge,
 	isSmall,
-	isSmaller
+	isSmaller,
+	isViewportAvailable,
+	isPreviewDesktop,
+	isPreviewTablet,
+	isPreviewMobile
 }) => {
 	useEffect( () => {
 		initBlock();
@@ -104,11 +108,17 @@ const Edit = ({
 
 	const [ dividerViewType, setDividerViewType ] = useState( 'top' );
 
-	const isDesktop = ( isLarger && ! isLarge && isSmall && ! isSmaller );
+	let isDesktop = isLarger && ! isLarge && isSmall && ! isSmaller;
 
-	const isTablet = ( ! isLarger && ! isLarge && isSmall && ! isSmaller );
+	let isTablet = ! isLarger && ! isLarge && isSmall && ! isSmaller;
 
-	const isMobile = ( ! isLarger && ! isLarge && ! isSmall && ! isSmaller );
+	let isMobile = ! isLarger && ! isLarge && ! isSmall && ! isSmaller;
+
+	if ( isViewportAvailable && ! isMobile ) {
+		isDesktop = isPreviewDesktop;
+		isTablet = isPreviewTablet;
+		isMobile = isPreviewMobile;
+	}
 
 	const Tag = attributes.columnsHTMLTag;
 
@@ -287,7 +297,10 @@ const Edit = ({
 		`has-${ attributes.columnsGap }-gap`,
 		`has-vertical-${ attributes.verticalAlign }`,
 		{ 'has-reverse-columns-tablet': ( attributes.reverseColumnsTablet && ! attributes.hideTablet && 'collapsedRows' === attributes.layoutTablet ) },
-		{ 'has-reverse-columns-mobile': ( attributes.reverseColumnsMobile && ! attributes.hideMobile && 'collapsedRows' === attributes.layoutMobile ) }
+		{ 'has-reverse-columns-mobile': ( attributes.reverseColumnsMobile && ! attributes.hideMobile && 'collapsedRows' === attributes.layoutMobile ) },
+		{ 'has-viewport-desktop': isDesktop },
+		{ 'has-viewport-tablet': isTablet },
+		{ 'has-viewport-mobile': isMobile }
 	);
 
 	const updateColumnsWidth = ( columns, layout ) => {
@@ -477,10 +490,15 @@ export default compose(
 	withSelect( ( select, props ) => {
 		const { clientId } = props;
 		const { getBlock } = select( 'core/block-editor' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
 		const sectionBlock = getBlock( clientId );
 
 		return {
-			sectionBlock
+			sectionBlock,
+			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
+			isPreviewDesktop: __experimentalGetPreviewDeviceType ? 'Desktop' === __experimentalGetPreviewDeviceType() : false,
+			isPreviewTablet: __experimentalGetPreviewDeviceType ? 'Tablet' === __experimentalGetPreviewDeviceType() : false,
+			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false
 		};
 	}),
 
@@ -490,5 +508,4 @@ export default compose(
 		isSmall: '>= small',
 		isSmaller: '<= small'
 	})
-
 )( Edit );

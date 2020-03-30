@@ -10,29 +10,48 @@ const { __ } = wp.i18n;
 
 const {
 	Button,
-	Dashicon,
 	Dropdown,
+	Icon,
 	IconButton
 } = wp.components;
 
-const { withInstanceId } = wp.compose;
+const {
+	compose,
+	withInstanceId
+} = wp.compose;
+
+const {
+	withSelect,
+	withDispatch
+} = wp.data;
+
+const { withViewportMatch } = wp.viewport;
 
 /**
  * Internal dependencies
  */
 import './editor.scss';
 
+import { checkIcon } from '../../helpers/icons.js';
+
 const ResponsiveControl = ({
 	instanceId,
 	label,
-	changeViewType,
+	className,
+	children,
 	view,
-	children
+	updateView
 }) => {
 	const id = `inspector-responsive-control-${ instanceId }`;
 
 	return (
-		<div id={ id } className="wp-block-themeisle-blocks-responsive-control">
+		<div
+			id={ id }
+			className={ classnames(
+				'wp-block-themeisle-blocks-responsive-control',
+				className
+			) }
+		>
 			<div className="components-base-control__field">
 				<div className="components-base-control__title">
 					<label className="components-base-control__label">{ label }</label>
@@ -41,30 +60,27 @@ const ResponsiveControl = ({
 							position="top left"
 							renderToggle={ ({ isOpen, onToggle }) => (
 								<IconButton
-									icon={ 'mobile' === view ? 'smartphone' : view }
+									icon={ 'Mobile' === view ? 'smartphone' : view.toLowerCase() }
 									label={ __( 'Responsiveness Settings' ) }
 									className="is-button"
 									onClick={ onToggle }
 									aria-expanded={ isOpen }
 								/>
 							) }
-							renderContent={ ({ onToggle }) => (
+							renderContent={ () => (
 								<div className="wp-block-themeisle-blocks-responsive-control-settings">
 									<div className="wp-block-themeisle-blocks-responsive-control-settings-title">
-										{ __( 'Responsiveness Settings' ) }
+										{ __( 'View' ) }
 									</div>
 
 									<Button
 										className={ classnames(
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
-											{ 'is-selected': 'desktop' === view }
+											{ 'is-selected': 'Desktop' === view }
 										) }
-										onClick={ () => {
-											onToggle();
-											changeViewType( 'desktop' );
-										}}
+										onClick={ () => updateView( 'Desktop' ) }
 									>
-										<Dashicon icon="desktop" />
+										{ 'Desktop' === view && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
 											{ __( 'Desktop' ) }
 										</span>
@@ -73,32 +89,26 @@ const ResponsiveControl = ({
 									<Button
 										className={ classnames(
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
-											{ 'is-selected': 'tablet' === view }
+											{ 'is-selected': 'Tablet' === view }
 										) }
-										onClick={ () => {
-											onToggle();
-											changeViewType( 'tablet' );
-										}}
+										onClick={ () => updateView( 'Tablet' ) }
 									>
-										<Dashicon icon="tablet" />
+										{ 'Tablet' === view && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
-											{ __( 'Tablet Devices' ) }
+											{ __( 'Tablet' ) }
 										</span>
 									</Button>
 
 									<Button
 										className={ classnames(
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
-											{ 'is-selected': 'mobile' === view }
+											{ 'is-selected': 'Mobile' === view }
 										) }
-										onClick={ () => {
-											onToggle();
-											changeViewType( 'mobile' );
-										}}
+										onClick={ () => updateView( 'Mobile' ) }
 									>
-										<Dashicon icon="smartphone" />
+										{ 'Mobile' === view && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
-											{ __( 'Smartphones' ) }
+											{ __( 'Mobile' ) }
 										</span>
 									</Button>
 								</div>
@@ -112,4 +122,33 @@ const ResponsiveControl = ({
 	);
 };
 
-export default withInstanceId( ResponsiveControl );
+export default compose(
+	withInstanceId,
+
+	withViewportMatch({
+		isLarger: '>= large',
+		isLarge: '<= large',
+		isSmall: '>= small',
+		isSmaller: '<= small'
+	}),
+
+	withSelect( ( select, props ) => {
+		const { getView } = select( 'themeisle-gutenberg/data' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+		const isMobile = ! props.isLarger && ! props.isLarge && ! props.isSmall && ! props.isSmaller;
+
+		return {
+			view: __experimentalGetPreviewDeviceType && ! isMobile ? __experimentalGetPreviewDeviceType() : getView()
+		};
+	}),
+
+	withDispatch( ( dispatch, props ) => {
+		const { updateView } = dispatch( 'themeisle-gutenberg/data' );
+		const { __experimentalSetPreviewDeviceType } = dispatch( 'core/edit-post' );
+		const isMobile = ! props.isLarger && ! props.isLarge && ! props.isSmall && ! props.isSmaller;
+
+		return {
+			updateView: __experimentalSetPreviewDeviceType && ! isMobile ? __experimentalSetPreviewDeviceType : updateView
+		};
+	})
+)( ResponsiveControl );
