@@ -48,7 +48,7 @@ class Main {
 	 */
 	public function init() {
 		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
-			define( 'THEMEISLE_BLOCKS_VERSION', '1.4.2' );
+			define( 'THEMEISLE_BLOCKS_VERSION', '1.5.0' );
 			define( 'THEMEISLE_BLOCKS_DEV', false );
 		}
 
