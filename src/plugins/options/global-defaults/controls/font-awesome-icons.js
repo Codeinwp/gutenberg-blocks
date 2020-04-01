@@ -4,7 +4,6 @@
 const { __ } = wp.i18n;
 
 const {
-	BaseControl,
 	Button,
 	ButtonGroup,
 	PanelBody,
@@ -20,6 +19,11 @@ const {
 	Fragment,
 	useState
 } = wp.element;
+
+/**
+ * Internal dependencies
+ */
+import ColorBaseControl from '../../../../components/color-base-control/index.js';
 
 const ButtonGroupBlock = ({
 	blockName,
@@ -91,25 +95,27 @@ const ButtonGroupBlock = ({
 
 				{ hover ? (
 					<Fragment>
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Hover Background' }
+							colorValue={ defaults.backgroundColorHover }
 						>
 							<ColorPalette
 								label={ 'Hover Background' }
 								value={ defaults.backgroundColorHover }
 								onChange={ value => changeConfig( blockName, { backgroundColorHover: value }) }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Hover Icon' }
+							colorValue={ defaults.textColorHover }
 						>
 							<ColorPalette
 								label={ 'Hover Icon' }
 								value={ defaults.textColorHover }
 								onChange={ value => changeConfig( blockName, { textColorHover: value }) }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 
 						<ContrastChecker
 							{ ...{
@@ -120,25 +126,27 @@ const ButtonGroupBlock = ({
 					</Fragment>
 				) : (
 					<Fragment>
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Background' }
+							colorValue={ defaults.backgroundColor }
 						>
 							<ColorPalette
 								label={ 'Background' }
 								value={ defaults.backgroundColor }
 								onChange={ value => changeConfig( blockName, { backgroundColor: value }) }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Icon' }
+							colorValue={ defaults.textColor }
 						>
 							<ColorPalette
 								label={ 'Icon' }
 								value={ defaults.textColor }
 								onChange={ value => changeConfig( blockName, { textColor: value }) }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 
 						<ContrastChecker
 							{ ...{

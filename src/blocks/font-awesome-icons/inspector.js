@@ -4,7 +4,6 @@
 const { __ } = wp.i18n;
 
 const {
-	BaseControl,
 	Button,
 	ButtonGroup,
 	PanelBody,
@@ -29,6 +28,7 @@ const {
  * Internal dependencies
  */
 const IconPickerControl = React.lazy( () => import( '../../components/icon-picker-control/index.js' ) );
+import ColorBaseControl from '../../components/color-base-control/index.js';
 import LinkControl from '../../components/link-control/index.js';
 
 const Inspector = ({
@@ -186,35 +186,38 @@ const Inspector = ({
 
 				{ hover ? (
 					<Fragment>
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Hover Background' }
+							colorValue={ attributes.backgroundColorHover }
 						>
 							<ColorPalette
 								label={ 'Hover Background' }
 								value={ attributes.backgroundColorHover }
 								onChange={ changeBackgroundColorHover }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Hover Icon' }
+							colorValue={ attributes.textColorHover }
 						>
 							<ColorPalette
 								label={ 'Hover Icon' }
 								value={ attributes.textColorHover }
 								onChange={ changeTextColorHover }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Hover Border' }
+							colorValue={ attributes.borderColorHover }
 						>
 							<ColorPalette
 								label={ 'Hover Border' }
 								value={ attributes.borderColorHover }
 								onChange={ changeBorderColorHover }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 
 						<ContrastChecker
 							{ ...{
@@ -225,35 +228,38 @@ const Inspector = ({
 					</Fragment>
 				) : (
 					<Fragment>
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Background' }
+							colorValue={ attributes.backgroundColor }
 						>
 							<ColorPalette
 								label={ 'Background' }
 								value={ attributes.backgroundColor }
 								onChange={ changeBackgroundColor }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Icon' }
+							colorValue={ attributes.textColor }
 						>
 							<ColorPalette
 								label={ 'Icon' }
 								value={ attributes.textColor }
 								onChange={ changeTextColor }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Border' }
+							colorValue={ attributes.borderColor }
 						>
 							<ColorPalette
 								label={ 'Border' }
 								value={ attributes.borderColor }
 								onChange={ changeBorderColor }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 
 						<ContrastChecker
 							{ ...{

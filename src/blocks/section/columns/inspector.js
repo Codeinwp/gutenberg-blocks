@@ -45,6 +45,7 @@ import {
 	middleIcon,
 	bottomIcon
 } from '../../../helpers/icons.js';
+import ColorBaseControl from '../../../components/color-base-control/index.js';
 import LayoutControl from './../components/layout-control/index.js';
 import SizingControl from '../../../components/sizing-control/index.js';
 import ResponsiveControl from '../../../components/responsive-control/index.js';
@@ -1191,15 +1192,16 @@ const Inspector = ({
 
 							{ 'color' === attributes.backgroundType && (
 
-								<Fragment>
-									<p>{ __( 'Background Color' ) }</p>
-
+								<ColorBaseControl
+									label={ __( 'Background Color' ) }
+									colorValue={ attributes.backgroundColor }
+								>
 									<ColorPalette
 										label={ 'Background Color' }
 										value={ attributes.backgroundColor }
 										onChange={ changeBackgroundColor }
 									/>
-								</Fragment>
+								</ColorBaseControl>
 
 							) || 'image' === attributes.backgroundType && (
 								attributes.backgroundImageURL ?
@@ -1339,15 +1341,16 @@ const Inspector = ({
 
 							{ 'color' === attributes.backgroundOverlayType && (
 
-								<Fragment>
-									<p>{ __( 'Overlay Color' ) }</p>
-
+								<ColorBaseControl
+									label={ __( 'Overlay Color' ) }
+									colorValue={ attributes.backgroundOverlayColor }
+								>
 									<ColorPalette
 										label={ 'Overlay Color' }
 										value={ attributes.backgroundOverlayColor }
 										onChange={ changeBackgroundOverlayColor }
 									/>
-								</Fragment>
+								</ColorBaseControl>
 
 							) || 'image' === attributes.backgroundOverlayType && (
 								attributes.backgroundOverlayImageURL ?
@@ -1580,15 +1583,16 @@ const Inspector = ({
 								] }
 							/>
 
-							<Fragment>
-								<p>{ __( 'Border Color' ) }</p>
-
+							<ColorBaseControl
+								label={ __( 'Border Color' ) }
+								colorValue={ attributes.borderColor }
+							>
 								<ColorPalette
 									label={ 'Border Color' }
 									value={ attributes.borderColor }
 									onChange={ changeBorderColor }
 								/>
-							</Fragment>
+							</ColorBaseControl>
 
 							<SizingControl
 								label={ __( 'Border Radius' ) }
@@ -1630,15 +1634,16 @@ const Inspector = ({
 							{ attributes.boxShadow && (
 								<Fragment>
 
-									<Fragment>
-										<p>{ __( 'Shadow Color' ) }</p>
-
+									<ColorBaseControl
+										label={ __( 'Shadow Color' ) }
+										colorValue={ attributes.boxShadowColor }
+									>
 										<ColorPalette
 											label={ 'Shadow Color' }
 											value={ attributes.boxShadowColor }
 											onChange={ changeBoxShadowColor }
 										/>
-									</Fragment>
+									</ColorBaseControl>
 
 									<ControlPanelControl
 										label={ 'Border Shadow' }
@@ -1728,15 +1733,16 @@ const Inspector = ({
 
 							{ 'none' !== getDividerType && (
 								<Fragment>
-									<Fragment>
-										<p>{ __( 'Color' ) }</p>
-
+									<ColorBaseControl
+										label={ __( 'Color' ) }
+										colorValue={ getDividerColor }
+									>
 										<ColorPalette
 											label={ __( 'Color' ) }
 											value={ getDividerColor }
 											onChange={ changeDividerColor }
 										/>
-									</Fragment>
+									</ColorBaseControl>
 
 									<ResponsiveControl
 										label={ 'Width' }
