@@ -139,8 +139,6 @@ const Inspector = ({
 					onChange={ changeFontSize }
 					min={ 12 }
 					max={ 140 }
-					beforeIcon="minus"
-					afterIcon="plus"
 				/>
 
 				<RangeControl
@@ -150,8 +148,6 @@ const Inspector = ({
 					onChange={ changePadding }
 					min={ 0 }
 					max={ 100 }
-					beforeIcon="minus"
-					afterIcon="plus"
 				/>
 
 				<RangeControl
@@ -161,8 +157,6 @@ const Inspector = ({
 					onChange={ changeMargin }
 					min={ 0 }
 					max={ 100 }
-					beforeIcon="minus"
-					afterIcon="plus"
 				/>
 			</PanelBody>
 
@@ -281,8 +275,6 @@ const Inspector = ({
 					onChange={ changeBorderSize }
 					min={ 0 }
 					max={ 120 }
-					beforeIcon="minus"
-					afterIcon="plus"
 				/>
 
 				<RangeControl
@@ -291,8 +283,6 @@ const Inspector = ({
 					onChange={ changeBorderRadius }
 					min={ 0 }
 					max={ 100 }
-					beforeIcon="grid-view"
-					afterIcon="marker"
 				/>
 			</PanelBody>
 		</InspectorControls>

@@ -283,7 +283,6 @@ const Inspector = ({
 								<RangeControl
 									label={ __( 'Border Width' ) }
 									className="border-width"
-									beforeIcon="move"
 									value={ attributes.data[selectedButton].borderSize }
 									onChange={ e => updateButton({ borderSize: e }, selectedButton ) }
 									min={ 0 }
@@ -292,7 +291,6 @@ const Inspector = ({
 
 								<RangeControl
 									label={ __( 'Border Radius' ) }
-									beforeIcon="move"
 									value={ attributes.data[selectedButton].borderRadius }
 									onChange={ e => updateButton({ borderRadius: e }, selectedButton ) }
 									min={ 0 }

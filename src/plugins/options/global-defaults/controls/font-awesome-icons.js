@@ -40,8 +40,6 @@ const ButtonGroupBlock = ({
 					onChange={ value => changeConfig( blockName, { fontSize: value }) }
 					min={ 12 }
 					max={ 140 }
-					beforeIcon="minus"
-					afterIcon="plus"
 				/>
 
 				<hr/>
@@ -53,8 +51,6 @@ const ButtonGroupBlock = ({
 					onChange={ value => changeConfig( blockName, { padding: value }) }
 					min={ 0 }
 					max={ 100 }
-					beforeIcon="minus"
-					afterIcon="plus"
 				/>
 
 				<hr/>
@@ -66,8 +62,6 @@ const ButtonGroupBlock = ({
 					onChange={ value => changeConfig( blockName, { margin: value }) }
 					min={ 0 }
 					max={ 100 }
-					beforeIcon="minus"
-					afterIcon="plus"
 				/>
 			</PanelBody>
 
