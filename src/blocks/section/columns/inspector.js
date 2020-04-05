@@ -1789,19 +1789,19 @@ const Inspector = ({
 							<ToggleControl
 								label={ 'Hide this section in Desktop devices?' }
 								checked={ attributes.hide }
-								onChange={ e => changeHideStatus( e, 'desktop' ) }
+								onChange={ e => changeHideStatus( e, 'Desktop' ) }
 							/>
 
 							<ToggleControl
 								label={ 'Hide this section in Tablet devices?' }
 								checked={ attributes.hideTablet }
-								onChange={ e => changeHideStatus( e, 'tablet' ) }
+								onChange={ e => changeHideStatus( e, 'Tablet' ) }
 							/>
 
 							<ToggleControl
 								label={ 'Hide this section in Mobile devices?' }
 								checked={ attributes.hideMobile }
-								onChange={ e => changeHideStatus( e, 'mobile' ) }
+								onChange={ e => changeHideStatus( e, 'Mobile' ) }
 							/>
 
 							<hr/>
@@ -1810,7 +1810,7 @@ const Inspector = ({
 								<ToggleControl
 									label={ 'Reverse Columns in Tablet devices?' }
 									checked={ attributes.reverseColumnsTablet }
-									onChange={ e => changeReverseColumns( e, 'tablet' ) }
+									onChange={ e => changeReverseColumns( e, 'Tablet' ) }
 								/>
 							) }
 
@@ -1818,7 +1818,7 @@ const Inspector = ({
 								<ToggleControl
 									label={ 'Reverse Columns in Mobile devices?' }
 									checked={ attributes.reverseColumnsMobile }
-									onChange={ e => changeReverseColumns( e, 'mobile' ) }
+									onChange={ e => changeReverseColumns( e, 'Mobile' ) }
 								/>
 							) }
 						</PanelBody>
