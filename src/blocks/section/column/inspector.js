@@ -37,6 +37,7 @@ const {
 /**
  * Internal dependencies
  */
+import ColorBaseControl from '../../../components/color-base-control/index.js';
 import SizingControl from '../../../components/sizing-control/index.js';
 import ResponsiveControl from '../../../components/responsive-control/index.js';
 import BackgroundControl from '../components/background-control/index.js';
@@ -688,15 +689,16 @@ const Inspector = ({
 
 						{ 'color' === attributes.backgroundType && (
 
-							<Fragment>
-								<p>{ __( 'Background Color' ) }</p>
-
+							<ColorBaseControl
+								label={ __( 'Background Color' ) }
+								colorValue={ attributes.headingColor }
+							>
 								<ColorPalette
 									label={ 'Background Color' }
 									value={ attributes.backgroundColor }
 									onChange={ changeBackgroundColor }
 								/>
-							</Fragment>
+							</ColorBaseControl>
 
 						) || 'image' === attributes.backgroundType && (
 							attributes.backgroundImageURL ?
@@ -851,15 +853,16 @@ const Inspector = ({
 							] }
 						/>
 
-						<Fragment>
-							<p>{ __( 'Border Color' ) }</p>
-
+						<ColorBaseControl
+							label={ __( 'Border Color' ) }
+							colorValue={ attributes.borderColor }
+						>
 							<ColorPalette
 								label={ 'Border Color' }
 								value={ attributes.borderColor }
 								onChange={ changeBorderColor }
 							/>
-						</Fragment>
+						</ColorBaseControl>
 
 						<SizingControl
 							label={ __( 'Border Radius' ) }
@@ -901,15 +904,16 @@ const Inspector = ({
 						{ attributes.boxShadow && (
 							<Fragment>
 
-								<Fragment>
-									<p>{ __( 'Shadow Color' ) }</p>
-
+								<ColorBaseControl
+									label={ __( 'Shadow Color' ) }
+									colorValue={ attributes.boxShadowColor }
+								>
 									<ColorPalette
 										label={ 'Shadow Color' }
 										value={ attributes.boxShadowColor }
 										onChange={ changeBoxShadowColor }
 									/>
-								</Fragment>
+								</ColorBaseControl>
 
 								<ControlPanelControl
 									label={ 'Shadow Properties' }

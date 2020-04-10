@@ -20,6 +20,20 @@ class Base_CSS {
 	protected $library_prefix = 'themeisle-blocks';
 
 	/**
+	 * Rest route namespace.
+	 *
+	 * @var string
+	 */
+	public $namespace = 'themeisle-gutenberg-blocks/';
+
+	/**
+	 * Rest route version.
+	 *
+	 * @var string
+	 */
+	public $version = 'v1';
+
+	/**
 	 * The namespace under which the block classees are saved.
 	 *
 	 * @var string

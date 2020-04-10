@@ -21,6 +21,7 @@ const { Fragment } = wp.element;
  * Internal dependencies
  */
 import './editor.scss';
+import ColorBaseControl from '../color-base-control/index.js';
 import GradientButton from './gradient-button.js';
 import gradients from './gradients.js';
 
@@ -91,14 +92,17 @@ const GradientPickerControl = ({
 								) }
 								renderContent={ () => (
 									<Fragment>
-										<p>{ __( 'First Color' ) }</p>
-
-										<ColorPalette
-											label={ __( 'Color' ) }
-											clearable={ false }
-											value={ value.firstColor }
-											onChange={ e => onChangeValue({ firstColor: e }) }
-										/>
+										<ColorBaseControl
+											label={ __( 'First Color' ) }
+											colorValue={ value.firstColor }
+										>
+											<ColorPalette
+												label={ __( 'Color' ) }
+												clearable={ false }
+												value={ value.firstColor }
+												onChange={ e => onChangeValue({ firstColor: e }) }
+											/>
+										</ColorBaseControl>
 
 										<RangeControl
 											label={ __( 'Location' ) }
@@ -108,14 +112,17 @@ const GradientPickerControl = ({
 											onChange={ e => onChangeValue({ firstLocation: e }) }
 										/>
 
-										<p>{ __( 'Second Color' ) }</p>
-
-										<ColorPalette
-											label={ __( 'Color' ) }
-											clearable={ false }
-											value={ value.secondColor }
-											onChange={ e => onChangeValue({ secondColor: e }) }
-										/>
+										<ColorBaseControl
+											label={ __( 'Second Color' ) }
+											colorValue={ value.secondColor }
+										>
+											<ColorPalette
+												label={ __( 'Color' ) }
+												clearable={ false }
+												value={ value.secondColor }
+												onChange={ e => onChangeValue({ secondColor: e }) }
+											/>
+										</ColorBaseControl>
 
 										<RangeControl
 											label={ __( 'Location' ) }

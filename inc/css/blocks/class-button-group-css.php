@@ -121,7 +121,7 @@ class Button_Group_CSS extends Base_CSS {
 				$style .= '}' . "\n \n";
 
 				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button-' . $i . ':hover {' . "\n";
-				if ( isset( $button['hoverColor'] ) && '' !== $button['hoverBackground'] ) {
+				if ( isset( $button['hoverColor'] ) && '' !== $button['hoverColor'] ) {
 					$style .= '	color: ' . $button['hoverColor'] . ';' . "\n";
 				}
 

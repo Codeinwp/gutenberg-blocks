@@ -9,6 +9,7 @@ import classnames from 'classnames';
 const { __ } = wp.i18n;
 
 const {
+	BlockVerticalAlignmentToolbar,
 	ColorPalette,
 	InspectorControls,
 	MediaPlaceholder
@@ -45,6 +46,7 @@ import {
 	middleIcon,
 	bottomIcon
 } from '../../../helpers/icons.js';
+import ColorBaseControl from '../../../components/color-base-control/index.js';
 import LayoutControl from './../components/layout-control/index.js';
 import SizingControl from '../../../components/sizing-control/index.js';
 import ResponsiveControl from '../../../components/responsive-control/index.js';
@@ -1128,51 +1130,52 @@ const Inspector = ({
 								</ResponsiveControl>
 							) }
 
+							{ ! BlockVerticalAlignmentToolbar && (
+								<BaseControl
+									label={ 'Vertical Align' }
+								>
+									<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
+										<Tooltip text={ __( 'Top' ) } >
+											<Button
+												className="components-icon-button is-button is-large"
+												isPrimary={ 'flex-start' === attributes.verticalAlign }
+												onClick={ () => changeVerticalAlign( 'flex-start' ) }
+											>
+												<Icon
+													icon={ topIcon }
+													size={ 20 }
+												/>
+											</Button>
+										</Tooltip>
 
-							<BaseControl
-								label={ 'Vertical Align' }
-							>
-								<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
-									<Tooltip text={ __( 'Top' ) } >
-										<Button
-											className="components-icon-button is-button is-large"
-											isPrimary={ 'flex-start' === attributes.verticalAlign }
-											onClick={ () => changeVerticalAlign( 'flex-start' ) }
-										>
-											<Icon
-												icon={ topIcon }
-												size={ 20 }
-											/>
-										</Button>
-									</Tooltip>
+										<Tooltip text={ __( 'Middle' ) } >
+											<Button
+												className="components-icon-button is-button is-large"
+												isPrimary={ 'center' === attributes.verticalAlign }
+												onClick={ () => changeVerticalAlign( 'center' ) }
+											>
+												<Icon
+													icon={ middleIcon }
+													size={ 20 }
+												/>
+											</Button>
+										</Tooltip>
 
-									<Tooltip text={ __( 'Middle' ) } >
-										<Button
-											className="components-icon-button is-button is-large"
-											isPrimary={ 'center' === attributes.verticalAlign }
-											onClick={ () => changeVerticalAlign( 'center' ) }
-										>
-											<Icon
-												icon={ middleIcon }
-												size={ 20 }
-											/>
-										</Button>
-									</Tooltip>
-
-									<Tooltip text={ __( 'Bottom' ) } >
-										<Button
-											className="components-icon-button is-button is-large"
-											isPrimary={ 'flex-end' === attributes.verticalAlign }
-											onClick={ () => changeVerticalAlign( 'flex-end' ) }
-										>
-											<Icon
-												icon={ bottomIcon }
-												size={ 20 }
-											/>
-										</Button>
-									</Tooltip>
-								</ButtonGroup>
-							</BaseControl>
+										<Tooltip text={ __( 'Bottom' ) } >
+											<Button
+												className="components-icon-button is-button is-large"
+												isPrimary={ 'flex-end' === attributes.verticalAlign }
+												onClick={ () => changeVerticalAlign( 'flex-end' ) }
+											>
+												<Icon
+													icon={ bottomIcon }
+													size={ 20 }
+												/>
+											</Button>
+										</Tooltip>
+									</ButtonGroup>
+								</BaseControl>
+							) }
 						</PanelBody>
 					</Fragment>
 
@@ -1191,15 +1194,16 @@ const Inspector = ({
 
 							{ 'color' === attributes.backgroundType && (
 
-								<Fragment>
-									<p>{ __( 'Background Color' ) }</p>
-
+								<ColorBaseControl
+									label={ __( 'Background Color' ) }
+									colorValue={ attributes.backgroundColor }
+								>
 									<ColorPalette
 										label={ 'Background Color' }
 										value={ attributes.backgroundColor }
 										onChange={ changeBackgroundColor }
 									/>
-								</Fragment>
+								</ColorBaseControl>
 
 							) || 'image' === attributes.backgroundType && (
 								attributes.backgroundImageURL ?
@@ -1339,15 +1343,16 @@ const Inspector = ({
 
 							{ 'color' === attributes.backgroundOverlayType && (
 
-								<Fragment>
-									<p>{ __( 'Overlay Color' ) }</p>
-
+								<ColorBaseControl
+									label={ __( 'Overlay Color' ) }
+									colorValue={ attributes.backgroundOverlayColor }
+								>
 									<ColorPalette
 										label={ 'Overlay Color' }
 										value={ attributes.backgroundOverlayColor }
 										onChange={ changeBackgroundOverlayColor }
 									/>
-								</Fragment>
+								</ColorBaseControl>
 
 							) || 'image' === attributes.backgroundOverlayType && (
 								attributes.backgroundOverlayImageURL ?
@@ -1580,15 +1585,16 @@ const Inspector = ({
 								] }
 							/>
 
-							<Fragment>
-								<p>{ __( 'Border Color' ) }</p>
-
+							<ColorBaseControl
+								label={ __( 'Border Color' ) }
+								colorValue={ attributes.borderColor }
+							>
 								<ColorPalette
 									label={ 'Border Color' }
 									value={ attributes.borderColor }
 									onChange={ changeBorderColor }
 								/>
-							</Fragment>
+							</ColorBaseControl>
 
 							<SizingControl
 								label={ __( 'Border Radius' ) }
@@ -1630,15 +1636,16 @@ const Inspector = ({
 							{ attributes.boxShadow && (
 								<Fragment>
 
-									<Fragment>
-										<p>{ __( 'Shadow Color' ) }</p>
-
+									<ColorBaseControl
+										label={ __( 'Shadow Color' ) }
+										colorValue={ attributes.boxShadowColor }
+									>
 										<ColorPalette
 											label={ 'Shadow Color' }
 											value={ attributes.boxShadowColor }
 											onChange={ changeBoxShadowColor }
 										/>
-									</Fragment>
+									</ColorBaseControl>
 
 									<ControlPanelControl
 										label={ 'Border Shadow' }
@@ -1728,15 +1735,16 @@ const Inspector = ({
 
 							{ 'none' !== getDividerType && (
 								<Fragment>
-									<Fragment>
-										<p>{ __( 'Color' ) }</p>
-
+									<ColorBaseControl
+										label={ __( 'Color' ) }
+										colorValue={ getDividerColor }
+									>
 										<ColorPalette
 											label={ __( 'Color' ) }
 											value={ getDividerColor }
 											onChange={ changeDividerColor }
 										/>
-									</Fragment>
+									</ColorBaseControl>
 
 									<ResponsiveControl
 										label={ 'Width' }
@@ -1781,19 +1789,19 @@ const Inspector = ({
 							<ToggleControl
 								label={ 'Hide this section in Desktop devices?' }
 								checked={ attributes.hide }
-								onChange={ e => changeHideStatus( e, 'desktop' ) }
+								onChange={ e => changeHideStatus( e, 'Desktop' ) }
 							/>
 
 							<ToggleControl
 								label={ 'Hide this section in Tablet devices?' }
 								checked={ attributes.hideTablet }
-								onChange={ e => changeHideStatus( e, 'tablet' ) }
+								onChange={ e => changeHideStatus( e, 'Tablet' ) }
 							/>
 
 							<ToggleControl
 								label={ 'Hide this section in Mobile devices?' }
 								checked={ attributes.hideMobile }
-								onChange={ e => changeHideStatus( e, 'mobile' ) }
+								onChange={ e => changeHideStatus( e, 'Mobile' ) }
 							/>
 
 							<hr/>
@@ -1802,7 +1810,7 @@ const Inspector = ({
 								<ToggleControl
 									label={ 'Reverse Columns in Tablet devices?' }
 									checked={ attributes.reverseColumnsTablet }
-									onChange={ e => changeReverseColumns( e, 'tablet' ) }
+									onChange={ e => changeReverseColumns( e, 'Tablet' ) }
 								/>
 							) }
 
@@ -1810,7 +1818,7 @@ const Inspector = ({
 								<ToggleControl
 									label={ 'Reverse Columns in Mobile devices?' }
 									checked={ attributes.reverseColumnsMobile }
-									onChange={ e => changeReverseColumns( e, 'mobile' ) }
+									onChange={ e => changeReverseColumns( e, 'Mobile' ) }
 								/>
 							) }
 						</PanelBody>

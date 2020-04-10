@@ -6,7 +6,6 @@ const { __ } = wp.i18n;
 const { ColorPalette } = wp.blockEditor;
 
 const {
-	BaseControl,
 	PanelBody,
 	RangeControl,
 	SelectControl
@@ -21,6 +20,7 @@ const { Fragment } = wp.element;
 /**
  * Internal dependencies
  */
+import ColorBaseControl from '../../../../components/color-base-control/index.js';
 import GoogleFontsControl from '../../../../components/google-fonts-control/index.js';
 import ResponsiveControl from '../../../../components/responsive-control/index.js';
 import SizingControl from '../../../../components/sizing-control/index.js';
@@ -388,14 +388,15 @@ const AdvancedHeading = ({
 					onChange={ value => changeConfig( blockName, { tag: value }) }
 				/>
 
-				<BaseControl
+				<ColorBaseControl
 					label={ 'Heading Color' }
+					colorValue={ defaults.headingColor }
 				>
 					<ColorPalette
 						value={ defaults.headingColor }
 						onChange={ value => changeConfig( blockName, { headingColor: value }) }
 					/>
-				</BaseControl>
+				</ColorBaseControl>
 
 				<hr/>
 

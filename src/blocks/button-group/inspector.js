@@ -42,6 +42,7 @@ const {
  */
 import { buttonsIcon } from '../../helpers/icons.js';
 import { unescapeHTML } from '../../helpers/helper-functions.js';
+import ColorBaseControl from '../../components/color-base-control/index.js';
 import GoogleFontsControl from '../../components/google-fonts-control/index.js';
 import ControlPanelControl from '../../components/control-panel-control/index.js';
 const IconPickerControl = React.lazy( () => import( '../../components/icon-picker-control/index.js' ) );
@@ -216,74 +217,79 @@ const Inspector = ({
 
 								{ hover ? (
 									<Fragment>
-										<BaseControl
+										<ColorBaseControl
 											label={ 'Hover Color' }
+											colorValue={ attributes.data[selectedButton].hoverColor }
 										>
 											<ColorPalette
 												label={ 'Hover Color' }
 												value={ attributes.data[selectedButton].hoverColor }
 												onChange={ e => updateButton({ hoverColor: e }, selectedButton ) }
 											/>
-										</BaseControl>
+										</ColorBaseControl>
 
-										<BaseControl
+										<ColorBaseControl
 											label={ 'Hover Background' }
+											colorValue={ attributes.data[selectedButton].hoverBackground }
 										>
 											<ColorPalette
 												label={ 'Hover Background' }
 												value={ attributes.data[selectedButton].hoverBackground }
 												onChange={ e => updateButton({ hoverBackground: e }, selectedButton ) }
 											/>
-										</BaseControl>
+										</ColorBaseControl>
 
-										<BaseControl
+										<ColorBaseControl
 											label={ 'Hover Border' }
+											colorValue={ attributes.data[selectedButton].hoverBorder }
 										>
 											<ColorPalette
 												label={ 'Hover Border' }
 												value={ attributes.data[selectedButton].hoverBorder }
 												onChange={ e => updateButton({ hoverBorder: e }, selectedButton ) }
 											/>
-										</BaseControl>
+										</ColorBaseControl>
 									</Fragment>
 								) : (
 									<Fragment>
-										<BaseControl
+										<ColorBaseControl
 											label={ 'Color' }
+											colorValue={ attributes.data[selectedButton].color }
 										>
 											<ColorPalette
 												label={ 'Color' }
 												value={ attributes.data[selectedButton].color }
 												onChange={ e => updateButton({ color: e }, selectedButton ) }
 											/>
-										</BaseControl>
+										</ColorBaseControl>
 
-										<BaseControl
+										<ColorBaseControl
 											label={ 'Background' }
+											colorValue={ attributes.data[selectedButton].background }
 										>
 											<ColorPalette
 												label={ 'Background' }
 												value={ attributes.data[selectedButton].background }
 												onChange={ e => updateButton({ background: e }, selectedButton ) }
 											/>
-										</BaseControl>
+										</ColorBaseControl>
 
-										<BaseControl
+										<ColorBaseControl
 											label={ 'Border' }
+											colorValue={ attributes.data[selectedButton].border }
 										>
 											<ColorPalette
 												label={ 'Border' }
 												value={ attributes.data[selectedButton].border }
 												onChange={ e => updateButton({ border: e }, selectedButton ) }
 											/>
-										</BaseControl>
+										</ColorBaseControl>
 									</Fragment>
 								) }
 
 								<RangeControl
 									label={ __( 'Border Width' ) }
 									className="border-width"
-									beforeIcon="move"
 									value={ attributes.data[selectedButton].borderSize }
 									onChange={ e => updateButton({ borderSize: e }, selectedButton ) }
 									min={ 0 }
@@ -292,7 +298,6 @@ const Inspector = ({
 
 								<RangeControl
 									label={ __( 'Border Radius' ) }
-									beforeIcon="move"
 									value={ attributes.data[selectedButton].borderRadius }
 									onChange={ e => updateButton({ borderRadius: e }, selectedButton ) }
 									min={ 0 }
@@ -333,15 +338,16 @@ const Inspector = ({
 
 										{ ! hover && (
 											<Fragment>
-												<BaseControl
+												<ColorBaseControl
 													label={ 'Shadow Color' }
+													colorValue={ attributes.data[selectedButton].boxShadowColor }
 												>
 													<ColorPalette
 														label={ 'Shadow Color' }
 														value={ attributes.data[selectedButton].boxShadowColor }
 														onChange={ e => updateButton({ boxShadowColor: e }, selectedButton ) }
 													/>
-												</BaseControl>
+												</ColorBaseControl>
 
 												<ControlPanelControl
 													label={ 'Shadow Properties' }
@@ -391,15 +397,16 @@ const Inspector = ({
 											</Fragment>
 										) || hover && (
 											<Fragment>
-												<BaseControl
+												<ColorBaseControl
 													label={ 'Hover Shadow Color' }
+													colorValue={ attributes.data[selectedButton].hoverBoxShadowColor }
 												>
 													<ColorPalette
 														label={ 'Hover Shadow Color' }
 														value={ attributes.data[selectedButton].hoverBoxShadowColor }
 														onChange={ e => updateButton({ hoverBoxShadowColor: e }, selectedButton ) }
 													/>
-												</BaseControl>
+												</ColorBaseControl>
 
 
 												<ControlPanelControl
