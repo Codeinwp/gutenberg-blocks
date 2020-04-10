@@ -247,7 +247,7 @@ class Block_Frontend extends Base_CSS {
 			if ( empty( $file_name ) || is_preview() ) {
 				if ( ! is_preview() ) {
 					$namespace = $this->namespace . $this->version;
-					$request = new WP_REST_Request( 'POST', '/' . $namespace . '/save_post_meta/' . $post_id  );
+					$request   = new WP_REST_Request( 'POST', '/' . $namespace . '/save_post_meta/' . $post_id );
 					rest_get_server()->dispatch( $request );
 				}
 
