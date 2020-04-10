@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b943f49df6f9925bcfc0bfba4af961c",
+    "content-hash": "d7b24c8e004496082e6d74612bde2fac",
     "packages": [
         {
             "name": "tubalmartin/cssmin",

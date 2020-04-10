@@ -6,7 +6,6 @@ const { __ } = wp.i18n;
 const { cloneDeep } = lodash;
 
 const {
-	BaseControl,
 	Button,
 	ButtonGroup,
 	PanelBody,
@@ -24,6 +23,7 @@ const {
 /**
  * Internal dependencies
  */
+import ColorBaseControl from '../../../../components/color-base-control/index.js';
 import SizingControl from '../../../../components/sizing-control/index.js';
 import GoogleFontsControl from '../../../../components/google-fonts-control/index.js';
 
@@ -82,75 +82,81 @@ const ButtonGroupBlock = ({
 
 				{ hover ? (
 					<Fragment>
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Hover Color' }
+							colorValue={ defaults.data.hoverColor }
 						>
 							<ColorPalette
 								label={ 'Hover Color' }
 								value={ defaults.data.hoverColor }
 								onChange={ value => changeData( 'hoverColor', value ) }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 
 						<hr/>
 
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Hover Background' }
+							colorValue={ defaults.data.hoverBackground }
 						>
 							<ColorPalette
 								label={ 'Hover Background' }
 								value={ defaults.data.hoverBackground }
 								onChange={ value => changeData( 'hoverBackground', value ) }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 
 						<hr/>
 
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Hover Border' }
+							colorValue={ defaults.data.hoverBorder }
 						>
 							<ColorPalette
 								label={ 'Hover Border' }
 								value={ defaults.data.hoverBorder }
 								onChange={ value => changeData( 'hoverBorder', value ) }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 					</Fragment>
 				) : (
 					<Fragment>
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Color' }
+							colorValue={ defaults.data.color }
 						>
 							<ColorPalette
 								label={ 'Color' }
 								value={ defaults.data.color }
 								onChange={ value => changeData( 'color', value ) }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 
 						<hr/>
 
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Background' }
+							colorValue={ defaults.data.background }
 						>
 							<ColorPalette
 								label={ 'Background' }
 								value={ defaults.data.background }
 								onChange={ value => changeData( 'background', value ) }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 
 						<hr/>
 
-						<BaseControl
+						<ColorBaseControl
 							label={ 'Border' }
+							colorValue={ defaults.data.border }
 						>
 							<ColorPalette
 								label={ 'Border' }
 								value={ defaults.data.border }
 								onChange={ value => changeData( 'border', value ) }
 							/>
-						</BaseControl>
+						</ColorBaseControl>
 					</Fragment>
 				) }
 

@@ -9,6 +9,8 @@ namespace ThemeIsle\GutenbergBlocks\CSS;
 
 use ThemeIsle\GutenbergBlocks\Base_CSS;
 
+use WP_REST_Request;
+
 /**
  * Class Block_Frontend
  */
@@ -243,6 +245,12 @@ class Block_Frontend extends Base_CSS {
 			}
 
 			if ( empty( $file_name ) || is_preview() ) {
+				if ( ! is_preview() ) {
+					$namespace = $this->namespace . $this->version;
+					$request   = new WP_REST_Request( 'POST', '/' . $namespace . '/save_post_meta/' . $post_id );
+					rest_get_server()->dispatch( $request );
+				}
+
 				return add_action(
 					$location,
 					function () use ( $post_id ) {
@@ -361,7 +369,7 @@ class Block_Frontend extends Base_CSS {
 			$blocks = $this->parse_blocks( $content );
 
 			if ( ! is_array( $blocks ) || empty( $blocks ) ) {
-				return '';
+				return $style;
 			}
 
 			$style .= $this->get_reusable_block_meta( $blocks );
@@ -389,6 +397,10 @@ class Block_Frontend extends Base_CSS {
 			if ( isset( $block['innerBlocks'] ) && ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
 				$style .= $this->get_reusable_block_meta( $block['innerBlocks'] );
 			}
+		}
+
+		if ( empty( $style ) ) {
+			$style .= $this->cycle_through_reusable_blocks( $blocks );
 		}
 
 		return $style;

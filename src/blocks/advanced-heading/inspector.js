@@ -34,6 +34,7 @@ const {
 /**
  * Internal dependencies
  */
+import ColorBaseControl from '../../components/color-base-control/index.js';
 import GoogleFontsControl from '../../components/google-fonts-control/index.js';
 import ControlPanelControl from '../../components/control-panel-control/index.js';
 import ResponsiveControl from '../../components/responsive-control/index.js';
@@ -444,15 +445,16 @@ const Inspector = ({
 						<PanelBody
 							title={ __( 'General Settings' ) }
 						>
-							<Fragment>
-								<p>{ __( 'Heading Color' ) }</p>
-
+							<ColorBaseControl
+								label={ __( 'Heading Color' ) }
+								colorValue={ attributes.headingColor }
+							>
 								<ColorPalette
 									label={ 'Heading Color' }
 									value={ attributes.headingColor }
 									onChange={ changeHeadingColor }
 								/>
-							</Fragment>
+							</ColorBaseControl>
 
 							<ResponsiveControl
 								label={ 'Font Size' }
@@ -517,15 +519,16 @@ const Inspector = ({
 							{ attributes.textShadow && (
 								<Fragment>
 
-									<Fragment>
-										<p>{ __( 'Color' ) }</p>
-
+									<ColorBaseControl
+										label={ __( 'Color' ) }
+										colorValue={ attributes.textShadowColor }
+									>
 										<ColorPalette
 											label={ __( 'Color' ) }
 											value={ attributes.textShadowColor }
 											onChange={ changeTextShadowColor }
 										/>
-									</Fragment>
+									</ColorBaseControl>
 
 									<ControlPanelControl
 										label={ 'Shadow Properties' }
@@ -574,25 +577,27 @@ const Inspector = ({
 						<PanelBody
 							title={ __( 'Highlight Color' ) }
 						>
-							<Fragment>
-								<p>{ __( 'Highlight Color' ) }</p>
-
+							<ColorBaseControl
+								label={ __( 'Highlight Color' ) }
+								colorValue={ attributes.highlightColor }
+							>
 								<ColorPalette
 									label={ 'Highlight Color' }
 									value={ attributes.highlightColor }
 									onChange={ changeHighlightColor }
 								/>
-							</Fragment>
+							</ColorBaseControl>
 
-							<Fragment>
-								<p>{ __( 'Highlight Background' ) }</p>
-
+							<ColorBaseControl
+								label={ __( 'Highlight Background' ) }
+								colorValue={ attributes.highlightBackground }
+							>
 								<ColorPalette
 									label={ 'Highlight Background' }
 									value={ attributes.highlightBackground }
 									onChange={ changeHighlightBackground }
 								/>
-							</Fragment>
+							</ColorBaseControl>
 						</PanelBody>
 
 						<PanelBody
