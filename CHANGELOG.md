@@ -1,3 +1,20 @@
+##### [Version 1.5.1](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.0...v1.5.1) (2020-04-10)
+
+- Remove Icons from Range Controls
+- Add ColorIndicator to Color Controls
+- Move Vertical Alignment to Toolbar
+- Fix Button Hover Color not saving
+- Fix Responsive Controls not working
+- Regenerate CSS file if it doesn't exist
+- Reduce FontAwesome Size
+
+#### [Version 1.5.0](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.4.2...v1.5.0) (2020-03-30)
+
+- Improve Responsiveness Control
+- Remove Popover from Sizing Control
+- Add Button Border to Global Defaults
+- Fix issue with CSS not saving properly
+
 ##### [Version 1.4.2](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.4.1...v1.4.2) (2020-03-20)
 
 - Adds compatibility with WordPress 5.4
