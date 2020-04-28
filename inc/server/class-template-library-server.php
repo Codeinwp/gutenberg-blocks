@@ -7,6 +7,8 @@
 
 namespace ThemeIsle\GutenbergBlocks\Server;
 
+use WP_Error;
+
 /**
  * Class Template_Library_Server
  */
@@ -185,15 +187,34 @@ class Template_Library_Server {
 	 * @return array|bool|\WP_Error
 	 */
 	public function import_template( $request ) {
+		global $wp_filesystem;
+
 		if ( ! current_user_can( 'edit_posts' ) ) {
 			return false;
 		}
 
+		require_once ABSPATH . '/wp-admin/includes/file.php';
+		WP_Filesystem();
+
 		$url = $request->get_param( 'url' );
-		if ( function_exists( 'wpcom_vip_file_get_contents' ) ) {
-			$json = wpcom_vip_file_get_contents( $url );
+		$site_url = get_site_url();
+
+		if ( strpos( $url, $site_url ) !== false ) {
+			$url = str_replace( $site_url, ABSPATH, $url );
+
+			if ( $wp_filesystem->exists( $url ) ) {
+				$json = $wp_filesystem->get_contents( $url );
+			} else {
+				return new WP_Error( 'filesystem_error', __( 'File doesn\'t exist', 'textdomain' ) );
+			}
 		} else {
-			$json = file_get_contents( $url ); //phpcs:ignore WordPressVIPMinimum.VIP.FetchingRemoteData.fileGetContentsUknown
+			if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
+				$request = vip_safe_wp_remote_get( $url );
+			} else {
+				$request = wp_remote_get( $url );
+			}
+
+			$json = wp_remote_retrieve_body( $request );
 		}
 
 		$obj = json_decode( $json );
