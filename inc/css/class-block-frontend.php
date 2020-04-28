@@ -7,6 +7,7 @@
 
 namespace ThemeIsle\GutenbergBlocks\CSS;
 
+use PHP_CodeSniffer\Tokenizers\CSS;
 use ThemeIsle\GutenbergBlocks\Base_CSS;
 
 use WP_REST_Request;
@@ -229,7 +230,6 @@ class Block_Frontend extends Base_CSS {
 	 * @param int  $post_id Post id.
 	 * @param bool $footer IN footer.
 	 *
-	 * @return string
 	 * @since   1.3.0
 	 * @access  public
 	 */
@@ -237,67 +237,62 @@ class Block_Frontend extends Base_CSS {
 		$post_id  = $post_id ? $post_id : get_the_ID();
 		$location = 'wp_head';
 
-		if ( function_exists( 'has_blocks' ) && has_blocks( $post_id ) ) {
-			$file_name = get_post_meta( $post_id, '_themeisle_gutenberg_block_stylesheet', true );
+		if ( ! function_exists( 'has_blocks' ) ) {
+			return;
+		}
 
-			if ( $footer ) {
-				$location = 'wp_footer';
-			}
+		if ( ! has_blocks( $post_id ) ) {
+			return;
+		}
 
-			if ( empty( $file_name ) || is_preview() ) {
-				if ( ! is_preview() ) {
-					$namespace = $this->namespace . $this->version;
-					$request   = new WP_REST_Request( 'POST', '/' . $namespace . '/save_post_meta/' . $post_id );
-					rest_get_server()->dispatch( $request );
-				}
 
-				return add_action(
-					$location,
-					function () use ( $post_id ) {
-						return $this->get_post_css( $post_id );
-					}
-				);
-			}
+		if ( $footer ) {
+			$location = 'wp_footer';
+		}
 
-			$wp_upload_dir = wp_upload_dir( null, false );
-			$basedir       = $wp_upload_dir['basedir'] . '/themeisle-gutenberg/';
-			$baseurl       = $wp_upload_dir['baseurl'] . '/themeisle-gutenberg/';
-			$file_path     = $basedir . $file_name . '.css';
-			$file_url      = $baseurl . $file_name . '.css';
-
-			if ( ! file_exists( $file_path ) ) {
-				return add_action(
-					$location,
-					function () use ( $post_id ) {
-						return $this->get_post_css( $post_id );
-					}
-				);
-			}
-
-			$content = get_post_field( 'post_content', $post_id );
-
-			$blocks = $this->parse_blocks( $content );
-
-			if ( is_array( $blocks ) || ! empty( $blocks ) ) {
-				$this->enqueue_reusable_styles( $blocks, $footer );
-			}
-
-			if ( $footer ) {
-				return add_action(
-					'wp_footer',
-					function () use ( $post_id, $file_name, $file_url ) {
-						return wp_enqueue_style( 'themeisle-gutenberg-' . $file_name, $file_url, array( 'themeisle-block_styles' ), get_the_modified_time( 'U', $post_id ) );
-					}
-				);
-			}
-
+		if ( is_preview() ) {
 			add_action(
-				'wp_enqueue_scripts',
+				$location,
+				function () use ( $post_id ) {
+					return $this->get_post_css( $post_id );
+				}
+			);
+
+			return;
+		}
+
+		if ( ! CSS_Handler::has_css_file( $post_id ) ) {
+			CSS_Handler::generate_css_file( $post_id );
+		}
+		$file_url = CSS_Handler::get_css_url( $post_id );
+
+		$file_name = basename( $file_url );
+
+		$content = get_post_field( 'post_content', $post_id );
+
+		$blocks = $this->parse_blocks( $content );
+
+		if ( is_array( $blocks ) || ! empty( $blocks ) ) {
+			$this->enqueue_reusable_styles( $blocks, $footer );
+		}
+
+		if ( $footer ) {
+			add_action(
+				'wp_footer',
 				function () use ( $post_id, $file_name, $file_url ) {
 					return wp_enqueue_style( 'themeisle-gutenberg-' . $file_name, $file_url, array( 'themeisle-block_styles' ), get_the_modified_time( 'U', $post_id ) );
 				}
 			);
+
+			return;
 		}
+
+		add_action(
+			'wp_enqueue_scripts',
+			function () use ( $post_id, $file_name, $file_url ) {
+				return wp_enqueue_style( 'themeisle-gutenberg-' . $file_name, $file_url, array( 'themeisle-block_styles' ), get_the_modified_time( 'U', $post_id ) );
+			}
+		);
 	}
 
 	/**
