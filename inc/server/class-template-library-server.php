@@ -196,7 +196,7 @@ class Template_Library_Server {
 		require_once ABSPATH . '/wp-admin/includes/file.php';
 		WP_Filesystem();
 
-		$url = $request->get_param( 'url' );
+		$url      = $request->get_param( 'url' );
 		$site_url = get_site_url();
 
 		if ( strpos( $url, $site_url ) !== false ) {
@@ -211,7 +211,7 @@ class Template_Library_Server {
 			if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
 				$request = vip_safe_wp_remote_get( $url );
 			} else {
-				$request = wp_remote_get( $url );
+				$request = wp_remote_get( $url ); //phpcs:ignore WordPressVIPMinimum.VIP.RestrictedFunctions.wp_remote_get_wp_remote_get
 			}
 
 			$json = wp_remote_retrieve_body( $request );
