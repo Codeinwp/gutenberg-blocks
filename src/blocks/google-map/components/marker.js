@@ -14,11 +14,15 @@ const {
 	ExternalLink,
 	IconButton,
 	SelectControl,
-	TextControl,
-	TextareaControl
+	TextControl
 } = wp.components;
 
 const { useRef } = wp.element;
+
+/**
+ * Internal dependencies
+ */
+import MarkerEditor from './marker-editor.js';
 
 const Marker = ({
 	marker,
@@ -137,7 +141,7 @@ const Marker = ({
 					onChange={ e => changeMarkerProp( marker.id, 'title', e ) }
 				/>
 
-				<TextareaControl
+				<MarkerEditor
 					label={ __( 'Description' ) }
 					type="text"
 					value={ marker.description }
