@@ -125,7 +125,9 @@ class Advanced_Heading_CSS extends Base_CSS {
 			}
 
 			if ( 'linked' === $this->get_attr_value( ( isset( $attr['paddingTypeTablet'] ) ? $attr['paddingTypeTablet'] : null ), 'linked' ) ) {
-				$style .= '		padding: ' . $this->get_attr_value( ( isset( $attr['paddingTablet'] ) ? $attr['paddingTablet'] : null ) ) . 'px;' . "\n";
+				if ( isset( $attr['paddingTablet'] ) ) {
+					$style .= '		padding: ' . $this->get_attr_value( ( isset( $attr['paddingTablet'] ) ? $attr['paddingTablet'] : null ) ) . 'px;' . "\n";
+				}
 			}
 
 			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['paddingTypeTablet'] ) ? $attr['paddingTypeTablet'] : null ), 'linked' ) ) {

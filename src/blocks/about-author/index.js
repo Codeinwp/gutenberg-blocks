@@ -11,7 +11,6 @@ const { registerBlockType } = wp.blocks;
 import './editor.scss';
 import './style.scss';
 import { authorIcon as icon } from '../../helpers/icons.js';
-import attributes from './attributes.js';
 import edit from './edit.js';
 
 registerBlockType( 'themeisle-blocks/about-author', {
@@ -24,7 +23,7 @@ registerBlockType( 'themeisle-blocks/about-author', {
 		'author',
 		'profile'
 	],
-	attributes,
+	example: {},
 	supports: {
 		html: false
 	},

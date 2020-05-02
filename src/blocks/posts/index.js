@@ -25,6 +25,7 @@ registerBlockType( 'themeisle-blocks/posts-grid', {
 		'news'
 	],
 	attributes,
+	example: {},
 	supports: {
 		align: [ 'wide', 'full' ],
 		html: false
