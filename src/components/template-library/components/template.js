@@ -29,13 +29,15 @@ const Template = ({
 
 			<div className="library-modal-content__footer">
 				<div className="library-modal-content__footer_meta">
-					{ ( template.title && 'template' === template.type ) && (
-						<h4 className="library-modal-content__footer_meta_title">{ template.title }{ template.author && __( ' by ' ) + template.author } </h4>
-					) }
+					<h4 className="library-modal-content__footer_meta_area">
+						{ ( template.title ) && (
+							template.title + ( template.author && __( ' by ' ) + template.author )
+						) }
 
-					{ ( template.author && 'block' === template.type ) && (
-						<h4 className="library-modal-content__footer_meta_author">{ __( 'Author:' ) } { template.author }</h4>
-					) }
+						{ ( ! template.title && template.author ) && (
+							__( 'Author: ' ) + template.author
+						) }
+					</h4>
 				</div>
 
 				<div className="library-modal-content__footer_actions">
