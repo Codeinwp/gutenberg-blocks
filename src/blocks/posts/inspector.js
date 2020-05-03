@@ -54,12 +54,14 @@ const Inspector = ({
 						return name;
 					}
 
-					const id = categoriesList.find( e => e.name === name ).id;
-					return {
-						id,
-						name
-					};
-				});
+					const category = categoriesList.find( e => e.name === name );
+					if ( category ) {
+						return {
+							id: category.id,
+							name
+						};
+					}
+				}).filter( e => undefined !== e );
 			}
 		} else {
 			if ( '' !== value ) {
@@ -69,6 +71,7 @@ const Inspector = ({
 				} ];
 			}
 		}
+
 		setAttributes({ categories });
 	};
 
