@@ -7,6 +7,8 @@
 
 namespace ThemeIsle\GutenbergBlocks;
 
+use Masterminds\HTML5;
+
 /**
  * Class Main
  */
@@ -57,6 +59,7 @@ class Main {
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
 		add_action( 'init', array( $this, 'load_server_side_blocks' ), 11 );
 		add_action( 'block_categories', array( $this, 'block_categories' ) );
+		add_filter( 'render_block', array( $this, 'render_amp' ), 10, 3 );
 	}
 
 	/**
@@ -176,6 +179,10 @@ class Main {
 			$version
 		);
 
+		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			return;
+		}
+
 		$has_map    = false;
 		$has_slider = false;
 
@@ -206,7 +213,7 @@ class Main {
 			$apikey = get_option( 'themeisle_google_map_block_api_key' );
 
 			// Don't output anything if there is no API key.
-			if ( null === $apikey || empty( $apikey ) || ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) ) {
+			if ( null === $apikey || empty( $apikey ) ) {
 				return;
 			}
 
@@ -398,6 +405,33 @@ class Main {
 				),
 			)
 		);
+	}
+
+	/**
+	 * Render Blocks for AMP
+	 *
+	 * @param string $block_content Content of block.
+	 * @param array $block Block Attributes.
+	 * @return mixed
+	 *
+	 * @since   1.5.3
+	 * @access public
+	 */
+	public function render_amp( $block_content, $block ) {
+		if ( 'themeisle-blocks/slider' !== $block['blockName'] || ! ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) ) {
+			return $block_content;
+		}
+
+		$html5 = new HTML5();
+		$dom = $html5->loadHTML( $block['innerHTML' ]);
+		$id = $block['attrs']['id'];
+		$images = $dom->getElementsByTagName( 'figure' );
+		$output = '<amp-carousel id="' . $id . '" class="wp-block-themeisle-blocks-slider" width="400" height="300" layout="responsive" type="slides" autoplay delay="2000">';
+		foreach ( $images as $image ) {
+			$output .= $html5->saveHTML( $image );
+		}
+		$output .= '</amp-carousel>';
+		return $output;
 	}
 
 	/**
