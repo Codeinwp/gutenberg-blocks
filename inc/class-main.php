@@ -411,7 +411,7 @@ class Main {
 	 * Render Blocks for AMP
 	 *
 	 * @param string $block_content Content of block.
-	 * @param array $block Block Attributes.
+	 * @param array  $block Block Attributes.
 	 * @return mixed
 	 *
 	 * @since   1.5.3
@@ -422,9 +422,9 @@ class Main {
 			return $block_content;
 		}
 
-		$html5 = new HTML5();
-		$dom = $html5->loadHTML( $block['innerHTML' ]);
-		$id = $block['attrs']['id'];
+		$html5  = new HTML5();
+		$dom    = $html5->loadHTML( $block['innerHTML' ] );
+		$id     = $block['attrs']['id'];
 		$images = $dom->getElementsByTagName( 'figure' );
 		$output = '<amp-carousel id="' . $id . '" class="wp-block-themeisle-blocks-slider" width="400" height="300" layout="responsive" type="slides" autoplay delay="2000">';
 		foreach ( $images as $image ) {
