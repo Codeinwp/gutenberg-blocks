@@ -96,7 +96,18 @@ class Google_Map_Block extends Base_Block {
 	 */
 	protected function render( $attributes ) {
 		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
-			return;
+			$apikey = get_option( 'themeisle_google_map_block_api_key' );
+
+			// Don't output anything if there is no API key.
+			if ( null === $apikey || empty( $apikey ) ) {
+				return;
+			}
+
+			$output  = '<amp-iframe width="400" height="' . intval( $attributes['height'] ) . '" sandbox="allow-scripts allow-same-origin" layout="responsive" src="https://www.google.com/maps/embed/v1/place?key=' . esc_attr( $apikey ) . '&q=' . esc_attr( $attributes['latitude'] ) . ', ' . esc_attr( $attributes['longitude'] ) . '">';
+			$output .= '	<amp-img layout="fill" src="' . plugin_dir_url( __FILE__ ) . '../../assets/icons/map-standard.png' . '" placeholder></amp-img>';
+			$output .= '</amp-iframe>';
+
+			return $output;
 		}
 
 		$id    = isset( $attributes['id'] ) ? $attributes['id'] : 'wp-block-themeisle-blocks-google-map-' . wp_rand( 10, 100 );
