@@ -7,7 +7,6 @@
 
 namespace ThemeIsle\GutenbergBlocks\CSS;
 
-use PHP_CodeSniffer\Tokenizers\CSS;
 use ThemeIsle\GutenbergBlocks\Base_CSS;
 
 use WP_REST_Request;
