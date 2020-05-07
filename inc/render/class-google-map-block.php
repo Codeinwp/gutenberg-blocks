@@ -104,7 +104,7 @@ class Google_Map_Block extends Base_Block {
 			}
 
 			$output  = '<amp-iframe width="400" height="' . intval( $attributes['height'] ) . '" sandbox="allow-scripts allow-same-origin" layout="responsive" src="https://www.google.com/maps/embed/v1/place?key=' . esc_attr( $apikey ) . '&q=' . esc_attr( $attributes['latitude'] ) . ', ' . esc_attr( $attributes['longitude'] ) . '">';
-			$output .= '	<amp-img layout="fill" src="' . plugin_dir_url( __FILE__ ) . '../../assets/icons/map-standard.png' . '" placeholder></amp-img>';
+			$output .= '	<amp-img layout="fill" src="' . plugin_dir_url( __FILE__ ) . '../../assets/icons/map-standard.png" placeholder></amp-img>';
 			$output .= '</amp-iframe>';
 
 			return $output;
