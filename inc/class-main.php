@@ -423,7 +423,7 @@ class Main {
 		}
 
 		$html5  = new HTML5();
-		$dom    = $html5->loadHTML( $block['innerHTML' ] );
+		$dom    = $html5->loadHTML( $block['innerHTML'] );
 		$id     = $block['attrs']['id'];
 		$images = $dom->getElementsByTagName( 'figure' );
 		$output = '<amp-carousel id="' . $id . '" class="wp-block-themeisle-blocks-slider" width="400" height="300" layout="responsive" type="slides" autoplay delay="2000">';

@@ -141,17 +141,6 @@
 	}
 }
 
-
-.block-editor-block-list__block {
-	&[data-type="themeisle-blocks/advanced-columns"] {
-		&:not(.is-selected) {
-			&:before {
-				outline: rgb(213, 218, 223) dashed 2px;
-			}
-		}
-	}
-}
-
 [data-type="themeisle-blocks/advanced-column"] {
 	
 	.wp-themeisle-block-advanced-column-resize-container {

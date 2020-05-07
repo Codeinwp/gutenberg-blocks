@@ -259,9 +259,6 @@
 .block-editor-block-list__block[data-type="themeisle-blocks/advanced-columns"]:not(.is-selected)::before {
 	outline: none;
 }
-.editor-block-list__block[data-type="themeisle-blocks/advanced-columns"]:not(.is-selected) > .editor-block-list__block-edit:before {
-	outline: 2px dashed #d5dadf;
-}
 [data-type="themeisle-blocks/advanced-column"] .wp-themeisle-block-advanced-column-resize-container .wp-themeisle-block-advanced-column-resize-container-handle .components-resizable-box__handle-right {
 	right: -15.5px;
 }
