@@ -82,6 +82,7 @@ const Library = ({
 	const [ data, setData ] = useState([]);
 	const [ preview, setPreview ] = useState( false );
 	const [ selectedTemplate, setSelectedTemplate ] = useState( null );
+	const [ selectedTemplateContent, setSelectedTemplateContent ] = useState( null );
 	const [ missingBlocks, setMissingBlocks ] = useState([]);
 
 	const changeTab = value => {
@@ -90,9 +91,13 @@ const Library = ({
 		setSearch( '' );
 	};
 
-	const togglePreview = ( template = null ) => {
-		setPreview( ! preview );
+	const importPreview = async( template = null ) => {
+		setLoaded( false );
+		let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ template.template_url }` });
 		setSelectedTemplate( template );
+		setSelectedTemplateContent( data );
+		setLoaded( true );
+		setPreview( ! preview );
 	};
 
 	const changeClientId = data => {
@@ -191,7 +196,7 @@ const Library = ({
 				selectedTemplate={ selectedTemplate }
 				selectedCategory={ selectedCategory }
 				search={ search }
-				togglePreview={ togglePreview }
+				setPreview={ setPreview }
 				close={ close }
 				importTemplate={ importTemplate }
 				selectCategory={ e => setSelectedCategory( e ) }
@@ -211,10 +216,10 @@ const Library = ({
 				isLoaded={ isLoaded }
 				data={ data }
 				tab={ tab }
-				selectedTemplate={ selectedTemplate }
+				selectedTemplateContent={ selectedTemplateContent }
 				selectedCategory={ selectedCategory }
 				search={ search }
-				togglePreview={ togglePreview }
+				importPreview={ importPreview }
 				importTemplate={ importTemplate }
 			/>
 		</Modal>

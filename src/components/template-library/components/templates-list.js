@@ -8,6 +8,8 @@ import LazyLoad from 'react-lazy-load';
  */
 const { __ } = wp.i18n;
 
+const { BlockPreview } = wp.blockEditor;
+
 const { Spinner } = wp.components;
 
 /**
@@ -20,16 +22,20 @@ const TemplatesList = ({
 	isLoaded,
 	data,
 	tab,
-	selectedTemplate,
+	selectedTemplateContent,
 	selectedCategory,
 	search,
-	togglePreview,
+	importPreview,
 	importTemplate
 }) => {
 	if ( preview ) {
+		console.log( selectedTemplateContent );
 		return (
 			<div className="library-modal-preview">
-				<iframe src={ selectedTemplate.demo_url }/>
+				<BlockPreview
+					blocks={ selectedTemplateContent }
+					viewportWidth={ 1200 }
+				/>
 			</div>
 		);
 	}
@@ -54,7 +60,7 @@ const TemplatesList = ({
 					return (
 						<Template
 							template={ i }
-							togglePreview={ togglePreview }
+							importPreview={ importPreview }
 							importTemplate={ importTemplate }
 						/>
 					);

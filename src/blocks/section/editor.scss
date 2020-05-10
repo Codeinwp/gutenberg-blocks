@@ -1,21 +1,27 @@
 @import "layouts.scss";
 
 .wp-block-themeisle-blocks-advanced-columns {
-	display: block;
+	display: flex;
 
-	> .innerblocks-wrap > .block-editor-inner-blocks > .block-editor-block-list__layout {
-		display: flex;
-		flex-wrap: nowrap;
+	> .innerblocks-wrap {
+		flex-basis: 100%;
+		width: 100%;
+		word-break: keep-all;
 
-		[data-type="themeisle-blocks/advanced-column"] {
+		> .block-editor-inner-blocks > .block-editor-block-list__layout {
 			display: flex;
-			flex-basis: 100%;
-			flex: 1;
-			max-width: unset;
-			margin: inherit;
-
-			[data-type="themeisle-blocks/advanced-columns"] {
+			flex-wrap: nowrap;
+	
+			[data-type="themeisle-blocks/advanced-column"] {
+				display: flex;
+				flex-basis: 100%;
+				flex: 1;
 				max-width: unset;
+				margin: inherit;
+	
+				[data-type="themeisle-blocks/advanced-columns"] {
+					max-width: unset;
+				}
 			}
 		}
 	}
@@ -77,24 +83,6 @@
 		}
 	}
 
-	&.has-vertical-flex-start {
-		> .innerblocks-wrap > .block-editor-inner-blocks > .block-editor-block-list__layout {
-			align-items: flex-start;
-		}
-	}
-
-	&.has-vertical-center {
-		> .innerblocks-wrap > .block-editor-inner-blocks > .block-editor-block-list__layout {
-			align-items: center;
-		}
-	}
-
-	&.has-vertical-flex-end {
-		> .innerblocks-wrap > .block-editor-inner-blocks > .block-editor-block-list__layout {
-			align-items: flex-end;
-		}
-	}
-
 	[data-type="themeisle-blocks/advanced-column"] {
 		&:before {
 			inset: 0;
@@ -106,6 +94,34 @@
 			.wp-block-themeisle-blocks-advanced-column {
 				flex-grow: 1;
 			}
+		}
+	}
+}
+
+body:not(.branch-5-2):not(.branch-5-3) {
+	.wp-block-themeisle-blocks-advanced-columns {
+		&.has-vertical-flex-start {
+			align-items: flex-start;
+		}
+	
+		&.has-vertical-center {
+			align-items: center;
+		}
+	
+		&.has-vertical-flex-end {
+			align-items: flex-end;
+		}
+
+		&.has-horizontal-flex-start {
+			justify-content: flex-start;
+		}
+
+		&.has-horizontal-center {
+			justify-content: center;
+		}
+
+		&.has-horizontal-flex-end {
+			justify-content: flex-end;
 		}
 	}
 }

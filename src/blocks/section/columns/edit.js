@@ -238,8 +238,7 @@ const Edit = ({
 		...background,
 		...borderStyle,
 		...borderRadiusStyle,
-		...boxShadowStyle,
-		alignItems: attributes.horizontalAlign
+		...boxShadowStyle
 	};
 
 	if ( 'color' === attributes.backgroundOverlayType ) {
@@ -297,6 +296,7 @@ const Edit = ({
 		`has-mobile-${ attributes.layoutMobile }-layout`,
 		`has-${ attributes.columnsGap }-gap`,
 		`has-vertical-${ attributes.verticalAlign }`,
+		`has-horizontal-${ attributes.horizontalAlign }`,
 		{ 'has-reverse-columns-tablet': ( attributes.reverseColumnsTablet && ! attributes.hideTablet && 'collapsedRows' === attributes.layoutTablet ) },
 		{ 'has-reverse-columns-mobile': ( attributes.reverseColumnsMobile && ! attributes.hideMobile && 'collapsedRows' === attributes.layoutMobile ) },
 		{ 'has-viewport-desktop': isDesktop },

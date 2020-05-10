@@ -35,20 +35,28 @@
 }
 
 .wp-block-themeisle-blocks-advanced-columns {
-	&.has-vertical-flex-start {
-		.wp-themeisle-block-advanced-column-resize-container {
+	&.branch-5-2, .branch-5-3 {
+		&.has-vertical-flex-start {
+			justify-content: flex-start;
+		}
+
+		&.has-vertical-center {
+			justify-content: center;
+		}
+
+		&.has-vertical-flex-end {
+			justify-content: flex-end;
+		}
+
+		&.has-horizontal-flex-start {
 			align-items: flex-start;
 		}
-	}
 
-	&.has-vertical-center {
-		.wp-themeisle-block-advanced-column-resize-container {
+		&.has-horizontal-center {
 			align-items: center;
 		}
-	}
 
-	&.has-vertical-flex-end {
-		.wp-themeisle-block-advanced-column-resize-container {
+		&.has-horizontal-flex-end {
 			align-items: flex-end;
 		}
 	}

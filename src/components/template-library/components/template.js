@@ -12,7 +12,7 @@ const { Button } = wp.components;
 
 const Template = ({
 	template,
-	togglePreview,
+	importPreview,
 	importTemplate
 }) => {
 	return (
@@ -41,17 +41,15 @@ const Template = ({
 				</div>
 
 				<div className="library-modal-content__footer_actions">
-					{ template.demo_url && (
-						<Button
-							isDefault
-							isLarge
-							className="library-modal-overlay__actions"
-							onClick={ () => togglePreview( template ) }
-							tabindex="0"
-						>
-							{ __( 'Preview' ) }
-						</Button>
-					) }
+					<Button
+						isDefault
+						isLarge
+						className="library-modal-overlay__actions"
+						onClick={ () => importPreview( template ) }
+						tabindex="0"
+					>
+						{ __( 'Preview' ) }
+					</Button>
 
 					<Button
 						isPrimary
