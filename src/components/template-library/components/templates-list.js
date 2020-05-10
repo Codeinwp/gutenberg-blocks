@@ -12,6 +12,8 @@ const { BlockPreview } = wp.blockEditor;
 
 const { Spinner } = wp.components;
 
+const { withViewportMatch } = wp.viewport;
+
 /**
  * Internal dependencies
  */
@@ -26,15 +28,30 @@ const TemplatesList = ({
 	selectedCategory,
 	search,
 	importPreview,
-	importTemplate
+	importTemplate,
+	isLarger,
+	isLarge,
+	isSmall,
+	isSmaller
 }) => {
+	let viewportWidth = 1400;
+
+	const isTablet = ! isLarger && ! isLarge && isSmall && ! isSmaller;
+
+	const isMobile = ! isLarger && ! isLarge && ! isSmall && ! isSmaller;
+
+	if ( isTablet ) {
+		viewportWidth = 960;
+	} else if ( isMobile ) {
+		viewportWidth = 600;
+	}
+
 	if ( preview ) {
-		console.log( selectedTemplateContent );
 		return (
 			<div className="library-modal-preview">
 				<BlockPreview
 					blocks={ selectedTemplateContent }
-					viewportWidth={ 1200 }
+					viewportWidth={ viewportWidth }
 				/>
 			</div>
 		);
@@ -81,4 +98,9 @@ const TemplatesList = ({
 	);
 };
 
-export default TemplatesList;
+export default withViewportMatch({
+	isLarger: '>= large',
+	isLarge: '<= large',
+	isSmall: '>= small',
+	isSmaller: '<= small'
+})( TemplatesList );

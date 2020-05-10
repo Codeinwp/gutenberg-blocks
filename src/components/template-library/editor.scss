@@ -322,6 +322,10 @@
 
 			.block-editor-block-preview__container {
 				background: #ffffff;
+
+				.wp-block {
+					max-width: none;
+				}
 			}
 		}
 
