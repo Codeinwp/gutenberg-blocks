@@ -465,10 +465,9 @@ const Edit = ({
 					style={ innerStyle }
 				>
 					<InnerBlocks
-						allowedBlocks={ [ 'themeisle-blocks/advanced-columns' ] }
+						allowedBlocks={ [ 'themeisle-blocks/advanced-column' ] }
 						template={ getColumnsTemplate( attributes.columns ) }
-						templateLock="insert"
-						__experimentalMoverDirection={ 'horizontal' }
+						templateLock="all"
 					/>
 				</div>
 
