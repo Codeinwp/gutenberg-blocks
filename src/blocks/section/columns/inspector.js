@@ -469,6 +469,22 @@ const Inspector = ({
 		});
 	};
 
+	const changeBackgroundGradientValue = object => {
+		const options = {
+			firstColor: 'backgroundGradientFirstColor',
+			firstLocation: 'backgroundGradientFirstLocation',
+			secondColor: 'backgroundGradientSecondColor',
+			secondLocation: 'backgroundGradientSecondLocation',
+			type: 'backgroundGradientType',
+			angle: 'backgroundGradientAngle',
+			position: 'backgroundGradientPosition'
+		};
+
+		for ( const key in object ) {
+			setAttributes({ [options[key]]: object[key] });
+		}
+	};
+
 	const changeBackgroundOverlayType = value => {
 		setAttributes({ backgroundOverlayType: value });
 	};
@@ -521,6 +537,22 @@ const Inspector = ({
 			backgroundOverlayGradientAngle: angle,
 			backgroundOverlayGradientPosition: position
 		});
+	};
+
+	const changeBackgroundOverlayGradientValue = object => {
+		const options = {
+			firstColor: 'backgroundOverlayGradientFirstColor',
+			firstLocation: 'backgroundOverlayGradientFirstLocation',
+			secondColor: 'backgroundOverlayGradientSecondColor',
+			secondLocation: 'backgroundOverlayGradientSecondLocation',
+			type: 'backgroundOverlayGradientType',
+			angle: 'backgroundOverlayGradientAngle',
+			position: 'backgroundOverlayGradientPosition'
+		};
+
+		for ( const key in object ) {
+			setAttributes({ [options[key]]: object[key] });
+		}
 	};
 
 	const changebackgroundOverlayFilterBlur = value => {
@@ -1318,6 +1350,7 @@ const Inspector = ({
 										position: attributes.backgroundGradientPosition
 									} }
 									onChange={ changeBackgroundGradient }
+									onChangeValue={ changeBackgroundGradientValue }
 								/>
 							) }
 						</PanelBody>
@@ -1467,6 +1500,7 @@ const Inspector = ({
 										position: attributes.backgroundOverlayGradientPosition
 									} }
 									onChange={ changeBackgroundOverlayGradient }
+									onChangeValue={ changeBackgroundOverlayGradientValue }
 								/>
 							) }
 
