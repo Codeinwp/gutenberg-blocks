@@ -19,7 +19,6 @@
 	.wp-block-themeisle-blocks-advanced-columns > .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout >[data-type="themeisle-blocks/advanced-column"] {
 		display: flex;
 		flex-direction: column;
-		margin: auto;
 		width: 0;
 	}
 	.wp-block-themeisle-blocks-advanced-columns > .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout >[data-type="themeisle-blocks/advanced-column"] .editor-block-list__block-edit {
