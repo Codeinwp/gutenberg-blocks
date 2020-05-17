@@ -76,7 +76,7 @@ abstract class Base_Block {
 
 	/**
 	 * Returns the block attributes.
-	 * The result is also filtered via `themeisle_gutenberg_block_attributes_for_{$this->block_slug}` filter.
+	 * The result is also filtered via `otter_block_attributes_for_{$this->block_slug}` filter.
 	 *
 	 * @return array
 	 */

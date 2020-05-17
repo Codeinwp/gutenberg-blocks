@@ -30,7 +30,14 @@ class Plugin_Card_Block extends Base_Block {
 	 */
 	protected function set_attributes() {
 		$this->attributes = array(
-			'slug' => array(
+			'slug'         => array(
+				'type' => 'string',
+			),
+			'hasCustomCSS' => array(
+				'type'    => 'boolean',
+				'default' => false,
+			),
+			'customCSS'    => array(
 				'type' => 'string',
 			),
 		);

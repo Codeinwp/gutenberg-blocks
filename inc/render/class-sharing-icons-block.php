@@ -75,36 +75,43 @@ class Sharing_Icons_Block extends Base_Block {
 		);
 
 		$this->attributes = array(
-			'align'     => array(
+			'align'        => array(
 				'type' => 'string',
 			),
-			'facebook'  => array(
+			'facebook'     => array(
 				'type'    => 'boolean',
 				'default' => 1,
 			),
-			'twitter'   => array(
+			'twitter'      => array(
 				'type'    => 'boolean',
 				'default' => 1,
 			),
-			'linkedin'  => array(
+			'linkedin'     => array(
 				'type'    => 'boolean',
 				'default' => 1,
 			),
-			'pinterest' => array(
+			'pinterest'    => array(
 				'type'    => 'boolean',
 				'default' => 0,
 			),
-			'tumblr'    => array(
+			'tumblr'       => array(
 				'type'    => 'boolean',
 				'default' => 0,
 			),
-			'reddit'    => array(
+			'reddit'       => array(
 				'type'    => 'boolean',
 				'default' => 0,
 			),
-			'className' => array(
+			'className'    => array(
 				'type'    => 'string',
 				'default' => 'is-default',
+			),
+			'hasCustomCSS' => array(
+				'type'    => 'boolean',
+				'default' => false,
+			),
+			'customCSS'   => array(
+				'type'    => 'string',
 			),
 		);
 	}
