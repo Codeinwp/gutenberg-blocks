@@ -110,8 +110,8 @@ class Sharing_Icons_Block extends Base_Block {
 				'type'    => 'boolean',
 				'default' => false,
 			),
-			'customCSS'   => array(
-				'type'    => 'string',
+			'customCSS'    => array(
+				'type' => 'string',
 			),
 		);
 	}
