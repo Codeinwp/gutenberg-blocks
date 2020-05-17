@@ -19,6 +19,7 @@
 	.wp-block-themeisle-blocks-advanced-columns > .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout >[data-type="themeisle-blocks/advanced-column"] {
 		display: flex;
 		flex-direction: column;
+		margin: 0 auto;
 		width: 0;
 	}
 	.wp-block-themeisle-blocks-advanced-columns > .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout >[data-type="themeisle-blocks/advanced-column"] .editor-block-list__block-edit {
@@ -84,6 +85,18 @@
 	}
 	.wp-block-themeisle-blocks-advanced-columns.has-6-columns.has-desktop-equal-layout > .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout >[data-type="themeisle-blocks/advanced-column"] {
 		flex-basis: 16.66%;
+	}
+	.branch-5-2 .wp-block-themeisle-blocks-advanced-columns.has-vertical-flex-start .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"],
+	.branch-5-3 .wp-block-themeisle-blocks-advanced-columns.has-vertical-flex-start .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"] {
+		align-self: flex-start;
+	}
+	.branch-5-2 .wp-block-themeisle-blocks-advanced-columns.has-vertical-center .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"],
+	.branch-5-3 .wp-block-themeisle-blocks-advanced-columns.has-vertical-center .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"] {
+		align-self: center;
+	}
+	.branch-5-2 .wp-block-themeisle-blocks-advanced-columns.has-vertical-flex-end .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"],
+	.branch-5-3 .wp-block-themeisle-blocks-advanced-columns.has-vertical-flex-end .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"] {
+		align-self: flex-end;
 	}
 }
 @media (min-width: 600px) and (max-width: 960px) {
