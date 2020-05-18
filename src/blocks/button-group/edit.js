@@ -127,9 +127,8 @@ const Edit = ({
 	const changeButtons = value => {
 		if ( 1 <= value && 5 >= value ) {
 			if ( attributes.data.length < value ) {
-				const data = [ ...attributes.data ];
 				times( value - attributes.data.length, () => {
-					data.push({
+					dataAttributes.current.push({
 						text: attributes.data[0].text,
 						link: attributes.data[0].link,
 						newTab: attributes.data[0].newTab,
@@ -162,7 +161,7 @@ const Edit = ({
 					});
 				});
 
-				setAttributes({ data });
+				setAttributes({ data: dataAttributes.current });
 			}
 			setAttributes({ buttons: value });
 			setSelectedButton( 0 );
