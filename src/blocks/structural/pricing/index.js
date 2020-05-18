@@ -22,7 +22,6 @@ registerBlockType( 'themeisle-blocks/pricing', {
 		'table',
 		'money'
 	],
-	example: {},
 	edit,
 	save
 });

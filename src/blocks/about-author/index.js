@@ -23,7 +23,6 @@ registerBlockType( 'themeisle-blocks/about-author', {
 		'author',
 		'profile'
 	],
-	example: {},
 	supports: {
 		html: false
 	},

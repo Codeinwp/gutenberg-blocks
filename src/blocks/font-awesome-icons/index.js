@@ -27,11 +27,6 @@ registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 		'icons'
 	],
 	attributes,
-	example: {
-		attributes: {
-			fontSize: 100
-		}
-	},
 	deprecated,
 	edit,
 	save

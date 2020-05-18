@@ -25,7 +25,6 @@ registerBlockType( 'themeisle-blocks/google-map', {
 		'orbitfox'
 	],
 	attributes,
-	example: {},
 	supports: {
 		align: [ 'wide', 'full' ],
 		html: false

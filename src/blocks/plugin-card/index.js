@@ -26,11 +26,6 @@ registerBlockType( 'themeisle-blocks/plugin-cards', {
 		'orbitfox'
 	],
 	attributes,
-	example: {
-		attributes: {
-			slug: 'otter-blocks'
-		}
-	},
 	supports: {
 		html: false
 	},

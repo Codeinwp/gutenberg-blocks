@@ -27,7 +27,6 @@ registerBlockType( 'themeisle-blocks/button-group', {
 		__( 'advanced buttons' )
 	],
 	attributes,
-	example: {},
 	deprecated,
 	edit,
 	save

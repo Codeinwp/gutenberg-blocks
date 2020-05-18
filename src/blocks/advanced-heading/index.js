@@ -29,11 +29,6 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 		__( 'advanced heading' )
 	],
 	attributes,
-	example: {
-		attributes: {
-			content: __( 'Hope is the thing with feathers.' )
-		}
-	},
 	deprecated,
 	transforms,
 	edit,

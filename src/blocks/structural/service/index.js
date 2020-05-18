@@ -23,7 +23,6 @@ registerBlockType( 'themeisle-blocks/service', {
 		'icon',
 		'features'
 	],
-	example: {},
 	edit,
 	save
 });
