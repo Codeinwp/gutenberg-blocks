@@ -430,7 +430,7 @@ class Main {
 	 * @param array  $block Block Attributes.
 	 * @return mixed
 	 *
-	 * @since   1.5.3
+	 * @since  1.5.2
 	 * @access public
 	 */
 	public function render_amp( $block_content, $block ) {

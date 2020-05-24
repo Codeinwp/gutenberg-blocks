@@ -4,14 +4,6 @@
 import classnames from 'classnames';
 
 /**
- * WordPress dependencies
- */
-const {
-	SVG,
-	Path
-} = wp.components;
-
-/**
  * Internal dependencies
  */
 import './style.scss';
@@ -41,7 +33,7 @@ const Separators = ({
 			} : {}}
 		>
 			{ ( 'bigTriangle' === style && false === invert ) && (
-				<SVG
+				<svg
 					id="bigTriangle"
 					fill={ fill }
 					viewBox="0 0 100 100"
@@ -53,12 +45,12 @@ const Separators = ({
 						{ 'rotate': 'bottom' === type }
 					) }
 				>
-					<Path d="M0 0 L50 100 L100 0 Z"></Path>
-				</SVG>
+					<path d="M0 0 L50 100 L100 0 Z"></path>
+				</svg>
 			) }
 
 			{ ( 'bigTriangle' === style && true === invert ) && (
-				<SVG
+				<svg
 					id="bigTriangle"
 					fill={ fill }
 					viewBox="0 0 100 100"
@@ -70,12 +62,12 @@ const Separators = ({
 						{ 'rotate': 'top' === type }
 					) }
 				>
-					<Path d="M100, 0l-50, 100l-50, -100l0, 100l100, 0l0, -100Z"></Path>
-				</SVG>
+					<path d="M100, 0l-50, 100l-50, -100l0, 100l100, 0l0, -100Z"></path>
+				</svg>
 			) }
 
 			{ ( 'rightCurve' === style && false === invert ) && (
-				<SVG
+				<svg
 					id="rightCurve"
 					fill={ fill }
 					viewBox="0 0 100 100"
@@ -87,12 +79,12 @@ const Separators = ({
 						{ 'rotate': 'top' === type }
 					) }
 				>
-					<Path d="M0 100 C 20 0 50 0 100 100 Z"></Path>
-				</SVG>
+					<path d="M0 100 C 20 0 50 0 100 100 Z"></path>
+				</svg>
 			) }
 
 			{ ( 'rightCurve' === style && true === invert ) && (
-				<SVG
+				<svg
 					id="rightCurve"
 					fill={ fill }
 					viewBox="0 0 100 100"
@@ -104,12 +96,12 @@ const Separators = ({
 						{ 'rotate': 'top' === type }
 					) }
 				>
-					<Path d="M0 100 C 50 0 70 0 100 100 Z"></Path>
-				</SVG>
+					<path d="M0 100 C 50 0 70 0 100 100 Z"></path>
+				</svg>
 			) }
 
 			{ ( 'curve' === style ) && (
-				<SVG
+				<svg
 					id="curve"
 					fill={ fill }
 					viewBox="0 0 100 100"
@@ -121,12 +113,12 @@ const Separators = ({
 						{ 'rotate': 'top' === type }
 					) }
 				>
-					<Path d="M0 100 C40 0 60 0 100 100 Z"></Path>
-				</SVG>
+					<path d="M0 100 C40 0 60 0 100 100 Z"></path>
+				</svg>
 			) }
 
 			{ ( 'slant' === style && false === invert ) && (
-				<SVG
+				<svg
 					id="slant"
 					fill={ fill }
 					viewBox="0 0 100 100"
@@ -138,12 +130,12 @@ const Separators = ({
 						{ 'rotate': 'bottom' === type }
 					) }
 				>
-					<Path d="M0 0 L100 100 L100 0 Z"></Path>
-				</SVG>
+					<path d="M0 0 L100 100 L100 0 Z"></path>
+				</svg>
 			) }
 
 			{ ( 'slant' === style && true === invert ) && (
-				<SVG
+				<svg
 					id="slant"
 					fill={ fill }
 					viewBox="0 0 100 100"
@@ -155,12 +147,12 @@ const Separators = ({
 						{ 'rotate': 'bottom' === type }
 					) }
 				>
-					<Path d="M0 0 L0 100 L100 0 Z"></Path>
-				</SVG>
+					<path d="M0 0 L0 100 L100 0 Z"></path>
+				</svg>
 			) }
 
 			{ ( 'cloud' === style ) && (
-				<SVG
+				<svg
 					id="cloud"
 					fill={ fill }
 					viewBox="0 0 100 100"
@@ -172,8 +164,8 @@ const Separators = ({
 						{ 'rotate': 'top' === type }
 					) }
 				>
-					<Path d="M-5 100 Q 10 -100 15 100 Z M10 100 Q 20 -20 30 100 M25 100 Q 35 -70 45 100 M40 100 Q 50 -100 60 100 M55 100 Q 65 -20 75 100 M70 100 Q 75 -45 90 100 M85 100 Q 90 -50 95 100 M90 100 Q 95 -25 105 100 Z"></Path>
-				</SVG>
+					<path d="M-5 100 Q 10 -100 15 100 Z M10 100 Q 20 -20 30 100 M25 100 Q 35 -70 45 100 M40 100 Q 50 -100 60 100 M55 100 Q 65 -20 75 100 M70 100 Q 75 -45 90 100 M85 100 Q 90 -50 95 100 M90 100 Q 95 -25 105 100 Z"></path>
+				</svg>
 			) }
 		</div>
 	);
