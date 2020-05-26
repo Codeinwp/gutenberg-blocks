@@ -273,11 +273,7 @@
 					.library-modal-content__footer_meta {
 						flex: 4;
 
-						.library-modal-content__footer_meta_title {
-							margin-left: 15px;
-						}
-
-						.library-modal-content__footer_meta_author {
+						.library-modal-content__footer_meta_area {
 							margin-left: 15px;
 						}
 					}
@@ -320,18 +316,16 @@
 		}
 
 		.library-modal-preview {
-			background: #f2f2f3;   
 			height: 750px;
 			max-height: 85vh;
-			overflow: hidden;
 			padding: 25px 30px 30px;
 
-			iframe {
-				width: 150%;
-				height: 150%;
-				-webkit-transform: scale(.666) translateX(-25%) translateY(-25%);
-				-ms-transform: scale(.666) translateX(-25%) translateY(-25%);
-				transform: scale(.666) translateX(-25%) translateY(-25%);
+			.block-editor-block-preview__container {
+				background: #ffffff;
+
+				.wp-block {
+					max-width: none;
+				}
 			}
 		}
 
@@ -344,10 +338,6 @@
 				margin-right: 10px;
 			}
 		}
-	}
-
-	&.is-preview {
-		overflow: hidden;
 	}
 }
 

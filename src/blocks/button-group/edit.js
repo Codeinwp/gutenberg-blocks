@@ -21,6 +21,7 @@ const { IconButton } = wp.components;
 const {
 	Fragment,
 	useEffect,
+	useRef,
 	useState
 } = wp.element;
 
@@ -109,6 +110,8 @@ const Edit = ({
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
+	const dataAttributes = useRef( attributes.data );
+
 	const [ selectedButton, setSelectedButton ] = useState( 0 );
 	const [ wait, setWait ] = useState( false );
 
@@ -124,9 +127,8 @@ const Edit = ({
 	const changeButtons = value => {
 		if ( 1 <= value && 5 >= value ) {
 			if ( attributes.data.length < value ) {
-				const data = [ ...attributes.data ];
 				times( value - attributes.data.length, () => {
-					data.push({
+					dataAttributes.current.push({
 						text: attributes.data[0].text,
 						link: attributes.data[0].link,
 						newTab: attributes.data[0].newTab,
@@ -159,7 +161,7 @@ const Edit = ({
 					});
 				});
 
-				setAttributes({ data });
+				setAttributes({ data: dataAttributes.current });
 			}
 			setAttributes({ buttons: value });
 			setSelectedButton( 0 );
@@ -202,16 +204,14 @@ const Edit = ({
 	};
 
 	const updateButton = ( value, index ) => {
-		const updatedData = attributes.data.map( ( item, i ) => {
+		dataAttributes.current = dataAttributes.current.map( ( item, i ) => {
 			if ( index === i ) {
 				item = { ...item, ...value };
 			}
 			return item;
 		});
 
-		setAttributes({
-			data: updatedData
-		});
+		setAttributes({ data: dataAttributes.current });
 	};
 
 	const collapseClass = 'collapse-none' !== attributes.collapse ? attributes.collapse : '';

@@ -17,7 +17,10 @@ const attributes = {
 		]
 	},
 	categories: {
-		type: 'string'
+		type: 'array',
+		items: {
+			type: 'object'
+		}
 	},
 	postsToShow: {
 		type: 'number',

@@ -11,7 +11,6 @@ const { __ } = wp.i18n;
 const { apiFetch } = wp;
 
 const {
-	Button,
 	Placeholder,
 	Dashicon,
 	TextControl,
@@ -32,13 +31,9 @@ const {
 } = wp.keycodes;
 
 const BlockPlaceholder = ({
-	attributes,
 	setAttributes,
-	isFetching,
 	hasError,
 	setError,
-	fetchPlugin,
-	saveData,
 	className
 }) => {
 	const searchRef = useRef( null );
@@ -165,35 +160,8 @@ const BlockPlaceholder = ({
 
 	const selectPlugin = data => {
 		setAttributes({ slug: data.slug });
-		saveData( data );
 		setResults({});
 	};
-
-	if ( isFetching ) {
-		return (
-			<Placeholder className="wp-themeisle-block-spinner">
-				<Spinner/>
-			</Placeholder>
-		);
-	}
-
-	if ( attributes.slug && hasError ) {
-		return (
-			<Placeholder className={ className }>
-				<div className="wp-block-themeisle-blocks-plugin-cards-error">
-					{ __( 'There seems to be an error. Make sure your internet is working properly.' ) }
-
-					<Button
-						isDefault
-						isLarge
-						onClick={ fetchPlugin }
-					>
-						{ __( 'Try again' ) }
-					</Button>
-				</div>
-			</Placeholder>
-		);
-	}
 
 	return (
 		<Placeholder
@@ -258,15 +226,7 @@ const BlockPlaceholder = ({
 
 			{ hasError && (
 				<div className="wp-block-themeisle-blocks-plugin-cards-error">
-					{ __( 'There seems to be an error. Make sure your internet is working properly.' ) }
-
-					<Button
-						isDefault
-						isLarge
-						onClick={ () => searchPlugins( query ) }
-					>
-						{ __( 'Try again' ) }
-					</Button>
+					<span>{ __( 'There seems to be an error. Make sure your internet is working properly.' ) }</span>
 				</div>
 			) }
 		</Placeholder>

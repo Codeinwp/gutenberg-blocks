@@ -30,13 +30,10 @@ const GradientPickerControl = ({
 	instanceId,
 	value,
 	customGradient = true,
-	onChange
+	onChange,
+	onChangeValue
 }) => {
 	const id = `inspector-gradient-picker-control-${ instanceId }`;
-
-	const onChangeValue = ({ firstColor = value.firstColor, firstLocation = value.firstLocation, secondColor = value.secondColor, secondLocation = value.secondLocation, type = value.type, angle = value.angle, position = value.position }) => {
-		onChange( firstColor, firstLocation, secondColor, secondLocation, type, angle, position );
-	};
 
 	let direction;
 

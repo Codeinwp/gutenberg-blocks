@@ -30,7 +30,14 @@ class Plugin_Card_Block extends Base_Block {
 	 */
 	protected function set_attributes() {
 		$this->attributes = array(
-			'slug' => array(
+			'slug'         => array(
+				'type' => 'string',
+			),
+			'hasCustomCSS' => array(
+				'type'    => 'boolean',
+				'default' => false,
+			),
+			'customCSS'    => array(
 				'type' => 'string',
 			),
 		);
@@ -47,6 +54,10 @@ class Plugin_Card_Block extends Base_Block {
 	 * @return mixed|string
 	 */
 	protected function render( $attributes ) {
+		if ( empty( $attributes['slug'] ) ) {
+			return;
+		}
+
 		$results = $this->search( $attributes['slug'] );
 
 		if ( ! is_wp_error( $results['data'] ) ) {

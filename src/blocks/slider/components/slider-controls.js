@@ -8,7 +8,7 @@ const {
 
 const { Fragment } = wp.element;
 
-const SliderControls = ({ attributes }) => {
+export const SliderControlsArrows = ({ attributes }) => {
 	return (
 		<Fragment>
 			{ ! attributes.hideArrows && (
@@ -44,7 +44,13 @@ const SliderControls = ({ attributes }) => {
 					</button>
 				</div>
 			) }
+		</Fragment>
+	);
+};
 
+export const SliderControlsBullets = ({ attributes }) => {
+	return (
+		<Fragment>
 			{ ! attributes.hideBullets && (
 				<div
 					className="glide__bullets"
@@ -59,6 +65,15 @@ const SliderControls = ({ attributes }) => {
 					) ) }
 				</div>
 			) }
+		</Fragment>
+	);
+};
+
+const SliderControls = ({ attributes }) => {
+	return (
+		<Fragment>
+			<SliderControlsArrows attributes={ attributes } />
+			<SliderControlsBullets attributes={ attributes } />
 		</Fragment>
 	);
 };
