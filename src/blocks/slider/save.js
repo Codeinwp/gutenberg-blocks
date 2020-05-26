@@ -8,7 +8,10 @@ import classnames from 'classnames';
  */
 const { RichText } = wp.blockEditor;
 
-import SliderControls from './components/slider-controls.js';
+/**
+ * Internal dependencies
+ */
+import { SliderControlsBullets } from './components/slider-controls.js';
 
 const Save = ({
 	attributes,
@@ -29,6 +32,7 @@ const Save = ({
 			data-peek={ attributes.peek }
 			data-autoplay={ autoplay }
 			data-height={ `${ attributes.height }px` }
+			data-hide-arrows={ attributes.hideArrows }
 		>
 			<div className="glide__track" data-glide-el="track">
 				<div className="glide__slides">
@@ -60,7 +64,7 @@ const Save = ({
 					}) }
 				</div>
 
-				<SliderControls attributes={ attributes } />
+				<SliderControlsBullets attributes={ attributes } />
 			</div>
 		</div>
 	);

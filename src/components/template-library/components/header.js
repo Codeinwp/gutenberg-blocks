@@ -35,7 +35,7 @@ const Header = ({
 	selectedCategory,
 	selectedTemplate,
 	search,
-	togglePreview,
+	setPreview,
 	changeTab,
 	close,
 	importTemplate,
@@ -70,7 +70,7 @@ const Header = ({
 						<Button
 							className="library-modal-header-tabs-button back-to-library"
 							aria-label={ __( 'Back to Library' ) }
-							onClick={ togglePreview }
+							onClick={ () => setPreview( ! preview ) }
 						>
 							<Dashicon icon="arrow-left-alt" /> { __( 'Back to Library' ) }
 						</Button>

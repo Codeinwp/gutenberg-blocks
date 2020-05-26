@@ -116,8 +116,10 @@ const Edit = ({
 export default withSelect( ( select, props ) => {
 	const { categories, order, orderBy, postsToShow, offset } = props.attributes;
 
+	const catIds = categories && 0 < categories.length ? categories.map( ( cat ) => cat.id ) : [];
+
 	const latestPostsQuery = pickBy({
-		categories,
+		categories: catIds,
 		order,
 		orderby: orderBy,
 		per_page: postsToShow, // eslint-disable-line camelcase

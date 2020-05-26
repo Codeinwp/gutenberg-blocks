@@ -27,7 +27,6 @@ const TEMPLATE =  [
 		fontSize: 12,
 		marginBottom: 0
 	} ],
-	[ 'core/separator', {} ],
 	[ 'themeisle-blocks/advanced-heading', {
 		content: __( 'First Feature' ),
 		align: 'center',
@@ -35,7 +34,6 @@ const TEMPLATE =  [
 		fontSize: 12,
 		marginBottom: 0
 	} ],
-	[ 'core/separator', {} ],
 	[ 'themeisle-blocks/advanced-heading', {
 		content: __( 'Second Feature' ),
 		align: 'center',
@@ -43,7 +41,6 @@ const TEMPLATE =  [
 		fontSize: 12,
 		marginBottom: 0
 	} ],
-	[ 'core/separator', {} ],
 	[ 'themeisle-blocks/advanced-heading', {
 		content: __( 'Last Feature' ),
 		align: 'center',
@@ -51,7 +48,6 @@ const TEMPLATE =  [
 		fontSize: 12,
 		marginBottom: 0
 	} ],
-	[ 'core/separator', {} ],
 	[ 'themeisle-blocks/button-group', {
 		align: 'center',
 		buttons: 1,

@@ -24,6 +24,57 @@ const Inspector = ({
 	changeStyle,
 	categoriesList
 }) => {
+	const categorySuggestions = categoriesList.reduce(
+		( accumulator, category ) => ({
+			...accumulator,
+			[ category.name ]: category
+		}),
+		{}
+	);
+
+	const selectedCategories = attributes.categories ? attributes.categories.map( category => {
+		const cat = categoriesList.find( cat => cat.id === Number( category.id ) );
+		return {
+			id: category.id,
+			name: cat.name || cat.slug
+		};
+	}) : [];
+
+	const selectedCategoryId = ( 'object' === typeof attributes.categories ) ?
+		1 <= attributes.categories.length ? attributes.categories[0].id : undefined :
+		attributes.categories;
+
+	const selectCategories = value => {
+		let categories;
+
+		if ( 'object' === typeof value ) {
+			if ( 0 < value.length ) {
+				categories = value.map( name => {
+					if ( 'object' === typeof name ) {
+						return name;
+					}
+
+					const category = categoriesList.find( e => e.name === name );
+					if ( category ) {
+						return {
+							id: category.id,
+							name
+						};
+					}
+				}).filter( e => undefined !== e );
+			}
+		} else {
+			if ( '' !== value ) {
+				categories = [ {
+					id: value,
+					name: categoriesList.find( e => e.id === Number( value ) ).name
+				} ];
+			}
+		}
+
+		setAttributes({ categories });
+	};
+
 	const changeColumns = value => {
 		setAttributes({ columns: value });
 	};
@@ -147,13 +198,15 @@ const Inspector = ({
 				<QueryControls
 					order={ attributes.order }
 					orderBy={ attributes.orderBy }
-					numberOfItems={ attributes.postsToShow }
-					categoriesList={ categoriesList }
-					selectedCategoryId={ attributes.categories }
 					onOrderChange={ value => setAttributes({ order: value }) }
 					onOrderByChange={ value => setAttributes({ orderBy: value }) }
-					onCategoryChange={ value => setAttributes({ categories: '' !== value ? value : undefined }) }
+					numberOfItems={ attributes.postsToShow }
 					onNumberOfItemsChange={ value => setAttributes({ postsToShow: value }) }
+					categoriesList={ categoriesList }
+					categorySuggestions={ categorySuggestions }
+					selectedCategoryId={ selectedCategoryId }
+					selectedCategories={ selectedCategories }
+					onCategoryChange={ selectCategories }
 				/>
 
 				<TextControl

@@ -427,6 +427,22 @@ const Inspector = ({
 		});
 	};
 
+	const changeBackgroundGradientValue = object => {
+		const options = {
+			firstColor: 'backgroundGradientFirstColor',
+			firstLocation: 'backgroundGradientFirstLocation',
+			secondColor: 'backgroundGradientSecondColor',
+			secondLocation: 'backgroundGradientSecondLocation',
+			type: 'backgroundGradientType',
+			angle: 'backgroundGradientAngle',
+			position: 'backgroundGradientPosition'
+		};
+
+		for ( const key in object ) {
+			setAttributes({ [options[key]]: object[key] });
+		}
+	};
+
 	const changeBorderType = value => {
 		setAttributes({ borderType: value });
 	};
@@ -813,6 +829,7 @@ const Inspector = ({
 									position: attributes.backgroundGradientPosition
 								} }
 								onChange={ changeBackgroundGradient }
+								onChangeValue={ changeBackgroundGradientValue }
 							/>
 						) }
 					</PanelBody>

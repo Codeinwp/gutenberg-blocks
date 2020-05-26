@@ -8,7 +8,11 @@ import LazyLoad from 'react-lazy-load';
  */
 const { __ } = wp.i18n;
 
+const { BlockPreview } = wp.blockEditor;
+
 const { Spinner } = wp.components;
+
+const { withViewportMatch } = wp.viewport;
 
 /**
  * Internal dependencies
@@ -20,16 +24,35 @@ const TemplatesList = ({
 	isLoaded,
 	data,
 	tab,
-	selectedTemplate,
+	selectedTemplateContent,
 	selectedCategory,
 	search,
-	togglePreview,
-	importTemplate
+	importPreview,
+	importTemplate,
+	isLarger,
+	isLarge,
+	isSmall,
+	isSmaller
 }) => {
+	let viewportWidth = 1400;
+
+	const isTablet = ! isLarger && ! isLarge && isSmall && ! isSmaller;
+
+	const isMobile = ! isLarger && ! isLarge && ! isSmall && ! isSmaller;
+
+	if ( isTablet ) {
+		viewportWidth = 960;
+	} else if ( isMobile ) {
+		viewportWidth = 600;
+	}
+
 	if ( preview ) {
 		return (
 			<div className="library-modal-preview">
-				<iframe src={ selectedTemplate.demo_url }/>
+				<BlockPreview
+					blocks={ selectedTemplateContent }
+					viewportWidth={ viewportWidth }
+				/>
 			</div>
 		);
 	}
@@ -54,7 +77,7 @@ const TemplatesList = ({
 					return (
 						<Template
 							template={ i }
-							togglePreview={ togglePreview }
+							importPreview={ importPreview }
 							importTemplate={ importTemplate }
 						/>
 					);
@@ -75,4 +98,9 @@ const TemplatesList = ({
 	);
 };
 
-export default TemplatesList;
+export default withViewportMatch({
+	isLarger: '>= large',
+	isLarge: '<= large',
+	isSmall: '>= small',
+	isSmaller: '<= small'
+})( TemplatesList );

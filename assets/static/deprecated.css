@@ -19,7 +19,7 @@
 	.wp-block-themeisle-blocks-advanced-columns > .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout >[data-type="themeisle-blocks/advanced-column"] {
 		display: flex;
 		flex-direction: column;
-		margin: auto;
+		margin: 0 auto;
 		width: 0;
 	}
 	.wp-block-themeisle-blocks-advanced-columns > .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout >[data-type="themeisle-blocks/advanced-column"] .editor-block-list__block-edit {
@@ -85,6 +85,18 @@
 	}
 	.wp-block-themeisle-blocks-advanced-columns.has-6-columns.has-desktop-equal-layout > .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout >[data-type="themeisle-blocks/advanced-column"] {
 		flex-basis: 16.66%;
+	}
+	.branch-5-2 .wp-block-themeisle-blocks-advanced-columns.has-vertical-flex-start .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"],
+	.branch-5-3 .wp-block-themeisle-blocks-advanced-columns.has-vertical-flex-start .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"] {
+		align-self: flex-start;
+	}
+	.branch-5-2 .wp-block-themeisle-blocks-advanced-columns.has-vertical-center .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"],
+	.branch-5-3 .wp-block-themeisle-blocks-advanced-columns.has-vertical-center .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"] {
+		align-self: center;
+	}
+	.branch-5-2 .wp-block-themeisle-blocks-advanced-columns.has-vertical-flex-end .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"],
+	.branch-5-3 .wp-block-themeisle-blocks-advanced-columns.has-vertical-flex-end .innerblocks-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="themeisle-blocks/advanced-column"] {
+		align-self: flex-end;
 	}
 }
 @media (min-width: 600px) and (max-width: 960px) {
@@ -241,13 +253,28 @@
 		flex: 1 1 33%;
 	}
 }
-.wp-block-themeisle-blocks-advanced-columns.has-vertical-flex-start .wp-themeisle-block-advanced-column-resize-container {
+.branch-5-2 .wp-block-themeisle-blocks-advanced-columns.has-vertical-flex-start,
+.branch-5-3 .wp-block-themeisle-blocks-advanced-columns.has-vertical-flex-start {
+	justify-content: flex-start;
+}
+.branch-5-2 .wp-block-themeisle-blocks-advanced-columns.has-vertical-center,
+.branch-5-3 .wp-block-themeisle-blocks-advanced-columns.has-vertical-center {
+	justify-content: center;
+}
+.branch-5-2 .wp-block-themeisle-blocks-advanced-columns.has-vertical-flex-end,
+.branch-5-3 .wp-block-themeisle-blocks-advanced-columns.has-vertical-flex-end {
+	justify-content: flex-end;
+}
+.branch-5-2 .wp-block-themeisle-blocks-advanced-columns.has-horizontal-flex-start,
+.branch-5-3 .wp-block-themeisle-blocks-advanced-columns.has-horizontal-flex-start {
 	align-items: flex-start;
 }
-.wp-block-themeisle-blocks-advanced-columns.has-vertical-center .wp-themeisle-block-advanced-column-resize-container {
+.branch-5-2 .wp-block-themeisle-blocks-advanced-columns.has-horizontal-center,
+.branch-5-3 .wp-block-themeisle-blocks-advanced-columns.has-horizontal-center {
 	align-items: center;
 }
-.wp-block-themeisle-blocks-advanced-columns.has-vertical-flex-end .wp-themeisle-block-advanced-column-resize-container {
+.branch-5-2 .wp-block-themeisle-blocks-advanced-columns.has-horizontal-flex-end,
+.branch-5-3 .wp-block-themeisle-blocks-advanced-columns.has-horizontal-flex-end {
 	align-items: flex-end;
 }
 .wp-block-themeisle-onboarding-component .wp-block-themeisle-layout-picker {
@@ -258,9 +285,6 @@
 }
 .block-editor-block-list__block[data-type="themeisle-blocks/advanced-columns"]:not(.is-selected)::before {
 	outline: none;
-}
-.editor-block-list__block[data-type="themeisle-blocks/advanced-columns"]:not(.is-selected) > .editor-block-list__block-edit:before {
-	outline: 2px dashed #d5dadf;
 }
 [data-type="themeisle-blocks/advanced-column"] .wp-themeisle-block-advanced-column-resize-container .wp-themeisle-block-advanced-column-resize-container-handle .components-resizable-box__handle-right {
 	right: -15.5px;

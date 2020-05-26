@@ -7,6 +7,8 @@
 
 namespace ThemeIsle\GutenbergBlocks;
 
+use Masterminds\HTML5;
+
 /**
  * Class Main
  */
@@ -55,8 +57,9 @@ class Main {
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
-		add_action( 'wp', array( $this, 'load_server_side_blocks' ), 11 );
+		add_action( 'init', array( $this, 'load_server_side_blocks' ), 11 );
 		add_action( 'block_categories', array( $this, 'block_categories' ) );
+		add_filter( 'render_block', array( $this, 'render_amp' ), 10, 3 );
 	}
 
 	/**
@@ -72,6 +75,8 @@ class Main {
 			$version = THEMEISLE_BLOCKS_VERSION;
 		}
 
+		$wp_version = get_bloginfo( 'version' );
+
 		if ( defined( 'THEMEISLE_GUTENBERG_GOOGLE_MAPS_API' ) ) {
 			$api = THEMEISLE_GUTENBERG_GOOGLE_MAPS_API;
 		} else {
@@ -86,10 +91,16 @@ class Main {
 			true
 		);
 
+		$dependencies = array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs' );
+
+		if ( version_compare( (float) $wp_version, '5.3', '>' ) ) {
+			array_push( $dependencies, 'wp-server-side-render' );
+		}
+
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
-			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs' ),
+			$dependencies,
 			$version,
 			true
 		);
@@ -124,13 +135,11 @@ class Main {
 			$version
 		);
 
-		$wp_version = get_bloginfo( 'version' );
-
 		if ( version_compare( (float) $wp_version, '5.4', '<' ) ) {
 			wp_enqueue_style(
 				'themeisle-block_deprecated_styles',
 				plugin_dir_url( $this->get_dir() ) . 'assets/static/deprecated.css',
-				[],
+				[ 'themeisle-gutenberg-blocks-editor' ],
 				$version
 			);
 		}
@@ -176,10 +185,19 @@ class Main {
 			$version
 		);
 
+		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			return;
+		}
+
 		$has_map    = false;
 		$has_slider = false;
 
 		if ( is_singular() ) {
+			if ( has_block( 'themeisle-blocks/button-group' ) || has_block( 'themeisle-blocks/font-awesome-icons' ) || has_block( 'themeisle-blocks/sharing-icons' ) || has_block( 'themeisle-blocks/plugin-cards' ) || has_block( 'block' ) ) {
+				wp_enqueue_style( 'font-awesome-5' );
+				wp_enqueue_style( 'font-awesome-4-shims' );
+			}
+
 			if ( has_block( 'themeisle-blocks/google-map' ) ) {
 				$has_map = true;
 			}
@@ -191,11 +209,16 @@ class Main {
 			$posts = wp_list_pluck( $wp_query->posts, 'ID' );
 
 			foreach ( $posts as $post ) {
+				if ( has_block( 'themeisle-blocks/button-group', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/sharing-icons', $post ) || has_block( 'themeisle-blocks/plugin-cards', $post ) || has_block( 'block', $post ) ) {
+					wp_enqueue_style( 'font-awesome-5' );
+					wp_enqueue_style( 'font-awesome-4-shims' );
+				}
+
 				if ( has_block( 'themeisle-blocks/google-map', $post ) ) {
 					$has_map = true;
 				}
 
-				if ( has_block( 'themeisle-blocks/slider' ) ) {
+				if ( has_block( 'themeisle-blocks/slider', $post ) ) {
 					$has_slider = true;
 				}
 			}
@@ -206,7 +229,7 @@ class Main {
 			$apikey = get_option( 'themeisle_google_map_block_api_key' );
 
 			// Don't output anything if there is no API key.
-			if ( null === $apikey || empty( $apikey ) || ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) ) {
+			if ( null === $apikey || empty( $apikey ) ) {
 				return;
 			}
 
@@ -398,6 +421,33 @@ class Main {
 				),
 			)
 		);
+	}
+
+	/**
+	 * Render Blocks for AMP
+	 *
+	 * @param string $block_content Content of block.
+	 * @param array  $block Block Attributes.
+	 * @return mixed
+	 *
+	 * @since  1.5.2
+	 * @access public
+	 */
+	public function render_amp( $block_content, $block ) {
+		if ( 'themeisle-blocks/slider' !== $block['blockName'] || ! ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) ) {
+			return $block_content;
+		}
+
+		$html5  = new HTML5();
+		$dom    = $html5->loadHTML( $block['innerHTML'] );
+		$id     = $block['attrs']['id'];
+		$images = $dom->getElementsByTagName( 'figure' );
+		$output = '<amp-carousel id="' . $id . '" class="wp-block-themeisle-blocks-slider" width="400" height="300" layout="responsive" type="slides" autoplay delay="2000">';
+		foreach ( $images as $image ) {
+			$output .= $html5->saveHTML( $image );
+		}
+		$output .= '</amp-carousel>';
+		return $output;
 	}
 
 	/**

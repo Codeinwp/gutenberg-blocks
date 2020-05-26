@@ -9,8 +9,7 @@ const {
 	ButtonGroup,
 	Modal,
 	SelectControl,
-	TextControl,
-	TextareaControl
+	TextControl
 } = wp.components;
 
 const {
@@ -19,6 +18,11 @@ const {
 	useState,
 	Fragment
 } = wp.element;
+
+/**
+ * Internal dependencies
+ */
+import MarkerEditor from './marker-editor.js';
 
 const MarkerModal = ({
 	marker,
@@ -118,7 +122,7 @@ const MarkerModal = ({
 				onChange={ setTitle }
 			/>
 
-			<TextareaControl
+			<MarkerEditor
 				label={ __( 'Description' ) }
 				type="text"
 				value={ description }

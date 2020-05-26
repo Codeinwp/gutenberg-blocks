@@ -8,11 +8,13 @@ import LazyLoad from 'react-lazy-load';
  */
 const { __ } = wp.i18n;
 
+const { BlockPreview } = wp.blockEditor;
+
 const { Button } = wp.components;
 
 const Template = ({
 	template,
-	togglePreview,
+	importPreview,
 	importTemplate
 }) => {
 	return (
@@ -29,22 +31,24 @@ const Template = ({
 
 			<div className="library-modal-content__footer">
 				<div className="library-modal-content__footer_meta">
-					{ ( template.title && 'template' === template.type ) && (
-						<h4 className="library-modal-content__footer_meta_title">{ template.title }{ template.author && __( ' by ' ) + template.author } </h4>
-					) }
+					<h4 className="library-modal-content__footer_meta_area">
+						{ ( template.title ) && (
+							template.title + ( template.author && __( ' by ' ) + template.author )
+						) }
 
-					{ ( template.author && 'block' === template.type ) && (
-						<h4 className="library-modal-content__footer_meta_author">{ __( 'Author:' ) } { template.author }</h4>
-					) }
+						{ ( ! template.title && template.author ) && (
+							__( 'Author: ' ) + template.author
+						) }
+					</h4>
 				</div>
 
 				<div className="library-modal-content__footer_actions">
-					{ template.demo_url && (
+					{ BlockPreview && (
 						<Button
 							isDefault
 							isLarge
 							className="library-modal-overlay__actions"
-							onClick={ () => togglePreview( template ) }
+							onClick={ () => importPreview( template ) }
 							tabindex="0"
 						>
 							{ __( 'Preview' ) }

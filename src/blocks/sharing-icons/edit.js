@@ -1,23 +1,20 @@
 /**
- * External dependencies
- */
-import classnames from 'classnames';
-
-/**
  * WordPress dependencies
  */
+const { Disabled } = wp.components;
+
 const { Fragment } = wp.element;
+
+const ServerSideRender = wp.serverSideRender;
 
 /**
  * Internal dependencies
  */
 import Controls from './controls.js';
-import socialList from './services.js';
 
 const Edit = ({
 	attributes,
-	setAttributes,
-	className
+	setAttributes
 }) => {
 	return (
 		<Fragment>
@@ -26,23 +23,12 @@ const Edit = ({
 				setAttributes={ setAttributes }
 			/>
 
-			<div
-				className={ classnames(
-					className,
-					{ 'has-label': ( attributes.className ? ! attributes.className.includes( 'is-style-icons' ) : true ) }
-				) }
-			>
-				{ Object.keys( socialList ).map( ( item, i ) => {
-					if ( true === attributes[item]) {
-						return (
-							<a className={ `social-icon is-${item}` }>
-								<i className={ `fab fa-${ socialList[item].icon }` }></i>
-								{ ( attributes.className ? ! attributes.className.includes( 'is-style-icons' ) : true ) && socialList[item].label }
-							</a>
-						);
-					}
-				}) }
-			</div>
+			<Disabled>
+				<ServerSideRender
+					block="themeisle-blocks/sharing-icons"
+					attributes={ { ...attributes } }
+				/>
+			</Disabled>
 		</Fragment>
 	);
 };
