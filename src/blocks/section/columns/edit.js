@@ -19,10 +19,7 @@ const {
 	withSelect
 } = wp.data;
 
-const {
-	__experimentalBlockNavigationList,
-	InnerBlocks
-} = wp.blockEditor;
+const { InnerBlocks } = wp.blockEditor;
 
 const {
 	Fragment,
@@ -425,7 +422,7 @@ const Edit = ({
 
 	return (
 		<Fragment>
-			{ __experimentalBlockNavigationList && <BlockNavigatorControl clientId={ clientId } /> }
+			<BlockNavigatorControl clientId={ clientId } />
 
 			<Controls
 				attributes={ attributes }

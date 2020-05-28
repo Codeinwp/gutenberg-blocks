@@ -51,7 +51,7 @@ class Main {
 	public function init() {
 		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
 			define( 'THEMEISLE_BLOCKS_VERSION', '1.5.1' );
-			define( 'THEMEISLE_BLOCKS_DEV', true );
+			define( 'THEMEISLE_BLOCKS_DEV', false );
 		}
 
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
@@ -91,16 +91,10 @@ class Main {
 			true
 		);
 
-		$dependencies = array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs' );
-
-		if ( version_compare( (float) $wp_version, '5.3', '>' ) ) {
-			array_push( $dependencies, 'wp-server-side-render' );
-		}
-
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
-			$dependencies,
+			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs' ),
 			$version,
 			true
 		);

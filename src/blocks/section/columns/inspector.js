@@ -9,7 +9,6 @@ import classnames from 'classnames';
 const { __ } = wp.i18n;
 
 const {
-	BlockVerticalAlignmentToolbar,
 	ColorPalette,
 	InspectorControls,
 	MediaPlaceholder
@@ -20,7 +19,6 @@ const {
 	Button,
 	ButtonGroup,
 	Dashicon,
-	Icon,
 	IconButton,
 	PanelBody,
 	Tooltip,
@@ -41,11 +39,6 @@ const {
 /**
  * Internal dependencies
  */
-import {
-	topIcon,
-	middleIcon,
-	bottomIcon
-} from '../../../helpers/icons.js';
 import ColorBaseControl from '../../../components/color-base-control/index.js';
 import LayoutControl from './../components/layout-control/index.js';
 import SizingControl from '../../../components/sizing-control/index.js';
@@ -409,14 +402,6 @@ const Inspector = ({
 		if ( 'Mobile' === view ) {
 			setAttributes({ columnsHeightCustomMobile: value });
 		}
-	};
-
-	const changeVerticalAlign = value => {
-		if ( attributes.verticalAlign === value ) {
-			return setAttributes({ verticalAlign: 'unset' });
-		}
-
-		setAttributes({ verticalAlign: value });
 	};
 
 	const changeBackgroundType = value => {
@@ -1160,53 +1145,6 @@ const Inspector = ({
 										max={ 1000 }
 									/>
 								</ResponsiveControl>
-							) }
-
-							{ ! BlockVerticalAlignmentToolbar && (
-								<BaseControl
-									label={ 'Vertical Align' }
-								>
-									<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
-										<Tooltip text={ __( 'Top' ) } >
-											<Button
-												className="components-icon-button is-button is-large"
-												isPrimary={ 'flex-start' === attributes.verticalAlign }
-												onClick={ () => changeVerticalAlign( 'flex-start' ) }
-											>
-												<Icon
-													icon={ topIcon }
-													size={ 20 }
-												/>
-											</Button>
-										</Tooltip>
-
-										<Tooltip text={ __( 'Middle' ) } >
-											<Button
-												className="components-icon-button is-button is-large"
-												isPrimary={ 'center' === attributes.verticalAlign }
-												onClick={ () => changeVerticalAlign( 'center' ) }
-											>
-												<Icon
-													icon={ middleIcon }
-													size={ 20 }
-												/>
-											</Button>
-										</Tooltip>
-
-										<Tooltip text={ __( 'Bottom' ) } >
-											<Button
-												className="components-icon-button is-button is-large"
-												isPrimary={ 'flex-end' === attributes.verticalAlign }
-												onClick={ () => changeVerticalAlign( 'flex-end' ) }
-											>
-												<Icon
-													icon={ bottomIcon }
-													size={ 20 }
-												/>
-											</Button>
-										</Tooltip>
-									</ButtonGroup>
-								</BaseControl>
 							) }
 						</PanelBody>
 					</Fragment>

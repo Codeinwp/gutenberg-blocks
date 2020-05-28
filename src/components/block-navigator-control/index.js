@@ -41,9 +41,7 @@ const BlockNavigatorControl = ({
 	return (
 		<Fragment>
 			<BlockControls>
-				<Toolbar
-					className="wp-themesiel-blocks-block-navigator-components-toolbar"
-				>
+				<Toolbar>
 					<IconButton
 						className="components-toolbar__control"
 						label={ __( 'Open block navigator' ) }

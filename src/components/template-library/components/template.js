@@ -8,8 +8,6 @@ import LazyLoad from 'react-lazy-load';
  */
 const { __ } = wp.i18n;
 
-const { BlockPreview } = wp.blockEditor;
-
 const { Button } = wp.components;
 
 const Template = ({
@@ -43,17 +41,15 @@ const Template = ({
 				</div>
 
 				<div className="library-modal-content__footer_actions">
-					{ BlockPreview && (
-						<Button
-							isDefault
-							isLarge
-							className="library-modal-overlay__actions"
-							onClick={ () => importPreview( template ) }
-							tabindex="0"
-						>
-							{ __( 'Preview' ) }
-						</Button>
-					) }
+					<Button
+						isDefault
+						isLarge
+						className="library-modal-overlay__actions"
+						onClick={ () => importPreview( template ) }
+						tabindex="0"
+					>
+						{ __( 'Preview' ) }
+					</Button>
 
 					<Button
 						isPrimary
