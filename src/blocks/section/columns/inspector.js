@@ -931,8 +931,7 @@ const Inspector = ({
 						) }
 						onClick={ () => setTab( 'layout' ) }
 					>
-						<span
-						>
+						<span>
 							<Dashicon icon="editor-table"/>
 							{ __( 'Layout' ) }
 						</span>
@@ -945,8 +944,7 @@ const Inspector = ({
 						) }
 						onClick={ () => setTab( 'style' ) }
 					>
-						<span
-						>
+						<span>
 							<Dashicon icon="admin-customizer"/>
 							{ __( 'Style' ) }
 						</span>
@@ -959,8 +957,7 @@ const Inspector = ({
 						) }
 						onClick={ () => setTab( 'advanced' ) }
 					>
-						<span
-						>
+						<span>
 							<Dashicon icon="admin-generic"/>
 							{ __( 'Advanced' ) }
 						</span>
@@ -1675,7 +1672,8 @@ const Inspector = ({
 						>
 							<ButtonGroup>
 								<Button
-									className="is-button"
+									isSecondary
+									isSmall
 									isPrimary={ 'top' === dividerViewType }
 									onClick={ () => setDividerViewType( 'top' ) }
 								>
@@ -1683,7 +1681,8 @@ const Inspector = ({
 								</Button>
 
 								<Button
-									className="is-button"
+									isSecondary
+									isSmall
 									isPrimary={ 'bottom' === dividerViewType }
 									onClick={ () => setDividerViewType( 'bottom' ) }
 								>

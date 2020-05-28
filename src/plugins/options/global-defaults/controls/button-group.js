@@ -60,10 +60,10 @@ const ButtonGroupBlock = ({
 			<PanelBody
 				title={ __( 'Color & Border' ) }
 			>
-				<ButtonGroup className="wp-block-themeisle-blocks-button-group-hover-control">
+				<ButtonGroup>
 					<Button
-						isDefault
-						isLarge
+						isSecondary
+						isSmall
 						isPrimary={ ! hover }
 						onClick={ () => setHover( false ) }
 					>
@@ -71,8 +71,8 @@ const ButtonGroupBlock = ({
 					</Button>
 
 					<Button
-						isDefault
-						isLarge
+						isSecondary
+						isSmall
 						isPrimary={ hover }
 						onClick={ () => setHover( true ) }
 					>

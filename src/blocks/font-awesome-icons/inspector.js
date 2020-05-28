@@ -164,10 +164,10 @@ const Inspector = ({
 				title={ __( 'Color' ) }
 				initialOpen={ false }
 			>
-				<ButtonGroup className="wp-block-themeisle-blocks-font-awesome-icons-hover-control">
+				<ButtonGroup>
 					<Button
-						isDefault
-						isLarge
+						isSecondary
+						isSmall
 						isPrimary={ ! hover }
 						onClick={ () => setHover( false ) }
 					>
@@ -175,8 +175,8 @@ const Inspector = ({
 					</Button>
 
 					<Button
-						isDefault
-						isLarge
+						isSecondary
+						isSmall
 						isPrimary={ hover }
 						onClick={ () => setHover( true ) }
 					>

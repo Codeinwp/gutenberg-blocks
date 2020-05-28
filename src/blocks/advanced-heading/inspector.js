@@ -417,8 +417,7 @@ const Inspector = ({
 						) }
 						onClick={ () => setTab( 'style' ) }
 					>
-						<span
-						>
+						<span>
 							<Dashicon icon="admin-customizer"/>
 							{ __( 'Style' ) }
 						</span>
@@ -431,8 +430,7 @@ const Inspector = ({
 						) }
 						onClick={ () => setTab( 'advanced' ) }
 					>
-						<span
-						>
+						<span>
 							<Dashicon icon="admin-generic"/>
 							{ __( 'Advanced' ) }
 						</span>
