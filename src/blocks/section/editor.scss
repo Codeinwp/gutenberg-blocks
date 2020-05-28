@@ -98,49 +98,47 @@
 	}
 }
 
-body:not(.branch-5-2):not(.branch-5-3) {
-	.wp-block-themeisle-blocks-advanced-columns {
-		&.has-vertical-flex-start {
-			align-items: flex-start;
+.wp-block-themeisle-blocks-advanced-columns {
+	&.has-vertical-flex-start {
+		align-items: flex-start;
 
-			[data-type="themeisle-blocks/advanced-column"] {
-				.wp-themeisle-block-advanced-column-resize-container {
-					align-items: flex-start;
-				}
+		[data-type="themeisle-blocks/advanced-column"] {
+			.wp-themeisle-block-advanced-column-resize-container {
+				align-items: flex-start;
 			}
 		}
-	
-		&.has-vertical-center {
-			align-items: center;
+	}
 
-			[data-type="themeisle-blocks/advanced-column"] {
-				.wp-themeisle-block-advanced-column-resize-container {
-					align-items: center;
-				}
+	&.has-vertical-center {
+		align-items: center;
+
+		[data-type="themeisle-blocks/advanced-column"] {
+			.wp-themeisle-block-advanced-column-resize-container {
+				align-items: center;
 			}
 		}
-	
-		&.has-vertical-flex-end {
-			align-items: flex-end;
+	}
 
-			[data-type="themeisle-blocks/advanced-column"] {
-				.wp-themeisle-block-advanced-column-resize-container {
-					align-items: flex-end;
-				}
+	&.has-vertical-flex-end {
+		align-items: flex-end;
+
+		[data-type="themeisle-blocks/advanced-column"] {
+			.wp-themeisle-block-advanced-column-resize-container {
+				align-items: flex-end;
 			}
 		}
+	}
 
-		&.has-horizontal-flex-start {
-			justify-content: flex-start;
-		}
+	&.has-horizontal-flex-start {
+		justify-content: flex-start;
+	}
 
-		&.has-horizontal-center {
-			justify-content: center;
-		}
+	&.has-horizontal-center {
+		justify-content: center;
+	}
 
-		&.has-horizontal-flex-end {
-			justify-content: flex-end;
-		}
+	&.has-horizontal-flex-end {
+		justify-content: flex-end;
 	}
 }
 

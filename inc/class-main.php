@@ -51,7 +51,7 @@ class Main {
 	public function init() {
 		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
 			define( 'THEMEISLE_BLOCKS_VERSION', '1.5.1' );
-			define( 'THEMEISLE_BLOCKS_DEV', false );
+			define( 'THEMEISLE_BLOCKS_DEV', true );
 		}
 
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
@@ -134,15 +134,6 @@ class Main {
 			array( 'wp-edit-blocks' ),
 			$version
 		);
-
-		if ( version_compare( (float) $wp_version, '5.4', '<' ) ) {
-			wp_enqueue_style(
-				'themeisle-block_deprecated_styles',
-				plugin_dir_url( $this->get_dir() ) . 'assets/static/deprecated.css',
-				[ 'themeisle-gutenberg-blocks-editor' ],
-				$version
-			);
-		}
 
 		wp_enqueue_style(
 			'glidejs-core',
