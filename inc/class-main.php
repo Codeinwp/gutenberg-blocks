@@ -51,7 +51,7 @@ class Main {
 	public function init() {
 		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
 			define( 'THEMEISLE_BLOCKS_VERSION', '1.5.1' );
-			define( 'THEMEISLE_BLOCKS_DEV', false );
+			define( 'THEMEISLE_BLOCKS_DEV', true );
 		}
 
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
