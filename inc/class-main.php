@@ -134,7 +134,7 @@ class Main {
 			'wp-url',
 			'wp-viewport',
 			'themeisle-gutenberg-blocks-vendor',
-			'glidejs'
+			'glidejs',
 		);
 
 		if ( version_compare( (float) $wp_version, '5.3', '>' ) ) {
@@ -210,20 +210,18 @@ class Main {
 	 */
 	public function enqueue_dependencies( $post = null ) {
 
-		if ( ! self::$is_fa_loaded &&
-		     (
-			     has_block( 'themeisle-blocks/button-group', $post )
-			     || has_block( 'themeisle-blocks/font-awesome-icons', $post )
-			     || has_block( 'themeisle-blocks/sharing-icons', $post )
-			     || has_block( 'themeisle-blocks/plugin-cards', $post )
-			     || has_block( 'block', $post )
-		     ) ) {
+		if ( ! self::$is_fa_loaded && ( has_block( 'themeisle-blocks/button-group', $post )
+										|| has_block( 'themeisle-blocks/font-awesome-icons', $post )
+										|| has_block( 'themeisle-blocks/sharing-icons', $post )
+										|| has_block( 'themeisle-blocks/plugin-cards', $post )
+										|| has_block( 'block', $post )
+			) ) {
 			wp_enqueue_style( 'font-awesome-5' );
 			wp_enqueue_style( 'font-awesome-4-shims' );
 			self::$is_fa_loaded = true;
 		}
 
-		//On AMP context, we don't load JS files.
+		// On AMP context, we don't load JS files.
 		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
 			return;
 		}
@@ -321,11 +319,14 @@ class Main {
 			}
 		}
 
-		add_filter( 'the_content', function ( $content ) {
-			$this->enqueue_dependencies();
+		add_filter(
+			'the_content',
+			function ( $content ) {
+				$this->enqueue_dependencies();
 
-			return $content;
-		} );
+				return $content;
+			}
+		);
 	}
 
 	/**
@@ -474,7 +475,7 @@ class Main {
 	 * Render Blocks for AMP
 	 *
 	 * @param string $block_content Content of block.
-	 * @param array $block Block Attributes.
+	 * @param array  $block Block Attributes.
 	 *
 	 * @return mixed
 	 *

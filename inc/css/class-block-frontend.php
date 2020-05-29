@@ -204,10 +204,10 @@ class Block_Frontend extends Base_CSS {
 	 */
 	public function render_post_css() {
 		if ( is_singular() ) {
-			//Enqueue main post attached style.
+			// Enqueue main post attached style.
 			$this->enqueue_styles();
 		}
-		//Enqueue styles for other posts that display the_content, if any.
+		// Enqueue styles for other posts that display the_content, if any.
 		add_filter(
 			'the_content',
 			function ( $content ) {
