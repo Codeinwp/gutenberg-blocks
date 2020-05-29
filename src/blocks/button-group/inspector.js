@@ -196,16 +196,16 @@ const Inspector = ({
 							>
 								<ButtonGroup>
 									<Button
-										isSecondary
 										isSmall
+										isSecondary={ hover }
 										isPrimary={ ! hover }
 										onClick={ () => setHover( false ) }
 									>
 										{ __( 'Normal' ) }
 									</Button>
 									<Button
-										isSecondary
 										isSmall
+										isSecondary={ ! hover }
 										isPrimary={ hover }
 										onClick={ () => setHover( true ) }
 									>
@@ -317,16 +317,16 @@ const Inspector = ({
 									<Fragment>
 										<ButtonGroup>
 											<Button
-												isSecondary
 												isSmall
+												isSecondary={ hover }
 												isPrimary={ ! hover }
 												onClick={ () => setHover( false ) }
 											>
 												{ __( 'Normal' ) }
 											</Button>
 											<Button
-												isSecondary
 												isSmall
+												isSecondary={ ! hover }
 												isPrimary={ hover }
 												onClick={ () => setHover( true ) }
 											>

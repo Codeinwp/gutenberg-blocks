@@ -75,8 +75,8 @@ const ButtonGroupBlock = ({
 			>
 				<ButtonGroup>
 					<Button
-						isSecondary
 						isSmall
+						isSecondary={ hover }
 						isPrimary={ ! hover }
 						onClick={ () => setHover( false ) }
 					>
@@ -84,8 +84,8 @@ const ButtonGroupBlock = ({
 					</Button>
 
 					<Button
-						isSecondary
 						isSmall
+						isSecondary={ ! hover }
 						isPrimary={ hover }
 						onClick={ () => setHover( true ) }
 					>

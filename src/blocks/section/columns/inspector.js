@@ -1672,8 +1672,8 @@ const Inspector = ({
 						>
 							<ButtonGroup>
 								<Button
-									isSecondary
 									isSmall
+									isSecondary={ 'top' !== dividerViewType }
 									isPrimary={ 'top' === dividerViewType }
 									onClick={ () => setDividerViewType( 'top' ) }
 								>
@@ -1681,8 +1681,8 @@ const Inspector = ({
 								</Button>
 
 								<Button
-									isSecondary
 									isSmall
+									isSecondary={ 'bottom' !== dividerViewType }
 									isPrimary={ 'bottom' === dividerViewType }
 									onClick={ () => setDividerViewType( 'bottom' ) }
 								>
