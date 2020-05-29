@@ -53,7 +53,6 @@ const Inspector = ({
 	updateBlockAttributes,
 	adjacentBlockClientId
 }) => {
-
 	const getView = useSelect( ( select ) => {
 		const { getView } = select( 'themeisle-gutenberg/data' );
 		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );

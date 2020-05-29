@@ -16,7 +16,7 @@ const {
 	Tooltip
 } = wp.components;
 
-const { withInstanceId } = wp.compose;
+const { useInstanceId } = wp.compose;
 
 /**
  * Internal dependencies
@@ -27,10 +27,11 @@ import { barcodeIcon } from '../../../../helpers/icons.js';
 
 const BackgroundControl = ({
 	label,
-	instanceId,
 	backgroundType,
 	changeBackgroundType
 }) => {
+	const instanceId = useInstanceId( BackgroundControl );
+
 	const id = `inspector-background-control-${ instanceId }`;
 
 	return (
@@ -82,4 +83,4 @@ const BackgroundControl = ({
 	);
 };
 
-export default withInstanceId( BackgroundControl );
+export default BackgroundControl;

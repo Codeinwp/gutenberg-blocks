@@ -16,9 +16,7 @@ const {
 	Tooltip
 } = wp.components;
 
-const { compose } = wp.compose;
-
-const { withSelect } = wp.data;
+const { useSelect } = wp.data;
 
 const { Fragment } = wp.element;
 
@@ -34,16 +32,22 @@ const LayoutControl = ({
 	layout,
 	layoutTablet,
 	layoutMobile,
-	columns,
-	view
+	columns
 }) => {
+	const getView = useSelect( ( select ) => {
+		const { getView } = select( 'themeisle-gutenberg/data' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+
+		return __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : getView();
+	}, []);
+
 	let value;
 
-	if ( 'Desktop' === view ) {
+	if ( 'Desktop' === getView ) {
 		value = layout;
-	} else if ( 'Tablet' === view ) {
+	} else if ( 'Tablet' === getView ) {
 		value = layoutTablet;
-	} else if ( 'Mobile' === view ) {
+	} else if ( 'Mobile' === getView ) {
 		value = layoutMobile;
 	}
 
@@ -113,7 +117,7 @@ const LayoutControl = ({
 						</Button>
 					</Tooltip>
 
-					{ ( 'Mobile' == view || 'Tablet' == view ) && (
+					{ ( 'Mobile' == getView || 'Tablet' == getView ) && (
 						<Tooltip text={ __( 'Collapsed Rows' ) } >
 							<Button
 								className={ classnames(
@@ -212,7 +216,7 @@ const LayoutControl = ({
 						</Button>
 					</Tooltip>
 
-					{ ( 'Mobile' == view || 'Tablet' == view ) && (
+					{ ( 'Mobile' == getView || 'Tablet' == getView ) && (
 						<Tooltip text={ __( 'Collapsed Rows' ) } >
 							<Button
 								className={ classnames(
@@ -248,7 +252,7 @@ const LayoutControl = ({
 						</Button>
 					</Tooltip>
 
-					{ ( 'Mobile' == view || 'Tablet' == view ) && (
+					{ ( 'Mobile' == getView || 'Tablet' == getView ) && (
 						<Fragment>
 							<Tooltip text={ __( 'Two Column Grid' ) } >
 								<Button
@@ -303,7 +307,7 @@ const LayoutControl = ({
 						</Button>
 					</Tooltip>
 
-					{ ( 'Mobile' == view || 'Tablet' == view ) && (
+					{ ( 'Mobile' == getView || 'Tablet' == getView ) && (
 						<Tooltip text={ __( 'Collapsed Rows' ) } >
 							<Button
 								className={ classnames(
@@ -341,7 +345,7 @@ const LayoutControl = ({
 						</Button>
 					</Tooltip>
 
-					{ ( 'Mobile' == view || 'Tablet' == view ) && (
+					{ ( 'Mobile' == getView || 'Tablet' == getView ) && (
 						<Fragment>
 							<Tooltip text={ __( 'Two Column Grid' ) } >
 								<Button
@@ -399,13 +403,4 @@ const LayoutControl = ({
 	);
 };
 
-export default compose(
-	withSelect( ( select ) => {
-		const { getView } = select( 'themeisle-gutenberg/data' );
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
-
-		return {
-			view: __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : getView()
-		};
-	})
-)( LayoutControl );
+export default LayoutControl;
