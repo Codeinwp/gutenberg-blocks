@@ -10,7 +10,7 @@ const { __ } = wp.i18n;
 
 const { InspectorAdvancedControls } = wp.blockEditor;
 
-const { withInstanceId } = wp.compose;
+const { useInstanceId } = wp.compose;
 
 const {
 	BaseControl,
@@ -26,10 +26,11 @@ const { useState } = wp.element;
 import './editor.scss';
 
 const HTMLAnchorControl = ({
-	instanceId,
 	value,
 	onChange
 }) => {
+	const instanceId = useInstanceId( HTMLAnchorControl );
+
 	const [ isEditing, setEditing ] = useState( false );
 	const [ ID, setID ] = useState( value );
 
@@ -85,4 +86,4 @@ const HTMLAnchorControl = ({
 	);
 };
 
-export default withInstanceId( HTMLAnchorControl );
+export default HTMLAnchorControl;

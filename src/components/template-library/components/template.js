@@ -42,7 +42,7 @@ const Template = ({
 
 				<div className="library-modal-content__footer_actions">
 					<Button
-						isDefault
+						isSecondary
 						isLarge
 						className="library-modal-overlay__actions"
 						onClick={ () => importPreview( template ) }

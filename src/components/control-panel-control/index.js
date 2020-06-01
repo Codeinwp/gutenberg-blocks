@@ -6,7 +6,7 @@ const {
 	IconButton
 } = wp.components;
 
-const { withInstanceId } = wp.compose;
+const { useInstanceId } = wp.compose;
 
 /**
  * Internal dependencies
@@ -15,9 +15,10 @@ import './editor.scss';
 
 const ControlPanelControl = ({
 	label,
-	instanceId,
 	children
 }) => {
+	const instanceId = useInstanceId( ControlPanelControl );
+
 	const id = `inspector-control-panel-control-${ instanceId }`;
 
 	return (
@@ -59,4 +60,4 @@ const ControlPanelControl = ({
 	);
 };
 
-export default withInstanceId( ControlPanelControl );
+export default ControlPanelControl;

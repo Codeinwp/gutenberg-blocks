@@ -14,7 +14,7 @@ const {
 	Toolbar
 } = wp.components;
 
-const { withInstanceId } = wp.compose;
+const { useInstanceId } = wp.compose;
 
 const { BlockControls } = wp.blockEditor;
 
@@ -26,12 +26,13 @@ const { Fragment } = wp.element;
 import './editor.scss';
 
 const StyleSwitcherControl = ({
-	instanceId,
 	label,
 	value,
 	options,
 	onChange
 }) => {
+	const instanceId = useInstanceId( StyleSwitcherControl );
+
 	const id = `inspector-style-switcher-control-${ instanceId }`;
 	const onChangeValue = value => onChange( value );
 
@@ -65,7 +66,7 @@ const StyleSwitcherControl = ({
 	);
 };
 
-export const StyleSwitcherInspectorControl = withInstanceId( StyleSwitcherControl );
+export const StyleSwitcherInspectorControl = StyleSwitcherControl;
 
 export const StyleSwitcherBlockControl = ({
 	label,

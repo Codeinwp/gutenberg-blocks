@@ -16,16 +16,14 @@ const {
 } = wp.components;
 
 const {
-	compose,
-	withInstanceId
+	useInstanceId,
+	useViewportMatch
 } = wp.compose;
 
 const {
-	withSelect,
-	withDispatch
+	useSelect,
+	useDispatch
 } = wp.data;
-
-const { withViewportMatch } = wp.viewport;
 
 /**
  * Internal dependencies
@@ -35,13 +33,34 @@ import './editor.scss';
 import { checkIcon } from '../../helpers/icons.js';
 
 const ResponsiveControl = ({
-	instanceId,
 	label,
 	className,
-	children,
-	view,
-	updateView
+	children
 }) => {
+	const instanceId = useInstanceId( ResponsiveControl );
+
+	const isLarger = useViewportMatch( 'large', '>=' );
+
+	const isLarge = useViewportMatch( 'large', '<=' );
+
+	const isSmall = useViewportMatch( 'small', '>=' );
+
+	const isSmaller = useViewportMatch( 'small', '<=' );
+
+	const isMobile = ! isLarger && ! isLarge && ! isSmall && ! isSmaller;
+
+	const view = useSelect( select => {
+		const { getView } = select( 'themeisle-gutenberg/data' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+
+		return __experimentalGetPreviewDeviceType && ! isMobile ? __experimentalGetPreviewDeviceType() : getView();
+	});
+
+	const { updateView } = useDispatch( 'themeisle-gutenberg/data' );
+	const { __experimentalSetPreviewDeviceType } = useDispatch( 'core/edit-post' );
+
+	const setView = __experimentalSetPreviewDeviceType && ! isMobile ? __experimentalSetPreviewDeviceType : updateView;
+
 	const id = `inspector-responsive-control-${ instanceId }`;
 
 	return (
@@ -78,7 +97,7 @@ const ResponsiveControl = ({
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'Desktop' === view }
 										) }
-										onClick={ () => updateView( 'Desktop' ) }
+										onClick={ () => setView( 'Desktop' ) }
 									>
 										{ 'Desktop' === view && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
@@ -91,7 +110,7 @@ const ResponsiveControl = ({
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'Tablet' === view }
 										) }
-										onClick={ () => updateView( 'Tablet' ) }
+										onClick={ () => setView( 'Tablet' ) }
 									>
 										{ 'Tablet' === view && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
@@ -104,7 +123,7 @@ const ResponsiveControl = ({
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'Mobile' === view }
 										) }
-										onClick={ () => updateView( 'Mobile' ) }
+										onClick={ () => setView( 'Mobile' ) }
 									>
 										{ 'Mobile' === view && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
@@ -122,33 +141,4 @@ const ResponsiveControl = ({
 	);
 };
 
-export default compose(
-	withInstanceId,
-
-	withViewportMatch({
-		isLarger: '>= large',
-		isLarge: '<= large',
-		isSmall: '>= small',
-		isSmaller: '<= small'
-	}),
-
-	withSelect( ( select, props ) => {
-		const { getView } = select( 'themeisle-gutenberg/data' );
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
-		const isMobile = ! props.isLarger && ! props.isLarge && ! props.isSmall && ! props.isSmaller;
-
-		return {
-			view: __experimentalGetPreviewDeviceType && ! isMobile ? __experimentalGetPreviewDeviceType() : getView()
-		};
-	}),
-
-	withDispatch( ( dispatch, props ) => {
-		const { updateView } = dispatch( 'themeisle-gutenberg/data' );
-		const { __experimentalSetPreviewDeviceType } = dispatch( 'core/edit-post' );
-		const isMobile = ! props.isLarger && ! props.isLarge && ! props.isSmall && ! props.isSmaller;
-
-		return {
-			updateView: __experimentalSetPreviewDeviceType && ! isMobile ? __experimentalSetPreviewDeviceType : updateView
-		};
-	})
-)( ResponsiveControl );
+export default ResponsiveControl;
