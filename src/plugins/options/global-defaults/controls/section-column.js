@@ -8,9 +8,7 @@ const {
 	SelectControl
 } = wp.components;
 
-const { compose } = wp.compose;
-
-const { withSelect } = wp.data;
+const { useSelect } = wp.data;
 
 const { Fragment } = wp.element;
 
@@ -23,19 +21,25 @@ import SizingControl from '../../../../components/sizing-control/index.js';
 const SectionColumn = ({
 	blockName,
 	defaults,
-	changeConfig,
-	view
+	changeConfig
 }) => {
+	const getView = useSelect( select => {
+		const { getView } = select( 'themeisle-gutenberg/data' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+
+		return __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : getView();
+	}, []);
+
 	let getPaddingType = () => {
 		let value;
 
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			value = defaults.paddingType;
 		}
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			value = defaults.paddingTypeTablet;
 		}
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			value = defaults.paddingTypeMobile;
 		}
 
@@ -45,17 +49,17 @@ const SectionColumn = ({
 	getPaddingType = getPaddingType();
 
 	const changePaddingType = value => {
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			changeConfig( blockName, {
 				paddingType: value
 			});
 		}
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			changeConfig( blockName, {
 				paddingTypeTablet: value
 			});
 		}
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			changeConfig( blockName, {
 				paddingTypeMobile: value
 			});
@@ -84,7 +88,7 @@ const SectionColumn = ({
 	};
 
 	const changePadding = ( type, value ) => {
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			if ( 'linked' === defaults.paddingType ) {
 				changeConfig( blockName, {
 					padding: value
@@ -96,7 +100,7 @@ const SectionColumn = ({
 			}
 		}
 
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			if ( 'linked' === defaults.paddingTypeTablet ) {
 				changeConfig( blockName, {
 					paddingTablet: value
@@ -108,7 +112,7 @@ const SectionColumn = ({
 			}
 		}
 
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			if ( 'linked' === defaults.paddingTypeMobile ) {
 				changeConfig( blockName, {
 					paddingMobile: value
@@ -125,57 +129,57 @@ const SectionColumn = ({
 		let value;
 
 		if ( 'top' == type ) {
-			if ( 'Desktop' === view ) {
+			if ( 'Desktop' === getView ) {
 				value = 'linked' === defaults.paddingType ? defaults.padding : defaults.paddingTop;
 			}
 
-			if ( 'Tablet' === view ) {
+			if ( 'Tablet' === getView ) {
 				value = 'linked' === defaults.paddingTypeTablet ? defaults.paddingTablet : defaults.paddingTopTablet;
 			}
 
-			if ( 'Mobile' === view ) {
+			if ( 'Mobile' === getView ) {
 				value = 'linked' === defaults.paddingTypeMobile ? defaults.paddingMobile : defaults.paddingTopMobile;
 			}
 		}
 
 		if ( 'right' == type ) {
-			if ( 'Desktop' === view ) {
+			if ( 'Desktop' === getView ) {
 				value = 'linked' === defaults.paddingType ? defaults.padding : defaults.paddingRight;
 			}
 
-			if ( 'Tablet' === view ) {
+			if ( 'Tablet' === getView ) {
 				value = 'linked' === defaults.paddingTypeTablet ? defaults.paddingTablet : defaults.paddingRightTablet;
 			}
 
-			if ( 'Mobile' === view ) {
+			if ( 'Mobile' === getView ) {
 				value = 'linked' === defaults.paddingTypeMobile ? defaults.paddingMobile : defaults.paddingRightMobile;
 			}
 		}
 
 		if ( 'bottom' == type ) {
-			if ( 'Desktop' === view ) {
+			if ( 'Desktop' === getView ) {
 				value = 'linked' === defaults.paddingType ? defaults.padding : defaults.paddingBottom;
 			}
 
-			if ( 'Tablet' === view ) {
+			if ( 'Tablet' === getView ) {
 				value = 'linked' === defaults.paddingTypeTablet ? defaults.paddingTablet : defaults.paddingBottomTablet;
 			}
 
-			if ( 'Mobile' === view ) {
+			if ( 'Mobile' === getView ) {
 				value = 'linked' === defaults.paddingTypeMobile ? defaults.paddingMobile : defaults.paddingBottomMobile;
 			}
 		}
 
 		if ( 'left' == type ) {
-			if ( 'Desktop' === view ) {
+			if ( 'Desktop' === getView ) {
 				value = 'linked' === defaults.paddingType ? defaults.padding : defaults.paddingLeft;
 			}
 
-			if ( 'Tablet' === view ) {
+			if ( 'Tablet' === getView ) {
 				value = 'linked' === defaults.paddingTypeTablet ? defaults.paddingTablet : defaults.paddingLeftTablet;
 			}
 
-			if ( 'Mobile' === view ) {
+			if ( 'Mobile' === getView ) {
 				value = 'linked' === defaults.paddingTypeMobile ? defaults.paddingMobile : defaults.paddingLeftMobile;
 			}
 		}
@@ -186,13 +190,13 @@ const SectionColumn = ({
 	let getMarginType = () => {
 		let value;
 
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			value = defaults.marginType;
 		}
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			value = defaults.marginTypeTablet;
 		}
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			value = defaults.marginTypeMobile;
 		}
 
@@ -202,17 +206,17 @@ const SectionColumn = ({
 	getMarginType = getMarginType();
 
 	const changeMarginType = value => {
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			changeConfig( blockName, {
 				marginType: value
 			});
 		}
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			changeConfig( blockName, {
 				marginTypeTablet: value
 			});
 		}
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			changeConfig( blockName, {
 				marginTypeMobile: value
 			});
@@ -241,7 +245,7 @@ const SectionColumn = ({
 	};
 
 	const changeMargin = ( type, value ) => {
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			if ( 'linked' === defaults.marginType ) {
 				changeConfig( blockName, {
 					margin: value
@@ -253,7 +257,7 @@ const SectionColumn = ({
 			}
 		}
 
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			if ( 'linked' === defaults.marginTypeTablet ) {
 				changeConfig( blockName, {
 					marginTablet: value
@@ -265,7 +269,7 @@ const SectionColumn = ({
 			}
 		}
 
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			if ( 'linked' === defaults.marginTypeMobile ) {
 				changeConfig( blockName, {
 					marginMobile: value
@@ -282,57 +286,57 @@ const SectionColumn = ({
 		let value;
 
 		if ( 'top' == type ) {
-			if ( 'Desktop' === view ) {
+			if ( 'Desktop' === getView ) {
 				value = 'linked' === defaults.marginType ? defaults.margin : defaults.marginTop;
 			}
 
-			if ( 'Tablet' === view ) {
+			if ( 'Tablet' === getView ) {
 				value = 'linked' === defaults.marginTypeTablet ? defaults.marginTablet : defaults.marginTopTablet;
 			}
 
-			if ( 'Mobile' === view ) {
+			if ( 'Mobile' === getView ) {
 				value = 'linked' === defaults.marginTypeMobile ? defaults.marginMobile : defaults.marginTopMobile;
 			}
 		}
 
 		if ( 'right' == type ) {
-			if ( 'Desktop' === view ) {
+			if ( 'Desktop' === getView ) {
 				value = 'linked' === defaults.marginType ? defaults.margin : defaults.marginRight;
 			}
 
-			if ( 'Tablet' === view ) {
+			if ( 'Tablet' === getView ) {
 				value = 'linked' === defaults.marginTypeTablet ? defaults.marginTablet : defaults.marginRightTablet;
 			}
 
-			if ( 'Mobile' === view ) {
+			if ( 'Mobile' === getView ) {
 				value = 'linked' === defaults.marginTypeMobile ? defaults.marginMobile : defaults.marginRightMobile;
 			}
 		}
 
 		if ( 'bottom' == type ) {
-			if ( 'Desktop' === view ) {
+			if ( 'Desktop' === getView ) {
 				value = 'linked' === defaults.marginType ? defaults.margin : defaults.marginBottom;
 			}
 
-			if ( 'Tablet' === view ) {
+			if ( 'Tablet' === getView ) {
 				value = 'linked' === defaults.marginTypeTablet ? defaults.marginTablet : defaults.marginBottomTablet;
 			}
 
-			if ( 'Mobile' === view ) {
+			if ( 'Mobile' === getView ) {
 				value = 'linked' === defaults.marginTypeMobile ? defaults.marginMobile : defaults.marginBottomMobile;
 			}
 		}
 
 		if ( 'left' == type ) {
-			if ( 'Desktop' === view ) {
+			if ( 'Desktop' === getView ) {
 				value = 'linked' === defaults.marginType ? defaults.margin : defaults.marginLeft;
 			}
 
-			if ( 'Tablet' === view ) {
+			if ( 'Tablet' === getView ) {
 				value = 'linked' === defaults.marginTypeTablet ? defaults.marginTablet : defaults.marginLeftTablet;
 			}
 
-			if ( 'Mobile' === view ) {
+			if ( 'Mobile' === getView ) {
 				value = 'linked' === defaults.marginTypeMobile ? defaults.marginMobile : defaults.marginLeftMobile;
 			}
 		}
@@ -438,13 +442,4 @@ const SectionColumn = ({
 	);
 };
 
-export default compose(
-	withSelect( ( select ) => {
-		const { getView } = select( 'themeisle-gutenberg/data' );
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
-
-		return {
-			view: __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : getView()
-		};
-	})
-)( SectionColumn );
+export default SectionColumn;

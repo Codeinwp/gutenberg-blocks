@@ -49,7 +49,7 @@ const ResponsiveControl = ({
 
 	const isMobile = ! isLarger && ! isLarge && ! isSmall && ! isSmaller;
 
-	const view = useSelect( select => {
+	const getView = useSelect( select => {
 		const { getView } = select( 'themeisle-gutenberg/data' );
 		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
 
@@ -79,7 +79,7 @@ const ResponsiveControl = ({
 							position="top left"
 							renderToggle={ ({ isOpen, onToggle }) => (
 								<IconButton
-									icon={ 'Mobile' === view ? 'smartphone' : view.toLowerCase() }
+									icon={ 'Mobile' === getView ? 'smartphone' : getView.toLowerCase() }
 									label={ __( 'Responsiveness Settings' ) }
 									className="is-button"
 									onClick={ onToggle }
@@ -89,17 +89,17 @@ const ResponsiveControl = ({
 							renderContent={ () => (
 								<div className="wp-block-themeisle-blocks-responsive-control-settings">
 									<div className="wp-block-themeisle-blocks-responsive-control-settings-title">
-										{ __( 'View' ) }
+										{ __( 'getView' ) }
 									</div>
 
 									<Button
 										className={ classnames(
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
-											{ 'is-selected': 'Desktop' === view }
+											{ 'is-selected': 'Desktop' === getView }
 										) }
 										onClick={ () => setView( 'Desktop' ) }
 									>
-										{ 'Desktop' === view && <Icon icon={ checkIcon } /> }
+										{ 'Desktop' === getView && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
 											{ __( 'Desktop' ) }
 										</span>
@@ -108,11 +108,11 @@ const ResponsiveControl = ({
 									<Button
 										className={ classnames(
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
-											{ 'is-selected': 'Tablet' === view }
+											{ 'is-selected': 'Tablet' === getView }
 										) }
 										onClick={ () => setView( 'Tablet' ) }
 									>
-										{ 'Tablet' === view && <Icon icon={ checkIcon } /> }
+										{ 'Tablet' === getView && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
 											{ __( 'Tablet' ) }
 										</span>
@@ -121,11 +121,11 @@ const ResponsiveControl = ({
 									<Button
 										className={ classnames(
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
-											{ 'is-selected': 'Mobile' === view }
+											{ 'is-selected': 'Mobile' === getView }
 										) }
 										onClick={ () => setView( 'Mobile' ) }
 									>
-										{ 'Mobile' === view && <Icon icon={ checkIcon } /> }
+										{ 'Mobile' === getView && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
 											{ __( 'Mobile' ) }
 										</span>
