@@ -8,7 +8,7 @@ import classnames from 'classnames';
  */
 const { __ } = wp.i18n;
 
-const { withInstanceId } = wp.compose;
+const { useInstanceId } = wp.compose;
 
 const {
 	Button,
@@ -32,12 +32,13 @@ import './editor.scss';
 import data from './icons.json';
 
 const IconPickerControl = ({
-	instanceId,
 	label,
 	prefix,
 	icon,
 	onChange
 }) => {
+	const instanceId = useInstanceId( IconPickerControl );
+
 	useEffect( () => {
 		let icons = [];
 
@@ -159,4 +160,4 @@ const IconPickerControl = ({
 	);
 };
 
-export default withInstanceId( IconPickerControl );
+export default IconPickerControl;

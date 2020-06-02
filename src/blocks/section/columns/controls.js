@@ -37,12 +37,10 @@ const Controls = ({
 
 	return (
 		<BlockControls>
-			{ BlockVerticalAlignmentToolbar && (
-				<BlockVerticalAlignmentToolbar
-					onChange={ changeVerticalAlign }
-					value={ getVerticalAlignValue }
-				/>
-			) }
+			<BlockVerticalAlignmentToolbar
+				onChange={ changeVerticalAlign }
+				value={ getVerticalAlignValue }
+			/>
 		</BlockControls>
 	);
 };

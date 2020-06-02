@@ -11,7 +11,7 @@ const {
 	SelectControl
 } = wp.components;
 
-const { withInstanceId } = wp.compose;
+const { useInstanceId } = wp.compose;
 
 const { ColorPalette } = wp.blockEditor;
 
@@ -27,12 +27,13 @@ import gradients from './gradients.js';
 
 const GradientPickerControl = ({
 	label,
-	instanceId,
 	value,
 	customGradient = true,
 	onChange,
 	onChangeValue
 }) => {
+	const instanceId = useInstanceId( GradientPickerControl );
+
 	const id = `inspector-gradient-picker-control-${ instanceId }`;
 
 	let direction;
@@ -173,7 +174,7 @@ const GradientPickerControl = ({
 							className="wp-block-themeisle-blocks-gradient-picker-control-clear"
 							type="button"
 							isSmall
-							isDefault
+							isSecondary
 							onClick={ () => onChange( '#ffffff', 0, '#ffffff', 100, 'linear', 90, 'center center' ) }
 						>
 							{ __( 'Clear' ) }
@@ -185,4 +186,4 @@ const GradientPickerControl = ({
 	);
 };
 
-export default withInstanceId( GradientPickerControl );
+export default GradientPickerControl;

@@ -4,8 +4,8 @@
 const { __ } = wp.i18n;
 
 const {
+	Button,
 	Dropdown,
-	IconButton,
 	RangeControl,
 	Toolbar
 } = wp.components;
@@ -67,17 +67,17 @@ const Controls = ({
 					contentClassName="wp-themesiel-blocks-button-group-popover-content"
 					position="bottom center"
 					renderToggle={ ({ isOpen, onToggle }) => (
-						<IconButton
+						<Button
 							className="components-dropdown-menu__toggle"
 							icon={ 'editor-textcolor' }
 							onClick={ onToggle }
 							aria-haspopup="true"
 							aria-expanded={ isOpen }
 							label={ __( 'Typography Settings' ) }
-							tooltip={ __( 'Typography Settings' ) }
+							showTooltip={ true }
 						>
 							<span className="components-dropdown-menu__indicator" />
-						</IconButton>
+						</Button>
 					) }
 					renderContent={ () => (
 						<Fragment>

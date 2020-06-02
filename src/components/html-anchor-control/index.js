@@ -10,11 +10,11 @@ const { __ } = wp.i18n;
 
 const { InspectorAdvancedControls } = wp.blockEditor;
 
-const { withInstanceId } = wp.compose;
+const { useInstanceId } = wp.compose;
 
 const {
 	BaseControl,
-	IconButton,
+	Button,
 	Notice
 } = wp.components;
 
@@ -26,10 +26,11 @@ const { useState } = wp.element;
 import './editor.scss';
 
 const HTMLAnchorControl = ({
-	instanceId,
 	value,
 	onChange
 }) => {
+	const instanceId = useInstanceId( HTMLAnchorControl );
+
 	const [ isEditing, setEditing ] = useState( false );
 	const [ ID, setID ] = useState( value );
 
@@ -52,9 +53,10 @@ const HTMLAnchorControl = ({
 						onClick={ e => e.target.select() }
 					/>
 
-					<IconButton
+					<Button
 						icon={ isEditing ? 'yes' : 'edit' }
-						tooltip={ isEditing ? __( 'Save' ) : __( 'Edit' ) }
+						label={ isEditing ? __( 'Save' ) : __( 'Edit' ) }
+						showTooltip={ true }
 						disabled={ isInvalid ? true : false }
 						className={ classnames(
 							'wp-block-themeisle-blocks-html-anchor-control-button',
@@ -85,4 +87,4 @@ const HTMLAnchorControl = ({
 	);
 };
 
-export default withInstanceId( HTMLAnchorControl );
+export default HTMLAnchorControl;

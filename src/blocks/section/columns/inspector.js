@@ -9,7 +9,6 @@ import classnames from 'classnames';
 const { __ } = wp.i18n;
 
 const {
-	BlockVerticalAlignmentToolbar,
 	ColorPalette,
 	InspectorControls,
 	MediaPlaceholder
@@ -20,18 +19,13 @@ const {
 	Button,
 	ButtonGroup,
 	Dashicon,
-	Icon,
-	IconButton,
 	PanelBody,
-	Tooltip,
 	ToggleControl,
 	RangeControl,
 	SelectControl
 } = wp.components;
 
-const { compose } = wp.compose;
-
-const { withSelect } = wp.data;
+const { useSelect } = wp.data;
 
 const {
 	Fragment,
@@ -41,11 +35,6 @@ const {
 /**
  * Internal dependencies
  */
-import {
-	topIcon,
-	middleIcon,
-	bottomIcon
-} from '../../../helpers/icons.js';
 import ColorBaseControl from '../../../components/color-base-control/index.js';
 import LayoutControl from './../components/layout-control/index.js';
 import SizingControl from '../../../components/sizing-control/index.js';
@@ -60,9 +49,15 @@ const Inspector = ({
 	setAttributes,
 	updateColumnsWidth,
 	dividerViewType,
-	setDividerViewType,
-	view
+	setDividerViewType
 }) => {
+	const getView = useSelect( ( select ) => {
+		const { getView } = select( 'themeisle-gutenberg/data' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+
+		return __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : getView();
+	}, []);
+
 	const [ tab, setTab ] = useState( 'layout' );
 
 	const changeColumns = value => {
@@ -99,14 +94,14 @@ const Inspector = ({
 
 
 	const changeLayout = value => {
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			setAttributes({ layout: value });
 			updateColumnsWidth( attributes.columns, value );
 		}
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			setAttributes({ layoutTablet: value });
 		}
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			setAttributes({ layoutMobile: value });
 		}
 	};
@@ -119,13 +114,13 @@ const Inspector = ({
 	let getPaddingType = () => {
 		let value;
 
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			value = attributes.paddingType;
 		}
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			value = attributes.paddingTypeTablet;
 		}
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			value = attributes.paddingTypeMobile;
 		}
 
@@ -136,13 +131,13 @@ const Inspector = ({
 
 
 	const changePaddingType = value => {
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			setAttributes({ paddingType: value });
 		}
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			setAttributes({ paddingTypeTablet: value });
 		}
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			setAttributes({ paddingTypeMobile: value });
 		}
 	};
@@ -169,7 +164,7 @@ const Inspector = ({
 	};
 
 	const changePadding = ( type, value ) => {
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			if ( 'linked' === attributes.paddingType ) {
 				setAttributes({ padding: value });
 			} else {
@@ -177,7 +172,7 @@ const Inspector = ({
 			}
 		}
 
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			if ( 'linked' === attributes.paddingTypeTablet ) {
 				setAttributes({ paddingTablet: value });
 			} else {
@@ -185,7 +180,7 @@ const Inspector = ({
 			}
 		}
 
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			if ( 'linked' === attributes.paddingTypeMobile ) {
 				setAttributes({ paddingMobile: value });
 			} else {
@@ -198,57 +193,57 @@ const Inspector = ({
 		let value;
 
 		if ( 'top' == type ) {
-			if ( 'Desktop' === view ) {
+			if ( 'Desktop' === getView ) {
 				value = 'linked' === attributes.paddingType ? attributes.padding : attributes.paddingTop;
 			}
 
-			if ( 'Tablet' === view ) {
+			if ( 'Tablet' === getView ) {
 				value = 'linked' === attributes.paddingTypeTablet ? attributes.paddingTablet : attributes.paddingTopTablet;
 			}
 
-			if ( 'Mobile' === view ) {
+			if ( 'Mobile' === getView ) {
 				value = 'linked' === attributes.paddingTypeMobile ? attributes.paddingMobile : attributes.paddingTopMobile;
 			}
 		}
 
 		if ( 'right' == type ) {
-			if ( 'Desktop' === view ) {
+			if ( 'Desktop' === getView ) {
 				value = 'linked' === attributes.paddingType ? attributes.padding : attributes.paddingRight;
 			}
 
-			if ( 'Tablet' === view ) {
+			if ( 'Tablet' === getView ) {
 				value = 'linked' === attributes.paddingTypeTablet ? attributes.paddingTablet : attributes.paddingRightTablet;
 			}
 
-			if ( 'Mobile' === view ) {
+			if ( 'Mobile' === getView ) {
 				value = 'linked' === attributes.paddingTypeMobile ? attributes.paddingMobile : attributes.paddingRightMobile;
 			}
 		}
 
 		if ( 'bottom' == type ) {
-			if ( 'Desktop' === view ) {
+			if ( 'Desktop' === getView ) {
 				value = 'linked' === attributes.paddingType ? attributes.padding : attributes.paddingBottom;
 			}
 
-			if ( 'Tablet' === view ) {
+			if ( 'Tablet' === getView ) {
 				value = 'linked' === attributes.paddingTypeTablet ? attributes.paddingTablet : attributes.paddingBottomTablet;
 			}
 
-			if ( 'Mobile' === view ) {
+			if ( 'Mobile' === getView ) {
 				value = 'linked' === attributes.paddingTypeMobile ? attributes.paddingMobile : attributes.paddingBottomMobile;
 			}
 		}
 
 		if ( 'left' == type ) {
-			if ( 'Desktop' === view ) {
+			if ( 'Desktop' === getView ) {
 				value = 'linked' === attributes.paddingType ? attributes.padding : attributes.paddingLeft;
 			}
 
-			if ( 'Tablet' === view ) {
+			if ( 'Tablet' === getView ) {
 				value = 'linked' === attributes.paddingTypeTablet ? attributes.paddingTablet : attributes.paddingLeftTablet;
 			}
 
-			if ( 'Mobile' === view ) {
+			if ( 'Mobile' === getView ) {
 				value = 'linked' === attributes.paddingTypeMobile ? attributes.paddingMobile : attributes.paddingLeftMobile;
 			}
 		}
@@ -259,13 +254,13 @@ const Inspector = ({
 	let getMarginType = () => {
 		let value;
 
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			value = attributes.marginType;
 		}
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			value = attributes.marginTypeTablet;
 		}
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			value = attributes.marginTypeMobile;
 		}
 
@@ -275,13 +270,13 @@ const Inspector = ({
 	getMarginType = getMarginType();
 
 	const changeMarginType = value => {
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			setAttributes({ marginType: value });
 		}
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			setAttributes({ marginTypeTablet: value });
 		}
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			setAttributes({ marginTypeMobile: value });
 		}
 	};
@@ -302,7 +297,7 @@ const Inspector = ({
 	};
 
 	const changeMargin = ( type, value ) => {
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			if ( 'linked' === attributes.marginType ) {
 				setAttributes({ margin: value });
 			} else {
@@ -310,7 +305,7 @@ const Inspector = ({
 			}
 		}
 
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			if ( 'linked' === attributes.marginTypeTablet ) {
 				setAttributes({ marginTablet: value });
 			} else {
@@ -318,7 +313,7 @@ const Inspector = ({
 			}
 		}
 
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			if ( 'linked' === attributes.marginTypeMobile ) {
 				setAttributes({ marginMobile: value });
 			} else {
@@ -331,29 +326,29 @@ const Inspector = ({
 		let value;
 
 		if ( 'top' == type ) {
-			if ( 'Desktop' === view ) {
+			if ( 'Desktop' === getView ) {
 				value = 'linked' === attributes.marginType ? attributes.margin : attributes.marginTop;
 			}
 
-			if ( 'Tablet' === view ) {
+			if ( 'Tablet' === getView ) {
 				value = 'linked' === attributes.marginTypeTablet ? attributes.marginTablet : attributes.marginTopTablet;
 			}
 
-			if ( 'Mobile' === view ) {
+			if ( 'Mobile' === getView ) {
 				value = 'linked' === attributes.marginTypeMobile ? attributes.marginMobile : attributes.marginTopMobile;
 			}
 		}
 
 		if ( 'bottom' == type ) {
-			if ( 'Desktop' === view ) {
+			if ( 'Desktop' === getView ) {
 				value = 'linked' === attributes.marginType ? attributes.margin : attributes.marginBottom;
 			}
 
-			if ( 'Tablet' === view ) {
+			if ( 'Tablet' === getView ) {
 				value = 'linked' === attributes.marginTypeTablet ? attributes.marginTablet : attributes.marginBottomTablet;
 			}
 
-			if ( 'Mobile' === view ) {
+			if ( 'Mobile' === getView ) {
 				value = 'linked' === attributes.marginTypeMobile ? attributes.marginMobile : attributes.marginBottomMobile;
 			}
 		}
@@ -382,15 +377,15 @@ const Inspector = ({
 	let getColumnsHeightCustom = () => {
 		let value;
 
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			value = attributes.columnsHeightCustom;
 		}
 
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			value = attributes.columnsHeightCustomTablet;
 		}
 
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			value = attributes.columnsHeightCustomMobile;
 		}
 
@@ -400,23 +395,15 @@ const Inspector = ({
 	getColumnsHeightCustom = getColumnsHeightCustom();
 
 	const changeColumnsHeightCustom = value => {
-		if ( 'Desktop' === view ) {
+		if ( 'Desktop' === getView ) {
 			setAttributes({ columnsHeightCustom: value });
 		}
-		if ( 'Tablet' === view ) {
+		if ( 'Tablet' === getView ) {
 			setAttributes({ columnsHeightCustomTablet: value });
 		}
-		if ( 'Mobile' === view ) {
+		if ( 'Mobile' === getView ) {
 			setAttributes({ columnsHeightCustomMobile: value });
 		}
-	};
-
-	const changeVerticalAlign = value => {
-		if ( attributes.verticalAlign === value ) {
-			return setAttributes({ verticalAlign: 'unset' });
-		}
-
-		setAttributes({ verticalAlign: value });
 	};
 
 	const changeBackgroundType = value => {
@@ -752,29 +739,29 @@ const Inspector = ({
 		let value;
 
 		if ( 'top' == dividerViewType ) {
-			if ( 'Desktop' == view ) {
+			if ( 'Desktop' == getView ) {
 				value = attributes.dividerTopWidth;
 			}
 
-			if ( 'Tablet' == view ) {
+			if ( 'Tablet' == getView ) {
 				value = attributes.dividerTopWidthTablet;
 			}
 
-			if ( 'Mobile' == view ) {
+			if ( 'Mobile' == getView ) {
 				value = attributes.dividerTopWidthMobile;
 			}
 		}
 
 		if ( 'bottom' == dividerViewType ) {
-			if ( 'Desktop' == view ) {
+			if ( 'Desktop' == getView ) {
 				value = attributes.dividerBottomWidth;
 			}
 
-			if ( 'Tablet' == view ) {
+			if ( 'Tablet' == getView ) {
 				value = attributes.dividerBottomWidthTablet;
 			}
 
-			if ( 'Mobile' == view ) {
+			if ( 'Mobile' == getView ) {
 				value = attributes.dividerBottomWidthMobile;
 			}
 		}
@@ -786,29 +773,29 @@ const Inspector = ({
 
 	const changeDividerWidth = value => {
 		if ( 'top' == dividerViewType ) {
-			if ( 'Desktop' == view ) {
+			if ( 'Desktop' == getView ) {
 				setAttributes({ dividerTopWidth: value });
 			}
 
-			if ( 'Tablet' == view ) {
+			if ( 'Tablet' == getView ) {
 				setAttributes({ dividerTopWidthTablet: value });
 			}
 
-			if ( 'Mobile' == view ) {
+			if ( 'Mobile' == getView ) {
 				setAttributes({ dividerTopWidthMobile: value });
 			}
 		}
 
 		if ( 'bottom' == dividerViewType ) {
-			if ( 'Desktop' == view ) {
+			if ( 'Desktop' == getView ) {
 				setAttributes({ dividerBottomWidth: value });
 			}
 
-			if ( 'Tablet' == view ) {
+			if ( 'Tablet' == getView ) {
 				setAttributes({ dividerBottomWidthTablet: value });
 			}
 
-			if ( 'Mobile' == view ) {
+			if ( 'Mobile' == getView ) {
 				setAttributes({ dividerBottomWidthMobile: value });
 			}
 		}
@@ -818,29 +805,29 @@ const Inspector = ({
 		let value;
 
 		if ( 'top' == dividerViewType ) {
-			if ( 'Desktop' == view ) {
+			if ( 'Desktop' == getView ) {
 				value = attributes.dividerTopHeight;
 			}
 
-			if ( 'Tablet' == view ) {
+			if ( 'Tablet' == getView ) {
 				value = attributes.dividerTopHeightTablet;
 			}
 
-			if ( 'Mobile' == view ) {
+			if ( 'Mobile' == getView ) {
 				value = attributes.dividerTopHeightMobile;
 			}
 		}
 
 		if ( 'bottom' == dividerViewType ) {
-			if ( 'Desktop' == view ) {
+			if ( 'Desktop' == getView ) {
 				value = attributes.dividerBottomHeight;
 			}
 
-			if ( 'Tablet' == view ) {
+			if ( 'Tablet' == getView ) {
 				value = attributes.dividerBottomHeightTablet;
 			}
 
-			if ( 'Mobile' == view ) {
+			if ( 'Mobile' == getView ) {
 				value = attributes.dividerBottomHeightMobile;
 			}
 		}
@@ -852,29 +839,29 @@ const Inspector = ({
 
 	const changeDividerHeight = value => {
 		if ( 'top' == dividerViewType ) {
-			if ( 'Desktop' == view ) {
+			if ( 'Desktop' == getView ) {
 				setAttributes({ dividerTopHeight: value });
 			}
 
-			if ( 'Tablet' == view ) {
+			if ( 'Tablet' == getView ) {
 				setAttributes({ dividerTopHeightTablet: value });
 			}
 
-			if ( 'Mobile' == view ) {
+			if ( 'Mobile' == getView ) {
 				setAttributes({ dividerTopHeightMobile: value });
 			}
 		}
 
 		if ( 'bottom' == dividerViewType ) {
-			if ( 'Desktop' == view ) {
+			if ( 'Desktop' == getView ) {
 				setAttributes({ dividerBottomHeight: value });
 			}
 
-			if ( 'Tablet' == view ) {
+			if ( 'Tablet' == getView ) {
 				setAttributes({ dividerBottomHeightTablet: value });
 			}
 
-			if ( 'Mobile' == view ) {
+			if ( 'Mobile' == getView ) {
 				setAttributes({ dividerBottomHeightMobile: value });
 			}
 		}
@@ -946,8 +933,7 @@ const Inspector = ({
 						) }
 						onClick={ () => setTab( 'layout' ) }
 					>
-						<span
-						>
+						<span>
 							<Dashicon icon="editor-table"/>
 							{ __( 'Layout' ) }
 						</span>
@@ -960,8 +946,7 @@ const Inspector = ({
 						) }
 						onClick={ () => setTab( 'style' ) }
 					>
-						<span
-						>
+						<span>
 							<Dashicon icon="admin-customizer"/>
 							{ __( 'Style' ) }
 						</span>
@@ -974,8 +959,7 @@ const Inspector = ({
 						) }
 						onClick={ () => setTab( 'advanced' ) }
 					>
-						<span
-						>
+						<span>
 							<Dashicon icon="admin-generic"/>
 							{ __( 'Advanced' ) }
 						</span>
@@ -1108,32 +1092,32 @@ const Inspector = ({
 									label={ 'Horizontal Align' }
 								>
 									<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
-										<Tooltip text={ __( 'Left' ) } >
-											<IconButton
-												icon="editor-alignleft"
-												className="is-button is-large"
-												isPrimary={ 'flex-start' === attributes.horizontalAlign }
-												onClick={ () => changeHorizontalAlign( 'flex-start' ) }
-											/>
-										</Tooltip>
+										<Button
+											icon="editor-alignleft"
+											label={ __( 'Left' ) }
+											showTooltip={ true }
+											isLarge
+											isPrimary={ 'flex-start' === attributes.horizontalAlign }
+											onClick={ () => changeHorizontalAlign( 'flex-start' ) }
+										/>
 
-										<Tooltip text={ __( 'Center' ) } >
-											<IconButton
-												icon="editor-aligncenter"
-												className="is-button is-large"
-												isPrimary={ 'center' === attributes.horizontalAlign }
-												onClick={ () => changeHorizontalAlign( 'center' ) }
-											/>
-										</Tooltip>
+										<Button
+											icon="editor-aligncenter"
+											label={ __( 'Center' ) }
+											showTooltip={ true }
+											isLarge
+											isPrimary={ 'center' === attributes.horizontalAlign }
+											onClick={ () => changeHorizontalAlign( 'center' ) }
+										/>
 
-										<Tooltip text={ __( 'Right' ) } >
-											<IconButton
-												icon="editor-alignright"
-												className="is-button is-large"
-												isPrimary={ 'flex-end' === attributes.horizontalAlign }
-												onClick={ () => changeHorizontalAlign( 'flex-end' ) }
-											/>
-										</Tooltip>
+										<Button
+											icon="editor-alignright"
+											label={ __( 'Right' ) }
+											showTooltip={ true }
+											isLarge
+											isPrimary={ 'flex-end' === attributes.horizontalAlign }
+											onClick={ () => changeHorizontalAlign( 'flex-end' ) }
+										/>
 									</ButtonGroup>
 								</BaseControl>
 							) }
@@ -1160,53 +1144,6 @@ const Inspector = ({
 										max={ 1000 }
 									/>
 								</ResponsiveControl>
-							) }
-
-							{ ! BlockVerticalAlignmentToolbar && (
-								<BaseControl
-									label={ 'Vertical Align' }
-								>
-									<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
-										<Tooltip text={ __( 'Top' ) } >
-											<Button
-												className="components-icon-button is-button is-large"
-												isPrimary={ 'flex-start' === attributes.verticalAlign }
-												onClick={ () => changeVerticalAlign( 'flex-start' ) }
-											>
-												<Icon
-													icon={ topIcon }
-													size={ 20 }
-												/>
-											</Button>
-										</Tooltip>
-
-										<Tooltip text={ __( 'Middle' ) } >
-											<Button
-												className="components-icon-button is-button is-large"
-												isPrimary={ 'center' === attributes.verticalAlign }
-												onClick={ () => changeVerticalAlign( 'center' ) }
-											>
-												<Icon
-													icon={ middleIcon }
-													size={ 20 }
-												/>
-											</Button>
-										</Tooltip>
-
-										<Tooltip text={ __( 'Bottom' ) } >
-											<Button
-												className="components-icon-button is-button is-large"
-												isPrimary={ 'flex-end' === attributes.verticalAlign }
-												onClick={ () => changeVerticalAlign( 'flex-end' ) }
-											>
-												<Icon
-													icon={ bottomIcon }
-													size={ 20 }
-												/>
-											</Button>
-										</Tooltip>
-									</ButtonGroup>
-								</BaseControl>
 							) }
 						</PanelBody>
 					</Fragment>
@@ -1261,7 +1198,7 @@ const Inspector = ({
 										</div>
 
 										<Button
-											isDefault
+											isSecondary
 											className="wp-block-themeisle-image-container-delete-button"
 											onClick={ removeBackgroundImage }
 										>
@@ -1411,7 +1348,7 @@ const Inspector = ({
 										</div>
 
 										<Button
-											isDefault
+											isSecondary
 											className="wp-block-themeisle-image-container-delete-button"
 											onClick={ removeBackgroundOverlayImage }
 										>
@@ -1737,7 +1674,8 @@ const Inspector = ({
 						>
 							<ButtonGroup>
 								<Button
-									className="is-button"
+									isSmall
+									isSecondary={ 'top' !== dividerViewType }
 									isPrimary={ 'top' === dividerViewType }
 									onClick={ () => setDividerViewType( 'top' ) }
 								>
@@ -1745,7 +1683,8 @@ const Inspector = ({
 								</Button>
 
 								<Button
-									className="is-button"
+									isSmall
+									isSecondary={ 'bottom' !== dividerViewType }
 									isPrimary={ 'bottom' === dividerViewType }
 									onClick={ () => setDividerViewType( 'bottom' ) }
 								>
@@ -1888,13 +1827,4 @@ const Inspector = ({
 	);
 };
 
-export default compose(
-	withSelect( ( select ) => {
-		const { getView } = select( 'themeisle-gutenberg/data' );
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
-
-		return {
-			view: __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : getView()
-		};
-	})
-)( Inspector );
+export default Inspector;

@@ -15,8 +15,8 @@ import attributes from './attributes.js';
 import edit from './edit.js';
 
 registerBlockType( 'themeisle-blocks/google-map', {
-	title: __( 'Google Map' ),
-	description: __( 'Display a Google Map on your website with Google Map block.' ),
+	title: __( 'Google Maps' ),
+	description: __( 'Display Google Maps on your website with Google Map block.' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [

@@ -11,11 +11,9 @@ const { apiFetch } = wp;
 
 const { Modal } = wp.components;
 
-const { compose } = wp.compose;
-
 const {
-	withSelect,
-	withDispatch
+	useSelect,
+	useDispatch
 } = wp.data;
 
 const {
@@ -32,10 +30,23 @@ import Notices from './components/notices.js';
 import TemplatesList from './components/templates-list.js';
 
 const Library = ({
-	close,
-	availableBlocks,
-	importBlocks
+	clientId,
+	close
 }) => {
+	const { block, availableBlocks } = useSelect( select => {
+		const { getBlock } = select( 'core/block-editor' );
+		const { getBlockTypes } = select( 'core/blocks' );
+		const block = getBlock( clientId );
+		const availableBlocks = getBlockTypes();
+
+		return {
+			block,
+			availableBlocks
+		};
+	}, []);
+
+	const { replaceBlocks } = useDispatch( 'core/block-editor' );
+
 	useEffect( () => {
 		const fetchData = async() => {
 			let data = await apiFetch({ path: 'themeisle-gutenberg-blocks/v1/fetch_templates' });
@@ -84,6 +95,11 @@ const Library = ({
 	const [ selectedTemplate, setSelectedTemplate ] = useState( null );
 	const [ selectedTemplateContent, setSelectedTemplateContent ] = useState( null );
 	const [ missingBlocks, setMissingBlocks ] = useState([]);
+
+	const importBlocks = content => replaceBlocks(
+		block.clientId,
+		content
+	);
 
 	const changeTab = value => {
 		setTab( value );
@@ -226,25 +242,4 @@ const Library = ({
 	);
 };
 
-export default compose(
-	withSelect( ( select, { clientId }) => {
-		const { getBlock } = select( 'core/block-editor' );
-		const { getBlockTypes } = select( 'core/blocks' );
-		const block = getBlock( clientId );
-		const availableBlocks = getBlockTypes();
-		return {
-			block,
-			availableBlocks
-		};
-	}),
-
-	withDispatch( ( dispatch, { block }) => {
-		const { replaceBlocks } = dispatch( 'core/block-editor' );
-		return {
-			importBlocks: ( content ) => replaceBlocks(
-				block.clientId,
-				content
-			)
-		};
-	})
-)( Library );
+export default Library;

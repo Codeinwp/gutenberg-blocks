@@ -153,7 +153,7 @@ const MarkerModal = ({
 
 				<Button
 					isLarge
-					isDefault
+					isSecondary
 					onClick={ close }
 				>
 					{ __( 'Cancel' ) }

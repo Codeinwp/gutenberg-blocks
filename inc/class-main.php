@@ -117,35 +117,11 @@ class Main {
 			true
 		);
 
-		$dependencies = array(
-			'lodash',
-			'wp-api',
-			'wp-i18n',
-			'wp-blocks',
-			'wp-components',
-			'wp-compose',
-			'wp-data',
-			'wp-editor',
-			'wp-edit-post',
-			'wp-element',
-			'wp-keycodes',
-			'wp-plugins',
-			'wp-rich-text',
-			'wp-url',
-			'wp-viewport',
-			'themeisle-gutenberg-blocks-vendor',
-			'glidejs',
-		);
-
-		if ( version_compare( (float) $wp_version, '5.3', '>' ) ) {
-			array_push( $dependencies, 'wp-server-side-render' );
-		}
-
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
-			$dependencies,
-			self::$assets_version,
+			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs' ),
+			$version,
 			true
 		);
 
@@ -178,15 +154,6 @@ class Main {
 			array( 'wp-edit-blocks' ),
 			self::$assets_version
 		);
-
-		if ( version_compare( (float) $wp_version, '5.4', '<' ) ) {
-			wp_enqueue_style(
-				'themeisle-block_deprecated_styles',
-				plugin_dir_url( $this->get_dir() ) . 'assets/static/deprecated.css',
-				[ 'themeisle-gutenberg-blocks-editor' ],
-				self::$assets_version
-			);
-		}
 
 		wp_enqueue_style(
 			'glidejs-core',

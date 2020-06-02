@@ -73,10 +73,10 @@ const ButtonGroupBlock = ({
 				title={ __( 'Color' ) }
 				initialOpen={ false }
 			>
-				<ButtonGroup className="wp-block-themeisle-blocks-font-awesome-icons-hover-control">
+				<ButtonGroup>
 					<Button
-						isDefault
-						isLarge
+						isSmall
+						isSecondary={ hover }
 						isPrimary={ ! hover }
 						onClick={ () => setHover( false ) }
 					>
@@ -84,8 +84,8 @@ const ButtonGroupBlock = ({
 					</Button>
 
 					<Button
-						isDefault
-						isLarge
+						isSmall
+						isSecondary={ ! hover }
 						isPrimary={ hover }
 						onClick={ () => setHover( true ) }
 					>

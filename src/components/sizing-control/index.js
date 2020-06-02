@@ -8,9 +8,9 @@ import classnames from 'classnames';
  */
 const { __ } = wp.i18n;
 
-const { IconButton } = wp.components;
+const { Button } = wp.components;
 
-const { withInstanceId } = wp.compose;
+const { useInstanceId } = wp.compose;
 
 /**
  * Internal dependencies
@@ -19,7 +19,6 @@ import './editor.scss';
 import Field from './field.js';
 
 const SizingControl = ({
-	instanceId,
 	label,
 	type,
 	min,
@@ -28,6 +27,8 @@ const SizingControl = ({
 	options,
 	onChange
 }) => {
+	const instanceId = useInstanceId( SizingControl );
+
 	const id = `inspector-sizing-control-${ instanceId }`;
 
 	if ( options && 1 > options.length ) {
@@ -74,9 +75,10 @@ const SizingControl = ({
 								{ 'is-linked': 'linked' === type }
 							) }
 						>
-							<IconButton
+							<Button
 								icon={ 'linked' === type ? 'admin-links' : 'editor-unlink' }
-								tooltip={ 'linked' === type ? __( 'Unlink Values' ) : __( 'Link Values' ) }
+								label={ 'linked' === type ? __( 'Unlink Values' ) : __( 'Link Values' ) }
+								showTooltip={ true }
 								className="wp-block-themeisle-blocks-sizing-control-item-input"
 								onClick={ () => changeType( 'linked' === type ? 'unlinked' : 'linked' ) }
 							/>
@@ -88,4 +90,4 @@ const SizingControl = ({
 	);
 };
 
-export default withInstanceId( SizingControl );
+export default SizingControl;

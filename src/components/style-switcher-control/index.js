@@ -10,11 +10,10 @@ const {
 	BaseControl,
 	Button,
 	Dropdown,
-	IconButton,
 	Toolbar
 } = wp.components;
 
-const { withInstanceId } = wp.compose;
+const { useInstanceId } = wp.compose;
 
 const { BlockControls } = wp.blockEditor;
 
@@ -26,12 +25,13 @@ const { Fragment } = wp.element;
 import './editor.scss';
 
 const StyleSwitcherControl = ({
-	instanceId,
 	label,
 	value,
 	options,
 	onChange
 }) => {
+	const instanceId = useInstanceId( StyleSwitcherControl );
+
 	const id = `inspector-style-switcher-control-${ instanceId }`;
 	const onChangeValue = value => onChange( value );
 
@@ -65,7 +65,7 @@ const StyleSwitcherControl = ({
 	);
 };
 
-export const StyleSwitcherInspectorControl = withInstanceId( StyleSwitcherControl );
+export const StyleSwitcherInspectorControl = StyleSwitcherControl;
 
 export const StyleSwitcherBlockControl = ({
 	label,
@@ -84,17 +84,17 @@ export const StyleSwitcherBlockControl = ({
 					contentClassName="wp-themesiel-blocks-block-styles-popover-content"
 					position="bottom center"
 					renderToggle={ ({ isOpen, onToggle }) => (
-						<IconButton
+						<Button
 							className="components-dropdown-menu__toggle"
 							icon={ 'admin-appearance' }
 							onClick={ onToggle }
 							aria-haspopup="true"
 							aria-expanded={ isOpen }
 							label={ label }
-							tooltip={ label }
+							showTooltip={ true }
 						>
 							<span className="components-dropdown-menu__indicator" />
-						</IconButton>
+						</Button>
 					) }
 					renderContent={ () => (
 						<Fragment>

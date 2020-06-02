@@ -3,16 +3,13 @@
  */
 const { __ } = wp.i18n;
 
-const {
-	registerBlockType
-} = wp.blocks;
+const { registerBlockType } = wp.blocks;
 
 /**
  * Internal dependencies
  */
 import './style.scss';
 import './editor.scss';
-import './deprecated.scss';
 import { sharingIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
