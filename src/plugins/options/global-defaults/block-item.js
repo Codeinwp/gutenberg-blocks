@@ -68,7 +68,7 @@ const BlockItem = ({
 
 						<div className="wp-block-themeisle-blocks-options-global-defaults-actions-primary">
 							<Button
-								isDefault
+								isSecondary
 								isLarge
 								onClick={ () => setOpen( false ) }
 							>

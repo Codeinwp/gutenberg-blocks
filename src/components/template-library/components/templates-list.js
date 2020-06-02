@@ -12,7 +12,7 @@ const { BlockPreview } = wp.blockEditor;
 
 const { Spinner } = wp.components;
 
-const { withViewportMatch } = wp.viewport;
+const { useViewportMatch } = wp.compose;
 
 /**
  * Internal dependencies
@@ -28,12 +28,16 @@ const TemplatesList = ({
 	selectedCategory,
 	search,
 	importPreview,
-	importTemplate,
-	isLarger,
-	isLarge,
-	isSmall,
-	isSmaller
+	importTemplate
 }) => {
+	const isLarger = useViewportMatch( 'large', '>=' );
+
+	const isLarge = useViewportMatch( 'large', '<=' );
+
+	const isSmall = useViewportMatch( 'small', '>=' );
+
+	const isSmaller = useViewportMatch( 'small', '<=' );
+
 	let viewportWidth = 1400;
 
 	const isTablet = ! isLarger && ! isLarge && isSmall && ! isSmaller;
@@ -98,9 +102,4 @@ const TemplatesList = ({
 	);
 };
 
-export default withViewportMatch({
-	isLarger: '>= large',
-	isLarge: '<= large',
-	isSmall: '>= small',
-	isSmaller: '<= small'
-})( TemplatesList );
+export default TemplatesList;

@@ -12,17 +12,14 @@ const { __ } = wp.i18n;
 const { apiFetch } = wp;
 
 const {
+	Button,
 	BaseControl,
-	IconButton,
 	Popover
 } = wp.components;
 
-const {
-	compose,
-	withInstanceId
-} = wp.compose;
+const { useInstanceId } = wp.compose;
 
-const { withSelect } = wp.data;
+const { useSelect } = wp.data;
 
 const {
 	useEffect,
@@ -45,16 +42,22 @@ const { addQueryArgs } = wp.url;
 import './editor.scss';
 
 const LinkControl = ({
-	instanceId,
 	label,
 	help,
 	placeholder,
 	value,
 	className,
 	onChange,
-	children,
-	fetchLinkSuggestions
+	children
 }) => {
+	const instanceId = useInstanceId( LinkControl );
+
+	const fetchLinkSuggestions = useSelect( select => {
+		const { getSettings } = select( 'core/block-editor' );
+
+		return getSettings().__experimentalFetchLinkSuggestions;
+	}, []);
+
 	useEffect( () => {
 		if ( showSuggestions && null !== selectedSuggestion && undefined !== suggestionNodes[ selectedSuggestion ] && ! scrollingIntoView && null !== autocompleteRef.current ) {
 			scrollingIntoView = true;
@@ -226,9 +229,10 @@ const LinkControl = ({
 				) }
 
 				{ undefined !== children && (
-					<IconButton
+					<Button
 						icon="admin-generic"
-						tooltip={ __( 'Link Options' ) }
+						label={ __( 'Link Options' ) }
+						showTooltip={ true }
 						onClick={ () => setOpen( ! isOpen ) }
 					/>
 				) }
@@ -239,17 +243,4 @@ const LinkControl = ({
 	);
 };
 
-export default compose(
-	withInstanceId,
-	withSelect( ( select ) => {
-		if ( ! select( 'core/block-editor' ) ) {
-			return;
-		}
-
-		const { getSettings } = select( 'core/block-editor' );
-
-		return {
-			fetchLinkSuggestions: getSettings().__experimentalFetchLinkSuggestions
-		};
-	})
-)( LinkControl );
+export default LinkControl;

@@ -20,7 +20,7 @@ const {
 const { __ } = wp.i18n;
 
 const {
-	IconButton,
+	Button,
 	TextControl,
 	SelectControl,
 	ToggleControl
@@ -103,17 +103,19 @@ export const SortableItem = ({
 				</div>
 
 				{ edit && (
-					<IconButton
+					<Button
 						icon={ isOpen ? 'arrow-up-alt2' : 'arrow-down-alt2' }
 						label={ isOpen ? __( 'Close Settings' ) : __( 'Open Settings' ) }
+						showTooltip={ true }
 						className="wp-block-themeisle-blocks-posts-grid-builder-button"
 						onClick={ () => setOpen( ! isOpen ) }
 					/>
 				) }
 
-				<IconButton
+				<Button
 					icon={ icon }
 					label={ message }
+					showTooltip={ true }
 					className="wp-block-themeisle-blocks-posts-grid-builder-button"
 					onClick={ () => {
 						toggleFields( value );

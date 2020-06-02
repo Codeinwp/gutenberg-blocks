@@ -12,25 +12,20 @@ const {
 	times
 } = lodash;
 
-const { compose } = wp.compose;
+const { useViewportMatch } = wp.compose;
 
 const {
-	withDispatch,
-	withSelect
+	useDispatch,
+	useSelect
 } = wp.data;
 
-const {
-	__experimentalBlockNavigationList,
-	InnerBlocks
-} = wp.blockEditor;
+const { InnerBlocks } = wp.blockEditor;
 
 const {
 	Fragment,
 	useEffect,
 	useState
 } = wp.element;
-
-const { withViewportMatch } = wp.viewport;
 
 /**
  * Internal dependencies
@@ -51,18 +46,38 @@ const Edit = ({
 	setAttributes,
 	className,
 	clientId,
-	name,
-	updateBlockAttributes,
-	sectionBlock,
-	isLarger,
-	isLarge,
-	isSmall,
-	isSmaller,
-	isViewportAvailable,
-	isPreviewDesktop,
-	isPreviewTablet,
-	isPreviewMobile
+	name
 }) => {
+	const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
+
+	const {
+		sectionBlock,
+		isViewportAvailable,
+		isPreviewDesktop,
+		isPreviewTablet,
+		isPreviewMobile
+	} = useSelect( select => {
+		const { getBlock } = select( 'core/block-editor' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+		const sectionBlock = getBlock( clientId );
+
+		return {
+			sectionBlock,
+			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
+			isPreviewDesktop: __experimentalGetPreviewDeviceType ? 'Desktop' === __experimentalGetPreviewDeviceType() : false,
+			isPreviewTablet: __experimentalGetPreviewDeviceType ? 'Tablet' === __experimentalGetPreviewDeviceType() : false,
+			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false
+		};
+	}, []);
+
+	const isLarger = useViewportMatch( 'large', '>=' );
+
+	const isLarge = useViewportMatch( 'large', '<=' );
+
+	const isSmall = useViewportMatch( 'small', '>=' );
+
+	const isSmaller = useViewportMatch( 'small', '<=' );
+
 	useEffect( () => {
 		initBlock();
 	}, []);
@@ -425,7 +440,7 @@ const Edit = ({
 
 	return (
 		<Fragment>
-			{ __experimentalBlockNavigationList && <BlockNavigatorControl clientId={ clientId } /> }
+			<BlockNavigatorControl clientId={ clientId } />
 
 			<Controls
 				attributes={ attributes }
@@ -484,34 +499,4 @@ const Edit = ({
 	);
 };
 
-export default compose(
-	withDispatch( ( dispatch ) => {
-		const { updateBlockAttributes } = dispatch( 'core/block-editor' );
-
-		return {
-			updateBlockAttributes
-		};
-	}),
-
-	withSelect( ( select, props ) => {
-		const { clientId } = props;
-		const { getBlock } = select( 'core/block-editor' );
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
-		const sectionBlock = getBlock( clientId );
-
-		return {
-			sectionBlock,
-			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
-			isPreviewDesktop: __experimentalGetPreviewDeviceType ? 'Desktop' === __experimentalGetPreviewDeviceType() : false,
-			isPreviewTablet: __experimentalGetPreviewDeviceType ? 'Tablet' === __experimentalGetPreviewDeviceType() : false,
-			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false
-		};
-	}),
-
-	withViewportMatch({
-		isLarger: '>= large',
-		isLarge: '<= large',
-		isSmall: '>= small',
-		isSmaller: '<= small'
-	})
-)( Edit );
+export default Edit;
