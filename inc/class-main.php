@@ -84,6 +84,7 @@ class Main {
 		} else {
 			self::$assets_version = THEMEISLE_BLOCKS_VERSION;
 		}
+
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
@@ -99,10 +100,6 @@ class Main {
 	 * @access  public
 	 */
 	public function enqueue_block_editor_assets() {
-
-
-		$wp_version = get_bloginfo( 'version' );
-
 		if ( defined( 'THEMEISLE_GUTENBERG_GOOGLE_MAPS_API' ) ) {
 			$api = THEMEISLE_GUTENBERG_GOOGLE_MAPS_API;
 		} else {
@@ -121,7 +118,7 @@ class Main {
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
 			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs' ),
-			$version,
+			self::$assets_version,
 			true
 		);
 
@@ -177,14 +174,10 @@ class Main {
 	 */
 	public function enqueue_dependencies( $post = null ) {
 
-		if ( ! self::$is_fa_loaded && ( has_block( 'themeisle-blocks/button-group', $post )
-										|| has_block( 'themeisle-blocks/font-awesome-icons', $post )
-										|| has_block( 'themeisle-blocks/sharing-icons', $post )
-										|| has_block( 'themeisle-blocks/plugin-cards', $post )
-										|| has_block( 'block', $post )
-			) ) {
+		if ( ! self::$is_fa_loaded && ( has_block( 'themeisle-blocks/button-group', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/sharing-icons', $post ) || has_block( 'themeisle-blocks/plugin-cards', $post ) || has_block( 'block', $post ) ) ) {
 			wp_enqueue_style( 'font-awesome-5' );
 			wp_enqueue_style( 'font-awesome-4-shims' );
+
 			self::$is_fa_loaded = true;
 		}
 
@@ -194,8 +187,7 @@ class Main {
 		}
 
 		if ( ! self::$is_map_loaded && has_block( 'themeisle-blocks/google-map', $post ) ) {
-			self::$is_map_loaded = true;
-			$apikey              = get_option( 'themeisle_google_map_block_api_key' );
+			$apikey = get_option( 'themeisle_google_map_block_api_key' );
 
 			// Don't output anything if there is no API key.
 			if ( null === $apikey || empty( $apikey ) ) {
@@ -218,10 +210,10 @@ class Main {
 				true
 			);
 
+			self::$is_map_loaded = true;
 		}
 
 		if ( ! self::$is_glide_loaded && has_block( 'themeisle-blocks/slider', $post ) ) {
-			self::$is_glide_loaded = true;
 			wp_enqueue_script(
 				'glidejs',
 				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.min.js',
@@ -252,7 +244,7 @@ class Main {
 				self::$assets_version
 			);
 
-
+			self::$is_glide_loaded = true;
 		}
 	}
 
@@ -269,13 +261,13 @@ class Main {
 			return;
 		}
 
-
 		wp_enqueue_style(
 			'themeisle-block_styles',
 			plugin_dir_url( $this->get_dir() ) . 'build/style.css',
 			[],
 			self::$assets_version
 		);
+
 		if ( is_singular() ) {
 			$this->enqueue_dependencies();
 		} else {
