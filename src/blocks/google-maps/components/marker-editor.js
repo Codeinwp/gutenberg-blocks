@@ -5,7 +5,7 @@ const { __ } = wp.i18n;
 
 const { BaseControl } = wp.components;
 
-const { withInstanceId } = wp.compose;
+const { useInstanceId } = wp.compose;
 
 const {
 	useEffect,
@@ -13,10 +13,11 @@ const {
 } = wp.element;
 
 const MarkerEditor = ({
-	instanceId,
 	value,
 	onChange
 }) => {
+	const instanceId = useInstanceId( MarkerEditor );
+
 	useEffect( () => {
 		const settings = {
 			'classic_block_editor': true,
@@ -58,4 +59,4 @@ const MarkerEditor = ({
 	);
 };
 
-export default withInstanceId( MarkerEditor );
+export default MarkerEditor;

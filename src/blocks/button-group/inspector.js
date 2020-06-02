@@ -95,8 +95,7 @@ const Inspector = ({
 					) }
 					onClick={ () => setTab( 'buttons' ) }
 				>
-					<span
-					>
+					<span>
 						<Icon
 							icon={ buttonsIcon }
 						/>
@@ -111,8 +110,7 @@ const Inspector = ({
 					) }
 					onClick={ () => setTab( 'group' ) }
 				>
-					<span
-					>
+					<span>
 						<Dashicon icon="admin-generic"/>
 						{ __( 'Group Settings' ) }
 					</span>
@@ -196,18 +194,18 @@ const Inspector = ({
 								title={ __( 'Color & Border' ) }
 								initialOpen={ false }
 							>
-								<ButtonGroup className="wp-block-themeisle-blocks-button-group-hover-control">
+								<ButtonGroup>
 									<Button
-										isDefault
-										isLarge
+										isSmall
+										isSecondary={ hover }
 										isPrimary={ ! hover }
 										onClick={ () => setHover( false ) }
 									>
 										{ __( 'Normal' ) }
 									</Button>
 									<Button
-										isDefault
-										isLarge
+										isSmall
+										isSecondary={ ! hover }
 										isPrimary={ hover }
 										onClick={ () => setHover( true ) }
 									>
@@ -317,18 +315,18 @@ const Inspector = ({
 
 								{ attributes.data[selectedButton].boxShadow && (
 									<Fragment>
-										<ButtonGroup className="wp-block-themeisle-blocks-button-group-hover-control" >
+										<ButtonGroup>
 											<Button
-												isDefault
-												isLarge
+												isSmall
+												isSecondary={ hover }
 												isPrimary={ ! hover }
 												onClick={ () => setHover( false ) }
 											>
 												{ __( 'Normal' ) }
 											</Button>
 											<Button
-												isDefault
-												isLarge
+												isSmall
+												isSecondary={ ! hover }
 												isPrimary={ hover }
 												onClick={ () => setHover( true ) }
 											>

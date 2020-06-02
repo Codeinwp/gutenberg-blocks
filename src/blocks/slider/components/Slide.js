@@ -12,7 +12,7 @@ const { filter } = lodash;
 
 const { RichText } = wp.blockEditor;
 
-const { IconButton } = wp.components;
+const { Button } = wp.components;
 
 const { Fragment } = wp.element;
 
@@ -83,20 +83,22 @@ const Slide = ({
 				{ isSelected && (
 					<Fragment>
 						<div className="wp-block-themeisle-blocks-slider-item-move-menu">
-							<IconButton
+							<Button
 								icon="arrow-left-alt2"
+								label={ __( 'Move image backward' ) }
+								showTooltip={ true }
 								onClick={ isFirstItem ? undefined : () => onMoveBackward() }
 								className="wp-block-themeisle-blocks-slider-item-move-backward"
-								label={ __( 'Move image backward' ) }
 								aria-disabled={ isFirstItem }
 								disabled={ ! isSelected }
 							/>
 
-							<IconButton
+							<Button
 								icon="arrow-right-alt2"
+								label={ __( 'Move image forward' ) }
+								showTooltip={ true }
 								onClick={ isLastItem ? undefined : () => onMoveForward() }
 								className="wp-block-themeisle-blocks-slider-item-move-forward"
-								label={ __( 'Move image forward' ) }
 								aria-disabled={ isLastItem }
 								disabled={ ! isSelected }
 							/>
@@ -104,11 +106,12 @@ const Slide = ({
 
 
 						<div className="wp-block-themeisle-blocks-slider-item-delete-menu">
-							<IconButton
+							<Button
 								icon="no-alt"
+								label={ __( 'Remove image' ) }
+								showTooltip={ true }
 								onClick={ onRemoveImage }
 								className="wp-block-themeisle-blocks-slider-item-delete"
-								label={ __( 'Remove image' ) }
 							/>
 						</div>
 					</Fragment>

@@ -48,7 +48,7 @@ const BlockPlaceholder = ({
 
 					<Button
 						isLarge
-						isDefault
+						isSecondary
 						type="submit"
 						onClick={ saveAPIKey }
 						isBusy={ isSaving }

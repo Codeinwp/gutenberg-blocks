@@ -16,16 +16,14 @@ const { createBlock } = wp.blocks;
 
 const { RichText } = wp.blockEditor;
 
-const { compose } = wp.compose;
+const { useViewportMatch } = wp.compose;
 
-const { withSelect } = wp.data;
+const { useSelect } = wp.data;
 
 const {
 	Fragment,
 	useEffect
 } = wp.element;
-
-const { withViewportMatch } = wp.viewport;
 
 /**
  * Internal dependencies
@@ -45,16 +43,32 @@ const Edit = ({
 	mergeBlocks,
 	name,
 	insertBlocksAfter,
-	onReplace,
-	isLarger,
-	isLarge,
-	isSmall,
-	isSmaller,
-	isViewportAvailable,
-	isPreviewDesktop,
-	isPreviewTablet,
-	isPreviewMobile
+	onReplace
 }) => {
+	const {
+		isViewportAvailable,
+		isPreviewDesktop,
+		isPreviewTablet,
+		isPreviewMobile
+	} = useSelect( select => {
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+
+		return {
+			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
+			isPreviewDesktop: __experimentalGetPreviewDeviceType ? 'Desktop' === __experimentalGetPreviewDeviceType() : false,
+			isPreviewTablet: __experimentalGetPreviewDeviceType ? 'Tablet' === __experimentalGetPreviewDeviceType() : false,
+			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false
+		};
+	}, []);
+
+	const isLarger = useViewportMatch( 'large', '>=' );
+
+	const isLarge = useViewportMatch( 'large', '<=' );
+
+	const isSmall = useViewportMatch( 'small', '>=' );
+
+	const isSmaller = useViewportMatch( 'small', '<=' );
+
 	useEffect( () => {
 		initBlock();
 	}, []);
@@ -288,22 +302,4 @@ const Edit = ({
 	);
 };
 
-export default compose(
-	withViewportMatch({
-		isLarger: '>= large',
-		isLarge: '<= large',
-		isSmall: '>= small',
-		isSmaller: '<= small'
-	}),
-
-	withSelect( ( select ) => {
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
-
-		return {
-			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
-			isPreviewDesktop: __experimentalGetPreviewDeviceType ? 'Desktop' === __experimentalGetPreviewDeviceType() : false,
-			isPreviewTablet: __experimentalGetPreviewDeviceType ? 'Tablet' === __experimentalGetPreviewDeviceType() : false,
-			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false
-		};
-	})
-)( Edit );
+export default Edit;

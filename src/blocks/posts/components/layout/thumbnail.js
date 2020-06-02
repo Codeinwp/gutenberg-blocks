@@ -6,42 +6,41 @@ const {
 	Spinner
 } = wp.components;
 
-const { withSelect } = wp.data;
+const { useSelect } = wp.data;
 
 const Thumbnail = ({
-	alt,
 	id,
-	thumbnail,
-	link
+	link,
+	alt,
+	size
 }) => {
-	let img = <Placeholder className="wp-themeisle-block-spinner"><Spinner/></Placeholder>;
+	const {
+		featuredImage,
+		altText
+	} = useSelect( select => {
+		const image = select( 'core' ).getMedia( id );
 
-	if ( thumbnail ) {
-		img = <img src={ thumbnail } alt={ alt } data-id={ id } />;
-	}
+		const featuredImage = image ?
+			0 < Object.keys( image.media_details.sizes ).length ?
+				image.media_details.sizes[size] ?
+					image.media_details.sizes[size].source_url :
+					image.source_url :
+				image.source_url :
+			null;
+
+		return {
+			featuredImage,
+			altText: image && image.alt_text ? image.alt_text : alt
+		};
+	}, [ size ]);
 
 	return (
 		<div className="wp-block-themeisle-blocks-posts-grid-post-image">
-			<a href={ link }>{ img }</a>
+			<a href={ link }>
+				{ featuredImage ? <img src={ featuredImage } size={ size } alt={ altText } data-id={ id } /> : <Placeholder><Spinner/></Placeholder> }
+			</a>
 		</div>
 	);
 };
 
-export default withSelect( ( select, props ) => {
-	const { id, alt, size } = props;
-	const image = id ? select( 'core' ).getMedia( id ) : undefined;
-	const thumbnail = image ?
-		0 < Object.keys( image.media_details.sizes ).length ?
-			image.media_details.sizes[size] ?
-				image.media_details.sizes[size].source_url :
-				image.source_url :
-			image.source_url :
-		null;
-
-	return image ? {
-		thumbnail: thumbnail,
-		alt: image.alt_text || alt
-	} : {
-		alt: alt
-	};
-})( Thumbnail );
+export default Thumbnail;
