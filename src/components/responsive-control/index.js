@@ -11,8 +11,7 @@ const { __ } = wp.i18n;
 const {
 	Button,
 	Dropdown,
-	Icon,
-	IconButton
+	Icon
 } = wp.components;
 
 const {
@@ -78,9 +77,10 @@ const ResponsiveControl = ({
 						<Dropdown
 							position="top left"
 							renderToggle={ ({ isOpen, onToggle }) => (
-								<IconButton
+								<Button
 									icon={ 'Mobile' === getView ? 'smartphone' : getView.toLowerCase() }
 									label={ __( 'Responsiveness Settings' ) }
+									showTooltip={ true }
 									className="is-button"
 									onClick={ onToggle }
 									aria-expanded={ isOpen }
@@ -89,7 +89,7 @@ const ResponsiveControl = ({
 							renderContent={ () => (
 								<div className="wp-block-themeisle-blocks-responsive-control-settings">
 									<div className="wp-block-themeisle-blocks-responsive-control-settings-title">
-										{ __( 'getView' ) }
+										{ __( 'View' ) }
 									</div>
 
 									<Button

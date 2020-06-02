@@ -2,8 +2,8 @@
  * WordPress dependencies
  */
 const {
-	Dropdown,
-	IconButton
+	Button,
+	Dropdown
 } = wp.components;
 
 const { useInstanceId } = wp.compose;
@@ -38,10 +38,11 @@ const ControlPanelControl = ({
 							headerTitle={ label }
 							expandOnMobile={ true }
 							renderToggle={ ({ isOpen, onToggle }) => (
-								<IconButton
+								<Button
 									id={ id }
 									icon="admin-settings"
 									label={ label }
+									shotTooltip={ true }
 									className="is-button"
 									onClick={ onToggle }
 									aria-expanded={ isOpen }

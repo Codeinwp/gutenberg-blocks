@@ -8,12 +8,10 @@ const {
 	Button,
 	ButtonGroup,
 	Icon,
-	IconButton,
 	PanelBody,
 	RangeControl,
 	SelectControl,
-	ToggleControl,
-	Tooltip
+	ToggleControl
 } = wp.components;
 
 const { useSelect } = wp.data;
@@ -517,32 +515,32 @@ const SectionColumns = ({
 							label={ 'Horizontal Align' }
 						>
 							<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
-								<Tooltip text={ __( 'Left' ) } >
-									<IconButton
-										icon="editor-alignleft"
-										className="is-button is-large"
-										isPrimary={ 'flex-start' === defaults.horizontalAlign }
-										onClick={ () => changeHorizontalAlign( 'flex-start' ) }
-									/>
-								</Tooltip>
+								<Button
+									icon="editor-alignleft"
+									label={ __( 'Left' ) }
+									showTooltip={ true }
+									isLarge
+									isPrimary={ 'flex-start' === defaults.horizontalAlign }
+									onClick={ () => changeHorizontalAlign( 'flex-start' ) }
+								/>
 
-								<Tooltip text={ __( 'Center' ) } >
-									<IconButton
-										icon="editor-aligncenter"
-										className="is-button is-large"
-										isPrimary={ 'center' === defaults.horizontalAlign }
-										onClick={ () => changeHorizontalAlign( 'center' ) }
-									/>
-								</Tooltip>
+								<Button
+									icon="editor-aligncenter"
+									label={ __( 'Center' ) }
+									showTooltip={ true }
+									isLarge
+									isPrimary={ 'center' === defaults.horizontalAlign }
+									onClick={ () => changeHorizontalAlign( 'center' ) }
+								/>
 
-								<Tooltip text={ __( 'Right' ) } >
-									<IconButton
-										icon="editor-alignright"
-										className="is-button is-large"
-										isPrimary={ 'flex-end' === defaults.horizontalAlign }
-										onClick={ () => changeHorizontalAlign( 'flex-end' ) }
-									/>
-								</Tooltip>
+								<Button
+									icon="editor-alignright"
+									label={ __( 'Right' ) }
+									showTooltip={ true }
+									isLarge
+									isPrimary={ 'flex-end' === defaults.horizontalAlign }
+									onClick={ () => changeHorizontalAlign( 'flex-end' ) }
+								/>
 							</ButtonGroup>
 						</BaseControl>
 
@@ -584,44 +582,41 @@ const SectionColumns = ({
 					label={ 'Vertical Align' }
 				>
 					<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
-						<Tooltip text={ __( 'Top' ) } >
-							<Button
-								className="components-icon-button is-button is-large"
-								isPrimary={ 'flex-start' === defaults.verticalAlign }
-								onClick={ () => changeVerticalAlign( 'flex-start' ) }
-							>
-								<Icon
-									icon={ topIcon }
-									size={ 20 }
-								/>
-							</Button>
-						</Tooltip>
+						<Button
+							icon={ <Icon
+								icon={ topIcon }
+								size={ 20 }
+							/> }
+							label={ __( 'Top' ) }
+							showTooltip={ true }
+							isLarge
+							isPrimary={ 'flex-start' === defaults.verticalAlign }
+							onClick={ () => changeVerticalAlign( 'flex-start' ) }
+						/>
 
-						<Tooltip text={ __( 'Middle' ) } >
-							<Button
-								className="components-icon-button is-button is-large"
-								isPrimary={ 'center' === defaults.verticalAlign }
-								onClick={ () => changeVerticalAlign( 'center' ) }
-							>
-								<Icon
-									icon={ middleIcon }
-									size={ 20 }
-								/>
-							</Button>
-						</Tooltip>
+						<Button
+							icon={ <Icon
+								icon={ middleIcon }
+								size={ 20 }
+							/> }
+							label={ __( 'Middle' ) }
+							showTooltip={ true }
+							isLarge
+							isPrimary={ 'center' === defaults.verticalAlign }
+							onClick={ () => changeVerticalAlign( 'center' ) }
+						/>
 
-						<Tooltip text={ __( 'Bottom' ) } >
-							<Button
-								className="components-icon-button is-button is-large"
-								isPrimary={ 'flex-end' === defaults.verticalAlign }
-								onClick={ () => changeVerticalAlign( 'flex-end' ) }
-							>
-								<Icon
-									icon={ bottomIcon }
-									size={ 20 }
-								/>
-							</Button>
-						</Tooltip>
+						<Button
+							icon={ <Icon
+								icon={ bottomIcon }
+								size={ 20 }
+							/> }
+							label={ __( 'Bottom' ) }
+							showTooltip={ true }
+							isLarge
+							isPrimary={ 'flex-end' === defaults.verticalAlign }
+							onClick={ () => changeVerticalAlign( 'flex-end' ) }
+						/>
 					</ButtonGroup>
 				</BaseControl>
 			</PanelBody>

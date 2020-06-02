@@ -10,7 +10,7 @@ const {
 } = wp.blockEditor;
 
 const {
-	IconButton,
+	Button,
 	Modal,
 	Toolbar
 } = wp.components;
@@ -56,9 +56,10 @@ const BlockNavigatorControl = ({ clientId }) => {
 		<Fragment>
 			<BlockControls>
 				<Toolbar>
-					<IconButton
+					<Button
 						className="components-toolbar__control"
 						label={ __( 'Open block navigator' ) }
+						showTooltip={ true }
 						onClick={ () => setOpen( true ) }
 						icon={ navigatorIcon }
 					/>

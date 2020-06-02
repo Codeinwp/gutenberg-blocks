@@ -14,7 +14,7 @@ const { useInstanceId } = wp.compose;
 
 const {
 	BaseControl,
-	IconButton,
+	Button,
 	Notice
 } = wp.components;
 
@@ -53,9 +53,10 @@ const HTMLAnchorControl = ({
 						onClick={ e => e.target.select() }
 					/>
 
-					<IconButton
+					<Button
 						icon={ isEditing ? 'yes' : 'edit' }
-						tooltip={ isEditing ? __( 'Save' ) : __( 'Edit' ) }
+						label={ isEditing ? __( 'Save' ) : __( 'Edit' ) }
+						showTooltip={ true }
 						disabled={ isInvalid ? true : false }
 						className={ classnames(
 							'wp-block-themeisle-blocks-html-anchor-control-button',

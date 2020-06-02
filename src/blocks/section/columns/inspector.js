@@ -19,9 +19,7 @@ const {
 	Button,
 	ButtonGroup,
 	Dashicon,
-	IconButton,
 	PanelBody,
-	Tooltip,
 	ToggleControl,
 	RangeControl,
 	SelectControl
@@ -1094,32 +1092,32 @@ const Inspector = ({
 									label={ 'Horizontal Align' }
 								>
 									<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
-										<Tooltip text={ __( 'Left' ) } >
-											<IconButton
-												icon="editor-alignleft"
-												className="is-button is-large"
-												isPrimary={ 'flex-start' === attributes.horizontalAlign }
-												onClick={ () => changeHorizontalAlign( 'flex-start' ) }
-											/>
-										</Tooltip>
+										<Button
+											icon="editor-alignleft"
+											label={ __( 'Left' ) }
+											showTooltip={ true }
+											isLarge
+											isPrimary={ 'flex-start' === attributes.horizontalAlign }
+											onClick={ () => changeHorizontalAlign( 'flex-start' ) }
+										/>
 
-										<Tooltip text={ __( 'Center' ) } >
-											<IconButton
-												icon="editor-aligncenter"
-												className="is-button is-large"
-												isPrimary={ 'center' === attributes.horizontalAlign }
-												onClick={ () => changeHorizontalAlign( 'center' ) }
-											/>
-										</Tooltip>
+										<Button
+											icon="editor-aligncenter"
+											label={ __( 'Center' ) }
+											showTooltip={ true }
+											isLarge
+											isPrimary={ 'center' === attributes.horizontalAlign }
+											onClick={ () => changeHorizontalAlign( 'center' ) }
+										/>
 
-										<Tooltip text={ __( 'Right' ) } >
-											<IconButton
-												icon="editor-alignright"
-												className="is-button is-large"
-												isPrimary={ 'flex-end' === attributes.horizontalAlign }
-												onClick={ () => changeHorizontalAlign( 'flex-end' ) }
-											/>
-										</Tooltip>
+										<Button
+											icon="editor-alignright"
+											label={ __( 'Right' ) }
+											showTooltip={ true }
+											isLarge
+											isPrimary={ 'flex-end' === attributes.horizontalAlign }
+											onClick={ () => changeHorizontalAlign( 'flex-end' ) }
+										/>
 									</ButtonGroup>
 								</BaseControl>
 							) }

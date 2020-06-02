@@ -12,8 +12,8 @@ const { __ } = wp.i18n;
 const { apiFetch } = wp;
 
 const {
+	Button,
 	BaseControl,
-	IconButton,
 	Popover
 } = wp.components;
 
@@ -229,9 +229,10 @@ const LinkControl = ({
 				) }
 
 				{ undefined !== children && (
-					<IconButton
+					<Button
 						icon="admin-generic"
-						tooltip={ __( 'Link Options' ) }
+						label={ __( 'Link Options' ) }
+						showTooltip={ true }
 						onClick={ () => setOpen( ! isOpen ) }
 					/>
 				) }

@@ -10,7 +10,6 @@ const {
 	BaseControl,
 	Button,
 	Dropdown,
-	IconButton,
 	Toolbar
 } = wp.components;
 
@@ -85,17 +84,17 @@ export const StyleSwitcherBlockControl = ({
 					contentClassName="wp-themesiel-blocks-block-styles-popover-content"
 					position="bottom center"
 					renderToggle={ ({ isOpen, onToggle }) => (
-						<IconButton
+						<Button
 							className="components-dropdown-menu__toggle"
 							icon={ 'admin-appearance' }
 							onClick={ onToggle }
 							aria-haspopup="true"
 							aria-expanded={ isOpen }
 							label={ label }
-							tooltip={ label }
+							showTooltip={ true }
 						>
 							<span className="components-dropdown-menu__indicator" />
-						</IconButton>
+						</Button>
 					) }
 					renderContent={ () => (
 						<Fragment>
