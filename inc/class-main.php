@@ -13,7 +13,31 @@ use Masterminds\HTML5;
  * Class Main
  */
 class Main {
+	/**
+	 * Flag to mark that the  FA has been loaded.
+	 *
+	 * @var bool $is_fa_loaded Is FA loaded?
+	 */
+	public static $is_fa_loaded = false;
+	/**
+	 * Flag to mark that the Glide related scripts has been loaded.
+	 *
+	 * @var bool $is_glide_loaded Is FA loaded?
+	 */
+	public static $is_glide_loaded = false;
+	/**
+	 * Flag to mark that maps scripts has been loaded.
+	 *
+	 * @var bool $is_map_loaded Is Map loaded?
+	 */
+	public static $is_map_loaded = false;
 
+	/**
+	 * Define assets version.
+	 *
+	 * @var string $assets_version Holds assets version.
+	 */
+	public static $assets_version = null;
 	/**
 	 * Singleton.
 	 *
@@ -34,6 +58,7 @@ class Main {
 	 * GutenbergBlocks constructor.
 	 *
 	 * @param string $name Colection name.
+	 *
 	 * @since   1.0.0
 	 * @access  public
 	 */
@@ -54,6 +79,12 @@ class Main {
 			define( 'THEMEISLE_BLOCKS_DEV', false );
 		}
 
+		if ( THEMEISLE_BLOCKS_DEV ) {
+			self::$assets_version = time();
+		} else {
+			self::$assets_version = THEMEISLE_BLOCKS_VERSION;
+		}
+
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
@@ -69,14 +100,6 @@ class Main {
 	 * @access  public
 	 */
 	public function enqueue_block_editor_assets() {
-		if ( THEMEISLE_BLOCKS_DEV ) {
-			$version = time();
-		} else {
-			$version = THEMEISLE_BLOCKS_VERSION;
-		}
-
-		$wp_version = get_bloginfo( 'version' );
-
 		if ( defined( 'THEMEISLE_GUTENBERG_GOOGLE_MAPS_API' ) ) {
 			$api = THEMEISLE_GUTENBERG_GOOGLE_MAPS_API;
 		} else {
@@ -87,7 +110,7 @@ class Main {
 			'themeisle-gutenberg-blocks-vendor',
 			plugin_dir_url( $this->get_dir() ) . 'build/chunk-vendor.js',
 			array( 'react', 'react-dom' ),
-			$version,
+			self::$assets_version,
 			true
 		);
 
@@ -95,7 +118,7 @@ class Main {
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
 			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs' ),
-			$version,
+			self::$assets_version,
 			true
 		);
 
@@ -103,7 +126,7 @@ class Main {
 			'glidejs',
 			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.min.js',
 			array(),
-			$version,
+			self::$assets_version,
 			true
 		);
 
@@ -119,29 +142,110 @@ class Main {
 				'updatePath'    => admin_url( 'update-core.php' ),
 				'mapsAPI'       => $api,
 				'themeDefaults' => $this->get_global_defaults(),
-			) 
+			)
 		);
 
 		wp_enqueue_style(
 			'themeisle-gutenberg-blocks-editor',
 			plugin_dir_url( $this->get_dir() ) . 'build/editor.css',
 			array( 'wp-edit-blocks' ),
-			$version
+			self::$assets_version
 		);
 
 		wp_enqueue_style(
 			'glidejs-core',
 			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.core.min.css',
 			[],
-			$version
+			self::$assets_version
 		);
 
 		wp_enqueue_style(
 			'glidejs-theme',
 			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.theme.min.css',
 			[],
-			$version
+			self::$assets_version
 		);
+	}
+
+	/**
+	 * Handler which checks the blocks used and enqueue the assets which needs.
+	 *
+	 * @param null $post Current post.
+	 */
+	public function enqueue_dependencies( $post = null ) {
+
+		if ( ! self::$is_fa_loaded && ( has_block( 'themeisle-blocks/button-group', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/sharing-icons', $post ) || has_block( 'themeisle-blocks/plugin-cards', $post ) || has_block( 'block', $post ) ) ) {
+			wp_enqueue_style( 'font-awesome-5' );
+			wp_enqueue_style( 'font-awesome-4-shims' );
+
+			self::$is_fa_loaded = true;
+		}
+
+		// On AMP context, we don't load JS files.
+		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			return;
+		}
+
+		if ( ! self::$is_map_loaded && has_block( 'themeisle-blocks/google-map', $post ) ) {
+			$apikey = get_option( 'themeisle_google_map_block_api_key' );
+
+			// Don't output anything if there is no API key.
+			if ( null === $apikey || empty( $apikey ) ) {
+				return;
+			}
+
+			wp_enqueue_script(
+				'themeisle-gutenberg-google-maps',
+				plugin_dir_url( $this->get_dir() ) . 'build/maps.js',
+				'',
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_script( //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion
+				'google-maps',
+				'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $apikey ) . '&libraries=places&callback=initMapScript',
+				array( 'themeisle-gutenberg-google-maps' ),
+				'',
+				true
+			);
+
+			self::$is_map_loaded = true;
+		}
+
+		if ( ! self::$is_glide_loaded && has_block( 'themeisle-blocks/slider', $post ) ) {
+			wp_enqueue_script(
+				'glidejs',
+				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.min.js',
+				array(),
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_script(
+				'themeisle-gutenberg-slider',
+				plugin_dir_url( $this->get_dir() ) . 'build/slider.js',
+				array( 'glidejs', 'wp-dom-ready', 'lodash' ),
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_style(
+				'glidejs-core',
+				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.core.min.css',
+				[],
+				self::$assets_version
+			);
+
+			wp_enqueue_style(
+				'glidejs-theme',
+				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.theme.min.css',
+				[],
+				self::$assets_version
+			);
+
+			self::$is_glide_loaded = true;
+		}
 	}
 
 	/**
@@ -157,115 +261,31 @@ class Main {
 			return;
 		}
 
-		if ( THEMEISLE_BLOCKS_DEV ) {
-			$version = time();
-		} else {
-			$version = THEMEISLE_BLOCKS_VERSION;
-		}
-
 		wp_enqueue_style(
 			'themeisle-block_styles',
 			plugin_dir_url( $this->get_dir() ) . 'build/style.css',
 			[],
-			$version
+			self::$assets_version
 		);
 
-		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
-			return;
-		}
-
-		$has_map    = false;
-		$has_slider = false;
-
 		if ( is_singular() ) {
-			if ( has_block( 'themeisle-blocks/button-group' ) || has_block( 'themeisle-blocks/font-awesome-icons' ) || has_block( 'themeisle-blocks/sharing-icons' ) || has_block( 'themeisle-blocks/plugin-cards' ) || has_block( 'block' ) ) {
-				wp_enqueue_style( 'font-awesome-5' );
-				wp_enqueue_style( 'font-awesome-4-shims' );
-			}
-
-			if ( has_block( 'themeisle-blocks/google-map' ) ) {
-				$has_map = true;
-			}
-
-			if ( has_block( 'themeisle-blocks/slider' ) ) {
-				$has_slider = true;
-			}
+			$this->enqueue_dependencies();
 		} else {
 			$posts = wp_list_pluck( $wp_query->posts, 'ID' );
 
 			foreach ( $posts as $post ) {
-				if ( has_block( 'themeisle-blocks/button-group', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/sharing-icons', $post ) || has_block( 'themeisle-blocks/plugin-cards', $post ) || has_block( 'block', $post ) ) {
-					wp_enqueue_style( 'font-awesome-5' );
-					wp_enqueue_style( 'font-awesome-4-shims' );
-				}
-
-				if ( has_block( 'themeisle-blocks/google-map', $post ) ) {
-					$has_map = true;
-				}
-
-				if ( has_block( 'themeisle-blocks/slider', $post ) ) {
-					$has_slider = true;
-				}
+				$this->enqueue_dependencies( $post );
 			}
 		}
 
-		if ( $has_map ) {
-			// Get the API key.
-			$apikey = get_option( 'themeisle_google_map_block_api_key' );
+		add_filter(
+			'the_content',
+			function ( $content ) {
+				$this->enqueue_dependencies();
 
-			// Don't output anything if there is no API key.
-			if ( null === $apikey || empty( $apikey ) ) {
-				return;
+				return $content;
 			}
-
-			wp_enqueue_script(
-				'themeisle-gutenberg-google-maps',
-				plugin_dir_url( $this->get_dir() ) . 'build/maps.js',
-				'',
-				$version,
-				true
-			);
-
-			wp_enqueue_script( //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion
-				'google-maps',
-				'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $apikey ) . '&libraries=places&callback=initMapScript',
-				array( 'themeisle-gutenberg-google-maps' ),
-				'',
-				true
-			);
-		}
-
-		if ( $has_slider ) {
-			wp_enqueue_script(
-				'glidejs',
-				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.min.js',
-				array(),
-				$version,
-				true
-			);
-	
-			wp_enqueue_script(
-				'themeisle-gutenberg-slider',
-				plugin_dir_url( $this->get_dir() ) . 'build/slider.js',
-				array( 'glidejs', 'wp-dom-ready', 'lodash' ),
-				$version,
-				true
-			);
-	
-			wp_enqueue_style(
-				'glidejs-core',
-				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.core.min.css',
-				[],
-				$version
-			);
-	
-			wp_enqueue_style(
-				'glidejs-theme',
-				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.theme.min.css',
-				[],
-				$version
-			);
-		}
+		);
 	}
 
 	/**
@@ -295,7 +315,7 @@ class Main {
 		$call_api = plugins_api( 'plugin_information', $args );
 
 		if ( is_wp_error( $call_api ) ) {
-			return true;    
+			return true;
 		} else {
 			if ( ! empty( $call_api->version ) ) {
 				$latest = $call_api->version;
@@ -382,6 +402,7 @@ class Main {
 			if ( class_exists( '\ThemeIsle\GutenbergBlocks\CSS\Block_Frontend' ) ) {
 				$class = '\ThemeIsle\GutenbergBlocks\CSS\Block_Frontend';
 				$path  = new $class();
+
 				return $path->enqueue_styles( $post, true );
 			}
 		}
@@ -390,10 +411,11 @@ class Main {
 	/**
 	 * Register our custom block category.
 	 *
+	 * @param array $categories All categories.
+	 *
+	 * @return mixed
 	 * @since   1.0.0
 	 * @access public
-	 * @return mixed
-	 * @param array $categories All categories.
 	 * @link   https://wordpress.org/gutenberg/handbook/extensibility/extending-blocks/#managing-block-categories
 	 */
 	public function block_categories( $categories ) {
@@ -413,6 +435,7 @@ class Main {
 	 *
 	 * @param string $block_content Content of block.
 	 * @param array  $block Block Attributes.
+	 *
 	 * @return mixed
 	 *
 	 * @since  1.5.2
@@ -432,15 +455,16 @@ class Main {
 			$output .= $html5->saveHTML( $image );
 		}
 		$output .= '</amp-carousel>';
+
 		return $output;
 	}
 
 	/**
 	 * Method to return path to child class in a Reflective Way.
 	 *
+	 * @return  string
 	 * @since   1.0.0
 	 * @access  protected
-	 * @return  string
 	 */
 	protected function get_dir() {
 		return dirname( __FILE__ );
@@ -450,16 +474,19 @@ class Main {
 	 * Singleton method.
 	 *
 	 * @static
+	 *
+	 * @param array $name Category Name.
+	 *
+	 * @return  GutenbergBlocks
 	 * @since   1.0.0
 	 * @access  public
-	 * @param   array $name Category Name.
-	 * @return  GutenbergBlocks
 	 */
 	public static function instance( $name ) {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self( $name );
 			self::$instance->init();
 		}
+
 		return self::$instance;
 	}
 
@@ -470,8 +497,8 @@ class Main {
 	 * object therefore, we don't want the object to be cloned.
 	 *
 	 * @access  public
-	 * @since   1.0.0
 	 * @return  void
+	 * @since   1.0.0
 	 */
 	public function __clone() {
 		// Cloning instances of the class is forbidden.
@@ -482,8 +509,8 @@ class Main {
 	 * Disable unserializing of the class
 	 *
 	 * @access  public
-	 * @since   1.0.0
 	 * @return  void
+	 * @since   1.0.0
 	 */
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden.
