@@ -9,7 +9,7 @@ const {
 	merge
 } = lodash;
 
-const { apiFetch } = wp;
+const apiFetch = wp.apiFetch;
 
 const {
 	PanelBody,

@@ -21,7 +21,7 @@ import Template from './template.js';
 
 const TemplatesList = ({
 	preview,
-	isLoaded,
+	isLoading,
 	data,
 	tab,
 	selectedTemplateContent,
@@ -61,7 +61,7 @@ const TemplatesList = ({
 		);
 	}
 
-	if ( ! isLoaded ) {
+	if ( isLoading ) {
 		return (
 			<div className="library-modal-loader">
 				<Spinner/>

@@ -3,7 +3,7 @@
  */
 const { debounce } = lodash;
 
-const { apiFetch } = wp;
+const apiFetch = wp.apiFetch;
 
 const {
 	select,
