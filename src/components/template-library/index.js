@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies
@@ -10,6 +9,8 @@ import { v4 as uuidv4 } from 'uuid';
 const { __ } = wp.i18n;
 
 const apiFetch = wp.apiFetch;
+
+const { parse } = wp.blocks;
 
 const { Modal } = wp.components;
 
@@ -126,26 +127,6 @@ const Library = ({
 		setSearch( '' );
 	};
 
-	const changeClientId = data => {
-		if ( Array.isArray( data ) ) {
-			data.map( i => changeClientId( i ) );
-		} else if ( 'object' === typeof data ) {
-			Object.keys( data ).map( k => {
-				if ( 'clientId' === k ) {
-					data[k] = uuidv4();
-				}
-
-				if ( 'innerBlocks' === k ) {
-					data[k].map( i => {
-						changeClientId( i );
-					});
-				}
-			});
-		}
-
-		return data;
-	};
-
 	const importPreview = async( template = null ) => {
 		setLoading( true );
 
@@ -176,7 +157,19 @@ const Library = ({
 
 		try {
 			let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ url }` });
-			data = changeClientId( data );
+
+			if ( ! data.__file || ! data.content || 'wp_export' !== data.__file ) {
+				createNotice(
+					'error',
+					__( 'There seems to be an error. Please try again.' ),
+					{
+						context: 'themeisle-blocks/notices/template-library',
+						isDismissible: true
+					}
+				);
+			}
+
+			data = parse( data.content );
 			importBlocks( data );
 		} catch ( error ) {
 			if ( error.message ) {
