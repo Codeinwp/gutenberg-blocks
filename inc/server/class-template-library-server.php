@@ -162,7 +162,7 @@ class Template_Library_Server {
 
 		$obj = json_decode( $json );
 
-		if ( ! isset( $obj->__file ) || 'wp_export' !== $obj->__file  || ! isset( $obj->content ) ) {
+		if ( ! isset( $obj->__file ) || 'wp_export' !== $obj->__file || ! isset( $obj->content ) ) {
 			return new WP_Error( 'invalid_json', __( 'Invalid JSON file.', 'textdomain' ) );
 		}
 
@@ -243,14 +243,14 @@ class Template_Library_Server {
 		);
 
 		if ( is_wp_error( $tmp ) ) {
-			@unlink( $file_array['tmp_name'] );
+			wp_delete_file( $file_array['tmp_name'] );
 			return $tmp;
 		}
 
 		$id = media_handle_sideload( $file_array );
 
 		if ( is_wp_error( $id ) ) {
-			@unlink( $file_array['tmp_name'] );
+			wp_delete_file( $file_array['tmp_name'] );
 			return $id;
 		}
 
