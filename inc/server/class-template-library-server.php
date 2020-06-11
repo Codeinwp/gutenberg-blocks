@@ -9,6 +9,8 @@ namespace ThemeIsle\GutenbergBlocks\Server;
 
 use WP_Error;
 
+use WP_Query;
+
 /**
  * Class Template_Library_Server
  */
@@ -196,20 +198,21 @@ class Template_Library_Server {
 	 * @return string
 	 */
 	public function get_saved_image( $url ) {
-		global $wpdb;
-
-		$post_id = $wpdb->get_var(
-			$wpdb->prepare(
-				'SELECT `post_id` FROM `' . $wpdb->postmeta . '`
-					WHERE `meta_key` = \'_themeisle_blocks_image_hash\'
-						AND `meta_value` = %s
-				;',
-				sha1( $url )
+		$args = array(
+			'post_type'   => 'attachment',
+			'post_status' => 'inherit',
+			'meta_query'  => array(
+				array(
+					'key'     => '_themeisle_blocks_image_hash',
+					'value'   => sha1( $url )
+				)
 			)
 		);
 
-		if ( $post_id ) {
-			return $post_id;
+		$query = new WP_Query( $args );
+
+		if ( $query->post ) {
+			return $query->post->ID;
 		}
 
 		return false;
