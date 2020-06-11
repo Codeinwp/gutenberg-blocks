@@ -72,6 +72,11 @@ class Template_Library_Server {
 							'required'    => true,
 							'description' => __( 'URL of the JSON file.', 'textdomain' ),
 						),
+						'preview' => array(
+							'type'        => 'boolean',
+							'default'     => false,
+							'description' => __( 'Load for Block Preview.', 'textdomain' ),
+						),
 					),
 				),
 			)
@@ -134,6 +139,7 @@ class Template_Library_Server {
 		WP_Filesystem();
 
 		$url      = $request->get_param( 'url' );
+		$preview  = $request->get_param( 'preview' );
 		$site_url = get_site_url();
 
 		if ( strpos( $url, $site_url ) !== false ) {
@@ -158,6 +164,10 @@ class Template_Library_Server {
 
 		if ( ! isset( $obj->__file ) || $obj->__file !== 'wp_export' || ! isset( $obj->content ) ) {
 			return new WP_Error( 'invalid_json', __( 'Invalid JSON file.', 'textdomain' ) );
+		}
+
+		if ( $preview ) {
+			return rest_ensure_response( $obj );
 		}
 
 		$regex = '/https?:\/\/\S+(?:png|jpg|jpeg|gif|webp)/';
