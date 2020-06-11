@@ -203,10 +203,10 @@ class Template_Library_Server {
 			'post_status' => 'inherit',
 			'meta_query'  => array(
 				array(
-					'key'     => '_themeisle_blocks_image_hash',
-					'value'   => sha1( $url )
-				)
-			)
+					'key'   => '_themeisle_blocks_image_hash',
+					'value' => sha1( $url ),
+				),
+			),
 		);
 
 		$query = new WP_Query( $args );
