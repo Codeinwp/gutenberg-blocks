@@ -201,7 +201,7 @@ class Template_Library_Server {
 		$args = array(
 			'post_type'   => 'attachment',
 			'post_status' => 'inherit',
-			'meta_query'  => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			'meta_query'  => array(
 				array(
 					'key'   => '_themeisle_blocks_image_hash',
 					'value' => sha1( $url ),
