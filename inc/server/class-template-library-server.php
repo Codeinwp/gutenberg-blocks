@@ -67,7 +67,7 @@ class Template_Library_Server {
 					'methods'  => \WP_REST_Server::READABLE,
 					'callback' => array( $this, 'import_template' ),
 					'args'     => array(
-						'url' => array(
+						'url'     => array(
 							'type'        => 'string',
 							'required'    => true,
 							'description' => __( 'URL of the JSON file.', 'textdomain' ),
@@ -162,7 +162,7 @@ class Template_Library_Server {
 
 		$obj = json_decode( $json );
 
-		if ( ! isset( $obj->__file ) || $obj->__file !== 'wp_export' || ! isset( $obj->content ) ) {
+		if ( ! isset( $obj->__file ) || 'wp_export' !== $obj->__file  || ! isset( $obj->content ) ) {
 			return new WP_Error( 'invalid_json', __( 'Invalid JSON file.', 'textdomain' ) );
 		}
 
@@ -174,7 +174,7 @@ class Template_Library_Server {
 		preg_match_all( $regex, $obj->content, $images, PREG_SET_ORDER, 0 );
 
 		if ( count( $images ) <= 1 ) {
-			foreach( $images as $image ) {
+			foreach ( $images as $image ) {
 				$image = $image[0];
 
 				$value = $this->import_image( $image );
@@ -191,7 +191,7 @@ class Template_Library_Server {
 	/**
 	 * Get image from Media Library by hash
 	 *
-	 * @param $url Image URL.
+	 * @param string $url Image URL.
 	 *
 	 * @return string
 	 */
@@ -218,7 +218,7 @@ class Template_Library_Server {
 	/**
 	 * Upload image to Media Library
 	 *
-	 * @param $url Image URL.
+	 * @param string $url Image URL.
 	 *
 	 * @return string
 	 */
@@ -226,7 +226,7 @@ class Template_Library_Server {
 		$saved_image = $this->get_saved_image( $url );
 
 		if ( $saved_image ) {
-			return wp_get_attachment_url( $saved_image );;
+			return wp_get_attachment_url( $saved_image );
 		}
 
 		if ( ! function_exists( 'media_handle_sideload' ) ) {
@@ -238,12 +238,12 @@ class Template_Library_Server {
 		$tmp = download_url( $url );
 
 		$file_array = array(
-			'name' => basename( $url ),
-			'tmp_name' => $tmp
+			'name'     => basename( $url ),
+			'tmp_name' => $tmp,
 		);
 
 		if ( is_wp_error( $tmp ) ) {
-			@unlink( $file_array[ 'tmp_name' ] );
+			@unlink( $file_array['tmp_name'] );
 			return $tmp;
 		}
 
