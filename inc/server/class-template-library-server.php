@@ -198,21 +198,17 @@ class Template_Library_Server {
 	 * @return string
 	 */
 	public function get_saved_image( $url ) {
-		$args = array(
-			'post_type'   => 'attachment',
-			'post_status' => 'inherit',
-			'meta_query'  => array(
-				array(
-					'key'   => '_themeisle_blocks_image_hash',
-					'value' => sha1( $url ),
-				),
-			),
+		global $wpdb;
+
+		$post_id = $wpdb->get_var( // phpcs:ignore WordPress.VIP.DirectDatabaseQuery.DirectQuery, WordPress.VIP.DirectDatabaseQuery.NoCaching
+			$wpdb->prepare(
+				'SELECT `post_id` FROM `' . $wpdb->postmeta . '` WHERE `meta_key` = \'_themeisle_blocks_image_hash\' AND `meta_value` = %s LIMIT 1;',
+				sha1( $url )
+			)
 		);
 
-		$query = new WP_Query( $args );
-
-		if ( $query->post ) {
-			return $query->post->ID;
+		if ( $post_id ) {
+			return $post_id;
 		}
 
 		return false;
