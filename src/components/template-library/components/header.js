@@ -70,7 +70,7 @@ const Header = ({
 						<Button
 							className="library-modal-header-tabs-button back-to-library"
 							aria-label={ __( 'Back to Library' ) }
-							onClick={ () => setPreview( ! preview ) }
+							onClick={ () => setPreview( false ) }
 						>
 							<Dashicon icon="arrow-left-alt" /> { __( 'Back to Library' ) }
 						</Button>

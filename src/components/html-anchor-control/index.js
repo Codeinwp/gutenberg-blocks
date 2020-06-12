@@ -18,7 +18,10 @@ const {
 	Notice
 } = wp.components;
 
-const { useState } = wp.element;
+const {
+	useEffect,
+	useState
+} = wp.element;
 
 /**
  * Internal dependencies
@@ -31,8 +34,10 @@ const HTMLAnchorControl = ({
 }) => {
 	const instanceId = useInstanceId( HTMLAnchorControl );
 
+	useEffect( () => setID( value ), [ value ]);
+
 	const [ isEditing, setEditing ] = useState( false );
-	const [ ID, setID ] = useState( value );
+	const [ ID, setID ] = useState( null );
 
 	const isInvalid = undefined !== window.themeisleGutenberg.blockIDs && value !== ID && window.themeisleGutenberg.blockIDs.includes( ID );
 

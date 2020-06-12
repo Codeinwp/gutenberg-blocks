@@ -9,6 +9,8 @@ namespace ThemeIsle\GutenbergBlocks\Server;
 
 use WP_Error;
 
+use WP_Query;
+
 /**
  * Class Template_Library_Server
  */
@@ -67,10 +69,15 @@ class Template_Library_Server {
 					'methods'  => \WP_REST_Server::READABLE,
 					'callback' => array( $this, 'import_template' ),
 					'args'     => array(
-						'url' => array(
+						'url'     => array(
 							'type'        => 'string',
 							'required'    => true,
 							'description' => __( 'URL of the JSON file.', 'textdomain' ),
+						),
+						'preview' => array(
+							'type'        => 'boolean',
+							'default'     => false,
+							'description' => __( 'Load for Block Preview.', 'textdomain' ),
 						),
 					),
 				),
@@ -92,22 +99,13 @@ class Template_Library_Server {
 
 		$templates_list = array(
 			array(
-				'title'          => __( 'Header with Video', 'textdomain' ),
-				'type'           => 'block',
-				'author'         => __( 'Otter', 'textdomain' ),
-				'keywords'       => array( 'header', 'video' ),
-				'categories'     => array( 'header' ),
-				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/header-video/template.json',
-				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/header-video/screenshot.png',
-			),
-			array(
 				'title'          => __( 'Blogger Header', 'textdomain' ),
 				'type'           => 'block',
 				'author'         => __( 'Otter', 'textdomain' ),
 				'keywords'       => array( 'header' ),
 				'categories'     => array( 'header', 'blogger' ),
-				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/blogger-header/template.json',
-				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/blogger-header/screenshot.png',
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/templates/01-blogger-header/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/templates/01-blogger-header/screenshot.png',
 			),
 			array(
 				'title'          => __( 'Blogger About', 'textdomain' ),
@@ -115,80 +113,8 @@ class Template_Library_Server {
 				'author'         => __( 'Otter', 'textdomain' ),
 				'keywords'       => array( 'about' ),
 				'categories'     => array( 'about', 'blogger' ),
-				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/blogger-about/template.json',
-				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/blogger-about/screenshot.png',
-			),
-			array(
-				'title'          => __( 'Services Simple', 'textdomain' ),
-				'type'           => 'block',
-				'author'         => __( 'Otter', 'textdomain' ),
-				'keywords'       => array( 'services', 'features' ),
-				'categories'     => array( 'services' ),
-				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-simple/template.json',
-				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-simple/screenshot.png',
-			),
-			array(
-				'title'          => __( 'Services Round Icons', 'textdomain' ),
-				'type'           => 'block',
-				'author'         => __( 'Otter', 'textdomain' ),
-				'keywords'       => array( 'services', 'features', 'icons' ),
-				'categories'     => array( 'services' ),
-				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-round-icons/template.json',
-				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-round-icons/screenshot.png',
-			),
-			array(
-				'title'          => __( 'Services Image Background', 'textdomain' ),
-				'type'           => 'block',
-				'author'         => __( 'Otter', 'textdomain' ),
-				'keywords'       => array( 'services', 'features' ),
-				'categories'     => array( 'services' ),
-				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-image-background/template.json',
-				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/services-image-background/screenshot.png',
-			),
-			array(
-				'title'          => __( 'Pricing Boxed', 'textdomain' ),
-				'type'           => 'block',
-				'author'         => __( 'Otter', 'textdomain' ),
-				'keywords'       => array( 'pricing' ),
-				'categories'     => array( 'pricing' ),
-				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/pricing-boxed/template.json',
-				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/pricing-boxed/screenshot.png',
-			),
-			array(
-				'title'          => __( 'Pricing Hestia', 'textdomain' ),
-				'type'           => 'block',
-				'author'         => __( 'Otter', 'textdomain' ),
-				'keywords'       => array( 'pricing', 'hestia' ),
-				'categories'     => array( 'pricing' ),
-				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/pricing-hestia/template.json',
-				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/pricing-hestia/screenshot.png',
-			),
-			array(
-				'title'          => __( 'Testimonials Simple', 'textdomain' ),
-				'type'           => 'block',
-				'author'         => __( 'Otter', 'textdomain' ),
-				'keywords'       => array( 'testimonials', 'quote' ),
-				'categories'     => array( 'testimonials' ),
-				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/testimonials-simple/template.json',
-				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/testimonials-simple/screenshot.png',
-			),
-			array(
-				'title'          => __( 'Testimonials Boxed', 'textdomain' ),
-				'type'           => 'block',
-				'author'         => __( 'Otter', 'textdomain' ),
-				'keywords'       => array( 'testimonials', 'quote', 'boxed' ),
-				'categories'     => array( 'testimonials' ),
-				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/testimonials-boxed/template.json',
-				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/testimonials-boxed/screenshot.png',
-			),
-			array(
-				'title'          => __( 'About with Map', 'textdomain' ),
-				'type'           => 'block',
-				'author'         => __( 'Otter', 'textdomain' ),
-				'keywords'       => array( 'about', 'social', 'maps', 'footer' ),
-				'categories'     => array( 'about', 'footer' ),
-				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/about-with-map/template.json',
-				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/about-with-map/screenshot.png',
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/templates/02-blogger-about/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/templates/02-blogger-about/screenshot.png',
 			),
 		);
 
@@ -215,6 +141,7 @@ class Template_Library_Server {
 		WP_Filesystem();
 
 		$url      = $request->get_param( 'url' );
+		$preview  = $request->get_param( 'preview' );
 		$site_url = get_site_url();
 
 		if ( strpos( $url, $site_url ) !== false ) {
@@ -236,7 +163,101 @@ class Template_Library_Server {
 		}
 
 		$obj = json_decode( $json );
+
+		if ( ! isset( $obj->__file ) || 'wp_export' !== $obj->__file || ! isset( $obj->content ) ) {
+			return new WP_Error( 'invalid_json', __( 'Invalid JSON file.', 'textdomain' ) );
+		}
+
+		if ( $preview ) {
+			return rest_ensure_response( $obj );
+		}
+
+		$regex = '/https?:\/\/\S+(?:png|jpg|jpeg|gif|webp)/';
+		preg_match_all( $regex, $obj->content, $images, PREG_SET_ORDER, 0 );
+
+		if ( count( $images ) <= 1 ) {
+			foreach ( $images as $image ) {
+				$image = $image[0];
+
+				$value = $this->import_image( $image );
+
+				if ( $value ) {
+					$obj->content = str_replace( $image, $value, $obj->content );
+				}
+			}
+		}
+
 		return rest_ensure_response( $obj );
+	}
+
+	/**
+	 * Get image from Media Library by hash
+	 *
+	 * @param string $url Image URL.
+	 *
+	 * @return string
+	 */
+	public function get_saved_image( $url ) {
+		global $wpdb;
+
+		$post_id = $wpdb->get_var( // phpcs:ignore WordPress.VIP.DirectDatabaseQuery.DirectQuery, WordPress.VIP.DirectDatabaseQuery.NoCaching
+			$wpdb->prepare(
+				'SELECT `post_id` FROM `' . $wpdb->postmeta . '` WHERE `meta_key` = \'_themeisle_blocks_image_hash\' AND `meta_value` = %s LIMIT 1;',
+				sha1( $url )
+			)
+		);
+
+		if ( $post_id ) {
+			return $post_id;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Upload image to Media Library
+	 *
+	 * @param string $url Image URL.
+	 *
+	 * @return string
+	 */
+	public function import_image( $url ) {
+		$saved_image = $this->get_saved_image( $url );
+
+		if ( $saved_image ) {
+			return wp_get_attachment_url( $saved_image );
+		}
+
+		if ( ! function_exists( 'media_handle_sideload' ) ) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			require_once ABSPATH . 'wp-admin/includes/image.php';
+			require_once ABSPATH . 'wp-admin/includes/media.php';
+		}
+
+		$tmp = download_url( $url );
+
+		$file_array = array(
+			'name'     => basename( $url ),
+			'tmp_name' => $tmp,
+		);
+
+		if ( is_wp_error( $tmp ) ) {
+			wp_delete_file( $file_array['tmp_name'] );
+			return $tmp;
+		}
+
+		$id = media_handle_sideload( $file_array );
+
+		if ( is_wp_error( $id ) ) {
+			wp_delete_file( $file_array['tmp_name'] );
+			return $id;
+		}
+
+		update_post_meta( $id, '_themeisle_blocks_image_hash', sha1( $url ) );
+
+		$value = wp_get_attachment_url( $id );
+
+		return $value;
 	}
 
 	/**

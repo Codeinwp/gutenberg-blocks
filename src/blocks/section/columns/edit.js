@@ -114,6 +114,7 @@ const Edit = ({
 			const instanceId = `wp-block-themeisle-blocks-advanced-columns-${ clientId.substr( 0, 8 ) }`;
 			setAttributes({ id: instanceId });
 			IDs.push( instanceId );
+			blockIDs.push( instanceId );
 		} else {
 			IDs.push( attributes.id );
 			blockIDs.push( attributes.id );

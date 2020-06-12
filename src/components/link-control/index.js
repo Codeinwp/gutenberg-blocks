@@ -9,7 +9,7 @@ import scrollIntoView from 'dom-scroll-into-view';
  */
 const { __ } = wp.i18n;
 
-const { apiFetch } = wp;
+const apiFetch = wp.apiFetch;
 
 const {
 	Button,
