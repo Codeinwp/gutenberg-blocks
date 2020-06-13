@@ -8,8 +8,6 @@ import LazyLoad from 'react-lazy-load';
  */
 const { __ } = wp.i18n;
 
-const { parse } = wp.blocks;
-
 const { BlockPreview } = wp.blockEditor;
 
 const { Spinner } = wp.components;
@@ -56,7 +54,7 @@ const TemplatesList = ({
 		return (
 			<div className="library-modal-preview">
 				<BlockPreview
-					blocks={ parse( selectedTemplateContent ) }
+					blocks={ selectedTemplateContent }
 					viewportWidth={ viewportWidth }
 				/>
 			</div>

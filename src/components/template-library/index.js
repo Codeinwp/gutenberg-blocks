@@ -131,22 +131,14 @@ const Library = ({
 		setLoading( true );
 
 		try {
-			const data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ template.template_url }&preview=true` });
+			let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ template.template_url }&preview=true` });
 
-			if ( ! data.__file || ! data.content || 'wp_export' !== data.__file ) {
-				createNotice(
-					'error',
-					__( 'There seems to be an error. Please try again.' ),
-					{
-						context: 'themeisle-blocks/notices/template-library',
-						isDismissible: true
-					}
-				);
-				return;
+			if ( data.__file && data.content && 'wp_export' === data.__file ) {
+				data = parse( data.content );
 			}
 
 			setSelectedTemplate( template );
-			setSelectedTemplateContent( data.content );
+			setSelectedTemplateContent( data );
 			setPreview( true );
 		} catch ( error ) {
 			if ( error.message ) {
@@ -171,18 +163,10 @@ const Library = ({
 		try {
 			let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ url }` });
 
-			if ( ! data.__file || ! data.content || 'wp_export' !== data.__file ) {
-				createNotice(
-					'error',
-					__( 'There seems to be an error. Please try again.' ),
-					{
-						context: 'themeisle-blocks/notices/template-library',
-						isDismissible: true
-					}
-				);
+			if ( data.__file && data.content && 'wp_export' === data.__file ) {
+				data = parse( data.content );
 			}
 
-			data = parse( data.content );
 			importBlocks( data );
 		} catch ( error ) {
 			if ( error.message ) {
@@ -195,6 +179,7 @@ const Library = ({
 					}
 				);
 			}
+
 			setLoading( false );
 		}
 	};

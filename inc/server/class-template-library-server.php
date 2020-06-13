@@ -164,11 +164,7 @@ class Template_Library_Server {
 
 		$obj = json_decode( $json );
 
-		if ( ! isset( $obj->__file ) || 'wp_export' !== $obj->__file || ! isset( $obj->content ) ) {
-			return new WP_Error( 'invalid_json', __( 'Invalid JSON file.', 'textdomain' ) );
-		}
-
-		if ( $preview ) {
+		if ( ! isset( $obj->__file ) || 'wp_export' !== $obj->__file || ! isset( $obj->content ) || $preview ) {
 			return rest_ensure_response( $obj );
 		}
 
