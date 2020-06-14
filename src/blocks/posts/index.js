@@ -12,6 +12,7 @@ import './style.scss';
 import './editor.scss';
 import { postsIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
+import deprecated from './deprecated.js';
 import edit from './edit.js';
 
 registerBlockType( 'themeisle-blocks/posts-grid', {
@@ -29,6 +30,7 @@ registerBlockType( 'themeisle-blocks/posts-grid', {
 		align: [ 'wide', 'full' ],
 		html: false
 	},
+	deprecated,
 	edit,
 	save: () => null
 });
