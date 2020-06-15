@@ -33,13 +33,6 @@ class Plugin_Card_Block extends Base_Block {
 			'slug'         => array(
 				'type' => 'string',
 			),
-			'hasCustomCSS' => array(
-				'type'    => 'boolean',
-				'default' => false,
-			),
-			'customCSS'    => array(
-				'type' => 'string',
-			),
 		);
 	}
 

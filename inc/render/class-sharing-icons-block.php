@@ -106,13 +106,6 @@ class Sharing_Icons_Block extends Base_Block {
 				'type'    => 'string',
 				'default' => 'is-default',
 			),
-			'hasCustomCSS' => array(
-				'type'    => 'boolean',
-				'default' => false,
-			),
-			'customCSS'    => array(
-				'type' => 'string',
-			),
 		);
 	}
 
