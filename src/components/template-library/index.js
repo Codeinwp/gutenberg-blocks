@@ -49,6 +49,7 @@ const Library = ({
 					__( 'You are using an older version of Otter. Use the latest version of Otter to have maximum compatibility with Template Library.' ),
 					{
 						context: 'themeisle-blocks/notices/template-library',
+						id: 'compatibility-warning',
 						isDismissible: false,
 						actions: [
 							{
