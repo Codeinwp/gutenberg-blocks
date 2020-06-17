@@ -37,7 +37,6 @@ class Block_Frontend extends Base_CSS {
 	 */
 	private $has_fonts = true;
 
-
 	/**
 	 * Initialize the class
 	 */
@@ -88,40 +87,17 @@ class Block_Frontend extends Base_CSS {
 	 * @access  public
 	 */
 	public function enqueue_google_fonts( $post_id = '' ) {
-		global $wp_query;
+		if ( ! is_singular() && ! $post_id ) {
+			return;
+		}
 
-		if ( is_singular() || $post_id ) {
-			$post_id = $post_id ? $post_id : get_the_ID();
+		$post_id = $post_id ? $post_id : get_the_ID();
+		$fonts_list = get_post_meta( $post_id, '_themeisle_gutenberg_block_fonts', true );
+		$content = get_post_field( 'post_content', $post_id );
+		$blocks = $this->parse_blocks( $content );
 
-			$fonts_list = get_post_meta( $post_id, '_themeisle_gutenberg_block_fonts', true );
-
-			$content = get_post_field( 'post_content', $post_id );
-
-			$blocks = $this->parse_blocks( $content );
-
-			if ( is_array( $blocks ) || ! empty( $blocks ) ) {
-				$this->enqueue_reusable_fonts( $blocks );
-			}
-		} else {
-			$fonts_list = array();
-
-			$posts = wp_list_pluck( $wp_query->posts, 'ID' );
-
-			foreach ( $posts as $post ) {
-				$fonts = get_post_meta( $post, '_themeisle_gutenberg_block_fonts', true );
-
-				if ( ! empty( $fonts ) ) {
-					$fonts_list = array_merge( $fonts_list, $fonts );
-				}
-
-				$content = get_post_field( 'post_content', $post );
-
-				$blocks = $this->parse_blocks( $content );
-
-				if ( is_array( $blocks ) || ! empty( $blocks ) ) {
-					$this->enqueue_reusable_fonts( $blocks );
-				}
-			}
+		if ( is_array( $blocks ) || ! empty( $blocks ) ) {
+			$this->enqueue_reusable_fonts( $blocks );
 		}
 
 		if ( empty( $fonts_list ) ) {
@@ -145,7 +121,7 @@ class Block_Frontend extends Base_CSS {
 			}
 
 			if ( count( $fonts ) > 0 ) {
-				wp_enqueue_style( 'themeisle-gutenberg-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ), [], THEMEISLE_BLOCKS_VERSION );
+				wp_enqueue_style( 'themeisle-gutenberg-google-fonts-' . $post_id, '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ), [], THEMEISLE_BLOCKS_VERSION );
 			}
 		}
 	}
@@ -218,6 +194,7 @@ class Block_Frontend extends Base_CSS {
 				$post_id = get_the_ID();
 
 				$this->enqueue_styles( $post_id, true );
+				$this->enqueue_google_fonts( $post_id );
 
 				return $content;
 			}
