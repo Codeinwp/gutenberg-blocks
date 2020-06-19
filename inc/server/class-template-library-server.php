@@ -395,6 +395,42 @@ class Template_Library_Server {
 				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/templates/02-blogger-about/template.json',
 				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/templates/02-blogger-about/screenshot.png',
 			),
+			array(
+				'title'          => __( 'Team', 'textdomain' ),
+				'type'           => 'block',
+				'author'         => __( 'Otter', 'textdomain' ),
+				'keywords'       => array( 'team', 'members' ),
+				'categories'     => array( 'team' ),
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/templates/34-team-one/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/templates/34-team-one/screenshot.png',
+			),
+			array(
+				'title'          => __( 'Team', 'textdomain' ),
+				'type'           => 'block',
+				'author'         => __( 'Otter', 'textdomain' ),
+				'keywords'       => array( 'team', 'members' ),
+				'categories'     => array( 'team' ),
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/templates/35-team-two/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/templates/35-team-two/screenshot.png',
+			),
+			array(
+				'title'          => __( 'Team', 'textdomain' ),
+				'type'           => 'block',
+				'author'         => __( 'Otter', 'textdomain' ),
+				'keywords'       => array( 'team', 'members' ),
+				'categories'     => array( 'team' ),
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/templates/36-team-three/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/templates/36-team-three/screenshot.png',
+			),
+			array(
+				'title'          => __( 'Team', 'textdomain' ),
+				'type'           => 'block',
+				'author'         => __( 'Otter', 'textdomain' ),
+				'keywords'       => array( 'team', 'members' ),
+				'categories'     => array( 'team' ),
+				'template_url'   => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/templates/37-team-four/template.json',
+				'screenshot_url' => 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/templates/37-team-four/screenshot.png',
+			),
 		);
 
 		$templates = apply_filters( 'themeisle_gutenberg_templates', $templates_list );
