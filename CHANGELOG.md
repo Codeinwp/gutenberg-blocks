@@ -1,3 +1,13 @@
+##### [Version 1.5.3](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.2...v1.5.3) (2020-06-22)
+
+- Store images locally when importing templates
+- The improved template import mechanism
+- Fix CSS file is not enqueued for posts outside the main loop
+- Drop support for WordPress 5.3
+- Add backward compatibility to Template Library import
+- Fix category filter in Posts Section
+- Add new Block Templates
+
 ##### [Version 1.5.2](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.1...v1.5.2) (2020-05-26)
 
 - Use WP File System in Template Import
