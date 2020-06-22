@@ -47,7 +47,7 @@ const Grid = ({
 				return (
 					<div className="wp-block-themeisle-blocks-posts-grid-post-blog wp-block-themeisle-blocks-posts-grid-post-plain">
 						<div className="wp-block-themeisle-blocks-posts-grid-post">
-							{ ( 0 !== post.featured_media && attributes.displayFeaturedImage ) && (
+							{ ( undefined !== post.featured_media && 0 !== post.featured_media && attributes.displayFeaturedImage ) && (
 								<Thumbnail
 									id={ post.featured_media }
 									link={ post.link }

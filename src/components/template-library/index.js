@@ -2,20 +2,21 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies
  */
-const { apiFetch } = wp;
+const { __ } = wp.i18n;
+
+const apiFetch = wp.apiFetch;
+
+const { parse } = wp.blocks;
 
 const { Modal } = wp.components;
 
-const { compose } = wp.compose;
-
 const {
-	withSelect,
-	withDispatch
+	useSelect,
+	useDispatch
 } = wp.data;
 
 const {
@@ -32,49 +33,81 @@ import Notices from './components/notices.js';
 import TemplatesList from './components/templates-list.js';
 
 const Library = ({
-	close,
-	availableBlocks,
-	importBlocks
+	clientId,
+	close
 }) => {
+	const block = useSelect( select => select( 'core/block-editor' ).getBlock( clientId ) );
+
+	const { replaceBlocks } = useDispatch( 'core/block-editor' );
+	const { createNotice } = useDispatch( 'core/notices' );
+
 	useEffect( () => {
 		const fetchData = async() => {
-			let data = await apiFetch({ path: 'themeisle-gutenberg-blocks/v1/fetch_templates' });
-
-			let blocksCategories = [];
-			let templateCategories = [];
-
-			data.map( i => {
-				if ( i.categories && i.template_url ) {
-					if ( 'block' === i.type ) {
-						i.categories.map( o => {
-							blocksCategories.push( o );
-						});
+			if ( ! Boolean( themeisleGutenberg.isCompatible ) ) {
+				createNotice(
+					'warning',
+					__( 'You are using an older version of Otter. Use the latest version of Otter to have maximum compatibility with Template Library.' ),
+					{
+						context: 'themeisle-blocks/notices/template-library',
+						id: 'compatibility-warning',
+						isDismissible: false,
+						actions: [
+							{
+								label: __( 'Update Now' ),
+								url: themeisleGutenberg.updatePath
+							}
+						]
 					}
+				);
+			}
 
-					if ( 'template' === i.type ) {
-						i.categories.map( o => {
-							templateCategories.push( o );
-						});
+			try {
+				let data = await apiFetch({ path: 'themeisle-gutenberg-blocks/v1/fetch_templates' });
+
+				let blocksCategories = [];
+				let templateCategories = [];
+
+				data.map( i => {
+					if ( i.categories && i.template_url ) {
+						if ( 'block' === i.type ) {
+							i.categories.map( o => {
+								blocksCategories.push( o );
+							});
+						}
+
+						if ( 'template' === i.type ) {
+							i.categories.map( o => {
+								templateCategories.push( o );
+							});
+						}
 					}
-				}
-			});
+				});
 
-			blocksCategories = blocksCategories.filter( ( item, i, ar ) => ar.indexOf( item ) === i ).sort();
-			templateCategories = templateCategories.filter( ( item, i, ar ) => ar.indexOf( item ) === i ).sort();
+				blocksCategories = blocksCategories.filter( ( item, i, ar ) => ar.indexOf( item ) === i ).sort();
+				templateCategories = templateCategories.filter( ( item, i, ar ) => ar.indexOf( item ) === i ).sort();
 
-			setBlocksCategories( blocksCategories );
-			setTemplateCategories( templateCategories );
-			setData( data );
-			setLoaded( true );
+				setBlocksCategories( blocksCategories );
+				setTemplateCategories( templateCategories );
+				setData( data );
+			} catch ( error ) {
+				createNotice(
+					'error',
+					__( 'There seems to be an error. Please try again.' ),
+					{
+						context: 'themeisle-blocks/notices/template-library',
+						isDismissible: true
+					}
+				);
+			}
+
+			setLoading( false );
 		};
 
 		fetchData();
 	}, []);
 
 	const [ tab, setTab ] = useState( 'block' );
-	const [ isLoaded, setLoaded ] = useState( false );
-	const [ isError, setError ] = useState( false );
-	const [ isMissing, setMissing ] = useState( false );
+	const [ isLoading, setLoading ] = useState( true );
 	const [ selectedCategory, setSelectedCategory ] = useState( 'all' );
 	const [ search, setSearch ] = useState( '' );
 	const [ blocksCategories, setBlocksCategories ] = useState([]);
@@ -83,7 +116,11 @@ const Library = ({
 	const [ preview, setPreview ] = useState( false );
 	const [ selectedTemplate, setSelectedTemplate ] = useState( null );
 	const [ selectedTemplateContent, setSelectedTemplateContent ] = useState( null );
-	const [ missingBlocks, setMissingBlocks ] = useState([]);
+
+	const importBlocks = content => replaceBlocks(
+		block.clientId,
+		content
+	);
 
 	const changeTab = value => {
 		setTab( value );
@@ -92,88 +129,59 @@ const Library = ({
 	};
 
 	const importPreview = async( template = null ) => {
-		setLoaded( false );
-		let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ template.template_url }` });
-		setSelectedTemplate( template );
-		setSelectedTemplateContent( data );
-		setLoaded( true );
-		setPreview( ! preview );
-	};
+		setLoading( true );
 
-	const changeClientId = data => {
-		if ( Array.isArray( data ) ) {
-			data.map( i => changeClientId( i ) );
-		} else if ( 'object' === typeof data ) {
-			Object.keys( data ).map( k => {
-				if ( 'clientId' === k ) {
-					data[k] = uuidv4();
-				}
+		try {
+			let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ template.template_url }&preview=true` });
 
-				if ( 'innerBlocks' === k ) {
-					data[k].map( i => {
-						changeClientId( i );
-					});
-				}
-			});
-		}
+			if ( data.__file && data.content && 'wp_export' === data.__file ) {
+				data = parse( data.content );
+			}
 
-		return data;
-	};
-
-	const validateBlocks = data => {
-		let status = false;
-		let missingBlocks = [];
-
-		if ( Array.isArray( data ) ) {
-			data.map( i => validateBlocks( i ) );
-		} else if ( 'object' === typeof data ) {
-			Object.keys( data ).some( k => {
-				if ( 'name' === k ) {
-					const exists = availableBlocks.find( i => {
-						return i.name === data.name;
-					});
-
-					if ( undefined === exists ) {
-						missingBlocks.push( data.name );
-						status = true;
+			setSelectedTemplate( template );
+			setSelectedTemplateContent( data );
+			setPreview( true );
+		} catch ( error ) {
+			if ( error.message ) {
+				createNotice(
+					'error',
+					error.message,
+					{
+						context: 'themeisle-blocks/notices/template-library',
+						isDismissible: true
 					}
-				}
-
-				if ( 'innerBlocks' === k ) {
-					data[k].map( i => validateBlocks( i  ) );
-				}
-			});
+				);
+			}
 		}
 
-		missingBlocks = missingBlocks
-			.concat( missingBlocks )
-			.filter( ( v, i, a ) => a.indexOf( v ) === i );
-
-		setMissingBlocks( missingBlocks );
-
-		return status;
+		setLoading( false );
 	};
 
 	const importTemplate = async url => {
 		setPreview( false );
-		setLoaded( false );
-		setMissingBlocks([]);
+		setLoading( true );
 
-		let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ url }` });
+		try {
+			let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ url }` });
 
-		data = changeClientId( data );
-
-		if ( null !== data ) {
-			setLoaded( true );
-
-			if ( ! validateBlocks( data ) ) {
-				importBlocks( data );
-			} else {
-				setMissing( true );
+			if ( data.__file && data.content && 'wp_export' === data.__file ) {
+				data = parse( data.content );
 			}
-		} else {
-			setLoaded( true );
-			setError( true );
+
+			importBlocks( data );
+		} catch ( error ) {
+			if ( error.message ) {
+				createNotice(
+					'error',
+					error.message,
+					{
+						context: 'themeisle-blocks/notices/template-library',
+						isDismissible: true
+					}
+				);
+			}
+
+			setLoading( false );
 		}
 	};
 
@@ -203,17 +211,11 @@ const Library = ({
 				changeSearch={ e => setSearch( e ) }
 			/>
 
-			<Notices
-				isError={ isError }
-				isMissing={ isMissing }
-				missingBlocks={ missingBlocks }
-				removeError={ () => setError( false ) }
-				removeMissing={ () => setMissing( false ) }
-			/>
+			<Notices/>
 
 			<TemplatesList
 				preview={ preview }
-				isLoaded={ isLoaded }
+				isLoading={ isLoading }
 				data={ data }
 				tab={ tab }
 				selectedTemplateContent={ selectedTemplateContent }
@@ -226,25 +228,4 @@ const Library = ({
 	);
 };
 
-export default compose(
-	withSelect( ( select, { clientId }) => {
-		const { getBlock } = select( 'core/block-editor' );
-		const { getBlockTypes } = select( 'core/blocks' );
-		const block = getBlock( clientId );
-		const availableBlocks = getBlockTypes();
-		return {
-			block,
-			availableBlocks
-		};
-	}),
-
-	withDispatch( ( dispatch, { block }) => {
-		const { replaceBlocks } = dispatch( 'core/block-editor' );
-		return {
-			importBlocks: ( content ) => replaceBlocks(
-				block.clientId,
-				content
-			)
-		};
-	})
-)( Library );
+export default Library;

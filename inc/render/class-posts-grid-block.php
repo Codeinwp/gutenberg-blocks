@@ -44,7 +44,10 @@ class Posts_Grid_Block extends Base_Block {
 				),
 			),
 			'categories'           => array(
-				'type' => 'string',
+				'type'  => 'array',
+				'items' => array(
+					'type' => 'object',
+				),
 			),
 			'postsToShow'          => array(
 				'type'    => 'number',
@@ -120,6 +123,18 @@ class Posts_Grid_Block extends Base_Block {
 	 * @return mixed|string
 	 */
 	protected function render( $attributes ) {
+		$categories = 0;
+
+		if ( isset( $attributes['categories'] ) ) {
+			$cats = array();
+
+			foreach ( $attributes['categories'] as $category ) {
+				array_push( $cats, $category['id'] );
+			}
+
+			$categories = join( ', ', $cats );
+		}
+
 		$recent_posts = wp_get_recent_posts(
 			array(
 				'numberposts' => $attributes['postsToShow'],
@@ -127,7 +142,7 @@ class Posts_Grid_Block extends Base_Block {
 				'order'       => $attributes['order'],
 				'orderby'     => $attributes['orderBy'],
 				'offset'      => $attributes['offset'],
-				'category'    => isset( $attributes['categories'] ) ? $attributes['categories'] : 0,
+				'category'    => $categories,
 			)
 		);
 

@@ -11,7 +11,7 @@ const {
 	Spinner
 } = wp.components;
 
-const { withSelect } = wp.data;
+const { useSelect } = wp.data;
 
 const { Fragment } = wp.element;
 
@@ -25,11 +25,31 @@ import Layout from './components/layout/index.js';
 const Edit = ({
 	attributes,
 	setAttributes,
-	className,
-	posts,
-	categoriesList,
-	authors
+	className
 }) => {
+	const {
+		posts,
+		categoriesList,
+		authors
+	} = useSelect( select => {
+		const catIds = attributes.categories && 0 < attributes.categories.length ? attributes.categories.map( ( cat ) => cat.id ) : [];
+
+		const latestPostsQuery = pickBy({
+			categories: catIds,
+			order: attributes.order,
+			orderby: attributes.orderBy,
+			per_page: attributes.postsToShow, // eslint-disable-line camelcase
+			offset: attributes.offset
+		}, ( value ) => ! isUndefined( value ) );
+
+		return {
+			posts: select( 'core' ).getEntityRecords( 'postType', 'post', latestPostsQuery ),
+			// eslint-disable-next-line camelcase
+			categoriesList: select( 'core' ).getEntityRecords( 'taxonomy', 'category', { per_page: 100 }),
+			authors: select( 'core' ).getAuthors()
+		};
+	}, [ attributes.categories, attributes.order, attributes.orderBy, attributes.postsToShow, attributes.offset ]);
+
 	const changeStyle = value => {
 		setAttributes({ style: value });
 	};
@@ -113,23 +133,4 @@ const Edit = ({
 	);
 };
 
-export default withSelect( ( select, props ) => {
-	const { categories, order, orderBy, postsToShow, offset } = props.attributes;
-
-	const catIds = categories && 0 < categories.length ? categories.map( ( cat ) => cat.id ) : [];
-
-	const latestPostsQuery = pickBy({
-		categories: catIds,
-		order,
-		orderby: orderBy,
-		per_page: postsToShow, // eslint-disable-line camelcase
-		offset
-	}, ( value ) => ! isUndefined( value ) );
-
-	return {
-		posts: select( 'core' ).getEntityRecords( 'postType', 'post', latestPostsQuery ),
-		// eslint-disable-next-line camelcase
-		categoriesList: select( 'core' ).getEntityRecords( 'taxonomy', 'category', { per_page: 100 }),
-		authors: select( 'core' ).getAuthors()
-	};
-})( Edit );
+export default Edit;

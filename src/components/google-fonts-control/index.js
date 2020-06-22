@@ -13,7 +13,7 @@ const {
 
 const { __ } = wp.i18n;
 
-const { withInstanceId } = wp.compose;
+const { useInstanceId } = wp.compose;
 
 const {
 	Button,
@@ -36,7 +36,6 @@ const {
 import './editor.scss';
 
 const GoogleFontsControl = ({
-	instanceId,
 	label,
 	value,
 	valueVariant,
@@ -48,6 +47,8 @@ const GoogleFontsControl = ({
 	onChangeFontStyle,
 	onChangeTextTransform
 }) => {
+	const instanceId = useInstanceId( GoogleFontsControl );
+
 	useEffect( () => {
 		fetch( 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyClGdkPJ1BvgLOol5JAkQY4Mv2lkLYu00k' )
 			.then( blob => blob.json() )
@@ -260,4 +261,4 @@ const GoogleFontsControl = ({
 	);
 };
 
-export default withInstanceId( GoogleFontsControl );
+export default GoogleFontsControl;

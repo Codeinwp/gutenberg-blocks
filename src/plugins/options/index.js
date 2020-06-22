@@ -9,7 +9,7 @@ const {
 	merge
 } = lodash;
 
-const { apiFetch } = wp;
+const apiFetch = wp.apiFetch;
 
 const {
 	PanelBody,
@@ -17,7 +17,7 @@ const {
 	ToggleControl
 } = wp.components;
 
-const { withDispatch } = wp.data;
+const { useDispatch } = wp.data;
 
 const {
 	Fragment,
@@ -38,7 +38,9 @@ import './editor.scss';
 import GlobalDefaults from './global-defaults/index.js';
 import defaultsAttrs from './global-defaults/defaults.js';
 
-const Options = ({ createNotice }) => {
+const Options = () => {
+	const { createNotice } = useDispatch( 'core/notices' );
+
 	useEffect( async() => {
 		let data = await apiFetch({ path: 'wp/v2/users/me?context=edit' });
 
@@ -182,10 +184,4 @@ const Options = ({ createNotice }) => {
 	);
 };
 
-export default withDispatch( ( dispatch ) => {
-	const { createNotice } = dispatch( 'core/notices' );
-
-	return {
-		createNotice
-	};
-})( Options );
+export default Options;

@@ -12,7 +12,6 @@ const {
 	BaseControl,
 	Button,
 	ExternalLink,
-	IconButton,
 	SelectControl,
 	TextControl
 } = wp.components;
@@ -67,9 +66,10 @@ const Marker = ({
 					{ marker.title || __( 'Custom Marker' ) }
 				</Button>
 
-				<IconButton
+				<Button
 					icon="no-alt"
 					label={ __( 'Remove Marker' ) }
+					showTooltip={ true }
 					className="wp-block-themeisle-blocks-google-map-marker-remove"
 					onClick={ () => removeMarker( marker.id ) }
 				/>

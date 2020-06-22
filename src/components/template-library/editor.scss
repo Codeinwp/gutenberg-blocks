@@ -194,37 +194,15 @@
 			.components-notice {
 				display: flex;
 				align-items: center;
-				margin: 20px 40px -20px;
+				margin: 10px 40px;
+				padding: 8px 12px;
 
-				&.library-modal-missing {
-					details {
-						margin-top: 5px;
-	
-						summary {
-							color: #0073aa;
-							text-decoration: underline;
-							cursor: pointer;
-						}
-					}
-	
-					ul {
-						list-style: disc;
-						margin: 10px 0 0 12px;
-					}
-
-					.components-button {
-						margin: 10px 5px;
-						top: 0;
-	
-						&.components-notice__action {
-							color: #0073aa;
-							text-decoration: underline;
-						}
-					}
+				&:first-child {
+					margin-top: 20px;
 				}
 
-				.components-button {
-					top: unset;
+				&:last-child {
+					margin-bottom: -20px;
 				}
 			}
 		}

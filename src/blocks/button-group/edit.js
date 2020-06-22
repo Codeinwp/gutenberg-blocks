@@ -16,7 +16,7 @@ const {
 	times
 } = lodash;
 
-const { IconButton } = wp.components;
+const { Button } = wp.components;
 
 const {
 	Fragment,
@@ -32,7 +32,7 @@ import defaultAttributes from './attributes.js';
 import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Controls from './controls.js';
 import Inspector from './inspector.js';
-import Button from './components/button-edit.js';
+import ButtonEdit from './components/button-edit.js';
 
 const IDs = [];
 
@@ -265,7 +265,7 @@ const Edit = ({
 				} }
 			>
 				{ times( attributes.buttons, i => (
-					<Button
+					<ButtonEdit
 						index={ i }
 						attributes={ attributes }
 						isSelected={ isSelected }
@@ -275,11 +275,12 @@ const Edit = ({
 				) ) }
 
 				{ ( isSelected && 4 >= attributes.buttons ) && (
-					<IconButton
+					<Button
 						className="wp-block-themeisle-blocks-button-inserter"
 						icon="plus-alt"
 						onClick={ () => changeButtons( attributes.buttons + 1 ) }
 						label={ __( 'Add Button' ) }
+						showTooltip={ true }
 					/>
 				) }
 			</div>
