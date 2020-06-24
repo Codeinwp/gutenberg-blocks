@@ -165,6 +165,17 @@
 	.wp-block-themeisle-blocks-button-inserter {
 		align-self: center;
 		margin-left: 10px;
+
+		&:hover {
+			color: #1e1e1e;
+		}
+
+		svg {
+			width: 24px;
+			background-color: #1e1e1e;
+			color: #fff;
+			border-radius: 2px;
+		}
 	}
 }
 

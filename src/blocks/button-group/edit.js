@@ -4,6 +4,8 @@
 import classnames from 'classnames';
 import GoogleFontLoader from 'react-google-font-loader';
 
+import { Icon, plus } from '@wordpress/icons';
+
 /**
  * WordPress dependencies.
  */
@@ -277,11 +279,13 @@ const Edit = ({
 				{ ( isSelected && 4 >= attributes.buttons ) && (
 					<Button
 						className="wp-block-themeisle-blocks-button-inserter"
-						icon="plus-alt"
+						icon={ () => <Icon icon={ plus } /> }
 						onClick={ () => changeButtons( attributes.buttons + 1 ) }
 						label={ __( 'Add Button' ) }
-						showTooltip={ true }
-					/>
+						showTooltip={ false }
+					>
+						{ __( 'Add Button' ) }
+					</Button>
 				) }
 			</div>
 		</Fragment>
