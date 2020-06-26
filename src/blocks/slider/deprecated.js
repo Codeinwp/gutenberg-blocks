@@ -6,71 +6,80 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
+const { omit } = lodash;
+
 const { RichText } = wp.blockEditor;
 
 import SliderControls from './components/slider-controls.js';
 
+const attributes = {
+	id: {
+		type: 'string'
+	},
+	align: {
+		type: 'string'
+	},
+	images: {
+		type: 'array',
+		default: [],
+		source: 'query',
+		selector: '.wp-block-themeisle-blocks-slider-item-wrapper',
+		query: {
+			id: {
+				type: 'number',
+				source: 'attribute',
+				selector: 'img',
+				attribute: 'data-id'
+			},
+			url: {
+				type: 'string',
+				source: 'attribute',
+				selector: 'img',
+				attribute: 'src'
+			},
+			alt: {
+				type: 'string',
+				source: 'attribute',
+				selector: 'img',
+				attribute: 'alt',
+				default: ''
+			},
+			caption: {
+				type: 'string',
+				source: 'html',
+				selector: 'figcaption',
+				default: ''
+			}
+		}
+	},
+	perView: {
+		type: 'number',
+		default: 1
+	},
+	gap: {
+		type: 'number',
+		default: 0
+	},
+	peek: {
+		type: 'number',
+		default: 0
+	},
+	autoplay: {
+		type: 'boolean',
+		default: true
+	},
+	height: {
+		type: 'number',
+		default: 400
+	}
+};
+
 const deprecated = [ {
 	attributes: {
-		id: {
-			type: 'string'
-		},
-		align: {
-			type: 'string'
-		},
-		images: {
-			type: 'array',
-			default: [],
-			source: 'query',
-			selector: '.wp-block-themeisle-blocks-slider-item-wrapper',
-			query: {
-				id: {
-					type: 'number',
-					source: 'attribute',
-					selector: 'img',
-					attribute: 'data-id'
-				},
-				url: {
-					type: 'string',
-					source: 'attribute',
-					selector: 'img',
-					attribute: 'src'
-				},
-				alt: {
-					type: 'string',
-					source: 'attribute',
-					selector: 'img',
-					attribute: 'alt',
-					default: ''
-				},
-				caption: {
-					type: 'string',
-					source: 'html',
-					selector: 'figcaption',
-					default: ''
-				}
-			}
-		},
-		perView: {
-			type: 'number',
-			default: 1
-		},
-		gap: {
-			type: 'number',
-			default: 0
-		},
-		peek: {
-			type: 'number',
-			default: 0
-		},
-		autoplay: {
-			type: 'boolean',
-			default: true
-		},
-		height: {
-			type: 'number',
-			default: 400
-		}
+		...omit(
+			attributes,
+			[ 'align' ]
+		)
 	},
 
 	supports: {
@@ -136,58 +145,10 @@ const deprecated = [ {
 	}
 }, {
 	attributes: {
-		id: {
-			type: 'string'
-		},
-		images: {
-			type: 'array',
-			default: [],
-			source: 'query',
-			selector: '.wp-block-themeisle-blocks-slider-item-wrapper',
-			query: {
-				id: {
-					type: 'number',
-					source: 'attribute',
-					selector: 'img',
-					attribute: 'data-id'
-				},
-				url: {
-					type: 'string',
-					source: 'attribute',
-					selector: 'img',
-					attribute: 'src'
-				},
-				alt: {
-					type: 'string',
-					source: 'attribute',
-					selector: 'img',
-					attribute: 'alt',
-					default: ''
-				},
-				caption: {
-					type: 'string',
-					source: 'html',
-					selector: 'figcaption',
-					default: ''
-				}
-			}
-		},
-		perView: {
-			type: 'number',
-			default: 1
-		},
-		gap: {
-			type: 'number',
-			default: 0
-		},
-		peek: {
-			type: 'number',
-			default: 0
-		},
-		autoplay: {
-			type: 'boolean',
-			default: true
-		},
+		...omit(
+			attributes,
+			[ 'align' ]
+		),
 		delay: {
 			type: 'number',
 			default: 2
@@ -199,10 +160,6 @@ const deprecated = [ {
 		hideBullets: {
 			type: 'boolean',
 			default: false
-		},
-		height: {
-			type: 'number',
-			default: 400
 		}
 	},
 
