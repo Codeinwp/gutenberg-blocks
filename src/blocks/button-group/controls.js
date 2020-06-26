@@ -60,9 +60,7 @@ const Controls = ({
 				] }
 			/>
 
-			<Toolbar
-				className="wp-themesiel-blocks-button-group-components-toolbar"
-			>
+			<Toolbar>
 				<Dropdown
 					contentClassName="wp-themesiel-blocks-button-group-popover-content"
 					position="bottom center"

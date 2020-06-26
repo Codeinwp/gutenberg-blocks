@@ -3,7 +3,6 @@
  */
 import classnames from 'classnames';
 import GoogleFontLoader from 'react-google-font-loader';
-
 import { Icon, plus } from '@wordpress/icons';
 
 /**

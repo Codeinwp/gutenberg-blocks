@@ -129,9 +129,7 @@ const Controls = ({
 				] }
 			/>
 
-			<Toolbar
-				className="wp-themesiel-blocks-advanced-heading-components-toolbar"
-			>
+			<Toolbar>
 				<Dropdown
 					contentClassName="wp-themesiel-blocks-advanced-heading-popover-content"
 					position="bottom center"
