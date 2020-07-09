@@ -22,6 +22,7 @@ const Edit = ({
 	attributes,
 	setAttributes,
 	className,
+	isSelected,
 	clientId,
 	name
 }) => {
@@ -91,6 +92,7 @@ const Edit = ({
 			<Controls
 				attributes={ attributes }
 				setAttributes={ setAttributes }
+				isSelected={ isSelected }
 			/>
 
 			<Inspector

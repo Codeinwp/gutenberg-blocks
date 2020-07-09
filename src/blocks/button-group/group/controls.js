@@ -1,5 +1,5 @@
 /**
- * WordPress dependencies...
+ * WordPress dependencies.
  */
 const { __ } = wp.i18n;
 
@@ -8,25 +8,15 @@ const {
 	BlockControls
 } = wp.blockEditor;
 
-/**
- * Internal dependencies
- */
-import LinkControl from '../../components/link-control/index.js';
-
 const Controls = ({
 	attributes,
-	setAttributes,
-	isSelected
+	setAttributes
 }) => {
-	const changeAlignment = value => {
-		setAttributes({ align: value });
-	};
-
 	return (
 		<BlockControls>
 			<AlignmentToolbar
 				value={ attributes.align }
-				onChange={ changeAlignment }
+				onChange={ e => setAttributes({ align: e }) }
 				alignmentControls={ [
 					{
 						icon: 'editor-alignleft',
@@ -44,13 +34,6 @@ const Controls = ({
 						align: 'right'
 					}
 				] }
-			/>
-
-			<LinkControl
-				isSelected={ isSelected }
-				setAttributes={ setAttributes }
-				url={ attributes.link }
-				opensInNewTab={ attributes.newTab }
 			/>
 		</BlockControls>
 	);

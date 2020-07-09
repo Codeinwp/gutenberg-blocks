@@ -57,7 +57,7 @@ const Edit = ({
 	if ( ! posts || ! categoriesList || ! authors ) {
 		return (
 			<Fragment>
-				<Placeholder className="wp-themeisle-block-spinner">
+				<Placeholder>
 					<Spinner/>
 					{ __( 'Loading Posts' ) }
 				</Placeholder>
