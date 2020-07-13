@@ -106,6 +106,8 @@ const Edit = ({
 
 	let boxShadowStyle = {};
 
+	let buttonStyle = {};
+
 	let buttonStyleParent = {};
 
 	if ( attributes.boxShadow ) {
@@ -116,7 +118,10 @@ const Edit = ({
 
 	if ( hasParent ) {
 		buttonStyleParent = {
-			marginRight: ! isLastChild && `${ parentAttributes.spacing }px`,
+			marginRight: ! isLastChild && `${ parentAttributes.spacing }px`
+		};
+
+		buttonStyle = {
 			paddingTop: `${ parentAttributes.paddingTopBottom }px`,
 			paddingBottom: `${ parentAttributes.paddingTopBottom }px`,
 			paddingLeft: `${ parentAttributes.paddingLeftRight }px`,
@@ -136,7 +141,7 @@ const Edit = ({
 		border: `${ attributes.borderSize }px solid ${ attributes.border }`,
 		borderRadius: attributes.borderRadius,
 		...boxShadowStyle,
-		...buttonStyleParent
+		...buttonStyle
 	};
 
 	const hoverStyles = css`
@@ -166,6 +171,7 @@ const Edit = ({
 					className,
 					'wp-block-button'
 				) }
+				style={ buttonStyleParent }
 			>
 				{ 'none' !== attributes.iconType ? (
 					<div
