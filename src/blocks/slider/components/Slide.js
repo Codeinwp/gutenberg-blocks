@@ -119,6 +119,7 @@ const Slide = ({
 
 				{ ( isSelected || ! RichText.isEmpty( image.caption ) ) && (
 					<RichText
+						className="wp-block-themeisle-editor-rich-text"
 						tagName="figcaption"
 						placeholder={ isSelected ? __( 'Write caption…' ) : null }
 						value={ image.caption }
