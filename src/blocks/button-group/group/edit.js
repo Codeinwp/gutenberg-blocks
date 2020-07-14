@@ -81,7 +81,7 @@ const Edit = ({
 					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
 
 					Object.keys( attrs ).map( i => {
-						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default || ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) ) {
+						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
 							return delete attrs[i];
 						}
 					});

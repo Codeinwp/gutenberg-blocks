@@ -38,6 +38,7 @@ const Edit = ({
 	setAttributes,
 	className,
 	isSelected,
+	name,
 	clientId
 }) => {
 	const {

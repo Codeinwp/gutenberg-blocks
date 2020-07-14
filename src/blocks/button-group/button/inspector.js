@@ -126,7 +126,6 @@ const Inspector = ({
 
 				<RangeControl
 					label={ __( 'Border Width' ) }
-					className="border-width"
 					value={ attributes.borderSize }
 					onChange={ e => setAttributes({ borderSize: e }) }
 					min={ 0 }
