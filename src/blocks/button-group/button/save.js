@@ -14,6 +14,7 @@ const Save = ({
 }) => {
 	return (
 		<div
+			id={ attributes.id }
 			className={ classnames(
 				className,
 				'wp-block-button'

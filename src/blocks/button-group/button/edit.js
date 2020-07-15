@@ -168,6 +168,7 @@ const Edit = ({
 			/>
 
 			<div
+				id={ attributes.id }
 				className={ classnames(
 					className,
 					'wp-block-button'
