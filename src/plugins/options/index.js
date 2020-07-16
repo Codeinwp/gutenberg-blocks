@@ -70,7 +70,7 @@ const Options = () => {
 						window.themeisleGutenberg.globalDefaults = {};
 						setBlockDefaults( defaults );
 					}
-					setAPILoaded( false );
+					setAPILoaded( true );
 				});
 			}
 		}
@@ -174,6 +174,7 @@ const Options = () => {
 				</PanelBody>
 
 				<GlobalDefaults
+					isAPILoaded={ isAPILoaded }
 					blockDefaults={ blockDefaults }
 					changeConfig={ changeConfig }
 					resetConfig={ resetConfig }

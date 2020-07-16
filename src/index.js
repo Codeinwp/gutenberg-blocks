@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import './editor.scss';
+
+/**
  * An entry point to set __webpack_public_path__ variable.
  */
 

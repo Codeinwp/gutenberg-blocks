@@ -1,33 +1,32 @@
 .wp-block-themeisle-blocks-button-group {
-	display: flex;
-	margin-bottom: 0;
-	position: relative;
+	&.align-left {
+		text-align: left;
+	}
+
+	&.align-center {
+		text-align: center;
+	}
+
+	&.align-right {
+		text-align: right;
+	}
 
 	&.collapse-desktop {
-		flex-direction: column;
-
 		.wp-block-themeisle-blocks-button {
-			margin: 10px 0 !important;
+			display: block;
 		}
 	}
 
 	.wp-block-themeisle-blocks-button {
-		cursor: pointer;
-		margin: 0;
-		text-align: center;
-		text-decoration: none;
-		white-space: normal;
-		overflow-wrap: break-word;
-		height: 100%;
-	}
 
-	i {
-		&.margin-left {
-			margin-left: 10px;
-		}
-	
-		&.margin-right {
-			margin-right: 10px;
+		i {
+			&.margin-left {
+				margin-left: 10px;
+			}
+		
+			&.margin-right {
+				margin-right: 10px;
+			}
 		}
 	}
 }
@@ -35,10 +34,8 @@
 @media ( max-width: 960px ) {
 	.wp-block-themeisle-blocks-button-group {
 		&.collapse-tablet {
-			flex-direction: column;
-
 			.wp-block-themeisle-blocks-button {
-				margin: 10px 0 !important;
+				display: block;
 			}
 		}
 	}
@@ -47,10 +44,8 @@
 @media ( max-width: 600px ) {
 	.wp-block-themeisle-blocks-button-group {
 		&.collapse-mobile {
-			flex-direction: column;
-
 			.wp-block-themeisle-blocks-button {
-				margin: 10px 0 !important;
+				display: block;
 			}
 		}
 	}

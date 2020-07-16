@@ -6,7 +6,13 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies.
  */
-const { times } = lodash;
+const {
+	omit,
+	pick,
+	times
+} = lodash;
+
+const { createBlock } = wp.blocks;
 
 const { RichText } = wp.editor;
 
@@ -272,6 +278,208 @@ const deprecated = [ {
 					justifyContent: attributes.align,
 					alignItems: attributes.align ? attributes.align : 'flex-start'
 				} }
+			>
+				{ times( attributes.buttons, i => button( i ) ) }
+			</div>
+		);
+	}
+}, {
+	attributes: {
+		...attributes,
+		fontSize: {
+			type: 'number'
+		},
+		fontStyle: {
+			type: 'string'
+		},
+		data: {
+			type: 'array',
+			default: [
+				{
+					text: '',
+					link: '',
+					newTab: false,
+					color: '',
+					background: '',
+					border: '',
+					hoverColor: '',
+					hoverBackground: '',
+					hoverBorder: '',
+					borderSize: '',
+					borderRadius: '',
+					boxShadow: false,
+					boxShadowColor: '',
+					boxShadowColorOpacity: 50,
+					boxShadowBlur: 5,
+					boxShadowSpread: 1,
+					boxShadowHorizontal: 0,
+					boxShadowVertical: 0,
+					hoverBoxShadowColor: '',
+					hoverBoxShadowColorOpacity: 50,
+					hoverBoxShadowBlur: 5,
+					hoverBoxShadowSpread: 1,
+					hoverBoxShadowHorizontal: 0,
+					hoverBoxShadowVertical: 0,
+					iconType: 'none',
+					prefix: '',
+					icon: '',
+					paddingTopBottom: '',
+					paddingLeftRight: ''
+				},
+				{
+					text: '',
+					link: '',
+					newTab: false,
+					color: '',
+					background: '',
+					border: '',
+					hoverColor: '',
+					hoverBackground: '',
+					hoverBorder: '',
+					borderSize: '',
+					borderRadius: '',
+					boxShadow: false,
+					boxShadowColor: '',
+					boxShadowColorOpacity: 50,
+					boxShadowBlur: 5,
+					boxShadowSpread: 1,
+					boxShadowHorizontal: 0,
+					boxShadowVertical: 0,
+					hoverBoxShadowColor: '',
+					hoverBoxShadowColorOpacity: 50,
+					hoverBoxShadowBlur: 5,
+					hoverBoxShadowSpread: 1,
+					hoverBoxShadowHorizontal: 0,
+					hoverBoxShadowVertical: 0,
+					iconType: 'none',
+					prefix: '',
+					icon: '',
+					paddingTopBottom: '',
+					paddingLeftRight: ''
+				}
+			]
+		}
+	},
+
+	migrate: ( oldAttributes, innerBlocks ) => {
+		let align, padding, blocks;
+
+		if ( 'flex-start' === oldAttributes.align ) {
+			align = 'left';
+		}
+
+		if ( 'center' === oldAttributes.align ) {
+			align = 'center';
+		}
+
+		if ( 'flex-end' === oldAttributes.align ) {
+			align = 'right';
+		}
+
+		if ( oldAttributes.data ) {
+			padding = pick(
+				oldAttributes.data[0],
+				[
+					'paddingLeftRight',
+					'paddingTopBottom'
+				]
+			);
+
+			if ( 1 <= Object.keys( padding ).length ) {
+				padding = pick(
+					padding,
+					Object.keys( padding ).filter( i => '' !== padding[i])
+				);
+			}
+
+			blocks = oldAttributes.data
+				.filter( ( block, i ) => i < oldAttributes.buttons )
+				.map( block => {
+					const atts = omit(
+						block,
+						[
+							'paddingLeftRight',
+							'paddingTopBottom'
+						]
+					);
+
+					return createBlock( 'themeisle-blocks/button', {
+						...atts
+					});
+				});
+		}
+
+		const attributes = {
+			...omit(
+				oldAttributes,
+				[
+					'buttons',
+					'data'
+				]
+			),
+			align,
+			...padding
+		};
+
+		return [
+			attributes,
+			[
+				...blocks,
+				...innerBlocks
+			]
+		];
+	},
+
+	save: ({
+		attributes,
+		className
+	}) => {
+		const collapseClass = 'collapse-none' !== attributes.collapse ? attributes.collapse : '';
+
+		const button = i => {
+			return (
+				<a
+					href={ attributes.data[i].link }
+					target={ attributes.data[i].newTab ? '_blank' : '_self' }
+					className={ classnames(
+						'wp-block-themeisle-blocks-button',
+						`wp-block-themeisle-blocks-button-${ i }`,
+						'wp-block-button__link'
+					) }
+					rel="noopener noreferrer"
+				>
+					{ ( 'left' === attributes.data[i].iconType || 'only' === attributes.data[i].iconType ) && (
+						<i className={ classnames(
+							attributes.data[i].prefix,
+							'fa-fw',
+							`fa-${ attributes.data[i].icon }`,
+							{ 'margin-right': 'left' === attributes.data[i].iconType }
+						) }>
+						</i>
+					) }
+
+					{ 'only' !== attributes.data[i].iconType && (
+						<RichText.Content
+							tagName="span"
+							value={ attributes.data[i].text }
+						/>
+					) }
+
+					{ 'right' === attributes.data[i].iconType && (
+						<i className={ `${ attributes.data[i].prefix } fa-fw fa-${ attributes.data[i].icon } margin-left` }></i>
+					) }
+				</a>
+			);
+		};
+
+		return (
+			<div
+				id={ attributes.id }
+				className={ classnames(
+					className,
+					collapseClass,
+					'wp-block-button'
+				) }
 			>
 				{ times( attributes.buttons, i => button( i ) ) }
 			</div>

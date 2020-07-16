@@ -77,9 +77,7 @@ export const StyleSwitcherBlockControl = ({
 
 	return (
 		<BlockControls>
-			<Toolbar
-				className="wp-themesiel-blocks-block-styles-components-toolbar"
-			>
+			<Toolbar>
 				<Dropdown
 					contentClassName="wp-themesiel-blocks-block-styles-popover-content"
 					position="bottom center"

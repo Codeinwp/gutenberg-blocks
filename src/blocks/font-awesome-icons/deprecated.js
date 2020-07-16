@@ -45,24 +45,24 @@ const deprecated = [ {
 		align: [ 'left', 'center', 'right' ]
 	},
 
-	migrate: ( attributes ) => {
+	migrate: oldAttributes => {
 		let align = 'center';
 
-		if ( attributes.className.includes( 'alignleft' ) ) {
+		if ( oldAttributes.className.includes( 'alignleft' ) ) {
 			align = 'left';
 		}
 
-		if ( attributes.className.includes( 'aligncenter' ) ) {
+		if ( oldAttributes.className.includes( 'aligncenter' ) ) {
 			align = 'center';
 		}
 
-		if ( attributes.className.includes( 'alignright' ) ) {
+		if ( oldAttributes.className.includes( 'alignright' ) ) {
 			align = 'right';
 		}
 
 		return {
-			...attributes,
-			align: align,
+			...oldAttributes,
+			align,
 			className: ''
 		};
 	},
