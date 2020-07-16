@@ -164,6 +164,7 @@ const Edit = ({
 				setAttributes={ setAttributes }
 				slider={ sliderRef.current }
 				changePerView={ changePerView }
+				onSelectImages={ onSelectImages }
 			/>
 
 			<ResizableBox

@@ -3,14 +3,15 @@
  */
 const { __ } = wp.i18n;
 
-const { max } = lodash;
+const { max, debounce } = lodash;
 
-const { InspectorControls } = wp.blockEditor;
+const { InspectorControls, MediaUpload, MediaUploadCheck } = wp.blockEditor;
 
 const {
 	PanelBody,
 	RangeControl,
-	ToggleControl
+	ToggleControl,
+	Button
 } = wp.components;
 
 const { Fragment } = wp.element;
@@ -19,7 +20,8 @@ const Inspector = ({
 	attributes,
 	setAttributes,
 	slider,
-	changePerView
+	changePerView,
+	onSelectImages
 }) => {
 	const changeGap = value => {
 		setAttributes({ gap: Number( value ) });
@@ -51,6 +53,10 @@ const Inspector = ({
 		setAttributes({ hideBullets: value });
 	};
 
+
+	const selectImages = debounce( onSelectImages, 250 );
+
+
 	return (
 		<InspectorControls>
 			<PanelBody
@@ -58,6 +64,23 @@ const Inspector = ({
 			>
 				{ attributes.images.length && (
 					<Fragment>
+						
+						<MediaUploadCheck>
+							<MediaUpload
+								onSelect={ selectImages }
+								allowedTypes={ ['image'] }
+								multiple
+								addToGallery={false}
+								gallery
+								value={attributes.images.map(({ id }) => id)}
+								render={({ open }) => (
+									<Button isPrimary onClick={open}>
+										Edit Images
+									</Button>
+								)}
+							/>
+						</MediaUploadCheck>
+						
 						<RangeControl
 							label={ __( 'Slides Per Page' ) }
 							help={ __( 'A number of visible slides.' ) }
