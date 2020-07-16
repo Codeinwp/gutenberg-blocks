@@ -2,11 +2,12 @@
  * External dependencies
  */
 import classnames from 'classnames';
+
 import {
 	closeSmall,
 	chevronLeft,
 	chevronRight,
-	Icon,
+	Icon
 } from '@wordpress/icons';
 
 /**
@@ -21,7 +22,6 @@ const { RichText } = wp.blockEditor;
 const { Button } = wp.components;
 
 const { Fragment } = wp.element;
-
 
 const Slide = ({
 	images,
