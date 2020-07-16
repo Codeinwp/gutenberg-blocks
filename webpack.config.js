@@ -22,7 +22,8 @@ module.exports = {
 	},
 	externals: {
 		'react': 'React',
-		'react-dom': 'ReactDOM'
+		'react-dom': 'ReactDOM',
+		'lodash': 'lodash'
 	},
 	output: {
 		path: path.resolve( __dirname, 'build' ),
