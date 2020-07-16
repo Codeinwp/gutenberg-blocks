@@ -16,6 +16,8 @@ const {
 
 const { Fragment } = wp.element;
 
+import ImageGrid from './components/ImageGrid'
+
 const Inspector = ({
 	attributes,
 	setAttributes,
@@ -60,26 +62,36 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
+				title={ __( 'Images' ) }
+				initialOpen={ false }
+			>
+				{ attributes.images.length && (
+					<Fragment>
+						<ImageGrid attributes={attributes} onSelectImages={onSelectImages} />
+						<MediaUploadCheck>
+							<MediaUpload
+								onSelect={selectImages}
+								allowedTypes={['image']}
+								multiple
+								addToGallery={true}
+								gallery
+								value={attributes.images.map(({ id }) => id)}
+								render={({ open }) => (
+									<Button
+										icon="plus"
+										onClick={open}
+									/>
+								)}
+							/>
+						</MediaUploadCheck>
+					</Fragment>
+				)}
+			</PanelBody>
+			<PanelBody
 				title={ __( 'Settings' ) }
 			>
 				{ attributes.images.length && (
 					<Fragment>
-						
-						<MediaUploadCheck>
-							<MediaUpload
-								onSelect={ selectImages }
-								allowedTypes={ ['image'] }
-								multiple
-								addToGallery={false}
-								gallery
-								value={attributes.images.map(({ id }) => id)}
-								render={({ open }) => (
-									<Button isPrimary onClick={open}>
-										Edit Images
-									</Button>
-								)}
-							/>
-						</MediaUploadCheck>
 						
 						<RangeControl
 							label={ __( 'Slides Per Page' ) }
