@@ -2,6 +2,12 @@
  * External dependencies
  */
 import classnames from 'classnames';
+import {
+	closeSmall,
+	chevronLeft,
+	chevronRight,
+	Icon,
+} from '@wordpress/icons';
 
 /**
  * WordPress dependencies
@@ -16,13 +22,6 @@ const { Button } = wp.components;
 
 const { Fragment } = wp.element;
 
-import {
-	closeSmall,
-	chevronLeft,
-	chevronRight,
-	Icon,
-	close
-} from '@wordpress/icons';
 
 const Slide = ({
 	images,
@@ -92,7 +91,7 @@ const Slide = ({
 					<Fragment>
 						<div className="wp-block-themeisle-blocks-slider-item-move-menu">
 							<Button
-								icon={ <Icon icon={chevronLeft} /> }
+								icon={ <Icon icon={ chevronLeft } /> }
 								label={ __( 'Move image backward' ) }
 								showTooltip={ true }
 								onClick={ isFirstItem ? undefined : () => onMoveBackward() }
@@ -102,7 +101,7 @@ const Slide = ({
 							/>
 
 							<Button
-								icon={ <Icon icon={chevronRight} /> }
+								icon={ <Icon icon={ chevronRight } /> }
 								label={ __( 'Move image forward' ) }
 								showTooltip={ true }
 								onClick={ isLastItem ? undefined : () => onMoveForward() }
@@ -115,7 +114,7 @@ const Slide = ({
 
 						<div className="wp-block-themeisle-blocks-slider-item-delete-menu">
 							<Button
-								icon={ <Icon icon={closeSmall} /> }
+								icon={ <Icon icon={ closeSmall } /> }
 								label={ __( 'Remove image' ) }
 								showTooltip={ true }
 								onClick={ onRemoveImage }
@@ -127,7 +126,6 @@ const Slide = ({
 
 				{ ( isSelected || ! RichText.isEmpty( image.caption ) ) && (
 					<RichText
-						className="wp-block-themeisle-editor-rich-text"
 						tagName="figcaption"
 						placeholder={ isSelected ? __( 'Write caption…' ) : null }
 						value={ image.caption }
