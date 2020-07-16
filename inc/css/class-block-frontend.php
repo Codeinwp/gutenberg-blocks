@@ -240,7 +240,17 @@ class Block_Frontend extends Base_CSS {
 
 		if ( ! CSS_Handler::has_css_file( $post_id ) ) {
 			CSS_Handler::generate_css_file( $post_id );
+
+			add_action(
+				$location,
+				function () use ( $post_id ) {
+					return $this->get_post_css( $post_id );
+				}
+			);
+
+			return;
 		}
+
 		$file_url = CSS_Handler::get_css_url( $post_id );
 
 		$file_name = basename( $file_url );
