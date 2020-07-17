@@ -3,23 +3,27 @@
  */
 const { __ } = wp.i18n;
 
-const { max } = lodash;
+const { max, debounce } = lodash;
 
-const { InspectorControls } = wp.blockEditor;
+const { InspectorControls, MediaUpload, MediaUploadCheck } = wp.blockEditor;
 
 const {
 	PanelBody,
 	RangeControl,
-	ToggleControl
+	ToggleControl,
+	Button
 } = wp.components;
 
 const { Fragment } = wp.element;
+
+import ImageGrid from './components/ImageGrid'
 
 const Inspector = ({
 	attributes,
 	setAttributes,
 	slider,
-	changePerView
+	changePerView,
+	onSelectImages
 }) => {
 	const changeGap = value => {
 		setAttributes({ gap: Number( value ) });
@@ -51,13 +55,63 @@ const Inspector = ({
 		setAttributes({ hideBullets: value });
 	};
 
+	const selectImages = debounce( onSelectImages, 250 );
+
+	const renderAddButton = () => (
+        <MediaUploadCheck>
+            <MediaUpload
+                onSelect={selectImages}
+                allowedTypes={['image']}
+                multiple
+                isPrimary
+                addToGallery={true}
+                gallery
+                value={attributes.images.map(({ id }) => id)}
+                render={({ open }) => (
+                    <Button
+                        icon="plus-alt"
+                        onClick={open}
+                    />
+                )}
+            />
+        </MediaUploadCheck>
+    )
+
 	return (
 		<InspectorControls>
+			<PanelBody
+				title={ __( 'Images' ) }
+				initialOpen={ false }
+			>
+				
+				<MediaUploadCheck>
+					<MediaUpload
+						onSelect={selectImages}
+						allowedTypes={['image']}
+						multiple
+						isPrimary
+						addToGallery={true}
+						gallery
+						value={attributes.images.map(({ id }) => id)}
+						render={({ open }) => {
+							return (
+								<ImageGrid 
+									className="wp-block-themeisle-blocks-slider-images-grid" 
+									attributes={attributes} 
+									open={ open }
+									onSelectImages={onSelectImages} 
+								/>				
+                			)
+						}}
+					/>
+				</MediaUploadCheck>
+			</PanelBody>
 			<PanelBody
 				title={ __( 'Settings' ) }
 			>
 				{ attributes.images.length && (
 					<Fragment>
+						
 						<RangeControl
 							label={ __( 'Slides Per Page' ) }
 							help={ __( 'A number of visible slides.' ) }
