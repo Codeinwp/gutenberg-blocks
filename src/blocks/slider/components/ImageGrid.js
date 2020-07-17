@@ -3,6 +3,8 @@
  */
 import arrayMove from 'array-move';
 
+import classnames from 'classnames';
+
 import {
 	SortableContainer,
 	SortableElement
@@ -16,9 +18,19 @@ import {
 /**
  * WordPress dependencies
  */
+const { __ } = wp.i18n;
+
 const { Button } = wp.components;
 
-const SortableItem = SortableElement( ({ url, alt }) => <img src={ url } alt={ alt } /> );
+const SortableItem = SortableElement( ({ url }) => (
+	<div
+		className="wp-block-themeisle-blocks-slider-images-grid__image"
+		tabIndex="0"
+		style={ {
+			backgroundImage: `url( ' ${ url } ' )`
+		} }
+	/>
+) );
 
 const SortableList = SortableContainer( ({
 	images,
@@ -30,24 +42,20 @@ const SortableList = SortableContainer( ({
 			className={ className }
 			tabIndex={ 0 }
 		>
-			{
-				images.map( ({ id, url, alt }, index ) => (
-					<SortableItem
-						key={ `image-${ id }` }
-						index={ index }
-						url={ url }
-						alt={ alt }
-					/>
-				) )
-			}
-
-			<div className="add-button">
-				<Button
-					isPrimary
-					onClick={ open }
-					icon={ <Icon icon={ plus } /> }
+			{ images.map( ({ id, url }, index ) => (
+				<SortableItem
+					key={ `image-${ id }` }
+					index={ index }
+					url={ url }
 				/>
-			</div>
+			) ) }
+
+			<Button
+				label={ __( 'Add Images' ) }
+				icon={ <Icon icon={ plus } /> }
+				isPrimary
+				onClick={ open }
+			/>
 		</div>
 	);
 });
@@ -55,7 +63,6 @@ const SortableList = SortableContainer( ({
 const GridList = ({
 	attributes,
 	onSelectImages,
-	className,
 	open
 }) => {
 	const onSortEnd = ({
@@ -68,7 +75,10 @@ const GridList = ({
 
 	return (
 		<SortableList
-			className={ className }
+			className={ classnames(
+				'wp-block-themeisle-blocks-slider-images-grid',
+				{ 'is-single': 1 === attributes.images.length }
+			) }
 			images={ attributes.images }
 			onSortEnd={ onSortEnd }
 			open={ open }

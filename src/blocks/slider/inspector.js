@@ -15,7 +15,10 @@ const {
 
 const { Fragment } = wp.element;
 
-import ImageGrid from './components/ImageGrid';
+/**
+ * Internal dependencies
+ */
+import ImageGrid from './components/ImageGrid.js';
 
 const Inspector = ({
 	attributes,
@@ -67,13 +70,11 @@ const Inspector = ({
 						onSelect={ selectImages }
 						allowedTypes={ [ 'image' ] }
 						multiple
-						isPrimary
 						addToGallery={ true }
 						gallery
-						value={attributes.images.map( ({ id }) => id ) }
+						value={ attributes.images.map( ({ id }) => id ) }
 						render={ ({ open }) => (
 							<ImageGrid
-								className="wp-block-themeisle-blocks-slider-images-grid"
 								attributes={ attributes }
 								open={ open }
 								onSelectImages={ onSelectImages }
