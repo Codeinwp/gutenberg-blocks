@@ -10,13 +10,12 @@ const { InspectorControls, MediaUpload, MediaUploadCheck } = wp.blockEditor;
 const {
 	PanelBody,
 	RangeControl,
-	ToggleControl,
-	Button
+	ToggleControl
 } = wp.components;
 
 const { Fragment } = wp.element;
 
-import ImageGrid from './components/ImageGrid'
+import ImageGrid from './components/ImageGrid';
 
 const Inspector = ({
 	attributes,
@@ -57,51 +56,30 @@ const Inspector = ({
 
 	const selectImages = debounce( onSelectImages, 250 );
 
-	const renderAddButton = () => (
-        <MediaUploadCheck>
-            <MediaUpload
-                onSelect={selectImages}
-                allowedTypes={['image']}
-                multiple
-                isPrimary
-                addToGallery={true}
-                gallery
-                value={attributes.images.map(({ id }) => id)}
-                render={({ open }) => (
-                    <Button
-                        icon="plus-alt"
-                        onClick={open}
-                    />
-                )}
-            />
-        </MediaUploadCheck>
-    )
-
 	return (
 		<InspectorControls>
 			<PanelBody
 				title={ __( 'Images' ) }
 				initialOpen={ false }
-			>
-				
+			>	
 				<MediaUploadCheck>
 					<MediaUpload
-						onSelect={selectImages}
+						onSelect={ selectImages }
 						allowedTypes={['image']}
 						multiple
 						isPrimary
-						addToGallery={true}
+						addToGallery={ true }
 						gallery
-						value={attributes.images.map(({ id }) => id)}
+						value={attributes.images.map(({ id }) => id )}
 						render={({ open }) => {
 							return (
-								<ImageGrid 
-									className="wp-block-themeisle-blocks-slider-images-grid" 
-									attributes={attributes} 
+								<ImageGrid
+									className="wp-block-themeisle-blocks-slider-images-grid"
+									attributes={ attributes }
 									open={ open }
-									onSelectImages={onSelectImages} 
+									onSelectImages={ onSelectImages }
 								/>				
-                			)
+							);
 						}}
 					/>
 				</MediaUploadCheck>
