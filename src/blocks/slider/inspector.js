@@ -55,9 +55,27 @@ const Inspector = ({
 		setAttributes({ hideBullets: value });
 	};
 
-
 	const selectImages = debounce( onSelectImages, 250 );
 
+	const renderAddButton = () => (
+        <MediaUploadCheck>
+            <MediaUpload
+                onSelect={selectImages}
+                allowedTypes={['image']}
+                multiple
+                isPrimary
+                addToGallery={true}
+                gallery
+                value={attributes.images.map(({ id }) => id)}
+                render={({ open }) => (
+                    <Button
+                        icon="plus-alt"
+                        onClick={open}
+                    />
+                )}
+            />
+        </MediaUploadCheck>
+    )
 
 	return (
 		<InspectorControls>
@@ -65,27 +83,12 @@ const Inspector = ({
 				title={ __( 'Images' ) }
 				initialOpen={ false }
 			>
-				{ attributes.images.length && (
-					<Fragment>
-						<ImageGrid attributes={attributes} onSelectImages={onSelectImages} />
-						<MediaUploadCheck>
-							<MediaUpload
-								onSelect={selectImages}
-								allowedTypes={['image']}
-								multiple
-								addToGallery={true}
-								gallery
-								value={attributes.images.map(({ id }) => id)}
-								render={({ open }) => (
-									<Button
-										icon="plus"
-										onClick={open}
-									/>
-								)}
-							/>
-						</MediaUploadCheck>
-					</Fragment>
-				)}
+				<div className="wp-block-themeisle-blocks-slider-images-setting">
+					{
+						renderAddButton()
+					}
+					<ImageGrid className="wp-block-themeisle-blocks-slider-images-grid" attributes={attributes} onSelectImages={onSelectImages} />
+				</div>
 			</PanelBody>
 			<PanelBody
 				title={ __( 'Settings' ) }
