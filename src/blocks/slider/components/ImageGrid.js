@@ -19,33 +19,33 @@ import {
  */
 const { Button } = wp.components;
 
-const SortableItem = SortableElement( ({ url }) => {
+const SortableItem = SortableElement( ({ url, alt }) => {
     return (
-            <img src={ url } />
+            <img src={ url } alt={ alt } />
         )    
 });
 
-const SortableButton = SortableElement( ({onClick}) => {
-    return (
-        <div className="add-button">
-            <Button 
-                onClick={ onClick } 
-                icon={ <Icon icon={ plus } />}
-            />
-        </div>
-    )
-} )
-
 const SortableList = SortableContainer( ({ images, className, open }) => {
-    console.log(images.length)
     return (
-        <div className={className}>
+        <div className={className} tabIndex={0}>
             {
-                images.map(({ id, url }, index) => (
-                    <SortableItem key={`image-${id}`} index={index} url={url} />
+                images.map(({ id, url, alt }, index) => (
+                    <SortableItem 
+                        key={ `image-${id}` } 
+                        index={ index } 
+                        url={ url } 
+                        alt={ alt }
+                    />
                 ))
             }
-            <SortableButton index={images.length} onClick={() => open()} />
+            
+            <div className="add-button">
+                <Button 
+                    isPrimary
+                    onClick={() => open()} 
+                    icon={ <Icon icon={ plus } />}
+                />
+            </div>
         </div>
     )
 } );
