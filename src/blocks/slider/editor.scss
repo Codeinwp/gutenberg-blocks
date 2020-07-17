@@ -152,3 +152,35 @@
 .wp-block-themeisle-blocks-slider-uploader {
 	margin: 20px 0;
 }
+
+.wp-block-themeisle-blocks-slider-images-setting {
+
+	display: contents;
+
+	.wp-block-themeisle-blocks-slider-images-grid {
+		
+	
+		img {
+			width: 60px;
+			height: 60px;
+			margin: 3px;
+		}
+
+		button {
+			width: 60px;
+			height: 60px;
+			margin: 3px;
+			background-color: grey;
+			display: block;
+		}
+	}
+
+	.components-button {
+		width: 60px;
+		height: 60px;
+		margin: 3px;
+		background-color: grey;
+		display: block;
+	}
+}
+
