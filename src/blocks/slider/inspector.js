@@ -83,12 +83,28 @@ const Inspector = ({
 				title={ __( 'Images' ) }
 				initialOpen={ false }
 			>
-				<div className="wp-block-themeisle-blocks-slider-images-setting">
-					{
-						renderAddButton()
-					}
-					<ImageGrid className="wp-block-themeisle-blocks-slider-images-grid" attributes={attributes} onSelectImages={onSelectImages} />
-				</div>
+				
+				<MediaUploadCheck>
+					<MediaUpload
+						onSelect={selectImages}
+						allowedTypes={['image']}
+						multiple
+						isPrimary
+						addToGallery={true}
+						gallery
+						value={attributes.images.map(({ id }) => id)}
+						render={({ open }) => {
+							return (
+								<ImageGrid 
+									className="wp-block-themeisle-blocks-slider-images-grid" 
+									attributes={attributes} 
+									open={ open }
+									onSelectImages={onSelectImages} 
+								/>				
+                			)
+						}}
+					/>
+				</MediaUploadCheck>
 			</PanelBody>
 			<PanelBody
 				title={ __( 'Settings' ) }

@@ -153,34 +153,34 @@
 	margin: 20px 0;
 }
 
-.wp-block-themeisle-blocks-slider-images-setting {
 
-	display: contents;
+.wp-block-themeisle-blocks-slider-images-grid {
 
-	.wp-block-themeisle-blocks-slider-images-grid {
-		
-	
-		img {
-			width: 60px;
-			height: 60px;
-			margin: 3px;
-		}
+	img {
+		width: 60px;
+		height: 60px;
+		margin: 3px;
+	}
+
+	.add-button {
+		display: inline-table;
 
 		button {
 			width: 60px;
 			height: 60px;
 			margin: 3px;
-			background-color: grey;
-			display: block;
+			display: grid;
+			align-items: center;
+			background-color: black;
+			border-radius: 8px;
+
+			svg {
+				width: 36px;
+				height: 36px;
+				color: white;
+			}
 		}
 	}
-
-	.components-button {
-		width: 60px;
-		height: 60px;
-		margin: 3px;
-		background-color: grey;
-		display: block;
-	}
 }
+
 

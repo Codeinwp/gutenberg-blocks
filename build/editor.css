@@ -2082,24 +2082,25 @@ span.wp-block-themeisle-blocks-advanced-heading {
 .wp-block-themeisle-blocks-slider-uploader {
   margin: 20px 0; }
 
-.wp-block-themeisle-blocks-slider-images-setting {
-  display: contents; }
-  .wp-block-themeisle-blocks-slider-images-setting .wp-block-themeisle-blocks-slider-images-grid img {
-    width: 60px;
-    height: 60px;
-    margin: 3px; }
-  .wp-block-themeisle-blocks-slider-images-setting .wp-block-themeisle-blocks-slider-images-grid button {
-    width: 60px;
-    height: 60px;
-    margin: 3px;
-    background-color: grey;
-    display: block; }
-  .wp-block-themeisle-blocks-slider-images-setting .components-button {
+.wp-block-themeisle-blocks-slider-images-grid img {
+  width: 60px;
+  height: 60px;
+  margin: 3px; }
+
+.wp-block-themeisle-blocks-slider-images-grid .add-button {
+  display: inline-table; }
+  .wp-block-themeisle-blocks-slider-images-grid .add-button button {
     width: 60px;
     height: 60px;
     margin: 3px;
-    background-color: grey;
-    display: block; }
+    display: grid;
+    align-items: center;
+    background-color: black;
+    border-radius: 8px; }
+    .wp-block-themeisle-blocks-slider-images-grid .add-button button svg {
+      width: 36px;
+      height: 36px;
+      color: white; }
 
 .wp-block-themeisle-blocks-icon-picker-popover:not(.is-mobile).is-bottom {
   z-index: 9999999; }

@@ -9,13 +9,35 @@ import {
     SortableHandle
 } from 'react-sortable-hoc';
 
+import {
+    Icon,
+    plus
+} from '@wordpress/icons';
+
+/**
+ * WordPress dependencies
+ */
+const { Button } = wp.components;
+
 const SortableItem = SortableElement( ({ url }) => {
     return (
-        <img src={ url } />
+            <img src={ url } />
         )    
 });
 
-const SortableList = SortableContainer( ({ images, className }) => {
+const SortableButton = SortableElement( ({onClick}) => {
+    return (
+        <div className="add-button">
+            <Button 
+                onClick={ onClick } 
+                icon={ <Icon icon={ plus } />}
+            />
+        </div>
+    )
+} )
+
+const SortableList = SortableContainer( ({ images, className, open }) => {
+    console.log(images.length)
     return (
         <div className={className}>
             {
@@ -23,26 +45,21 @@ const SortableList = SortableContainer( ({ images, className }) => {
                     <SortableItem key={`image-${id}`} index={index} url={url} />
                 ))
             }
-            <button onClick={() => wp.media.frame.open()}>Click Me</button>
+            <SortableButton index={images.length} onClick={() => open()} />
         </div>
     )
 } );
 
 
-const GridList = ({ attributes, onSelectImages, className }) => {
-
-    
-    
+const GridList = ({ attributes, onSelectImages, className, open }) => {
 
     const onSortEnd = ({ oldIndex, newIndex })  => {
         const images = arrayMove( attributes.images, oldIndex, newIndex );
-		onSelectImages( images );
+		onSelectImages( images.filter( image => image !== undefined) );
     };
-
-
     
     return (
-        <SortableList className={className} images={attributes.images} onSortEnd={onSortEnd} axis="xy" />
+        <SortableList className={className} images={attributes.images} onSortEnd={onSortEnd} open={ open } axis="xy" />
     );
 }
 
