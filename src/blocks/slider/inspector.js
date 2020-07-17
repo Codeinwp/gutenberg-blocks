@@ -61,35 +61,33 @@ const Inspector = ({
 			<PanelBody
 				title={ __( 'Images' ) }
 				initialOpen={ false }
-			>	
+			>
 				<MediaUploadCheck>
 					<MediaUpload
 						onSelect={ selectImages }
-						allowedTypes={['image']}
+						allowedTypes={ [ 'image' ] }
 						multiple
 						isPrimary
 						addToGallery={ true }
 						gallery
-						value={attributes.images.map(({ id }) => id )}
-						render={({ open }) => {
-							return (
-								<ImageGrid
-									className="wp-block-themeisle-blocks-slider-images-grid"
-									attributes={ attributes }
-									open={ open }
-									onSelectImages={ onSelectImages }
-								/>				
-							);
-						}}
+						value={attributes.images.map( ({ id }) => id ) }
+						render={ ({ open }) => (
+							<ImageGrid
+								className="wp-block-themeisle-blocks-slider-images-grid"
+								attributes={ attributes }
+								open={ open }
+								onSelectImages={ onSelectImages }
+							/>
+						) }
 					/>
 				</MediaUploadCheck>
 			</PanelBody>
+
 			<PanelBody
 				title={ __( 'Settings' ) }
 			>
 				{ attributes.images.length && (
 					<Fragment>
-						
 						<RangeControl
 							label={ __( 'Slides Per Page' ) }
 							help={ __( 'A number of visible slides.' ) }
