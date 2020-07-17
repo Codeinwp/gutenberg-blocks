@@ -41,12 +41,17 @@
       width: auto;
       float: none; } }
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/upstream/development
 .wp-block-themeisle-blocks-button-group.align-left{text-align:left}.wp-block-themeisle-blocks-button-group.align-center{text-align:center}.wp-block-themeisle-blocks-button-group.align-right{text-align:right}.wp-block-themeisle-blocks-button-group.collapse-desktop .wp-block-themeisle-blocks-button{display:block}.wp-block-themeisle-blocks-button-group .wp-block-themeisle-blocks-button i.margin-left{margin-left:10px}.wp-block-themeisle-blocks-button-group .wp-block-themeisle-blocks-button i.margin-right{margin-right:10px}@media (max-width: 960px){.wp-block-themeisle-blocks-button-group.collapse-tablet .wp-block-themeisle-blocks-button{display:block}}@media (max-width: 600px){.wp-block-themeisle-blocks-button-group.collapse-mobile .wp-block-themeisle-blocks-button{display:block}}
 =======
 span.wp-block-themeisle-blocks-advanced-heading {
   display: block; }
 >>>>>>> Add Edit Images button to inspector
+=======
+span.wp-block-themeisle-blocks-advanced-heading {
+  display: block; }
+>>>>>>> development
 
 .wp-block-themeisle-blocks-button-group {
   display: flex;
