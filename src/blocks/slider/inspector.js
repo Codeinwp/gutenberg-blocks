@@ -3,9 +3,16 @@
  */
 const { __ } = wp.i18n;
 
-const { max, debounce } = lodash;
+const {
+	debounce,
+	max
+} = lodash;
 
-const { InspectorControls, MediaUpload, MediaUploadCheck } = wp.blockEditor;
+const {
+	InspectorControls,
+	MediaUpload,
+	MediaUploadCheck
+} = wp.blockEditor;
 
 const {
 	PanelBody,
