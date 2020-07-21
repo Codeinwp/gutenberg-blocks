@@ -196,6 +196,7 @@
 	background-position: center;
 	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
 	cursor: move;
+	overflow: visible;
 
 	&.is-selected {
 		box-shadow: 0 0 0 1px #fff,0 0 0 3px #007cba;
@@ -214,7 +215,7 @@
 	}
 
 	.wp-block-themeisle-blocks-slider-images-grid__image__count {
-		background: var(--wp-admin-theme-color);
+		background: #007cba;
 		color: #fff;
 		width: 25px;
 		height: 25px;
