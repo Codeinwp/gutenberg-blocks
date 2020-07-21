@@ -111,7 +111,7 @@ const Edit = ({
 			<p
 				className={ className }
 				id={ attributes.id }
-				style={{ textAlign: attributes.align }}
+				style={ { textAlign: attributes.align } }
 			>
 				<span
 					className="wp-block-themeisle-blocks-font-awesome-icons-container"
