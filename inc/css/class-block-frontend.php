@@ -179,19 +179,23 @@ class Block_Frontend extends Base_CSS {
 	 * @access  public
 	 */
 	public function render_post_css() {
+		$id = 0;
+
 		if ( is_singular() ) {
 			// Enqueue main post attached style.
+			$id = get_the_ID();
 			$this->enqueue_styles();
 		}
+
 		// Enqueue styles for other posts that display the_content, if any.
 		add_filter(
 			'the_content',
-			function ( $content ) {
-				if ( $this->has_excerpt ) {
+			function ( $content ) use ( $id ) {
+				$post_id = get_the_ID();
+
+				if ( $this->has_excerpt || $id === $post_id ) {
 					return $content;
 				}
-
-				$post_id = get_the_ID();
 
 				$this->enqueue_styles( $post_id, true );
 				$this->enqueue_google_fonts( $post_id );
