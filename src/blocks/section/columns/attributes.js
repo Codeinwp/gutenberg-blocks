@@ -462,7 +462,7 @@ const attributes = {
 		type: 'boolean',
 		default: false
 	},
-	reverseColumnsTablet: {
+	reverseColumnsMobile: {
 		type: 'boolean',
 		default: false
 	},
