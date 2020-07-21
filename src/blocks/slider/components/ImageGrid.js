@@ -24,42 +24,66 @@ const { Button } = wp.components;
 
 const { useState } = wp.element;
 
-const SortableItem = SortableElement( ({ onClick, value }) => (
-	<div
-		className="wp-block-themeisle-blocks-slider-images-grid__image"
-		tabIndex="0"
-		onClick={ () => onClick( value ) }
-		onKeyPress={ event => {
-			if ( event.which === ENTER_KEY ) {
-				onClick( value );
-			}
-		}}
-		style={{
-			backgroundImage: `url( ' ${value.url} ' )`
-		}}
-	/>
-) );
+const SortableItem = SortableElement( ({
+	value,
+	selected,
+	dragging,
+	sorting,
+	selectedItemsCount,
+	onClick
+}) => {
+	const shouldRenderItemCountBadge = dragging && 1 < selectedItemsCount;
+
+	return (
+		<Button
+			className={ classnames(
+				'wp-block-themeisle-blocks-slider-images-grid__image',
+				{
+					'is-selected': selected,
+					'is-sorting': selected && sorting
+				}
+			) }
+			onClick={ () => onClick( value ) }
+			style={ {
+				backgroundImage: `url( ' ${ value.url } ' )`
+			} }
+		>
+			{ shouldRenderItemCountBadge && <div className="wp-block-themeisle-blocks-slider-images-grid__image__count">{ selectedItemsCount }</div> }
+		</Button>
+	);
+});
 
 const SortableList = SortableContainer( ({
 	items,
 	className,
 	onItemSelect,
+	selectedItems,
+	isSorting,
+	sortingItemKey,
 	open
 }) => {
-	console.log( items );
 	return (
 		<div
 			className={ className }
 			tabIndex="0"
 		>
-			{ items.map( ( value, index ) => (
-				<SortableItem
-					key={ `image-${value.id}` }
-					index={ index }
-					value={ value }
-					onClick={ onItemSelect }
-				/>
-			) ) }
+			{ items.map( ( item, index ) => {
+				const isSelected = selectedItems.includes( item );
+				const itemIsBeingDragged = sortingItemKey === item;
+
+				return (
+					<SortableItem
+						key={ `image-${ item.id }` }
+						index={ index }
+						value={ item }
+						selected={ isSelected }
+						dragging={ itemIsBeingDragged }
+						sorting={ isSorting }
+						selectedItemsCount={ selectedItems.length }
+						onClick={ onItemSelect }
+					/>
+				);
+			}) }
 
 			<Button
 				label={ __( 'Add Images' ) }
@@ -76,56 +100,26 @@ const GridList = ({
 	onSelectImages,
 	open
 }) => {
-
-	const [ state, setState ] = useState({
-		selectedItems: [],
-		isSorting: false,
-		sortingItemKey: null,
-		items: attributes.images
-	});
-
-	console.log( state );
-
-	const filterItems = value => {
-		const { selectedItems, sortingItemKey, isSorting } = state;
-
-		// Do not hide the ghost of the element currently being sorted
-		if ( sortingItemKey === value ) {
-			return true;
-		}
-
-		// Hide the other items that are selected
-		if ( isSorting && selectedItems.includes( value ) ) {
-			return false;
-		}
-
-		// Do not hide any other items
-		return true;
-	};
-
+	const [ selectedItems, setSelectedItems ] = useState([]);
+	const [ isSorting, setIsSorting ] = useState( false );
+	const [ sortingItemKey, setSortingItemKey ] = useState( null );
 
 	const handleUpdateBeforeSortStart = ({ index }) => {
-		return new Promise( resolve =>
-			setState(
-				prevState => {
-					prevState.sortingItemKey = prevState.items[index];
-					prevState.isSorting = true;
-					return { ...prevState };
-				},
-				resolve
-			)
-		);
+		return new Promise( resolve => {
+			setIsSorting( true );
+			setSortingItemKey( attributes.images[ index ]);
+			resolve();
+		});
 	};
 
 	const onSortEnd = ({
 		oldIndex,
 		newIndex
 	}) => {
-		const { selectedItems } = state;
 		let newItems;
 
 		if ( selectedItems.length ) {
-			const items = state.items.filter( value => ! selectedItems.includes( value ) );
+			const items = attributes.images.filter( value => ! selectedItems.includes( value ) );
 
 			newItems = [
 				...items.slice( 0, newIndex ),
@@ -133,45 +127,39 @@ const GridList = ({
 				...items.slice( newIndex, items.length )
 			];
 		} else {
-			newItems = arrayMove( state.items, oldIndex, newIndex );
+			newItems = arrayMove( attributes.images, oldIndex, newIndex );
 		}
 
-		console.log( newItems );
-
-		setState({
-			items: newItems,
-			isSorting: false,
-			sortingItemKey: null,
-			selectedItems: []
-		});
-
+		setIsSorting( false );
+		setSortingItemKey( null );
+		setSelectedItems([]);
 		onSelectImages( newItems );
 	};
 
 	const handleItemSelect = item => {
-		setState( prevState => {
-			if ( prevState.selectedItems.includes( item ) ) {
-				prevState.selectedItems = prevState.selectedItems.filter( value => value !== item );
-			} else {
-				prevState.selectedItems = [ ...prevState.selectedItems, item ];
-			}
-			return {
-				...prevState
-			};
-		});
+		let items;
+		if ( selectedItems.includes( item ) ) {
+			items = selectedItems.filter( value => value !== item );
+		} else {
+			items = [ ...selectedItems, item ];
+		}
+
+		setSelectedItems( items );
 	};
 
 	const handleShouldCancelStart = event => {
-		const { items, selectedItems } = state;
+		if ( ! event.target.sortableInfo ) {
+			return false;
+		}
+
+		const items = attributes.images;
+
 		const item = items[event.target.sortableInfo.index];
 
-		// Never cancel start if there are no selected items
 		if ( ! selectedItems.length ) {
 			return false;
 		}
 
-		// If there are selected items, we want to cancel sorting
-		// from starting when dragging elements that are not selected
 		return ! selectedItems.includes( item );
 	};
 
@@ -181,18 +169,16 @@ const GridList = ({
 				'wp-block-themeisle-blocks-slider-images-grid',
 				{ 'is-single': 1 === attributes.images.length }
 			) }
-			items={ state.items.filter( filterItems ) }
-			isSorting={ state.isSorting }
-			sortingItemKey={ state.sortingItemKey }
-			selectedItems={ state.selectedItems }
+			open={ open }
+			items={ attributes.images }
 			onItemSelect={ handleItemSelect }
+			selectedItems={ selectedItems }
+			isSorting={ isSorting }
+			sortingItemKey={ sortingItemKey }
 			shouldCancelStart={ handleShouldCancelStart }
 			updateBeforeSortStart={ handleUpdateBeforeSortStart }
-
-			//onSortStart={ onSortStart }
 			onSortEnd={ onSortEnd }
-			distance={ 0 }
-			open={ open }
+			distance={ 3 }
 			axis="xy"
 		/>
 	);

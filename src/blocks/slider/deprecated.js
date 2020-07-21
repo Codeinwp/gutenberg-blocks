@@ -106,9 +106,9 @@ const deprecated = [ {
 				<div className="glide__track" data-glide-el="track">
 					<div
 						className="glide__slides"
-						style={{
+						style={ {
 							height: `${ attributes.height }px`
-						}}
+						} }
 					>
 						{ attributes.images.map( image => {
 							return (

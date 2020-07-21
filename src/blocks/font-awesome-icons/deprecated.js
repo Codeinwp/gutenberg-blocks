@@ -91,7 +91,7 @@ const deprecated = [ {
 		return (
 			<p
 				className={ className }
-				style={{ textAlign: attributes.align }}
+				style={ { textAlign: attributes.align } }
 			>
 				<span
 					className={ `${ className }-container` }
@@ -138,7 +138,7 @@ const deprecated = [ {
 		return (
 			<p
 				className={ className }
-				style={{ textAlign: attributes.align }}
+				style={ { textAlign: attributes.align } }
 			>
 				<span
 					className="undefined-container"
@@ -212,7 +212,7 @@ const deprecated = [ {
 			<p
 				className={ className }
 				id={ attributes.id }
-				style={{ textAlign: attributes.align }}
+				style={ { textAlign: attributes.align } }
 			>
 				<span
 					className="wp-block-themeisle-blocks-font-awesome-icons-container"
@@ -222,9 +222,9 @@ const deprecated = [ {
 						<a
 							href={ attributes.link }
 							target={ attributes.newTab ? '_blank' : '_self' }
-							style={{
+							style={ {
 								color: attributes.textColor
-							}}
+							} }
 							rel="noopener noreferrer"
 						>
 							<IconElement />
