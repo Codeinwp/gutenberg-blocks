@@ -1,6 +1,6 @@
 {
 	"name": "themeisle-gutenberg-blocks",
-	"version": "1.5.2",
+	"version": "1.5.3",
 	"description": "ThemeIsle Gutenberg Blocks",
 	"scripts": {
 		"build": "cross-env BABEL_ENV=default NODE_ENV=production webpack",
@@ -15,7 +15,7 @@
 	"dependencies": {
 		"@emotion/core": "^10.0.28",
 		"@wordpress/icons": "^2.4.0",
-		"array-move": "^2.2.2",
+		"array-move": "^3.0.0",
 		"classnames": "^2.2.6",
 		"dom-scroll-into-view": "^2.0.1",
 		"hex-rgba": "^1.0.2",
@@ -42,7 +42,7 @@
 		"conventional-changelog-simple-preset": "^1.0.14",
 		"cross-env": "7.0.2",
 		"css-loader": "^3.6.0",
-		"eslint": "^7.4.0",
+		"eslint": "^7.5.0",
 		"eslint-config-wordpress": "^2.0.0",
 		"eslint-loader": "^4.0.2",
 		"eslint-plugin-react": "^7.20.3",
@@ -51,7 +51,7 @@
 		"mini-css-extract-plugin": "^0.8.0",
 		"node-sass": "^4.14.1",
 		"postcss-loader": "^3.0.0",
-		"sass-loader": "^8.0.2",
+		"sass-loader": "^9.0.2",
 		"semantic-release": "^17.1.1",
 		"webpack": "^4.43.0",
 		"webpack-cli": "^3.3.12"
