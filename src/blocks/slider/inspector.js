@@ -3,13 +3,9 @@
  */
 const { __ } = wp.i18n;
 
-const {
-	max
-} = lodash;
+const { max } = lodash;
 
-const {
-	InspectorControls
-} = wp.blockEditor;
+const { InspectorControls } = wp.blockEditor;
 
 const {
 	PanelBody,
@@ -22,7 +18,7 @@ const { Fragment } = wp.element;
 /**
  * Internal dependencies
  */
-import ImageGrid from './../../components/image-grid';
+import ImageGrid from './../../components/image-grid/index.js';
 
 const Inspector = ({
 	attributes,

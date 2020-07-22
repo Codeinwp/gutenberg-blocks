@@ -1,10 +1,7 @@
 /**
  * WordPress dependencies
  */
-
-const {
-	debounce
-} = lodash;
+const { debounce } = lodash;
 
 const {
 	MediaUpload,
@@ -14,11 +11,13 @@ const {
 /**
  * Internal dependencies
  */
-import GridList from './GridList';
 import './editor.scss';
+import GridList from './GridList.js';
 
-const ImageGrid = ({ attributes, onSelectImages }) => {
-
+const ImageGrid = ({
+	attributes,
+	onSelectImages
+}) => {
 	const selectImages = debounce( onSelectImages, 250 );
 
 	return (

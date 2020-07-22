@@ -7,7 +7,7 @@ const { PanelBody } = wp.components;
 
 const { createHigherOrderComponent } = wp.compose;
 
-const { InspectorControls } = wp.blockEditor || wp.editor;
+const { InspectorControls } = wp.blockEditor;
 
 const { Fragment } = wp.element;
 
@@ -16,15 +16,12 @@ const { addFilter } = wp.hooks;
 /**
  * Internal dependencies.
  */
-import ImageGrid from './../../components/image-grid';
+import ImageGrid from './../../components/image-grid/index.js';
 
-const withImageGrid = createHigherOrderComponent( ( BlockEdit ) => {
+const withGalleryExtension = createHigherOrderComponent( BlockEdit => {
 	return ( props ) => {
-
-		const { attributes, setAttributes } = props;
-
 		const onSelectImages = images => {
-			setAttributes({
+			props.setAttributes({
 				images: images.map( image => ({
 					id: image.id,
 					url: image.url,
@@ -34,24 +31,31 @@ const withImageGrid = createHigherOrderComponent( ( BlockEdit ) => {
 			});
 		};
 
-		return (
-			<Fragment>
-				<BlockEdit { ...props } />
-				<InspectorControls>
-					<PanelBody
-						title={ __( 'Images' ) }
-						initialOpen={ false }
-					>
-						<ImageGrid
-							attributes={ attributes }
-							onSelectImages={ onSelectImages }
-						/>
-					</PanelBody>
-				</InspectorControls>
-			</Fragment>
-		);
-	};
-}, 'withImageGrid' );
+		if ( 'core/gallery' === props.name ) {
+			return (
+				<Fragment>
+					<BlockEdit { ...props } />
 
-addFilter( 'editor.BlockEdit', 'core/gallery', withImageGrid );
+					{ !! props.attributes.images.length && (
+						<InspectorControls>
+							<PanelBody
+								title={ __( 'Images' ) }
+								initialOpen={ false }
+							>
+								<ImageGrid
+									attributes={ props.attributes }
+									onSelectImages={ onSelectImages }
+								/>
+							</PanelBody>
+						</InspectorControls>
+					) }
+				</Fragment>
+			);
+		}
+
+		return <BlockEdit { ...props } />;
+	};
+}, 'withGalleryExtension' );
+
+addFilter( 'editor.BlockEdit', 'themeisle-gutenberg/gallery-extension', withGalleryExtension );
 

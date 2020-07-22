@@ -1,9 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	SortableContainer
-} from 'react-sortable-hoc';
+import { SortableContainer } from 'react-sortable-hoc';
 
 import {
 	Icon,
@@ -20,7 +18,7 @@ const { Button } = wp.components;
 /**
  * Internal dependencies
  */
-import SortableItem from './SortableItem';
+import SortableItem from './SortableItem.js';
 
 const SortableList = SortableContainer( ({
 	items,

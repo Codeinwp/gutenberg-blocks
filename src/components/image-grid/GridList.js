@@ -13,7 +13,7 @@ const { useState } = wp.element;
 /**
  * Internal dependencies
  */
-import SortableList from './SortableList';
+import SortableList from './SortableList.js';
 
 const GridList = ({
 	attributes,
@@ -86,7 +86,7 @@ const GridList = ({
 	return (
 		<SortableList
 			className={ classnames(
-				'wp-block-themeisle-blocks-slider-images-grid',
+				'wp-block-themeisle-blocks-images-grid-component',
 				{ 'is-single': 1 === attributes.images.length }
 			) }
 			open={ open }

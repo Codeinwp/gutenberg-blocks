@@ -3,15 +3,12 @@
  */
 import classnames from 'classnames';
 
-import {
-	SortableElement
-} from 'react-sortable-hoc';
+import { SortableElement } from 'react-sortable-hoc';
 
 /**
  * WordPress dependencies
  */
 const { Button } = wp.components;
-
 
 const SortableItem = SortableElement( ({
 	value,
@@ -26,7 +23,7 @@ const SortableItem = SortableElement( ({
 	return (
 		<Button
 			className={ classnames(
-				'wp-block-themeisle-blocks-slider-images-grid__image',
+				'wp-block-themeisle-blocks-images-grid-component__image',
 				{
 					'is-selected': selected,
 					'is-sorting': selected && sorting
@@ -37,7 +34,7 @@ const SortableItem = SortableElement( ({
 				backgroundImage: `url( ' ${ value.url } ' )`
 			} }
 		>
-			{ shouldRenderItemCountBadge && <div className="wp-block-themeisle-blocks-slider-images-grid__image__count">{ selectedItemsCount }</div> }
+			{ shouldRenderItemCountBadge && <div className="wp-block-themeisle-blocks-images-grid-component__image__count">{ selectedItemsCount }</div> }
 		</Button>
 	);
 });
