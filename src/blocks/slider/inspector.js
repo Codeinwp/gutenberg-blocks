@@ -67,12 +67,10 @@ const Inspector = ({
 				title={ __( 'Images' ) }
 				initialOpen={ false }
 			>
-
 				<ImageGrid
 					attributes={ attributes }
 					onSelectImages={ onSelectImages }
 				/>
-
 			</PanelBody>
 
 			<PanelBody
