@@ -13,6 +13,7 @@ import { otterIcon } from '../helpers/icons.js';
 import Options from './options/index.js';
 import './css-handler/index.js';
 import './data/index.js';
+import './galley-extension';
 
 const icon = <Icon icon={ otterIcon } />;
 

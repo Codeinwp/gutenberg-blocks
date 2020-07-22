@@ -3,16 +3,9 @@
  */
 const { __ } = wp.i18n;
 
-const {
-	debounce,
-	max
-} = lodash;
+const { max } = lodash;
 
-const {
-	InspectorControls,
-	MediaUpload,
-	MediaUploadCheck
-} = wp.blockEditor;
+const { InspectorControls } = wp.blockEditor;
 
 const {
 	PanelBody,
@@ -25,7 +18,7 @@ const { Fragment } = wp.element;
 /**
  * Internal dependencies
  */
-import ImageGrid from './components/ImageGrid.js';
+import ImageGrid from './../../components/image-grid/index.js';
 
 const Inspector = ({
 	attributes,
@@ -64,31 +57,16 @@ const Inspector = ({
 		setAttributes({ hideBullets: value });
 	};
 
-	const selectImages = debounce( onSelectImages, 250 );
-
 	return (
 		<InspectorControls>
 			<PanelBody
 				title={ __( 'Images' ) }
 				initialOpen={ false }
 			>
-				<MediaUploadCheck>
-					<MediaUpload
-						onSelect={ selectImages }
-						allowedTypes={ [ 'image' ] }
-						multiple
-						addToGallery={ true }
-						gallery
-						value={ attributes.images.map( ({ id }) => id ) }
-						render={ ({ open }) => (
-							<ImageGrid
-								attributes={ attributes }
-								open={ open }
-								onSelectImages={ onSelectImages }
-							/>
-						) }
-					/>
-				</MediaUploadCheck>
+				<ImageGrid
+					attributes={ attributes }
+					onSelectImages={ onSelectImages }
+				/>
 			</PanelBody>
 
 			<PanelBody
