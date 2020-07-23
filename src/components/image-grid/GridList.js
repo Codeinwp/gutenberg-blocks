@@ -23,6 +23,7 @@ const GridList = ({
 	const [ selectedItems, setSelectedItems ] = useState([]);
 	const [ isSorting, setIsSorting ] = useState( false );
 	const [ sortingItemKey, setSortingItemKey ] = useState( null );
+	const [ isHovering, setIsHovering ] = useState( true );
 
 	const handleUpdateBeforeSortStart = ({ index }) => {
 		return new Promise( resolve => {
@@ -37,9 +38,10 @@ const GridList = ({
 		newIndex
 	}) => {
 		let newItems;
-
-		if ( selectedItems.length ) {
-			const items = attributes.images.filter( value => ! selectedItems.includes( value ) );
+		const items = attributes.images.filter( value => ! selectedItems.includes( value ) );
+		if ( isHovering ) {
+			newItems = [ ...items ];
+		} else if ( selectedItems.length ) {
 
 			newItems = [
 				...items.slice( 0, newIndex ),
@@ -98,6 +100,7 @@ const GridList = ({
 			shouldCancelStart={ handleShouldCancelStart }
 			updateBeforeSortStart={ handleUpdateBeforeSortStart }
 			onSortEnd={ onSortEnd }
+			setIsHovering={ setIsHovering }
 			distance={ 3 }
 			axis="xy"
 		/>

@@ -5,7 +5,8 @@ import { SortableContainer } from 'react-sortable-hoc';
 
 import {
 	Icon,
-	plus
+	plus,
+	trash
 } from '@wordpress/icons';
 
 /**
@@ -27,6 +28,7 @@ const SortableList = SortableContainer( ({
 	selectedItems,
 	isSorting,
 	sortingItemKey,
+	setIsHovering,
 	open
 }) => {
 	return (
@@ -53,10 +55,12 @@ const SortableList = SortableContainer( ({
 			}) }
 
 			<Button
-				label={ __( 'Add Images' ) }
-				icon={ <Icon icon={ plus } /> }
+				label={ selectedItems.length && isSorting  ? __( 'Delete Images' ) : __( 'Add Images' ) }
+				icon={ <Icon icon={ selectedItems.length && isSorting ? trash : plus } /> }
 				isPrimary
 				onClick={ open }
+				onMouseEnter={ () => setIsHovering( true )}
+				onMouseLeave={ () => setIsHovering( false )}
 			/>
 		</div>
 	);
