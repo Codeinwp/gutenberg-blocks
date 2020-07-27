@@ -28,12 +28,6 @@
 		align-content: center;
 		cursor: pointer;
 
-		&.has-trash {
-			&:hover {
-				background: #EB553C;
-			}
-		}
-
 		svg {
 			width: 36px;
 			height: 36px;
