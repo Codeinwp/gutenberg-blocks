@@ -62,8 +62,6 @@ const SortableList = SortableContainer( ({
 					{ 'has-trash': selectedItems.length && isSorting }
 				) }
 				onClick={ open }
-				onMouseEnter={ () => setIsHovering( true )}
-				onMouseLeave={ () => setIsHovering( false )}
 			/>
 		</div>
 	);
