@@ -42,10 +42,10 @@ const attributes = {
 		type: 'string'
 	},
 	borderSize: {
-		type: 'string'
+		type: 'number'
 	},
 	borderRadius: {
-		type: 'string'
+		type: 'number'
 	},
 	boxShadow: {
 		type: 'boolean',
