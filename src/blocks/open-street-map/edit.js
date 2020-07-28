@@ -23,7 +23,7 @@ const {
  * Internal dependencies
  */
 //import Placeholder from './placeholder.js';
-//import Inspector from './inspector.js';
+import Inspector from './inspector.js';
 
 //import { StyleSwitcherBlockControl } from '../../components/style-switcher-control/index.js';
 //import MarkerModal from './components/marker-modal.js';
@@ -31,7 +31,7 @@ import Map from './components/map.js';
 
 //import styles from './components/styles.js';
 
-//const IDs = [];
+const IDs = [];
 
 const Edit = ({
 	attributes,
@@ -59,16 +59,25 @@ const Edit = ({
 		stylesheetRef.current.id = 'themeisle-open-street-map-api-stylesheet-loading';
 	}, []);
 
+	useEffect( ()=>{
+		if ( null === mapRef ) {
+			mapRef.current.setOptions({
+				zoomControl: isSelected ? true : attributes.zoomControl
+			});
+
+			//todo: do something
+		};
+	}, [ isSelected ]);
+
 	//const settingsRef = useRef( null );
 	const linkRef = useRef( null );
 	const stylesheetRef = useRef( null );
+	const mapRef = useRef( null );
+	const markerRef = useRef([]);
 
 	//const mapRef = useRef( null );
 
-	const [ api, setAPI ] = useState( '' );
 	const [ displayMap, setDisplayMap ] = useState( false );
-	const [ isAPILoaded, setAPILoaded ] = useState( false );
-	const [ isAPISaved, setAPISaved ] = useState( false );
 
 	//const [ isMapLoaded, setMapLoaded ] = useState( false );
 	const IDs = [];
@@ -86,13 +95,7 @@ const Edit = ({
 			IDs.push( attributes.id );
 		}
 
-		if ( ! isAPILoaded ) {
-			setAPI( themeisleGutenberg.mapsAPI );
-			setAPILoaded( true );
-			setAPISaved( true );
-
-			enqueueScripts();
-		}
+		enqueueScripts();
 	};
 
 	const enqueueScripts = () => {
@@ -129,16 +132,54 @@ const Edit = ({
 	};
 
 	const initMap = () =>{
-		var mymap = L.map( attributes.id ).setView([ 51.505, -0.09 ], 13 );
+		! attributes.latitude ? setAttributes({ latitude: 41.4036299 }) : '';
+		! attributes.longitude ? setAttributes({ longitude: 2.1743558000000576}) : '';
+		mapRef.current = new L.map( document.getElementById( attributes.id ), {
+			center: {
+				lat: Number( attributes.latitude ) || 41.4036299,
+				lng: Number( attributes.longitude ) || 2.1743558000000576
+			},
+			zoom: attributes.zoom
+		});
+
 
 		L.tileLayer( 'http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-		}).addTo( mymap );
-		console.log( mymap );
+		}).addTo( mapRef.current );
+		console.log( mapRef.current );
+
+
+		mapRef.current.addEventListener( 'zoom', () => {
+			const zoom = mapRef.current.getZoom();
+			setAttributes({ zoom });
+		});
+
+		mapRef.current.addEventListener( 'moveend', () => {
+			const location = mapRef.current.getCenter();
+			console.log( location );
+			const latitude = location.lat;
+			const longitude = location.lng;
+			setAttributes({
+				latitude: latitude.toString(),
+				longitude: longitude.toString()
+			});
+		});
+
+		/* mapRef.current.addEventListener('dragend', event => {
+			const lat = event.latLng.lat();
+			const lng = event.latLng.lng();
+			setAttributes({ zoom });
+		}); */
+
+
 	};
 
 	return (
 		<Fragment>
+			<Inspector
+				attributes={attributes}
+				setAttributes={setAttributes}
+				map={mapRef.current}/>
 			<ResizableBox
 				size={
 					{height: attributes.height
