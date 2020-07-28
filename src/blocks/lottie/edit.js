@@ -6,6 +6,10 @@ import { Player, Controls } from '@lottiefiles/react-lottie-player';
 /**
  * Wordpress dependencies
  */
+const { __ } = wp.i18n;
+
+const { TextControl, Placeholder } = wp.components;
+
 const { Fragment, useEffect, useRef } = wp.element;
 
 /**
@@ -18,20 +22,38 @@ const LottiePlayer = ({ attributes, setAttributes }) => {
 	const playerRef = useRef( null );
 
 	useEffect( () => {
-		if ( playerRef ) {
-			console.log( playerRef, attributes.speed );
+		if ( playerRef.current ) {
 			playerRef.current.setPlayerDirection( attributes.direction );
 			playerRef.current.setPlayerSpeed( attributes.speed );
 		}
 	});
 
+	const setSrc = ( value ) => {
+		setAttributes({
+			src: value
+		});
+	};
+
 	const renderPlayer = () => {
 
-		// if ( ! attributes.src ) {
-		// 	return (
-
-		// 	)
-		// }
+		if ( ! attributes.src ) {
+			return (
+				<Placeholder
+					label={ 'Lottie Animation URL' }
+					className="wp-block-embed"
+					instructions={ __(
+						'Paste a link to the content you want to display on your site.'
+					) }
+				>
+					<TextControl
+						help={ __( 'Ex: https://assets1.lottiefiles.com/datafiles/jEgAWaDrrm6qdJx/data.json' ) }
+						type='text'
+						value={ attributes.src }
+						onChange={ setSrc }
+					/>
+				</Placeholder>
+			);
+		}
 
 		return (
 			<Player
@@ -46,7 +68,7 @@ const LottiePlayer = ({ attributes, setAttributes }) => {
 
 	return (
 		<Fragment>
-			<Inspector attributes={ attributes } setAttributes={ setAttributes }/>
+			<Inspector attributes={ attributes } setAttributes={ setAttributes } setSrc= { setSrc }/>
 			{ renderPlayer() }
 		</Fragment>
 	);

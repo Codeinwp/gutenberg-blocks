@@ -18,14 +18,9 @@ const { Fragment } = wp.element;
 
 const Inspector = ({
 	attributes,
-	setAttributes
+	setAttributes,
+	setSrc
 }) => {
-
-	const setSrc = ( value ) => {
-		setAttributes({
-			src: value
-		});
-	};
 
 	const setAutoplay = ( value ) => {
 		setAttributes({ autoplay: value });
