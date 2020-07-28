@@ -9,7 +9,8 @@ const {
 	PanelBody,
 	Placeholder,
 	RangeControl,
-	Spinner
+	Spinner,
+	ToggleControl
 } = wp.components;
 
 const {
@@ -20,16 +21,15 @@ const {
 
 const {
 	Fragment,
-	lazy,
-	Suspense,
 	useState
 } = wp.element;
 
 /**
  * Internal dependencies
  */
-const IconPickerControl = lazy( () => import( '../../components/icon-picker-control/index.js' ) );
+const IconPickerControl = React.lazy( () => import( '../../components/icon-picker-control/index.js' ) );
 import ColorBaseControl from '../../components/color-base-control/index.js';
+import LinkControl from '../../components/link-control/index.js';
 
 const Inspector = ({
 	attributes,
@@ -46,6 +46,14 @@ const Inspector = ({
 		} else {
 			setAttributes({ icon: value });
 		}
+	};
+
+	const changeLink = value => {
+		setAttributes({ link: value });
+	};
+
+	const toggleNewTab = () => {
+		setAttributes({ newTab: ! attributes.newTab });
 	};
 
 	const changeFontSize = value => {
@@ -95,16 +103,29 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Icon' ) }
+				title={ __( 'Icon Settings' ) }
 			>
-				<Suspense fallback={<Placeholder><Spinner/></Placeholder>}>
+				<React.Suspense fallback={<Placeholder className="wp-themeisle-block-spinner"><Spinner/></Placeholder>}>
 					<IconPickerControl
 						label={ __( 'Icon Picker' ) }
 						prefix={ attributes.prefix }
 						icon={ attributes.icon }
 						onChange={ changeIcon }
 					/>
-				</Suspense>
+				</React.Suspense>
+
+				<LinkControl
+					label={ __( 'Link' ) }
+					placeholder="https://…"
+					value={ attributes.link }
+					onChange={ changeLink }
+				>
+					<ToggleControl
+						label={ 'Open in New Tab?' }
+						checked={ attributes.newTab }
+						onChange={ toggleNewTab }
+					/>
+				</LinkControl>
 			</PanelBody>
 
 			<PanelBody

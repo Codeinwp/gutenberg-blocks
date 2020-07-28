@@ -3,11 +3,7 @@
  */
 const { __ } = wp.i18n;
 
-const {
-	PanelBody,
-	Placeholder,
-	Spinner
-} = wp.components;
+const { PanelBody } = wp.components;
 
 /**
  * Internal dependencies
@@ -15,13 +11,11 @@ const {
 import ButtomItem from './block-item.js';
 import AdvancedHeading from './controls/advanced-heading.js';
 import ButtonGroup from './controls/button-group.js';
-import Button from './controls/button.js';
 import FontAwesomeIcons from './controls/font-awesome-icons.js';
 import SectionColumns from './controls/section-columns.js';
 import SectionColumn from './controls/section-column.js';
 
 const GlobalDefaults = ({
-	isAPILoaded,
 	blockDefaults,
 	changeConfig,
 	resetConfig,
@@ -37,10 +31,6 @@ const GlobalDefaults = ({
 			control: ButtonGroup
 		},
 		{
-			name: 'themeisle-blocks/button',
-			control: Button
-		},
-		{
 			name: 'themeisle-blocks/font-awesome-icons',
 			control: FontAwesomeIcons
 		},
@@ -53,14 +43,6 @@ const GlobalDefaults = ({
 			control: SectionColumn
 		}
 	];
-
-	if ( ! isAPILoaded ) {
-		return (
-			<Placeholder>
-				<Spinner/>
-			</Placeholder>
-		);
-	}
 
 	return (
 		<PanelBody

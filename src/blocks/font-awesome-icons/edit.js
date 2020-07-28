@@ -22,7 +22,6 @@ const Edit = ({
 	attributes,
 	setAttributes,
 	className,
-	isSelected,
 	clientId,
 	name
 }) => {
@@ -92,7 +91,6 @@ const Edit = ({
 			<Controls
 				attributes={ attributes }
 				setAttributes={ setAttributes }
-				isSelected={ isSelected }
 			/>
 
 			<Inspector
@@ -111,7 +109,7 @@ const Edit = ({
 			<p
 				className={ className }
 				id={ attributes.id }
-				style={ { textAlign: attributes.align } }
+				style={{ textAlign: attributes.align }}
 			>
 				<span
 					className="wp-block-themeisle-blocks-font-awesome-icons-container"

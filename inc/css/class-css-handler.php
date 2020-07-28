@@ -199,9 +199,7 @@ class CSS_Handler extends Base_CSS {
 		$css = wp_filter_nohtml_kses( $css );
 
 		$css = self::compress( $css );
-
 		update_post_meta( $post_id, '_themeisle_gutenberg_block_styles', $css );
-
 		if ( is_file( $file_path ) ) {
 			self::delete_css_file( $post_id );
 		}
@@ -213,6 +211,7 @@ class CSS_Handler extends Base_CSS {
 				delete_post_meta( $post_id, '_themeisle_gutenberg_block_fonts' );
 			}
 		}
+
 
 		$target_dir = $wp_filesystem->is_dir( $upload_dir );
 

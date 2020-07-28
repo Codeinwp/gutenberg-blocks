@@ -1,104 +1,99 @@
-const attributes = {
-	prefix: {
-		type: 'string',
-		default: 'fab'
-	},
-	icon: {
-		type: 'string',
-		default: 'themeisle'
-	},
-	fontSize: {
-		type: 'number',
-		default: 16
-	},
-	padding: {
-		type: 'number',
-		default: 5
-	},
-	margin: {
-		type: 'number',
-		default: 5
-	},
-	backgroundColor: {
-		type: 'string'
-	},
-	textColor: {
-		type: 'string'
-	},
-	borderColor: {
-		type: 'string'
-	},
-	borderSize: {
-		type: 'number',
-		default: 0
-	},
-	borderRadius: {
-		type: 'number',
-		default: 0
-	}
-};
-
 const deprecated = [ {
-	attributes,
+	attributes: {
+		prefix: {
+			type: 'string',
+			default: 'fab'
+		},
+		icon: {
+			type: 'string',
+			default: 'themeisle'
+		},
+		fontSize: {
+			type: 'number',
+			default: 16
+		},
+		padding: {
+			type: 'number',
+			default: 5
+		},
+		margin: {
+			type: 'number',
+			default: 5
+		},
+		backgroundColor: {
+			type: 'string'
+		},
+		textColor: {
+			type: 'string'
+		},
+		borderColor: {
+			type: 'string'
+		},
+		borderSize: {
+			type: 'number',
+			default: 0
+		},
+		borderRadius: {
+			type: 'number',
+			default: 0
+		}
+	},
 
 	supports: {
 		align: [ 'left', 'center', 'right' ]
 	},
 
-	migrate: oldAttributes => {
+	migrate: ( attributes ) => {
 		let align = 'center';
 
-		if ( oldAttributes.className.includes( 'alignleft' ) ) {
+		if ( attributes.className.includes( 'alignleft' ) ) {
 			align = 'left';
 		}
 
-		if ( oldAttributes.className.includes( 'aligncenter' ) ) {
+		if ( attributes.className.includes( 'aligncenter' ) ) {
 			align = 'center';
 		}
 
-		if ( oldAttributes.className.includes( 'alignright' ) ) {
+		if ( attributes.className.includes( 'alignright' ) ) {
 			align = 'right';
 		}
 
 		return {
-			...oldAttributes,
-			align,
+			...attributes,
+			align: align,
 			className: ''
 		};
 	},
 
-	save: ({
-		attributes,
-		className
-	}) => {
+	save: props => {
 		const iconStyle = {
-			borderRadius: attributes.borderRadius + '%',
-			fontSize: attributes.fontSize + 'px',
-			padding: attributes.padding + 'px'
+			borderRadius: props.attributes.borderRadius + '%',
+			fontSize: props.attributes.fontSize + 'px',
+			padding: props.attributes.padding + 'px'
 		};
 
 		const containerStyle = {
-			color: attributes.textColor,
-			backgroundColor: attributes.backgroundColor,
-			borderColor: attributes.borderColor,
-			borderRadius: attributes.borderRadius + '%',
+			color: props.attributes.textColor,
+			backgroundColor: props.attributes.backgroundColor,
+			borderColor: props.attributes.borderColor,
+			borderRadius: props.attributes.borderRadius + '%',
 			borderStyle: 'solid',
-			borderWidth: attributes.borderSize + 'px',
+			borderWidth: props.attributes.borderSize + 'px',
 			display: 'inline-block',
-			margin: attributes.margin + 'px'
+			margin: props.attributes.margin + 'px'
 		};
 
 		return (
 			<p
-				className={ className }
-				style={ { textAlign: attributes.align } }
+				className={ props.className }
+				style={{ textAlign: props.attributes.align }}
 			>
 				<span
-					className={ `${ className }-container` }
+					className={ `${ props.className }-container` }
 					style={ containerStyle }
 				>
 					<i
-						className={ `${ attributes.prefix } fa-${ attributes.icon }` }
+						className={ `${ props.attributes.prefix } fa-${ props.attributes.icon }` }
 						style={ iconStyle }
 					>
 					</i>
@@ -108,44 +103,77 @@ const deprecated = [ {
 	}
 }, {
 	attributes: {
-		...attributes,
 		align: {
 			type: 'string'
+		},
+		prefix: {
+			type: 'string',
+			default: 'fab'
+		},
+		icon: {
+			type: 'string',
+			default: 'themeisle'
+		},
+		fontSize: {
+			type: 'number',
+			default: 16
+		},
+		padding: {
+			type: 'number',
+			default: 5
+		},
+		margin: {
+			type: 'number',
+			default: 5
+		},
+		backgroundColor: {
+			type: 'string'
+		},
+		textColor: {
+			type: 'string'
+		},
+		borderColor: {
+			type: 'string'
+		},
+		borderSize: {
+			type: 'number',
+			default: 0
+		},
+		borderRadius: {
+			type: 'number',
+			default: 0
 		}
 	},
 
-	save: ({
-		attributes,
-		className
-	}) => {
+	save: props => {
 		const iconStyle = {
-			borderRadius: attributes.borderRadius + '%',
-			fontSize: attributes.fontSize + 'px',
-			padding: attributes.padding + 'px'
+			borderRadius: props.attributes.borderRadius + '%',
+			fontSize: props.attributes.fontSize + 'px',
+			padding: props.attributes.padding + 'px'
 		};
 
 		const containerStyle = {
-			color: attributes.textColor,
-			backgroundColor: attributes.backgroundColor,
-			borderColor: attributes.borderColor,
-			borderRadius: attributes.borderRadius + '%',
+			color: props.attributes.textColor,
+			backgroundColor: props.attributes.backgroundColor,
+			borderColor: props.attributes.borderColor,
+			borderRadius: props.attributes.borderRadius + '%',
 			borderStyle: 'solid',
-			borderWidth: attributes.borderSize + 'px',
+			borderWidth: props.attributes.borderSize + 'px',
 			display: 'inline-block',
-			margin: attributes.margin + 'px'
+			margin: props.attributes.margin + 'px'
 		};
 
 		return (
 			<p
-				className={ className }
-				style={ { textAlign: attributes.align } }
+				className={ props.className }
+				style={{ textAlign: props.attributes.align }}
 			>
 				<span
 					className="undefined-container"
 					style={ containerStyle }
 				>
 					<i
-						className={ `${ attributes.prefix } fa-${ attributes.icon }` }
+						className={ `${ props.attributes.prefix } fa-${ props.attributes.icon }` }
 						style={ iconStyle }
 					>
 					</i>
@@ -155,12 +183,19 @@ const deprecated = [ {
 	}
 }, {
 	attributes: {
-		...attributes,
 		id: {
 			type: 'string'
 		},
 		align: {
 			type: 'string'
+		},
+		prefix: {
+			type: 'string',
+			default: 'fab'
+		},
+		icon: {
+			type: 'string',
+			default: 'themeisle'
 		},
 		link: {
 			type: 'string'
@@ -168,6 +203,27 @@ const deprecated = [ {
 		newTab: {
 			type: 'boolean',
 			default: false
+		},
+		fontSize: {
+			type: 'number',
+			default: 16
+		},
+		padding: {
+			type: 'number',
+			default: 5
+		},
+		margin: {
+			type: 'number',
+			default: 5
+		},
+		backgroundColor: {
+			type: 'string'
+		},
+		textColor: {
+			type: 'string'
+		},
+		borderColor: {
+			type: 'string'
 		},
 		backgroundColorHover: {
 			type: 'string'
@@ -177,6 +233,14 @@ const deprecated = [ {
 		},
 		borderColorHover: {
 			type: 'string'
+		},
+		borderSize: {
+			type: 'number',
+			default: 0
+		},
+		borderRadius: {
+			type: 'number',
+			default: 0
 		}
 	},
 
@@ -212,7 +276,7 @@ const deprecated = [ {
 			<p
 				className={ className }
 				id={ attributes.id }
-				style={ { textAlign: attributes.align } }
+				style={{ textAlign: attributes.align }}
 			>
 				<span
 					className="wp-block-themeisle-blocks-font-awesome-icons-container"
@@ -222,9 +286,9 @@ const deprecated = [ {
 						<a
 							href={ attributes.link }
 							target={ attributes.newTab ? '_blank' : '_self' }
-							style={ {
+							style={{
 								color: attributes.textColor
-							} }
+							}}
 							rel="noopener noreferrer"
 						>
 							<IconElement />

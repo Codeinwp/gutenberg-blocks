@@ -1,5 +1,64 @@
-.wp-block-themeisle-toolbar-icon {
-	svg {
-		height: 24px;
+.wp-block-themeisle-blocks-link-control-wrapper {
+	display: flex;
+    border: 1px solid #8d96a0;
+	border-radius: 4px;
+
+	&:focus-within {
+		box-shadow: 0 0 0 1px #00a0d2;
+	}
+
+	&.is-open {
+		margin-bottom: 18px;
+	}
+
+	input[type="url"] {
+		&.components-text-control__input {
+			border: 0;
+			flex-basis: 85%;
+		}
+
+		&.is-full {
+			flex-basis: 100%;
+		}
+
+		&:focus {
+			box-shadow: none;
+		}
+	}
+
+	.components-button {
+		flex-basis: 15%;
+		height: auto;
+		justify-content: center;
+		padding-top: 0px;
+		padding-bottom: 0px;
+		border-left: 1px solid #8d96a0;
+		border-radius: 0;
+
+		svg {
+			width: 16px;
+			height: 16px;
+		}
+	}
+}
+
+.components-popover {
+	&.is-bottom {
+		&.wp-block-themeisle-blocks-link-control-popover {
+			z-index: 1000000;
+		
+			.wp-block-themeisle-blocks-link-control-popover-container {
+				max-height: 200px;
+				overflow-y: auto;
+
+				.block-editor-url-input__suggestion {
+					&.is-selected {
+						background: #00719e;
+						color: #fff;
+						outline: none;
+					}
+				}
+			}
+		}
 	}
 }

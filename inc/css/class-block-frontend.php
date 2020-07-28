@@ -179,23 +179,19 @@ class Block_Frontend extends Base_CSS {
 	 * @access  public
 	 */
 	public function render_post_css() {
-		$id = 0;
-
 		if ( is_singular() ) {
 			// Enqueue main post attached style.
-			$id = get_the_ID();
 			$this->enqueue_styles();
 		}
-
 		// Enqueue styles for other posts that display the_content, if any.
 		add_filter(
 			'the_content',
-			function ( $content ) use ( $id ) {
-				$post_id = get_the_ID();
-
-				if ( $this->has_excerpt || $id === $post_id ) {
+			function ( $content ) {
+				if ( $this->has_excerpt ) {
 					return $content;
 				}
+
+				$post_id = get_the_ID();
 
 				$this->enqueue_styles( $post_id, true );
 				$this->enqueue_google_fonts( $post_id );
@@ -244,17 +240,7 @@ class Block_Frontend extends Base_CSS {
 
 		if ( ! CSS_Handler::has_css_file( $post_id ) ) {
 			CSS_Handler::generate_css_file( $post_id );
-
-			add_action(
-				$location,
-				function () use ( $post_id ) {
-					return $this->get_post_css( $post_id );
-				}
-			);
-
-			return;
 		}
-
 		$file_url = CSS_Handler::get_css_url( $post_id );
 
 		$file_name = basename( $file_url );

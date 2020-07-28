@@ -2,6 +2,7 @@ const defaultsAttrs = {
 	'themeisle-blocks/advanced-heading': {
 		tag: 'h2',
 		headingColor: '#000000',
+		fontStyle: 'normal',
 		textTransform: 'none',
 		paddingType: 'linked',
 		paddingTypeTablet: 'linked',
@@ -20,9 +21,16 @@ const defaultsAttrs = {
 	},
 	'themeisle-blocks/button-group': {
 		spacing: 20,
-		collapse: 'collapse-none'
+		collapse: 'collapse-none',
+		fontSize: 18,
+		fontStyle: 'normal',
+		data: {
+			color: '#ffffff',
+			background: '#32373c',
+			paddingTopBottom: 12,
+			paddingLeftRight: 24
+		}
 	},
-	'themeisle-blocks/button': {},
 	'themeisle-blocks/font-awesome-icons': {
 		fontSize: 16,
 		padding: 5,
@@ -44,13 +52,13 @@ const defaultsAttrs = {
 		margin: 20,
 		marginTop: 20,
 		marginBottom: 20,
+		columnsHTMLTag: 'div',
 		horizontalAlign: 'unset',
 		columnsHeight: 'auto',
 		verticalAlign: 'unset',
 		hide: false,
 		hideTablet: false,
-		hideMobile: false,
-		columnsHTMLTag: 'div'
+		hideMobile: false
 	},
 	'themeisle-blocks/advanced-column': {
 		paddingType: 'linked',

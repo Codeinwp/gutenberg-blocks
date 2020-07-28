@@ -22,8 +22,7 @@ module.exports = {
 	},
 	externals: {
 		'react': 'React',
-		'react-dom': 'ReactDOM',
-		'lodash': 'lodash'
+		'react-dom': 'ReactDOM'
 	},
 	output: {
 		path: path.resolve( __dirname, 'build' ),
@@ -38,10 +37,7 @@ module.exports = {
 				use: [ {
 					loader: 'babel-loader',
 					options: {
-						presets: [
-							'@babel/preset-env',
-							'@emotion/babel-preset-css-prop'
-						],
+						presets: [ '@babel/preset-env' ],
 						plugins: [
 							'@babel/plugin-transform-async-to-generator',
 							'@babel/plugin-proposal-object-rest-spread',

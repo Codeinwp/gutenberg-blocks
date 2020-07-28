@@ -215,7 +215,7 @@ const Inspector = ({
 					type="number"
 					value={ attributes.offset }
 					min={ 0 }
-					onChange={ value => setAttributes({ offset: Number( value ) }) }
+					onChange={ value => setAttributes({ offset: value }) }
 				/>
 			</PanelBody>
 

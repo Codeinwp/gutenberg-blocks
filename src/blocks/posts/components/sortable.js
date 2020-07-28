@@ -33,7 +33,7 @@ const {
 
 const DragHandle = SortableHandle( () => {
 	return (
-		<div className="wp-block-themeisle-blocks-posts-grid-builder-handle" tabIndex="0">
+		<div className="wp-block-themeisle-blocks-posts-grid-builder-handle">
 			<span></span>
 		</div>
 	);
