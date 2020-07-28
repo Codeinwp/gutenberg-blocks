@@ -3,6 +3,13 @@
  */
 import classnames from 'classnames';
 
+import {
+	closeSmall,
+	chevronLeft,
+	chevronRight,
+	Icon
+} from '@wordpress/icons';
+
 /**
  * WordPress dependencies
  */
@@ -84,7 +91,7 @@ const Slide = ({
 					<Fragment>
 						<div className="wp-block-themeisle-blocks-slider-item-move-menu">
 							<Button
-								icon="arrow-left-alt2"
+								icon={ <Icon icon={ chevronLeft } /> }
 								label={ __( 'Move image backward' ) }
 								showTooltip={ true }
 								onClick={ isFirstItem ? undefined : () => onMoveBackward() }
@@ -94,7 +101,7 @@ const Slide = ({
 							/>
 
 							<Button
-								icon="arrow-right-alt2"
+								icon={ <Icon icon={ chevronRight } /> }
 								label={ __( 'Move image forward' ) }
 								showTooltip={ true }
 								onClick={ isLastItem ? undefined : () => onMoveForward() }
@@ -107,7 +114,7 @@ const Slide = ({
 
 						<div className="wp-block-themeisle-blocks-slider-item-delete-menu">
 							<Button
-								icon="no-alt"
+								icon={ <Icon icon={ closeSmall } /> }
 								label={ __( 'Remove image' ) }
 								showTooltip={ true }
 								onClick={ onRemoveImage }

@@ -70,6 +70,7 @@ class Base_CSS {
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Columns_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Heading_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Button_Group_CSS',
+			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Button_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Font_Awesome_Icons_CSS',
 		);
 	}

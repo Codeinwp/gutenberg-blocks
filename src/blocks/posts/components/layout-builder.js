@@ -55,6 +55,8 @@ const LayoutBuilder = ({
 					titleTag={ titleTag }
 					excerptLimit={ excerptLimit }
 					useDragHandle
+					axis="y"
+					lockAxis="y"
 				/>
 			</div>
 		</Fragment>
