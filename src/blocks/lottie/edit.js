@@ -25,13 +25,6 @@ const LottiePlayer = ({ attributes, setAttributes }) => {
 		}
 	});
 
-	const setSrc = ( src ) => {
-		attributes.src = src;
-		setAttributes({
-			...attributes
-		});
-	};
-
 	const renderPlayer = () => {
 
 		// if ( ! attributes.src ) {
@@ -43,7 +36,7 @@ const LottiePlayer = ({ attributes, setAttributes }) => {
 		return (
 			<Player
 				ref= { playerRef }
-				style={{ height: '300px', width: '300px' }}
+				style={{ height: `${ attributes.height }px`, width: `${ attributes.width }px`, background: attributes.background }}
 				{ ...attributes }
 			>
 				<Controls visible={ attributes.controls } buttons={[ 'play', 'repeat', 'debug' ]} />

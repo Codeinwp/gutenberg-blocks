@@ -1,7 +1,6 @@
 const attributes = {
 	src: {
-		type: 'string',
-		default: 'https://assets3.lottiefiles.com/packages/lf20_XZ3pkn.json'
+		type: 'string'
 	},
 	autoplay: {
 		type: 'boolean',
@@ -17,7 +16,7 @@ const attributes = {
 	},
 	renderer: {
 		type: 'string',
-		default: 'canvas'
+		default: 'svg'
 	},
 	speed: {
 		type: 'number',
@@ -33,6 +32,14 @@ const attributes = {
 	hover: {
 		type: 'boolean',
 		default: false
+	},
+	height: {
+		type: 'number',
+		default: 400
+	},
+	width: {
+		type: 'number',
+		default: 400
 	}
 };
 
