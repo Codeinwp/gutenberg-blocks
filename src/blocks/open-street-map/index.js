@@ -8,7 +8,7 @@ const { registerBlockType } = wp.blocks;
 /**
  * Internal dependencies
  */
-import './style.scss';
+//import './style.scss';
 import './editor.scss';
 
 //import { mapIcon as icon } from '../../helpers/icons.js';  todo: find an icon
