@@ -36,23 +36,14 @@ const GridList = ({
 		oldIndex,
 		newIndex
 	}) => {
-		let newItems;
+		let newItems = arrayMove( attributes.images, oldIndex, newIndex );
 
 		if ( selectedItems.length ) {
-			const items = attributes.images;
-			let index = 0;
-
-			if ( newIndex ) {
-				index = newIndex + 1;
-			}
-
 			newItems = [
-				...items.slice( 0, index ).filter( value => ! selectedItems.includes( value ) ),
+				...newItems.slice( 0, newIndex ).filter( item => ! selectedItems.includes( item ) ),
 				...selectedItems,
-				...items.slice( index, items.length ).filter( value => ! selectedItems.includes( value ) )
+				...newItems.slice( newIndex, newItems.length ).filter( item => ! selectedItems.includes( item ) )
 			];
-		} else {
-			newItems = arrayMove( attributes.images, oldIndex, newIndex );
 		}
 
 		setIsSorting( false );
