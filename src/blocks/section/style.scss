@@ -1,5 +1,13 @@
 .wp-block-themeisle-blocks-advanced-columns {
 
+	&.has-top-divider {
+		padding-top: 100px;
+	}
+
+	&.has-bottom-divider {
+		padding-bottom: 100px;
+	}
+
 	.wp-themeisle-block-overlay,
 	.wp-block-themeisle-blocks-advanced-columns-overlay {
 		position: absolute;
