@@ -10,6 +10,8 @@ const {
 	useState
 } = wp.element;
 
+const { omit } = lodash;
+
 /**
  * Internal dependencies
  */
@@ -42,7 +44,7 @@ const Edit = ({
 			<Disabled>
 				<ServerSideRender
 					block="themeisle-blocks/plugin-cards"
-					attributes={ { ...attributes } }
+					attributes={ { ...omit( attributes, [ 'className' ]) } }
 				/>
 			</Disabled>
 		</Fragment>
