@@ -1,3 +1,12 @@
+##### [Version 1.5.4](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.3...v1.5.4) (2020-08-03)
+
+- Button Group Improvements
+- Fixed Caption field missing from Slider Block
+- Image management in Slider & Gallery Block
+- Fix issue with CSS inline loading twice
+- Fix Posts Block offset bug
+- Remove default font size from Posts Block
+
 ##### [Version 1.5.3](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.2...v1.5.3) (2020-06-22)
 
 - Store images locally when importing templates
