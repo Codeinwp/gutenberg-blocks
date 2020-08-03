@@ -4,16 +4,33 @@
 	.components-base-control__title {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 
 		label {
 			padding: 5px 0;
 		}
 
 		.floating-controls {
-			display: flex;
+			.components-dropdown {
+				display: flex;
 
-			button {
-				border: 1px solid #555d66;
+				button {
+					border: 1px solid #555d66;
+
+					&.is-tertiary {
+						border: none;
+						box-shadow: none;
+						color: #1e1e1e;
+
+						&:hover {
+							color: var(--wp-admin-theme-color);
+						}
+					}
+
+					&.is-active {
+						color: var(--wp-admin-theme-color);
+					}
+				}
 			}
 		}
 	}
@@ -22,4 +39,8 @@
 .wp-block-themeisle-popover-settings {
 	padding: 10px;
 	overflow: hidden;
+
+	.components-button-group {
+		padding-bottom: 10px;
+	}
 }

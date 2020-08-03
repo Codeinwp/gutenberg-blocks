@@ -22,7 +22,7 @@ const BlockPlaceholder = ({
 }) => {
 	if ( ! isAPILoaded ) {
 		return (
-			<Placeholder className="wp-themeisle-block-spinner">
+			<Placeholder>
 				<Spinner/>
 				{ __( 'Loading…' ) }
 			</Placeholder>

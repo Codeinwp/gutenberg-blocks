@@ -21,7 +21,7 @@ const {
 
 import Placeholder from './placeholder.js';
 import Inspector from './inspector.js';
-import Slide from './components/slide.js';
+import Slide from './components/Slide.js';
 import SliderControls from './components/slider-controls.js';
 
 const IDs = [];
@@ -164,6 +164,7 @@ const Edit = ({
 				setAttributes={ setAttributes }
 				slider={ sliderRef.current }
 				changePerView={ changePerView }
+				onSelectImages={ onSelectImages }
 			/>
 
 			<ResizableBox
@@ -203,9 +204,9 @@ const Edit = ({
 					<div className="glide__track" data-glide-el="track">
 						<div
 							className="glide__slides"
-							style={{
+							style={ {
 								height: `${ attributes.height }px`
-							}}
+							} }
 						>
 							{ attributes.images.map( ( image, index ) => (
 								<Slide

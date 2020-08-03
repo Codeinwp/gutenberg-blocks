@@ -15,11 +15,17 @@ const {
 
 const { Fragment } = wp.element;
 
+/**
+ * Internal dependencies
+ */
+import ImageGrid from './../../components/image-grid/index.js';
+
 const Inspector = ({
 	attributes,
 	setAttributes,
 	slider,
-	changePerView
+	changePerView,
+	onSelectImages
 }) => {
 	const changeGap = value => {
 		setAttributes({ gap: Number( value ) });
@@ -53,6 +59,16 @@ const Inspector = ({
 
 	return (
 		<InspectorControls>
+			<PanelBody
+				title={ __( 'Images' ) }
+				initialOpen={ false }
+			>
+				<ImageGrid
+					attributes={ attributes }
+					onSelectImages={ onSelectImages }
+				/>
+			</PanelBody>
+
 			<PanelBody
 				title={ __( 'Settings' ) }
 			>
