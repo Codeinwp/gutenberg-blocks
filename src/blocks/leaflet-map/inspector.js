@@ -8,7 +8,8 @@ const {
 	PanelBody,
 	RangeControl,
 	SelectControl,
-	TextControl
+	TextControl,
+	ToggleControl
 } = wp.components;
 
 const { InspectorControls } = wp.blockEditor;
@@ -62,6 +63,24 @@ const Inspector = ({
 		setAttributes({ height: value });
 	};
 
+	const toggleDraggable = () => {
+		attributes.draggable ? mapRef.current.dragging.disable() : mapRef.current.dragging.enable();
+		setAttributes({ draggable: ! attributes.draggable });
+	};
+
+	const toggleMapTypeControl = () => {
+		setAttributes({ mapTypeControl: ! attributes.mapTypeControl });
+	};
+
+	const toggleZoomControl = () => {
+		attributes.zoomControl ? mapRef.current.zoomControl.disable() : mapRef.zoomControl.enable();
+		setAttributes({ zoomControl: ! attributes.zoomControl });
+	};
+
+	const toggleFullScreenControl = () => {
+		setAttributes({ fullscreenControl: ! attributes.fullscreenControl });
+	};
+
 
 	return (
 		<InspectorControls>
@@ -70,14 +89,14 @@ const Inspector = ({
 			>
 				<BaseControl
 					label={ __( 'Location' ) }
-					id="wp-block-themeisle-blocks-open-street-map-search"
+					id="wp-block-themeisle-blocks-leaflet-map-search"
 				>
 					<input
 						type="text"
-						id="wp-block-themeisle-blocks-open-street-map-search"
+						id="wp-block-themeisle-blocks-leaflet-map-search"
 
 						//value={ attributes.location }
-						//className="wp-block-themeisle-blocks-open-street-map-search"
+						//className="wp-block-themeisle-blocks-leaflet-map-search"
 
 					/>
 				</BaseControl>
@@ -136,6 +155,38 @@ const Inspector = ({
 				/>
 			</PanelBody>
 
+			<PanelBody
+				title={__( 'Controls' )}
+				initialOpen={false}
+			>
+				<BaseControl>
+					{__( 'The following changes will not affect block preview during the editing process. You can click outside the block to see the changes take effect.' )}
+				</BaseControl>
+
+				<ToggleControl
+					label={'Draggable Map'}
+					checked={attributes.draggable}
+					onChange={toggleDraggable}
+				/>
+
+				<ToggleControl
+					label={'Map Type Control'}
+					checked={attributes.mapTypeControl}
+					onChange={toggleMapTypeControl}
+				/>
+
+				<ToggleControl
+					label={'Zoom Control'}
+					checked={attributes.zoomControl}
+					onChange={toggleZoomControl}
+				/>
+
+				<ToggleControl
+					label={'Full Screen Control'}
+					checked={attributes.fullscreenControl}
+					onChange={toggleFullScreenControl}
+				/>
+			</PanelBody>
 
 			<PanelBody
 				title={ __( 'Markers' ) }

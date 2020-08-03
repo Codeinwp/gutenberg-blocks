@@ -41,7 +41,7 @@ const Edit = ({
 	useEffect( () => {
 		initBlock();
 
-		window.isMapLoaded = window.isMapLoaded || false;
+		window.isLeafletMapLoaded = window.isLeafletMapLoaded || false;
 		window[`removeMarker_${ clientId.substr( 0, 8 ) }`] = removeMarker;
 
 		stylesheetRef.current = document.createElement( 'link' );
@@ -49,19 +49,19 @@ const Edit = ({
 		stylesheetRef.current.rel = 'stylesheet';
 		stylesheetRef.current.async = false;
 		stylesheetRef.current.defer = true;
-		stylesheetRef.current.id = 'themeisle-open-street-map-api-stylesheet-loading';
+		stylesheetRef.current.id = 'themeisle-leaflet-map-api-stylesheet-loading';
 
 		linkRef.current = document.createElement( 'script' );
 		linkRef.current.type = 'text/javascript';
 		linkRef.current.async = false;
 		linkRef.current.defer = true;
-		linkRef.current.id = 'themeisle-open-street-map-api-loading';
+		linkRef.current.id = 'themeisle-leaflet-map-api-loading';
 
 		esriRef.current = document.createElement( 'script' );
 		esriRef.current.type = 'text/javascript';
 		esriRef.current.async = false;
 		esriRef.current.defer = true;
-		esriRef.current.id = 'themeisle-open-street-map-esri-loading';
+		esriRef.current.id = 'themeisle-leaflet-map-esri-loading';
 
 		stylesheetRef.current.href = 'https://unpkg.com/leaflet@1.6.0/dist/leaflet.css';
 
@@ -100,11 +100,11 @@ const Edit = ({
 
 	const initBlock = async() => {
 		if ( attributes.id === undefined ) {
-			const instanceId = `wp-block-themeisle-blocks-open-street-map-${ clientId.substr( 0, 8 ) }`;
+			const instanceId = `wp-block-themeisle-blocks-leaflet-map-${ clientId.substr( 0, 8 ) }`;
 			await setAttributes({ id: instanceId });
 			IDs.push( instanceId );
 		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-open-street-map-${ clientId.substr( 0, 8 ) }`;
+			const instanceId = `wp-block-themeisle-blocks-leaflet-map-${ clientId.substr( 0, 8 ) }`;
 			await setAttributes({ id: instanceId });
 			IDs.push( instanceId );
 		} else {
@@ -120,34 +120,34 @@ const Edit = ({
 
 	const enqueueScripts = () => {
 
-		if ( ! window.isMapLoaded ) {
-			window.isMapLoaded = true;
+		if ( ! window.isLeafletMapLoaded ) {
+			window.isLeafletMapLoaded = true;
 
 			stylesheetRef.current.onload = () => {
-				const stylesheet = document.getElementById( 'themeisle-open-street-map-api-stylesheet-loading' );
-				stylesheet.id = 'themeisle-open-street-map-api-stylesheet';
+				const stylesheet = document.getElementById( 'themeisle-leaflet-map-api-stylesheet-loading' );
+				stylesheet.id = 'themeisle-leaflet-map-api-stylesheet';
 
-				if ( document.getElementById( 'themeisle-open-street-map-api' ) &&
-					document.getElementById( 'themeisle-open-street-map-esri' ) ) {
+				if ( document.getElementById( 'themeisle-leaflet-map-api' ) &&
+					document.getElementById( 'themeisle-leaflet-map-esri' ) ) {
 					setDisplayMap( true );
 				}
 			};
 			linkRef.current.onload = () => {
-				const script = document.getElementById( 'themeisle-open-street-map-api-loading' );
-				script.id = 'themeisle-open-street-map-api';
+				const script = document.getElementById( 'themeisle-leaflet-map-api-loading' );
+				script.id = 'themeisle-leaflet-map-api';
 
-				if ( document.getElementById( 'themeisle-open-street-map-api-stylesheet' ) &&
-					document.getElementById( 'themeisle-open-street-map-esri' ) ) {
+				if ( document.getElementById( 'themeisle-leaflet-map-api-stylesheet' ) &&
+					document.getElementById( 'themeisle-leaflet-map-esri' ) ) {
 					setDisplayMap( true );
 				}
 			};
 
 			esriRef.current.onload = () =>{
-				const script = document.getElementById( 'themeisle-open-street-map-esri-loading' );
-				script.id = 'themeisle-open-street-map-esri';
+				const script = document.getElementById( 'themeisle-leaflet-map-esri-loading' );
+				script.id = 'themeisle-leaflet-map-esri';
 
-				if ( document.getElementById( 'themeisle-open-street-map-api-stylesheet' ) &&
-					document.getElementById( 'themeisle-open-street-map-api' ) ) {
+				if ( document.getElementById( 'themeisle-leaflet-map-api-stylesheet' ) &&
+					document.getElementById( 'themeisle-leaflet-map-api' ) ) {
 					setDisplayMap( true );
 				}
 			};
@@ -156,9 +156,9 @@ const Edit = ({
 			document.head.appendChild( esriRef.current );
 		}
 
-		if ( document.getElementById( 'themeisle-open-street-map-api-stylesheet' ) &&
-			document.getElementById( 'themeisle-open-street-map-esri' )  &&
-			document.getElementById( 'themeisle-open-street-map-api' ) ) {
+		if ( document.getElementById( 'themeisle-leaflet-map-api-stylesheet' ) &&
+			document.getElementById( 'themeisle-leaflet-map-esri' )  &&
+			document.getElementById( 'themeisle-leaflet-map-api' ) ) {
 			setDisplayMap( true );
 		}
 	};
@@ -377,6 +377,20 @@ const Edit = ({
 		markersRef.current = [];
 	};
 
+	const toggleFullscreen = () =>{
+		const map = document.getElementById( attributes.id );
+		if ( map.requestFullscreen ) {
+			map.requestFullscreen();
+		} else if ( map.mozRequestFullScreen ) { /* Firefox */
+			map.mozRequestFullScreen();
+		} else if ( map.webkitRequestFullscreen ) { /* Chrome, Safari and Opera */
+			map.webkitRequestFullscreen();
+		} else if ( map.msRequestFullscreen ) { /* IE/Edge */
+			map.msRequestFullscreen();
+		}
+
+	};
+
 
 	return (
 		<Fragment>
@@ -425,7 +439,7 @@ const Edit = ({
 					toggleSelection( true );
 				} }
 				className={ classnames(
-					'wp-block-themeisle-blocks-open-street-map-resizer',
+					'wp-block-themeisle-blocks-leaflet-map-resizer',
 					{ 'is-focused': isSelected }
 				) }
 			>
@@ -436,6 +450,7 @@ const Edit = ({
 					displayMap={ displayMap }
 					selectMarker={ selectMarker }
 					isSelectingMarker={ isSelectingMarker }
+					toggleFullscreen={toggleFullscreen}
 				/>
 			</ResizableBox>
 		</Fragment>

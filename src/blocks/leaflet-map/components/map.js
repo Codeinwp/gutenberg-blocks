@@ -16,7 +16,8 @@ const Map = ({
 	initMap,
 	displayMap,
 	selectMarker,
-	isSelectingMarker
+	isSelectingMarker,
+	toggleFullscreen
 }) => {
 	useEffect( () => {
 		if ( displayMap ) {
@@ -38,11 +39,20 @@ const Map = ({
 			</div>
 
 			<Button
-				className="wp-block-themeisle-blocks-open-street-map-marker-button"
+				className="wp-block-themeisle-blocks-leaflet-map-marker-button"
 				title={ __( 'Add Button' ) }
 				onClick={ selectMarker }
 			>
 				<span className="dashicons dashicons-sticky"></span>
+			</Button>
+
+			<Button
+				className="wp-block-themeisle-blocks-leaflet-map-fullscreen-button"
+				disabled={! attributes.fullscreenControl}
+				title={ __( 'Toggle Fullscreen' ) }
+				onClick={ toggleFullscreen }
+			>
+				<span className="dashicons dashicons-editor-expand"></span>
 			</Button>
 		</Fragment>
 	);
