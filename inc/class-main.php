@@ -33,6 +33,13 @@ class Main {
 	public static $is_map_loaded = false;
 
 	/**
+	 * Flag to mark that maps scripts has been loaded.
+	 *
+	 * @var bool $is_leaflet_map_loaded Is Map loaded?
+	 */
+	public static $is_leaflet_map_loaded = false;
+
+	/**
 	 * Define assets version.
 	 *
 	 * @var string $assets_version Holds assets version.
@@ -209,8 +216,36 @@ class Main {
 				true
 			);
 
+
 			self::$is_map_loaded = true;
 		}
+
+
+			if ( ! self::$is_leaflet_map_loaded && has_block( 'themeisle-blocks/leaflet-map', $post ) ) {
+				if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+					return;
+				}
+
+			wp_enqueue_style(
+				'leaflet-map-css',
+				'https://unpkg.com/leaflet@1.6.0/dist/leaflet.css',
+				[],
+				self::$assets_version
+			);
+
+			wp_enqueue_script( //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion
+				'leaflet-map',
+				'https://unpkg.com/leaflet@1.6.0/dist/leaflet.js',
+				array(),
+				'',
+				true
+			);
+			
+			
+			self::$is_leaflet_map_loaded = true;
+		}
+
+
 
 		if ( ! self::$is_glide_loaded && has_block( 'themeisle-blocks/slider', $post ) ) {
 			wp_enqueue_script(
@@ -220,6 +255,7 @@ class Main {
 				self::$assets_version,
 				true
 			);
+			
 
 			wp_enqueue_script(
 				'themeisle-gutenberg-slider',
@@ -349,10 +385,12 @@ class Main {
 		$classnames = array(
 			'\ThemeIsle\GutenbergBlocks\Render\About_Author_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Google_Map_Block',
+			'\ThemeIsle\GutenbergBlocks\Render\Leaflet_Map_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Plugin_Card_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Posts_Grid_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Sharing_Icons_Block',
 		);
+
 
 		foreach ( $classnames as $classname ) {
 			$block = new $classname();
