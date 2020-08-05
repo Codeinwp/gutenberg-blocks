@@ -34,6 +34,7 @@ const BlockPlaceholder = ({
 	setAttributes,
 	hasError,
 	setError,
+	setShowEdit,
 	className
 }) => {
 	const searchRef = useRef( null );
@@ -160,6 +161,7 @@ const BlockPlaceholder = ({
 
 	const selectPlugin = data => {
 		setAttributes({ slug: data.slug });
+		setShowEdit( false );
 		setResults({});
 	};
 

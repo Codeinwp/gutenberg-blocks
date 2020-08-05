@@ -13,14 +13,14 @@ const {
 
 const { BlockControls } = wp.blockEditor;
 
-const Controls = ({ setLoaded }) => {
+const Controls = ({ setShowEdit }) => {
 	return (
 		<BlockControls>
 			<Toolbar>
 				<Tooltip text={ __( 'Edit' ) }>
 					<Button
 						className="components-icon-button components-toolbar__control wp-block-themeisle-blocks-plugin-cards-edit-plugin-card"
-						onClick={ () => setLoaded( false ) }
+						onClick={ () => setShowEdit( true ) }
 					>
 						<Dashicon icon="edit" />
 					</Button>

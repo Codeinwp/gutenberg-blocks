@@ -24,14 +24,16 @@ const Edit = ({
 	className
 }) => {
 	const [ hasError, setError ] = useState( false );
+	const [ showEdit, setShowEdit ] = useState( ! attributes.slug );
 
-	if ( ! attributes.slug ) {
+	if ( ! attributes.slug || showEdit ) {
 		return (
 			<Placeholder
 				attributes={ attributes }
 				setAttributes={ setAttributes }
 				hasError={ hasError }
 				setError={ setError }
+				setShowEdit={ setShowEdit }
 				className={ className }
 			/>
 		);
@@ -39,12 +41,13 @@ const Edit = ({
 
 	return (
 		<Fragment>
-			<Controls/>
+			<Controls setShowEdit={ setShowEdit }/>
 
 			<Disabled>
 				<ServerSideRender
 					block="themeisle-blocks/plugin-cards"
-					attributes={ { ...omit( attributes, [ 'className' ]) } }
+					className={ attributes.className }
+					attributes={ { ...omit( attributes, [ 'customCSS', 'hasCustomCSS', 'className' ]) } }
 				/>
 			</Disabled>
 		</Fragment>
