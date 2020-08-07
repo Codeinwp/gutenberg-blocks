@@ -3,14 +3,12 @@
  */
 const { Disabled } = wp.components;
 
-const ServerSideRender = wp.serverSideRender;
-
 const {
 	Fragment,
 	useState
 } = wp.element;
 
-const { omit } = lodash;
+const ServerSideRender = wp.serverSideRender;
 
 /**
  * Internal dependencies
@@ -24,16 +22,14 @@ const Edit = ({
 	className
 }) => {
 	const [ hasError, setError ] = useState( false );
-	const [ showEdit, setShowEdit ] = useState( ! attributes.slug );
 
-	if ( ! attributes.slug || showEdit ) {
+	if ( ! attributes.slug ) {
 		return (
 			<Placeholder
 				attributes={ attributes }
 				setAttributes={ setAttributes }
 				hasError={ hasError }
 				setError={ setError }
-				setShowEdit={ setShowEdit }
 				className={ className }
 			/>
 		);
@@ -41,13 +37,13 @@ const Edit = ({
 
 	return (
 		<Fragment>
-			<Controls setShowEdit={ setShowEdit }/>
+			<Controls setAttributes={ setAttributes }/>
 
 			<Disabled>
 				<ServerSideRender
 					block="themeisle-blocks/plugin-cards"
 					className={ attributes.className }
-					attributes={ { ...omit( attributes, [ 'customCSS', 'hasCustomCSS', 'className' ]) } }
+					attributes={ { ...attributes } }
 				/>
 			</Disabled>
 		</Fragment>
