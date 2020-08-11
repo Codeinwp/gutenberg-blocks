@@ -1,0 +1,29 @@
+.wp-themeisle-block-progress-bar {
+    display: flex;
+    flex-direction: column;
+
+    .wp-themeisle-block-progress-bar__content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: .25em;
+
+        .wp-themeisle-block-progress-bar__title {
+            margin: 0px;
+        }
+
+        .wp-themeisle-block-progress-bar__value {
+            margin-left: auto;
+        }
+    }
+
+    .wp-themeisle-block-progress-bar__bar {
+        width: 100%;
+        height: 8px;
+
+        .wp-themeisle-block-progress-bar__progress {
+            height: 100%;
+            overflow: hidden;
+        }
+    }
+}
