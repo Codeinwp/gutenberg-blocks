@@ -57,6 +57,9 @@ class Template_Library_Server {
 				array(
 					'methods'  => \WP_REST_Server::READABLE,
 					'callback' => array( $this, 'fetch_templates' ),
+					'permission_callback' => function () {
+						return current_user_can( 'edit_posts' );
+					},
 				),
 			)
 		);
@@ -80,6 +83,9 @@ class Template_Library_Server {
 							'description' => __( 'Load for Block Preview.', 'textdomain' ),
 						),
 					),
+					'permission_callback' => function () {
+						return current_user_can( 'edit_posts' );
+					},
 				),
 			)
 		);

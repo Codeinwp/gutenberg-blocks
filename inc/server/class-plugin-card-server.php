@@ -60,6 +60,9 @@ class Plugin_Card_Server {
 							'description' => __( 'Search query.', 'textdomain' ),
 						),
 					),
+					'permission_callback' => function () {
+						return current_user_can( 'edit_posts' );
+					},
 				),
 			)
 		);
@@ -78,6 +81,9 @@ class Plugin_Card_Server {
 							'description' => __( 'Slug of the plugin.', 'textdomain' ),
 						),
 					),
+					'permission_callback' => function () {
+						return current_user_can( 'edit_posts' );
+					},
 				),
 			)
 		);

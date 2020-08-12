@@ -58,6 +58,9 @@ class CSS_Handler extends Base_CSS {
 							},
 						),
 					),
+					'permission_callback' => function () {
+						return current_user_can( 'publish_posts' );
+					},
 				),
 			)
 		);
@@ -79,6 +82,9 @@ class CSS_Handler extends Base_CSS {
 							},
 						),
 					),
+					'permission_callback' => function () {
+						return current_user_can( 'publish_posts' );
+					},
 				),
 			)
 		);
