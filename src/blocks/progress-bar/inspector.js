@@ -10,55 +10,78 @@ const {
 
 const {
 	PanelBody,
-	RangeControl,
+	RangeControl
 } = wp.components;
-
-const { useState } = wp.element;
 
 const Inspector = ({ attributes, setAttributes }) => {
 
-    const setValue = value => {
-        setAttributes({ value: value });
-    }
+	const setValue = value => {
+		setAttributes({ value: value });
+	};
 
-    const setProgressColor = value => {
-        setAttributes({ progressColor: value });
-    }
+	const setProgressColor = value => {
+		setAttributes({ progressColor: value });
+	};
 
-    const setBackgroundColor = value => {
-        setAttributes({ backgroundColor: value });
-    }
+	const setBackgroundColor = value => {
+		setAttributes({ backgroundColor: value });
+	};
 
-    return (
-        <InspectorControls>
-            <PanelBody
+	const setBorderRadius = value => {
+		setAttributes({ borderRadius: value });
+
+	};
+
+	const setHeight = value => {
+		setAttributes({ height: value });
+	};
+
+	return (
+		<InspectorControls>
+			<PanelBody
 				title={ __( 'Settings' ) }
 				initialOpen={ true }
 			>
 
-                <RangeControl 
-                    label={ __( 'Value' ) }
+				<RangeControl
+					label={ __( 'Value' ) }
 					value={ attributes.value }
 					onChange={ setValue }
 					min={ 0 }
 					max={ 100 }
-                />
+				/>
 
-                <ColorGradientControl
+				<ColorGradientControl
 					label={ 'Progress Color' }
 					colorValue={ attributes.progressColor }
 					onColorChange={ setProgressColor }
 				/>
 
-                <ColorGradientControl
+				<ColorGradientControl
 					label={ 'Background Color' }
 					colorValue={ attributes.backgroundColor }
 					onColorChange={ setBackgroundColor }
 				/>
 
-            </PanelBody>
-        </InspectorControls>
-    );
-}
+				<RangeControl
+					label={ __( 'Height' ) }
+					value={ attributes.height }
+					onChange={ setHeight }
+					min={ 5 }
+					max={ 20 }
+				/>
+
+				<RangeControl
+					label={ __( 'Border Radius' ) }
+					value={ attributes.borderRadius }
+					onChange={ setBorderRadius }
+					min={ 0 }
+					max={ 20 }
+				/>
+
+			</PanelBody>
+		</InspectorControls>
+	);
+};
 
 export default Inspector;
