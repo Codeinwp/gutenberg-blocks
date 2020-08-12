@@ -3,12 +3,12 @@
  */
 const { Disabled } = wp.components;
 
-const ServerSideRender = wp.serverSideRender;
-
 const {
 	Fragment,
 	useState
 } = wp.element;
+
+const ServerSideRender = wp.serverSideRender;
 
 /**
  * Internal dependencies
@@ -37,11 +37,12 @@ const Edit = ({
 
 	return (
 		<Fragment>
-			<Controls/>
+			<Controls setAttributes={ setAttributes }/>
 
 			<Disabled>
 				<ServerSideRender
 					block="themeisle-blocks/plugin-cards"
+					className={ attributes.className }
 					attributes={ { ...attributes } }
 				/>
 			</Disabled>
