@@ -2,7 +2,7 @@
   "name": "codeinwp/gutenberg-blocks",
   "description": "A set of awesome Gutenberg Blocks!",
   "type": "library",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "license": "GPL-2.0-or-later",
   "homepage": "https://github.com/Codeinwp/gutenberg-blocks",
   "authors": [
