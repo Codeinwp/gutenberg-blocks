@@ -23,6 +23,26 @@
         .wp-themeisle-block-progress-bar__progress {
             height: 100%;
             overflow: hidden;
+
+            &.has-animation {
+                animation-duration: 3s;
+                animation-name: progress;
+
+                @keyframes progress {
+                    from {
+                        width: 0%;
+                    }
+                
+                    to {
+                        width: var( --width );
+                    }
+                }
+            }
+
+            &.has-no-animation {
+                width: var( --width );
+            }
+           
         }
     }
 }

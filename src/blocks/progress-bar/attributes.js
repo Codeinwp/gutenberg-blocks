@@ -8,11 +8,11 @@ const attributes = {
 	},
 	progressColor: {
 		type: 'string',
-		default: 'red'
+		default: '#2675cf'
 	},
 	backgroundColor: {
 		type: 'string',
-		default: 'green'
+		default: '#dcd7ca'
 	},
 	borderRadius: {
 		type: 'number',
@@ -21,6 +21,14 @@ const attributes = {
 	height: {
 		type: 'number',
 		default: 8
+	},
+	animated: {
+		type: 'boolean',
+		default: true
+	},
+	hideValue: {
+		type: 'boolean',
+		default: true
 	}
 };
 

@@ -1,3 +1,4 @@
+
 /**
  * WordPress dependencies
  */
@@ -10,7 +11,8 @@ const {
 
 const {
 	PanelBody,
-	RangeControl
+	RangeControl,
+	ToggleControl
 } = wp.components;
 
 const Inspector = ({ attributes, setAttributes }) => {
@@ -36,12 +38,33 @@ const Inspector = ({ attributes, setAttributes }) => {
 		setAttributes({ height: value });
 	};
 
+	const setAnimated = value => {
+		setAttributes({ animated: value });
+	};
+
+	const setHideValue = value => {
+		setAttributes({ hideValue: value });
+	};
+
 	return (
 		<InspectorControls>
 			<PanelBody
 				title={ __( 'Settings' ) }
 				initialOpen={ true }
 			>
+				<ToggleControl
+					label={ __( 'Animated' ) }
+					help={ __( 'Show animation.' ) }
+					checked={ attributes.animated }
+					onChange={ setAnimated }
+				/>
+
+				<ToggleControl
+					label={ __( 'Hide Percentage' ) }
+					help={ __( 'Hide the value of the percentage.' ) }
+					checked={ attributes.hideValue }
+					onChange={ setHideValue }
+				/>
 
 				<RangeControl
 					label={ __( 'Value' ) }
