@@ -25,8 +25,6 @@ import Inspector from './inspector.js';
 import MarkerModal from './components/marker-modal.js';
 import Map from './components/map.js';
 
-//import {search} from './search';
-
 
 const IDs = [];
 
@@ -38,42 +36,18 @@ const Edit = ({
 	isSelected,
 	toggleSelection
 }) => {
+
+	useEffect( ()=>{
+		( document.getElementById( `wp-block-themeisle-blocks-map-search-${attributes.id}` ) && document.getElementById( attributes.id ) && mapRef.current ) ?
+			L.Layer.search({
+				inputTag: `wp-block-themeisle-blocks-map-search-${attributes.id}`
+			}).addTo( mapRef.current ) : '';
+	}, [ document.getElementById( `wp-block-themeisle-blocks-map-search-${attributes.id}` ), document.getElementById( attributes.id ) ]);
+
 	useEffect( () => {
 		initBlock();
-
-		window.isLeafletMapLoaded = window.isLeafletMapLoaded || false;
+		window.isMapLoaded = window.isMapLoaded || false;
 		window[`removeMarker_${ clientId.substr( 0, 8 ) }`] = removeMarker;
-
-		stylesheetRef.current = document.createElement( 'link' );
-		stylesheetRef.current.type = 'text/css ';
-		stylesheetRef.current.rel = 'stylesheet';
-		stylesheetRef.current.async = false;
-		stylesheetRef.current.defer = true;
-		stylesheetRef.current.id = 'themeisle-leaflet-map-api-stylesheet-loading';
-
-		linkRef.current = document.createElement( 'script' );
-		linkRef.current.type = 'text/javascript';
-		linkRef.current.async = false;
-		linkRef.current.defer = true;
-		linkRef.current.id = 'themeisle-leaflet-map-api-loading';
-
-		esriRef.current = document.createElement( 'script' );
-		esriRef.current.type = 'text/javascript';
-		esriRef.current.async = false;
-		esriRef.current.defer = true;
-		esriRef.current.id = 'themeisle-leaflet-map-esri-loading';
-
-		stylesheetRef.current.href = 'https://unpkg.com/leaflet@1.6.0/dist/leaflet.css';
-
-		//stylesheetRef.current.integrity = 'sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==';
-		linkRef.current.src = 'https://unpkg.com/leaflet@1.6.0/dist/leaflet.js';
-
-		//linkRef.current.integrity = 'sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==';
-
-		esriRef.current.src = 'https://unpkg.com/esri-leaflet@2.4.1/dist/esri-leaflet.js';
-
-		//esriRef.current.integrity = 'sha512-xY2smLIHKirD03vHKDJ2u4pqeHA7OQZZ27EjtqmuhDguxiUvdsOuXMwkg16PQrm9cgTmXtoxA6kwr8KBy3cdcw==';
-
 	}, []);
 
 
@@ -83,28 +57,26 @@ const Edit = ({
 
 	const markersRef = useRef([]);
 	const settingsRef = useRef( null );
-	const linkRef = useRef( null );
-	const stylesheetRef = useRef( null );
-	const esriRef = useRef( null );
 	const mapRef = useRef( null );
 	const lastInfoWindowRef = useRef( null );
 	const markersAttrRef = useRef([ ...attributes.markers ]);
+	const isSelectingMarkerRef = useRef( isSelectingMarker );
 
 
 	const [ displayMap, setDisplayMap ] = useState( false );
 	const [ isMarkerOpen, setMarkerOpen ] = useState( false );
-	const [ isSelectingMarker, setSelectingMarker ] = useState( false );
 	const [ isModalOpen, setModalOpen ] = useState( false );
+	const [ isSelectingMarker, setSelectingMarker ] = useState( false );
 	const [ isAdvanced, setAdvanced ] = useState( false );
 	const [ selectedMarker, setSelectedMarker ] = useState({});
 
 	const initBlock = async() => {
 		if ( attributes.id === undefined ) {
-			const instanceId = `wp-block-themeisle-blocks-leaflet-map-${ clientId.substr( 0, 8 ) }`;
+			const instanceId = `wp-block-themeisle-blocks-map-${ clientId.substr( 0, 8 ) }`;
 			await setAttributes({ id: instanceId });
 			IDs.push( instanceId );
 		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-leaflet-map-${ clientId.substr( 0, 8 ) }`;
+			const instanceId = `wp-block-themeisle-blocks-map-${ clientId.substr( 0, 8 ) }`;
 			await setAttributes({ id: instanceId });
 			IDs.push( instanceId );
 		} else {
@@ -115,69 +87,27 @@ const Edit = ({
 			settingsRef.current = new wp.api.models.Settings();
 		});
 
-		enqueueScripts();
-	};
 
-	const enqueueScripts = () => {
-
-		if ( ! window.isLeafletMapLoaded ) {
-			window.isLeafletMapLoaded = true;
-
-			stylesheetRef.current.onload = () => {
-				const stylesheet = document.getElementById( 'themeisle-leaflet-map-api-stylesheet-loading' );
-				stylesheet.id = 'themeisle-leaflet-map-api-stylesheet';
-
-				if ( document.getElementById( 'themeisle-leaflet-map-api' ) &&
-					document.getElementById( 'themeisle-leaflet-map-esri' ) ) {
-					setDisplayMap( true );
-				}
-			};
-			linkRef.current.onload = () => {
-				const script = document.getElementById( 'themeisle-leaflet-map-api-loading' );
-				script.id = 'themeisle-leaflet-map-api';
-
-				if ( document.getElementById( 'themeisle-leaflet-map-api-stylesheet' ) &&
-					document.getElementById( 'themeisle-leaflet-map-esri' ) ) {
-					setDisplayMap( true );
-				}
-			};
-
-			esriRef.current.onload = () =>{
-				const script = document.getElementById( 'themeisle-leaflet-map-esri-loading' );
-				script.id = 'themeisle-leaflet-map-esri';
-
-				if ( document.getElementById( 'themeisle-leaflet-map-api-stylesheet' ) &&
-					document.getElementById( 'themeisle-leaflet-map-api' ) ) {
-					setDisplayMap( true );
-				}
-			};
-			document.head.appendChild( stylesheetRef.current );
-			document.head.appendChild( linkRef.current );
-			document.head.appendChild( esriRef.current );
-		}
-
-		if ( document.getElementById( 'themeisle-leaflet-map-api-stylesheet' ) &&
-			document.getElementById( 'themeisle-leaflet-map-esri' )  &&
-			document.getElementById( 'themeisle-leaflet-map-api' ) ) {
-			setDisplayMap( true );
-		}
+		setDisplayMap( true );
 	};
 
 	const initMap = () => {
-		! attributes.latitude ? setAttributes({ latitude: 41.4036299 }) : '';
-		! attributes.longitude ? setAttributes({ longitude: 2.1743558000000576 }) : '';
+		if ( mapRef.current ) {
+			return;
+		}
 		mapRef.current = L.map( document.getElementById( attributes.id ), {
 			center: {
-				lat: Number( attributes.latitude ) || 41.4036299,
-				lng: Number( attributes.longitude ) || 2.1743558000000576
+				lat: Number( attributes.latitude ),
+				lng: Number( attributes.longitude )
 			},
 			zoom: attributes.zoom
 		});
 
+		L.control.fullscreen({ position: 'bottomright' }).addTo( mapRef.current );
+		L.control.addMarker({fnct: selectMarker}).addTo( mapRef.current );
 
-		L.esri.basemapLayer( 'Streets' ).addTo( mapRef.current );
-		setAttributes({type: 'Streets'});
-
+		L.esri.basemapLayer( 'Topographic' ).addTo( mapRef.current );
+		setAttributes({ style: 'Topographic'});
 
 		mapRef.current.on( 'zoom', () => {
 			const zoom = mapRef.current.getZoom();
@@ -189,15 +119,15 @@ const Edit = ({
 			const latitude = location.lat;
 			const longitude = location.lng;
 			setAttributes({
-				latitude: latitude.toString(),
-				longitude: longitude.toString()
+				latitude: latitude,
+				longitude: longitude
 			});
+
 		});
 
 		if ( 0 < attributes.markers.length ) {
 			cycleMarkers( attributes.markers );
 		}
-
 	};
 
 
@@ -217,6 +147,8 @@ const Edit = ({
 
 
 	const addMarker = ( location, title, iconColor, description, latitude, longitude ) => {
+		isSelectingMarkerRef.current = false;
+		setSelectingMarker( false );
 		const id = uuidv4();
 		const icon = setMarkerIcon( iconColor );
 
@@ -255,7 +187,6 @@ const Edit = ({
 
 		addInfoWindow( mark, marker.id, title, description );
 		setModalOpen( false );
-		setSelectingMarker( false );
 	};
 
 	const addInfoWindow = ( marker, id, title, description ) => {
@@ -294,10 +225,13 @@ const Edit = ({
 		});
 	};
 
-	const selectMarker = () => {
-		setSelectingMarker( ! isSelectingMarker );
 
-		if ( ! isSelectingMarker ) {
+	const selectMarker = () => {
+
+		isSelectingMarkerRef.current = ! isSelectingMarkerRef.current;
+		setSelectingMarker( isSelectingMarkerRef.current );
+
+		if ( isSelectingMarkerRef.current ) {
 			mapRef.current.on( 'click', e => {
 				mapRef.current.off( 'click' );
 
@@ -347,7 +281,6 @@ const Edit = ({
 		const markers = [ ...markersAttrRef.current ];
 		markers.map( marker => {
 			if ( marker.id === id ) {
-
 				return marker[ prop ] = value.toString();
 			}
 		});
@@ -377,41 +310,30 @@ const Edit = ({
 		markersRef.current = [];
 	};
 
-	const toggleFullscreen = () =>{
-		const map = document.getElementById( attributes.id );
-		if ( map.requestFullscreen ) {
-			map.requestFullscreen();
-		} else if ( map.mozRequestFullScreen ) { /* Firefox */
-			map.mozRequestFullScreen();
-		} else if ( map.webkitRequestFullscreen ) { /* Chrome, Safari and Opera */
-			map.webkitRequestFullscreen();
-		} else if ( map.msRequestFullscreen ) { /* IE/Edge */
-			map.msRequestFullscreen();
-		}
-
-	};
-
 
 	return (
 		<Fragment>
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
-				map={ mapRef.current }
 				isMarkerOpen={ isMarkerOpen }
 				setMarkerOpen={ setMarkerOpen }
 				removeMarker={ removeMarker }
 				changeMarkerProp={ changeMarkerProp }
 				addMarkerManual={ addMarkerManual }
 				mapRef={mapRef}
+				locationId={attributes.id}
 			/>
 
 			{ isModalOpen && (
 				<MarkerModal
 					marker={ selectedMarker }
 					isAdvanced={ isAdvanced }
-					close={ () => setModalOpen( false ) }
+					close={ () => {
+						selectMarker(); setModalOpen( false );
+					} }
 					addMarker={ addMarker }
+					mapRef={ mapRef }
 				/>
 			) }
 
@@ -439,7 +361,7 @@ const Edit = ({
 					toggleSelection( true );
 				} }
 				className={ classnames(
-					'wp-block-themeisle-blocks-leaflet-map-resizer',
+					'wp-block-themeisle-blocks-map-resizer',
 					{ 'is-focused': isSelected }
 				) }
 			>
@@ -448,9 +370,7 @@ const Edit = ({
 					className={ className }
 					initMap={ initMap }
 					displayMap={ displayMap }
-					selectMarker={ selectMarker }
-					isSelectingMarker={ isSelectingMarker }
-					toggleFullscreen={toggleFullscreen}
+					isSelectingMarkerRef={ isSelectingMarkerRef }
 				/>
 			</ResizableBox>
 		</Fragment>

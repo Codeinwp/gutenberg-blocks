@@ -1,4 +1,4 @@
-.wp-block-themeisle-blocks-leaflet-map {
+.wp-block-themeisle-blocks-map {
     &.components-placeholder {
         padding: 40px 20px;
 
@@ -31,7 +31,7 @@
     }
 }
 
-.wp-block-themeisle-blocks-leaflet-map-marker-button {
+.wp-block-themeisle-blocks-map-add-marker-button {
     background-color: #fff;
     border: 2px solid #fff;
     border-radius: 3px;
@@ -40,7 +40,7 @@
     padding: 8px;
     text-align: center;
     position: absolute;
-    bottom: 26px;
+    bottom: 30px;
     left: 0px;
     z-index: 500;
 
@@ -51,12 +51,6 @@
             cursor: pointer;
         }
 
-        .dashicons {
-
-            &:before {
-                content: "\f109";
-            }
-        }
     }
 
     .dashicons {
@@ -68,7 +62,7 @@
     }
 }
 
-.wp-block-themeisle-blocks-leaflet-map-fullscreen-button {
+.wp-block-themeisle-blocks-map-fullscreen-button {
     background-color: #fff;
     border: 2px solid #fff;
     border-radius: 3px;
@@ -77,7 +71,7 @@
     padding: 8px;
     text-align: center;
     position: absolute;
-    bottom: 26px;
+    bottom: 13px;
     right: 0px;
     z-index: 500;
 
@@ -99,16 +93,39 @@
     }
 }
 
-.wp-block-themeisle-blocks-leaflet-map-search {
-    width: 100%;
+.wp-block-themeisle-blocks-map-search-wrapper {
+
+    input{
+        width: 100%;
+    }
+
+    .wp-block-themeisle-blocks-map-search-results {
+        width: 100%;
+
+        :first-child {
+            margin-top: 0;
+        }
+
+        .wp-block-themeisle-blocks-map-geocoder-control-suggestion {
+            border: 1px solid black;
+            border-top: 0;
+            padding: 10px;
+            margin: 0px !important;
+        }
+    }
+
+    .wp-block-themeisle-blocks-map-search-no-results{
+        padding: 10px;
+        padding-bottom: 0 !important;
+    }
 }
 
-.wp-block-themeisle-blocks-leaflet-map-marker-group {
+.wp-block-themeisle-blocks-map-marker-group {
 
-    .wp-block-themeisle-blocks-leaflet-map-marker {
+    .wp-block-themeisle-blocks-map-marker {
         margin: 10px 0;
 
-        .wp-block-themeisle-blocks-leaflet-map-marker-title-area {
+        .wp-block-themeisle-blocks-map-marker-title-area {
             display: flex;
             border: 1px solid #d5dadf;
 
@@ -116,7 +133,7 @@
                 border-color: #a4afb7;
             }
 
-            .wp-block-themeisle-blocks-leaflet-map-marker-title {
+            .wp-block-themeisle-blocks-map-marker-title {
                 flex-basis: 80%;
                 padding: 10px 15px;
                 cursor: pointer;
@@ -126,7 +143,7 @@
                 }
             }
 
-            .wp-block-themeisle-blocks-leaflet-map-marker-remove {
+            .wp-block-themeisle-blocks-map-marker-remove {
                 display: flex;
                 flex-basis: 20%;
                 justify-content: center;
@@ -142,7 +159,7 @@
             }
         }
 
-        .wp-block-themeisle-blocks-leaflet-map-marker-control-area {
+        .wp-block-themeisle-blocks-map-marker-control-area {
             border: 1px solid #d5dadf;
             border-top: none;
             padding: 10px 15px;
@@ -155,7 +172,7 @@
     }
 }
 
-.wp-block-themeisle-blocks-leaflet-map-marker-add {
+.wp-block-themeisle-blocks-map-marker-add {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -177,7 +194,7 @@
     }
 }
 
-.wp-block-themeisle-blocks-leaflet-map-resizer {
+.wp-block-themeisle-blocks-map-resizer {
 
     &.is-focused {
         .components-resizable-box__handle {
@@ -185,8 +202,4 @@
             z-index: 1;
         }
     }
-}
-
-.pac-container {
-    z-index: 999999;
 }

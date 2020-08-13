@@ -21,7 +21,8 @@ const MarkerWrapper = ({
 	markers,
 	addMarker,
 	removeMarker,
-	changeMarkerProp
+	changeMarkerProp,
+	mapRef
 }) => {
 	useEffect( () => {
 		if ( false !== initialOpen ) {
@@ -41,7 +42,7 @@ const MarkerWrapper = ({
 
 	return (
 		<Fragment>
-			<div className="wp-block-themeisle-blocks-leaflet-map-marker-group">
+			<div className="wp-block-themeisle-blocks-map-marker-group">
 				{ markers.map( marker => {
 					return (
 						<Marker
@@ -50,6 +51,7 @@ const MarkerWrapper = ({
 							openMarker={ openMarker }
 							removeMarker={ removeMarker }
 							changeMarkerProp={ changeMarkerProp }
+							mapRef={mapRef}
 						/>
 					);
 				}) }
@@ -58,7 +60,7 @@ const MarkerWrapper = ({
 			<Button
 				isSecondary
 				isLarge
-				className="wp-block-themeisle-blocks-leaflet-map-marker-add"
+				className="wp-block-themeisle-blocks-map-marker-add"
 				onClick={ addMarker }
 			>
 				{ __( 'Add Marker' ) }

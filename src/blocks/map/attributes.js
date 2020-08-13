@@ -16,13 +16,15 @@ const attributes = {
 	},
 	location: {
 		type: 'string',
-		default: 'La Sagrada Familia, Barcelona, Spain'
+		default: 'Statue of Liberty, New York, NY, 10004, USA'
 	},
 	latitude: {
-		type: 'string'
+		type: 'number',
+		default: 40.68924563540814
 	},
 	longitude: {
-		type: 'string'
+		type: 'number',
+		default: -74.04443979263307
 	},
 	zoom: {
 		type: 'number',
@@ -40,19 +42,11 @@ const attributes = {
 		type: 'boolean',
 		default: true
 	},
-	mapTypeControl: {
-		type: 'boolean',
-		default: true
-	},
 	zoomControl: {
 		type: 'boolean',
 		default: true
 	},
 	fullscreenControl: {
-		type: 'boolean',
-		default: true
-	},
-	streetViewControl: {
 		type: 'boolean',
 		default: true
 	},

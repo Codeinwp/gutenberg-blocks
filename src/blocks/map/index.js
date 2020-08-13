@@ -11,13 +11,13 @@ const { registerBlockType } = wp.blocks;
 //import './style.scss';
 import './editor.scss';
 
-import { leafletMapIcon as icon } from '../../helpers/icons.js';
+import { lMapIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
 
-registerBlockType( 'themeisle-blocks/leaflet-map', {
-	title: __( 'Leaflet Map' ),
-	description: __( ' Display Leaflet Maps on your website with Leaflet Maps Block' ),
+registerBlockType( 'themeisle-blocks/map', {
+	title: __( 'Map' ),
+	description: __( ' Display maps on your website with Maps Block' ),
 	category: 'themeisle-blocks',
 	keywords: [
 		'map',

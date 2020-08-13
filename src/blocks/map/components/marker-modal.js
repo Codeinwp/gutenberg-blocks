@@ -14,7 +14,6 @@ const {
 
 const {
 	useEffect,
-	useRef,
 	useState,
 	Fragment
 } = wp.element;
@@ -28,7 +27,8 @@ const MarkerModal = ({
 	marker,
 	isAdvanced,
 	addMarker,
-	close
+	close,
+	mapRef
 }) => {
 	useEffect( () => {
 		setID( marker.id );
@@ -40,7 +40,19 @@ const MarkerModal = ({
 		setLongitude( marker.longitude );
 	}, [ marker ]);
 
-	const searchRef = useRef( null );
+	useEffect( () => {
+		if ( document.getElementById( `themeisle-location-search-${marker.id}` ) ) {
+			L.Layer.search({
+				inputTag: `themeisle-location-search-${marker.id}`,
+				placeholder: 'Enter a location',
+				setLocation: setLocation,
+				setLatitude: setLatitude,
+				setLongitude: setLongitude
+
+			//changeMarkerProp: changeMarkerProp
+			}).addTo( mapRef.current );
+		}
+	}, []);
 
 	const [ id, setID ] = useState( marker.id );
 	const [ location, setLocation ] = useState( marker.location );
@@ -59,19 +71,14 @@ const MarkerModal = ({
 			{ isAdvanced && (
 				<Fragment>
 					<BaseControl
-						label={ __( 'Location' ) }
-						id={ `themeisle-location-search-${ marker.id }` }
+						label={__( 'Location' )}
+						id={`themeisle-location-search-${marker.id}`}
 					>
 						<input
 							type="text"
-							id={ `themeisle-location-search-${ id }` }
-							placeholder={ __( 'Enter a location…' ) }
-							value={ location }
-							className="wp-block-themeisle-blocks-leaflet-map-search"
-							ref={ searchRef }
+							id={`themeisle-location-search-${marker.id}`}
+							placeholder={__( 'Enter a location' )}
 
-							//onFocus={ initSearch }
-							onChange={ e => setLocation( e.target.value ) }
 						/>
 					</BaseControl>
 

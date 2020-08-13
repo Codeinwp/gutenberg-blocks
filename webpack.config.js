@@ -13,6 +13,9 @@ module.exports = {
 			'./src/plugins/registerPlugin.js',
 			...glob.sync( './src/blocks/**/index.js' )
 		],
+		map: [
+			...glob.sync( './src/frontend/map/index.js' )
+		],
 		maps: [
 			...glob.sync( './src/frontend/google-map/index.js' )
 		],

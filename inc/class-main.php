@@ -33,6 +33,13 @@ class Main {
 	public static $is_map_loaded = false;
 
 	/**
+	 * Flag to mark that maps scripts has been loaded.
+	 *
+	 * @var bool $is_Lmap_loaded Is Map loaded?
+	 */
+	public static $is_Lmap_loaded = false;
+
+	/**
 	 * Define assets version.
 	 *
 	 * @var string $assets_version Holds assets version.
@@ -130,6 +137,90 @@ class Main {
 			true
 		);
 
+		wp_enqueue_style(
+			'leafletcss',
+			plugin_dir_url( $this->get_dir() ) . 'assets/map/leaflet.css',
+			[],
+			self::$assets_version
+		);
+
+		wp_enqueue_script(
+			'leafletjs',
+			plugin_dir_url( $this->get_dir() ) . 'assets/map/leaflet.js',
+			array(),
+			self::$assets_version,
+			true
+		);
+
+		wp_enqueue_script(
+			'esrileafletjs',
+			plugin_dir_url( $this->get_dir() ) . 'assets/map/esri-leaflet.js',
+			array(),
+			self::$assets_version,
+			true
+		);
+
+		wp_enqueue_style(
+			'geocodercss',
+			plugin_dir_url( $this->get_dir() ) . 'assets/map/esri-leaflet-geocoder.css',
+			[],
+			self::$assets_version
+		);
+
+		wp_enqueue_script(
+			'geocoderjs',
+			plugin_dir_url( $this->get_dir() ) . 'assets/map/esri-leaflet-geocoder.js',
+			array(),
+			self::$assets_version,
+			true
+		);
+
+		wp_enqueue_style(
+			'fullscreen-controlcss',
+			plugin_dir_url( $this->get_dir() ) . 'assets/map/map-controls/fullscreen-control/fullscreen-control.css',
+			[],
+			self::$assets_version
+		);
+
+		wp_enqueue_script(
+			'fullscreen-controljs',
+			plugin_dir_url( $this->get_dir() ) . 'assets/map/map-controls/fullscreen-control/fullscreen-control.js',
+			array(),
+			self::$assets_version,
+			true
+		);
+
+		wp_enqueue_style(
+			'addMarker-controlcss',
+			plugin_dir_url( $this->get_dir() ) . 'assets/map/map-controls/add-marker-control/add-marker-control.css',
+			[],
+			self::$assets_version
+		);
+
+		wp_enqueue_script(
+			'addMarker-controljs',
+			plugin_dir_url( $this->get_dir() ) . 'assets/map/map-controls/add-marker-control/add-marker-control.js',
+			array(),
+			self::$assets_version,
+			true
+		);
+
+		wp_enqueue_style(
+			'searchlocation-controlcss',
+			plugin_dir_url( $this->get_dir() ) . 'assets/map/map-controls/search-location-control/search-location-control.css',
+			[],
+			self::$assets_version
+		);
+
+		wp_enqueue_script(
+			'searchlocation-controljs',
+			plugin_dir_url( $this->get_dir() ) . 'assets/map/map-controls/search-location-control/search-location-control.js',
+			array(),
+			self::$assets_version,
+			true
+		);		
+
+
 		wp_set_script_translations( 'themeisle-gutenberg-blocks', 'textdomain' );
 
 		wp_localize_script(
@@ -211,6 +302,41 @@ class Main {
 
 			self::$is_map_loaded = true;
 		}
+
+		/* if ( ! self::$is_Lmap_loaded && has_block( 'themeisle-blocks/map', $post ) ) {
+			wp_enqueue_style(
+				'leafletcss',
+				plugin_dir_url( $this->get_dir() ) . 'assets/map/leaflet.css',
+				[],
+				self::$assets_version
+			);
+			
+			wp_enqueue_script(
+				'leafletjs',
+				plugin_dir_url( $this->get_dir() ) . 'assets/map/leaflet.js',
+				array(),
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_script(
+				'esrileafletjs',
+				plugin_dir_url( $this->get_dir() ) . 'assets/map/esri-leaflet.js',
+				array(),
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_script(
+				'themeisle-gutenberg-map',
+				plugin_dir_url( $this->get_dir() ) . 'build/lmaps.js',
+				array( 'wp-component' ),
+				self::$assets_version,
+				true
+			);
+
+			self::$is_Lmap_loaded = true;
+		} */
 
 		if ( ! self::$is_glide_loaded && has_block( 'themeisle-blocks/slider', $post ) ) {
 			wp_enqueue_script(
@@ -320,7 +446,7 @@ class Main {
 				$latest = $call_api->version;
 			}
 		}
-
+		
 		return version_compare( $current, $latest, '>=' );
 	}
 
@@ -349,7 +475,7 @@ class Main {
 		$classnames = array(
 			'\ThemeIsle\GutenbergBlocks\Render\About_Author_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Google_Map_Block',
-			'\ThemeIsle\GutenbergBlocks\Render\Leaflet_Map_Block',
+			'\ThemeIsle\GutenbergBlocks\Render\Map_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Plugin_Card_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Posts_Grid_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Sharing_Icons_Block',

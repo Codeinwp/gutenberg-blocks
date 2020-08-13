@@ -15,7 +15,9 @@ const {
 	TextControl
 } = wp.components;
 
-const { useRef } = wp.element;
+const {
+	useEffect
+} = wp.element;
 
 /**
  * Internal dependencies
@@ -27,15 +29,27 @@ const Marker = ({
 	isOpen,
 	openMarker,
 	removeMarker,
-	changeMarkerProp
+	changeMarkerProp,
+	mapRef
 }) => {
-	const searchRef = useRef( null );
+
+	useEffect ( ()=>{
+		if ( document.getElementById( `themeisle-location-search-${marker.id}` ) ) {
+			L.Layer.search({
+				inputTag: `themeisle-location-search-${marker.id}`,
+				placeholder: 'Enter a location',
+				markerId: marker.id,
+				changeMarkerProp: changeMarkerProp,
+				inputValue: marker.location ? marker.location : ''
+			}).addTo( mapRef.current );
+		}
+	}, []);
 
 	return (
-		<div className="wp-block-themeisle-blocks-leaflet-map-marker">
-			<div className="wp-block-themeisle-blocks-leaflet-map-marker-title-area">
+		<div className="wp-block-themeisle-blocks-map-marker">
+			<div className="wp-block-themeisle-blocks-map-marker-title-area">
 				<Button
-					className="wp-block-themeisle-blocks-leaflet-map-marker-title"
+					className="wp-block-themeisle-blocks-map-marker-title"
 					onClick={ () => openMarker( marker.id ) }
 				>
 					{ marker.title || __( 'Custom Marker' ) }
@@ -45,14 +59,14 @@ const Marker = ({
 					icon="no-alt"
 					label={ __( 'Remove Marker' ) }
 					showTooltip={ true }
-					className="wp-block-themeisle-blocks-leaflet-map-marker-remove"
+					className="wp-block-themeisle-blocks-map-marker-remove"
 					onClick={ () => removeMarker( marker.id ) }
 				/>
 			</div>
 
 			<div
 				className={ classnames(
-					'wp-block-themeisle-blocks-leaflet-map-marker-control-area',
+					'wp-block-themeisle-blocks-map-marker-control-area',
 					{ 'opened': marker.id === isOpen }
 				) }
 			>
@@ -63,13 +77,8 @@ const Marker = ({
 					<input
 						type="text"
 						id={ `themeisle-location-search-${ marker.id }` }
-						placeholder={ __( 'Enter a location…' ) }
-						value={ marker.location }
-						className="wp-block-themeisle-blocks-leaflet-map-search"
-						ref={ searchRef }
+						placeholder= { __( 'Enter a location' ) }
 
-						//onFocus={ initSearch }
-						onChange={ e => changeMarkerProp( marker.id, 'location', e.target.value ) }
 					/>
 				</BaseControl>
 
