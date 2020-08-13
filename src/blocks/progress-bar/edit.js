@@ -10,9 +10,7 @@ import Inspector from './inspector.js';
 
 const ProgressBar = ({ attributes, setAttributes }) => {
 
-	const { text, value, progressColor, backgroundColor, borderRadius, height, animated, hideValue } = attributes;
-
-	const setText = value => {
+	const onTextChange = value => {
 		setAttributes({ text: value });
 	};
 
@@ -28,24 +26,24 @@ const ProgressBar = ({ attributes, setAttributes }) => {
 						tagName="p"
 						className="wp-themeisle-block-progress-bar__title"
 						placeholder={ __( 'Write a title…' ) }
-						value={ text }
-						onChange={ setText }
+						value={ attributes.text }
+						onChange={ onTextChange }
 						multiline={ false }
 					/>
 					<span className="wp-themeisle-block-progress-bar__value">
 						{
-							hideValue && `${value}%`
+							attributes.hideValue && `${attributes.value}%`
 						}
 					</span>
 				</div>
 				<div
 					className='wp-themeisle-block-progress-bar__bar'
-					style={{ backgroundColor, borderRadius: `${borderRadius}px`, height: `${height}px` }}>
+					style={{ backgroundColor: attributes.backgroundColor, borderRadius: `${attributes.borderRadius}px`, height: `${attributes.height}px` }}>
 					<div
 						className={
-							classname( 'wp-themeisle-block-progress-bar__progress', { 'has-animation': animated }, { 'has-no-animation': ! animated })
+							classname( 'wp-themeisle-block-progress-bar__progress', { 'has-animation': attributes.animated }, { 'has-no-animation': ! attributes.animated })
 						}
-						style={{ backgroundColor: progressColor, '--width': `${value}%`, maxWidth: `${value}%`, borderRadius: `${borderRadius}px` }}>
+						style={{ backgroundColor: attributes.progressColor, '--width': `${attributes.value}%`, maxWidth: `${attributes.value}%`, borderRadius: `${attributes.borderRadius}px` }}>
 
 					</div>
 				</div>

@@ -19,10 +19,13 @@
 
     .wp-themeisle-block-progress-bar__bar {
         width: 100%;
+        background-color: #dcd7ca;
         
         .wp-themeisle-block-progress-bar__progress {
             height: 100%;
             overflow: hidden;
+            background-color: lightseagreen;
+
 
             &.has-animation {
                 animation-duration: 3s;

@@ -28,9 +28,6 @@ registerBlockType( 'themeisle-blocks/progress-bar', {
 		'orbitfox'
 	],
 	attributes,
-	supports: {
-		html: true
-	},
 	edit,
 	save
 });

@@ -7,12 +7,10 @@ const attributes = {
 		default: 80
 	},
 	progressColor: {
-		type: 'string',
-		default: '#2675cf'
+		type: 'string'
 	},
 	backgroundColor: {
-		type: 'string',
-		default: '#dcd7ca'
+		type: 'string'
 	},
 	borderRadius: {
 		type: 'number',

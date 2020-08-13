@@ -17,32 +17,31 @@ const {
 
 const Inspector = ({ attributes, setAttributes }) => {
 
-	const setValue = value => {
+	const onValueChange = value => {
 		setAttributes({ value: value });
 	};
 
-	const setProgressColor = value => {
+	const onProgressColorChange = value => {
 		setAttributes({ progressColor: value });
 	};
 
-	const setBackgroundColor = value => {
+	const onBackgroundColorChange = value => {
 		setAttributes({ backgroundColor: value });
 	};
 
-	const setBorderRadius = value => {
+	const onBorderRadiusChange = value => {
 		setAttributes({ borderRadius: value });
-
 	};
 
-	const setHeight = value => {
+	const onHeigthChange = value => {
 		setAttributes({ height: value });
 	};
 
-	const setAnimated = value => {
+	const toggleAnimation = value => {
 		setAttributes({ animated: value });
 	};
 
-	const setHideValue = value => {
+	const toggleHideValue = value => {
 		setAttributes({ hideValue: value });
 	};
 
@@ -56,20 +55,20 @@ const Inspector = ({ attributes, setAttributes }) => {
 					label={ __( 'Animated' ) }
 					help={ __( 'Show animation.' ) }
 					checked={ attributes.animated }
-					onChange={ setAnimated }
+					onChange={ toggleAnimation }
 				/>
 
 				<ToggleControl
 					label={ __( 'Hide Percentage' ) }
 					help={ __( 'Hide the value of the percentage.' ) }
 					checked={ attributes.hideValue }
-					onChange={ setHideValue }
+					onChange={ toggleHideValue }
 				/>
 
 				<RangeControl
 					label={ __( 'Value' ) }
 					value={ attributes.value }
-					onChange={ setValue }
+					onChange={ onValueChange }
 					min={ 0 }
 					max={ 100 }
 				/>
@@ -77,19 +76,19 @@ const Inspector = ({ attributes, setAttributes }) => {
 				<ColorGradientControl
 					label={ 'Progress Color' }
 					colorValue={ attributes.progressColor }
-					onColorChange={ setProgressColor }
+					onColorChange={ onProgressColorChange }
 				/>
 
 				<ColorGradientControl
 					label={ 'Background Color' }
 					colorValue={ attributes.backgroundColor }
-					onColorChange={ setBackgroundColor }
+					onColorChange={ onBackgroundColorChange }
 				/>
 
 				<RangeControl
 					label={ __( 'Height' ) }
 					value={ attributes.height }
-					onChange={ setHeight }
+					onChange={ onHeigthChange }
 					min={ 5 }
 					max={ 20 }
 				/>
@@ -97,7 +96,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 				<RangeControl
 					label={ __( 'Border Radius' ) }
 					value={ attributes.borderRadius }
-					onChange={ setBorderRadius }
+					onChange={ onBorderRadiusChange }
 					min={ 0 }
 					max={ 20 }
 				/>
