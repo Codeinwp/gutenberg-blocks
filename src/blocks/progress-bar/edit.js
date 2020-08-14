@@ -33,7 +33,7 @@ const ProgressBar = ({ attributes, setAttributes, toggleSelection }) => {
 					/>
 					<span className="wp-themeisle-block-progress-bar__value">
 						{
-							attributes.hideValue && `${attributes.value}%`
+							! attributes.hideValue && `${attributes.value}%`
 						}
 					</span>
 				</div>

@@ -26,7 +26,7 @@ const attributes = {
 	},
 	hideValue: {
 		type: 'boolean',
-		default: true
+		default: false
 	}
 };
 
