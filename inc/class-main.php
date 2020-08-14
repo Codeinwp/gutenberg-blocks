@@ -253,12 +253,13 @@ class Main {
 			self::$is_glide_loaded = true;
 		}
 
-		if( ! self::$is_lottie_loaded && has_block( 'themeisle-blocks/lottie-block', $post )) {
+		if ( ! self::$is_lottie_loaded && has_block( 'themeisle-blocks/lottie-block', $post ) ) {
 			wp_enqueue_script(
 				'themeisle-gutenberg-lottie-player',
 				plugin_dir_url( $this->get_dir() ) . '/assets/lottie/lottie_player.js',
 				array(),
-				self::$assets_version
+				self::$assets_version,
+				true
 			);
 
 			self::$is_lottie_loaded = true;
