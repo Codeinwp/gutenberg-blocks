@@ -1,6 +1,8 @@
 const attributes = {
 	text: {
-		type: 'string'
+		type: 'string',
+		source: 'text',
+		selector: 'p'
 	},
 	value: {
 		type: 'number',
