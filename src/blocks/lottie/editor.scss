@@ -1,0 +1,34 @@
+
+.wp-block-themeisle-block-embed {
+    background-color: green;
+
+    .components-placeholder__fieldset {
+        display: flex;
+        flex-direction: column;
+
+        .wp-block-themeisle-block-embed-form {
+            display: flex;
+            flex-direction: row;
+            
+            .wp-block-themeisle-block-src {
+                margin-right: 20px;
+            }
+        }
+
+
+        .wp-block-themeisle-buttons-group {
+            display: flex;
+            flex-direction: row;
+            button {
+                margin-left: 10px;
+                width: max-content;
+            }
+        }
+        
+    }
+}
+
+
+.wp-block-themeisle-inspector-background {
+    margin: 5px;  
+}
