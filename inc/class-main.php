@@ -124,7 +124,7 @@ class Main {
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
-			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs' ),
+			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player' ),
 			self::$assets_version,
 			true
 		);
@@ -132,6 +132,14 @@ class Main {
 		wp_enqueue_script(
 			'glidejs',
 			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.min.js',
+			array(),
+			self::$assets_version,
+			true
+		);
+
+		wp_enqueue_script(
+			'lottie-player',
+			plugin_dir_url( $this->get_dir() ) . 'assets/lottie/lottie-player.js',
 			array(),
 			self::$assets_version,
 			true
@@ -253,10 +261,10 @@ class Main {
 			self::$is_glide_loaded = true;
 		}
 
-		if ( ! self::$is_lottie_loaded && has_block( 'themeisle-blocks/lottie-block', $post ) ) {
+		if ( ! self::$is_lottie_loaded && has_block( 'themeisle-blocks/lottie', $post ) ) {
 			wp_enqueue_script(
-				'themeisle-gutenberg-lottie-player',
-				plugin_dir_url( $this->get_dir() ) . '/assets/lottie/lottie_player.js',
+				'lottie-player',
+				plugin_dir_url( $this->get_dir() ) . 'assets/lottie/lottie-player.js',
 				array(),
 				self::$assets_version,
 				true

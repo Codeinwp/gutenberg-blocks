@@ -1,15 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	Controls,
-	Player
-} from '@lottiefiles/react-lottie-player';
-
-import {
-	Icon,
-	video
-} from '@wordpress/icons';
+import { video } from '@wordpress/icons';
 
 /**
  * Wordpress dependencies
@@ -21,7 +13,10 @@ const {
 	pick
 } = lodash;
 
-const { MediaPlaceholder } = wp.blockEditor;
+const {
+	BlockIcon,
+	MediaPlaceholder
+} = wp.blockEditor;
 
 const {
 	Fragment,
@@ -33,11 +28,11 @@ const {
  * Internal dependencies
  */
 import Inspector from './inspector.js';
-import { LOOP_OPTIONS } from './constants.js';
+import LottiePlayer from './components/lottie-player.js';
 
 const IDs = [];
 
-const LottiePlayer = ({
+const Edit = ({
 	attributes,
 	setAttributes,
 	isSelected,
@@ -46,32 +41,6 @@ const LottiePlayer = ({
 	useEffect( () => {
 		initBlock();
 	}, []);
-
-	useEffect( () => {
-		if ( playerRef.current ) {
-			playerRef.current.setPlayerDirection( attributes.direction );
-			playerRef.current.setPlayerSpeed( attributes.speed );
-			setLoopToPlayer( playerRef );
-		}
-
-		if ( playerRef.current ) {
-			const { playerState } = playerRef.current.state;
-			if ( playerState ) {
-				if ( 'error' === playerState ) {
-					setAttributes({ file: undefined });
-					console.log( 'WiP: Error' );
-				}
-			}
-		}
-	}, [ attributes ]);
-
-	useEffect( () => {
-		if ( playerRef.current ) {
-			if ( ! isSelected ) {
-				playerRef.current.stop();
-			}
-		}
-	}, [ isSelected ]);
 
 	const playerRef = useRef( null );
 
@@ -99,39 +68,6 @@ const LottiePlayer = ({
 		setAttributes({ file: { ...obj } });
 	};
 
-	const getLoop = () => {
-		switch ( attributes.loopType ) {
-		case LOOP_OPTIONS.NONE:
-			return false;
-		case LOOP_OPTIONS.CONTINUOUS:
-			return true;
-		case LOOP_OPTIONS.COUNTED:
-			return attributes.loopCount - 1;
-		}
-	};
-
-	const setLoopToPlayer = ()  => {
-		if ( ! playerRef.current.state.instance ) {
-			return;
-		}
-
-		const { instance } = playerRef.current.state;
-		instance.loop = getLoop();
-		playerRef.current.setState({ instance: instance });
-	};
-
-	const eventHandeler = event => {
-		if ( 'load' === event ) {
-			playerRef.current.setPlayerDirection( attributes.direction );
-			playerRef.current.setPlayerSpeed( attributes.speed );
-			setLoopToPlayer();
-		}
-
-		if ( 'error' === event ) {
-			console.log( 'WiP: Error' );
-		}
-	};
-
 	if ( isEmpty( attributes.file ) ) {
 		return (
 			<MediaPlaceholder
@@ -139,7 +75,7 @@ const LottiePlayer = ({
 					title: __( 'Lottie' ),
 					instructions: __( 'Add Lottie animations and files to your website.' )
 				} }
-				icon={ <Icon icon={ video } />}
+				icon={ <BlockIcon icon={ video } />}
 				accept={ [ 'application/json' ] }
 				allowedTypes={ [ 'application/json' ] }
 				value={ { ...attributes.file } }
@@ -154,32 +90,16 @@ const LottiePlayer = ({
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
+				playerRef={ playerRef }
 			/>
 
-			<Player
-				id={ attributes.id }
-				ref={ playerRef }
-				src={ attributes.file.url }
-				style={ {
-					height: `${ attributes.height }px`,
-					width: `${ attributes.width }px`
-				} }
-				hover={ attributes.hover }
-				loop={ getLoop() }
-				direction={ attributes.direction }
-				controls={ attributes.controls }
-				autoplay={ attributes.autoplay }
-				renderer={ attributes.renderer }
-				onEvent={ eventHandeler }
-			>
-				<Controls
-					visible={ isSelected }
-					buttons={ [ 'play', 'stop' ] }
-				/>
-			</Player>
+			<LottiePlayer
+				attributes={ attributes }
+				isSelected={ isSelected }
+				playerRef={ playerRef }
+			/>
 		</Fragment>
 	);
 };
 
-export default LottiePlayer;
-
+export default Edit;

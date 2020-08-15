@@ -18,7 +18,7 @@ import edit from './edit.js';
 import save from './save.js';
 import attributes from './attributes.js';
 
-registerBlockType( 'themeisle-blocks/lottie-block', {
+registerBlockType( 'themeisle-blocks/lottie', {
 	title: __( 'Lottie Animation' ),
 	description: __( 'Add Lottie animations to your WordPress.' ),
 	icon,
@@ -29,6 +29,9 @@ registerBlockType( 'themeisle-blocks/lottie-block', {
 		'animation'
 	],
 	attributes,
+	supports: {
+		align: [ 'left', 'center', 'right' ]
+	},
 	edit,
 	save
 });

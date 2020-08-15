@@ -1,16 +1,23 @@
-const { Fragment } = wp.element;
-
-import { playerProps } from './adaptor.js';
-
-const Save = ({ attributes }) => {
-
+const Save = ({
+	attributes,
+	className
+}) => {
 	return (
-		<Fragment>
-			{/* <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script> */}
-			<lottie-player
-				{...playerProps( attributes )}
-			></lottie-player>
-		</Fragment>
+		<lottie-player
+			id={ attributes.id }
+			className={ className }
+			src={ attributes.file.url }
+			autoplay
+			count={ attributes.count }
+			speed={ attributes.speed }
+			direction={ attributes.direction ? -1 : 1 }
+			style={ {
+				width: attributes.width,
+				height: 'auto'
+			} }
+			mode="normal"
+		>
+		</lottie-player>
 	);
 };
 
