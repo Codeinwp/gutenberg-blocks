@@ -4,23 +4,29 @@ const attributes = {
 		source: 'text',
 		selector: 'p'
 	},
+	type: {
+		type: 'string',
+		default: 'BAR'
+	},
 	percentage: {
 		type: 'number',
 		default: 80
 	},
 	progressColor: {
-		type: 'string'
+		type: 'string',
+		default: 'green'
 	},
 	strokeWidth: {
 		type: 'number',
 		default: 2.1
 	},
 	trailColor: {
-		type: 'string'
+		type: 'string',
+		default: 'gray'
 	},
 	trailWidth: {
 		type: 'number',
-		default: 0.8
+		default: 0
 	},
 	borderRadius: {
 		type: 'number',
@@ -28,7 +34,7 @@ const attributes = {
 	},
 	height: {
 		type: 'number',
-		default: 8
+		default: 15
 	},
 	animated: {
 		type: 'boolean',
@@ -48,19 +54,23 @@ const attributes = {
 	},
 	startColor: {
 		type: 'string',
-		default: 'orange'
+		default: '#d20f12'
 	},
 	endColor: {
 		type: 'string',
-		default: 'green'
+		default: '#0ce950'
 	},
 	coloredProgress: {
 		type: 'boolean',
 		default: false
 	},
+	strokeAnimation: {
+		type: 'boolean',
+		default: false
+	},
 	easing: {
 		type: 'string',
-		default: 'easeOut'
+		default: 'linear'
 	},
 	warnings: {
 		type: 'string',

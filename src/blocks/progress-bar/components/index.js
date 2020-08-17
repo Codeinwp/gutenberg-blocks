@@ -3,21 +3,27 @@ import SimpleBar from './SimpleBar.js';
 import CircleBar from './CircleBar.js';
 import SemicircleBar from './SemicircleBar.js';
 
+export const BarType = {
+	BAR: 'BAR',
+	CIRCLE: 'CIRCLE',
+	SEMICIRCLE: 'SEMICIRCLE'
+};
+
 
 const ProgressBar = ({ type, attributes, getValue }) => {
 
 	const { settings, animation } = adaptor( attributes );
 
 	switch ( type ) {
-	case 'bar':
+	case BarType.BAR:
 		return (
 			<SimpleBar settings={ settings } animation={ animation } getValue={ getValue }/>
 		);
-	case 'circle':
+	case BarType.CIRCLE:
 		return (
 			<CircleBar settings={ settings } animation={ animation } getValue={ getValue }/>
 		);
-	case 'semicircle':
+	case BarType.SEMICIRCLE:
 		return (
 			<SemicircleBar settings={ settings } animation={ animation } getValue={ getValue }/>
 		);

@@ -12,29 +12,38 @@ const {
 const {
 	PanelBody,
 	RangeControl,
-	ToggleControl
+	ToggleControl,
+	SelectControl
 } = wp.components;
+
+const { Fragment } = wp.element;
+
+import { BarType } from './components/index.js';
 
 const Inspector = ({ attributes, setAttributes }) => {
 
-	const onValueChange = value => {
-		setAttributes({ value: value });
+	const onTypeChange = value => {
+		setAttributes({ type: value});
+	};
+
+	const onPercentageChange = value => {
+		setAttributes({ percentage: value });
 	};
 
 	const onProgressColorChange = value => {
 		setAttributes({ progressColor: value });
 	};
 
-	const onBackgroundColorChange = value => {
-		setAttributes({ backgroundColor: value });
+	const onTrailColorChange = value => {
+		setAttributes({ trailColor: value });
 	};
 
-	const onBorderRadiusChange = value => {
-		setAttributes({ borderRadius: value });
+	const onStrokeWidthChange = value => {
+		setAttributes({ strokeWidth: value });
 	};
 
-	const onHeigthChange = value => {
-		setAttributes({ height: value });
+	const onTrailStrokeWidthChange = value => {
+		setAttributes({ trailWidth: value });
 	};
 
 	const toggleAnimation = value => {
@@ -45,12 +54,47 @@ const Inspector = ({ attributes, setAttributes }) => {
 		setAttributes({ hideValue: value });
 	};
 
+	const onDurationChange = value => {
+		setAttributes({ duration: value });
+	};
+
+	const onAnimationChange = value => {
+		setAttributes({ easing: value });
+	};
+
+	const toggleColoredProgress = value => {
+		setAttributes({ coloredProgress: value });
+	};
+
+	const onStartColorChange = value => {
+		setAttributes({ startColor: value });
+	};
+
+	const onEndColorChange = value => {
+		setAttributes({ endColor: value });
+	};
+
+	const toggleStrokeAnimaton = value => {
+		setAttributes({ strokeAnimation: value });
+	};
+
 	return (
 		<InspectorControls>
 			<PanelBody
 				title={ __( 'Settings' ) }
 				initialOpen={ true }
 			>
+				<SelectControl
+					label="Animation"
+					value={ attributes.type}
+					options={ [
+						{ label: 'Bar', value: BarType.BAR },
+						{ label: 'Circle', value: BarType.CIRCLE },
+						{ label: 'Semicircle', value: BarType.SEMICIRCLE }
+					] }
+					onChange={ onTypeChange }
+				/>
+
 				<ToggleControl
 					label={ __( 'Animated' ) }
 					help={ __( 'Show animation.' ) }
@@ -66,11 +110,39 @@ const Inspector = ({ attributes, setAttributes }) => {
 				/>
 
 				<RangeControl
-					label={ __( 'Value' ) }
-					value={ attributes.value }
-					onChange={ onValueChange }
+					label={ __( 'Percentage' ) }
+					value={ attributes.percentage }
+					onChange={ onPercentageChange }
 					min={ 0 }
 					max={ 100 }
+				/>
+
+				<RangeControl
+					label={ __( 'Duration' ) }
+					value={ attributes.duration }
+					onChange={ onDurationChange }
+					min={ 0.5 }
+					step={ 0.1 }
+					max={ 5 }
+				/>
+
+				<SelectControl
+					label="Animation"
+					value={ attributes.easing }
+					options={ [
+						{ label: 'Linear', value: 'linear' },
+						{ label: 'Ease In', value: 'easeIn' },
+						{ label: 'Ease In Quad', value: 'easeInQuad' },
+						{ label: 'Ease In Cubic', value: 'easeInCubic' },
+						{ label: 'Ease Out', value: 'easeOut' },
+						{ label: 'Ease Out Quad', value: 'easeOutQuad' },
+						{ label: 'Ease Out Cubic', value: 'easeOutCubic' },
+						{ label: 'Ease In Out', value: 'easeInOut' },
+						{ label: 'Ease Out', value: 'easeOut' },
+						{ label: 'Ease Out', value: 'easeOut' }
+
+					] }
+					onChange={ onAnimationChange }
 				/>
 
 				<ColorGradientControl
@@ -79,27 +151,62 @@ const Inspector = ({ attributes, setAttributes }) => {
 					onColorChange={ onProgressColorChange }
 				/>
 
+				{ attributes.type !== BarType.BAR && (
+					<RangeControl
+						label={ __( 'Stroke Width' ) }
+						value={ attributes.strokeWidth }
+						onChange={ onStrokeWidthChange }
+						min={ 0 }
+						step={ 0.1 }
+						max={ 5 }
+					/>
+				)}
+
 				<ColorGradientControl
-					label={ 'Background Color' }
+					label={ 'Trail Color' }
 					colorValue={ attributes.backgroundColor }
-					onColorChange={ onBackgroundColorChange }
+					onColorChange={ onTrailColorChange }
 				/>
 
 				<RangeControl
-					label={ __( 'Height' ) }
-					value={ attributes.height }
-					onChange={ onHeigthChange }
-					min={ 5 }
-					max={ 20 }
-				/>
-
-				<RangeControl
-					label={ __( 'Border Radius' ) }
-					value={ attributes.borderRadius }
-					onChange={ onBorderRadiusChange }
+					label={ __( 'Trail Stroke Width' ) }
+					value={ attributes.trailWidth}
+					onChange={ onTrailStrokeWidthChange }
 					min={ 0 }
-					max={ 20 }
+					step={ 0.1 }
+					max={ attributes.strokeWidth }
 				/>
+
+				<ToggleControl
+					label={ __( 'Animated Progress' ) }
+					help={ __( 'Show animation on the progress bar.' ) }
+					checked={ attributes.coloredProgress }
+					onChange={ toggleColoredProgress }
+				/>
+
+				{ attributes.coloredProgress && (
+					<Fragment>
+						<ColorGradientControl
+							label={ 'Start Color' }
+							colorValue={ attributes.startColor }
+							onColorChange={ onStartColorChange }
+						/>
+
+						<ColorGradientControl
+							label={ 'End Color' }
+							colorValue={ attributes.endColor }
+							onColorChange={ onEndColorChange }
+						/>
+					</Fragment>
+				)}
+
+				<ToggleControl
+					label={ __( 'Animated Stroke' ) }
+					help={ __( 'Show stroke animation on the progress bar.' ) }
+					checked={ attributes.strokeAnimation }
+					onChange={ toggleStrokeAnimaton }
+				/>
+
 
 			</PanelBody>
 		</InspectorControls>

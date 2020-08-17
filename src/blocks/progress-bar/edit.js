@@ -1,18 +1,25 @@
 
-import classname from 'classnames';
-
-
 const { __ } = wp.i18n;
 const { RichText } = wp.blockEditor;
 const { Fragment } = wp.element;
 const { ResizableBox } = wp.components;
+const { useRef } = wp.element;
 
 import Inspector from './inspector.js';
+import ProgressBarLibrary from './components/index.js';
 
 const ProgressBar = ({ attributes, setAttributes, toggleSelection }) => {
 
+	const percentageRef = useRef( null );
+
 	const onTextChange = value => {
 		setAttributes({ text: value });
+	};
+
+	const renderPercentage = value => {
+		if ( percentageRef.current ) {
+			percentageRef.current.innerHTML = value;
+		}
 	};
 
 	return (
@@ -31,11 +38,15 @@ const ProgressBar = ({ attributes, setAttributes, toggleSelection }) => {
 						onChange={ onTextChange }
 						multiline={ false }
 					/>
-					<span className="wp-themeisle-block-progress-bar__value">
-						{
-							! attributes.hideValue && `${attributes.value}%`
-						}
-					</span>
+
+					{
+						! attributes.hideValue && (
+							<span ref={ percentageRef }>
+
+							</span>
+						)
+					}
+
 				</div>
 				<ResizableBox
 					size={ {
@@ -62,16 +73,8 @@ const ProgressBar = ({ attributes, setAttributes, toggleSelection }) => {
 						toggleSelection( false );
 					} }
 				>
-					<div
-						className='wp-themeisle-block-progress-bar__bar'
-						style={{ backgroundColor: attributes.backgroundColor, borderRadius: `${attributes.borderRadius}px`, height: `${attributes.height}px` }}>
-						<div
-							className={
-								classname( 'wp-themeisle-block-progress-bar__progress', { 'has-animation': attributes.animated }, { 'has-no-animation': ! attributes.animated })
-							}
-							style={{ backgroundColor: attributes.progressColor, '--width': `${attributes.value}%`, maxWidth: `${attributes.value}%`, borderRadius: `${attributes.borderRadius}px` }}>
-
-						</div>
+					<div style={{ height: attributes.height }}>
+						<ProgressBarLibrary type={ attributes.type } attributes={ attributes } getValue={ renderPercentage } />
 					</div>
 				</ResizableBox>
 			</div>

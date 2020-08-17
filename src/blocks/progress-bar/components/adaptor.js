@@ -1,6 +1,32 @@
-import attributes from '../attributes';
 
 const extractSettings = attributes => {
+
+	let from, to;
+
+	if ( attributes.coloredProgress ) {
+		from = {
+			...from,
+			color: attributes.startColor
+		};
+		to = {
+			...to,
+			color: attributes.endColor
+		};
+
+	}
+
+	if ( attributes.strokeAnimation ) {
+		from = {
+			...from,
+			width: 0
+		};
+		to = {
+			...to,
+			width: attributes.strokeWidth
+		};
+	}
+
+
 	return ({
 		color: attributes.progressColor,
 		strokeWidth: attributes.strokeWidth,
@@ -8,11 +34,12 @@ const extractSettings = attributes => {
 		trailWidth: attributes.trailWidth,
 		duration: attributes.duration * 1000,
 		easing: attributes.easing,
-		from: {
-			color: attributes.startColor
-		},
-		to: {
-			color: attributes.endColor
+		to,
+		from,
+		svgStyle: {
+			display: 'block',
+			width: '100%',
+			height: `${attributes.height}px`
 		},
 		warnings: attributes.warnings
 	});
@@ -21,14 +48,16 @@ const extractSettings = attributes => {
 const extractAnimation = attributes => {
 	return ({
 		coloredProgress: attributes.coloredProgress,
-		percentage: attributes.percentage
+		percentage: attributes.percentage,
+		isAnimated: attributes.animated,
+		strokeAnimation: attributes.strokeAnimation
 	});
 };
 
 const adaptor = attributes => {
 	return ({
 		settings: extractSettings( attributes ),
-		animation: extractAnimation( animation )
+		animation: extractAnimation( attributes )
 	});
 };
 

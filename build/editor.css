@@ -947,6 +947,84 @@ span.wp-block-themeisle-blocks-advanced-heading {
     .wp-block-themeisle-blocks-posts-grid.is-grid .wp-block-themeisle-blocks-posts-grid-post-blog {
       min-width: 100%; } }
 
+.wp-themeisle-block-progress-bar {
+  display: flex;
+  flex-direction: column; }
+  .wp-themeisle-block-progress-bar .wp-themeisle-block-progress-bar__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: .25em; }
+    .wp-themeisle-block-progress-bar .wp-themeisle-block-progress-bar__content .wp-themeisle-block-progress-bar__title {
+      margin: 0px; }
+    .wp-themeisle-block-progress-bar .wp-themeisle-block-progress-bar__content .wp-themeisle-block-progress-bar__value {
+      margin-left: auto; }
+  .wp-themeisle-block-progress-bar .wp-themeisle-block-progress-bar__bar {
+    width: 100%;
+    background-color: #dcd7ca; }
+    .wp-themeisle-block-progress-bar .wp-themeisle-block-progress-bar__bar .wp-themeisle-block-progress-bar__progress {
+      height: 100%;
+      overflow: hidden;
+      background-color: lightseagreen; }
+      .wp-themeisle-block-progress-bar .wp-themeisle-block-progress-bar__bar .wp-themeisle-block-progress-bar__progress.has-animation {
+        -webkit-animation-duration: 3s;
+                animation-duration: 3s;
+        -webkit-animation-name: progress;
+                animation-name: progress; }
+
+@-webkit-keyframes progress {
+  from {
+    width: 0%; }
+  to {
+    width: var(--width); } }
+
+@keyframes progress {
+  from {
+    width: 0%; }
+  to {
+    width: var(--width); } }
+      .wp-themeisle-block-progress-bar .wp-themeisle-block-progress-bar__bar .wp-themeisle-block-progress-bar__progress.has-no-animation {
+        width: var(--width); }
+
+.wp-themeisle-block-progress-bar {
+  display: flex;
+  flex-direction: column; }
+  .wp-themeisle-block-progress-bar .wp-themeisle-block-progress-bar__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: .25em; }
+    .wp-themeisle-block-progress-bar .wp-themeisle-block-progress-bar__content .wp-themeisle-block-progress-bar__title {
+      margin: 0px; }
+    .wp-themeisle-block-progress-bar .wp-themeisle-block-progress-bar__content .wp-themeisle-block-progress-bar__value {
+      margin-left: auto; }
+  .wp-themeisle-block-progress-bar .wp-themeisle-block-progress-bar__bar {
+    width: 100%;
+    background-color: #dcd7ca; }
+    .wp-themeisle-block-progress-bar .wp-themeisle-block-progress-bar__bar .wp-themeisle-block-progress-bar__progress {
+      height: 100%;
+      overflow: hidden;
+      background-color: lightseagreen; }
+      .wp-themeisle-block-progress-bar .wp-themeisle-block-progress-bar__bar .wp-themeisle-block-progress-bar__progress.has-animation {
+        -webkit-animation-duration: 3s;
+                animation-duration: 3s;
+        -webkit-animation-name: progress;
+                animation-name: progress; }
+
+@-webkit-keyframes progress {
+  from {
+    width: 0%; }
+  to {
+    width: var(--width); } }
+
+@keyframes progress {
+  from {
+    width: 0%; }
+  to {
+    width: var(--width); } }
+      .wp-themeisle-block-progress-bar .wp-themeisle-block-progress-bar__bar .wp-themeisle-block-progress-bar__progress.has-no-animation {
+        width: var(--width); }
+
 .wp-block-themeisle-blocks-advanced-columns-background-control {
   margin: 0 0 1.5em 0; }
   .wp-block-themeisle-blocks-advanced-columns-background-control .components-base-control__title {
