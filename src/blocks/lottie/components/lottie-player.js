@@ -7,6 +7,7 @@ const { useEffect } = wp.element;
 
 const LottiePlayer = ({
 	attributes,
+	isSelected,
 	playerRef
 }) => {
 	useEffect( () => {
@@ -14,6 +15,18 @@ const LottiePlayer = ({
 			playerRef.current.addEventListener( 'complete', initLoop );
 		}
 	}, []);
+
+	useEffect( () => {
+		if ( isSelected ) {
+			playerRef.current.play();
+
+			if ( attributes.direction ) {
+				playerRef.current.seek( '100%' );
+			}
+		} else  {
+			playerRef.current.stop();
+		}
+	}, [ isSelected ]);
 
 	const initLoop = () => {
 		if ( playerRef.current ) {

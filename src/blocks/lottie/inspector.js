@@ -35,7 +35,6 @@ const Inspector = ({
 
 	const toggleDirection = value => {
 		setAttributes({ direction: value });
-		console.log( playerRef.current, value ? -1 : 1 );
 		playerRef.current.setDirection( value ? -1 : 1 );
 	};
 
