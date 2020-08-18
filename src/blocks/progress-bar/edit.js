@@ -1,25 +1,95 @@
 
+import ProgressBar from 'progressbar.js';
+
+/**
+ * WordPress dependencies
+ */
 const { __ } = wp.i18n;
 const { RichText } = wp.blockEditor;
 const { Fragment } = wp.element;
 const { ResizableBox } = wp.components;
-const { useRef } = wp.element;
+const { useRef, useState, useEffect } = wp.element;
 
 import Inspector from './inspector.js';
-import ProgressBarLibrary from './components/index.js';
+import adaptor from './adaptor.js';
 
-const ProgressBar = ({ attributes, setAttributes, toggleSelection }) => {
+export const BarType = {
+	BAR: 'BAR',
+	CIRCLE: 'CIRCLE',
+	SEMICIRCLE: 'SEMICIRCLE'
+};
 
-	const percentageRef = useRef( null );
+const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) => {
+
+	const progressBarRef = useRef( null );
+
+	const [ progressBar, setProgressBar ] = useState( null );
+	const [ value, setValue ] = useState( null );
+
+	const { settings, animation } = adaptor( attributes );
+
+	useEffect( () => {
+		create();
+	}, [ attributes ]);
 
 	const onTextChange = value => {
 		setAttributes({ text: value });
 	};
 
-	const renderPercentage = value => {
-		if ( percentageRef.current ) {
-			percentageRef.current.innerHTML = value;
+	const step = ( state, bar ) => {
+		if ( animation.coloredProgress ) {
+			bar.path.setAttribute( 'stroke', state.color );
 		}
+
+		if ( animation.strokeAnimation ) {
+			bar.path.setAttribute( 'stroke-width', state.width );
+		}
+
+		setValue( Math.round( bar.value() * 100 ) );
+	};
+
+	const create = () => {
+
+		if ( ! progressBarRef.current ) {
+			return;
+		}
+
+		if ( progressBar ) {
+			progressBar.destroy();
+		}
+
+		console.log({ ...settings });
+
+		let bar;
+
+		switch ( attributes.type ) {
+		case BarType.BAR:
+			bar = new ProgressBar.Line( progressBarRef.current, {
+				...settings,
+				step
+			});
+			break;
+		case BarType.CIRCLE:
+			bar = new ProgressBar.Circle( progressBarRef.current, {
+				...settings,
+				step
+			});
+			break;
+		case BarType.SEMICIRCLE:
+			bar = new ProgressBar.SemiCircle( progressBarRef.current, {
+				...settings,
+				step
+			});
+			break;
+		}
+
+		if ( animation.isAnimated ) {
+			bar.animate( ( animation.percentage / 100 ).toFixed( 2 ) );
+		} else {
+			bar.set( ( animation.percentage / 100 ).toFixed( 2 ) );
+		}
+
+		setProgressBar( bar );
 	};
 
 	return (
@@ -40,11 +110,7 @@ const ProgressBar = ({ attributes, setAttributes, toggleSelection }) => {
 					/>
 
 					{
-						! attributes.hideValue && (
-							<span ref={ percentageRef }>
-
-							</span>
-						)
+						! attributes.hideValue && value
 					}
 
 				</div>
@@ -54,7 +120,7 @@ const ProgressBar = ({ attributes, setAttributes, toggleSelection }) => {
 					} }
 					minHeight="20"
 					enable={ {
-						top: true,
+						top: false,
 						right: false,
 						bottom: true,
 						left: false,
@@ -74,7 +140,7 @@ const ProgressBar = ({ attributes, setAttributes, toggleSelection }) => {
 					} }
 				>
 					<div style={{ height: attributes.height }}>
-						<ProgressBarLibrary type={ attributes.type } attributes={ attributes } getValue={ renderPercentage } />
+						<div ref={ progressBarRef }></div>
 					</div>
 				</ResizableBox>
 			</div>
@@ -82,4 +148,4 @@ const ProgressBar = ({ attributes, setAttributes, toggleSelection }) => {
 	);
 };
 
-export default ProgressBar;
+export default ProgressBarComponent;

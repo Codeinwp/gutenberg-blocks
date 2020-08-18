@@ -18,7 +18,7 @@ const {
 
 const { Fragment } = wp.element;
 
-import { BarType } from './components/index.js';
+import { BarType } from './edit.js';
 
 const Inspector = ({ attributes, setAttributes }) => {
 
