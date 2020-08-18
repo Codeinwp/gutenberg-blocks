@@ -139,7 +139,7 @@ class Main {
 
 		wp_enqueue_script(
 			'lottie-player',
-			plugin_dir_url( $this->get_dir() ) . 'assets/lottie/lottie-player.js',
+			plugin_dir_url( $this->get_dir() ) . 'assets/lottie/lottie-player.min.js',
 			array(),
 			self::$assets_version,
 			true
@@ -264,8 +264,24 @@ class Main {
 		if ( ! self::$is_lottie_loaded && has_block( 'themeisle-blocks/lottie', $post ) ) {
 			wp_enqueue_script(
 				'lottie-player',
-				plugin_dir_url( $this->get_dir() ) . 'assets/lottie/lottie-player.js',
+				plugin_dir_url( $this->get_dir() ) . 'assets/lottie/lottie-player.min.js',
 				array(),
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_script(
+				'lottie-interactivity',
+				plugin_dir_url( $this->get_dir() ) . 'assets/lottie/lottie-interactivity.min.js',
+				array( 'lottie-player' ),
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_script(
+				'themeisle-gutenberg-lottie',
+				plugin_dir_url( $this->get_dir() ) . 'build/lottie.js',
+				array( 'wp-dom-ready', 'lottie-player', 'lottie-interactivity' ),
 				self::$assets_version,
 				true
 			);

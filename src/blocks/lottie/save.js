@@ -8,13 +8,13 @@ const Save = ({
 			className={ className }
 			src={ attributes.file.url }
 			autoplay
-			count={ attributes.count }
+			loop
+			count={ attributes.direction ? attributes.count * -1 : attributes.count }
 			speed={ attributes.speed }
 			direction={ attributes.direction ? -1 : 1 }
-			style={ {
-				width: attributes.width,
-				height: 'auto'
-			} }
+			trigger={ attributes.trigger }
+			width={ attributes.width }
+			data-loop={ attributes.loop }
 			mode="normal"
 		>
 		</lottie-player>

@@ -18,6 +18,9 @@ module.exports = {
 		],
 		slider: [
 			...glob.sync( './src/frontend/slider/index.js' )
+		],
+		lottie: [
+			...glob.sync( './src/frontend/lottie/index.js' )
 		]
 	},
 	externals: {

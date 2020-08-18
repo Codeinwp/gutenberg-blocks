@@ -5,6 +5,10 @@ const attributes = {
 	file: {
 		type: 'object'
 	},
+	trigger: {
+		type: 'string',
+		default: 'none'
+	},
 	loop: {
 		type: 'boolean',
 		default: false
