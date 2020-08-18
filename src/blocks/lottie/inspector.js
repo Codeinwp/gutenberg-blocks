@@ -65,7 +65,6 @@ const Inspector = ({
 					value={ attributes.trigger }
 					options={ [
 						{ label: __( 'None' ), value: 'none' },
-						{ label: __( 'Viewport' ), value: 'Viewport' },
 						{ label: __( 'Scroll' ), value: 'scroll' },
 						{ label: __( 'Hover' ), value: 'hover' },
 						{ label: __( 'Click' ), value: 'click' }
@@ -91,25 +90,25 @@ const Inspector = ({
 								onChange={ onChangeLoopCount }
 							/>
 						) }
+
+						<RangeControl
+							label={ __( 'Speed' ) }
+							help={ __( 'Animation speed.' ) }
+							value={ attributes.speed }
+							onChange={ onChangeSpeed }
+							step={ 0.1 }
+							min={ 0.1 }
+							max={ 5 }
+						/>
+
+						<ToggleControl
+							label={ __( 'Reverse' ) }
+							help={ __( 'Direction of animation.' ) }
+							checked={ attributes.direction }
+							onChange={ toggleDirection }
+						/>
 					</Fragment>
 				) }
-
-				<RangeControl
-					label={ __( 'Speed' ) }
-					help={ __( 'Animation speed.' ) }
-					value={ attributes.speed }
-					onChange={ onChangeSpeed }
-					step={ 0.1 }
-					min={ 0.1 }
-					max={ 5 }
-				/>
-
-				<ToggleControl
-					label={ __( 'Reverse' ) }
-					help={ __( 'Direction of animation.' ) }
-					checked={ attributes.direction }
-					onChange={ toggleDirection }
-				/>
 
 				<RangeControl
 					label={ __( 'Width' ) }

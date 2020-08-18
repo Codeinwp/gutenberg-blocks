@@ -2,6 +2,18 @@ const Save = ({
 	attributes,
 	className
 }) => {
+	if ( 'scroll' === attributes.trigger ) {
+		return (
+			<lottie-player
+				id={ attributes.id }
+				className={ className }
+				src={ attributes.file.url }
+				trigger={ attributes.trigger }
+			>
+			</lottie-player>
+		);
+	}
+
 	return (
 		<lottie-player
 			id={ attributes.id }
