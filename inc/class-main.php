@@ -245,6 +245,22 @@ class Main {
 
 			self::$is_glide_loaded = true;
 		}
+
+		wp_enqueue_script(
+			'progress-bar',
+			plugin_dir_url( $this->get_dir() ) . 'assets/progress-bar/progressbar.min.js',
+			array(),
+			self::$assets_version,
+			true
+		);
+
+		wp_enqueue_script(
+			'themeisle-gutenberg-progress-bar',
+			plugin_dir_url( $this->get_dir() ) . 'build/progressBar.js',
+			array( 'wp-dom-ready', 'progress-bar'),//array('progressbar'),
+			self::$assets_version,
+			true
+		);
 	}
 
 	/**

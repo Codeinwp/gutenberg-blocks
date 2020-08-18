@@ -144,6 +144,15 @@ const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) =>
 					</div>
 				</ResizableBox>
 			</div>
+			<progress-bar { ...attributes }>
+				<div className="wp-themeisle-block-progress-bar">
+					<div className="wp-themeisle-block-progress-bar__content">
+						<span id="value" className="wp-themeisle-block-progress-bar__value">
+						</span>
+					</div>
+					<div id="container"/>
+				</div>
+			</progress-bar>
 		</Fragment>
 	);
 };

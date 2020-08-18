@@ -85,7 +85,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 				initialOpen={ true }
 			>
 				<SelectControl
-					label="Animation"
+					label="Bar Type"
 					value={ attributes.type}
 					options={ [
 						{ label: 'Bar', value: BarType.BAR },
