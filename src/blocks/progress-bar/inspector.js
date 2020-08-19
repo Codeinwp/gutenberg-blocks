@@ -95,12 +95,6 @@ const Inspector = ({ attributes, setAttributes }) => {
 					onChange={ onTypeChange }
 				/>
 
-				<ToggleControl
-					label={ __( 'Animated' ) }
-					help={ __( 'Show animation.' ) }
-					checked={ attributes.animated }
-					onChange={ toggleAnimation }
-				/>
 
 				<ToggleControl
 					label={ __( 'Hide Percentage' ) }
@@ -117,33 +111,6 @@ const Inspector = ({ attributes, setAttributes }) => {
 					max={ 100 }
 				/>
 
-				<RangeControl
-					label={ __( 'Duration' ) }
-					value={ attributes.duration }
-					onChange={ onDurationChange }
-					min={ 0.5 }
-					step={ 0.1 }
-					max={ 5 }
-				/>
-
-				<SelectControl
-					label="Animation"
-					value={ attributes.easing }
-					options={ [
-						{ label: 'Linear', value: 'linear' },
-						{ label: 'Ease In', value: 'easeIn' },
-						{ label: 'Ease In Quad', value: 'easeInQuad' },
-						{ label: 'Ease In Cubic', value: 'easeInCubic' },
-						{ label: 'Ease Out', value: 'easeOut' },
-						{ label: 'Ease Out Quad', value: 'easeOutQuad' },
-						{ label: 'Ease Out Cubic', value: 'easeOutCubic' },
-						{ label: 'Ease In Out', value: 'easeInOut' },
-						{ label: 'Ease Out', value: 'easeOut' },
-						{ label: 'Ease Out', value: 'easeOut' }
-
-					] }
-					onChange={ onAnimationChange }
-				/>
 
 				<ColorGradientControl
 					label={ 'Progress Color' }
@@ -178,35 +145,73 @@ const Inspector = ({ attributes, setAttributes }) => {
 				/>
 
 				<ToggleControl
-					label={ __( 'Animated Progress' ) }
-					help={ __( 'Show animation on the progress bar.' ) }
-					checked={ attributes.coloredProgress }
-					onChange={ toggleColoredProgress }
+					label={ __( 'Animated' ) }
+					help={ __( 'Show animation.' ) }
+					checked={ attributes.animated }
+					onChange={ toggleAnimation }
 				/>
+				{ attributes.animated && (
 
-				{ attributes.coloredProgress && (
 					<Fragment>
-						<ColorGradientControl
-							label={ 'Start Color' }
-							colorValue={ attributes.startColor }
-							onColorChange={ onStartColorChange }
+						<RangeControl
+							label={ __( 'Duration' ) }
+							value={ attributes.duration }
+							onChange={ onDurationChange }
+							min={ 0.5 }
+							step={ 0.1 }
+							max={ 5 }
 						/>
 
-						<ColorGradientControl
-							label={ 'End Color' }
-							colorValue={ attributes.endColor }
-							onColorChange={ onEndColorChange }
+						<SelectControl
+							label="Animation"
+							value={ attributes.easing }
+							options={ [
+								{ label: 'Linear', value: 'linear' },
+								{ label: 'Ease In', value: 'easeIn' },
+								{ label: 'Ease In Quad', value: 'easeInQuad' },
+								{ label: 'Ease In Cubic', value: 'easeInCubic' },
+								{ label: 'Ease Out', value: 'easeOut' },
+								{ label: 'Ease Out Quad', value: 'easeOutQuad' },
+								{ label: 'Ease Out Cubic', value: 'easeOutCubic' },
+								{ label: 'Ease In Out', value: 'easeInOut' },
+								{ label: 'Ease Out', value: 'easeOut' },
+								{ label: 'Ease Out', value: 'easeOut' }
+
+							] }
+							onChange={ onAnimationChange }
+						/>
+
+						<ToggleControl
+							label={ __( 'Animated Progress' ) }
+							help={ __( 'Show animation on the progress bar.' ) }
+							checked={ attributes.coloredProgress }
+							onChange={ toggleColoredProgress }
+						/>
+
+						{ attributes.coloredProgress && (
+							<Fragment>
+								<ColorGradientControl
+									label={ 'Start Color' }
+									colorValue={ attributes.startColor }
+									onColorChange={ onStartColorChange }
+								/>
+
+								<ColorGradientControl
+									label={ 'End Color' }
+									colorValue={ attributes.endColor }
+									onColorChange={ onEndColorChange }
+								/>
+							</Fragment>
+						)}
+
+						<ToggleControl
+							label={ __( 'Animated Stroke' ) }
+							help={ __( 'Show stroke animation on the progress bar.' ) }
+							checked={ attributes.strokeAnimation }
+							onChange={ toggleStrokeAnimaton }
 						/>
 					</Fragment>
 				)}
-
-				<ToggleControl
-					label={ __( 'Animated Stroke' ) }
-					help={ __( 'Show stroke animation on the progress bar.' ) }
-					checked={ attributes.strokeAnimation }
-					onChange={ toggleStrokeAnimaton }
-				/>
-
 
 			</PanelBody>
 		</InspectorControls>
