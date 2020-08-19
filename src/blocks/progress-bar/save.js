@@ -3,8 +3,8 @@ const { RichText } = wp.blockEditor;
 const ProgressBar = ({ attributes }) => {
 
 	return (
-		<progress-bar { ...attributes }>
-			<div className="wp-themeisle-block-progress-bar">
+		<div className="wp-themeisle-block-progress-bar">
+			<progress-bar { ...attributes }>
 				<div className="wp-themeisle-block-progress-bar__content">
 					<RichText.Content
 						tagName="p"
@@ -14,9 +14,11 @@ const ProgressBar = ({ attributes }) => {
 					<span id="value" className="wp-themeisle-block-progress-bar__value">
 					</span>
 				</div>
-				<div id="container"/>
-			</div>
-		</progress-bar>
+				<div style={{ height: `${attributes.height}px` }}>
+					<div id="container" className="wp-themeisle-block-progress-bar__bar"/>
+				</div>
+			</progress-bar>
+		</div>
 	);
 };
 

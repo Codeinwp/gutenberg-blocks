@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
 
+
     .wp-themeisle-block-progress-bar__content {
         display: flex;
         flex-direction: row;
@@ -17,40 +18,7 @@
         }
     }
 
-    #container {
-        width: 300px;
-        height: 150px;
-    }
-
     .wp-themeisle-block-progress-bar__bar {
         width: 100%;
-        background-color: #dcd7ca;
-        
-        .wp-themeisle-block-progress-bar__progress {
-            height: 100%;
-            overflow: hidden;
-            background-color: lightseagreen;
-
-
-            &.has-animation {
-                animation-duration: 3s;
-                animation-name: progress;
-
-                @keyframes progress {
-                    from {
-                        width: 0%;
-                    }
-                
-                    to {
-                        width: var( --width );
-                    }
-                }
-            }
-
-            &.has-no-animation {
-                width: var( --width );
-            }
-           
-        }
     }
 }

@@ -58,8 +58,6 @@ const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) =>
 			progressBar.destroy();
 		}
 
-		console.log({ ...settings });
-
 		let bar;
 
 		switch ( attributes.type ) {
@@ -99,60 +97,55 @@ const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) =>
 				setAttributes={ setAttributes }
 			/>
 			<div className="wp-themeisle-block-progress-bar">
-				<div className="wp-themeisle-block-progress-bar__content">
-					<RichText
-						tagName="p"
-						className="wp-themeisle-block-progress-bar__title"
-						placeholder={ __( 'Write a title…' ) }
-						value={ attributes.text }
-						onChange={ onTextChange }
-						multiline={ false }
-					/>
-
-					{
-						! attributes.hideValue && value
-					}
-
-				</div>
-				<ResizableBox
-					size={ {
-						height: attributes.height
-					} }
-					minHeight="20"
-					enable={ {
-						top: false,
-						right: false,
-						bottom: true,
-						left: false,
-						topRight: false,
-						bottomRight: false,
-						bottomLeft: false,
-						topLeft: false
-					} }
-					onResizeStop={ ( event, direction, elt, delta ) => {
-						setAttributes({
-							height: parseInt( attributes.height + delta.height, 10 )
-						});
-						toggleSelection( true );
-					} }
-					onResizeStart={ () => {
-						toggleSelection( false );
-					} }
-				>
-					<div style={{ height: attributes.height }}>
-						<div ref={ progressBarRef }></div>
-					</div>
-				</ResizableBox>
-			</div>
-			<progress-bar { ...attributes }>
-				<div className="wp-themeisle-block-progress-bar">
+				<progress-bar {...attributes}>
 					<div className="wp-themeisle-block-progress-bar__content">
+						<RichText
+							tagName="p"
+							className="wp-themeisle-block-progress-bar__title"
+							placeholder={ __( 'Write a title…' ) }
+							value={ attributes.text }
+							onChange={ onTextChange }
+							multiline={ false }
+						/>
+
 						<span id="value" className="wp-themeisle-block-progress-bar__value">
+							{
+								! attributes.hideValue && value
+							}
 						</span>
+
 					</div>
-					<div id="container"/>
-				</div>
-			</progress-bar>
+					<ResizableBox
+						size={ {
+							height: attributes.height
+						} }
+						minHeight="20"
+						enable={ {
+							top: false,
+							right: false,
+							bottom: true,
+							left: false,
+							topRight: false,
+							bottomRight: false,
+							bottomLeft: false,
+							topLeft: false
+						} }
+						onResizeStop={ ( event, direction, elt, delta ) => {
+							setAttributes({
+								height: parseInt( attributes.height + delta.height, 10 )
+							});
+							toggleSelection( true );
+						} }
+						onResizeStart={ () => {
+							toggleSelection( false );
+						} }
+					>
+						<div style={{ height: `${attributes.height}px` }}>
+							<div ref={ progressBarRef } id="container" className="wp-themeisle-block-progress-bar__bar"></div>
+						</div>
+					</ResizableBox>
+				</progress-bar>
+			</div>
 		</Fragment>
 	);
 };

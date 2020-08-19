@@ -1,14 +1,10 @@
-
-//import adaptor from './../../blocks/progress-bar/adaptor.js';
-//import ProgressBar from 'progressbar.js';
-
 const domReady = wp.domReady;
 
 const extractSettings = attributes => {
 
 	let from, to;
 
-	if ( attributes.coloredprogress ) {
+	if ( 'true' === attributes.coloredprogress ) {
 		from = {
 			...from,
 			color: attributes.startcolor
@@ -20,23 +16,23 @@ const extractSettings = attributes => {
 
 	}
 
-	if ( attributes.strokeanimation ) {
+	if ( 'true' === attributes.strokeanimation ) {
 		from = {
 			...from,
 			width: 0
 		};
 		to = {
 			...to,
-			width: attributes.strokewidth
+			width: parseFloat( attributes.strokewidth )
 		};
 	}
 
 
 	return ({
 		color: attributes.progresscolor,
-		strokeWidth: attributes.strokewidth,
+		strokeWidth: parseFloat( attributes.strokewidth ),
 		trailColor: attributes.trailcolor,
-		trailWidth: attributes.trailwidth,
+		trailWidth: parseFloat( attributes.trailwidth ),
 		duration: attributes.duration * 1000,
 		easing: attributes.easing,
 		to,
@@ -46,7 +42,16 @@ const extractSettings = attributes => {
 			width: '100%',
 			height: `${attributes.height}px`
 		},
-		warnings: attributes.warnings
+		warnings: 'true' === attributes.warnings
+	});
+};
+
+const extractAnimation = attributes => {
+	return ({
+		coloredProgress: 'true' === attributes.coloredprogress,
+		percentage: parseFloat( attributes.percentage ),
+		isAnimated: 'true' === attributes.animated,
+		strokeAnimation: 'true' === attributes.strokeanimation
 	});
 };
 
@@ -56,7 +61,6 @@ export const BarType = {
 	SEMICIRCLE: 'SEMICIRCLE'
 };
 
-export const barsRef = [];
 
 domReady( () => {
 	const bars = document.getElementsByTagName( 'PROGRESS-BAR' );
@@ -68,41 +72,61 @@ domReady( () => {
 
 		const container = element.querySelector( '#container' );
 
-		//const value = element.querySelector( 'value' );
+		const value = element.querySelector( '#value' );
 
 		let attributes = {};
 		Array.from( element.attributes ).forEach( x => attributes[x.nodeName] = x.nodeValue );
-		console.log( attributes );
-		console.log( container );
+		console.log( element.attributes );
+
+		//console.log( container );
+		//console.log( value );
 
 		const settings  = extractSettings( attributes );
+		const animation = extractAnimation( attributes );
 
 		console.log( settings );
+		console.log( animation );
 
 		let bar;
+
+		const step = ( state, bar ) => {
+
+			if ( animation.coloredProgress ) {
+				bar.path.setAttribute( 'stroke', state.color );
+			}
+
+			if ( animation.strokeAnimation ) {
+				bar.path.setAttribute( 'stroke-width', state.width );
+			}
+
+			value.innerHTML = `${ Math.round( bar.value() * 100 ) }%`;
+			console.log( bar.value() );
+		};
 
 		switch ( attributes.type ) {
 		case BarType.BAR:
 			bar = new ProgressBar.Line( container, {
 				...settings,
-				//step
+				step
 			});
 			break;
 		case BarType.CIRCLE:
 			bar = new ProgressBar.Circle( container, {
-				...settings,
-				step
+				...settings
 			});
 			break;
 		case BarType.SEMICIRCLE:
 			bar = new ProgressBar.SemiCircle( container, {
-				...settings,
-				step
+				...settings
 			});
 			break;
 		}
 
-		barsRef.push( bar );
+		if ( animation.isAnimated ) {
+			bar.animate( ( animation.percentage / 100 ).toFixed( 2 ) );
+		} else {
+			bar.set( ( animation.percentage / 100 ).toFixed( 2 ) );
+		}
 	});
 });
 

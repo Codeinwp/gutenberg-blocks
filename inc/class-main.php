@@ -165,6 +165,22 @@ class Main {
 			[],
 			self::$assets_version
 		);
+
+		wp_enqueue_script(
+			'progress-bar',
+			plugin_dir_url( $this->get_dir() ) . 'assets/progress-bar/progressbar.js',
+			array(),
+			self::$assets_version,
+			true
+		);
+
+		wp_enqueue_script(
+			'themeisle-gutenberg-progress-bar',
+			plugin_dir_url( $this->get_dir() ) . 'build/progressBar.js',
+			array( 'wp-dom-ready', 'progress-bar'),
+			self::$assets_version,
+			true
+		);
 	}
 
 	/**
@@ -248,7 +264,7 @@ class Main {
 
 		wp_enqueue_script(
 			'progress-bar',
-			plugin_dir_url( $this->get_dir() ) . 'assets/progress-bar/progressbar.min.js',
+			plugin_dir_url( $this->get_dir() ) . 'assets/progress-bar/progressbar.js',
 			array(),
 			self::$assets_version,
 			true
@@ -257,7 +273,7 @@ class Main {
 		wp_enqueue_script(
 			'themeisle-gutenberg-progress-bar',
 			plugin_dir_url( $this->get_dir() ) . 'build/progressBar.js',
-			array( 'wp-dom-ready', 'progress-bar'),//array('progressbar'),
+			array( 'wp-dom-ready', 'progress-bar'),
 			self::$assets_version,
 			true
 		);

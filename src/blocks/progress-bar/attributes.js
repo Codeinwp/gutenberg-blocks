@@ -60,10 +60,6 @@ const attributes = {
 		type: 'string',
 		default: '#0ce950'
 	},
-	coloredProgress: {
-		type: 'boolean',
-		default: false
-	},
 	strokeAnimation: {
 		type: 'boolean',
 		default: false
