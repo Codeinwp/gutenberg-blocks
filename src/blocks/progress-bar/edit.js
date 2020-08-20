@@ -45,7 +45,21 @@ const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) =>
 			bar.path.setAttribute( 'stroke-width', state.width );
 		}
 
-		setValue( Math.round( bar.value() * 100 ) );
+		const percentage = Math.round( bar.value() * 100 );
+
+		if ( attributes.type !== BarType.BAR  && ! animation.hideValue ) {
+			if ( 0 === percentage ) {
+				bar.setText( '' );
+			} else {
+				bar.setText( percentage );
+			}
+
+			if ( animation.coloredProgress ) {
+				bar.text.style.color = state.color ;
+			}
+		}
+
+		setValue( percentage );
 	};
 
 	const create = () => {
@@ -67,17 +81,31 @@ const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) =>
 				step
 			});
 			break;
+
 		case BarType.CIRCLE:
 			bar = new ProgressBar.Circle( progressBarRef.current, {
 				...settings,
-				step
+				step,
+				text: {
+					autoStyleContainer: false
+				}
 			});
+			bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+			bar.text.style.fontSize = `${attributes.height / 4 }px`;
 			break;
+
 		case BarType.SEMICIRCLE:
 			bar = new ProgressBar.SemiCircle( progressBarRef.current, {
 				...settings,
-				step
+				step,
+				text: {
+					value: '',
+					alignToBottom: false
+				}
 			});
+			bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+			bar.text.style.fontSize = `${attributes.height / 4 }px`;
+			bar.text.style.bottom = '12%';
 			break;
 		}
 
@@ -89,6 +117,7 @@ const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) =>
 
 		setProgressBar( bar );
 	};
+
 
 	return (
 		<Fragment>
@@ -110,7 +139,7 @@ const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) =>
 
 						<span id="value" className="wp-themeisle-block-progress-bar__value">
 							{
-								! attributes.hideValue && value
+								! attributes.hideValue && `${ value }%`
 							}
 						</span>
 

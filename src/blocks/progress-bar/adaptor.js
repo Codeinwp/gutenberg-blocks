@@ -50,7 +50,8 @@ const extractAnimation = attributes => {
 		coloredProgress: attributes.coloredProgress,
 		percentage: attributes.percentage,
 		isAnimated: attributes.animated,
-		strokeAnimation: attributes.strokeAnimation
+		strokeAnimation: attributes.strokeAnimation,
+		hideValue: attributes.hideValue
 	});
 };
 

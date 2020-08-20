@@ -2,6 +2,11 @@ const { RichText } = wp.blockEditor;
 
 const ProgressBar = ({ attributes }) => {
 
+	attributes.animated = attributes.animated && 'true';
+	attributes.coloredProgress = attributes.coloredProgress && 'true';
+	attributes.strokeAnimation = attributes.strokeAnimation && 'true';
+	attributes.hideValue = attributes.hideValue && 'true';
+
 	return (
 		<div className="wp-themeisle-block-progress-bar">
 			<progress-bar { ...attributes }>
