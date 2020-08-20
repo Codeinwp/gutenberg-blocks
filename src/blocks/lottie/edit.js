@@ -1,22 +1,10 @@
 /**
- * External dependencies
- */
-import { video } from '@wordpress/icons';
-
-/**
  * Wordpress dependencies
  */
-const { __ } = wp.i18n;
-
 const {
 	isEmpty,
 	pick
 } = lodash;
-
-const {
-	BlockIcon,
-	MediaPlaceholder
-} = wp.blockEditor;
 
 const {
 	Fragment,
@@ -27,6 +15,7 @@ const {
 /**
  * Internal dependencies
  */
+import Placeholder from './placeholder.js';
 import Inspector from './inspector.js';
 import LottiePlayer from './components/lottie-player.js';
 
@@ -35,6 +24,7 @@ const IDs = [];
 const Edit = ({
 	attributes,
 	setAttributes,
+	className,
 	isSelected,
 	clientId
 }) => {
@@ -59,6 +49,10 @@ const Edit = ({
 	};
 
 	const onChangeFile = value => {
+		if ( '' === value || null === value ) {
+			return;
+		}
+
 		const obj = pick( value, [ 'id', 'url' ]);
 
 		if ( isEmpty( obj ) ) {
@@ -70,17 +64,10 @@ const Edit = ({
 
 	if ( isEmpty( attributes.file ) ) {
 		return (
-			<MediaPlaceholder
-				labels={ {
-					title: __( 'Lottie' ),
-					instructions: __( 'Add Lottie animations and files to your website.' )
-				} }
-				icon={ <BlockIcon icon={ video } />}
-				accept={ [ 'application/json' ] }
-				allowedTypes={ [ 'application/json' ] }
-				value={ { ...attributes.file } }
-				onSelectURL={ onChangeFile }
-				onSelect={ onChangeFile }
+			<Placeholder
+				className={ className }
+				value={ attributes.file }
+				onChange={ onChangeFile }
 			/>
 		);
 	}
@@ -95,6 +82,7 @@ const Edit = ({
 
 			<LottiePlayer
 				attributes={ attributes }
+				className={ className }
 				isSelected={ isSelected }
 				playerRef={ playerRef }
 			/>

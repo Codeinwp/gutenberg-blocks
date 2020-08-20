@@ -7,7 +7,7 @@ const Save = ({
 			<lottie-player
 				id={ attributes.id }
 				className={ className }
-				src={ attributes.file.url }
+				src={ attributes.file ? attributes.file.url : '' }
 				trigger={ attributes.trigger }
 			>
 			</lottie-player>
@@ -18,7 +18,7 @@ const Save = ({
 		<lottie-player
 			id={ attributes.id }
 			className={ className }
-			src={ attributes.file.url }
+			src={ attributes.file ? attributes.file.url : '' }
 			autoplay
 			loop
 			count={ attributes.direction ? attributes.count * -1 : attributes.count }
