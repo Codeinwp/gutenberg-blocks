@@ -101,8 +101,8 @@ class Main {
 		add_action( 'block_categories', array( $this, 'block_categories' ) );
 		add_filter( 'render_block', array( $this, 'render_amp' ), 10, 3 );
 
-		if ( isset( $allow_json ) && true === ( bool ) $allow_json ) {
-			add_filter( 'upload_mimes', array( $this, 'allow_json' ) );
+		if ( isset( $allow_json ) && true === (bool) $allow_json ) {
+			add_filter( 'upload_mimes', array( $this, 'allow_json' ) ); //phpcs:ignore WordPressVIPMinimum.Filters.RestrictedHook.UploadMimes
 			add_filter( 'wp_check_filetype_and_ext', array( $this, 'fix_mime_type_json' ), 75, 4 );
 		}
 	}
@@ -528,11 +528,10 @@ class Main {
 	/**
 	 * Allow JSON uploads
 	 *
-	 *
-	 * @param null $data
-	 * @param null $file
-	 * @param null $filename
-	 * @param null $mimes
+	 * @param null $data File data.
+	 * @param null $file File object.
+	 * @param null $filename File name.
+	 * @param null $mimes Supported mimes.
 	 *
 	 * @return array
 	 *
@@ -545,7 +544,7 @@ class Main {
 			$exploded = explode( '.', $filename );
 			$ext      = strtolower( end( $exploded ) );
 		}
-		if ( $ext === 'json' ) {
+		if ( 'json' === $ext  ) {
 			$data['type'] = 'application/json';
 			$data['ext']  = 'json';
 		}
