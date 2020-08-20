@@ -544,7 +544,7 @@ class Main {
 			$exploded = explode( '.', $filename );
 			$ext      = strtolower( end( $exploded ) );
 		}
-		if ( 'json' === $ext  ) {
+		if ( 'json' === $ext ) {
 			$data['type'] = 'application/json';
 			$data['ext']  = 'json';
 		}
