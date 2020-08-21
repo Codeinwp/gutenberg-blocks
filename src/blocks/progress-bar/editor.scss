@@ -19,5 +19,12 @@
 
     #container {
         width: 100%;
+        position: relative;
+
+        &.is-bar {
+            align-items: center;
+            justify-content: center;
+            display: flex;
+        }
     }
 }

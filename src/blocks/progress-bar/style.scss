@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
 
-
     .wp-themeisle-block-progress-bar__content {
         display: flex;
         flex-direction: row;
@@ -18,8 +17,14 @@
         }
     }
 
-    .wp-themeisle-block-progress-bar__bar {
+    #container {
         width: 100%;
         position: relative;
+
+        &.is-bar {
+            align-items: center;
+            justify-content: center;
+            display: flex;
+        }
     }
 }

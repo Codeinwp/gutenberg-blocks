@@ -257,7 +257,7 @@ class Main {
 		if ( ! self::$is_progress_bar_loaded && has_block( 'themeisle-blocks/progress-bar', $post ) ) {
 
 			wp_enqueue_script(
-				'progress-bar',
+				'progress-bar-js',
 				plugin_dir_url( $this->get_dir() ) . 'assets/progress-bar/progressbar.js',
 				array(),
 				self::$assets_version,
@@ -266,8 +266,8 @@ class Main {
 
 			wp_enqueue_script(
 				'themeisle-gutenberg-progress-bar',
-				plugin_dir_url( $this->get_dir() ) . 'build/progressBar.js',
-				array( 'wp-dom-ready', 'progress-bar'),
+				plugin_dir_url( $this->get_dir() ) . 'build/progress-bar.js',
+				array( 'wp-dom-ready', 'progress-bar-js'),
 				self::$assets_version,
 				true
 			);

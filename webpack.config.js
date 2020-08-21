@@ -19,7 +19,7 @@ module.exports = {
 		slider: [
 			...glob.sync( './src/frontend/slider/index.js' )
 		],
-		progressBar: [
+		'progress-bar': [
 			...glob.sync( './src/frontend/progress-bar/index.js' )
 		]
 	},

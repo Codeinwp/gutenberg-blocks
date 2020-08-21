@@ -1,5 +1,6 @@
 
 import ProgressBar from 'progressbar.js';
+import classnames from 'classnames';
 
 /**
  * WordPress dependencies
@@ -47,15 +48,11 @@ const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) =>
 
 		const percentage = Math.round( bar.value() * 100 );
 
-		if ( attributes.type !== BarType.BAR  && ! animation.hideValue ) {
+		if ( ! animation.hideValue ) {
 			if ( 0 === percentage ) {
 				bar.setText( '' );
 			} else {
-				bar.setText( percentage );
-			}
-
-			if ( animation.coloredProgress ) {
-				bar.text.style.color = state.color ;
+				bar.setText( `${percentage}%` );
 			}
 		}
 
@@ -78,6 +75,18 @@ const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) =>
 		case BarType.BAR:
 			bar = new ProgressBar.Line( progressBarRef.current, {
 				...settings,
+				text: {
+					style: {
+						color: attributes.textColor,
+						position: 'absolute',
+						padding: 0,
+						margin: 0,
+						transform: null,
+						fontSize: `${ attributes.height * 0.8 }px`
+					},
+					autoStyleContainer: false,
+					alignToBottom: false
+				},
 				step
 			});
 			break;
@@ -126,54 +135,56 @@ const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) =>
 				setAttributes={ setAttributes }
 			/>
 			<div className="wp-themeisle-block-progress-bar">
-				<progress-bar {...attributes}>
-					<div className="wp-themeisle-block-progress-bar__content">
-						<RichText
-							tagName="p"
-							className="wp-themeisle-block-progress-bar__title"
-							placeholder={ __( 'Write a title…' ) }
-							value={ attributes.text }
-							onChange={ onTextChange }
-							multiline={ false }
-						/>
+				<div className="wp-themeisle-block-progress-bar__content">
+					<RichText
+						tagName="p"
+						className="wp-themeisle-block-progress-bar__title"
+						placeholder={ __( 'Write a title…' ) }
+						value={ attributes.text }
+						onChange={ onTextChange }
+						multiline={ false }
+					/>
 
-						<span id="value" className="wp-themeisle-block-progress-bar__value">
-							{
-								! attributes.hideValue && `${ value }%`
-							}
-						</span>
+					<span id="value" className="wp-themeisle-block-progress-bar__value">
+						{
+							! attributes.hideValue && `${ value }%`
+						}
+					</span>
 
+				</div>
+				<ResizableBox
+					size={ {
+						height: attributes.height
+					} }
+					minHeight="20"
+					enable={ {
+						top: false,
+						right: false,
+						bottom: true,
+						left: false,
+						topRight: false,
+						bottomRight: false,
+						bottomLeft: false,
+						topLeft: false
+					} }
+					onResizeStop={ ( event, direction, elt, delta ) => {
+						setAttributes({
+							height: parseInt( attributes.height + delta.height, 10 )
+						});
+						toggleSelection( true );
+					} }
+					onResizeStart={ () => {
+						toggleSelection( false );
+					} }
+				>
+					<div style={{ height: `${attributes.height}px` }}>
+						<div
+							ref={ progressBarRef }
+							id="container"
+							className={ classnames ( 'wp-themeisle-block-progress-bar__bar', { 'is-bar': attributes.type === BarType.BAR }) }
+						></div>
 					</div>
-					<ResizableBox
-						size={ {
-							height: attributes.height
-						} }
-						minHeight="20"
-						enable={ {
-							top: false,
-							right: false,
-							bottom: true,
-							left: false,
-							topRight: false,
-							bottomRight: false,
-							bottomLeft: false,
-							topLeft: false
-						} }
-						onResizeStop={ ( event, direction, elt, delta ) => {
-							setAttributes({
-								height: parseInt( attributes.height + delta.height, 10 )
-							});
-							toggleSelection( true );
-						} }
-						onResizeStart={ () => {
-							toggleSelection( false );
-						} }
-					>
-						<div style={{ height: `${attributes.height}px` }}>
-							<div ref={ progressBarRef } id="container" className="wp-themeisle-block-progress-bar__bar"></div>
-						</div>
-					</ResizableBox>
-				</progress-bar>
+				</ResizableBox>
 			</div>
 		</Fragment>
 	);

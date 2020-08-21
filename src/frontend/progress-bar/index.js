@@ -71,7 +71,7 @@ const extractAnimation = attributes => {
 
 
 domReady( () => {
-	const bars = document.getElementsByTagName( 'PROGRESS-BAR' );
+	const bars = document.querySelectorAll( '.wp-themeisle-block-progress-bar' );
 
 	console.log( bars );
 
@@ -95,7 +95,6 @@ domReady( () => {
 		console.log( settings );
 		console.log( animation );
 
-		let bar;
 
 		const step = ( state, bar ) => {
 
@@ -110,26 +109,36 @@ domReady( () => {
 			const percentage = Math.round( bar.value() * 100 );
 			value.innerText = `${ percentage }%`;
 
-			if ( attributes.type !== BarType.BAR && ! animation.hideValue ) {
+			if ( ! animation.hideValue ) {
 				if ( 0 === percentage ) {
 					bar.setText( '' );
 				} else {
-					bar.setText( percentage );
-				}
-
-				if ( animation.coloredProgress ) {
-					bar.text.style.color = state.color ;
+					bar.setText( `${percentage}%` );
 				}
 			}
 
-			//console.log( bar.value() );
+			console.log( bar.value() );
 		};
+
+		let bar;
 
 		switch ( attributes.type ) {
 		case BarType.BAR:
 			bar = new ProgressBar.Line( container, {
 				...settings,
-				step
+				step,
+				text: {
+					style: {
+						color: attributes.textcolor,
+						position: 'absolute',
+						padding: 0,
+						margin: 0,
+						transform: null,
+						fontSize: `${ attributes.height * 0.8 }px`
+					},
+					autoStyleContainer: false,
+					alignToBottom: false
+				}
 			});
 			break;
 
@@ -172,19 +181,14 @@ domReady( () => {
 			value.innerText = '0%';
 			let observer = new IntersectionObserver( ( entries ) => {
 
-				//console.log( entries, observer );
-
 				entries.forEach( entrie => {
 					if ( entrie.isIntersecting && 0 ===  Math.round( bar.value() * 100 ) ) {
 						if ( animation.isAnimated  ) {
+
 							bar.animate( ( animation.percentage / 100 ).toFixed( 2 ), animation.options, () => {
 								value.innerText = `${ animation.percentage }%`;
-
-								if ( attributes.type !== BarType.BAR ) {
-									bar.setText( `${ animation.percentage }` );
-								}
+								bar.setText( `${ animation.percentage }%` );
 							});
-							console.log( ( animation.percentage / 100 ).toFixed( 2 ) );
 						} else {
 							bar.set( ( animation.percentage / 100 ).toFixed( 2 ) );
 						}

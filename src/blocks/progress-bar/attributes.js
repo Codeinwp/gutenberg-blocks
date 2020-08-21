@@ -34,7 +34,7 @@ const attributes = {
 	},
 	height: {
 		type: 'number',
-		default: 15
+		default: 35
 	},
 	animated: {
 		type: 'boolean',
@@ -67,6 +67,10 @@ const attributes = {
 	easing: {
 		type: 'string',
 		default: 'linear'
+	},
+	textColor: {
+		type: 'string',
+		default: '#999'
 	},
 	warnings: {
 		type: 'string',

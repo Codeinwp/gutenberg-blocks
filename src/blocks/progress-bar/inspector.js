@@ -70,6 +70,10 @@ const Inspector = ({ attributes, setAttributes }) => {
 		setAttributes({ startColor: value });
 	};
 
+	const onTextColorChange = value => {
+		setAttributes({ textColor: value });
+	};
+
 	const onEndColorChange = value => {
 		setAttributes({ endColor: value });
 	};
@@ -111,42 +115,9 @@ const Inspector = ({ attributes, setAttributes }) => {
 					max={ 100 }
 				/>
 
-
-				<ColorGradientControl
-					label={ 'Progress Color' }
-					colorValue={ attributes.progressColor }
-					onColorChange={ onProgressColorChange }
-				/>
-
-				{ attributes.type !== BarType.BAR && (
-					<RangeControl
-						label={ __( 'Stroke Width' ) }
-						value={ attributes.strokeWidth }
-						onChange={ onStrokeWidthChange }
-						min={ 0 }
-						step={ 0.1 }
-						max={ 5 }
-					/>
-				)}
-
-				<ColorGradientControl
-					label={ 'Trail Color' }
-					colorValue={ attributes.backgroundColor }
-					onColorChange={ onTrailColorChange }
-				/>
-
-				<RangeControl
-					label={ __( 'Trail Stroke Width' ) }
-					value={ attributes.trailWidth}
-					onChange={ onTrailStrokeWidthChange }
-					min={ 0 }
-					step={ 0.1 }
-					max={ attributes.strokeWidth }
-				/>
-
 				<ToggleControl
-					label={ __( 'Animated' ) }
-					help={ __( 'Show animation.' ) }
+					label={ __( 'Show loaging animation' ) }
+					help={ __( 'Show loading animation on the progress bar.' ) }
 					checked={ attributes.animated }
 					onChange={ toggleAnimation }
 				/>
@@ -213,6 +184,49 @@ const Inspector = ({ attributes, setAttributes }) => {
 					</Fragment>
 				)}
 
+			</PanelBody>
+
+			<PanelBody
+				title={ __( 'Style' ) }
+				initialOpen={ true }
+			>
+				<ColorGradientControl
+					label={ 'Progress Text Color' }
+					colorValue={ attributes.textColor }
+					onColorChange={ onTextColorChange }
+				/>
+
+				<ColorGradientControl
+					label={ 'Progress Color' }
+					colorValue={ attributes.progressColor }
+					onColorChange={ onProgressColorChange }
+				/>
+
+				{ attributes.type !== BarType.BAR && (
+					<RangeControl
+						label={ __( 'Stroke Width' ) }
+						value={ attributes.strokeWidth }
+						onChange={ onStrokeWidthChange }
+						min={ 0 }
+						step={ 0.1 }
+						max={ 5 }
+					/>
+				)}
+
+				<ColorGradientControl
+					label={ 'Trail Color' }
+					colorValue={ attributes.backgroundColor }
+					onColorChange={ onTrailColorChange }
+				/>
+
+				<RangeControl
+					label={ __( 'Trail Stroke Width' ) }
+					value={ attributes.trailWidth}
+					onChange={ onTrailStrokeWidthChange }
+					min={ 0 }
+					step={ 0.1 }
+					max={ attributes.strokeWidth }
+				/>
 			</PanelBody>
 		</InspectorControls>
 	);
