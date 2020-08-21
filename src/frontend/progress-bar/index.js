@@ -107,7 +107,7 @@ domReady( () => {
 			}
 
 			const percentage = Math.round( bar.value() * 100 );
-			value.innerText = `${ percentage }%`;
+			value.innerText = `Testing: ${ percentage }%`;
 
 			if ( ! animation.hideValue ) {
 				if ( 0 === percentage ) {
@@ -116,8 +116,6 @@ domReady( () => {
 					bar.setText( `${percentage}%` );
 				}
 			}
-
-			console.log( bar.value() );
 		};
 
 		let bar;
@@ -186,8 +184,9 @@ domReady( () => {
 						if ( animation.isAnimated  ) {
 
 							bar.animate( ( animation.percentage / 100 ).toFixed( 2 ), animation.options, () => {
-								value.innerText = `${ animation.percentage }%`;
-								bar.setText( `${ animation.percentage }%` );
+
+								// value.innerText = `${ animation.percentage }%`;
+								// bar.setText( `${ animation.percentage }%` );
 							});
 						} else {
 							bar.set( ( animation.percentage / 100 ).toFixed( 2 ) );

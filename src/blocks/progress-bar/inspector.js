@@ -145,11 +145,16 @@ const Inspector = ({ attributes, setAttributes }) => {
 								{ label: 'Ease Out Quad', value: 'easeOutQuad' },
 								{ label: 'Ease Out Cubic', value: 'easeOutCubic' },
 								{ label: 'Ease In Out', value: 'easeInOut' },
-								{ label: 'Ease Out', value: 'easeOut' },
 								{ label: 'Ease Out', value: 'easeOut' }
-
 							] }
 							onChange={ onAnimationChange }
+						/>
+
+						<ToggleControl
+							label={ __( 'Animated Stroke' ) }
+							help={ __( 'Show stroke animation on the progress bar.' ) }
+							checked={ attributes.strokeAnimation }
+							onChange={ toggleStrokeAnimaton }
 						/>
 
 						<ToggleControl
@@ -175,12 +180,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 							</Fragment>
 						)}
 
-						<ToggleControl
-							label={ __( 'Animated Stroke' ) }
-							help={ __( 'Show stroke animation on the progress bar.' ) }
-							checked={ attributes.strokeAnimation }
-							onChange={ toggleStrokeAnimaton }
-						/>
+
 					</Fragment>
 				)}
 
