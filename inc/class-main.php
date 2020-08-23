@@ -152,29 +152,6 @@ class Main {
 			true
 		);
 
-		wp_enqueue_script(
-			'esrileafletjs',
-			plugin_dir_url( $this->get_dir() ) . 'assets/map/esri-leaflet.js',
-			array(),
-			self::$assets_version,
-			true
-		);
-
-		wp_enqueue_style(
-			'geocodercss',
-			plugin_dir_url( $this->get_dir() ) . 'assets/map/esri-leaflet-geocoder.css',
-			[],
-			self::$assets_version
-		);
-
-		wp_enqueue_script(
-			'geocoderjs',
-			plugin_dir_url( $this->get_dir() ) . 'assets/map/esri-leaflet-geocoder.js',
-			array(),
-			self::$assets_version,
-			true
-		);
-
 		wp_enqueue_style(
 			'fullscreen-controlcss',
 			plugin_dir_url( $this->get_dir() ) . 'assets/map/map-controls/fullscreen-control/fullscreen-control.css',
@@ -204,22 +181,6 @@ class Main {
 			self::$assets_version,
 			true
 		);
-
-		wp_enqueue_style(
-			'searchlocation-controlcss',
-			plugin_dir_url( $this->get_dir() ) . 'assets/map/map-controls/search-location-control/search-location-control.css',
-			[],
-			self::$assets_version
-		);
-
-		wp_enqueue_script(
-			'searchlocation-controljs',
-			plugin_dir_url( $this->get_dir() ) . 'assets/map/map-controls/search-location-control/search-location-control.js',
-			array(),
-			self::$assets_version,
-			true
-		);		
-
 
 		wp_set_script_translations( 'themeisle-gutenberg-blocks', 'textdomain' );
 
@@ -303,7 +264,7 @@ class Main {
 			self::$is_map_loaded = true;
 		}
 
-		/* if ( ! self::$is_Lmap_loaded && has_block( 'themeisle-blocks/map', $post ) ) {
+		 if ( ! self::$is_Lmap_loaded && has_block( 'themeisle-blocks/map', $post ) ) {
 			wp_enqueue_style(
 				'leafletcss',
 				plugin_dir_url( $this->get_dir() ) . 'assets/map/leaflet.css',
@@ -319,24 +280,8 @@ class Main {
 				true
 			);
 
-			wp_enqueue_script(
-				'esrileafletjs',
-				plugin_dir_url( $this->get_dir() ) . 'assets/map/esri-leaflet.js',
-				array(),
-				self::$assets_version,
-				true
-			);
-
-			wp_enqueue_script(
-				'themeisle-gutenberg-map',
-				plugin_dir_url( $this->get_dir() ) . 'build/lmaps.js',
-				array( 'wp-component' ),
-				self::$assets_version,
-				true
-			);
-
 			self::$is_Lmap_loaded = true;
-		} */
+		} 
 
 		if ( ! self::$is_glide_loaded && has_block( 'themeisle-blocks/slider', $post ) ) {
 			wp_enqueue_script(

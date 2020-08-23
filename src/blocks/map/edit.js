@@ -25,7 +25,6 @@ import Inspector from './inspector.js';
 import MarkerModal from './components/marker-modal.js';
 import Map from './components/map.js';
 
-
 const IDs = [];
 
 const Edit = ({
@@ -36,13 +35,6 @@ const Edit = ({
 	isSelected,
 	toggleSelection
 }) => {
-
-	useEffect( ()=>{
-		( document.getElementById( `wp-block-themeisle-blocks-map-search-${attributes.id}` ) && document.getElementById( attributes.id ) && mapRef.current ) ?
-			L.Layer.search({
-				inputTag: `wp-block-themeisle-blocks-map-search-${attributes.id}`
-			}).addTo( mapRef.current ) : '';
-	}, [ document.getElementById( `wp-block-themeisle-blocks-map-search-${attributes.id}` ), document.getElementById( attributes.id ) ]);
 
 	useEffect( () => {
 		initBlock();
@@ -106,8 +98,9 @@ const Edit = ({
 		L.control.fullscreen({ position: 'bottomright' }).addTo( mapRef.current );
 		L.control.addMarker({fnct: selectMarker}).addTo( mapRef.current );
 
-		L.esri.basemapLayer( 'Topographic' ).addTo( mapRef.current );
-		setAttributes({ style: 'Topographic'});
+		L.tileLayer( 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo( mapRef.current );
 
 		mapRef.current.on( 'zoom', () => {
 			const zoom = mapRef.current.getZoom();
@@ -131,28 +124,12 @@ const Edit = ({
 	};
 
 
-	const setMarkerIcon = color =>{
-		const LeafIcon = L.Icon.extend({
-			options: {
-				iconSize: [ 28, 30 ]
-			}
-		});
-
-		const icon = new LeafIcon({
-			iconUrl: `https://maps.google.com/mapfiles/ms/icons/${color}-dot.png`
-		});
-
-		return icon;
-	};
-
-
-	const addMarker = ( location, title, iconColor, description, latitude, longitude ) => {
+	const addMarker = ( title, description, latitude, longitude ) => {
 		isSelectingMarkerRef.current = false;
 		setSelectingMarker( false );
 		const id = uuidv4();
-		const icon = setMarkerIcon( iconColor );
 
-		const mark = L.marker([ latitude, longitude ], {icon: icon}).addTo( mapRef.current );
+		const mark = L.marker([ latitude, longitude ]).addTo( mapRef.current );
 		mark.dragging.enable();
 
 		mark.on( 'dragend', () => {
@@ -168,9 +145,7 @@ const Edit = ({
 
 		const marker = {
 			id,
-			location,
 			title,
-			iconColor,
 			description,
 			latitude,
 			longitude
@@ -200,9 +175,8 @@ const Edit = ({
 		markers.forEach( marker => {
 			const latitude = marker.latitude;
 			const longitude = marker.longitude;
-			const icon = setMarkerIcon( marker.iconColor );
 
-			const mark = L.marker([ latitude, longitude ], {icon: icon}).addTo( mapRef.current );
+			const mark = L.marker([ latitude, longitude ]).addTo( mapRef.current );
 			mark.dragging.enable();
 
 			mark.on( 'dragend', () => {
@@ -244,9 +218,7 @@ const Edit = ({
 				setAdvanced( false );
 				setSelectedMarker({
 					id,
-					location: '',
 					title,
-					iconColor: 'red',
 					description: '',
 					latitude,
 					longitude
@@ -268,9 +240,7 @@ const Edit = ({
 		setAdvanced( true );
 		setSelectedMarker({
 			id,
-			location: '',
 			title,
-			iconColor: 'red',
 			description: '',
 			latitude,
 			longitude
@@ -322,7 +292,6 @@ const Edit = ({
 				changeMarkerProp={ changeMarkerProp }
 				addMarkerManual={ addMarkerManual }
 				mapRef={mapRef}
-				locationId={attributes.id}
 			/>
 
 			{ isModalOpen && (

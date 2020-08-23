@@ -1,8 +1,7 @@
 /**
  * Internal dependencies
  */
-
-const initMapScripts = () => {
+window.initMap = function() {
 	let maps = [];
 	maps = window.themeisleMaps;
 
@@ -15,16 +14,17 @@ const initMapScripts = () => {
 				lat: map.attributes.latitude,
 				lng: map.attributes.longitude
 			},
-			zoom: map.attributes.zoom,
-			zoomControl: map.attributes.zoomControl,
-			dragging: map.attributes.draggable,
-			fullscreenControl: map.attributes.fullscreenControl
+			zoom: map.attributes.zoom
 		});
+
+		L.tileLayer( 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo( leafletMap );
 
 		if ( map.attributes.markers && 0 < map.attributes.markers.length ) {
 			map.attributes.markers.forEach( marker => {
 
-				L.marker([ marker.latitude, marker.longitude ], { icon: marker.icon || 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' }).addTo( leafletMap );
+				L.marker([ marker.latitude, marker.longitude ]).addTo( leafletMap );
 
 				if ( marker.title || marker.description ) {
 					const contentString = `<div class="wp-block-themeisle-blocks-map-overview"><h6 class="wp-block-themeisle-blocks-map-overview-title">${marker.title}</h6><div class="wp-block-themeisle-blocks-map-overview-content">${marker.description ? `<p>${marker.description}</p>` : ''}</div></div>`;
@@ -36,4 +36,3 @@ const initMapScripts = () => {
 
 };
 
-window.initMapScripts = initMapScripts;

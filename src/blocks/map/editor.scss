@@ -93,33 +93,6 @@
     }
 }
 
-.wp-block-themeisle-blocks-map-search-wrapper {
-
-    input{
-        width: 100%;
-    }
-
-    .wp-block-themeisle-blocks-map-search-results {
-        width: 100%;
-
-        :first-child {
-            margin-top: 0;
-        }
-
-        .wp-block-themeisle-blocks-map-geocoder-control-suggestion {
-            border: 1px solid black;
-            border-top: 0;
-            padding: 10px;
-            margin: 0px !important;
-        }
-    }
-
-    .wp-block-themeisle-blocks-map-search-no-results{
-        padding: 10px;
-        padding-bottom: 0 !important;
-    }
-}
-
 .wp-block-themeisle-blocks-map-marker-group {
 
     .wp-block-themeisle-blocks-map-marker {

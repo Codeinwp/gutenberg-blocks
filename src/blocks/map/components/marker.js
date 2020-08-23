@@ -15,10 +15,6 @@ const {
 	TextControl
 } = wp.components;
 
-const {
-	useEffect
-} = wp.element;
-
 /**
  * Internal dependencies
  */
@@ -29,21 +25,8 @@ const Marker = ({
 	isOpen,
 	openMarker,
 	removeMarker,
-	changeMarkerProp,
-	mapRef
+	changeMarkerProp
 }) => {
-
-	useEffect ( ()=>{
-		if ( document.getElementById( `themeisle-location-search-${marker.id}` ) ) {
-			L.Layer.search({
-				inputTag: `themeisle-location-search-${marker.id}`,
-				placeholder: 'Enter a location',
-				markerId: marker.id,
-				changeMarkerProp: changeMarkerProp,
-				inputValue: marker.location ? marker.location : ''
-			}).addTo( mapRef.current );
-		}
-	}, []);
 
 	return (
 		<div className="wp-block-themeisle-blocks-map-marker">
@@ -70,17 +53,6 @@ const Marker = ({
 					{ 'opened': marker.id === isOpen }
 				) }
 			>
-				<BaseControl
-					label={ __( 'Location' ) }
-					id={ `themeisle-location-search-${ marker.id }` }
-				>
-					<input
-						type="text"
-						id={ `themeisle-location-search-${ marker.id }` }
-						placeholder= { __( 'Enter a location' ) }
-
-					/>
-				</BaseControl>
 
 				<TextControl
 					label={ __( 'Latitude' ) }
@@ -94,19 +66,6 @@ const Marker = ({
 					type="text"
 					value={ marker.longitude }
 					onChange={ e => changeMarkerProp( marker.id, 'longitude', e ) }
-				/>
-
-				<SelectControl
-					label={ __( 'Map Icon' ) }
-					value={ marker.iconColor || 'red' }
-					options={ [
-						{ label: __( 'Red' ), value: 'red' },
-						{ label: __( 'Blue' ), value: 'blue' },
-						{ label: __( 'Yellow' ), value: 'yellow' },
-						{ label: __( 'Green' ), value: 'green' },
-						{ label: __( 'Orange' ), value: 'orange' }
-					] }
-					onChange={ e => changeMarkerProp( marker.id, 'iconColor', e ) }
 				/>
 
 				<TextControl

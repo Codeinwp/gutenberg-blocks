@@ -13,7 +13,7 @@ use ThemeIsle\GutenbergBlocks\Base_Block;
  * Class Map_Block
  */
 class Map_Block extends Base_Block {
-
+	
 	/**
 	 * Every block needs a slug, so we need to define one and assign it to the `$this->block_slug` property
 	 *
@@ -104,7 +104,16 @@ class Map_Block extends Base_Block {
 		$output .= '<script type="text/javascript">' . "\n";
 		$output .= '	/* <![CDATA[ */' . "\n";
 		$output .= '		if ( ! window.themeisleMaps ) window.themeisleMaps =[];' . "\n";
-		$output .= '		window.themeisleMaps.push( { container: "' . $id . '", attributes: ' . wp_json_encode( $attributes ) . ' } );' . "\n";
+		$output .= '		const map= { container: "' . $id . '", attributes: ' . wp_json_encode( $attributes ) . ' };' . "\n";
+		$output .= '		const mapContainer=document.getElementById( map.container); ' . "\n";
+		$output .= '		mapContainer.style.height = `${map.attributes.height}px`;' . "\n";  //L is not defined. I also tried using window.L or the frontend/map.index.js script
+		$output .= '		const leafletMap = L.Map( mapContainer, {  
+								center: {
+									lat: map.attributes.latitude,
+									lng: map.attributes.longitude
+								},
+							zoom: map.attributes.zoom
+							});' . "\n";
 		$output .= '	/* ]]> */' . "\n";
 		$output .= '</script>' . "\n";
 
