@@ -62,6 +62,10 @@ const Edit = ({
 	const [ isAdvanced, setAdvanced ] = useState( false );
 	const [ selectedMarker, setSelectedMarker ] = useState({});
 
+	const markerIcon = L.icon({
+		iconUrl: themeisleGutenberg.assetsPath + '/map/marker-icon.png'
+	});
+
 	const initBlock = async() => {
 		if ( attributes.id === undefined ) {
 			const instanceId = `wp-block-themeisle-blocks-map-${ clientId.substr( 0, 8 ) }`;
@@ -129,7 +133,7 @@ const Edit = ({
 		setSelectingMarker( false );
 		const id = uuidv4();
 
-		const mark = L.marker([ latitude, longitude ]).addTo( mapRef.current );
+		const mark = L.marker([ latitude, longitude ], { icon: markerIcon }).addTo( mapRef.current );
 		mark.dragging.enable();
 
 		mark.on( 'dragend', () => {
@@ -176,7 +180,7 @@ const Edit = ({
 			const latitude = marker.latitude;
 			const longitude = marker.longitude;
 
-			const mark = L.marker([ latitude, longitude ]).addTo( mapRef.current );
+			const mark = L.marker([ latitude, longitude ], { icon: markerIcon }).addTo( mapRef.current );
 			mark.dragging.enable();
 
 			mark.on( 'dragend', () => {
