@@ -35,7 +35,7 @@ class Main {
 	/**
 	 * Flag to mark that lottie scripts has been loaded.
 	 *
-	 * @var bool $s_lottie_loaded Is Lottie loaded?
+	 * @var bool $is_lottie_loaded Is Lottie loaded?
 	 */
 	public static $is_lottie_loaded = false;
 
