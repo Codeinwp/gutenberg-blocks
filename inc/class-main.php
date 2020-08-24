@@ -509,7 +509,7 @@ class Main {
 
 		if ( 'themeisle-blocks/lottie' === $block['blockName'] && function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
 			if ( ! isset( $block['attrs']['file'] ) ) {
-				return;
+				return $block_content;
 			}
 
 			$file = $block['attrs']['file'];
