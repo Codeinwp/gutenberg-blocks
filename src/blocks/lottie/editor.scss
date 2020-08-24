@@ -1,0 +1,28 @@
+.wp-block-themeisle-blocks-lottie {
+	&.components-placeholder {
+		.components-placeholder__fieldset {
+			.components-button {
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
+.wp-block-themeisle-blocks-lottie-modal {
+	.components-modal__frame {
+		width: 360px;
+
+		.components-modal__content {
+			.wp-block-themeisle-blocks-lottie-modal__actions {
+				display: flex;
+				justify-content: flex-end;
+		
+				button {
+					&.is-primary {
+						margin-left: 10px;
+					}
+				}
+			}
+		}
+	}
+}

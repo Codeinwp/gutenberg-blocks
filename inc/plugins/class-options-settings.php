@@ -69,6 +69,18 @@ class Options_Settings {
 				'default'           => '',
 			)
 		);
+
+		register_setting(
+			'themeisle_blocks_settings',
+			'themeisle_allow_json_upload',
+			array(
+				'type'              => 'boolean',
+				'description'       => __( 'Allow JSON Upload to Media Library.', 'textdomain' ),
+				'sanitize_callback' => 'rest_sanitize_boolean',
+				'show_in_rest'      => true,
+				'default'           => false,
+			)
+		);
 	}
 
 	/**
