@@ -494,21 +494,36 @@ class Main {
 	 * @access public
 	 */
 	public function render_amp( $block_content, $block ) {
-		if ( 'themeisle-blocks/slider' !== $block['blockName'] || ! ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) ) {
-			return $block_content;
+		if ( 'themeisle-blocks/slider' === $block['blockName'] && function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			$html5  = new HTML5();
+			$dom    = $html5->loadHTML( $block['innerHTML'] );
+			$id     = $block['attrs']['id'];
+			$images = $dom->getElementsByTagName( 'figure' );
+			$output = '<amp-carousel id="' . $id . '" class="wp-block-themeisle-blocks-slider" width="400" height="300" layout="responsive" type="slides" autoplay delay="2000">';
+			foreach ( $images as $image ) {
+				$output .= $html5->saveHTML( $image );
+			}
+			$output .= '</amp-carousel>';
+			return $output;
 		}
 
-		$html5  = new HTML5();
-		$dom    = $html5->loadHTML( $block['innerHTML'] );
-		$id     = $block['attrs']['id'];
-		$images = $dom->getElementsByTagName( 'figure' );
-		$output = '<amp-carousel id="' . $id . '" class="wp-block-themeisle-blocks-slider" width="400" height="300" layout="responsive" type="slides" autoplay delay="2000">';
-		foreach ( $images as $image ) {
-			$output .= $html5->saveHTML( $image );
-		}
-		$output .= '</amp-carousel>';
+		if ( 'themeisle-blocks/lottie' === $block['blockName'] && function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			if ( ! isset( $block['attrs']['file'] ) ) {
+				return;
+			}
 
-		return $output;
+			$file = $block['attrs']['file'];
+			$size = isset( $block['attrs']['width'] ) ? $block['attrs']['width'] : 400;
+			$loop = ( isset( $block['attrs']['loop'] ) && true === $block['attrs']['loop'] ) ? 'true' : 'false';
+			if ( isset( $block['attrs']['count'] ) ) {
+				$loop = intval( $block['attrs']['count'] );
+			}
+
+			$output = '<amp-bodymovin-animation layout="responsive" width="' . intval( $size ) . '" height="' . intval( $size ) . '" loop="' . $loop . '" src="' . esc_url( $file['url'] ) . '"></amp-bodymovin-animation>';
+			return $output;
+		}
+
+		return $block_content;
 	}
 
 	/**
