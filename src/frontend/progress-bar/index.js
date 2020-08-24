@@ -107,7 +107,9 @@ domReady( () => {
 			}
 
 			const percentage = Math.round( bar.value() * 100 );
-			value.innerText = `Testing: ${ percentage }%`;
+			if ( value ) {
+				value.innerText = `Testing: ${ percentage }%`;
+			}
 
 			if ( ! animation.hideValue ) {
 				if ( 0 === percentage ) {
@@ -176,7 +178,9 @@ domReady( () => {
 				rootMargin: '0px',
 				threshold: INTERSECTION_THRESHOLD
 			};
-			value.innerText = '0%';
+			if ( value ) {
+				value.innerText = `Testing: ${ percentage }%`;
+			}
 			let observer = new IntersectionObserver( ( entries ) => {
 
 				entries.forEach( entrie => {

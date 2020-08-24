@@ -70,7 +70,7 @@ const attributes = {
 	},
 	textColor: {
 		type: 'string',
-		default: '#999'
+		default: '#fff'
 	},
 	warnings: {
 		type: 'string',

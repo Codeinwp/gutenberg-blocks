@@ -11,21 +11,33 @@ const ProgressBar = ({ attributes }) => {
 
 	return (
 		<div className="wp-themeisle-block-progress-bar" { ...attributes }>
-			<div className="wp-themeisle-block-progress-bar__content">
-				<RichText.Content
-					tagName="p"
-					className="wp-themeisle-block-progress-bar__title"
-					value={  attributes.text }
-				/>
-				<span id="value" className="wp-themeisle-block-progress-bar__value">
-				</span>
-			</div>
+			{
+				attributes.type === BarType.BAR && (
+					<div className="wp-themeisle-block-progress-bar-content-top">
+						<RichText.Content
+							tagName="p"
+							className="wp-themeisle-block-progress-bar__title"
+							value={  attributes.text }
+						/>
+					</div>
+				)
+			}
 			<div style={{ height: `${attributes.height}px` }}>
 				<div
 					id="container"
 					className={ classnames ( 'wp-themeisle-block-progress-bar__bar', { 'is-bar': attributes.type === BarType.BAR }) }
 				></div>
 			</div>
+			{
+				attributes.type !== BarType.BAR && (
+					<div className="wp-themeisle-block-progress-bar-content-bottom">
+						<RichText.Content
+							tagName="p"
+							value={  attributes.text }
+						/>
+					</div>
+				)
+			}
 		</div>
 	);
 };

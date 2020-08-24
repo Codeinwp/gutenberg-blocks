@@ -16,13 +16,21 @@ const {
 	SelectControl
 } = wp.components;
 
+const { clamp } = lodash;
+
 const { Fragment } = wp.element;
 
 import { BarType } from './edit.js';
+import constants from './constants.js';
 
 const Inspector = ({ attributes, setAttributes }) => {
 
 	const onTypeChange = value => {
+		if ( value !== BarType.BAR && attributes.type === BarType.BAR ) {
+			setAttributes({ height: clamp( attributes.height + constants.conversionOffSet, constants.minHeight, constants.maxHeight ) });
+		} else if ( value === BarType.BAR && attributes.type !== BarType.BAR ) {
+			setAttributes({ height: clamp( attributes.height - constants.conversionOffSet, constants.minHeight, constants.maxHeight ) });
+		}
 		setAttributes({ type: value});
 	};
 

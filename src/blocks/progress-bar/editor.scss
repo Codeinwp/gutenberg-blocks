@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
 
-    .wp-themeisle-block-progress-bar__content {
+    .wp-themeisle-block-progress-bar-content-top {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -15,6 +15,11 @@
         .wp-themeisle-block-progress-bar__value {
             margin-left: auto;
         }
+    }
+
+    .wp-themeisle-block-progress-bar-content-bottom {
+        display: flex;
+        justify-content: center;
     }
 
     #container {

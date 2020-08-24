@@ -10,9 +10,10 @@ const { RichText } = wp.blockEditor;
 const { Fragment } = wp.element;
 const { ResizableBox } = wp.components;
 const { useRef, useState, useEffect } = wp.element;
-
 import Inspector from './inspector.js';
 import adaptor from './adaptor.js';
+import constants from './constants.js';
+
 
 export const BarType = {
 	BAR: 'BAR',
@@ -81,6 +82,7 @@ const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) =>
 						position: 'absolute',
 						padding: 0,
 						margin: 0,
+						right: '1%',
 						transform: null,
 						fontSize: `${ attributes.height * 0.8 }px`
 					},
@@ -135,28 +137,35 @@ const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) =>
 				setAttributes={ setAttributes }
 			/>
 			<div className="wp-themeisle-block-progress-bar">
-				<div className="wp-themeisle-block-progress-bar__content">
-					<RichText
-						tagName="p"
-						className="wp-themeisle-block-progress-bar__title"
-						placeholder={ __( 'Write a title…' ) }
-						value={ attributes.text }
-						onChange={ onTextChange }
-						multiline={ false }
-					/>
+				{
+					attributes.type === BarType.BAR && (
+						<div className="wp-themeisle-block-progress-bar-content-top">
 
-					<span id="value" className="wp-themeisle-block-progress-bar__value">
-						{
-							! attributes.hideValue && `Testing: ${ value }%`
-						}
-					</span>
+							<RichText
+								tagName="p"
+								className="wp-themeisle-block-progress-bar__title"
+								placeholder={ __( 'Write a title…' ) }
+								value={ attributes.text }
+								onChange={ onTextChange }
+								multiline={ false }
+							/>
 
-				</div>
+							<span id="value" className="wp-themeisle-block-progress-bar__value">
+								{
+									! attributes.hideValue && `Testing: ${ value }%`
+								}
+							</span>
+
+						</div>
+					)
+				}
+
 				<ResizableBox
 					size={ {
 						height: attributes.height
 					} }
-					minHeight="20"
+					minHeight={ constants.minHeight }
+					maxHeight={ constants.maxHeight }
 					enable={ {
 						top: false,
 						right: false,
@@ -185,6 +194,19 @@ const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) =>
 						></div>
 					</div>
 				</ResizableBox>
+				{
+					attributes.type !== BarType.BAR && (
+						<div className="wp-themeisle-block-progress-bar-content-bottom">
+							<RichText
+								tagName="p"
+								placeholder={ __( 'Write a title…' ) }
+								value={ attributes.text }
+								onChange={ onTextChange }
+								multiline={ false }
+							/>
+						</div>
+					)
+				}
 			</div>
 		</Fragment>
 	);
