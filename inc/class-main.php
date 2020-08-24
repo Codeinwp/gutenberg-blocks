@@ -101,7 +101,7 @@ class Main {
 		add_action( 'block_categories', array( $this, 'block_categories' ) );
 		add_filter( 'render_block', array( $this, 'render_amp' ), 10, 3 );
 
-		if ( isset( $allow_json ) && true === (bool) $allow_json ) {
+		if ( isset( $allow_json ) && true === (bool) $allow_json && ! function_exists( 'is_wpcom_vip' ) ) {
 			add_filter( 'upload_mimes', array( $this, 'allow_json' ) ); //phpcs:ignore WordPressVIPMinimum.Filters.RestrictedHook.UploadMimes
 			add_filter( 'wp_check_filetype_and_ext', array( $this, 'fix_mime_type_json' ), 75, 4 );
 		}
@@ -164,6 +164,7 @@ class Main {
 				'updatePath'    => admin_url( 'update-core.php' ),
 				'mapsAPI'       => $api,
 				'themeDefaults' => $this->get_global_defaults(),
+				'isWPVIP'       => function_exists( 'is_wpcom_vip' )
 			)
 		);
 

@@ -68,7 +68,7 @@ const BlockPlaceholder = ({
 		});
 	};
 
-	if ( isJSONAllowed ) {
+	if ( isJSONAllowed && ! Boolean( themeisleGutenberg.isWPVIP ) ) {
 		return (
 			<MediaPlaceholder
 				labels={ {
@@ -111,12 +111,14 @@ const BlockPlaceholder = ({
 						{ __( 'Embed' ) }
 					</Button>
 
-					<Button
-						isSecondary
-						onClick={ () => setOpen( true ) }
-					>
-						{ __( 'Upload' ) }
-					</Button>
+					{ ! Boolean( themeisleGutenberg.isWPVIP ) && (
+						<Button
+							isSecondary
+							onClick={ () => setOpen( true ) }
+						>
+							{ __( 'Upload' ) }
+						</Button>
+					) }
 				</form>
 			</Placeholder>
 
