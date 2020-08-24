@@ -164,7 +164,7 @@ class Main {
 				'updatePath'    => admin_url( 'update-core.php' ),
 				'mapsAPI'       => $api,
 				'themeDefaults' => $this->get_global_defaults(),
-				'isWPVIP'       => function_exists( 'is_wpcom_vip' )
+				'isWPVIP'       => function_exists( 'is_wpcom_vip' ),
 			)
 		);
 
