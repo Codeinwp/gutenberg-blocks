@@ -63,18 +63,20 @@
 		}
 	}
 
-	&.has-vertical-center {
-		.innerblocks-wrap {
-			align-items: center;
-		}
-	}	
-
 	&.has-vertical-flex-end {
 		.innerblocks-wrap {
 			align-items: flex-end;
 		}
 	}
 
+}
+
+@media ( min-width: 600px ) {
+	&.has-vertical-center {
+		.innerblocks-wrap {
+			align-items: center;
+		}
+	}	
 }
 
 @media ( min-width: 960px ) {
