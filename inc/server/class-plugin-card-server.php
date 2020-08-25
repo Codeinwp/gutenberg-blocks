@@ -51,15 +51,18 @@ class Plugin_Card_Server {
 			'/get_plugins',
 			array(
 				array(
-					'methods'  => \WP_REST_Server::READABLE,
-					'callback' => array( $this, 'search' ),
-					'args'     => array(
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'search' ),
+					'args'                => array(
 						'search' => array(
 							'type'        => 'string',
 							'required'    => true,
 							'description' => __( 'Search query.', 'textdomain' ),
 						),
 					),
+					'permission_callback' => function () {
+						return current_user_can( 'edit_posts' );
+					},
 				),
 			)
 		);
@@ -69,15 +72,18 @@ class Plugin_Card_Server {
 			'/get_plugin',
 			array(
 				array(
-					'methods'  => \WP_REST_Server::READABLE,
-					'callback' => array( $this, 'get' ),
-					'args'     => array(
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get' ),
+					'args'                => array(
 						'slug' => array(
 							'type'        => 'string',
 							'required'    => true,
 							'description' => __( 'Slug of the plugin.', 'textdomain' ),
 						),
 					),
+					'permission_callback' => function () {
+						return current_user_can( 'edit_posts' );
+					},
 				),
 			)
 		);
