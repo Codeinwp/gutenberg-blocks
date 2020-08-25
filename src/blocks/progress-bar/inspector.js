@@ -20,8 +20,10 @@ const { clamp } = lodash;
 
 const { Fragment } = wp.element;
 
-import { BarType } from './edit.js';
-import constants from './constants.js';
+/**
+ * Internal dependencies
+ */
+import constants, { BarType } from './constants.js';
 
 const Inspector = ({ attributes, setAttributes }) => {
 

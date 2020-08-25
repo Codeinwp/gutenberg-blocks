@@ -1,4 +1,7 @@
 
+/**
+ * External dependencies
+ */
 import ProgressBar from 'progressbar.js';
 import classnames from 'classnames';
 
@@ -10,16 +13,13 @@ const { RichText } = wp.blockEditor;
 const { Fragment } = wp.element;
 const { ResizableBox } = wp.components;
 const { useRef, useState, useEffect } = wp.element;
+
+/**
+ * Internal dependencies
+ */
 import Inspector from './inspector.js';
 import adaptor from './adaptor.js';
-import constants from './constants.js';
-
-
-export const BarType = {
-	BAR: 'BAR',
-	CIRCLE: 'CIRCLE',
-	SEMICIRCLE: 'SEMICIRCLE'
-};
+import constants, { BarType } from './constants.js';
 
 const ProgressBarComponent = ({ attributes, setAttributes, toggleSelection }) => {
 

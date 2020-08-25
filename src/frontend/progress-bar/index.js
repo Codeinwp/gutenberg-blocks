@@ -6,7 +6,7 @@ const domReady = wp.domReady;
 
 const INTERSECTION_THRESHOLD = [ 0.6 ];
 
-export const BarType = {
+const BarType = {
 	BAR: 'BAR',
 	CIRCLE: 'CIRCLE',
 	SEMICIRCLE: 'SEMICIRCLE'
@@ -15,54 +15,54 @@ export const BarType = {
 
 const extractSettings = attributes => {
 	return ({
-		color: attributes.progresscolor,
-		strokeWidth: parseFloat( attributes.strokewidth ),
-		trailColor: attributes.trailcolor,
-		trailWidth: parseFloat( attributes.trailwidth ),
+		color: attributes['data-progress-color'],
+		strokeWidth: parseFloat( attributes['data-stroke-width']),
+		trailColor: attributes['data-trail-color'],
+		trailWidth: parseFloat( attributes['data-trail-width']),
+		textColor: attributes['data-text-color'],
 		svgStyle: {
 			display: 'block',
 			width: '100%',
-			height: `${attributes.height}px`
+			height: `${attributes['data-height']}px`
 		},
-		warnings: 'true' === attributes.warnings
+		warnings: 'true' === attributes['data-warnings']
 	});
 };
 
 const extractAnimation = attributes => {
 	let from, to;
 
-	if ( 'true' === attributes.coloredprogress ) {
+	if ( 'true' === attributes['data-colored-progress']) {
 		from = {
 			...from,
-			color: attributes.startcolor
+			color: attributes['data-start-color']
 		};
 		to = {
 			...to,
-			color: attributes.endcolor
+			color: attributes['data-end-color']
 		};
-
 	}
 
-	if ( 'true' === attributes.strokeanimation ) {
+	if ( 'true' === attributes['data-stroke-animation']) {
 		from = {
 			...from,
 			width: 0
 		};
 		to = {
 			...to,
-			width: parseFloat( attributes.strokewidth )
+			width: parseFloat( attributes['data-stroke-width'])
 		};
 	}
 
 	return ({
-		coloredProgress: 'true' === attributes.coloredprogress,
-		percentage: parseFloat( attributes.percentage ),
-		isAnimated: 'true' === attributes.animated,
-		strokeAnimation: 'true' === attributes.strokeanimation,
-		hideValue: 'true' === attributes.hidevalue,
+		coloredProgress: 'true' === attributes['data-colored-progress'],
+		percentage: parseFloat( attributes['data-percentage']),
+		isAnimated: 'true' === attributes['data-animated'],
+		strokeAnimation: 'true' === attributes['data-stroke-animation'],
+		hideValue: 'true' === attributes['data-hide-value'],
 		options: {
-			duration: attributes.duration * 1000,
-			easing: attributes.easing,
+			duration: attributes['data-duration'] * 1000,
+			easing: attributes['data-easing'],
 			to,
 			from
 		}
@@ -122,19 +122,20 @@ domReady( () => {
 
 		let bar;
 
-		switch ( attributes.type ) {
+		switch ( attributes['data-type']) {
 		case BarType.BAR:
 			bar = new ProgressBar.Line( container, {
 				...settings,
 				step,
 				text: {
 					style: {
-						color: attributes.textcolor,
+						color: settings.textColor,
 						position: 'absolute',
 						padding: 0,
 						margin: 0,
+						right: '1%',
 						transform: null,
-						fontSize: `${ attributes.height * 0.8 }px`
+						fontSize: `${ attributes['data-height'] * 0.8 }px`
 					},
 					autoStyleContainer: false,
 					alignToBottom: false
@@ -147,12 +148,11 @@ domReady( () => {
 				...settings,
 				step,
 				text: {
-					value: '',
 					autoStyleContainer: false
 				}
 			});
 			bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-			bar.text.style.fontSize = `${attributes.height / 4 }px`;
+			bar.text.style.fontSize = `${attributes['data-height'] / 4 }px`;
 			break;
 
 		case BarType.SEMICIRCLE:
@@ -165,7 +165,7 @@ domReady( () => {
 				}
 			});
 			bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-			bar.text.style.fontSize = `${attributes.height / 4 }px`;
+			bar.text.style.fontSize = `${attributes['data-height'] / 4 }px`;
 			bar.text.style.bottom = '12%';
 			break;
 		}
