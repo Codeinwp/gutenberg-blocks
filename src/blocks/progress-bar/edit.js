@@ -7,7 +7,6 @@ import Inspector from './inspector.js';
 
 
 const fontRatio = 0.342;
-const highlightRatio = 3.14;
 
 const ProgressBar = ({ attributes, setAttributes, isSelected, toggleSelection }) => {
 
