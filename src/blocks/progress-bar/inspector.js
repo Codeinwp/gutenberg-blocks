@@ -1,0 +1,136 @@
+import ProgressBar from './edit';
+
+/**
+ * WordPress dependencies
+ */
+const { __ } = wp.i18n;
+
+const { max } = lodash;
+
+const {
+	__experimentalColorGradientControl: ColorGradientControl,
+	InspectorControls
+} = wp.blockEditor;
+
+const {
+	PanelBody,
+	RangeControl,
+	ToggleControl,
+	SelectControl
+} = wp.components;
+
+const { Fragment } = wp.element;
+
+
+const Inspector = ({ attributes, setAttributes }) => {
+
+	const onPrcentageChange = value => {
+		setAttributes({ percentage: value});
+	};
+
+	const onTitleChange = value => {
+		setAttributes({ title: value});
+	};
+
+	const onBorderRadiusChange = value => {
+		setAttributes({ borderRadius: value});
+	};
+
+	const toggleHidePercentage = value => {
+		setAttributes({ hidePercentage: value});
+	};
+
+	const toggleHighlightTitle = value => {
+		setAttributes({ highlightTitle: value});
+	};
+
+	const selectPercentagePosition = value => {
+		setAttributes({ percentagePosition: value});
+	};
+
+	const onBackgroundColorChange = value => {
+		setAttributes({ backgroundColor: value});
+	};
+
+	const onBarBackgroundColorChange = value => {
+		setAttributes({ barBackgroundColor: value});
+	};
+
+	const onDurationChange = value => {
+		setAttributes({ duration: value });
+	};
+
+	return (
+		<InspectorControls>
+			<Fragment>
+				<PanelBody
+					title={ __( 'Settings' ) }
+					initialOpen={ true }
+				>
+					<RangeControl
+						label={ __( 'Percentage' ) }
+						help={ __( 'The value of the progress bar.' ) }
+						value={ attributes.percentage }
+						onChange={ onPrcentageChange }
+						min={ 0 }
+						max={ 100 }
+					/>
+
+					<ToggleControl
+						label={ __( 'Highligth Title' ) }
+						help={ __( 'Make the title to stand out.' ) }
+						checked={ attributes.highlightTitle }
+						onChange={ toggleHighlightTitle }
+					/>
+
+					<RangeControl
+						label={ __( 'Duration' ) }
+						help={ __( 'The duration of the animation.' ) }
+						value={ attributes.duration }
+						onChange={ onDurationChange }
+						min={ 0 }
+						max={ 3 }
+						step={ 0.1 }
+					/>
+
+					<SelectControl
+						label="Percentage Style"
+						value={ attributes.percentagePosition }
+						options={ [
+							{ label: 'Inline', value: 'inline' },
+							{ label: 'Arrow', value: 'arrow' }
+						] }
+						onChange={ selectPercentagePosition }
+					/>
+		   		</PanelBody>
+
+				<PanelBody
+					title={ __( 'Style' ) }
+				>
+					<RangeControl
+						label={ __( 'Border Radius' ) }
+						help={ __( 'Round the corners of the progress bar.' ) }
+						value={ attributes.borderRadius }
+						onChange={ onBorderRadiusChange }
+						min={ 0 }
+						max={ 100 }
+					/>
+
+					<ColorGradientControl
+						label={ 'Progress Color' }
+						colorValue={ attributes.barBackgroundColor }
+						onColorChange={ onBarBackgroundColorChange }
+					/>
+
+					<ColorGradientControl
+						label={ 'Background Color' }
+						colorValue={ attributes.backgroundColor }
+						onColorChange={ onBackgroundColorChange }
+					/>
+				</PanelBody>
+			</Fragment>
+	   </InspectorControls>
+	);
+};
+
+export default Inspector;

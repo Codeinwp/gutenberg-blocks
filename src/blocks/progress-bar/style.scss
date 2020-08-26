@@ -1,0 +1,115 @@
+body {
+  font-family: sans-serif;
+}
+
+p {
+  color: #525252;
+  font-size: 12px;
+}
+
+.skillbar {
+  position: relative;
+  display: block;
+  margin-bottom: 15px;
+  width: 100%;
+  background: #eee;
+  height: 35px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -webkit-transition: 0.4s linear;
+  -moz-transition: 0.4s linear;
+  -ms-transition: 0.4s linear;
+  -o-transition: 0.4s linear;
+  transition: 0.4s linear;
+  -webkit-transition-property: width, background-color;
+  -moz-transition-property: width, background-color;
+  -ms-transition-property: width, background-color;
+  -o-transition-property: width, background-color;
+  transition-property: width, background-color;
+}
+
+.skillbar-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 110px;
+  font-weight: bold;
+  font-size: 13px;
+  color: #ffffff;
+  background: #6adcfa;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 4px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.skillbar-title span {
+  display: block;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 0 20px;
+  height: 35px;
+  line-height: 35px;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.skillbar-title.transparent span {
+  background: transparent;
+}
+
+.skillbar-bar {
+  width: 110px;
+  height: 35px;
+  background: #6adcfa;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+
+  .skillbar-tooltip {
+      float: right;
+      bottom: 40px;
+      left: 20px;
+      color: white;
+      transition: all 1s;
+      position: relative;
+      padding: 4px 10px 7px 10px;
+      background-color: rgba(67, 66, 76, 0.81);
+      border-radius: 2px;
+      line-height: 20px;
+
+      .skillbar-arrow {
+          width: 0;
+          height: 0;
+          position: absolute;
+          content: "";
+          bottom: -5px;
+          left: 0;
+          right: 0;
+          margin: auto;
+          display: block;
+          border-style: solid;
+          border-width: 5px 5px 0 5px;
+          border-color: rgba(67, 66, 76, 0.81) transparent transparent transparent;
+        }
+        
+    }
+    
+}
+
+.skill-bar-percent {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  font-size: 11px;
+  height: 35px;
+  line-height: 35px;
+  color: #ffffff;
+  color: rgba(0, 0, 0, 0.4);
+}
