@@ -283,7 +283,7 @@ p {
   position: absolute;
   top: 0;
   left: 0;
-  width: 110px;
+  width: auto;
   font-weight: bold;
   font-size: 13px;
   color: #ffffff;
@@ -296,7 +296,9 @@ p {
   border-bottom-left-radius: 3px; }
 
 .skillbar-title span {
-  display: block;
+  display: flex;
+  align-items: center;
+  width: 100%;
   background: rgba(0, 0, 0, 0.1);
   padding: 0 20px;
   height: 35px;
@@ -319,6 +321,7 @@ p {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px; }
   .skillbar-bar .skillbar-tooltip {
+    font-size: 12px;
     float: right;
     bottom: 40px;
     left: 20px;
@@ -344,6 +347,8 @@ p {
       border-color: rgba(67, 66, 76, 0.81) transparent transparent transparent; }
 
 .skill-bar-percent {
+  display: flex;
+  align-items: center;
   position: absolute;
   right: 10px;
   top: 0;

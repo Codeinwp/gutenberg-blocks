@@ -13,7 +13,7 @@ const attributes = {
 	},
 	title: {
 		type: 'string',
-		default: 'Hello'
+		default: 'skill'
 	},
 	borderRadius: {
 		type: 'number',
@@ -25,7 +25,7 @@ const attributes = {
 	},
 	highlightTitle: {
 		type: 'bool',
-		default: 'true'
+		default: 'false'
 	},
 	percentagePosition: {
 		type: 'string',

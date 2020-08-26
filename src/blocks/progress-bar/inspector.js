@@ -1,11 +1,7 @@
-import ProgressBar from './edit';
-
 /**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
-
-const { max } = lodash;
 
 const {
 	__experimentalColorGradientControl: ColorGradientControl,
@@ -16,7 +12,8 @@ const {
 	PanelBody,
 	RangeControl,
 	ToggleControl,
-	SelectControl
+	SelectControl,
+	TextControl
 } = wp.components;
 
 const { Fragment } = wp.element;
@@ -24,20 +21,16 @@ const { Fragment } = wp.element;
 
 const Inspector = ({ attributes, setAttributes }) => {
 
-	const onPrcentageChange = value => {
-		setAttributes({ percentage: value});
-	};
-
 	const onTitleChange = value => {
 		setAttributes({ title: value});
 	};
 
-	const onBorderRadiusChange = value => {
-		setAttributes({ borderRadius: value});
+	const onPrcentageChange = value => {
+		setAttributes({ percentage: value});
 	};
 
-	const toggleHidePercentage = value => {
-		setAttributes({ hidePercentage: value});
+	const onBorderRadiusChange = value => {
+		setAttributes({ borderRadius: value});
 	};
 
 	const toggleHighlightTitle = value => {
@@ -67,6 +60,11 @@ const Inspector = ({ attributes, setAttributes }) => {
 					title={ __( 'Settings' ) }
 					initialOpen={ true }
 				>
+					<TextControl
+						label="Title"
+						value={ attributes.title }
+						onChange={ onTitleChange }
+					/>
 					<RangeControl
 						label={ __( 'Percentage' ) }
 						help={ __( 'The value of the progress bar.' ) }
@@ -94,11 +92,12 @@ const Inspector = ({ attributes, setAttributes }) => {
 					/>
 
 					<SelectControl
-						label="Percentage Style"
+						label="Show Percentage"
 						value={ attributes.percentagePosition }
 						options={ [
 							{ label: 'Inline', value: 'inline' },
-							{ label: 'Arrow', value: 'arrow' }
+							{ label: 'Tooltip', value: 'tooltip' },
+							{ label: 'Hide', value: 'hide' }
 						] }
 						onChange={ selectPercentagePosition }
 					/>
@@ -113,7 +112,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 						value={ attributes.borderRadius }
 						onChange={ onBorderRadiusChange }
 						min={ 0 }
-						max={ 100 }
+						max={ 35 }
 					/>
 
 					<ColorGradientControl

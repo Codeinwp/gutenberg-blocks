@@ -33,7 +33,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 110px;
+    width: auto;
     font-weight: bold;
     font-size: 13px;
     color: #ffffff;
@@ -49,6 +49,7 @@ body {
   .skillbar-title span {
     display: flex;
     align-items: center;
+    width: 100%;
     background: rgba(0, 0, 0, 0.1);
     padding: 0 20px;
     height: 35px;
@@ -74,6 +75,7 @@ body {
     -webkit-border-radius: 3px;
 
     .skillbar-tooltip {
+        font-size: 12px;
         float: right;
         bottom: 40px;
         left: 20px;
@@ -105,6 +107,8 @@ body {
   }
   
   .skill-bar-percent {
+    display: flex;
+    align-items: center;
     position: absolute;
     right: 10px;
     top: 0;

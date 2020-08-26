@@ -5,6 +5,10 @@ const { useEffect, useRef, Fragment } = wp.element;
 
 import Inspector from './inspector.js';
 
+
+const fontRatio = 0.342;
+const highlightRatio = 3.14;
+
 const ProgressBar = ({ attributes, setAttributes, isSelected, toggleSelection }) => {
 
 	const barRef = useRef( null );
@@ -13,8 +17,6 @@ const ProgressBar = ({ attributes, setAttributes, isSelected, toggleSelection })
 		if ( ! barRef.current ) {
 			return;
 		}
-
-		barRef.current.style.width = '110px';
 
 		barRef.current.animate(
 			{
@@ -57,14 +59,16 @@ const ProgressBar = ({ attributes, setAttributes, isSelected, toggleSelection })
 				} }
 			>
 				<div class="skillbar" data-percent={`${ attributes.percentage }%`} style={{background: attributes.backgroundColor, borderRadius: `${ attributes.borderRadius }px`, height: `${ attributes.height }px` }}>
-					<div class={ classnames( 'skillbar-title', { 'transparent': ! attributes.highlightTitle})} style={{background: attributes.barBackgroundColor, height: `${ attributes.height }px`}}><span style={{height: `${ attributes.height }px`}}>{ `${ attributes.title }` }</span></div>
+					<div class={ classnames( 'skillbar-title', { 'transparent': ! attributes.highlightTitle})} style={{fontSize: `${ attributes.height * fontRatio }px`, background: attributes.barBackgroundColor, height: `${ attributes.height }px`}}>
+						<span style={{height: `${ attributes.height }px`}}>  {`${ attributes.title }`}  </span>
+					</div>
 					<div class="skillbar-bar" ref={ barRef } style={{background: attributes.barBackgroundColor, borderRadius: `${ attributes.borderRadius }px`, height: `${ attributes.height }px`}}>
-						{ 'inline' !== attributes.percentagePosition && (
+						{ 'tooltip' === attributes.percentagePosition && (
 							<span class="skillbar-tooltip"> {`${ attributes.percentage }%`} <span class="skillbar-arrow"></span></span>
 						)}
 					</div>
 					{ 'inline' === attributes.percentagePosition && (
-						<div class="skill-bar-percent">{ `${ attributes.percentage }%` }</div>
+						<div class="skill-bar-percent" style={{fontSize: `${ attributes.height * fontRatio }px`, height: `${ attributes.height }px` }}>{ `${ attributes.percentage }%` }</div>
 					)}
 				</div>
 			</ResizableBox>
