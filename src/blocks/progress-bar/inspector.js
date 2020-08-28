@@ -25,7 +25,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 		setAttributes({ title: value});
 	};
 
-	const onPrcentageChange = value => {
+	const onPercentageChange = value => {
 		setAttributes({ percentage: value});
 	};
 
@@ -35,6 +35,10 @@ const Inspector = ({ attributes, setAttributes }) => {
 
 	const toggleHighlightTitle = value => {
 		setAttributes({ highlightTitle: value});
+	};
+
+	const selectTitlePosition = value => {
+		setAttributes({ titlePosition: value});
 	};
 
 	const selectPercentagePosition = value => {
@@ -69,7 +73,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 						label={ __( 'Percentage' ) }
 						help={ __( 'The value of the progress bar.' ) }
 						value={ attributes.percentage }
-						onChange={ onPrcentageChange }
+						onChange={ onPercentageChange }
 						min={ 0 }
 						max={ 100 }
 					/>
@@ -92,11 +96,22 @@ const Inspector = ({ attributes, setAttributes }) => {
 					/>
 
 					<SelectControl
+						label="Title Position"
+						value={ attributes.titlePosition }
+						options={ [
+							{ label: 'Inline', value: 'inline' },
+							{ label: 'Outer', value: 'outer' }
+						] }
+						onChange={ selectTitlePosition }
+					/>
+
+					<SelectControl
 						label="Show Percentage"
 						value={ attributes.percentagePosition }
 						options={ [
 							{ label: 'Inline', value: 'inline' },
 							{ label: 'Tooltip', value: 'tooltip' },
+							{ label: 'Outer', value: 'outer' },
 							{ label: 'Hide', value: 'hide' }
 						] }
 						onChange={ selectPercentagePosition }

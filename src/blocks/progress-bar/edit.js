@@ -30,48 +30,80 @@ const ProgressBar = ({ attributes, setAttributes, isSelected, toggleSelection })
 	}, [ attributes.percentage, attributes.duration ]);
 
 	const onHeightChange = value => {
-		setAttributes({ height: value});
+		if ( 35 > value ) {
+			setAttributes({
+				height: value,
+				titlePosition: 'outer',
+				percentagePosition: 'outer'
+			});
+		} else {
+			setAttributes({ height: value });
+		}
 	};
 
 	return (
 		<Fragment>
 			<Inspector attributes={ attributes } setAttributes={ setAttributes }/>
-			<ResizableBox
-				size={ {
-					height: attributes.height
-				} }
-				minHeight="35"
-				maxHeight="50"
-				enable={ {
-					top: false,
-					right: false,
-					bottom: true,
-					left: false
-				} }
-				showHandle={ isSelected }
-				onResizeStop={ ( event, direction, elt, delta ) => {
-					onHeightChange( parseInt( attributes.height + delta.height, 10 ) );
-					toggleSelection( true );
-				} }
-				onResizeStart={ () => {
-					toggleSelection( false );
-				} }
-			>
-				<div class="skillbar" data-percent={`${ attributes.percentage }%`} style={{background: attributes.backgroundColor, borderRadius: `${ attributes.borderRadius }px`, height: `${ attributes.height }px` }}>
-					<div class={ classnames( 'skillbar-title', { 'transparent': ! attributes.highlightTitle})} style={{fontSize: `${ attributes.height * fontRatio }px`, background: attributes.barBackgroundColor, height: `${ attributes.height }px`}}>
-						<span style={{height: `${ attributes.height }px`}}>  {`${ attributes.title }`}  </span>
-					</div>
-					<div class="skillbar-bar" ref={ barRef } style={{background: attributes.barBackgroundColor, borderRadius: `${ attributes.borderRadius }px`, height: `${ attributes.height }px`}}>
-						{ 'tooltip' === attributes.percentagePosition && (
-							<span class="skillbar-tooltip"> {`${ attributes.percentage }%`} <span class="skillbar-arrow"></span></span>
-						)}
-					</div>
-					{ 'inline' === attributes.percentagePosition && (
-						<div class="skill-bar-percent" style={{fontSize: `${ attributes.height * fontRatio }px`, height: `${ attributes.height }px` }}>{ `${ attributes.percentage }%` }</div>
+			<div className="wp-themeisle-progress-bar-block">
+
+				<div className="wp-themeisle-progress-bar-outer-content">
+					{'outer' === attributes.titlePosition && (
+						<h3 className="wp-themeisle-block-progress-bar-outer-content__title">
+							{`${ attributes.title }`}
+						</h3>
+					)}
+					{ 'outer' === attributes.percentagePosition && (
+						<div className={ classnames( 'wp-themeisle-skill-bar-percent', 'wp-themeisle-block-progress-bar-outer-content__value' )} >{ `${ attributes.percentage }%` }</div>
 					)}
 				</div>
-			</ResizableBox>
 
+
+				<ResizableBox
+					size={ {
+						height: attributes.height
+					} }
+					minHeight="10"
+					maxHeight="70"
+					enable={ {
+						top: false,
+						right: false,
+						bottom: true,
+						left: false
+					} }
+					showHandle={ isSelected }
+					onResizeStop={ ( event, direction, elt, delta ) => {
+						onHeightChange( parseInt( attributes.height + delta.height, 10 ) );
+						toggleSelection( true );
+					} }
+					onResizeStart={ () => {
+						toggleSelection( false );
+					} }
+				>
+
+					<div className="wp-themeisle-skillbar" data-percent={`${ attributes.percentage }%`} style={{background: attributes.backgroundColor, borderRadius: `${ attributes.borderRadius }px`, height: `${ attributes.height }px` }}>
+						{
+							'inline' === attributes.titlePosition && (
+								<div className={ classnames( 'wp-themeisle-skillbar-title', { 'transparent': ! attributes.highlightTitle})} style={{fontSize: `${ attributes.height * fontRatio }px`, background: attributes.barBackgroundColor, height: `${ attributes.height }px`, borderRadius: `${ attributes.borderRadius }px`}}>
+									<span style={{height: `${ attributes.height }px`, borderRadius: `${ attributes.borderRadius }px 0px 0px ${ attributes.borderRadius }px`}}>
+								  {`${ attributes.title }`}
+									</span>
+								</div>
+							)
+						}
+
+						<div className="wp-themeisle-skillbar-bar" ref={ barRef } style={{background: attributes.barBackgroundColor, borderRadius: `${ attributes.borderRadius }px`, height: `${ attributes.height }px`}}>
+							{ 'tooltip' === attributes.percentagePosition && (
+								<span className="wp-themeisle-skillbar-tooltip"> {`${ attributes.percentage }%`} <span className="wp-themeisle-skillbar-arrow"></span></span>
+							)}
+						</div>
+						{ 'inline' === attributes.percentagePosition && (
+							<div className="wp-themeisle-skill-bar-percent" style={{fontSize: `${ attributes.height * fontRatio }px`, height: `${ attributes.height }px` }}>{ `${ attributes.percentage }%` }</div>
+						)}
+					</div>
+
+
+				</ResizableBox>
+			</div>
 		</Fragment>
 	);
 };

@@ -27,6 +27,10 @@ const attributes = {
 		type: 'bool',
 		default: 'false'
 	},
+	titlePosition: {
+		type: 'string',
+		default: 'inline'
+	},
 	percentagePosition: {
 		type: 'string',
 		default: 'inline'
