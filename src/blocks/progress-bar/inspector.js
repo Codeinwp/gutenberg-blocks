@@ -11,7 +11,6 @@ const {
 const {
 	PanelBody,
 	RangeControl,
-	ToggleControl,
 	SelectControl,
 	TextControl
 } = wp.components;
@@ -33,12 +32,11 @@ const Inspector = ({ attributes, setAttributes }) => {
 		setAttributes({ borderRadius: value});
 	};
 
-	const toggleHighlightTitle = value => {
-		setAttributes({ highlightTitle: value});
-	};
-
-	const selectTitlePosition = value => {
-		setAttributes({ titlePosition: value});
+	const selectTitleStyle = value => {
+		if ( 35 > attributes.height && 'outer' !== value ) {
+			return;
+		}
+		setAttributes({ titleStyle: value});
 	};
 
 	const selectPercentagePosition = value => {
@@ -78,13 +76,6 @@ const Inspector = ({ attributes, setAttributes }) => {
 						max={ 100 }
 					/>
 
-					<ToggleControl
-						label={ __( 'Highligth Title' ) }
-						help={ __( 'Make the title to stand out.' ) }
-						checked={ attributes.highlightTitle }
-						onChange={ toggleHighlightTitle }
-					/>
-
 					<RangeControl
 						label={ __( 'Duration' ) }
 						help={ __( 'The duration of the animation.' ) }
@@ -96,13 +87,14 @@ const Inspector = ({ attributes, setAttributes }) => {
 					/>
 
 					<SelectControl
-						label="Title Position"
-						value={ attributes.titlePosition }
+						label="Title Style"
+						value={ attributes.titleStyle }
 						options={ [
-							{ label: 'Inline', value: 'inline' },
+							{ label: 'Default', value: 'default' },
+							{ label: 'Simple', value: 'simple' },
 							{ label: 'Outer', value: 'outer' }
 						] }
-						onChange={ selectTitlePosition }
+						onChange={ selectTitleStyle }
 					/>
 
 					<SelectControl

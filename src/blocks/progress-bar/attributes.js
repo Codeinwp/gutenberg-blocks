@@ -23,13 +23,9 @@ const attributes = {
 		type: 'bool',
 		default: false
 	},
-	highlightTitle: {
-		type: 'bool',
-		default: 'false'
-	},
-	titlePosition: {
+	titleStyle: {
 		type: 'string',
-		default: 'inline'
+		default: 'default'
 	},
 	percentagePosition: {
 		type: 'string',

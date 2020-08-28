@@ -33,7 +33,7 @@ const ProgressBar = ({ attributes, setAttributes, isSelected, toggleSelection })
 		if ( 35 > value ) {
 			setAttributes({
 				height: value,
-				titlePosition: 'outer',
+				titleStyle: 'outer',
 				percentagePosition: 'outer'
 			});
 		} else {
@@ -47,7 +47,7 @@ const ProgressBar = ({ attributes, setAttributes, isSelected, toggleSelection })
 			<div className="wp-themeisle-progress-bar-block">
 
 				<div className="wp-themeisle-progress-bar-outer-content">
-					{'outer' === attributes.titlePosition && (
+					{'outer' === attributes.titleStyle && (
 						<h3 className="wp-themeisle-block-progress-bar-outer-content__title">
 							{`${ attributes.title }`}
 						</h3>
@@ -63,7 +63,7 @@ const ProgressBar = ({ attributes, setAttributes, isSelected, toggleSelection })
 						height: attributes.height
 					} }
 					minHeight="10"
-					maxHeight="70"
+					maxHeight="100"
 					enable={ {
 						top: false,
 						right: false,
@@ -82,10 +82,10 @@ const ProgressBar = ({ attributes, setAttributes, isSelected, toggleSelection })
 
 					<div className="wp-themeisle-skillbar" data-percent={`${ attributes.percentage }%`} style={{background: attributes.backgroundColor, borderRadius: `${ attributes.borderRadius }px`, height: `${ attributes.height }px` }}>
 						{
-							'inline' === attributes.titlePosition && (
-								<div className={ classnames( 'wp-themeisle-skillbar-title', { 'transparent': ! attributes.highlightTitle})} style={{fontSize: `${ attributes.height * fontRatio }px`, background: attributes.barBackgroundColor, height: `${ attributes.height }px`, borderRadius: `${ attributes.borderRadius }px`}}>
+							( 'default' === attributes.titleStyle || 'simple' === attributes.titleStyle ) && (
+								<div className={ classnames( 'wp-themeisle-skillbar-title', { 'transparent': 'simple' === attributes.titleStyle})} style={{fontSize: `${ attributes.height * fontRatio }px`, background: attributes.barBackgroundColor, height: `${ attributes.height }px`, borderRadius: `${ attributes.borderRadius }px`}}>
 									<span style={{height: `${ attributes.height }px`, borderRadius: `${ attributes.borderRadius }px 0px 0px ${ attributes.borderRadius }px`}}>
-								  {`${ attributes.title }`}
+								  		{`${ attributes.title }`}
 									</span>
 								</div>
 							)
