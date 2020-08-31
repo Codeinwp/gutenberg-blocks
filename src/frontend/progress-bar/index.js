@@ -13,22 +13,37 @@ domReady( () => {
 
 		let attributes = {};
 		Array.from( progressBar.attributes ).forEach( x => attributes[x.nodeName] = x.nodeValue );
-		console.log( attributes );
 
-		setTimeout( () => {
-			percentage.style.visibility = 'unset';
+		let options = {
+			root: null,
+			rootMargin: '0px',
+			threshold: [ 0.6 ]
+		};
 
-		}, parseFloat( attributes['data-duration']) * 1000 );
+		let observer = new IntersectionObserver( ( entries ) => {
 
-		bar.animate(
-			{
-				width: `${ parseInt( attributes['data-percent']) }%`
-			},
-			{
-				duration: parseFloat( attributes['data-duration']) * 1000,
-				easing: 'linear',
-				fill: 'forwards'
-			}
-		);
+			entries.forEach( entrie => {
+				if ( entrie.isIntersecting ) {
+					setTimeout( () => {
+						percentage.style.visibility = 'unset';
+
+					}, parseFloat( attributes['data-duration']) * 1000 );
+
+					bar.animate(
+						{
+							width: `${ parseInt( attributes['data-percent']) }%`
+						},
+						{
+							duration: parseFloat( attributes['data-duration']) * 1000,
+							easing: 'linear',
+							fill: 'forwards'
+						}
+					);
+				}
+			});
+		}, options );
+
+
+		observer.observe( bar );
 	});
 });
