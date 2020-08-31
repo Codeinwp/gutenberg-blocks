@@ -31,6 +31,12 @@ class Main {
 	 * @var bool $is_map_loaded Is Map loaded?
 	 */
 	public static $is_map_loaded = false;
+	/**
+	 * Flag to mark that progress bar scripts has been loaded.
+	 *
+	 * @var bool $is_progress_bar_loaded Is Map loaded?
+	 */
+	public static $is_progress_bar_loaded = false;
 
 	/**
 	 * Define assets version.
@@ -244,6 +250,19 @@ class Main {
 			);
 
 			self::$is_glide_loaded = true;
+		}
+
+		if ( ! self::$is_progress_bar_loaded && has_block( 'themeisle-blocks/progress-bar', $post ) ) {
+
+			wp_enqueue_script(
+				'themeisle-gutenberg-progress-bar',
+				plugin_dir_url( $this->get_dir() ) . 'build/progress-bar.js',
+				array( 'wp-dom-ready'),
+				self::$assets_version,
+				true
+			);
+
+			self::$is_progress_bar_loaded = true;
 		}
 	}
 

@@ -13,6 +13,7 @@ import './editor.scss';
 import { postsIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
+import save from './save.js';
 
 registerBlockType( 'themeisle-blocks/progress-bar', {
 	title: __( 'Progress bar' ),
@@ -30,5 +31,5 @@ registerBlockType( 'themeisle-blocks/progress-bar', {
 		html: false
 	},
 	edit,
-	save: () => null
+	save
 });

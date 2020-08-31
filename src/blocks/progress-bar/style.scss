@@ -16,16 +16,20 @@
         justify-content: space-between;
         margin-bottom: .25em;
 
-        .wp-themeisle-block-progress-bar__title {
+        .wp-themeisle-block-progress-bar-outer-content__title {
             margin: 0px;
+            display: grid;
+            align-items: center;
         }
 
-        .wp-themeisle-block-progress-bar__value {
+        .wp-themeisle-block-progress-bar-outer-content__value {
             margin-left: auto;
+            display: grid;
+            align-items: center;
         }
   }
   
-  .wp-themeisle-skillbar {
+  .wp-themeisle-progress-bar-skillbar {
     position: relative;
     width: 100%;
     display: block;
@@ -47,7 +51,7 @@
     -o-transition-property: width, background-color;
     transition-property: width, background-color;
 
-    .wp-themeisle-skill-bar-percent {
+    .wp-themeisle-progress-bar-skill-bar-percent {
       display: flex;
       align-items: center;
       position: absolute;
@@ -60,7 +64,7 @@
       color: rgba(0, 0, 0, 0.4);
     }
     
-    .wp-themeisle-skillbar-bar {
+    .wp-themeisle-progress-bar-skillbar-bar {
       width: 110px;
       height: 35px;
       background: #6adcfa;
@@ -70,7 +74,7 @@
       
     
   
-      .wp-themeisle-skillbar-tooltip {
+      .wp-themeisle-progress-bar-skillbar-tooltip {
           font-size: 12px;
           float: right;
           bottom: 40px;
@@ -83,7 +87,7 @@
           border-radius: 2px;
           line-height: 20px;
   
-          .wp-themeisle-skillbar-arrow {
+          .wp-themeisle-progress-bar-skillbar-arrow {
               width: 0;
               height: 0;
               position: absolute;
@@ -104,7 +108,7 @@
     
   }
   
-  .wp-themeisle-skillbar-title {
+  .wp-themeisle-progress-bar-skillbar-title {
     position: absolute;
     top: 0;
     left: 0;
@@ -121,7 +125,7 @@
     border-bottom-left-radius: 3px;
   }
   
-  .wp-themeisle-skillbar-title span {
+  .wp-themeisle-progress-bar-skillbar-title span {
     display: flex;
     align-items: center;
     width: 100%;
@@ -137,7 +141,7 @@
     border-bottom-left-radius: 3px;
   }
   
-  .wp-themeisle-skillbar-title.transparent span {
+  .wp-themeisle-progress-bar-skillbar-title.transparent span {
     background: transparent;
   }
 
