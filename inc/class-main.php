@@ -139,7 +139,7 @@ class Main {
 		wp_enqueue_script(
 			'glidejs',
 			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.min.js',
-			array(),
+			[],
 			self::$assets_version,
 			true
 		);
@@ -147,7 +147,7 @@ class Main {
 		wp_enqueue_script(
 			'lottie-player',
 			plugin_dir_url( $this->get_dir() ) . 'assets/lottie/lottie-player.min.js',
-			array(),
+			[],
 			self::$assets_version,
 			true
 		);
@@ -165,6 +165,7 @@ class Main {
 				'mapsAPI'       => $api,
 				'themeDefaults' => $this->get_global_defaults(),
 				'isWPVIP'       => function_exists( 'is_wpcom_vip' ),
+				'canTrack'		=> 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false
 			)
 		);
 
@@ -239,7 +240,7 @@ class Main {
 			wp_enqueue_script(
 				'glidejs',
 				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.min.js',
-				array(),
+				[],
 				self::$assets_version,
 				true
 			);
@@ -273,7 +274,7 @@ class Main {
 			wp_enqueue_script(
 				'lottie-player',
 				plugin_dir_url( $this->get_dir() ) . 'assets/lottie/lottie-player.min.js',
-				array(),
+				[],
 				self::$assets_version,
 				true
 			);

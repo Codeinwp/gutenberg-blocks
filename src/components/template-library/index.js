@@ -168,6 +168,19 @@ const Library = ({
 				data = parse( data.content );
 			}
 
+			if ( url.includes( 'https://raw.githubusercontent.com/Codeinwp/' ) && window.themeisleGutenberg.dataLogging.templates && Boolean( window.themeisleGutenberg.canTrack ) ) {
+				const obj = window.themeisleGutenberg.dataLogging.templates.find( template => template.url === url );
+
+				if ( obj ) {
+					obj.instances = obj.instances + 1;
+				} else {
+					window.themeisleGutenberg.dataLogging.templates.push({
+						url,
+						instances: 1
+					});
+				}
+			}
+
 			importBlocks( data );
 		} catch ( error ) {
 			if ( error.message ) {

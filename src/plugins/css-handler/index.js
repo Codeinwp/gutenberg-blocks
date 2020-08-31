@@ -56,7 +56,7 @@ subscribe( () => {
 		}
 	});
 
-	if ( ( isPublishing || ( postPublished && isSaving ) ) && ! isAutoSaving && ! status ) {
+	if ( ( isPublishing || ( postPublished && isSaving ) ) && ! isAutoSaving ) {
 		savePostMeta();
 	}
 });
