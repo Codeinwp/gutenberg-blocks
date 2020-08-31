@@ -165,7 +165,7 @@ class Main {
 				'mapsAPI'       => $api,
 				'themeDefaults' => $this->get_global_defaults(),
 				'isWPVIP'       => function_exists( 'is_wpcom_vip' ),
-				'canTrack'		=> 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false
+				'canTrack'      => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false
 			)
 		);
 
