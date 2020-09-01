@@ -5,10 +5,11 @@
 const domReady = wp.domReady;
 
 domReady( () => {
-	const markerIcon = L.icon({
-		iconUrl: '../../../assets/map/marker-icon.png',
+
+	/* const markerIcon = L.icon({
+		iconUrl: themeisleGutenberg.assetsPath + '/map/marker-icon.png',  //not working
 		iconSize: [ 25, 40 ]
-	});
+	}); */
 
 	let maps = [];
 	maps = window.themeisleMaps;
@@ -32,7 +33,7 @@ domReady( () => {
 		if ( map.attributes.markers && 0 < map.attributes.markers.length ) {
 			map.attributes.markers.forEach( marker => {
 
-				const mark = new L.marker([ marker.latitude, marker.longitude ], {icon: markerIcon}).addTo( lMap );
+				const mark = new L.marker([ marker.latitude, marker.longitude ]).addTo( lMap );
 
 				if ( marker.title || marker.description ) {
 					const contentString = `<div class="wp-block-themeisle-blocks-map-overview"><h6 class="wp-block-themeisle-blocks-map-overview-title">${marker.title}</h6><div class="wp-block-themeisle-blocks-map-overview-content">${marker.description ? `<p>${marker.description}</p>` : ''}</div></div>`;

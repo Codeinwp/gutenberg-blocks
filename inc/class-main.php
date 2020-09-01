@@ -265,8 +265,6 @@ class Main {
 		}
 
 		if ( ! self::$is_Lmap_loaded && has_block( 'themeisle-blocks/map', $post ) ) {
-
-			
 			wp_enqueue_style(
 				'leafletcss',
 				plugin_dir_url( $this->get_dir() ) . 'assets/map/leaflet.css',
@@ -285,7 +283,7 @@ class Main {
 			wp_enqueue_script(
 				'frontendjs',
 				plugin_dir_url( $this->get_dir() ) . 'src/frontend/map/index.js',
-				array('wp-dom-ready', 'wp-element'),
+				array('wp-dom-ready'),
 				self::$assets_version,
 				true
 			);
