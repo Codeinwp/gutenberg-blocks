@@ -281,7 +281,7 @@ class Main {
 			wp_enqueue_script(
 				'themeisle-gutenberg-progress-bar',
 				plugin_dir_url( $this->get_dir() ) . 'build/progress-bar.js',
-				array( 'wp-dom-ready'),
+				array( 'wp-dom-ready' ),
 				self::$assets_version,
 				true
 			);
