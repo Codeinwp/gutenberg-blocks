@@ -37,7 +37,7 @@
     width: 100%;
     background: #eee;
     height: 35px;
-    border-radius: 3px;
+    border-radius: 5px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     -webkit-transition: 0.4s linear;
@@ -68,7 +68,7 @@
       width: 110px;
       height: 35px;
       background: #6adcfa;
-      border-radius: 3px;
+      border-radius: 5px;
       -moz-border-radius: 3px;
       -webkit-border-radius: 3px;
       
@@ -128,6 +128,7 @@
   .wp-themeisle-progress-bar-skillbar-title span {
     display: flex;
     align-items: center;
+    border-radius: 5px 0px 0px 5px;
     width: 100%;
     background: rgba(0, 0, 0, 0.1);
     padding: 0 20px;

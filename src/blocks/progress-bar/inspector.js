@@ -73,7 +73,7 @@ const Inspector = ({
 					initialOpen={ true }
 				>
 					<TextControl
-						label="Title"
+						label={ __( 'Title' ) }
 						value={ attributes.title }
 						onChange={ onTitleChange }
 					/>
@@ -100,12 +100,12 @@ const Inspector = ({
 					{
 						( 35 <= attributes.height ) && (
 							<SelectControl
-								label="Title Style"
+								label={ __( 'Title Style' ) }
 								value={ attributes.titleStyle }
 								options={ [
-									{ label: 'Default', value: 'default' },
-									{ label: 'Simple', value: 'simple' },
-									{ label: 'Outer', value: 'outer' }
+									{ label: __( 'Default' ), value: 'default' },
+									{ label: __( 'Simple' ), value: 'simple' },
+									{ label: __( 'Outer' ), value: 'outer' }
 								] }
 								onChange={ selectTitleStyle }
 							/>
@@ -113,13 +113,13 @@ const Inspector = ({
 					}
 
 					<SelectControl
-						label="Show Percentage"
+						label={ __( 'Show Percentage' ) }
 						value={ attributes.percentagePosition }
 						options={ [
-							{ label: 'Inline', value: 'inline' },
-							{ label: 'Tooltip', value: 'tooltip' },
-							{ label: 'Outer', value: 'outer' },
-							{ label: 'Hide', value: 'hide' }
+							{ label: __( 'Inline' ), value: 'inline' },
+							{ label: __( 'Tooltip' ), value: 'tooltip' },
+							{ label: __( 'Outer' ), value: 'outer' },
+							{ label: __( 'Hide' ), value: 'hide' }
 						] }
 						onChange={ selectPercentagePosition }
 					/>
@@ -147,13 +147,13 @@ const Inspector = ({
 					/>
 
 					<ColorGradientControl
-						label={ 'Progress Color' }
+						label={ __( 'Progress Color' ) }
 						colorValue={ attributes.barBackgroundColor }
 						onColorChange={ onBarBackgroundColorChange }
 					/>
 
 					<ColorGradientControl
-						label={ 'Background Color' }
+						label={ __( 'Background Color' ) }
 						colorValue={ attributes.backgroundColor }
 						onColorChange={ onBackgroundColorChange }
 					/>

@@ -1,7 +1,9 @@
+/**
+ * External dependencies
+ */
 import classnames from 'classnames';
 
-import { fontRatio } from './constants.js';
-
+export const fontRatio = 0.342;
 
 const Save = ({ attributes }) => {
 	return (
@@ -15,15 +17,16 @@ const Save = ({ attributes }) => {
 				( 'outer' === attributes.titleStyle || 'outer' === attributes.percentagePosition ) && (
 					<div className="wp-themeisle-progress-bar-outer-content">
 						{'outer' === attributes.titleStyle && (
-							<h3 className="wp-themeisle-block-progress-bar-outer-content__title">
+							<span className="wp-themeisle-block-progress-bar-outer-content__title">
 								{`${ attributes.title }`}
-							</h3>
+							</span>
 						)}
 						{ 'outer' === attributes.percentagePosition && (
 							<div
 								id="percentage"
-								className={ classnames( 'wp-themeisle-progress-bar-skill-bar-percent', 'wp-themeisle-block-progress-bar-outer-content__value' )} >
-						style={{ visibility: 'hidden' }}
+								className={ classnames( 'wp-themeisle-progress-bar-skill-bar-percent', 'wp-themeisle-block-progress-bar-outer-content__value' )}
+								style={{ visibility: 'hidden' }}
+							>
 								{ `${ attributes.percentage }%` }
 							</div>
 						)}

@@ -16,8 +16,7 @@ const attributes = {
 		default: 'Skill'
 	},
 	borderRadius: {
-		type: 'number',
-		default: 5
+		type: 'number'
 	},
 	hidePercentage: {
 		type: 'bool',
