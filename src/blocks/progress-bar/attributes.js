@@ -1,7 +1,12 @@
+/**
+ * WordPress dependencies
+ */
+const { __ } = wp.i18n;
+
 const attributes = {
-	height: {
-		type: 'number',
-		default: 35
+	title: {
+		type: 'string',
+		default: __( 'Skill' )
 	},
 	percentage: {
 		type: 'number',
@@ -9,18 +14,7 @@ const attributes = {
 	},
 	duration: {
 		type: 'number',
-		default: 3
-	},
-	title: {
-		type: 'string',
-		default: 'Skill'
-	},
-	borderRadius: {
-		type: 'number'
-	},
-	hidePercentage: {
-		type: 'bool',
-		default: false
+		default: 2
 	},
 	titleStyle: {
 		type: 'string',
@@ -29,6 +23,13 @@ const attributes = {
 	percentagePosition: {
 		type: 'string',
 		default: 'inline'
+	},
+	height: {
+		type: 'number',
+		default: 35
+	},
+	borderRadius: {
+		type: 'number'
 	},
 	backgroundColor: {
 		type: 'string'
