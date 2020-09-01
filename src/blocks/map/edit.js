@@ -63,7 +63,8 @@ const Edit = ({
 	const [ selectedMarker, setSelectedMarker ] = useState({});
 
 	const markerIcon = L.icon({
-		iconUrl: themeisleGutenberg.assetsPath + '/map/marker-icon.png'
+		iconUrl: themeisleGutenberg.assetsPath + '/map/marker-icon.png',
+		iconSize: [ 25, 40 ]
 	});
 
 	const initBlock = async() => {

@@ -264,7 +264,9 @@ class Main {
 			self::$is_map_loaded = true;
 		}
 
-		 if ( ! self::$is_Lmap_loaded && has_block( 'themeisle-blocks/map', $post ) ) {
+		if ( ! self::$is_Lmap_loaded && has_block( 'themeisle-blocks/map', $post ) ) {
+
+			
 			wp_enqueue_style(
 				'leafletcss',
 				plugin_dir_url( $this->get_dir() ) . 'assets/map/leaflet.css',
@@ -276,6 +278,14 @@ class Main {
 				'leafletjs',
 				plugin_dir_url( $this->get_dir() ) . 'assets/map/leaflet.js',
 				array(),
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_script(
+				'frontendjs',
+				plugin_dir_url( $this->get_dir() ) . 'src/frontend/map/index.js',
+				array('wp-dom-ready', 'wp-element'),
 				self::$assets_version,
 				true
 			);

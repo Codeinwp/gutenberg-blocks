@@ -2,10 +2,7 @@
  * WordPress dependencies
  */
 
-const {
-	Fragment,
-	useEffect
-} = wp.element;
+const { useEffect } = wp.element;
 
 const Map = ({
 	attributes,
@@ -21,18 +18,16 @@ const Map = ({
 	}, [ displayMap ]);
 
 	return (
-		<Fragment>
-			<div
-				id={ attributes.id }
-				className={className}
+		<div
+			id={ attributes.id }
+			className={className}
 
-				style={ {
-					height: attributes.height + 'px',
-					cursor: isSelectingMarkerRef.current ? 'crosshair' : ''
-				} }
-			>
-			</div>
-		</Fragment>
+			style={ {
+				height: attributes.height + 'px',
+				cursor: isSelectingMarkerRef.current ? 'crosshair' : ''
+			} }
+		>
+		</div>
 	);
 };
 
