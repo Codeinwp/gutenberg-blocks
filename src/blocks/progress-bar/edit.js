@@ -76,21 +76,24 @@ const ProgressBar = ({ attributes, setAttributes, isSelected, toggleSelection })
 			/>
 			<div className="wp-themeisle-progress-bar-block">
 
-				<div className="wp-themeisle-progress-bar-outer-content">
-					{'outer' === attributes.titleStyle && (
-						<h3 className="wp-themeisle-block-progress-bar-outer-content__title">
-							{`${ attributes.title }`}
-						</h3>
-					)}
-					{ 'outer' === attributes.percentagePosition && showPercentage && (
-						<div
-							className={
-								classnames( 'wp-themeisle-progress-bar-skill-bar-percent', 'wp-themeisle-block-progress-bar-outer-content__value' )
-							}
-						>{ `${ attributes.percentage }%` }</div>
-					)}
-				</div>
-
+				{
+					( 'outer' === attributes.titleStyle || 'outer' === attributes.percentagePosition ) && (
+						<div className="wp-themeisle-progress-bar-outer-content">
+							{'outer' === attributes.titleStyle && (
+								<h3 className="wp-themeisle-block-progress-bar-outer-content__title">
+									{`${ attributes.title }`}
+								</h3>
+							)}
+							{ 'outer' === attributes.percentagePosition && showPercentage && (
+								<div
+									className={
+										classnames( 'wp-themeisle-progress-bar-skill-bar-percent', 'wp-themeisle-block-progress-bar-outer-content__value' )
+									}
+								>{ `${ attributes.percentage }%` }</div>
+							)}
+						</div>
+					)
+				}
 
 				<ResizableBox
 					size={ {

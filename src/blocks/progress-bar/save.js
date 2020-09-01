@@ -11,23 +11,25 @@ const Save = ({ attributes }) => {
 			data-duration={ attributes.duration }
 			data-height={ attributes.height }
 		>
-
-			<div className="wp-themeisle-progress-bar-outer-content">
-				{'outer' === attributes.titleStyle && (
-					<h3 className="wp-themeisle-block-progress-bar-outer-content__title">
-						{`${ attributes.title }`}
-					</h3>
-				)}
-				{ 'outer' === attributes.percentagePosition && (
-					<div
-						id="percentage"
-						className={ classnames( 'wp-themeisle-progress-bar-skill-bar-percent', 'wp-themeisle-block-progress-bar-outer-content__value' )} >
+			{
+				( 'outer' === attributes.titleStyle || 'outer' === attributes.percentagePosition ) && (
+					<div className="wp-themeisle-progress-bar-outer-content">
+						{'outer' === attributes.titleStyle && (
+							<h3 className="wp-themeisle-block-progress-bar-outer-content__title">
+								{`${ attributes.title }`}
+							</h3>
+						)}
+						{ 'outer' === attributes.percentagePosition && (
+							<div
+								id="percentage"
+								className={ classnames( 'wp-themeisle-progress-bar-skill-bar-percent', 'wp-themeisle-block-progress-bar-outer-content__value' )} >
 						style={{ visibility: 'hidden' }}
-						{ `${ attributes.percentage }%` }
+								{ `${ attributes.percentage }%` }
+							</div>
+						)}
 					</div>
-				)}
-			</div>
-
+				)
+			}
 
 			<div
 				className="wp-themeisle-progress-bar-skillbar"
