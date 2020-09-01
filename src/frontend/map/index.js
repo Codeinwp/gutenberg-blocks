@@ -15,7 +15,6 @@ domReady( () => {
 
 	maps.forEach( map => {
 		const mapContainer = document.getElementById( map.container );
-		console.log( mapContainer );
 		mapContainer.style.height = `${map.attributes.height}px`;
 
 		const lMap = new L.Map( mapContainer, {
