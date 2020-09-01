@@ -18,7 +18,13 @@ const {
 const { Fragment } = wp.element;
 
 
-const Inspector = ({ attributes, setAttributes }) => {
+const Inspector = ({
+	attributes,
+	setAttributes,
+	onHeightChange,
+	heightMode,
+	setHeightMode
+}) => {
 
 	const onTitleChange = value => {
 		setAttributes({ title: value});
@@ -33,13 +39,17 @@ const Inspector = ({ attributes, setAttributes }) => {
 	};
 
 	const selectTitleStyle = value => {
-		if ( 35 > attributes.height && 'outer' !== value ) {
-			return;
-		}
 		setAttributes({ titleStyle: value});
 	};
 
 	const selectPercentagePosition = value => {
+		if ( heightMode.isAutomatic ) {
+			heightMode.percentagePosition = value;
+			setHeightMode({
+				...heightMode
+			});
+		}
+
 		setAttributes({ percentagePosition: value});
 	};
 
@@ -67,6 +77,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 						value={ attributes.title }
 						onChange={ onTitleChange }
 					/>
+
 					<RangeControl
 						label={ __( 'Percentage' ) }
 						help={ __( 'The value of the progress bar.' ) }
@@ -86,16 +97,20 @@ const Inspector = ({ attributes, setAttributes }) => {
 						step={ 0.1 }
 					/>
 
-					<SelectControl
-						label="Title Style"
-						value={ attributes.titleStyle }
-						options={ [
-							{ label: 'Default', value: 'default' },
-							{ label: 'Simple', value: 'simple' },
-							{ label: 'Outer', value: 'outer' }
-						] }
-						onChange={ selectTitleStyle }
-					/>
+					{
+						( 35 <= attributes.height ) && (
+							<SelectControl
+								label="Title Style"
+								value={ attributes.titleStyle }
+								options={ [
+									{ label: 'Default', value: 'default' },
+									{ label: 'Simple', value: 'simple' },
+									{ label: 'Outer', value: 'outer' }
+								] }
+								onChange={ selectTitleStyle }
+							/>
+						)
+					}
 
 					<SelectControl
 						label="Show Percentage"
@@ -113,6 +128,15 @@ const Inspector = ({ attributes, setAttributes }) => {
 				<PanelBody
 					title={ __( 'Style' ) }
 				>
+					<RangeControl
+						label={ __( 'Height' ) }
+						help={ __( 'The height of the progress bar.' ) }
+						value={ attributes.height }
+						onChange={ onHeightChange }
+						min={ 10 }
+						max={ 100 }
+					/>
+
 					<RangeControl
 						label={ __( 'Border Radius' ) }
 						help={ __( 'Round the corners of the progress bar.' ) }

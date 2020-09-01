@@ -13,11 +13,11 @@ const attributes = {
 	},
 	title: {
 		type: 'string',
-		default: 'skill'
+		default: 'Skill'
 	},
 	borderRadius: {
 		type: 'number',
-		default: 3
+		default: 5
 	},
 	hidePercentage: {
 		type: 'bool',

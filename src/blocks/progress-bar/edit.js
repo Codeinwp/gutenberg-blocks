@@ -10,6 +10,7 @@ const ProgressBar = ({ attributes, setAttributes, isSelected, toggleSelection })
 
 	const barRef = useRef( null );
 	const [ showPercentage, setShowPercentage ] = useState( false );
+	const [ heightMode, setHeightMode ] = useState({ isAutomatic: false, titleStyle: attributes.titleStyle, percentagePosition: attributes.percentagePosition });
 
 	useEffect( () => {
 		if ( ! barRef.current ) {
@@ -35,20 +36,44 @@ const ProgressBar = ({ attributes, setAttributes, isSelected, toggleSelection })
 	}, [ attributes.percentage, attributes.duration ]);
 
 	const onHeightChange = value => {
+		console.log( heightMode );
 		if ( 35 > value ) {
+			if ( ! heightMode.isAutomatic ) {
+				setHeightMode({
+					isAutomatic: true,
+					titleStyle: attributes.titleStyle,
+					percentagePosition: attributes.percentagePosition
+				});
+
+			}
 			setAttributes({
 				height: value,
 				titleStyle: 'outer',
-				percentagePosition: 'outer'
+				percentagePosition: 'inline' === attributes.percentagePosition ? 'outer' : attributes.percentagePosition
 			});
 		} else {
-			setAttributes({ height: value });
+			if ( heightMode.isAutomatic ) {
+				setHeightMode({
+					isAutomatic: false
+				});
+			}
+			setAttributes({
+				titleStyle: heightMode.isAutomatic ? heightMode.titleStyle : attributes.titleStyle,
+				percentagePosition: heightMode.isAutomatic ? heightMode.percentagePosition : attributes.percentagePosition,
+				height: value
+			});
 		}
 	};
 
 	return (
 		<Fragment>
-			<Inspector attributes={ attributes } setAttributes={ setAttributes }/>
+			<Inspector
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				onHeightChange={ onHeightChange }
+				heightMode={ heightMode }
+				setHeightMode={ setHeightMode }
+			/>
 			<div className="wp-themeisle-progress-bar-block">
 
 				<div className="wp-themeisle-progress-bar-outer-content">
