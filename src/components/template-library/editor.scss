@@ -304,6 +304,12 @@
 				.wp-block {
 					max-width: none;
 				}
+
+				.components-resizable-box__handle {
+					&:after {
+						display: none;
+					}
+				}
 			}
 		}
 
