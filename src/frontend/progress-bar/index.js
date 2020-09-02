@@ -3,6 +3,8 @@
  */
 const domReady = wp.domReady;
 
+import { range, linear } from './utils.js';
+
 domReady( () => {
 	const progressBars = document.querySelectorAll( '.wp-block-themeisle-blocks-progress-bar' );
 
@@ -21,28 +23,21 @@ domReady( () => {
 			entries.forEach( entry => {
 				if ( entry.isIntersecting ) {
 					if ( number ) {
-						let num = 0;
-						const target = parseInt( number.innerText );
-						const time = duration / target;
-						let interval = setInterval( () => {
-							number.innerText = `${ num }%`;
-							if ( num >= target ) {
-								clearInterval( interval );
-							}
-							num++;
-						}, time );
-					}
+						const step = 10; // for a more smother animation, decrease the value
+						const totalPercent =  parseInt( number.innerText );
+						const percentPerTime = range( 0, duration, step ).map( x => linear( x  / duration ) * totalPercent ).reverse();
 
-					bar.animate(
-						{
-							width: `${ progressBar.dataset.percent }%`
-						},
-						{
-							duration: duration,
-							easing: 'linear',
-							fill: 'forwards'
-						}
-					);
+						let interval = setInterval(
+							() => {
+								const value = percentPerTime.pop();
+								bar.style.width = `${ value }%`;
+								number.innerText = `${ Math.ceil( value ) }%`;
+								if ( ! percentPerTime.length ) {
+									clearInterval( interval );
+								}
+							}
+							, step );
+					}
 				}
 			});
 		}, options );
