@@ -4,6 +4,9 @@
 const { __ } = wp.i18n;
 
 const attributes = {
+	id: {
+		type: 'string'
+	},
 	title: {
 		type: 'string',
 		default: __( 'Skill' )

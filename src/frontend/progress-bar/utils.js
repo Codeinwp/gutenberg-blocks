@@ -1,5 +1,4 @@
-
-export function range( start, end, step ) {
+export const range = ( start, end, step ) => {
 	var range = [];
 	var typeofStart = typeof start;
 	var typeofEnd = typeof end;
@@ -8,27 +7,26 @@ export function range( start, end, step ) {
 		throw TypeError( 'Step cannot be zero.' );
 	}
 
-	if ( 'undefined' == typeofStart || 'undefined' == typeofEnd ) {
+	if ( undefined === typeofStart || undefined === typeofEnd ) {
 		throw TypeError( 'Must pass start and end arguments.' );
-	} else if ( typeofStart != typeofEnd ) {
+	} else if ( typeofStart !== typeofEnd ) {
 		throw TypeError( 'Start and end arguments must be of same type.' );
 	}
 
-	'undefined' == typeof step && ( step = 1 );
+	undefined === typeof step && ( step = 1 );
 
 	if ( end < start ) {
 		step = -step;
 	}
 
-	if ( 'number' == typeofStart ) {
+	if ( 'number' === typeofStart ) {
 
 		while ( 0 < step ? end >= start : end <= start ) {
 			range.push( start );
 			start += step;
 		}
 
-	} else if ( 'string' == typeofStart ) {
-
+	} else if ( 'string' === typeofStart ) {
 		if ( 1 != start.length || 1 != end.length ) {
 			throw TypeError( 'Only strings with one character are supported.' );
 		}
@@ -49,20 +47,18 @@ export function range( start, end, step ) {
 
 };
 
-export function linear( x ) {
+export const linear = ( x ) => {
 	return x;
-}
+};
 
-export function easeInSine( x ) {
+export const easeInSine = ( x ) => {
 	return 1 - Math.cos( ( x * Math.PI ) / 2 );
-}
+};
 
-export function easeOutSine( x ) {
+export const easeOutSine = ( x ) => {
 	return Math.sin( ( x * Math.PI ) / 2 );
-}
+};
 
-export function easeInOutSine( x ) {
+export const easeInOutSine = ( x ) => {
 	return -( Math.cos( Math.PI * x ) - 1 ) / 2;
-}
-
-
+};

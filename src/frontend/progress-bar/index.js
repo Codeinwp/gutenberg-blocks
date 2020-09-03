@@ -27,16 +27,14 @@ domReady( () => {
 						const totalPercent =  parseInt( number.innerText );
 						const percentPerTime = range( 0, duration, step ).map( x => linear( x  / duration ) * totalPercent ).reverse();
 
-						let interval = setInterval(
-							() => {
-								const value = percentPerTime.pop();
-								bar.style.width = `${ value }%`;
-								number.innerText = `${ Math.ceil( value ) }%`;
-								if ( ! percentPerTime.length ) {
-									clearInterval( interval );
-								}
+						let interval = setInterval( () => {
+							const value = percentPerTime.pop();
+							bar.style.width = `${ value }%`;
+							number.innerText = `${ Math.ceil( value ) }%`;
+							if ( ! percentPerTime.length ) {
+								clearInterval( interval );
 							}
-							, step );
+						}, step );
 					}
 				}
 			});

@@ -4,11 +4,10 @@
 import classnames from 'classnames';
 
 const Save = ({ attributes }) => {
-	const fontRatio = 0.342;
-
 	return (
 		<div
 			className={ attributes.className }
+			id={ attributes.id }
 			data-percent={ attributes.percentage }
 			data-duration={ attributes.duration }
 		>
@@ -28,46 +27,19 @@ const Save = ({ attributes }) => {
 				</div>
 			) }
 
-			<div
-				className="wp-block-themeisle-blocks-progress-bar__area"
-				style={ {
-					background: attributes.backgroundColor,
-					borderRadius: `${ attributes.borderRadius }px`,
-					height: `${ attributes.height }px`
-				} }
-			>
+			<div className="wp-block-themeisle-blocks-progress-bar__area">
 				{ ( 'default' === attributes.titleStyle || 'simple' === attributes.titleStyle ) && (
 					<div
 						className={ classnames(
 							'wp-block-themeisle-blocks-progress-bar__area__title',
 							{ 'transparent': 'simple' === attributes.titleStyle }
 						) }
-						style={ {
-							fontSize: `${ attributes.height * fontRatio }px`,
-							background: attributes.barBackgroundColor,
-							height: `${ attributes.height }px`,
-							borderRadius: `${ attributes.borderRadius }px`
-						} }
 					>
-						<span
-							style={ {
-								height: `${ attributes.height }px`,
-								borderRadius: `${ attributes.borderRadius }px 0px 0px ${ attributes.borderRadius }px`
-							} }
-						>
-							{ attributes.title }
-						</span>
+						<span>{ attributes.title }</span>
 					</div>
 				) }
 
-				<div
-					className="wp-block-themeisle-blocks-progress-bar__area__bar"
-					style={ {
-						background: attributes.barBackgroundColor,
-						borderRadius: `${ attributes.borderRadius }px`,
-						height: `${ attributes.height }px`
-					} }
-				>
+				<div className="wp-block-themeisle-blocks-progress-bar__area__bar">
 					{ 'tooltip' === attributes.percentagePosition && (
 						<span className="wp-block-themeisle-blocks-progress-bar__area__tooltip">
 							<span className="wp-block-themeisle-blocks-progress-bar__number">
@@ -79,13 +51,7 @@ const Save = ({ attributes }) => {
 				</div>
 
 				{ 'inline' === attributes.percentagePosition && (
-					<div
-						className="wp-block-themeisle-blocks-progress-bar__progress wp-block-themeisle-blocks-progress-bar__number"
-						style={ {
-							fontSize: `${ attributes.height * fontRatio }px`,
-							height: `${ attributes.height }px`
-						} }
-					>
+					<div className="wp-block-themeisle-blocks-progress-bar__progress wp-block-themeisle-blocks-progress-bar__number">
 						{ attributes.percentage }
 					</div>
 				) }
