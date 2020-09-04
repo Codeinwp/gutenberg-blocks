@@ -31,12 +31,14 @@ const BlockPlaceholder = ({
 	onChange
 }) => {
 	useEffect( () => {
-		const settings = new wp.api.models.Settings();
+		wp.api.loadPromise.then( () => {
+			const settings = new wp.api.models.Settings();
 
-		settings.fetch().then( response => {
-			if ( response.themeisle_allow_json_upload ) {
-				setJSONAllowed( response.themeisle_allow_json_upload );
-			}
+			settings.fetch().then( response => {
+				if ( response.themeisle_allow_json_upload ) {
+					setJSONAllowed( response.themeisle_allow_json_upload );
+				}
+			});
 		});
 	}, []);
 

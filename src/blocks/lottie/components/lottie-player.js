@@ -12,7 +12,7 @@ const LottiePlayer = ({
 	playerRef
 }) => {
 	useEffect( () => {
-		if ( ! isEmpty( attributes.file ) && attributes.loop && playerRef.current ) {
+		if ( ! isEmpty( attributes.file ) && attributes.loop && null !== playerRef.current ) {
 			playerRef.current.addEventListener( 'complete', initLoop );
 		}
 	}, []);
