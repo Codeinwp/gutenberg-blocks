@@ -34,12 +34,12 @@ const Inspector = ({
 	};
 
 	const onChangeLoopCount = value => {
-		setAttributes({ count: value });
+		setAttributes({ count: Number( value ) });
 		playerRef.current.load( attributes.file.url );
 	};
 
 	const onChangeSpeed = value => {
-		setAttributes({ speed: value });
+		setAttributes({ speed: Number( value ) });
 		playerRef.current.setSpeed( value );
 	};
 
@@ -50,7 +50,7 @@ const Inspector = ({
 	};
 
 	const onChangeWidth = value => {
-		setAttributes({ width: value });
+		setAttributes({ width: Number( value ) });
 	};
 
 	return (
