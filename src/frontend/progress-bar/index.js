@@ -23,31 +23,38 @@ domReady( () => {
 			bar.style.width = `${ parseInt( number.innerText ) }%`;
 			number.innerText = `${ parseInt( number.innerText ) }%`;
 		} else {
-			let isComplet = false;
+			let runOnce = false;
 			let observer = new IntersectionObserver( entries => {
 				entries.forEach( entry => {
 					console.log( entry );
 					if ( entry.isIntersecting ) {
-						if ( number && ! isComplet ) {
+						if ( number && ! runOnce ) {
+
+							let interval;
+
+							if ( interval ) {
+								clearInterval( interval );
+							}
+
 							const step = 10; // for a more smother animation, decrease the value
 							const totalPercent =  parseInt( number.innerText );
 							const percentPerTime = range( 0, duration, step ).map( x => linear( x  / duration ) * totalPercent ).reverse();
 
-							let interval = setInterval( () => {
+							interval = setInterval( () => {
 								const value = percentPerTime.pop();
 								bar.style.width = `${ value }%`;
 								number.innerText = `${ Math.ceil( value ) }%`;
 								if ( ! percentPerTime.length ) {
-									isComplet = true;
 									clearInterval( interval );
 								}
 							}, step );
 						}
+						runOnce = true;
 					}
 				});
 			}, options );
 
-			observer.observe( bar );
+			setTimeout( () => observer.observe( bar ), 1 );
 		}
 
 	});
