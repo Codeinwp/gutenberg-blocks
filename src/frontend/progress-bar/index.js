@@ -3,6 +3,9 @@
  */
 const domReady = wp.domReady;
 
+/**
+ * Internal dependencies
+ */
 import { range, linear } from './utils.js';
 
 domReady( () => {
@@ -26,7 +29,6 @@ domReady( () => {
 			let runOnce = false;
 			let observer = new IntersectionObserver( entries => {
 				entries.forEach( entry => {
-					console.log( entry );
 					if ( entry.isIntersecting ) {
 						if ( number && ! runOnce ) {
 
@@ -56,6 +58,5 @@ domReady( () => {
 
 			setTimeout( () => observer.observe( bar ), 1 );
 		}
-
 	});
 });
