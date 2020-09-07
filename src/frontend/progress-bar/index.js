@@ -3,6 +3,9 @@
  */
 const domReady = wp.domReady;
 
+/**
+ * Internal dependencies
+ */
 import { range, linear } from './utils.js';
 
 domReady( () => {
@@ -19,27 +22,41 @@ domReady( () => {
 			threshold: [ 0.6 ]
 		};
 
-		let observer = new IntersectionObserver( entries => {
-			entries.forEach( entry => {
-				if ( entry.isIntersecting ) {
-					if ( number ) {
-						const step = 10; // for a more smother animation, decrease the value
-						const totalPercent =  parseInt( number.innerText );
-						const percentPerTime = range( 0, duration, step ).map( x => linear( x  / duration ) * totalPercent ).reverse();
+		if ( 0 === duration ) {
+			bar.style.width = `${ parseInt( number.innerText ) }%`;
+			number.innerText = `${ parseInt( number.innerText ) }%`;
+		} else {
+			let runOnce = false;
+			let observer = new IntersectionObserver( entries => {
+				entries.forEach( entry => {
+					if ( entry.isIntersecting ) {
+						if ( number && ! runOnce ) {
 
-						let interval = setInterval( () => {
-							const value = percentPerTime.pop();
-							bar.style.width = `${ value }%`;
-							number.innerText = `${ Math.ceil( value ) }%`;
-							if ( ! percentPerTime.length ) {
+							let interval;
+
+							if ( interval ) {
 								clearInterval( interval );
 							}
-						}, step );
-					}
-				}
-			});
-		}, options );
 
-		observer.observe( bar );
+							const step = 10; // for a more smother animation, decrease the value
+							const totalPercent =  parseInt( number.innerText );
+							const percentPerTime = range( 0, duration, step ).map( x => linear( x  / duration ) * totalPercent ).reverse();
+
+							interval = setInterval( () => {
+								const value = percentPerTime.pop();
+								bar.style.width = `${ value }%`;
+								number.innerText = `${ Math.ceil( value ) }%`;
+								if ( ! percentPerTime.length ) {
+									clearInterval( interval );
+								}
+							}, step );
+						}
+						runOnce = true;
+					}
+				});
+			}, options );
+
+			setTimeout( () => observer.observe( bar ), 1 );
+		}
 	});
 });
