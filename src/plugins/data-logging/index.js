@@ -10,12 +10,14 @@ const {
 
 window.themeisleGutenberg.dataLogging = {};
 
-const settings = new wp.api.models.Settings();
+wp.api.loadPromise.then( () => {
+	const settings = new wp.api.models.Settings();
 
-settings.fetch().then( response => {
-	if ( response.otter_blocks_logger_data && Boolean( window.themeisleGutenberg.canTrack ) ) {
-		window.themeisleGutenberg.dataLogging = response.otter_blocks_logger_data;
-	}
+	settings.fetch().then( response => {
+		if ( response.otter_blocks_logger_data && Boolean( window.themeisleGutenberg.canTrack ) ) {
+			window.themeisleGutenberg.dataLogging = response.otter_blocks_logger_data;
+		}
+	});
 });
 
 const saveTrackingData = debounce( async() => {
