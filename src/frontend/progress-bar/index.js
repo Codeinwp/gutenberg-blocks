@@ -19,27 +19,33 @@ domReady( () => {
 			threshold: [ 0.6 ]
 		};
 
-		let observer = new IntersectionObserver( entries => {
-			entries.forEach( entry => {
-				if ( entry.isIntersecting ) {
-					if ( number ) {
-						const step = 10; // for a more smother animation, decrease the value
-						const totalPercent =  parseInt( number.innerText );
-						const percentPerTime = range( 0, duration, step ).map( x => linear( x  / duration ) * totalPercent ).reverse();
+		if ( 0 === duration ) {
+			bar.style.width = `${ parseInt( number.innerText ) }%`;
+			number.innerText = `${ parseInt( number.innerText ) }%`;
+		} else {
+			let observer = new IntersectionObserver( entries => {
+				entries.forEach( entry => {
+					if ( entry.isIntersecting ) {
+						if ( number ) {
+							const step = 10; // for a more smother animation, decrease the value
+							const totalPercent =  parseInt( number.innerText );
+							const percentPerTime = range( 0, duration, step ).map( x => linear( x  / duration ) * totalPercent ).reverse();
 
-						let interval = setInterval( () => {
-							const value = percentPerTime.pop();
-							bar.style.width = `${ value }%`;
-							number.innerText = `${ Math.ceil( value ) }%`;
-							if ( ! percentPerTime.length ) {
-								clearInterval( interval );
-							}
-						}, step );
+							let interval = setInterval( () => {
+								const value = percentPerTime.pop();
+								bar.style.width = `${ value }%`;
+								number.innerText = `${ Math.ceil( value ) }%`;
+								if ( ! percentPerTime.length ) {
+									clearInterval( interval );
+								}
+							}, step );
+						}
 					}
-				}
-			});
-		}, options );
+				});
+			}, options );
 
-		observer.observe( bar );
+			observer.observe( bar );
+		}
+
 	});
 });
