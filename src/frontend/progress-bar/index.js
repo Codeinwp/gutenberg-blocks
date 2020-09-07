@@ -23,10 +23,12 @@ domReady( () => {
 			bar.style.width = `${ parseInt( number.innerText ) }%`;
 			number.innerText = `${ parseInt( number.innerText ) }%`;
 		} else {
+			let isComplet = false;
 			let observer = new IntersectionObserver( entries => {
 				entries.forEach( entry => {
+					console.log( entry );
 					if ( entry.isIntersecting ) {
-						if ( number ) {
+						if ( number && ! isComplet ) {
 							const step = 10; // for a more smother animation, decrease the value
 							const totalPercent =  parseInt( number.innerText );
 							const percentPerTime = range( 0, duration, step ).map( x => linear( x  / duration ) * totalPercent ).reverse();
@@ -36,6 +38,7 @@ domReady( () => {
 								bar.style.width = `${ value }%`;
 								number.innerText = `${ Math.ceil( value ) }%`;
 								if ( ! percentPerTime.length ) {
+									isComplet = true;
 									clearInterval( interval );
 								}
 							}, step );
