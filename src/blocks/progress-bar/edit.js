@@ -212,7 +212,7 @@ const ProgressBar = ({
 								style={ {
 									fontSize: `${ attributes.height * fontRatio }px`,
 									background: attributes.barBackgroundColor,
-									borderRadius: `${ attributes.borderRadius }px`,
+									borderRadius: `${ attributes.borderRadius }px 0px 0px ${ attributes.borderRadius }px`,
 									height: `${ attributes.height }px`
 								} }
 							>

@@ -14,6 +14,7 @@ domReady( () => {
 	Array.from( progressBars ).forEach( progressBar => {
 		const duration = progressBar.dataset.duration * 1000;
 		const bar = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__area__bar' );
+		console.log( bar );
 		const number = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__number' );
 
 		let options = {

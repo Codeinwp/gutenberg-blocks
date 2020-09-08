@@ -47,7 +47,6 @@
 		}
 
 		.wp-block-themeisle-blocks-progress-bar__area__bar {
-			width: 110px;
 			height: 35px;
 			background: #6adcfa;
 			border-radius: 5px;
@@ -96,6 +95,7 @@
 		border-radius: 3px;
 
 		&.transparent {
+			background: transparent;
 			span {
 				background: transparent;
 			}
