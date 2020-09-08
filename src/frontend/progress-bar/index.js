@@ -56,7 +56,7 @@ domReady( () => {
 				});
 			}, options );
 
-			setTimeout( () => observer.observe( bar ), 1 );
+			setTimeout( () => observer.observe( bar ), 100 );
 		}
 	});
 });
