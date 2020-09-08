@@ -14,7 +14,7 @@ domReady( () => {
 	Array.from( progressBars ).forEach( progressBar => {
 		const duration = progressBar.dataset.duration * 1000;
 		const bar = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__area__bar' );
-		console.log( bar );
+		const borderRadius = window.getComputedStyle( bar ).borderTopLeftRadius.replace( 'px', '' );
 		const number = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__number' );
 
 		let options = {
@@ -47,6 +47,16 @@ domReady( () => {
 								const value = percentPerTime.pop();
 								bar.style.width = `${ value }%`;
 								number.innerText = `${ Math.ceil( value ) }%`;
+
+								const currentWidth = bar.getBoundingClientRect().width;
+
+								if ( currentWidth < borderRadius ) {
+									bar.style.visibility = 'hidden';
+								} else {
+									bar.style.visibility = 'unset';
+								}
+
+
 								if ( ! percentPerTime.length ) {
 									clearInterval( interval );
 								}
