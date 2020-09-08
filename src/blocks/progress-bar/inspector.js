@@ -27,6 +27,10 @@ const Inspector = ({
 	};
 
 	const onPercentageChange = value => {
+		console.log( value );
+		if ( value === undefined ) {
+			return ;
+		}
 		setAttributes({ percentage: value });
 	};
 
@@ -58,6 +62,9 @@ const Inspector = ({
 	};
 
 	const onDurationChange = value => {
+		if ( value === undefined ) {
+			return ;
+		}
 		setAttributes({ duration: value });
 	};
 
