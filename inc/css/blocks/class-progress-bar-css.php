@@ -57,7 +57,7 @@ class Progress_Bar_CSS extends Base_CSS {
 				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
 			}
 			if ( isset( $attr['borderRadius'] ) ) {
-				$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px;' . "\n";
+				$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px 0 0 ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px;' . "\n";
 			}
 			$style .= '}' . "\n \n";
 

@@ -27,7 +27,6 @@ const Inspector = ({
 	};
 
 	const onPercentageChange = value => {
-		console.log( value );
 		if ( value === undefined ) {
 			return ;
 		}
