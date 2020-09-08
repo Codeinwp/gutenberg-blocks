@@ -152,7 +152,7 @@ const BlockPlaceholder = ({
 							isLoading={ isLoading }
 							onClick={ onChangeOption }
 						>
-							{ __( 'Save' ) }
+							{ __( 'Allow' ) }
 						</Button>
 					</div>
 				</Modal>
