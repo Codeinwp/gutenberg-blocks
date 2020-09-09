@@ -15,6 +15,8 @@ const {
 	TextControl
 } = wp.components;
 
+const { clamp } = lodash;
+
 const Inspector = ({
 	attributes,
 	setAttributes,
@@ -30,6 +32,7 @@ const Inspector = ({
 		if ( value === undefined ) {
 			return ;
 		}
+		value = clamp( value, 0, 100 );
 		setAttributes({ percentage: value });
 	};
 
@@ -64,6 +67,7 @@ const Inspector = ({
 		if ( value === undefined ) {
 			return ;
 		}
+		value = clamp( value, 0, 3 );
 		setAttributes({ duration: value });
 	};
 
@@ -142,6 +146,7 @@ const Inspector = ({
 					help={ __( 'Round the corners of the progress bar.' ) }
 					value={ attributes.borderRadius }
 					onChange={ onBorderRadiusChange }
+					initialPosition={ 5 }
 					min={ 0 }
 					max={ 35 }
 				/>
