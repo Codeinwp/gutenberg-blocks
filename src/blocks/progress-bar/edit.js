@@ -110,10 +110,10 @@ const ProgressBar = ({
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
-	const fontRatio = 0.342;
+	const fontRatio = 0.5;
 
 	const onHeightChange = value => {
-		if ( 35 > value ) {
+		if ( 30 > value ) {
 			if ( ! heightMode.isAutomatic ) {
 				setHeightMode({
 					isAutomatic: true,
@@ -154,7 +154,7 @@ const ProgressBar = ({
 			/>
 
 			<div
-				className={ className }
+				className={ classnames( className, {'only-tooltip-on-outer': 'tooltip' === attributes.percentagePosition && 'outer' !== attributes.titleStyle}) }
 				id={ attributes.id }
 			>
 				{ ( 'outer' === attributes.titleStyle || 'outer' === attributes.percentagePosition ) && (
@@ -203,11 +203,11 @@ const ProgressBar = ({
 							height: `${ attributes.height }px`
 						} }
 					>
-						{ ( 'default' === attributes.titleStyle || 'simple' === attributes.titleStyle ) && (
+						{ ( 'default' === attributes.titleStyle || 'highlight' === attributes.titleStyle ) && (
 							<div
 								className={ classnames(
 									'wp-block-themeisle-blocks-progress-bar__area__title',
-									{ 'transparent': 'simple' === attributes.titleStyle }
+									{ 'transparent': 'default' === attributes.titleStyle }
 								) }
 								style={ {
 									fontSize: `${ attributes.height * fontRatio }px`,
@@ -237,24 +237,26 @@ const ProgressBar = ({
 							} }
 						>
 							{ 'tooltip' === attributes.percentagePosition && showPercentage && (
-								<span className="wp-block-themeisle-blocks-progress-bar__area__tooltip">
+								<span className="wp-block-themeisle-blocks-progress-bar__area__tooltip show">
 									{ `${ attributes.percentage }%` }
 									<span className="wp-block-themeisle-blocks-progress-bar__area__arrow"></span>
 								</span>
 							)}
+
+							{ 'inline' === attributes.percentagePosition && showPercentage && (
+								<div
+									className="wp-block-themeisle-blocks-progress-bar__progress show"
+									style={ {
+										fontSize: `${ attributes.height * fontRatio }px`,
+										height: `${ attributes.height }px`
+									} }
+								>
+									{ `${ attributes.percentage }%` }
+								</div>
+							)}
 						</div>
 
-						{ 'inline' === attributes.percentagePosition && showPercentage && (
-							<div
-								className="wp-block-themeisle-blocks-progress-bar__progress"
-								style={ {
-									fontSize: `${ attributes.height * fontRatio }px`,
-									height: `${ attributes.height }px`
-								} }
-							>
-								{ `${ attributes.percentage }%` }
-							</div>
-						)}
+
 					</div>
 				</ResizableBox>
 			</div>

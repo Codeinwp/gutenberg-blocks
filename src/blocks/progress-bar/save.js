@@ -3,10 +3,10 @@
  */
 import classnames from 'classnames';
 
-const Save = ({ attributes }) => {
+const Save = ({ attributes, className }) => {
 	return (
 		<div
-			className={ attributes.className }
+			className={ classnames( className, {'only-tooltip-on-outer': 'tooltip' === attributes.percentagePosition && 'outer' !== attributes.titleStyle}) }
 			id={ attributes.id }
 			data-percent={ attributes.percentage }
 			data-duration={ attributes.duration }
@@ -28,11 +28,11 @@ const Save = ({ attributes }) => {
 			) }
 
 			<div className="wp-block-themeisle-blocks-progress-bar__area">
-				{ ( 'default' === attributes.titleStyle || 'simple' === attributes.titleStyle ) && (
+				{ ( 'default' === attributes.titleStyle || 'highlight' === attributes.titleStyle ) && (
 					<div
 						className={ classnames(
 							'wp-block-themeisle-blocks-progress-bar__area__title',
-							{ 'transparent': 'simple' === attributes.titleStyle }
+							{ 'transparent': 'default' === attributes.titleStyle }
 						) }
 					>
 						<span>{ attributes.title }</span>
@@ -48,13 +48,13 @@ const Save = ({ attributes }) => {
 							 <span className="wp-block-themeisle-blocks-progress-bar__area__arrow"></span>
 						</span>
 					)}
-				</div>
 
-				{ 'inline' === attributes.percentagePosition && (
-					<div className="wp-block-themeisle-blocks-progress-bar__progress wp-block-themeisle-blocks-progress-bar__number">
-						{ attributes.percentage }
-					</div>
-				) }
+					{ 'inline' === attributes.percentagePosition && (
+						<div className="wp-block-themeisle-blocks-progress-bar__progress wp-block-themeisle-blocks-progress-bar__number">
+							{ attributes.percentage }
+						</div>
+					) }
+				</div>
 			</div>
 		</div>
 	);

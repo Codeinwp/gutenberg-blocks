@@ -32,6 +32,7 @@ class Progress_Bar_CSS extends Base_CSS {
 	public function render_css( $block ) {
 		$attr  = $block['attrs'];
 		$style = '';
+		$ratio = 0.5;
 
 		if ( isset( $attr['id'] ) ) {
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area {' . "\n";
@@ -48,7 +49,7 @@ class Progress_Bar_CSS extends Base_CSS {
 
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title {' . "\n";
 			if ( isset( $attr['fontSize'] ) ) {
-				$style .= '	font-size: ' . $this->get_attr_value( $attr['fontSize'] ) * 0.342 . 'px;' . "\n";
+				$style .= '	font-size: ' . $this->get_attr_value( $attr['fontSize'] ) * $ratio . 'px;' . "\n";
 			}
 			if ( isset( $attr['barBackgroundColor'] ) ) {
 				$style .= '	background: ' . $this->get_attr_value( $attr['barBackgroundColor'] ) . ';' . "\n";
@@ -84,7 +85,7 @@ class Progress_Bar_CSS extends Base_CSS {
 
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__progress {' . "\n";
 			if ( isset( $attr['fontSize'] ) ) {
-				$style .= '	font-size: ' . $this->get_attr_value( $attr['fontSize'] ) * 0.342 . 'px;' . "\n";
+				$style .= '	font-size: ' . $this->get_attr_value( $attr['fontSize'] ) * $ratio . 'px;' . "\n";
 			}
 			if ( isset( $attr['height'] ) ) {
 				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";

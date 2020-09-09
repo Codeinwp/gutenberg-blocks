@@ -98,13 +98,13 @@ const Inspector = ({
 					step={ 0.1 }
 				/>
 
-				{ 35 <= attributes.height && (
+				{ 30 <= attributes.height && (
 					<SelectControl
 						label={ __( 'Title Style' ) }
 						value={ attributes.titleStyle }
 						options={ [
 							{ label: __( 'Default' ), value: 'default' },
-							{ label: __( 'Simple' ), value: 'simple' },
+							{ label: __( 'Highlight' ), value: 'highlight' },
 							{ label: __( 'Outer' ), value: 'outer' }
 						] }
 						onChange={ selectTitleStyle }

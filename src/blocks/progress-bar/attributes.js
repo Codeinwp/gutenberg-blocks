@@ -29,7 +29,7 @@ const attributes = {
 	},
 	height: {
 		type: 'number',
-		default: 35
+		default: 30
 	},
 	borderRadius: {
 		type: 'number'

@@ -16,6 +16,19 @@ domReady( () => {
 		const bar = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__area__bar' );
 		const borderRadius = window.getComputedStyle( bar ).borderTopLeftRadius.replace( 'px', '' );
 		const number = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__number' );
+		const tooltip = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__area__tooltip' );
+		const inline = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__progress' );
+		const outerTitle = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__outer__title' );
+		const innerTitle = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__area__title' );
+
+		let titleWidth;
+		if ( outerTitle ) {
+			titleWidth = outerTitle.getBoundingClientRect().width;
+		} else if ( innerTitle ) {
+			titleWidth = innerTitle.getBoundingClientRect().width;
+		}
+
+		const numberWidth = number.getBoundingClientRect().width;
 
 		let options = {
 			root: null,
@@ -26,12 +39,17 @@ domReady( () => {
 		if ( 0 === duration ) {
 			bar.style.width = `${ parseInt( number.innerText ) }%`;
 			number.innerText = `${ parseInt( number.innerText ) }%`;
+			if ( tooltip ) {
+				tooltip.style.opacity = 1;
+			}
+			if ( inline ) {
+				inline.style.opacity = 1;
+			}
 		} else {
-			let runOnce = false;
 			let observer = new IntersectionObserver( entries => {
 				entries.forEach( entry => {
 					if ( entry.isIntersecting ) {
-						if ( number && ! runOnce ) {
+						if ( number ) {
 
 							let interval;
 
@@ -56,13 +74,29 @@ domReady( () => {
 									bar.style.visibility = 'unset';
 								}
 
+								if ( tooltip ) {
+									if ( outerTitle ) {
+										if ( currentWidth > titleWidth + 10 ) {
+											tooltip.style.opacity = 1;
+										}
+									} else {
+										tooltip.style.opacity = 1;
+									}
+								}
+
+								if ( inline ) {
+									if ( currentWidth > titleWidth + numberWidth + 5 ) {
+										inline.style.opacity = 1;
+									}
+								}
+
 
 								if ( ! percentPerTime.length ) {
+									observer.unobserve( bar );
 									clearInterval( interval );
 								}
 							}, step );
 						}
-						runOnce = true;
 					}
 				});
 			}, options );
