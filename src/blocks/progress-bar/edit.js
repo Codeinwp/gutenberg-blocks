@@ -126,7 +126,7 @@ const ProgressBar = ({
 			setAttributes({
 				height: value,
 				titleStyle: 'outer',
-				percentagePosition: 'inline' === attributes.percentagePosition ? 'outer' : attributes.percentagePosition
+				percentagePosition: 'append' === attributes.percentagePosition ? 'outer' : attributes.percentagePosition
 			});
 		} else {
 			if ( heightMode.isAutomatic ) {
@@ -243,7 +243,7 @@ const ProgressBar = ({
 								</span>
 							)}
 
-							{ 'inline' === attributes.percentagePosition && showPercentage && (
+							{ 'append' === attributes.percentagePosition && showPercentage && (
 								<div
 									className="wp-block-themeisle-blocks-progress-bar__progress__append show"
 									style={ {

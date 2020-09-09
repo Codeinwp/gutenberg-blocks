@@ -116,7 +116,7 @@ const Inspector = ({
 					value={ attributes.percentagePosition }
 					options={ [
 						{ label: __( 'Default' ), value: 'default' },
-						{ label: __( 'Append' ), value: 'inline' },
+						{ label: __( 'Append' ), value: 'append' },
 						{ label: __( 'Tooltip' ), value: 'tooltip' },
 						{ label: __( 'Outer' ), value: 'outer' },
 						{ label: __( 'Hide' ), value: 'hide' }

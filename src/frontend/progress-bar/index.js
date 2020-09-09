@@ -17,7 +17,7 @@ domReady( () => {
 		const borderRadius = window.getComputedStyle( bar ).borderTopLeftRadius.replace( 'px', '' );
 		const number = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__number' );
 		const tooltip = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__area__tooltip' );
-		const inline = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__progress__append' );
+		const append = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__progress__append' );
 		const outerTitle = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__outer__title' );
 		const innerTitle = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__area__title' );
 
@@ -42,8 +42,8 @@ domReady( () => {
 			if ( tooltip ) {
 				tooltip.style.opacity = 1;
 			}
-			if ( inline ) {
-				inline.style.opacity = 1;
+			if ( append ) {
+				append.style.opacity = 1;
 			}
 		} else {
 
@@ -89,14 +89,14 @@ domReady( () => {
 
 								}
 
-								if ( inline ) {
+								if ( append ) {
 									if ( innerTitle ) {
-										if ( currentWidth > titleWidth + numberWidth + 5 ) {
-											inline.style.opacity = 1;
+										if ( currentWidth > titleWidth + numberWidth * 1.5 ) {
+											append.style.opacity = 1;
 										}
 									} else {
-										if ( 4 <=  value ) {
-											inline.style.opacity = 1;
+										if ( currentWidth > numberWidth * 1.8 ) {
+											append.style.opacity = 1;
 										}
 									}
 								}

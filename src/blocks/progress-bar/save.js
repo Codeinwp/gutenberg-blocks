@@ -49,7 +49,7 @@ const Save = ({ attributes, className }) => {
 						</span>
 					)}
 
-					{ 'inline' === attributes.percentagePosition && (
+					{ 'append' === attributes.percentagePosition && (
 						<div className="wp-block-themeisle-blocks-progress-bar__progress__append wp-block-themeisle-blocks-progress-bar__number">
 							{ attributes.percentage }
 						</div>
