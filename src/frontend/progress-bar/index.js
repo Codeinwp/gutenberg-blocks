@@ -85,8 +85,14 @@ domReady( () => {
 								}
 
 								if ( inline ) {
-									if ( currentWidth > titleWidth + numberWidth + 5 ) {
-										inline.style.opacity = 1;
+									if ( innerTitle ) {
+										if ( currentWidth > titleWidth + numberWidth + 5 ) {
+											inline.style.opacity = 1;
+										}
+									} else {
+										if ( 4 <=  value ) {
+											inline.style.opacity = 1;
+										}
 									}
 								}
 
