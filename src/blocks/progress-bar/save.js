@@ -6,7 +6,7 @@ import classnames from 'classnames';
 const Save = ({ attributes, className }) => {
 	return (
 		<div
-			className={ classnames( className, {'only-tooltip-on-outer': 'tooltip' === attributes.percentagePosition && 'outer' !== attributes.titleStyle}) }
+			className={ classnames( className, {'has-tooltip': 'tooltip' === attributes.percentagePosition }) }
 			id={ attributes.id }
 			data-percent={ attributes.percentage }
 			data-duration={ attributes.duration }
@@ -50,11 +50,18 @@ const Save = ({ attributes, className }) => {
 					)}
 
 					{ 'inline' === attributes.percentagePosition && (
-						<div className="wp-block-themeisle-blocks-progress-bar__progress wp-block-themeisle-blocks-progress-bar__number">
+						<div className="wp-block-themeisle-blocks-progress-bar__progress__append wp-block-themeisle-blocks-progress-bar__number">
 							{ attributes.percentage }
 						</div>
 					) }
 				</div>
+				{ 'default' === attributes.percentagePosition && (
+					<div
+						className="wp-block-themeisle-blocks-progress-bar__progress wp-block-themeisle-blocks-progress-bar__number"
+					>
+						{ `${ attributes.percentage }%` }
+					</div>
+				)}
 			</div>
 		</div>
 	);

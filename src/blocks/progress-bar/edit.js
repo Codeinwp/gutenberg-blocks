@@ -154,7 +154,7 @@ const ProgressBar = ({
 			/>
 
 			<div
-				className={ classnames( className, {'only-tooltip-on-outer': 'tooltip' === attributes.percentagePosition && 'outer' !== attributes.titleStyle}) }
+				className={ classnames( className, {'has-tooltip': 'tooltip' === attributes.percentagePosition }) }
 				id={ attributes.id }
 			>
 				{ ( 'outer' === attributes.titleStyle || 'outer' === attributes.percentagePosition ) && (
@@ -245,7 +245,7 @@ const ProgressBar = ({
 
 							{ 'inline' === attributes.percentagePosition && showPercentage && (
 								<div
-									className="wp-block-themeisle-blocks-progress-bar__progress show"
+									className="wp-block-themeisle-blocks-progress-bar__progress__append show"
 									style={ {
 										fontSize: `${ attributes.height * fontRatio }px`,
 										height: `${ attributes.height }px`
@@ -256,7 +256,17 @@ const ProgressBar = ({
 							)}
 						</div>
 
-
+						{ 'default' === attributes.percentagePosition && showPercentage && (
+							<div
+								className="wp-block-themeisle-blocks-progress-bar__progress"
+								style={ {
+									fontSize: `${ attributes.height * fontRatio }px`,
+									height: `${ attributes.height }px`
+								} }
+							>
+								{ `${ attributes.percentage }%` }
+							</div>
+						)}
 					</div>
 				</ResizableBox>
 			</div>

@@ -25,7 +25,7 @@ const attributes = {
 	},
 	percentagePosition: {
 		type: 'string',
-		default: 'inline'
+		default: 'default'
 	},
 	height: {
 		type: 'number',

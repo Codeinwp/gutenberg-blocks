@@ -2,7 +2,7 @@
 	display: flex;
 	flex-direction: column;
 
-	&.only-tooltip-on-outer {
+	&.has-tooltip {
 		margin-top: 43px;
 	}
 
@@ -37,6 +37,19 @@
 		transition: 0.4s linear;
 		transition-property: width, background-color;
 
+		.wp-block-themeisle-blocks-progress-bar__progress {
+			display: flex;
+			align-items: center;
+			position: absolute;
+			right: 10px;
+			top: 0;
+			font-size: 11px;
+			height: 35px;
+			line-height: 35px;
+			color: #ffffff;
+			color: rgba(0, 0, 0, 0.4);
+		}
+
 		
 
 		.wp-block-themeisle-blocks-progress-bar__area__bar {
@@ -45,11 +58,11 @@
 			background: #6adcfa;
 			border-radius: 5px;
 
-			.wp-block-themeisle-blocks-progress-bar__progress {
+			.wp-block-themeisle-blocks-progress-bar__progress__append {
 				display: flex;
 				align-items: center;
-				justify-content: flex-end;
 				position: relative;
+				justify-content: flex-end;
 				right: 10px;
 				left: 0px;
 				top: 0;
