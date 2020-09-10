@@ -34,11 +34,10 @@ domReady( () => {
 			tooltip.style.opacity = 1;
 		}
 
-		number.innerText = '0%';
 
 		if ( 0 === duration ) {
 			bar.style.width = `${ parseInt( progressBar.dataset.percent ) }%`;
-			number.innerText = `${ parseInt( progressBar.dataset.percent ) }%`;
+
 			if ( tooltip ) {
 				tooltip.style.opacity = 1;
 			}
@@ -46,6 +45,10 @@ domReady( () => {
 				append.style.opacity = 1;
 			}
 		} else {
+
+			if ( number ) {
+				number.innerText = '0%';
+			}
 
 			let options = {
 				root: null,
@@ -56,21 +59,23 @@ domReady( () => {
 			let observer = new IntersectionObserver( entries => {
 				entries.forEach( entry => {
 					if ( entry.isIntersecting ) {
-						if ( number ) {
 
-							let interval;
 
-							if ( interval ) {
-								clearInterval( interval );
-							}
+						let interval;
 
-							const step = 20; // for a more smother animation, decrease the value
-							const totalPercent =  parseInt( progressBar.dataset.percent );
-							const percentPerTime = range( 0, duration, step ).map( x => linear( x  / duration ) * totalPercent ).reverse();
+						if ( interval ) {
+							clearInterval( interval );
+						}
 
-							interval = setInterval( () => {
-								const value = percentPerTime.pop();
-								bar.style.width = `${ value }%`;
+						const step = 20; // for a more smother animation, decrease the value
+						const totalPercent =  parseInt( progressBar.dataset.percent );
+						const percentPerTime = range( 0, duration, step ).map( x => linear( x  / duration ) * totalPercent ).reverse();
+
+						interval = setInterval( () => {
+							const value = percentPerTime.pop();
+							bar.style.width = `${ value }%`;
+
+							if ( number ) {
 								number.innerText = `${ Math.ceil( value ) }%`;
 
 								const currentWidth = bar.getBoundingClientRect().width;
@@ -100,14 +105,14 @@ domReady( () => {
 										}
 									}
 								}
+							}
 
+							if ( ! percentPerTime.length ) {
+								observer.unobserve( bar );
+								clearInterval( interval );
+							}
+						}, step );
 
-								if ( ! percentPerTime.length ) {
-									observer.unobserve( bar );
-									clearInterval( interval );
-								}
-							}, step );
-						}
 					}
 				});
 			}, options );
