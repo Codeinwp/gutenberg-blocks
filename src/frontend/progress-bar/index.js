@@ -14,12 +14,14 @@ domReady( () => {
 	Array.from( progressBars ).forEach( progressBar => {
 		const duration = progressBar.dataset.duration * 1000;
 		const bar = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__area__bar' );
-		const borderRadius = window.getComputedStyle( bar ).borderTopLeftRadius.replace( 'px', '' );
+		let borderRadius = window.getComputedStyle( bar ).borderTopLeftRadius.replace( 'px', '' ) || 0;
 		const number = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__number' );
 		const tooltip = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__area__tooltip' );
 		const append = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__progress__append' );
 		const outerTitle = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__outer__title' );
 		const innerTitle = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__area__title' );
+
+		console.log( innerTitle.classList );
 
 		let titleWidth;
 		if ( outerTitle ) {
@@ -48,6 +50,10 @@ domReady( () => {
 
 			if ( number ) {
 				number.innerText = '0%';
+			}
+
+			if ( innerTitle.classList.contains( 'highlight' ) ) {
+				borderRadius *= 2;
 			}
 
 			let options = {
@@ -80,10 +86,8 @@ domReady( () => {
 
 								const currentWidth = bar.getBoundingClientRect().width;
 
-								if ( currentWidth < borderRadius ) {
-									bar.style.visibility = 'hidden';
-								} else {
-									bar.style.visibility = 'unset';
+								if ( currentWidth > borderRadius ) {
+									bar.style.opacity = 1;
 								}
 
 								if ( tooltip && outerTitle ) {

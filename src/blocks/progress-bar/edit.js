@@ -207,7 +207,7 @@ const ProgressBar = ({
 							<div
 								className={ classnames(
 									'wp-block-themeisle-blocks-progress-bar__area__title',
-									{ 'transparent': 'default' === attributes.titleStyle }
+									{ 'highlight': 'highlight' === attributes.titleStyle }
 								) }
 								style={ {
 									fontSize: `${ attributes.height * fontRatio }px`,
@@ -228,7 +228,7 @@ const ProgressBar = ({
 						) }
 
 						<div
-							className="wp-block-themeisle-blocks-progress-bar__area__bar"
+							className="wp-block-themeisle-blocks-progress-bar__area__bar show"
 							ref={ barRef }
 							style={ {
 								background: attributes.barBackgroundColor,

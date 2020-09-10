@@ -47,19 +47,28 @@ class Progress_Bar_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n";
 
+
+
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title {' . "\n";
 			if ( isset( $attr['height'] ) ) {
 				$style .= '	font-size: ' . $this->get_attr_value( $attr['height'] ) * $ratio . 'px;' . "\n";
 			}
-			if ( isset( $attr['barBackgroundColor'] ) ) {
-				$style .= '	background: ' . $this->get_attr_value( $attr['barBackgroundColor'] ) . ';' . "\n";
-			}
+			
 			if ( isset( $attr['height'] ) ) {
 				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
 			}
 			if ( isset( $attr['borderRadius'] ) ) {
 				$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px 0 0 ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px;' . "\n";
 			}
+			$style .= '}' . "\n \n";
+
+
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title.highlight {' . "\n";
+			
+			if ( isset( $attr['barBackgroundColor'] ) ) {
+				$style .= '	background: ' . $this->get_attr_value( $attr['barBackgroundColor'] ) . ';' . "\n";
+			}
+			
 			$style .= '}' . "\n \n";
 
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title span {' . "\n";

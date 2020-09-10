@@ -32,7 +32,7 @@ const Save = ({ attributes, className }) => {
 					<div
 						className={ classnames(
 							'wp-block-themeisle-blocks-progress-bar__area__title',
-							{ 'transparent': 'default' === attributes.titleStyle }
+							{ 'highlight': 'highlight' === attributes.titleStyle }
 						) }
 					>
 						<span>{ attributes.title }</span>
