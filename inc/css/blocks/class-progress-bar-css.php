@@ -42,6 +42,12 @@ class Progress_Bar_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n";
 
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__outer .wp-block-themeisle-blocks-progress-bar__outer__value {' . "\n";
+			if ( isset( $attr['percentageColor'] ) ) {
+				$style .= '	color: ' . $this->get_attr_value( $attr['percentageColor'] ) . ';' . "\n";
+			}
+			$style .= '}' . "\n \n";
+
 
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area {' . "\n";
 			if ( isset( $attr['backgroundColor'] ) ) {
