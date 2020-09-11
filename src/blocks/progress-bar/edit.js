@@ -126,7 +126,7 @@ const ProgressBar = ({
 			setAttributes({
 				height: value,
 				titleStyle: 'outer',
-				percentagePosition: 'append' === attributes.percentagePosition ? 'outer' : attributes.percentagePosition
+				percentagePosition: 'append' === attributes.percentagePosition || 'default' === attributes.percentagePosition ? 'outer' : attributes.percentagePosition
 			});
 		} else {
 			if ( heightMode.isAutomatic ) {
@@ -183,7 +183,7 @@ const ProgressBar = ({
 					size={ {
 						height: attributes.height
 					} }
-					minHeight={ 0 }
+					minHeight={ 5 }
 					maxHeight={ 100 }
 					enable={ {
 						top: false,
