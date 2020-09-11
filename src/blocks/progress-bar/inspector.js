@@ -71,6 +71,14 @@ const Inspector = ({
 		setAttributes({ duration: value });
 	};
 
+	const onTitleColorChange = value => {
+		setAttributes({ titleColor: value });
+	};
+
+	const onPerncetageColorChange = value => {
+		setAttributes({ percentageColor: value });
+	};
+
 	return (
 		<InspectorControls>
 			<PanelBody
@@ -137,7 +145,7 @@ const Inspector = ({
 					help={ __( 'The height of the progress bar.' ) }
 					value={ attributes.height }
 					onChange={ onHeightChange }
-					min={ 10 }
+					min={ 0 }
 					max={ 100 }
 				/>
 
@@ -155,6 +163,18 @@ const Inspector = ({
 					label={ __( 'Progress Color' ) }
 					colorValue={ attributes.barBackgroundColor }
 					onColorChange={ onBarBackgroundColorChange }
+				/>
+
+				<ColorGradientControl
+					label={ __( 'Title Color' ) }
+					colorValue={ attributes.titleColor }
+					onColorChange={ onTitleColorChange }
+				/>
+
+				<ColorGradientControl
+					label={ __( 'Percentage Color' ) }
+					colorValue={ attributes.percentageColor }
+					onColorChange={ onPerncetageColorChange }
 				/>
 
 				<ColorGradientControl

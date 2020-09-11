@@ -39,6 +39,12 @@ const attributes = {
 	},
 	barBackgroundColor: {
 		type: 'string'
+	},
+	titleColor: {
+		type: 'string'
+	},
+	percentageColor: {
+		type: 'string'
 	}
 };
 

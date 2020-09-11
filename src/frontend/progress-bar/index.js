@@ -21,8 +21,6 @@ domReady( () => {
 		const outerTitle = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__outer__title' );
 		const innerTitle = progressBar.querySelector( '.wp-block-themeisle-blocks-progress-bar__area__title' );
 
-		console.log( innerTitle.classList );
-
 		let titleWidth;
 		if ( outerTitle ) {
 			titleWidth = outerTitle.getBoundingClientRect().width;
@@ -52,7 +50,7 @@ domReady( () => {
 				number.innerText = '0%';
 			}
 
-			if ( innerTitle.classList.contains( 'highlight' ) ) {
+			if ( innerTitle && innerTitle.classList.contains( 'highlight' ) ) {
 				borderRadius *= 2;
 			}
 
