@@ -9,6 +9,7 @@ const Save = ({
 				className={ className }
 				src={ attributes.file ? attributes.file.url : '' }
 				trigger={ attributes.trigger }
+				width={ attributes.width }
 			>
 			</lottie-player>
 		);

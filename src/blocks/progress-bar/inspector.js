@@ -15,6 +15,8 @@ const {
 	TextControl
 } = wp.components;
 
+const { clamp } = lodash;
+
 const Inspector = ({
 	attributes,
 	setAttributes,
@@ -27,6 +29,10 @@ const Inspector = ({
 	};
 
 	const onPercentageChange = value => {
+		if ( value === undefined ) {
+			return ;
+		}
+		value = clamp( value, 0, 100 );
 		setAttributes({ percentage: value });
 	};
 
@@ -58,7 +64,19 @@ const Inspector = ({
 	};
 
 	const onDurationChange = value => {
+		if ( value === undefined ) {
+			return ;
+		}
+		value = clamp( value, 0, 3 );
 		setAttributes({ duration: value });
+	};
+
+	const onTitleColorChange = value => {
+		setAttributes({ titleColor: value });
+	};
+
+	const onPerncetageColorChange = value => {
+		setAttributes({ percentageColor: value });
 	};
 
 	return (
@@ -92,13 +110,13 @@ const Inspector = ({
 					step={ 0.1 }
 				/>
 
-				{ 35 <= attributes.height && (
+				{ 30 <= attributes.height && (
 					<SelectControl
 						label={ __( 'Title Style' ) }
 						value={ attributes.titleStyle }
 						options={ [
 							{ label: __( 'Default' ), value: 'default' },
-							{ label: __( 'Simple' ), value: 'simple' },
+							{ label: __( 'Highlight' ), value: 'highlight' },
 							{ label: __( 'Outer' ), value: 'outer' }
 						] }
 						onChange={ selectTitleStyle }
@@ -109,7 +127,8 @@ const Inspector = ({
 					label={ __( 'Show Percentage' ) }
 					value={ attributes.percentagePosition }
 					options={ [
-						{ label: __( 'Inline' ), value: 'inline' },
+						{ label: __( 'Default' ), value: 'default' },
+						{ label: __( 'Append' ), value: 'append' },
 						{ label: __( 'Tooltip' ), value: 'tooltip' },
 						{ label: __( 'Outer' ), value: 'outer' },
 						{ label: __( 'Hide' ), value: 'hide' }
@@ -126,7 +145,7 @@ const Inspector = ({
 					help={ __( 'The height of the progress bar.' ) }
 					value={ attributes.height }
 					onChange={ onHeightChange }
-					min={ 10 }
+					min={ 0 }
 					max={ 100 }
 				/>
 
@@ -135,6 +154,7 @@ const Inspector = ({
 					help={ __( 'Round the corners of the progress bar.' ) }
 					value={ attributes.borderRadius }
 					onChange={ onBorderRadiusChange }
+					initialPosition={ 5 }
 					min={ 0 }
 					max={ 35 }
 				/>
@@ -143,6 +163,18 @@ const Inspector = ({
 					label={ __( 'Progress Color' ) }
 					colorValue={ attributes.barBackgroundColor }
 					onColorChange={ onBarBackgroundColorChange }
+				/>
+
+				<ColorGradientControl
+					label={ __( 'Title Color' ) }
+					colorValue={ attributes.titleColor }
+					onColorChange={ onTitleColorChange }
+				/>
+
+				<ColorGradientControl
+					label={ __( 'Percentage Color' ) }
+					colorValue={ attributes.percentageColor }
+					onColorChange={ onPerncetageColorChange }
 				/>
 
 				<ColorGradientControl

@@ -110,10 +110,10 @@ const ProgressBar = ({
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
-	const fontRatio = 0.342;
+	const fontRatio = 0.65;
 
 	const onHeightChange = value => {
-		if ( 35 > value ) {
+		if ( 30 > value ) {
 			if ( ! heightMode.isAutomatic ) {
 				setHeightMode({
 					isAutomatic: true,
@@ -126,7 +126,7 @@ const ProgressBar = ({
 			setAttributes({
 				height: value,
 				titleStyle: 'outer',
-				percentagePosition: 'inline' === attributes.percentagePosition ? 'outer' : attributes.percentagePosition
+				percentagePosition: 'append' === attributes.percentagePosition || 'default' === attributes.percentagePosition ? 'outer' : attributes.percentagePosition
 			});
 		} else {
 			if ( heightMode.isAutomatic ) {
@@ -154,19 +154,25 @@ const ProgressBar = ({
 			/>
 
 			<div
-				className={ className }
+				className={ classnames( className, {'has-tooltip': 'tooltip' === attributes.percentagePosition }) }
 				id={ attributes.id }
 			>
 				{ ( 'outer' === attributes.titleStyle || 'outer' === attributes.percentagePosition ) && (
 					<div className="wp-block-themeisle-blocks-progress-bar__outer">
 						{ 'outer' === attributes.titleStyle && (
-							<span className="wp-block-themeisle-blocks-progress-bar__outer__title">
+							<span
+								className="wp-block-themeisle-blocks-progress-bar__outer__title"
+								style={{ color: attributes.titleColor }}
+							>
 								{ attributes.title }
 							</span>
 						) }
 
 						{ 'outer' === attributes.percentagePosition && showPercentage && (
-							<div className="wp-block-themeisle-blocks-progress-bar__progress wp-block-themeisle-blocks-progress-bar__outer__value">
+							<div
+								className="wp-block-themeisle-blocks-progress-bar__progress wp-block-themeisle-blocks-progress-bar__outer__value"
+								style={{ color: attributes.percentageColor }}
+							>
 								{ `${ attributes.percentage }%` }
 							</div>
 						)}
@@ -177,7 +183,7 @@ const ProgressBar = ({
 					size={ {
 						height: attributes.height
 					} }
-					minHeight={ 10 }
+					minHeight={ 5 }
 					maxHeight={ 100 }
 					enable={ {
 						top: false,
@@ -203,22 +209,23 @@ const ProgressBar = ({
 							height: `${ attributes.height }px`
 						} }
 					>
-						{ ( 'default' === attributes.titleStyle || 'simple' === attributes.titleStyle ) && (
+						{ ( 'default' === attributes.titleStyle || 'highlight' === attributes.titleStyle ) && (
 							<div
 								className={ classnames(
 									'wp-block-themeisle-blocks-progress-bar__area__title',
-									{ 'transparent': 'simple' === attributes.titleStyle }
+									{ 'highlight': 'highlight' === attributes.titleStyle }
 								) }
 								style={ {
 									fontSize: `${ attributes.height * fontRatio }px`,
-									background: attributes.barBackgroundColor,
-									borderRadius: `${ attributes.borderRadius }px`,
+									background: 'highlight' === attributes.titleStyle && attributes.barBackgroundColor,
+									borderRadius: `${ attributes.borderRadius }px 0px 0px ${ attributes.borderRadius }px`,
 									height: `${ attributes.height }px`
 								} }
 							>
 								<span
 									style={ {
 										height: `${ attributes.height }px`,
+										color: attributes.titleColor,
 										borderRadius: `${ attributes.borderRadius }px 0px 0px ${ attributes.borderRadius }px`
 									} }
 								>
@@ -228,7 +235,7 @@ const ProgressBar = ({
 						) }
 
 						<div
-							className="wp-block-themeisle-blocks-progress-bar__area__bar"
+							className="wp-block-themeisle-blocks-progress-bar__area__bar show"
 							ref={ barRef }
 							style={ {
 								background: attributes.barBackgroundColor,
@@ -237,19 +244,36 @@ const ProgressBar = ({
 							} }
 						>
 							{ 'tooltip' === attributes.percentagePosition && showPercentage && (
-								<span className="wp-block-themeisle-blocks-progress-bar__area__tooltip">
+								<span
+									className="wp-block-themeisle-blocks-progress-bar__area__tooltip show"
+									style={{ color: attributes.percentageColor }}
+								>
 									{ `${ attributes.percentage }%` }
 									<span className="wp-block-themeisle-blocks-progress-bar__area__arrow"></span>
 								</span>
 							)}
+
+							{ 'append' === attributes.percentagePosition && showPercentage && (
+								<div
+									className="wp-block-themeisle-blocks-progress-bar__progress__append show"
+									style={ {
+										fontSize: `${ attributes.height * fontRatio }px`,
+										height: `${ attributes.height }px`,
+										color: attributes.percentageColor
+									} }
+								>
+									{ `${ attributes.percentage }%` }
+								</div>
+							)}
 						</div>
 
-						{ 'inline' === attributes.percentagePosition && showPercentage && (
+						{ 'default' === attributes.percentagePosition && showPercentage && (
 							<div
 								className="wp-block-themeisle-blocks-progress-bar__progress"
 								style={ {
 									fontSize: `${ attributes.height * fontRatio }px`,
-									height: `${ attributes.height }px`
+									height: `${ attributes.height }px`,
+									color: attributes.percentageColor
 								} }
 							>
 								{ `${ attributes.percentage }%` }

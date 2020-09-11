@@ -32,8 +32,23 @@ class Progress_Bar_CSS extends Base_CSS {
 	public function render_css( $block ) {
 		$attr  = $block['attrs'];
 		$style = '';
+		$ratio = 0.65;
 
 		if ( isset( $attr['id'] ) ) {
+
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__outer .wp-block-themeisle-blocks-progress-bar__outer__title {' . "\n";
+			if ( isset( $attr['titleColor'] ) ) {
+				$style .= '	color: ' . $this->get_attr_value( $attr['titleColor'] ) . ';' . "\n";
+			}
+			$style .= '}' . "\n \n";
+
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__outer .wp-block-themeisle-blocks-progress-bar__outer__value {' . "\n";
+			if ( isset( $attr['percentageColor'] ) ) {
+				$style .= '	color: ' . $this->get_attr_value( $attr['percentageColor'] ) . ';' . "\n";
+			}
+			$style .= '}' . "\n \n";
+
+
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area {' . "\n";
 			if ( isset( $attr['backgroundColor'] ) ) {
 				$style .= '	background: ' . $this->get_attr_value( $attr['backgroundColor'] ) . ';' . "\n";
@@ -46,22 +61,13 @@ class Progress_Bar_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n";
 
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title {' . "\n";
-			if ( isset( $attr['fontSize'] ) ) {
-				$style .= '	font-size: ' . $this->get_attr_value( $attr['fontSize'] ) * 0.342 . 'px;' . "\n";
-			}
-			if ( isset( $attr['barBackgroundColor'] ) ) {
-				$style .= '	background: ' . $this->get_attr_value( $attr['barBackgroundColor'] ) . ';' . "\n";
-			}
-			if ( isset( $attr['height'] ) ) {
-				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
-			}
-			if ( isset( $attr['borderRadius'] ) ) {
-				$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px;' . "\n";
-			}
-			$style .= '}' . "\n \n";
 
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title span {' . "\n";
+
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title {' . "\n";
+			if ( isset( $attr['height'] ) ) {
+				$style .= '	font-size: ' . $this->get_attr_value( $attr['height'] ) * $ratio . 'px;' . "\n";
+			}
+			
 			if ( isset( $attr['height'] ) ) {
 				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
 			}
@@ -69,6 +75,29 @@ class Progress_Bar_CSS extends Base_CSS {
 				$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px 0 0 ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px;' . "\n";
 			}
 			$style .= '}' . "\n \n";
+
+
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title.highlight {' . "\n";
+			
+			if ( isset( $attr['barBackgroundColor'] ) ) {
+				$style .= '	background: ' . $this->get_attr_value( $attr['barBackgroundColor'] ) . ';' . "\n";
+			}
+			
+			$style .= '}' . "\n \n";
+
+
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title span {' . "\n";
+			if ( isset( $attr['height'] ) ) {
+				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
+			}
+			if ( isset( $attr['titleColor'] ) ) {
+				$style .= '	color: ' . $this->get_attr_value( $attr['titleColor'] ) . ';' . "\n";
+			}
+			if ( isset( $attr['borderRadius'] ) ) {
+				$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px 0 0 ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px;' . "\n";
+			}
+			$style .= '}' . "\n \n";
+
 
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar {' . "\n";
 			if ( isset( $attr['barBackgroundColor'] ) ) {
@@ -82,9 +111,33 @@ class Progress_Bar_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n";
 
+
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar .wp-block-themeisle-blocks-progress-bar__area__tooltip {' . "\n";
+			if ( isset( $attr['percentageColor'] ) ) {
+				$style .= '	color: ' . $this->get_attr_value( $attr['percentageColor'] ) . ';' . "\n";
+			}
+			$style .= '}' . "\n \n";
+
+
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__progress {' . "\n";
-			if ( isset( $attr['fontSize'] ) ) {
-				$style .= '	font-size: ' . $this->get_attr_value( $attr['fontSize'] ) * 0.342 . 'px;' . "\n";
+			if ( isset( $attr['height'] ) ) {
+				$style .= '	font-size: ' . $this->get_attr_value( $attr['height'] ) * $ratio . 'px;' . "\n";
+			}
+			if ( isset( $attr['percentageColor'] ) ) {
+				$style .= '	color: ' . $this->get_attr_value( $attr['percentageColor'] ) . ';' . "\n";
+			}
+			if ( isset( $attr['height'] ) ) {
+				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
+			}
+			$style .= '}' . "\n \n";
+
+
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar .wp-block-themeisle-blocks-progress-bar__progress__append {' . "\n";
+			if ( isset( $attr['height'] ) ) {
+				$style .= '	font-size: ' . $this->get_attr_value( $attr['height'] ) * $ratio . 'px;' . "\n";
+			}
+			if ( isset( $attr['percentageColor'] ) ) {
+				$style .= '	color: ' . $this->get_attr_value( $attr['percentageColor'] ) . ';' . "\n";
 			}
 			if ( isset( $attr['height'] ) ) {
 				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
