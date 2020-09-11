@@ -110,7 +110,7 @@ const ProgressBar = ({
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
-	const fontRatio = 0.5;
+	const fontRatio = 0.65;
 
 	const onHeightChange = value => {
 		if ( 30 > value ) {
@@ -183,7 +183,7 @@ const ProgressBar = ({
 					size={ {
 						height: attributes.height
 					} }
-					minHeight={ 10 }
+					minHeight={ 0 }
 					maxHeight={ 100 }
 					enable={ {
 						top: false,

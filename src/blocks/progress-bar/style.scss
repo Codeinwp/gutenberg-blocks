@@ -1,3 +1,9 @@
+$height-value: 30;
+$font-ratio: 0.65;
+
+$height: $height-value + 0px;
+$font-size: $height-value * $font-ratio + 0px;
+
 .wp-block-themeisle-blocks-progress-bar {
 	display: flex;
 	flex-direction: column;
@@ -32,7 +38,7 @@
 		margin-bottom: 15px;
 		width: 100%;
 		background: #eee;
-		height: 30px;
+		height: $height;
 		border-radius: 5px;
 		transition: 0.4s linear;
 		transition-property: width, background-color;
@@ -43,8 +49,8 @@
 			position: absolute;
 			right: 10px;
 			top: 0;
-			font-size: 15px;
-			height: 30px;
+			font-size: $font-size;
+			height: $height;
 			line-height: 30px;
 			color: #ffffff;
 			color: rgba(0, 0, 0, 0.4);
@@ -53,7 +59,7 @@
 		
 
 		.wp-block-themeisle-blocks-progress-bar__area__bar {
-			height: 30px;
+			height: $height;
 			width: 0px;
 			background: #6adcfa;
 			border-radius: 5px;
@@ -71,9 +77,9 @@
 				right: 10px;
 				left: 0px;
 				top: 0;
-				font-size: 15px;
+				font-size: $font-size;
 				margin-right: 5px;
-				height: 30px;
+				height: $height;
 				line-height: 30px;
 				color: #fff;
 				opacity: 0;
@@ -126,7 +132,7 @@
 		left: 0;
 		width: auto;
 		font-weight: bold;
-		font-size: 13px;
+		font-size: $font-size;
 		color: #ffffff;
 		background: transparent;
 		border-radius: 5px 0px 0px 5px;
@@ -146,7 +152,7 @@
 			width: 100%;
 			background: transparent;
 			padding: 0 20px;
-			height: 30px;
+			height: $height;
 			line-height: 30px;
 			border-radius: 3px;
 		}

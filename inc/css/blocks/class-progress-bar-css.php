@@ -32,7 +32,7 @@ class Progress_Bar_CSS extends Base_CSS {
 	public function render_css( $block ) {
 		$attr  = $block['attrs'];
 		$style = '';
-		$ratio = 0.5;
+		$ratio = 0.65;
 
 		if ( isset( $attr['id'] ) ) {
 
