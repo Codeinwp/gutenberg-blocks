@@ -15,6 +15,7 @@ const {
 
 const {
 	Button,
+	ExternalLink,
 	Modal,
 	Placeholder
 } = wp.components;
@@ -45,7 +46,6 @@ const BlockPlaceholder = ({
 	const [ isJSONAllowed, setJSONAllowed ] = useState( false );
 	const [ url, setURL ] = useState( null );
 	const [ isOpen, setOpen ] = useState( false );
-	const [ isLoading, setLoading ] = useState( false );
 
 	const onChangeValue = e => {
 		if ( e ) {
@@ -55,22 +55,7 @@ const BlockPlaceholder = ({
 		return onChange( url );
 	};
 
-	const onChangeOption = () => {
-		setLoading( true );
-
-		const settings = new wp.api.models.Settings({
-			// eslint-disable-next-line camelcase
-			themeisle_allow_json_upload: true
-		});
-
-		settings.save().then( response => {
-			setLoading( false );
-			setOpen( false );
-			setJSONAllowed( response.themeisle_allow_json_upload );
-		});
-	};
-
-	if ( isJSONAllowed && ! Boolean( themeisleGutenberg.isWPVIP ) ) {
+	if ( isJSONAllowed && ! Boolean( window.themeisleGutenberg.isWPVIP ) ) {
 		return (
 			<MediaPlaceholder
 				labels={ {
@@ -95,7 +80,7 @@ const BlockPlaceholder = ({
 				icon={ <BlockIcon icon={ video } />}
 				className={ className }
 			>
-				<form onSubmit={ e => onChangeValue( e ) }>
+				<form onSubmit={ onChangeValue }>
 					<input
 						type="url"
 						value={ url }
@@ -113,7 +98,7 @@ const BlockPlaceholder = ({
 						{ __( 'Embed' ) }
 					</Button>
 
-					{ ! Boolean( themeisleGutenberg.isWPVIP ) && (
+					{ ! Boolean( window.themeisleGutenberg.isWPVIP ) && (
 						<Button
 							isSecondary
 							onClick={ () => setOpen( true ) }
@@ -132,29 +117,10 @@ const BlockPlaceholder = ({
 					overlayClassName="wp-block-themeisle-blocks-lottie-modal"
 				>
 					{ __( 'This file type is not permitted for security reasons. Would you still like to enable JSON uploads?' ) }
-
 					<br/><br/>
-
-					{ __( 'You can always enable/disable this option later from Settings > Otter.' ) }
-
-					<div className="wp-block-themeisle-blocks-lottie-modal__actions">
-						<Button
-							isSecondary
-							isLarge
-							onClick={ () => setOpen( false ) }
-						>
-							{ __( 'Close' ) }
-						</Button>
-
-						<Button
-							isPrimary
-							isLarge
-							isLoading={ isLoading }
-							onClick={ onChangeOption }
-						>
-							{ __( 'Allow' ) }
-						</Button>
-					</div>
+					<ExternalLink href={ window.themeisleGutenberg.optionsPath }>{ __( 'You can enable JSON uploads from Otter.' ) }</ExternalLink>
+					<br/><br/>
+					{ __( 'You will have to refresh the page after changing JSON upload settings.' ) }
 				</Modal>
 			) }
 		</Fragment>

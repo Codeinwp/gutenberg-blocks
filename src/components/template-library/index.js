@@ -43,7 +43,7 @@ const Library = ({
 
 	useEffect( () => {
 		const fetchData = async() => {
-			if ( ! Boolean( themeisleGutenberg.isCompatible ) ) {
+			if ( ! Boolean( window.themeisleGutenberg.isCompatible ) ) {
 				createNotice(
 					'warning',
 					__( 'You are using an older version of Otter. Use the latest version of Otter to have maximum compatibility with Template Library.' ),
@@ -54,7 +54,7 @@ const Library = ({
 						actions: [
 							{
 								label: __( 'Update Now' ),
-								url: themeisleGutenberg.updatePath
+								url: window.themeisleGutenberg.updatePath
 							}
 						]
 					}
