@@ -92,9 +92,9 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 			}
 
 			if ( isset( $attr['textColor'] ) ) {
-				$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container a {' . "\n";
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container a {' . "\n";
 				$style .= '	color: ' . $this->get_attr_value( $attr['textColor'] ) . ';' . "\n";
-				$style     .= '}' . "\n \n";
+				$style .= '}' . "\n \n";
 			}
 
 			if ( isset( $attr['borderRadius'] ) || isset( $attr['fontSize'] ) || isset( $attr['padding'] ) ) {
