@@ -41,7 +41,7 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 			}
 
 			if ( isset( $attr['textColor'] ) || isset( $attr['backgroundColor'] ) || isset( $attr['borderColor'] ) || isset( $attr['borderRadius'] ) || isset( $attr['borderSize'] ) || isset( $attr['margin'] ) ) {
-				$width = 0;
+				$width  = 0;
 				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container {' . "\n";
 				if ( isset( $attr['textColor'] ) ) {
 					$style .= '	color: ' . $this->get_attr_value( $attr['textColor'] ) . ';' . "\n";
@@ -55,8 +55,7 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 				if ( isset( $attr['borderSize'] ) ) {
 					$style .= '	border-width: ' . $this->get_attr_value( $attr['borderSize'], 0 ) . 'px;' . "\n";
 					$style .= '	border-style: solid;' . "\n";
-
-					$width +=  $this->get_attr_value( $attr['borderSize'], 0 );
+					$width += $this->get_attr_value( $attr['borderSize'], 0 );
 				}
 				if ( isset( $attr['borderRadius'] ) ) {
 					$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'], 0 ) . '%;' . "\n";
@@ -65,14 +64,13 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 					$style .= '	margin: ' . $this->get_attr_value( $attr['margin'] ) . 'px;' . "\n";
 				}
 				if ( isset( $attr['fontSize'] ) ) {
-					$width +=  $this->get_attr_value( $attr['fontSize'], 0 );
+					$width += $this->get_attr_value( $attr['fontSize'], 0 );
 				}
 				if ( isset( $attr['padding'] ) ) {
-					$width +=  $this->get_attr_value( $attr['padding'], 0 ) * 2;
-
+					$width += $this->get_attr_value( $attr['padding'], 0 ) * 2;
 				}
 
-				if( $width > 0 ) {
+				if ( $width > 0 ) {
 					$style .= '	width: ' . $width . 'px;' . "\n";
 				}
 
@@ -95,7 +93,7 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 
 			if ( isset( $attr['textColor'] ) ) {
 				$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container a {' . "\n";
-					$style .= '	color: ' . $this->get_attr_value( $attr['textColor'] ) . ';' . "\n";
+				$style .= '	color: ' . $this->get_attr_value( $attr['textColor'] ) . ';' . "\n";
 				$style     .= '}' . "\n \n";
 			}
 
