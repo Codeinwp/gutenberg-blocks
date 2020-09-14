@@ -131,32 +131,32 @@ const Inspector = ({
 						{
 							label: __( 'Standard' ),
 							value: 'standard',
-							image: themeisleGutenberg.assetsPath + '/icons/map-standard.png'
+							image: window.themeisleGutenberg.assetsPath + '/icons/map-standard.png'
 						},
 						{
 							label: __( 'Silver' ),
 							value: 'silver',
-							image: themeisleGutenberg.assetsPath + '/icons/map-silver.png'
+							image: window.themeisleGutenberg.assetsPath + '/icons/map-silver.png'
 						},
 						{
 							label: __( 'Retro' ),
 							value: 'retro',
-							image: themeisleGutenberg.assetsPath + '/icons/map-retro.png'
+							image: window.themeisleGutenberg.assetsPath + '/icons/map-retro.png'
 						},
 						{
 							label: __( 'Dark' ),
 							value: 'dark',
-							image: themeisleGutenberg.assetsPath + '/icons/map-dark.png'
+							image: window.themeisleGutenberg.assetsPath + '/icons/map-dark.png'
 						},
 						{
 							label: __( 'Night' ),
 							value: 'night',
-							image: themeisleGutenberg.assetsPath + '/icons/map-night.png'
+							image: window.themeisleGutenberg.assetsPath + '/icons/map-night.png'
 						},
 						{
 							label: __( 'Aubergine' ),
 							value: 'aubergine',
-							image: themeisleGutenberg.assetsPath + '/icons/map-aubergine.png'
+							image: window.themeisleGutenberg.assetsPath + '/icons/map-aubergine.png'
 						}
 					] }
 					onChange={ changeStyle }

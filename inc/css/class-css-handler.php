@@ -197,7 +197,7 @@ class CSS_Handler extends Base_CSS {
 		require_once ABSPATH . '/wp-admin/includes/file.php';
 		WP_Filesystem();
 
-		$file_name     = 'post-' . $post_id;
+		$file_name     = 'post-' . $post_id . '-' . time();
 		$wp_upload_dir = wp_upload_dir( null, false );
 		$upload_dir    = $wp_upload_dir['basedir'] . '/themeisle-gutenberg/';
 		$file_path     = $upload_dir . $file_name . '.css';
@@ -208,7 +208,10 @@ class CSS_Handler extends Base_CSS {
 
 		update_post_meta( $post_id, '_themeisle_gutenberg_block_styles', $css );
 
-		if ( is_file( $file_path ) ) {
+		$existing_file      = get_post_meta( $post_id, '_themeisle_gutenberg_block_stylesheet', true );
+		$existing_file_path = $upload_dir . $existing_file . '.css';
+
+		if ( $existing_file && is_file( $existing_file_path ) ) {
 			self::delete_css_file( $post_id );
 		}
 
