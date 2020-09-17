@@ -1,4 +1,6 @@
-
+/*
+	TODO: Move CSS to PHP when block is ready
+*/
 const Save = ({
 	attributes
 }) => {
@@ -7,9 +9,7 @@ const Save = ({
 	const radius = center -  attributes.strokeWidth / 2;
 	const circumference = 2 * Math.PI * radius;
 
-	const fontSize = size * 0.30;
-	const progressStroke = attributes.barBackgroundColor;
-	const backgroundStroke = attributes.backgroundColor;
+	const fontSize = size * 0.30 + 'px';
 
 	return (
 		<div
@@ -27,7 +27,7 @@ const Save = ({
 							className="wp-block-themeisle-blocks-circular-progress-bar-title__value"
 							style={{
 								color: attributes.titleColor,
-								fontSize: fontSize + 'px'
+								fontSize: fontSize
 							}}
 						>
 							{ attributes.title }
@@ -52,7 +52,7 @@ const Save = ({
 						cy={ center }
 						r={ radius }
 						style={{
-							stroke: backgroundStroke,
+							stroke: attributes.backgroundColor,
 							strokeWidth: attributes.strokeWidth
 						}}
 					/>
@@ -64,7 +64,7 @@ const Save = ({
 
 						style={{
 							strokeDasharray: circumference,
-							stroke: progressStroke,
+							stroke: attributes.progressColor,
 							strokeWidth: attributes.strokeWidth
 						}}
 					/>
@@ -73,8 +73,8 @@ const Save = ({
 						x="50%"
 						y="50%"
 						style={{
-							fill: progressStroke,
-							fontSize: fontSize + 'px'
+							fill: attributes.progressColor,
+							fontSize: fontSize
 						}}
 					>
 					</text>

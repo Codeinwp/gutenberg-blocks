@@ -10,19 +10,15 @@ import { range, linear } from './utils.js';
 
 domReady( () => {
 	const progressBars = document.querySelectorAll( '.wp-block-themeisle-blocks-circular-progress-bar' );
-	console.log( progressBars );
+
 	Array.from( progressBars ).forEach( progressBar => {
 
 		const duration = progressBar.dataset.duration * 1000;
 		const circumference = progressBar.dataset.circumference;
 		const percentage = progressBar.dataset.percentage;
 
-		console.log( duration, circumference, percentage );
-
 		const progressRef = progressBar.querySelector( '.wp-block-themeisle-blocks-circular-progress-bar-progress' );
 		const valueRef = progressBar.querySelector( '.wp-block-themeisle-blocks-circular-progress-bar-text' );
-
-		console.log( progressBars, valueRef );
 
 		if ( ! duration || ! circumference || ! percentage || ! progressRef || ! valueRef ) {
 			return;

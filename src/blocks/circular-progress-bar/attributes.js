@@ -34,7 +34,7 @@ const attributes = {
 	backgroundColor: {
 		type: 'string'
 	},
-	barBackgroundColor: {
+	progressColor: {
 		type: 'string'
 	},
 	titleColor: {
