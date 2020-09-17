@@ -38,7 +38,8 @@ const Save = ({
 			<div
 				className="wp-block-themeisle-blocks-circular-progress-bar__bar"
 				style={{
-					height: size + 'px'
+					height: size + 'px',
+					width: size + 'px'
 				}}
 			>
 				<svg

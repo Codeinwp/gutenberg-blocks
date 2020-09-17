@@ -1,4 +1,8 @@
 .wp-block-themeisle-blocks-circular-progress-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     .wp-block-themeisle-blocks-circular-progress-bar-title__area {
         display: flex;
         justify-content: center;
@@ -7,6 +11,7 @@
         .wp-block-themeisle-blocks-circular-progress-bar-title__value {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-weight: bold;
+            text-align: center;
         }
     }
     
