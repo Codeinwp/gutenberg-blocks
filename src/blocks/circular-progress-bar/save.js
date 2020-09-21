@@ -75,7 +75,7 @@ const Save = ({
 						y="50%"
 						style={{
 							fill: attributes.progressColor,
-							fontSize: fontSize
+							fontSize: attributes.fontSize + 'px'
 						}}
 					>
 					</text>

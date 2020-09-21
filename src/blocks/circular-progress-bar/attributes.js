@@ -27,6 +27,10 @@ const attributes = {
 		type: 'number',
 		default: 120
 	},
+	fontSize: {
+		type: 'number',
+		default: 40
+	},
 	strokeWidth: {
 		type: 'number',
 		default: 5
@@ -38,9 +42,6 @@ const attributes = {
 		type: 'string'
 	},
 	titleColor: {
-		type: 'string'
-	},
-	percentageColor: {
 		type: 'string'
 	}
 };

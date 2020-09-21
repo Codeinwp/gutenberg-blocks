@@ -38,6 +38,8 @@ const CircularProgressBarBlock = ({
 	const radius = center - attributes.strokeWidth / 2;
 	const circumference = 2 * Math.PI * radius;
 
+	const innerTextFontSizeRatio = attributes.fontSize / attributes.height;
+
 
 	useEffect( () => {
 
@@ -83,7 +85,7 @@ const CircularProgressBarBlock = ({
 	}, [ attributes.percentage, attributes.height ]);
 
 	const onHeightChange = value => {
-		setAttributes({ height: value });
+		setAttributes({ height: value, fontSize: value * innerTextFontSizeRatio });
 	};
 
 	return (
@@ -136,11 +138,7 @@ const CircularProgressBarBlock = ({
 					} }
 				>
 					<CircularProgressBar
-						percentage={ attributes.percentage }
-						size={ attributes.height }
-						strokeWidth={ attributes.strokeWidth }
-						progressStroke={ attributes.progressColor }
-						backgroundStroke={ attributes.backgroundColor }
+						attributes={ attributes }
 						progressRef={ progressRef }
 						valueRef={ valueRef }
 					/>

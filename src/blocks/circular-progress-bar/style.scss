@@ -13,6 +13,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-weight: bold;
             text-align: center;
+            font-size: 40px;
         }
     }
     
@@ -28,11 +29,13 @@
             .wp-block-themeisle-blocks-circular-progress-bar-bg {
                 fill: none;
                 stroke: grey;
+                stroke-width: 5;
             }
         
             .wp-block-themeisle-blocks-circular-progress-bar-progress {
                 fill: none;
                 stroke: darkorange;
+                stroke-width: 5;
                 transform-origin: center;
                 transform: rotateZ(-90deg);
             }
@@ -42,6 +45,7 @@
                 dominant-baseline: middle;
                 fill: darkorange;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: 40px;
             }
         } 
     }

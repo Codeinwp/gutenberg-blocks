@@ -1,21 +1,15 @@
 
 const CircularProgressBar = ({
-	size,
-	percentage,
-	strokeWidth,
-	backgroundStroke,
-	progressStroke,
+	attributes,
 	progressRef,
 	valueRef
 }) => {
-
+	const size = attributes.height;
 	const center = size / 2;
-	const radius = size / 2 - strokeWidth / 2;
+	const radius = size / 2 - attributes.strokeWidth / 2;
 	const circumference = 2 * Math.PI * radius;
 
 	//const progressOffSet = ( ( 100 - percentage ) / 100 ) * circumference;
-
-	const fontSize = size * 0.30;
 
 	return (
 		<div
@@ -29,15 +23,16 @@ const CircularProgressBar = ({
 				className="wp-block-themeisle-blocks-circular-progress-bar-container"
 				width={ size }
 				height={ size }
+				preserveAspectRatio="xMidYMid meet"
 			>
 				<circle
 					className="wp-block-themeisle-blocks-circular-progress-bar-bg"
 					cx={ center }
 					cy={ center }
 					r={ radius }
-					strokeWidth={ strokeWidth }
+					strokeWidth={ attributes.strokeWidth }
 					style={{
-						stroke: backgroundStroke
+						stroke: attributes.backgroundColor
 					}}
 				/>
 				<circle
@@ -46,12 +41,12 @@ const CircularProgressBar = ({
 					cx={ center }
 					cy={ center }
 					r={ radius }
-					strokeWidth={ strokeWidth }
+					strokeWidth={ attributes.strokeWidth }
 					strokeDasharray={ circumference }
 
 					//strokeDashoffset={ progressOffSet }
 					style={{
-						stroke: progressStroke
+						stroke: attributes.progressColor
 					}}
 				/>
 				<text
@@ -60,11 +55,11 @@ const CircularProgressBar = ({
 					x="50%"
 					y="50%"
 					style={{
-						fill: progressStroke,
-						fontSize: fontSize + 'px'
+						fill: attributes.progressColor,
+						fontSize: attributes.fontSize + 'px'
 					}}
 				>
-					{ percentage }%
+					{ attributes.percentage }%
 				</text>
 			</svg>
 		</div>
