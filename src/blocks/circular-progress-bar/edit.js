@@ -115,9 +115,10 @@ const CircularProgressBarBlock = ({
 				}
 				<ResizableBox
 					size={ {
-						height: attributes.height
+						height: attributes.height,
+						width: attributes.height
 					} }
-					minHeight={ 5 }
+					minHeight={ 0 }
 					maxHeight={ 240 }
 					enable={ {
 						top: false,
