@@ -80,7 +80,7 @@ const CircularProgressBarBlock = ({
 		valueRef.current.innerHTML = attributes.percentage + '%';
 
 		clearInterval( interval );
-	}, [ attributes.percentage ]);
+	}, [ attributes.percentage, attributes.height ]);
 
 	const onHeightChange = value => {
 		setAttributes({ height: value });
