@@ -23,7 +23,6 @@ const CircularProgressBar = ({
 				className="wp-block-themeisle-blocks-circular-progress-bar-container"
 				width={ size }
 				height={ size }
-				preserveAspectRatio="xMidYMid meet"
 			>
 				<circle
 					className="wp-block-themeisle-blocks-circular-progress-bar-bg"
