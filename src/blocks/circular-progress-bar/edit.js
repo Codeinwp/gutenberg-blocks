@@ -6,6 +6,8 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
+const { __ } = wp.i18n;
+
 const { range } = lodash;
 
 const { ResizableBox } = wp.components;
@@ -16,6 +18,8 @@ const {
 	useState,
 	useRef
 } = wp.element;
+
+const { RichText } = wp.blockEditor;
 
 /**
  * Internal dependencies
@@ -88,6 +92,10 @@ const CircularProgressBarBlock = ({
 		setAttributes({ height: value, fontSize: value * innerTextFontSizeRatio });
 	};
 
+	const onTitleChange = value => {
+		setAttributes({ title: value });
+	};
+
 	return (
 		<Fragment>
 			<Inspector
@@ -103,15 +111,18 @@ const CircularProgressBarBlock = ({
 						<div
 							className="wp-block-themeisle-blocks-circular-progress-bar-title__area"
 						>
-							<span
+							<RichText
+								tagName="span"
 								className="wp-block-themeisle-blocks-circular-progress-bar-title__value"
+								placeholder={ isSelected ? __( 'Write caption…' ) : null }
+								value={ attributes.title }
+								onChange={ onTitleChange }
+								multiline={ false }
 								style={{
 									color: attributes.titleColor,
 									fontSize: attributes.height * 0.3 + 'px'
 								}}
-							>
-								{ attributes.title }
-							</span>
+							/>
 						</div>
 					)
 				}

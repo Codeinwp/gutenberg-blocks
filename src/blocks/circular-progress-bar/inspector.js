@@ -11,8 +11,7 @@ const {
 const {
 	PanelBody,
 	RangeControl,
-	SelectControl,
-	TextControl
+	SelectControl
 } = wp.components;
 
 const { clamp } = lodash;
@@ -21,9 +20,6 @@ const Inspector = ({
 	attributes,
 	setAttributes
 }) => {
-	const onTitleChange = value => {
-		setAttributes({ title: value });
-	};
 
 	const onPercentageChange = value => {
 		if ( value === undefined ) {
@@ -76,12 +72,6 @@ const Inspector = ({
 				title={ __( 'Settings' ) }
 				initialOpen={ true }
 			>
-				<TextControl
-					label={ __( 'Title' ) }
-					value={ attributes.title }
-					onChange={ onTitleChange }
-				/>
-
 				<RangeControl
 					label={ __( 'Percentage' ) }
 					help={ __( 'The value of the circular progress bar.' ) }
