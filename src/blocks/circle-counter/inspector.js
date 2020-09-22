@@ -74,7 +74,7 @@ const Inspector = ({
 			>
 				<RangeControl
 					label={ __( 'Percentage' ) }
-					help={ __( 'The value of the circular progress bar.' ) }
+					help={ __( 'The value of the counter.' ) }
 					value={ attributes.percentage }
 					onChange={ onPercentageChange }
 					min={ 0 }
@@ -109,7 +109,7 @@ const Inspector = ({
 			>
 				<RangeControl
 					label={ __( 'Height' ) }
-					help={ __( 'The height of the circular progress bar.' ) }
+					help={ __( 'The height of the circle counter.' ) }
 					value={ attributes.height }
 					onChange={ onHeightChange }
 					min={ 0 }
