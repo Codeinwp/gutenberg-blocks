@@ -13,7 +13,7 @@ const transform = {
 				const commonProps = omit( attributes, [ 'titleStyle', 'percentagePosition', 'height', 'borderRadius', 'barBackgroundColor', 'percentageColor' ]);
 
 
-				return createBlock( 'themeisle-blocks/circular-progress-bar', {
+				return createBlock( 'themeisle-blocks/circle-counter', {
 					...commonProps,
 					progressColor: attributes.barBackgroundColor,
 					height: clamp( attributes.height * 4, 0, 240 ),

@@ -42,7 +42,7 @@ class Main {
 	 *
 	 * @var bool $is_circular_progress_bar_loaded Is Map loaded?
 	 */
-	public static $is_circular_progress_bar_loaded = false;
+	public static $is_circle_counter_loaded = false;
 
 	/**
 	 * Flag to mark that lottie scripts has been loaded.
@@ -296,17 +296,17 @@ class Main {
 			self::$is_progress_bar_loaded = true;
 		}
 
-		if ( ! self::$is_circular_progress_bar_loaded && has_block( 'themeisle-blocks/circular-progress-bar', $post ) ) {
+		if ( ! self::$is_circle_counter_loaded && has_block( 'themeisle-blocks/circle-counter', $post ) ) {
 
 			wp_enqueue_script(
-				'themeisle-gutenberg-circular-progress-bar',
-				plugin_dir_url( $this->get_dir() ) . 'build/circular-progress-bar.js',
+				'themeisle-gutenberg-circle-counter',
+				plugin_dir_url( $this->get_dir() ) . 'build/circle-counter.js',
 				array( 'wp-dom-ready' ),
 				self::$assets_version,
 				true
 			);
 
-			self::$is_circular_progress_bar_loaded = true;
+			self::$is_circle_counter_loaded = true;
 		}
 		
 		if ( ! self::$is_lottie_loaded && has_block( 'themeisle-blocks/lottie', $post ) ) {

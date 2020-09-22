@@ -9,7 +9,7 @@ const domReady = wp.domReady;
 import { range, linear } from './utils.js';
 
 domReady( () => {
-	const progressBars = document.querySelectorAll( '.wp-block-themeisle-blocks-circular-progress-bar' );
+	const progressBars = document.querySelectorAll( '.wp-block-themeisle-blocks-circle-counter' );
 
 	Array.from( progressBars ).forEach( progressBar => {
 
@@ -17,8 +17,8 @@ domReady( () => {
 		const circumference = progressBar.dataset.circumference;
 		const percentage = progressBar.dataset.percentage;
 
-		const progressRef = progressBar.querySelector( '.wp-block-themeisle-blocks-circular-progress-bar-progress' );
-		const valueRef = progressBar.querySelector( '.wp-block-themeisle-blocks-circular-progress-bar-text' );
+		const progressRef = progressBar.querySelector( '.wp-block-themeisle-blocks-circle-counter-progress' );
+		const valueRef = progressBar.querySelector( '.wp-block-themeisle-blocks-circle-counter-text' );
 
 		if ( ! duration || ! circumference || ! percentage || ! progressRef || ! valueRef ) {
 			return;
@@ -55,7 +55,6 @@ domReady( () => {
 
 						interval = setInterval( () => {
 							const value =  Math.round( percentPerTime.pop() );
-							console.log( value );
 							progressRef.style.strokeDashoffset = ( ( 100 - value ) / 100 ) * circumference;
 							valueRef.innerHTML = value + '%';
 							if ( ! percentPerTime.length ) {

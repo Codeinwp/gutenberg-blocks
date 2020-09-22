@@ -25,7 +25,7 @@ const { RichText } = wp.blockEditor;
  * Internal dependencies
  */
 import Inspector from './inspector.js';
-import CircularProgressBar from './components/CircularProgressBar.js';
+import CircularProgressBar from './components/CircleCounter.js';
 
 const CircularProgressBarBlock = ({
 	attributes,
@@ -104,16 +104,16 @@ const CircularProgressBarBlock = ({
 				onFontSizeChange={ onHeightChange }
 			/>
 			<div
-				className={ classnames( className, 'wp-block-themeisle-blocks-circular-progress-bar' ) }
+				className={ classnames( className, 'wp-block-themeisle-blocks-circle-counter' ) }
 			>
 				{
 					( 'default' === attributes.titleStyle ) && (
 						<div
-							className="wp-block-themeisle-blocks-circular-progress-bar-title__area"
+							className="wp-block-themeisle-blocks-circle-counter-title__area"
 						>
 							<RichText
 								tagName="span"
-								className="wp-block-themeisle-blocks-circular-progress-bar-title__value"
+								className="wp-block-themeisle-blocks-circle-counter-title__value"
 								placeholder={ isSelected ? __( 'Write caption…' ) : null }
 								value={ attributes.title }
 								onChange={ onTitleChange }
@@ -154,7 +154,26 @@ const CircularProgressBarBlock = ({
 						valueRef={ valueRef }
 					/>
 				</ResizableBox>
-
+				{
+					( 'bottom' === attributes.titleStyle ) && (
+						<div
+							className="wp-block-themeisle-blocks-circle-counter-title__area"
+						>
+							<RichText
+								tagName="span"
+								className="wp-block-themeisle-blocks-circle-counter-title__value"
+								placeholder={ isSelected ? __( 'Write caption…' ) : null }
+								value={ attributes.title }
+								onChange={ onTitleChange }
+								multiline={ false }
+								style={{
+									color: attributes.titleColor,
+									fontSize: attributes.height * 0.3 + 'px'
+								}}
+							/>
+						</div>
+					)
+				}
 			</div>
 		</Fragment>
 

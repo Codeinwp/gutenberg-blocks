@@ -29,11 +29,11 @@ const attributes = {
 	},
 	fontSize: {
 		type: 'number',
-		default: 40
+		default: 35
 	},
 	strokeWidth: {
 		type: 'number',
-		default: 5
+		default: 10
 	},
 	backgroundColor: {
 		type: 'string'

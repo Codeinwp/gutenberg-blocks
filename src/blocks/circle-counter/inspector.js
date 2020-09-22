@@ -96,7 +96,8 @@ const Inspector = ({
 					value={ attributes.titleStyle }
 					options={ [
 						{ label: __( 'Default' ), value: 'default' },
-						{ label: __( 'Hide' ), value: 'hide' }
+						{ label: __( 'Hide' ), value: 'hide' },
+						{ label: __( 'Bottom' ), value: 'bottom' }
 					] }
 					onChange={ selectTitleStyle }
 				/>

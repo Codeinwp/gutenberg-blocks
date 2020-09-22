@@ -13,19 +13,19 @@ const CircularProgressBar = ({
 
 	return (
 		<div
-			className="wp-block-themeisle-blocks-circular-progress-bar__bar"
+			className="wp-block-themeisle-blocks-circle-counter__bar"
 			style={{
 				height: size + 'px',
 				width: size + 'px'
 			}}
 		>
 			<svg
-				className="wp-block-themeisle-blocks-circular-progress-bar-container"
+				className="wp-block-themeisle-blocks-circle-counter-container"
 				width={ size }
 				height={ size }
 			>
 				<circle
-					className="wp-block-themeisle-blocks-circular-progress-bar-bg"
+					className="wp-block-themeisle-blocks-circle-counter-bg"
 					cx={ center }
 					cy={ center }
 					r={ radius }
@@ -36,7 +36,7 @@ const CircularProgressBar = ({
 				/>
 				<circle
 					ref={ progressRef }
-					className="wp-block-themeisle-blocks-circular-progress-bar-progress"
+					className="wp-block-themeisle-blocks-circle-counter-progress"
 					cx={ center }
 					cy={ center }
 					r={ radius }
@@ -50,7 +50,7 @@ const CircularProgressBar = ({
 				/>
 				<text
 					ref={ valueRef }
-					className="wp-block-themeisle-blocks-circular-progress-bar-text"
+					className="wp-block-themeisle-blocks-circle-counter-text"
 					x="50%"
 					y="50%"
 					style={{
