@@ -131,9 +131,9 @@ const Inspector = ({
 					help={ __( 'Change the font size of the inner text.' ) }
 					value={ attributes.fontSize }
 					onChange={ onFontSizeChange }
-					initialPosition={ 40 }
+					initialPosition={ 27 }
 					min={ 0 }
-					max={ Math.round( attributes.height  * 0.375 ) }
+					max={ Math.round( attributes.height  * 0.27 ) }
 				/>
 
 				{

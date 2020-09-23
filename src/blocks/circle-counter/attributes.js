@@ -25,11 +25,10 @@ const attributes = {
 	},
 	height: {
 		type: 'number',
-		default: 120
+		default: 100
 	},
 	fontSize: {
-		type: 'number',
-		default: 35
+		type: 'number'
 	},
 	strokeWidth: {
 		type: 'number',

@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { loop as icon } from '@wordpress/icons';
+import { rotateRight as icon } from '@wordpress/icons';
 
 /**
  * WordPress dependencies
