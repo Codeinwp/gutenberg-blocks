@@ -55,7 +55,7 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 				if ( isset( $attr['borderSize'] ) ) {
 					$style .= '	border-width: ' . $this->get_attr_value( $attr['borderSize'], 0 ) . 'px;' . "\n";
 					$style .= '	border-style: solid;' . "\n";
-					$width += $this->get_attr_value( $attr['borderSize'], 0 );
+					$width += $this->get_attr_value( $attr['borderSize'], 0 ) * 2;
 				}
 				if ( isset( $attr['borderRadius'] ) ) {
 					$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'], 0 ) . '%;' . "\n";
@@ -65,9 +65,13 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 				}
 				if ( isset( $attr['fontSize'] ) ) {
 					$width += $this->get_attr_value( $attr['fontSize'], 0 );
+				} else {
+					$width += 16;
 				}
 				if ( isset( $attr['padding'] ) ) {
-					$width += $this->get_attr_value( $attr['padding'], 0 ) * 2;
+					$width += $this->get_attr_value( $attr['padding'], 5 ) * 2;
+				} else {
+					$width += 5 * 2;
 				}
 
 				if ( $width > 0 ) {
