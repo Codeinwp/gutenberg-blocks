@@ -9,7 +9,9 @@ const CircularProgressBar = ({
 	const radius = size / 2 - attributes.strokeWidth / 2;
 	const circumference = 2 * Math.PI * radius;
 
-	//const progressOffSet = ( ( 100 - percentage ) / 100 ) * circumference;
+	if ( 0 > radius ) {
+		return <div></div>;
+	}
 
 	return (
 		<div
@@ -55,7 +57,7 @@ const CircularProgressBar = ({
 					y="50%"
 					style={{
 						fill: attributes.progressColor,
-						fontSize: attributes.fontSize + 'px'
+						fontSize: attributes.fontSizePercent + 'px'
 					}}
 				>
 					{ attributes.percentage }%

@@ -30,8 +30,10 @@ const Inspector = ({
 	};
 
 	const onHeightChange = value => {
-		const innerTextFontSizeRatio = attributes.fontSize / attributes.height;
-		setAttributes({ height: value, fontSize: value * innerTextFontSizeRatio });
+		const innerTextFontSizeRatio = attributes.fontSizePercent / attributes.height;
+		const titleFontSizeRatio = attributes.fontSizeTitle / attributes.height;
+
+		setAttributes({ height: value, fontSizePercent: value * innerTextFontSizeRatio, fontSizeTitle: value * titleFontSizeRatio });
 	};
 
 	const selectTitleStyle = value => {
@@ -62,8 +64,12 @@ const Inspector = ({
 		setAttributes({ titleColor: value });
 	};
 
-	const onFontSizeChange = value => {
-		setAttributes({ fontSize: value });
+	const onFontSizePercentChange = value => {
+		setAttributes({ fontSizePercent: value });
+	};
+
+	const onFontSizeTitleChange = value => {
+		setAttributes({ fontSizeTitle: value });
 	};
 
 	return (
@@ -127,10 +133,20 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Font Size' ) }
+					label={ __( 'Font Size Title' ) }
+					help={ __( 'Change the font size of the title.' ) }
+					value={ attributes.fontSizeTitle }
+					onChange={ onFontSizeTitleChange }
+					initialPosition={ 37 }
+					min={ 0 }
+					max={ Math.round( attributes.height  * 0.60 ) }
+				/>
+
+				<RangeControl
+					label={ __( 'Font Size Percent' ) }
 					help={ __( 'Change the font size of the inner text.' ) }
-					value={ attributes.fontSize }
-					onChange={ onFontSizeChange }
+					value={ attributes.fontSizePercent }
+					onChange={ onFontSizePercentChange }
 					initialPosition={ 27 }
 					min={ 0 }
 					max={ Math.round( attributes.height  * 0.27 ) }

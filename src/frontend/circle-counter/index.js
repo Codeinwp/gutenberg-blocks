@@ -20,13 +20,17 @@ domReady( () => {
 		const percentage = progressBar.dataset.percentage;
 		const size = progressBar.dataset.height;
 		const strokeWidth = progressBar.dataset.strokeWidth;
-		const fontSize = progressBar.dataset.fontSize;
+		const fontSize = progressBar.dataset.fontSizePercent;
 		const backgroundStroke = progressBar.dataset.backgroundStroke;
 		const progressStroke = progressBar.dataset.progressStroke;
 
 		const center = size / 2;
 		const radius = center -  strokeWidth / 2;
 		const circumference = 2 * Math.PI * radius;
+
+		if ( 0 > radius ) {
+			return;
+		}
 
 
 		/*

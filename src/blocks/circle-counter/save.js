@@ -4,8 +4,6 @@
 const Save = ({
 	attributes
 }) => {
-	const fontSize = attributes.height * 0.30 + 'px';
-
 	return (
 		<div
 			className="wp-block-themeisle-blocks-circle-counter"
@@ -13,7 +11,7 @@ const Save = ({
 			data-duration={ attributes.duration }
 			data-height={ attributes.height }
 			data-stroke-width={ attributes.strokeWidth }
-			data-font-size={ attributes.fontSize }
+			data-font-size-percent={ attributes.fontSizePercent }
 			data-background-stroke={ attributes.backgroundColor }
 			data-progress-stroke={ attributes.progressColor }
 		>
@@ -26,7 +24,7 @@ const Save = ({
 							className="wp-block-themeisle-blocks-circle-counter-title__value"
 							style={{
 								color: attributes.titleColor,
-								fontSize: fontSize
+								fontSize: attributes.fontSizeTitle
 							}}
 						>
 							{ attributes.title }
@@ -47,7 +45,7 @@ const Save = ({
 							className="wp-block-themeisle-blocks-circle-counter-title__value"
 							style={{
 								color: attributes.titleColor,
-								fontSize: fontSize
+								fontSize: attributes.fontSizeTitle
 							}}
 						>
 							{ attributes.title }

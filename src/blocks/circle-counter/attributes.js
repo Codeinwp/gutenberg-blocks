@@ -27,7 +27,10 @@ const attributes = {
 		type: 'number',
 		default: 100
 	},
-	fontSize: {
+	fontSizeTitle: {
+
+	},
+	fontSizePercent: {
 		type: 'number'
 	},
 	strokeWidth: {
