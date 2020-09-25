@@ -28,7 +28,7 @@ const attributes = {
 		default: 100
 	},
 	fontSizeTitle: {
-
+		type: 'number'
 	},
 	fontSizePercent: {
 		type: 'number'

@@ -30,8 +30,8 @@ const Inspector = ({
 	};
 
 	const onHeightChange = value => {
-		const innerTextFontSizeRatio = attributes.fontSizePercent / attributes.height;
-		const titleFontSizeRatio = attributes.fontSizeTitle / attributes.height;
+		const innerTextFontSizeRatio = ( attributes.fontSizePercent || 27 ) / attributes.height;
+		const titleFontSizeRatio = ( attributes.fontSizeTitle || 37 ) / attributes.height;
 
 		setAttributes({ height: value, fontSizePercent: value * innerTextFontSizeRatio, fontSizeTitle: value * titleFontSizeRatio });
 	};

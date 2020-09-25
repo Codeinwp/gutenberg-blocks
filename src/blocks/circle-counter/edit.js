@@ -42,8 +42,6 @@ const CircularProgressBarBlock = ({
 	const radius = center - attributes.strokeWidth / 2;
 	const circumference = 2 * Math.PI * radius;
 
-	const innerTextFontSizeRatio = attributes.fontSize / attributes.height;
-
 
 	useEffect( () => {
 
@@ -89,7 +87,10 @@ const CircularProgressBarBlock = ({
 	}, [ attributes.percentage, attributes.height ]);
 
 	const onHeightChange = value => {
-		setAttributes({ height: value, fontSize: value * innerTextFontSizeRatio });
+		const innerTextFontSizeRatio = ( attributes.fontSizePercent || 27 ) / attributes.height;
+		const titleFontSizeRatio = ( attributes.fontSizeTitle || 37 ) / attributes.height;
+
+		setAttributes({ height: value, fontSizePercent: value * innerTextFontSizeRatio, fontSizeTitle: value * titleFontSizeRatio  });
 	};
 
 	const onTitleChange = value => {
