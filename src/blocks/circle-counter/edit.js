@@ -168,7 +168,7 @@ const CircularProgressBarBlock = ({
 								multiline={ false }
 								style={{
 									color: attributes.titleColor,
-									fontSize: attributes.height * 0.3 + 'px'
+									fontSize: attributes.fontSizeTitle + 'px'
 								}}
 							/>
 						</div>
