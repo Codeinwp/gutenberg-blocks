@@ -14,6 +14,8 @@ const { uniqueId } = lodash;
 
 const { RichText } = wp.blockEditor;
 
+const { InnerBlocks } = wp.blockEditor;
+
 
 import Inspector from './inspector.js';
 
@@ -41,25 +43,25 @@ const Edit = ({
 		setAttributes({ title: value });
 	};
 
-	const changeContent = value => {
-		setAttributes({ content: value });
-	};
+	// const changeContent = value => {
+	// 	setAttributes({ content: value });
+	// };
 
 	const titleStyle = {
 		color: attributes.titleColor,
 		fontSize: attributes.titleFontSize
 	};
 
-	const contentStyle = {
-		color: attributes.contentColor,
-		fontSize: attributes.contentFontSize
-	};
+	// const contentStyle = {
+	// 	color: attributes.contentColor,
+	// 	fontSize: attributes.contentFontSize
+	// };
 
 	return (
 		<Fragment>
 			<Inspector attributes={ attributes } setAttributes={ setAttributes } />
 			<div
-				className="wp-block-themeisle-blocks-accordion-block-tab"
+				className="wp-block-themeisle-blocks-accordion-block-tab__container"
 				style={{
 					backgroundColor: attributes.titleBackgroundColor
 				}}
@@ -92,7 +94,7 @@ const Edit = ({
 						backgroundColor: attributes.contentBackgroundColor
 					}}
 				>
-					<RichText
+					{/* <RichText
 						tagName="p"
 						placeholder={ __( 'Write some content…' ) }
 						value={ attributes.content }
@@ -101,6 +103,11 @@ const Edit = ({
 						style={
 							{ ...contentStyle }
 						}
+					/> */}
+					<InnerBlocks
+						__experimentalMoverDirection="vertical"
+						orientation="vertical"
+						renderAppender={ InnerBlocks.ButtonBlockAppender }
 					/>
 				</div>
 			</div>

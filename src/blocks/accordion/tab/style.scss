@@ -1,9 +1,12 @@
 $toggler-background-color: rgb(255, 255, 255);
 
-.wp-block-themeisle-blocks-accordion-block-tab {
+.wp-block-themeisle-blocks-accordion-block-tab__container {
 	max-height: max-content;
     width: 100%;
 	overflow: hidden;
+
+	margin-bottom: 5px;
+	border: solid 2px black;
 
 	.wp-block-themeisle-blocks-accordion-block-tab-toggle {
 		display: none;

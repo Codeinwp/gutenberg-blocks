@@ -12,8 +12,8 @@ import { buttonsIcon as icon } from '../../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
 import save from './save.js';
-import './editor.scss';
 import './style.scss';
+import './editor.scss';
 
 
 //import save from './save.js';

@@ -2,6 +2,8 @@ import { Icon, chevronRight } from '@wordpress/icons';
 
 const { RichText } = wp.blockEditor;
 
+const { InnerBlocks } = wp.blockEditor;
+
 
 const Save = ({
 	attributes
@@ -11,10 +13,10 @@ const Save = ({
 		fontSize: attributes.titleFontSize
 	};
 
-	const contentStyle = {
-		color: attributes.contentColor,
-		fontSize: attributes.contentFontSize
-	};
+	// const contentStyle = {
+	// 	color: attributes.contentColor,
+	// 	fontSize: attributes.contentFontSize
+	// };
 
 	console.log( attributes.id );
 
@@ -24,7 +26,7 @@ const Save = ({
 
 	return (
 		<div
-			className="wp-block-themeisle-blocks-accordion-block-tab"
+			className="wp-block-themeisle-blocks-accordion-block-tab__container"
 			style={{
 				backgroundColor: attributes.titleBackgroundColor
 			}}
@@ -53,13 +55,14 @@ const Save = ({
 					backgroundColor: attributes.contentBackgroundColor
 				}}
 			>
-				<RichText.Content
+				{/* <RichText.Content
 					tagName="p"
 					value={ attributes.content }
 					style={
 						{ ...contentStyle }
 					}
-				/>
+				/> */}
+				<InnerBlocks.Content />
 			</div>
 		</div>
 	);
