@@ -1,0 +1,76 @@
+$toggler-background-color: rgb(255, 255, 255);
+
+.wp-block-themeisle-blocks-accordion-block-tab {
+	max-height: max-content;
+    width: 100%;
+	overflow: hidden;
+
+	.wp-block-themeisle-blocks-accordion-block-tab-toggle {
+		display: none;
+
+		// &:checked + .wp-block-themeisle-blocks-accordion-block-tab-label {
+		// 	background-color: darken($toggler-background-color, 20%)
+		// }
+
+		&:checked + .wp-block-themeisle-blocks-accordion-block-tab-title + .wp-block-themeisle-blocks-accordion-block-tab-content {
+			opacity: 1;
+			max-height: 100vh;
+			transition: all 1s ease-in;
+		}
+
+		&:checked + .wp-block-themeisle-blocks-accordion-block-tab-title {
+			svg {
+				transform: rotate(90deg);
+			}
+		}
+	}
+	
+	.wp-block-themeisle-blocks-accordion-block-tab-title {
+
+		display: flex;
+		justify-content: center;
+		width: 100%;
+
+		.wp-block-themeisle-blocks-accordion-block-tab-label {
+			display: block;
+			background-color: $toggler-background-color;
+			color: #444;
+			cursor: pointer;
+			font-weight: bold;
+			width: inherit;
+			border: none;
+			text-align: left;
+			outline: none;
+			font-size: 20px;
+			transition: 0.4s;
+		}
+
+		label {
+			margin-bottom: 0px;
+		}
+
+		svg {
+			text-align: center;
+			transition: all .35s;
+			fill: gray;
+		}
+	}
+	
+
+	.wp-block-themeisle-blocks-accordion-block-tab-content {
+		padding: 0 18px;
+		background-color: white;
+		max-height: 0;
+		opacity: 0;
+		overflow: hidden;
+		transition: max-height 0.2s;
+	
+		p {
+			margin: 0;
+			padding: 0.5em 1em 1em;
+			font-size:18px;
+			line-height: 1.5;
+			text-align: left;
+		}
+	}
+}

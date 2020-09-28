@@ -1,0 +1,14 @@
+.wp-block-themeisle-blocks-accordion-block {
+
+	.wp-block-themeisle-blocks-accordion-block-tabs {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.block-editor-inner-blocks {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+		}
+	}	
+}
