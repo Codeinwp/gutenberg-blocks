@@ -5,30 +5,14 @@ const attributes = {
 	title: {
 		type: 'string'
 	},
-	content: {
-		type: 'string'
-	},
-	titleColor: {
-		type: 'string'
-	},
-	contentColor: {
-		type: 'string'
-	},
 	titleBackgroundColor: {
 		type: 'string'
 	},
 	contentBackgroundColor: {
 		type: 'string'
 	},
-	titleFontSize: {
-		type: 'number'
-	},
-	contentFontSize: {
-		type: 'number'
-	},
-	open: {
-		type: 'bool',
-		default: false
+	parentAttributes: {
+		type: 'object'
 	}
 };
 

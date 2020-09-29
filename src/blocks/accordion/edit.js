@@ -12,10 +12,16 @@ const {
 } = wp.element;
 
 
-const Edit = () => {
+import Inspector from './inspector.js';
+
+const Edit = ({
+	attributes,
+	setAttributes
+}) => {
 
 	return (
 		<Fragment>
+			<Inspector attributes={ attributes } setAttributes={ setAttributes } />
 			<div
 				className="wp-block-themeisle-blocks-accordion-block"
 			>

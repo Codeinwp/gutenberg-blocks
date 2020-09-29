@@ -16,13 +16,34 @@ const { RichText } = wp.blockEditor;
 
 const { InnerBlocks } = wp.blockEditor;
 
+const { useSelect } = wp.data;
+
 
 import Inspector from './inspector.js';
 
 const Edit = ({
 	attributes,
-	setAttributes
+	setAttributes,
+	clientId
 }) => {
+
+	const {
+		hasParent,
+		parentAttributes
+	} = useSelect( select => {
+		const {
+			getBlock,
+			getBlockRootClientId
+		} = select( 'core/block-editor' );
+
+		const parentClientId = getBlockRootClientId( clientId );
+		const parentBlock = getBlock( parentClientId );
+
+		return {
+			hasParent: parentBlock ? true : false,
+			parentAttributes: parentBlock ? parentBlock.attributes : {}
+		};
+	}, []);
 
 	const ratio = 36 / 20;
 
@@ -43,36 +64,53 @@ const Edit = ({
 		setAttributes({ title: value });
 	};
 
-	// const changeContent = value => {
-	// 	setAttributes({ content: value });
-	// };
+	let titleStyle;
+	let tabStyle;
+	let iconStyle;
+	let iconSize;
 
-	const titleStyle = {
-		color: attributes.titleColor,
-		fontSize: attributes.titleFontSize
+	if ( hasParent ) {
+		titleStyle = {
+			color: parentAttributes.tabsTitleColor,
+			fontSize: parentAttributes.tabsTitleFontSize + 'px'
+		};
+
+		tabStyle = {
+			border: 'solid ' + parentAttributes.tabsBorderSize + 'px',
+			borderColor: parentAttributes.tabsBorderColor,
+			borderRadius: parentAttributes.tabsBorderRadius + 'px',
+			marginBottom: parentAttributes.tabsGap + 'px'
+		};
+
+		iconStyle = {
+			fill: parentAttributes.tabsTitleColor
+		};
+
+		iconSize = parentAttributes.tabsTitleFontSize * ratio;
+
+		setAttributes({ parentAttributes: parentAttributes });
 	};
-
-	// const contentStyle = {
-	// 	color: attributes.contentColor,
-	// 	fontSize: attributes.contentFontSize
-	// };
 
 	return (
 		<Fragment>
 			<Inspector attributes={ attributes } setAttributes={ setAttributes } />
 			<div
 				className="wp-block-themeisle-blocks-accordion-block-tab__container"
-				style={{
-					backgroundColor: attributes.titleBackgroundColor
-				}}
+				style={
+					{ ...tabStyle }
+				}
 			>
 				<input type="checkbox" id={ attributes.id } class="wp-block-themeisle-blocks-accordion-block-tab-toggle" checked disabled/>
 
-				<div className="wp-block-themeisle-blocks-accordion-block-tab-title">
+				<div className="wp-block-themeisle-blocks-accordion-block-tab-title"
+					style={{
+						backgroundColor: attributes.titleBackgroundColor
+					}}
+				>
 					<Icon
 						icon={ chevronRight }
-						style={{ fill: attributes.titleColor }}
-						size={ attributes.titleFontSize * ratio || 36 }
+						style={{ ...iconStyle }}
+						size={ iconSize || 36 }
 					/>
 					<RichText
 						tagName="label"
@@ -83,9 +121,10 @@ const Edit = ({
 						onChange={ changeTitle }
 						multiline={ false }
 						keepPlaceholderOnFocus={ true }
-						style={
-							{ ...titleStyle }
-						}
+						style={{
+							...titleStyle,
+							backgroundColor: attributes.titleBackgroundColor
+						}}
 					/>
 				</div>
 				<div
@@ -94,16 +133,6 @@ const Edit = ({
 						backgroundColor: attributes.contentBackgroundColor
 					}}
 				>
-					{/* <RichText
-						tagName="p"
-						placeholder={ __( 'Write some content…' ) }
-						value={ attributes.content }
-						onChange={ changeContent }
-						keepPlaceholderOnFocus={ true }
-						style={
-							{ ...contentStyle }
-						}
-					/> */}
 					<InnerBlocks
 						__experimentalMoverDirection="vertical"
 						orientation="vertical"

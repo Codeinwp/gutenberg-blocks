@@ -8,13 +8,11 @@ $toggler-background-color: rgb(255, 255, 255);
 	margin-bottom: 5px;
 	border: solid 2px black;
 
+	transition: all 0.35s ease-in;
+
 	.wp-block-themeisle-blocks-accordion-block-tab-toggle {
 		display: none;
-
-		// &:checked + .wp-block-themeisle-blocks-accordion-block-tab-label {
-		// 	background-color: darken($toggler-background-color, 20%)
-		// }
-
+		
 		&:checked + .wp-block-themeisle-blocks-accordion-block-tab-title + .wp-block-themeisle-blocks-accordion-block-tab-content {
 			opacity: 1;
 			max-height: 100vh;
@@ -36,7 +34,7 @@ $toggler-background-color: rgb(255, 255, 255);
 
 		.wp-block-themeisle-blocks-accordion-block-tab-label {
 			display: block;
-			background-color: $toggler-background-color;
+			background-color: transparent;
 			color: #444;
 			cursor: pointer;
 			font-weight: bold;
@@ -62,7 +60,7 @@ $toggler-background-color: rgb(255, 255, 255);
 
 	.wp-block-themeisle-blocks-accordion-block-tab-content {
 		padding: 0 18px;
-		background-color: white;
+		background-color: transparent;
 		max-height: 0;
 		opacity: 0;
 		overflow: hidden;

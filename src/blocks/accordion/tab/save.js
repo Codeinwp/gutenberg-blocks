@@ -8,45 +8,63 @@ const { InnerBlocks } = wp.blockEditor;
 const Save = ({
 	attributes
 }) => {
-	const titleStyle = {
-		color: attributes.titleColor,
-		fontSize: attributes.titleFontSize
-	};
-
-	// const contentStyle = {
-	// 	color: attributes.contentColor,
-	// 	fontSize: attributes.contentFontSize
-	// };
-
-	console.log( attributes.id );
 
 	const ratio = 36 / 20;
-	const size = attributes.titleFontSize * ratio || 36;
-	console.log( size );
+
+	let titleStyle;
+	let tabStyle;
+	let iconStyle;
+	let iconSize = 36;
+
+	if ( attributes.parentAttributes ) {
+		titleStyle = {
+			color: attributes.parentAttributes.tabsTitleColor,
+			fontSize: attributes.parentAttributes.tabsTitleFontSize + 'px'
+		};
+
+		tabStyle = {
+			border: 'solid ' + attributes.parentAttributes.tabsBorderSize + 'px',
+			borderColor: attributes.parentAttributes.tabsBorderColor,
+			borderRadius: attributes.parentAttributes.tabsBorderRadius + 'px',
+			marginBottom: attributes.parentAttributes.tabsGap + 'px'
+		};
+
+		iconStyle = {
+			fill: attributes.parentAttributes.tabsTitleColor
+		};
+
+		iconSize =  attributes.parentAttributes.tabsTitleFontSize * ratio || iconSize;
+	}
 
 	return (
 		<div
 			className="wp-block-themeisle-blocks-accordion-block-tab__container"
-			style={{
-				backgroundColor: attributes.titleBackgroundColor
-			}}
+			style={
+				{ ...tabStyle }
+			}
 		>
 			<input type="checkbox" id={ attributes.id } class="wp-block-themeisle-blocks-accordion-block-tab-toggle"/>
 
-			<div className="wp-block-themeisle-blocks-accordion-block-tab-title">
+			<div
+				className="wp-block-themeisle-blocks-accordion-block-tab-title"
+				style={{
+					backgroundColor: attributes.titleBackgroundColor
+				}}
+			>
 				<Icon
 					icon={ chevronRight }
-					style={{ fill: attributes.titleColor }}
-					size={ size }
+					style={{ ...iconStyle }}
+					size={ iconSize }
 				/>
 				<RichText.Content
 					tagName="label"
 					className="wp-block-themeisle-blocks-accordion-block-tab-label"
 					htmlFor={ attributes.id }
 					value={ attributes.title }
-					style={
-						{ ...titleStyle }
-					}
+					style={{
+						...titleStyle,
+						backgroundColor: attributes.titleBackgroundColor
+					}}
 				/>
 			</div>
 			<div
@@ -55,13 +73,6 @@ const Save = ({
 					backgroundColor: attributes.contentBackgroundColor
 				}}
 			>
-				{/* <RichText.Content
-					tagName="p"
-					value={ attributes.content }
-					style={
-						{ ...contentStyle }
-					}
-				/> */}
 				<InnerBlocks.Content />
 			</div>
 		</div>
