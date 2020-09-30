@@ -36,7 +36,7 @@ class Circle_Counter_CSS extends Base_CSS {
 
 		if ( isset( $attr['id'] ) ) {
 
-			$style .= '#' . $attr['id'] . ' wp-block-themeisle-blocks-circle-counter-title__area .wp-block-themeisle-blocks-circle-counter-title__value {' . "\n";
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-circle-counter-title__area .wp-block-themeisle-blocks-circle-counter-title__value {' . "\n";
 			if ( isset( $attr['titleColor'] ) ) {
 				$style .= '	color: ' . $this->get_attr_value( $attr['titleColor'] ) . ';' . "\n";
 			}
