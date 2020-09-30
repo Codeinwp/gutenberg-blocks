@@ -2,11 +2,13 @@
 	TODO: Move CSS to PHP when block is ready
 */
 const Save = ({
-	attributes
+	attributes,
+	className
 }) => {
 	return (
 		<div
-			className="wp-block-themeisle-blocks-circle-counter"
+			className={ className }
+			id={ attributes.id }
 			data-percentage={ attributes.percentage }
 			data-duration={ attributes.duration }
 			data-height={ attributes.height }
