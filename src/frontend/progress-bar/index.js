@@ -37,6 +37,8 @@ domReady( () => {
 
 		if ( 0 === duration ) {
 			bar.style.width = `${ parseInt( progressBar.dataset.percent ) }%`;
+			number.innerHTML = `${ parseInt( progressBar.dataset.percent ) }%`;
+			bar.style.opacity = 1;
 
 			if ( tooltip ) {
 				tooltip.style.opacity = 1;
