@@ -11,7 +11,7 @@ const {
 	useEffect
 } = wp.element;
 
-const { uniqueId } = lodash;
+const { isEqual } = lodash;
 
 const { RichText } = wp.blockEditor;
 
@@ -22,13 +22,30 @@ const { useSelect } = wp.data;
 const { getBlockTypes } = wp.blocks;
 
 
+import defaultAttributes from './attributes.js';
+import defaults from '../../../plugins/options/global-defaults/defaults.js';
 import Inspector from './inspector.js';
+
+const IDs = [];
+
 
 const Edit = ({
 	attributes,
 	setAttributes,
-	clientId
+	clientId,
+	name,
+	className
 }) => {
+
+	useEffect( () => {
+		initBlock();
+	}, []);
+
+	useEffect( () => {
+		setAttributes({
+			htmlFor: attributes.id + '-toggler'
+		});
+	}, [ attributes.id ]);
 
 	const {
 		hasParent,
@@ -50,18 +67,45 @@ const Edit = ({
 
 	const ratio = 36 / 20;
 
-	useEffect( () => {
+	const initBlock = () => {
+		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
+
 		if ( attributes.id === undefined ) {
+			let attrs;
+			const instanceId = `wp-block-themeisle-blocks-accordion-tab-${ clientId.substr( 0, 8 ) }`;
 
-			let id = uniqueId( 'wp-block-themeisle-blocks-accordion-block-tab-' );
+			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
 
-			while ( document.querySelector( '#' + id ) ) {
-				id = uniqueId( 'wp-block-themeisle-blocks-accordion-block-tab-' );
+			if ( undefined !== globalDefaults ) {
+				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
+					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+
+					Object.keys( attrs ).map( i => {
+						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
+							return delete attrs[i];
+						}
+					});
+				}
 			}
 
-			setAttributes({ id: id });
+			setAttributes({
+				...attrs,
+				id: instanceId
+			});
+
+			IDs.push( instanceId );
+			blockIDs.push( instanceId );
+		} else if ( IDs.includes( attributes.id ) ) {
+			const instanceId = `wp-block-themeisle-blocks-accordion-tab-${ clientId.substr( 0, 8 ) }`;
+			setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+		} else {
+			IDs.push( attributes.id );
+			blockIDs.push( attributes.id );
 		}
-	}, []);
+
+		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
+	};
 
 	const changeTitle = value => {
 		setAttributes({ title: value });
@@ -113,12 +157,13 @@ const Edit = ({
 		<Fragment>
 			<Inspector attributes={ attributes } setAttributes={ setAttributes } />
 			<div
-				className="wp-block-themeisle-blocks-accordion-block-tab__container"
+				className={ className }
+				id={ attributes.id }
 				style={
 					{ ...tabStyle }
 				}
 			>
-				<input type="checkbox" id={ attributes.id } class="wp-block-themeisle-blocks-accordion-block-tab-toggle" checked disabled/>
+				<input type="checkbox" id={ attributes.htmlFor } class="wp-block-themeisle-blocks-accordion-block-tab-toggle" checked disabled/>
 
 				<div className="wp-block-themeisle-blocks-accordion-block-tab-title"
 					style={{
@@ -140,7 +185,7 @@ const Edit = ({
 						className={
 							classnames( 'wp-block-themeisle-blocks-accordion-block-tab-label', {'no-front-icon': 'default' !== iconStylePosition})
 						}
-						htmlFor={ attributes.id }
+						htmlFor={ attributes.htmlFor }
 						value={ attributes.title }
 						onChange={ changeTitle }
 						multiline={ false }

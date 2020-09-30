@@ -4,11 +4,15 @@
 
 const { InnerBlocks } = wp.blockEditor;
 
-const Save = () => {
+const Save = ({
+	attributes,
+	className
+}) => {
 
 	return (
 		<div
-			className="wp-block-themeisle-blocks-accordion-block"
+			className={ className }
+			id={ attributes.id }
 		>
 			<div
 				className="wp-block-themeisle-blocks-accordion-block-tabs"

@@ -7,7 +7,8 @@ import classnames from 'classnames';
 
 
 const Save = ({
-	attributes
+	attributes,
+	className
 }) => {
 
 	const ratio = 36 / 20;
@@ -42,12 +43,13 @@ const Save = ({
 
 	return (
 		<div
-			className="wp-block-themeisle-blocks-accordion-block-tab__container"
+			className={ className }
+			id={ attributes.id }
 			style={
 				{ ...tabStyle }
 			}
 		>
-			<input type="checkbox" id={ attributes.id } class="wp-block-themeisle-blocks-accordion-block-tab-toggle"/>
+			<input type="checkbox" id={ attributes.htmlFor } class="wp-block-themeisle-blocks-accordion-block-tab-toggle"/>
 
 			<div
 				className="wp-block-themeisle-blocks-accordion-block-tab-title"
@@ -68,7 +70,7 @@ const Save = ({
 					className={
 						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-label', {'no-front-icon': 'default' !== iconStylePosition})
 					}
-					htmlFor={ attributes.id }
+					htmlFor={ attributes.htmlFor }
 					value={ attributes.title }
 					style={{
 						...titleStyle,
