@@ -168,6 +168,7 @@ class Main {
 				'packagePath'   => plugin_dir_url( $this->get_dir() ) . 'build/',
 				'assetsPath'    => plugin_dir_url( $this->get_dir() ) . 'assets',
 				'updatePath'    => admin_url( 'update-core.php' ),
+				'optionsPath'   => admin_url( 'options-general.php?page=otter' ),
 				'mapsAPI'       => $api,
 				'themeDefaults' => $this->get_global_defaults(),
 				'isWPVIP'       => function_exists( 'is_wpcom_vip' ),

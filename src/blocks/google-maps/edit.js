@@ -103,7 +103,7 @@ const Edit = ({
 			settingsRef.current = new wp.api.models.Settings();
 		});
 
-		if ( false === Boolean( themeisleGutenberg.mapsAPI ) ) {
+		if ( false === Boolean( window.themeisleGutenberg.mapsAPI ) ) {
 			if ( ! isAPILoaded ) {
 				settingsRef.current.fetch().then( response => {
 					setAPI( response.themeisle_google_map_block_api_key );
@@ -117,10 +117,10 @@ const Edit = ({
 			}
 		} else {
 			if ( ! isAPILoaded ) {
-				setAPI( themeisleGutenberg.mapsAPI );
+				setAPI( window.themeisleGutenberg.mapsAPI );
 				setAPILoaded( true );
 				setAPISaved( true );
-				enqueueScript( themeisleGutenberg.mapsAPI );
+				enqueueScript( window.themeisleGutenberg.mapsAPI );
 			}
 		}
 	};
@@ -403,7 +403,7 @@ const Edit = ({
 	};
 
 	const saveAPIKey = () => {
-		if ( false === Boolean( themeisleGutenberg.mapsAPI ) ) {
+		if ( false === Boolean( window.themeisleGutenberg.mapsAPI ) ) {
 			setSaving( true );
 
 			const model = new wp.api.models.Settings({
@@ -456,32 +456,32 @@ const Edit = ({
 					{
 						label: __( 'Standard' ),
 						value: 'standard',
-						image: themeisleGutenberg.assetsPath + '/icons/map-standard.png'
+						image: window.themeisleGutenberg.assetsPath + '/icons/map-standard.png'
 					},
 					{
 						label: __( 'Silver' ),
 						value: 'silver',
-						image: themeisleGutenberg.assetsPath + '/icons/map-silver.png'
+						image: window.themeisleGutenberg.assetsPath + '/icons/map-silver.png'
 					},
 					{
 						label: __( 'Retro' ),
 						value: 'retro',
-						image: themeisleGutenberg.assetsPath + '/icons/map-retro.png'
+						image: window.themeisleGutenberg.assetsPath + '/icons/map-retro.png'
 					},
 					{
 						label: __( 'Dark' ),
 						value: 'dark',
-						image: themeisleGutenberg.assetsPath + '/icons/map-dark.png'
+						image: window.themeisleGutenberg.assetsPath + '/icons/map-dark.png'
 					},
 					{
 						label: __( 'Night' ),
 						value: 'night',
-						image: themeisleGutenberg.assetsPath + '/icons/map-night.png'
+						image: window.themeisleGutenberg.assetsPath + '/icons/map-night.png'
 					},
 					{
 						label: __( 'Aubergine' ),
 						value: 'aubergine',
-						image: themeisleGutenberg.assetsPath + '/icons/map-aubergine.png'
+						image: window.themeisleGutenberg.assetsPath + '/icons/map-aubergine.png'
 					}
 				] }
 				onChange={ changeStyle }
