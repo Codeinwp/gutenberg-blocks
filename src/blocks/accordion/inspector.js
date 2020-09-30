@@ -10,7 +10,8 @@ const {
 
 const {
 	PanelBody,
-	RangeControl
+	RangeControl,
+	SelectControl
 } = wp.components;
 
 
@@ -43,12 +44,27 @@ const Inspector = ({
 		setAttributes({ tabsGap: value });
 	};
 
+	const selectIconStyle = value => {
+		setAttributes({ iconStyle: value });
+	};
+
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Style' )}
+				title={ __( 'Settings' )}
 				initialOpen={ true }
 			>
+				<SelectControl
+					label={ __( 'Icons Style' ) }
+					value={ attributes.iconStyle }
+					options={ [
+						{ label: __( 'Default' ), value: 'default' },
+						{ label: __( 'End' ), value: 'end' },
+						{ label: __( 'Hide' ), value: 'hide' }
+					] }
+					onChange={ selectIconStyle }
+				/>
+
 				<RangeControl
 					label={ __( 'Title Font Size' ) }
 					help={ __( 'The font size of the title.' ) }

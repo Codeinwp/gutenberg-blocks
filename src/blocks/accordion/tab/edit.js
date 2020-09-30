@@ -1,4 +1,5 @@
 import { Icon, chevronRight } from '@wordpress/icons';
+import classnames from 'classnames';
 
 /**
  * WordPress dependencies.
@@ -17,6 +18,8 @@ const { RichText } = wp.blockEditor;
 const { InnerBlocks } = wp.blockEditor;
 
 const { useSelect } = wp.data;
+
+const { getBlockTypes } = wp.blocks;
 
 
 import Inspector from './inspector.js';
@@ -68,6 +71,7 @@ const Edit = ({
 	let tabStyle;
 	let iconStyle;
 	let iconSize;
+	let iconStylePosition = 'default';
 
 	if ( hasParent ) {
 		titleStyle = {
@@ -88,7 +92,21 @@ const Edit = ({
 
 		iconSize = parentAttributes.tabsTitleFontSize * ratio;
 
+		iconStylePosition = parentAttributes.iconStyle || iconStylePosition;
+
 		setAttributes({ parentAttributes: parentAttributes });
+	};
+
+	const getAllowedTypeBlocks = () => {
+
+		const bannedBlocks = [
+			'themeisle-blocks/progress-bar',
+			'themeisle-blocks/circular-counter'
+		];
+
+		return getBlockTypes()
+			.map( block => block.name )
+			.filter( blockType => ! bannedBlocks.includes( blockType ) );
 	};
 
 	return (
@@ -107,15 +125,21 @@ const Edit = ({
 						backgroundColor: attributes.titleBackgroundColor
 					}}
 				>
-					<Icon
-						icon={ chevronRight }
-						style={{ ...iconStyle }}
-						size={ iconSize || 36 }
-					/>
+
+					{ ( 'default' === iconStylePosition ) && (
+						<Icon
+							icon={ chevronRight }
+							style={{ ...iconStyle }}
+							size={ iconSize || 36 }
+							className="wp-block-themeisle-blocks-accordion-block-tab-title__icon__start"
+						/>
+					)}
 					<RichText
 						tagName="label"
 						placeholder={ __( 'Write a title…' ) }
-						className="wp-block-themeisle-blocks-accordion-block-tab-label"
+						className={
+							classnames( 'wp-block-themeisle-blocks-accordion-block-tab-label', {'no-front-icon': 'default' !== iconStylePosition})
+						}
 						htmlFor={ attributes.id }
 						value={ attributes.title }
 						onChange={ changeTitle }
@@ -126,6 +150,14 @@ const Edit = ({
 							backgroundColor: attributes.titleBackgroundColor
 						}}
 					/>
+					{ ( 'end' === iconStylePosition ) && (
+						<Icon
+							icon={ chevronRight }
+							style={{ ...iconStyle }}
+							size={ iconSize || 36 }
+							className="wp-block-themeisle-blocks-accordion-block-tab-title__icon__end"
+						/>
+					)}
 				</div>
 				<div
 					className="wp-block-themeisle-blocks-accordion-block-tab-content"
@@ -134,6 +166,7 @@ const Edit = ({
 					}}
 				>
 					<InnerBlocks
+						allowedBlocks={ getAllowedTypeBlocks() }
 						__experimentalMoverDirection="vertical"
 						orientation="vertical"
 						renderAppender={ InnerBlocks.ButtonBlockAppender }

@@ -3,6 +3,7 @@ import { Icon, chevronRight } from '@wordpress/icons';
 const { RichText } = wp.blockEditor;
 
 const { InnerBlocks } = wp.blockEditor;
+import classnames from 'classnames';
 
 
 const Save = ({
@@ -15,6 +16,8 @@ const Save = ({
 	let tabStyle;
 	let iconStyle;
 	let iconSize = 36;
+	let iconStylePosition = 'default';
+
 
 	if ( attributes.parentAttributes ) {
 		titleStyle = {
@@ -34,6 +37,7 @@ const Save = ({
 		};
 
 		iconSize =  attributes.parentAttributes.tabsTitleFontSize * ratio || iconSize;
+		iconStylePosition =  attributes.parentAttributes.iconStyle || iconStylePosition;
 	}
 
 	return (
@@ -51,14 +55,19 @@ const Save = ({
 					backgroundColor: attributes.titleBackgroundColor
 				}}
 			>
-				<Icon
-					icon={ chevronRight }
-					style={{ ...iconStyle }}
-					size={ iconSize }
-				/>
+				{ ( 'default' === iconStylePosition ) && (
+					<Icon
+						icon={ chevronRight }
+						style={{ ...iconStyle }}
+						size={ iconSize }
+						className="wp-block-themeisle-blocks-accordion-block-tab-title__icon__start"
+					/>
+				)}
 				<RichText.Content
 					tagName="label"
-					className="wp-block-themeisle-blocks-accordion-block-tab-label"
+					className={
+						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-label', {'no-front-icon': 'default' !== iconStylePosition})
+					}
 					htmlFor={ attributes.id }
 					value={ attributes.title }
 					style={{
@@ -66,6 +75,14 @@ const Save = ({
 						backgroundColor: attributes.titleBackgroundColor
 					}}
 				/>
+				{ ( 'end' === iconStylePosition ) && (
+					<Icon
+						icon={ chevronRight }
+						style={{ ...iconStyle }}
+						size={ iconSize }
+						className="wp-block-themeisle-blocks-accordion-block-tab-title__icon__end"
+					/>
+				)}
 			</div>
 			<div
 				className="wp-block-themeisle-blocks-accordion-block-tab-content"

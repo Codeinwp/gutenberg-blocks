@@ -19,6 +19,10 @@ const attributes = {
 	},
 	tabsGap: {
 		type: 'number'
+	},
+	iconStyle: {
+		type: 'string',
+		default: 'default'
 	}
 };
 

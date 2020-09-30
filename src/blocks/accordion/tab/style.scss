@@ -20,9 +20,11 @@ $toggler-background-color: rgb(255, 255, 255);
 		}
 
 		&:checked + .wp-block-themeisle-blocks-accordion-block-tab-title {
-			svg {
+			.wp-block-themeisle-blocks-accordion-block-tab-title__icon__start,
+			.wp-block-themeisle-blocks-accordion-block-tab-title__icon__end {
 				transform: rotate(90deg);
 			}
+			
 		}
 	}
 	
@@ -44,6 +46,10 @@ $toggler-background-color: rgb(255, 255, 255);
 			outline: none;
 			font-size: 20px;
 			transition: 0.4s;
+
+			&.no-front-icon {
+				margin-left: 10px
+			}
 		}
 
 		label {
@@ -54,6 +60,10 @@ $toggler-background-color: rgb(255, 255, 255);
 			text-align: center;
 			transition: all .35s;
 			fill: gray;
+		}
+
+		.wp-block-themeisle-blocks-accordion-block-tab-title__icon__end {
+			transform: rotate(-90deg);
 		}
 	}
 	
