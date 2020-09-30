@@ -66,6 +66,21 @@ domReady( () => {
 				entries.forEach( entry => {
 					if ( entry.isIntersecting ) {
 
+						if ( 0 >= entry.intersectionRect.height ) {
+							bar.style.width = `${ parseInt( progressBar.dataset.percent ) }%`;
+							number.innerHTML = `${ parseInt( progressBar.dataset.percent ) }%`;
+							bar.style.opacity = 1;
+
+							if ( tooltip ) {
+								tooltip.style.opacity = 1;
+							}
+							if ( append ) {
+								append.style.opacity = 1;
+							}
+
+							observer.unobserve( bar );
+							return;
+						}
 
 						let interval;
 
