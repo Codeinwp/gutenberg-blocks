@@ -5,6 +5,13 @@ const Save = ({
 	attributes,
 	className
 }) => {
+
+	// Delete when PHP CSS file are ready
+	const titleStyle = {
+		color: attributes.titleColor,
+		fontSize: attributes.fontSizeTitle
+	}
+
 	return (
 		<div
 			className={ className }
@@ -24,10 +31,9 @@ const Save = ({
 					>
 						<span
 							className="wp-block-themeisle-blocks-circle-counter-title__value"
-							style={{
-								color: attributes.titleColor,
-								fontSize: attributes.fontSizeTitle
-							}}
+							style={
+								{ ...titleStyle }
+							}
 						>
 							{ attributes.title }
 						</span>
@@ -45,10 +51,9 @@ const Save = ({
 					>
 						<span
 							className="wp-block-themeisle-blocks-circle-counter-title__value"
-							style={{
-								color: attributes.titleColor,
-								fontSize: attributes.fontSizeTitle
-							}}
+							style={
+								{ ...titleStyle }
+							}
 						>
 							{ attributes.title }
 						</span>

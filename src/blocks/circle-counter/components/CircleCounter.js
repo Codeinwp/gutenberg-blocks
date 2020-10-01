@@ -44,8 +44,6 @@ const CircularProgressBar = ({
 					r={ radius }
 					strokeWidth={ attributes.strokeWidth }
 					strokeDasharray={ circumference }
-
-					//strokeDashoffset={ progressOffSet }
 					style={{
 						stroke: attributes.progressColor
 					}}
