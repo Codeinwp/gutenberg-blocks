@@ -35,8 +35,7 @@ class Accordion_CSS extends Base_CSS {
 
 		if ( isset( $attr['id'] ) ) {
 
-			// Label
-
+			// Label.
 			$style .= '#' . $attr['id'] . '  .wp-block-themeisle-blocks-accordion-block-tabs .wp-block-themeisle-blocks-accordion-tab .wp-block-themeisle-blocks-accordion-block-tab-title .wp-block-themeisle-blocks-accordion-block-tab-label {' . "\n";
 			if ( isset( $attr['tabsTitleColor'] ) ) {
 				$style .= '	color: ' . $this->get_attr_value( $attr['tabsTitleColor'] ) . ';' . "\n";
@@ -46,8 +45,7 @@ class Accordion_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n";
 
-			// Border
-
+			// Border.
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-accordion-block-tabs .wp-block-themeisle-blocks-accordion-tab {' . "\n";
 			if ( isset( $attr['tabsBorderSize'] ) ) {
 				$style .= '	border: solid ' . $this->get_attr_value( $attr['tabsBorderSize'] ) . 'px;' . "\n";
