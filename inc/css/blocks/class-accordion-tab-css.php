@@ -19,7 +19,7 @@ class Accordion_Tab_CSS extends Base_CSS {
 	 *
 	 * @var string
 	 */
-	public $block_prefix = 'accordion-ab';
+	public $block_prefix = 'accordion-tab';
 
 	/**
 	 * Generate Accordion Tab CSS
@@ -42,8 +42,14 @@ class Accordion_Tab_CSS extends Base_CSS {
 			$style .= '}' . "\n \n";
 
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-accordion-block-tab-title .wp-block-themeisle-blocks-accordion-block-tab-label {' . "\n";
-			if ( isset( $attr['titleBackgroundColorr'] ) ) {
+			if ( isset( $attr['titleBackgroundColor'] ) ) {
 				$style .= '	background-color: ' . $this->get_attr_value( $attr['titleBackgroundColor'] ) . ';' . "\n";
+			}
+			$style .= '}' . "\n \n";
+
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-accordion-block-tab-toggle:checked + .wp-block-themeisle-blocks-accordion-block-tab-title + .wp-block-themeisle-blocks-accordion-block-tab-content {' . "\n";
+			if ( isset( $attr['contentBackgroundColor'] ) ) {
+				$style .= '	background-color: ' . $this->get_attr_value( $attr['contentBackgroundColor'] ) . ';' . "\n";
 			}
 			$style .= '}' . "\n \n";
 		}

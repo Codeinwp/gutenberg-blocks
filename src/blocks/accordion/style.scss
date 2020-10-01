@@ -4,5 +4,7 @@
 		display: flex;
 		width: 100%;
 		flex-direction: column;
+
+		@import './tab/style.scss';
 	}	
 }
