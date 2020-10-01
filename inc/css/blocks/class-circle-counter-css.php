@@ -41,7 +41,7 @@ class Circle_Counter_CSS extends Base_CSS {
 				$style .= '	color: ' . $this->get_attr_value( $attr['titleColor'] ) . ';' . "\n";
 			}
 			if ( isset( $attr['fontSizeTitle'] ) ) {
-				$style .= '	font-size: ' . $this->get_attr_value( $attr['fontSizeTitle'] ) . ';' . "\n";
+				$style .= '	font-size: ' . $this->get_attr_value( $attr['fontSizeTitle'] ) . 'px;' . "\n";
 			}
 			$style .= '}' . "\n \n";
 
