@@ -36,7 +36,7 @@ class Accordion_CSS extends Base_CSS {
 		if ( isset( $attr['id'] ) ) {
 
 			// Label.
-			$style .= '#' . $attr['id'] . '  .wp-block-themeisle-blocks-accordion-block-tabs .wp-block-themeisle-blocks-accordion-tab .wp-block-themeisle-blocks-accordion-block-tab-title .wp-block-themeisle-blocks-accordion-block-tab-label {' . "\n";
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-accordion-block-tabs .wp-block-themeisle-blocks-accordion-tab .wp-block-themeisle-blocks-accordion-block-tab-title .wp-block-themeisle-blocks-accordion-block-tab-label {' . "\n";
 			if ( isset( $attr['tabsTitleColor'] ) ) {
 				$style .= '	color: ' . $this->get_attr_value( $attr['tabsTitleColor'] ) . ';' . "\n";
 			}

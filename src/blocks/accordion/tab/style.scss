@@ -15,7 +15,7 @@ $toggler-background-color: rgb(255, 255, 255);
 		
 		&:checked + .wp-block-themeisle-blocks-accordion-block-tab-title + .wp-block-themeisle-blocks-accordion-block-tab-content {
 			opacity: 1;
-			max-height: 100vh;
+			max-height: max-content;
 			transition: all 1s ease-in;
 		}
 
@@ -75,13 +75,5 @@ $toggler-background-color: rgb(255, 255, 255);
 		opacity: 0;
 		overflow: hidden;
 		transition: max-height 0.2s;
-	
-		p {
-			margin: 0;
-			padding: 0.5em 1em 1em;
-			font-size:18px;
-			line-height: 1.5;
-			text-align: left;
-		}
 	}
 }
