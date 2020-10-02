@@ -100,6 +100,13 @@ domReady( () => {
 				entries.forEach( entry => {
 					if ( entry.isIntersecting ) {
 
+						if ( 0 >= entry.intersectionRect.height ) {
+							progressCircle.style.strokeDashoffset = ( ( 100 - percentage ) / 100 ) * circumference;
+							value.innerHTML = percentage + '%';
+
+							observer.unobserve( bar );
+							return;
+						}
 
 						if ( interval ) {
 							clearInterval( interval );
