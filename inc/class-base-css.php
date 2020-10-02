@@ -74,7 +74,7 @@ class Base_CSS {
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Font_Awesome_Icons_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Progress_Bar_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Accordion_Tab_CSS',
-			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Accordion_CSS'
+			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Accordion_CSS',
 		);
 	}
 
