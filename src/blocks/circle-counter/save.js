@@ -10,7 +10,7 @@ const Save = ({
 	const titleStyle = {
 		color: attributes.titleColor,
 		fontSize: attributes.fontSizeTitle
-	}
+	};
 
 	return (
 		<div
