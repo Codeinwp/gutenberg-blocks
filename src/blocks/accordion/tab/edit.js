@@ -165,10 +165,11 @@ const Edit = ({
 			>
 				<input type="checkbox" id={ attributes.htmlFor } class="wp-block-themeisle-blocks-accordion-block-tab-toggle" checked disabled/>
 
-				<div className="wp-block-themeisle-blocks-accordion-block-tab-title"
+				<label className="wp-block-themeisle-blocks-accordion-block-tab-title"
 					style={{
 						backgroundColor: attributes.titleBackgroundColor
 					}}
+					htmlFor={ attributes.htmlFor }
 				>
 
 					{ ( 'default' === iconStylePosition ) && (
@@ -180,12 +181,12 @@ const Edit = ({
 						/>
 					)}
 					<RichText
-						tagName="label"
+						tagName="p"
 						placeholder={ __( 'Write a title…' ) }
 						className={
 							classnames( 'wp-block-themeisle-blocks-accordion-block-tab-label', {'no-front-icon': 'default' !== iconStylePosition})
 						}
-						htmlFor={ attributes.htmlFor }
+						
 						value={ attributes.title }
 						onChange={ changeTitle }
 						multiline={ false }
@@ -203,7 +204,7 @@ const Edit = ({
 							className="wp-block-themeisle-blocks-accordion-block-tab-title__icon__end"
 						/>
 					)}
-				</div>
+				</label>
 				<div
 					className="wp-block-themeisle-blocks-accordion-block-tab-content"
 					style={{

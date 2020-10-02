@@ -51,11 +51,12 @@ const Save = ({
 		>
 			<input type="checkbox" id={ attributes.htmlFor } class="wp-block-themeisle-blocks-accordion-block-tab-toggle"/>
 
-			<div
+			<label
 				className="wp-block-themeisle-blocks-accordion-block-tab-title"
 				style={{
 					backgroundColor: attributes.titleBackgroundColor
 				}}
+				htmlFor={ attributes.htmlFor }
 			>
 				{ ( 'default' === iconStylePosition ) && (
 					<Icon
@@ -66,11 +67,11 @@ const Save = ({
 					/>
 				)}
 				<RichText.Content
-					tagName="label"
+					tagName="p"
 					className={
 						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-label', {'no-front-icon': 'default' !== iconStylePosition})
 					}
-					htmlFor={ attributes.htmlFor }
+					
 					value={ attributes.title }
 					style={{
 						...titleStyle,
@@ -85,7 +86,7 @@ const Save = ({
 						className="wp-block-themeisle-blocks-accordion-block-tab-title__icon__end"
 					/>
 				)}
-			</div>
+			</label>
 			<div
 				className="wp-block-themeisle-blocks-accordion-block-tab-content"
 				style={{
