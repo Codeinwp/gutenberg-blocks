@@ -204,7 +204,7 @@ class Main {
 	 * @param null $post Current post.
 	 */
 	public function enqueue_dependencies( $post = null ) {
-		if ( ! self::$is_fa_loaded && ( has_block( 'themeisle-blocks/button-group', $post ) || has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/sharing-icons', $post ) || has_block( 'themeisle-blocks/plugin-cards', $post ) || has_block( 'block', $post ) ) ) {
+		if ( ! self::$is_fa_loaded && ( has_block( 'themeisle-blocks/button-group', $post ) || has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/sharing-icons', $post ) || has_block( 'themeisle-blocks/plugin-cards', $post ) || has_block( 'themeisle-blocks/icon-list', $post ) ) ) {
 			wp_enqueue_style( 'font-awesome-5' );
 			wp_enqueue_style( 'font-awesome-4-shims' );
 
