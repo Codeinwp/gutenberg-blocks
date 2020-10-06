@@ -53,6 +53,9 @@ class Accordion_CSS extends Base_CSS {
 			if ( isset( $attr['tabsBorderColor'] ) ) {
 				$style .= '	border-color: ' . $this->get_attr_value( $attr['tabsBorderColor'] ) . ';' . "\n";
 			}
+			if ( isset( $attr['tabsBorderRadius'] ) ) {
+				$style .= '	border-radius: ' . $this->get_attr_value( $attr['tabsBorderRadius'] ) . 'px;' . "\n";
+			}
 			if ( isset( $attr['tabsGap'] ) ) {
 				$style .= '	margin-bottom: ' . $this->get_attr_value( $attr['tabsGap'] ) . 'px;' . "\n";
 			}
