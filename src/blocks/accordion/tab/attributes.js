@@ -13,9 +13,6 @@ const attributes = {
 	},
 	contentBackgroundColor: {
 		type: 'string'
-	},
-	parentAttributes: {
-		type: 'object'
 	}
 };
 
