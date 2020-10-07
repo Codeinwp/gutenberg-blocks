@@ -39,8 +39,8 @@ const Inspector = ({
 		}
 	};
 
-	const selectDefaultIconStyleChange = value => {
-		setAttributes({ defaultIconStyle: value });
+	const selectListStyle = value => {
+		setAttributes({listStyle: value });
 	};
 
 	const onDefaultTitleColorChange = value => {
@@ -55,6 +55,10 @@ const Inspector = ({
 		setAttributes({ defaultSize: value });
 	};
 
+	const onGapChange = value => {
+		setAttributes({ gap: value });
+	};
+
 	return (
 		<InspectorControls>
 			<PanelBody
@@ -62,13 +66,13 @@ const Inspector = ({
 				initialOpen={true}
 			>
 				<SelectControl
-					label={ __('Icons Style') }
-					value={attributes.defaultIconStyle}
+					label={ __('List Style') }
+					value={ attributes.listStyle }
 					options={[
-						{ label: __( 'Default' ), value: 'default' },
-						{ label: __( 'Hide' ), value: 'hide' }
+						{ label: __( 'Vertical' ), value: 'vertical' },
+						{ label: __( 'Horizontal' ), value: 'horizontal' }
 					]}
-					onChange={ selectDefaultIconStyleChange }
+					onChange={ selectListStyle }
 				/>
 				<Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
 					<IconPickerControl
@@ -83,6 +87,14 @@ const Inspector = ({
 					help={ __('The size of the font size of the title and icon.') }
 					value={ attributes.defaultSize }
 					onChange={ onDefaultSizeChange }
+					min={ 0 }
+					max={ 60 }
+				/>
+				<RangeControl
+					label={ __('Gap') }
+					help={ __('The distance between the items.') }
+					value={ attributes.gap }
+					onChange={ onGapChange }
 					min={ 0 }
 					max={ 60 }
 				/>

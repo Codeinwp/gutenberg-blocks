@@ -2,7 +2,16 @@
 	
 	.wp-block-themeisle-blocks-icon-list-items {
 		display: flex;
-		flex-direction: column;
+		
+		&.is-vertical {
+			flex-direction: column;
+		}
+
+		&.is-horizontal {
+			flex-wrap: wrap;
+			align-items: center;
+		}
+
 		@import './item/style.scss';
 	}	
 }

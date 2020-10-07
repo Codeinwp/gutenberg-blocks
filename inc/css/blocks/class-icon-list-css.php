@@ -35,6 +35,27 @@ class Icon_List_CSS extends Base_CSS {
 
 		if ( isset( $attr['id'] ) ) {
 
+			$listStyle = '';
+			if ( isset( $attr['listStyle'] ) ) {
+				if ( strcmp( $this->get_attr_value( $attr['listStyle'] ), 'vertical' ) == 0 ) {
+					$listStyle .= 'vertical';
+				} else {
+					$listStyle .= 'orizontal';
+				}
+			}
+
+			
+			// Item
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-items .wp-block-themeisle-blocks-icon-list-item {' . "\n";
+			if ( isset( $attr['gap'] ) ) {
+				if ( strcmp( $listStyle, 'vertical' ) == 0 ) {
+					$style .= '	margin-bottom: ' . $this->get_attr_value( $attr['gap'] ) . 'px;' . "\n";
+				} else {
+					$style .= '	margin-right: ' . $this->get_attr_value( $attr['gap'] ) . 'px;' . "\n";
+				}
+			}
+			$style .= '}' . "\n \n"; 
+
 			// Title.
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-items .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-title {' . "\n";
 			if ( isset( $attr['defaultTitleColor'] ) ) {
@@ -45,6 +66,7 @@ class Icon_List_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n";
 
+			// Title Custom
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-items .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-title-custom {' . "\n";
 			if ( isset( $attr['defaultSize'] ) ) {
 				$style .= '	font-size: ' . $this->get_attr_value( $attr['defaultSize'] ) . 'px;' . "\n";
@@ -62,7 +84,7 @@ class Icon_List_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n";
 
-			// Icon
+			// Icon Custom
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-items .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-icon-custom {' . "\n";
 			if ( isset( $attr['defaultSize'] ) ) {
 				$style .= '	font-size: ' . $this->get_attr_value( $attr['defaultSize'] ) . 'px;' . "\n";

@@ -1,3 +1,5 @@
+import classnames from 'classnames';
+
 /**
  * WordPress dependencies.
  */
@@ -79,7 +81,13 @@ const Edit = ({
 				id={ attributes.id }
 			>
 				<div
-					className="wp-block-themeisle-blocks-icon-list-items"
+					className={
+						classnames(
+							'wp-block-themeisle-blocks-icon-list-items',
+							{ 'is-vertical': 'vertical' === attributes.listStyle },
+							{ 'is-horizontal': 'horizontal' === attributes.listStyle }
+						)
+					}
 				>
 					<InnerBlocks
 						allowedBlocks={ [ 'themeisle-blocks/icon-list-item' ] }

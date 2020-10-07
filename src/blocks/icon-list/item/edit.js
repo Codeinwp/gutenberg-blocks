@@ -99,6 +99,7 @@ const Edit = ({
 	let iconClassName;
 	let titleStyle;
 	let iconStyle;
+	let itemStyle;
 
 	if ( hasParent ) {
 		console.log( parentAttributes );
@@ -124,6 +125,16 @@ const Edit = ({
 			color: attributes.iconColor || parentAttributes.defaultIconColor,
 			fontSize: parentAttributes.defaultSize + 'px'
 		};
+
+		if ( 'vertical' === parentAttributes.listStyle ) {
+			itemStyle = {
+				marginBottom: parentAttributes.gap
+			}
+		} else {
+			itemStyle = {
+				marginRight: parentAttributes.gap
+			}
+		}
 	};
 
 	const changeTitle = value => {
@@ -139,6 +150,7 @@ const Edit = ({
 			/>
 			<div
 				className={ className }
+				style={ itemStyle }
 			>
 				<i
 					className={

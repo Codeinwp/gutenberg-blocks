@@ -2,9 +2,9 @@ const attributes = {
 	id: {
 		type: 'string'
 	},
-	defaultIconStyle: {
+	listStyle: {
 		type: 'string',
-		default: 'default'
+		default: 'vertical'
 	},
 	defaultIconPrefix: {
 		type: 'string',
@@ -21,6 +21,9 @@ const attributes = {
 		type: 'string'
 	},
 	defaultSize: {
+		type: 'number'
+	},
+	gap: {
 		type: 'number'
 	}
 };
