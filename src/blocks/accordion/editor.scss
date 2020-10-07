@@ -9,8 +9,13 @@
 			width: 100%;
 			display: flex;
 			flex-direction: column;
-
-			@import './tab/style.scss';
+				
+			.block-editor-block-list__layout {
+				.block-editor-block-list__block {
+					margin: 0px;
+					@import './tab/style.scss';
+				}
+			}
 		}
 	}	
 }
