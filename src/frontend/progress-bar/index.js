@@ -98,30 +98,30 @@ domReady( () => {
 
 							if ( number ) {
 								number.innerText = `${ Math.ceil( value ) }%`;
+							}
 
-								const currentWidth = bar.getBoundingClientRect().width;
+							const currentWidth = bar.getBoundingClientRect().width;
 
-								if ( currentWidth > borderRadius ) {
-									bar.style.opacity = 1;
+							if ( currentWidth > borderRadius ) {
+								bar.style.opacity = 1;
+							}
+
+							if ( tooltip && outerTitle ) {
+
+								if ( currentWidth > titleWidth + 10 ) {
+									tooltip.style.opacity = 1;
 								}
 
-								if ( tooltip && outerTitle ) {
+							}
 
-									if ( currentWidth > titleWidth + 10 ) {
-										tooltip.style.opacity = 1;
+							if ( append ) {
+								if ( innerTitle ) {
+									if ( currentWidth > titleWidth + numberWidth * 1.5 ) {
+										append.style.opacity = 1;
 									}
-
-								}
-
-								if ( append ) {
-									if ( innerTitle ) {
-										if ( currentWidth > titleWidth + numberWidth * 1.5 ) {
-											append.style.opacity = 1;
-										}
-									} else {
-										if ( currentWidth > numberWidth * 1.8 ) {
-											append.style.opacity = 1;
-										}
+								} else {
+									if ( currentWidth > numberWidth * 1.8 ) {
+										append.style.opacity = 1;
 									}
 								}
 							}
