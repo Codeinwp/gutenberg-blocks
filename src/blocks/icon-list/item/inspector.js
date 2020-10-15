@@ -16,7 +16,7 @@ const {
 
 const {
 	lazy,
-	Suspense,
+	Suspense
 } = wp.element;
 
 const IconPickerControl = lazy( () => import( '../../../components/icon-picker-control/index.js' ) );
@@ -28,7 +28,7 @@ const Inspector = ({
 }) => {
 
 	const changeIcon = value => {
-		if ('object' === typeof value) {
+		if ( 'object' === typeof value ) {
 			setAttributes({
 				icon: value.name,
 				iconPrefix: value.prefix
@@ -46,16 +46,16 @@ const Inspector = ({
 	const onDefaultIconColorChange = value => {
 		setAttributes({ iconColor: value });
 	};
-	
+
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __('Settings') }
+				title={ __( 'Settings' ) }
 				initialOpen={true}
 			>
 				<Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
 					<IconPickerControl
-						label={ __('Icon Picker') }
+						label={ __( 'Icon Picker' ) }
 						prefix={ attributes.iconPrefix }
 						icon={ attributes.icon }
 						onChange={ changeIcon }
@@ -75,6 +75,6 @@ const Inspector = ({
 		</InspectorControls>
 
 	);
-}
+};
 
 export default Inspector;

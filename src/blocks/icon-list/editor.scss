@@ -1,31 +1,34 @@
 .wp-block-themeisle-blocks-icon-list { 
-	.wp-block-themeisle-blocks-icon-list-items {
+	
+	display: flex;
+	flex-direction: column;
+
+	&.is-style-vertical {
+		flex-direction: column;
+	}
+
+	&.is-style-horizontal {
+		flex-direction: unset;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.block-editor-inner-blocks {
 		display: flex;
-		&.is-vertical {
-			flex-direction: column;
-		}
-
-		&.is-horizontal {
-			flex-wrap: wrap;
-			align-items: center;
-		}
-
-		.block-editor-inner-blocks {
+		flex-direction: inherit;
+		align-items: inherit;
+		
+		.block-editor-block-list__layout {
 			display: flex;
 			flex-direction: inherit;
+			flex-wrap: wrap;
 			align-items: inherit;
-			
-			.block-editor-block-list__layout {
-				display: flex;
-				flex-direction: inherit;
-				flex-wrap: wrap;
-				align-items: inherit;
 
-				.block-editor-block-list__block {
-					margin: 0px;
-					@import './item/style.scss';
-				}
+			.block-editor-block-list__block {
+				margin: 0px;
+				@import './item/style.scss';
 			}
 		}
 	}
+	
 }

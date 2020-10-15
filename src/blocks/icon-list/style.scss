@@ -1,17 +1,25 @@
 .wp-block-themeisle-blocks-icon-list { 
-	
-	.wp-block-themeisle-blocks-icon-list-items {
-		display: flex;
+	display: flex;
+
+	&.is-style-vertical {
+		flex-direction: column;
 		
-		&.is-vertical {
-			flex-direction: column;
+		> *:not(:last-child) {
+			margin-bottom: 50px;
 		}
+	}
 
-		&.is-horizontal {
-			flex-wrap: wrap;
-			align-items: center;
+	&.is-style-horizontal {
+		flex-wrap: wrap;
+		align-items: center;
+
+		
+		> *:not(:last-child) {
+			margin-right: 50px;
 		}
+	}
 
-		@import './item/style.scss';
-	}	
+	
+	
+	@import './item/style.scss';	
 }

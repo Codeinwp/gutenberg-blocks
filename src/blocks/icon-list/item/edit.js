@@ -19,7 +19,7 @@ const { RichText } = wp.blockEditor;
 
 import defaultAttributes from './attributes.js';
 import defaults from '../../../plugins/options/global-defaults/defaults.js';
-import Inspector from './inspector.js'
+import Inspector from './inspector.js';
 
 const IDs = [];
 
@@ -35,6 +35,7 @@ const Edit = ({
 
 	const {
 		hasParent,
+		parentId,
 		parentAttributes
 	} = useSelect( select => {
 		const {
@@ -45,9 +46,12 @@ const Edit = ({
 		const parentClientId = getBlockRootClientId( clientId );
 		const parentBlock = getBlock( parentClientId );
 
+		// console.log( parentBlock );
+
 		return {
 			hasParent: parentBlock ? true : false,
-			parentAttributes: parentBlock ? parentBlock.attributes : {},
+			parentId: parentBlock?.attributes?.id,
+			parentAttributes: parentBlock ? parentBlock.attributes : {}
 		};
 	}, []);
 
@@ -102,19 +106,18 @@ const Edit = ({
 	let itemStyle;
 
 	if ( hasParent ) {
-		console.log( parentAttributes );
 
 		if ( ! hasCustomIcon ) {
-			iconClassName =  `${ parentAttributes.defaultIconPrefix } fa-${ parentAttributes.defaultIcon }`
+			iconClassName =  `${ parentAttributes.defaultIconPrefix } fa-${ parentAttributes.defaultIcon }`;
 
 			setAttributes({
 				icon: parentAttributes.defaultIcon,
 				iconPrefix: parentAttributes.defaultIconPrefix
 			});
 		} else {
-			iconClassName = `${ attributes.iconPrefix } fa-${ attributes.icon }`
+			iconClassName = `${ attributes.iconPrefix } fa-${ attributes.icon }`;
 		}
-		
+
 
 		titleStyle = {
 			color: attributes.titleColor || parentAttributes.defaultTitleColor,
@@ -126,13 +129,19 @@ const Edit = ({
 			fontSize: parentAttributes.defaultSize + 'px'
 		};
 
-		if ( 'vertical' === parentAttributes.listStyle ) {
-			itemStyle = {
-				marginBottom: parentAttributes.gap
-			}
-		} else {
-			itemStyle = {
-				marginRight: parentAttributes.gap
+		if ( parentId ) {
+
+			const parentClassname = document.querySelector( '#' + parentId );
+			console.log( parentId, parentClassname );
+
+			if ( parentClassname?.classList.contains( 'is-style-horizontal' ) ) {
+				itemStyle = {
+					marginRight: parentAttributes.gap + 'px'
+				};
+			} else {
+				itemStyle = {
+					marginBottom: parentAttributes.gap + 'px'
+				};
 			}
 		}
 	};
@@ -143,10 +152,10 @@ const Edit = ({
 
 	return (
 		<Fragment>
-			<Inspector 
-				attributes={ attributes } 
-				setAttributes={ setAttributes } 
-				setHasCustomIcon={ setHasCustomIcon} 
+			<Inspector
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				setHasCustomIcon={ setHasCustomIcon}
 			/>
 			<div
 				className={ className }
@@ -154,8 +163,8 @@ const Edit = ({
 			>
 				<i
 					className={
-						classnames( 
-							iconClassName, 
+						classnames(
+							iconClassName,
 							{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
 							{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
 						)
@@ -163,20 +172,20 @@ const Edit = ({
 					style={ iconStyle }
 				></i>
 				<RichText
-						tagName="p"
-						placeholder={ __( 'Write a title…' ) }
-						className={
-							classnames( 
-								{ 'wp-block-themeisle-blocks-icon-list-item-title': ! attributes.titleColor },
-								{ 'wp-block-themeisle-blocks-icon-list-item-title-custom': attributes.titleColor }
-							)
-						}
-						style={ titleStyle }
-						value={ attributes.title }
-						onChange={ changeTitle }
-						multiline={ false }
-						keepPlaceholderOnFocus={ true }
-					/>
+					tagName="p"
+					placeholder={ __( 'Write a title…' ) }
+					className={
+						classnames(
+							{ 'wp-block-themeisle-blocks-icon-list-item-title': ! attributes.titleColor },
+							{ 'wp-block-themeisle-blocks-icon-list-item-title-custom': attributes.titleColor }
+						)
+					}
+					style={ titleStyle }
+					value={ attributes.title }
+					onChange={ changeTitle }
+					multiline={ false }
+					keepPlaceholderOnFocus={ true }
+				/>
 			</div>
 		</Fragment>
 	);

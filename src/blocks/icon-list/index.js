@@ -27,5 +27,16 @@ registerBlockType( 'themeisle-blocks/icon-list', {
 	],
 	attributes,
 	edit,
-	save
+	save,
+	styles: [
+		{
+			name: 'vertical',
+			label: __( 'Vertical' ),
+			isDefault: true
+		},
+		{
+			name: 'horizontal',
+			label: __( 'Horizontal' )
+		}
+	]
 });

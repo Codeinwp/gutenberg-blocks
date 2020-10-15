@@ -2,10 +2,6 @@ const attributes = {
 	id: {
 		type: 'string'
 	},
-	listStyle: {
-		type: 'string',
-		default: 'vertical'
-	},
 	defaultIconPrefix: {
 		type: 'string',
 		default: 'fab'

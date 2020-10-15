@@ -11,14 +11,13 @@ const {
 const {
 	PanelBody,
 	RangeControl,
-	SelectControl,
 	Placeholder,
 	Spinner
 } = wp.components;
 
 const {
 	lazy,
-	Suspense,
+	Suspense
 } = wp.element;
 
 const IconPickerControl = lazy( () => import( '../../components/icon-picker-control/index.js' ) );
@@ -29,7 +28,7 @@ const Inspector = ({
 }) => {
 
 	const changeIcon = value => {
-		if ('object' === typeof value) {
+		if ( 'object' === typeof value ) {
 			setAttributes({
 				defaultIcon: value.name,
 				defaultIconPrefix: value.prefix
@@ -37,10 +36,6 @@ const Inspector = ({
 		} else {
 			setAttributes({ defaultIcon: value });
 		}
-	};
-
-	const selectListStyle = value => {
-		setAttributes({listStyle: value });
 	};
 
 	const onDefaultTitleColorChange = value => {
@@ -62,37 +57,28 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __('Settings') }
+				title={ __( 'Settings' ) }
 				initialOpen={true}
 			>
-				<SelectControl
-					label={ __('List Style') }
-					value={ attributes.listStyle }
-					options={[
-						{ label: __( 'Vertical' ), value: 'vertical' },
-						{ label: __( 'Horizontal' ), value: 'horizontal' }
-					]}
-					onChange={ selectListStyle }
-				/>
 				<Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
 					<IconPickerControl
-						label={ __('Icon Picker') }
+						label={ __( 'Icon Picker' ) }
 						prefix={ attributes.defaultIconPrefix }
 						icon={ attributes.defaultIcon }
 						onChange={ changeIcon }
 					/>
 				</Suspense>
 				<RangeControl
-					label={ __('Font Size') }
-					help={ __('The size of the font size of the title and icon.') }
+					label={ __( 'Font Size' ) }
+					help={ __( 'The size of the font size of the title and icon.' ) }
 					value={ attributes.defaultSize }
 					onChange={ onDefaultSizeChange }
 					min={ 0 }
 					max={ 60 }
 				/>
 				<RangeControl
-					label={ __('Gap') }
-					help={ __('The distance between the items.') }
+					label={ __( 'Gap' ) }
+					help={ __( 'The distance between the items.' ) }
 					value={ attributes.gap }
 					onChange={ onGapChange }
 					min={ 0 }
@@ -112,6 +98,6 @@ const Inspector = ({
 		</InspectorControls>
 
 	);
-}
+};
 
 export default Inspector;

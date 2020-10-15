@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 
 /**
  * WordPress dependencies.
@@ -18,7 +17,7 @@ const {
  */
 import defaultAttributes from './attributes.js';
 import defaults from '../../plugins/options/global-defaults/defaults.js';
-import Inspector from './inspector.js'
+import Inspector from './inspector.js';
 
 const IDs = [];
 
@@ -80,23 +79,14 @@ const Edit = ({
 				className={ className }
 				id={ attributes.id }
 			>
-				<div
-					className={
-						classnames(
-							'wp-block-themeisle-blocks-icon-list-items',
-							{ 'is-vertical': 'vertical' === attributes.listStyle },
-							{ 'is-horizontal': 'horizontal' === attributes.listStyle }
-						)
-					}
-				>
-					<InnerBlocks
-						allowedBlocks={ [ 'themeisle-blocks/icon-list-item' ] }
-						__experimentalMoverDirection="vertical"
-						orientation="vertical"
-						template={ [ [ 'themeisle-blocks/icon-list-item' ] ] }
-						renderAppender={ InnerBlocks.DefaultAppender }
-					/>
-				</div>
+				<InnerBlocks
+					allowedBlocks={ [ 'themeisle-blocks/icon-list-item' ] }
+					__experimentalMoverDirection="vertical"
+					orientation="vertical"
+					template={ [ [ 'themeisle-blocks/icon-list-item' ] ] }
+					renderAppender={ InnerBlocks.DefaultAppender }
+				/>
+
 			</div>
 		</Fragment>
 	);
