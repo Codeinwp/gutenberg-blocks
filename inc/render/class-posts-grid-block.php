@@ -137,9 +137,9 @@ class Posts_Grid_Block extends Base_Block {
 
 		$recent_posts = wp_get_recent_posts(
 			array(
-				'numberposts' 	   => $attributes['postsToShow'],
-				'post_status' 	   => 'publish',
-				'order'       	   => $attributes['order'],
+				'numberposts'      => $attributes['postsToShow'],
+				'post_status'      => 'publish',
+				'order'            => $attributes['order'],
 				'orderby'          => $attributes['orderBy'],
 				'offset'           => $attributes['offset'],
 				'category'         => $categories,
