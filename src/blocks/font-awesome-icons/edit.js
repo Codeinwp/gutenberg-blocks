@@ -83,7 +83,6 @@ const Edit = ({
 		borderRadius: attributes.borderRadius + '%',
 		borderStyle: 'solid',
 		borderWidth: attributes.borderSize + 'px',
-		display: 'inline-block',
 		margin: attributes.margin + 'px',
 		width: attributes.fontSize + attributes.padding * 2 + attributes.borderSize * 2
 	};
