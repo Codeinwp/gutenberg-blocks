@@ -137,12 +137,13 @@ class Posts_Grid_Block extends Base_Block {
 
 		$recent_posts = wp_get_recent_posts(
 			array(
-				'numberposts' => $attributes['postsToShow'],
-				'post_status' => 'publish',
-				'order'       => $attributes['order'],
-				'orderby'     => $attributes['orderBy'],
-				'offset'      => $attributes['offset'],
-				'category'    => $categories,
+				'numberposts'      => $attributes['postsToShow'],
+				'post_status'      => 'publish',
+				'order'            => $attributes['order'],
+				'orderby'          => $attributes['orderBy'],
+				'offset'           => $attributes['offset'],
+				'category'         => $categories,
+				'suppress_filters' => false,
 			)
 		);
 
@@ -171,7 +172,7 @@ class Posts_Grid_Block extends Base_Block {
 
 			foreach ( $attributes['template'] as $element ) {
 				if ( 'category' === $element ) {
-					if ( isset( $attributes['displayCategory'] ) && $attributes['displayCategory'] ) {
+					if ( isset( $attributes['displayCategory'] ) && isset( $category[0] ) && $attributes['displayCategory'] ) {
 						$list_items_markup .= sprintf(
 							'<span class="wp-block-themeisle-blocks-posts-grid-post-category">%1$s</span>',
 							esc_html( $category[0]->cat_name )
