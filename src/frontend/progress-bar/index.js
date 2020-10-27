@@ -37,6 +37,8 @@ domReady( () => {
 
 		if ( 0 === duration ) {
 			bar.style.width = `${ parseInt( progressBar.dataset.percent ) }%`;
+			number.innerHTML = `${ parseInt( progressBar.dataset.percent ) }%`;
+			bar.style.opacity = 1;
 
 			if ( tooltip ) {
 				tooltip.style.opacity = 1;
@@ -64,6 +66,21 @@ domReady( () => {
 				entries.forEach( entry => {
 					if ( entry.isIntersecting ) {
 
+						if ( 0 >= entry.intersectionRect.height ) {
+							bar.style.width = `${ parseInt( progressBar.dataset.percent ) }%`;
+							number.innerHTML = `${ parseInt( progressBar.dataset.percent ) }%`;
+							bar.style.opacity = 1;
+
+							if ( tooltip ) {
+								tooltip.style.opacity = 1;
+							}
+							if ( append ) {
+								append.style.opacity = 1;
+							}
+
+							observer.unobserve( bar );
+							return;
+						}
 
 						let interval;
 
@@ -81,30 +98,30 @@ domReady( () => {
 
 							if ( number ) {
 								number.innerText = `${ Math.ceil( value ) }%`;
+							}
 
-								const currentWidth = bar.getBoundingClientRect().width;
+							const currentWidth = bar.getBoundingClientRect().width;
 
-								if ( currentWidth > borderRadius ) {
-									bar.style.opacity = 1;
+							if ( currentWidth > borderRadius ) {
+								bar.style.opacity = 1;
+							}
+
+							if ( tooltip && outerTitle ) {
+
+								if ( currentWidth > titleWidth + 10 ) {
+									tooltip.style.opacity = 1;
 								}
 
-								if ( tooltip && outerTitle ) {
+							}
 
-									if ( currentWidth > titleWidth + 10 ) {
-										tooltip.style.opacity = 1;
+							if ( append ) {
+								if ( innerTitle ) {
+									if ( currentWidth > titleWidth + numberWidth * 1.5 ) {
+										append.style.opacity = 1;
 									}
-
-								}
-
-								if ( append ) {
-									if ( innerTitle ) {
-										if ( currentWidth > titleWidth + numberWidth * 1.5 ) {
-											append.style.opacity = 1;
-										}
-									} else {
-										if ( currentWidth > numberWidth * 1.8 ) {
-											append.style.opacity = 1;
-										}
+								} else {
+									if ( currentWidth > numberWidth * 1.8 ) {
+										append.style.opacity = 1;
 									}
 								}
 							}
