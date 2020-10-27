@@ -41,6 +41,7 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 			}
 
 			if ( isset( $attr['textColor'] ) || isset( $attr['backgroundColor'] ) || isset( $attr['borderColor'] ) || isset( $attr['borderRadius'] ) || isset( $attr['borderSize'] ) || isset( $attr['margin'] ) ) {
+				$width  = 0;
 				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container {' . "\n";
 				if ( isset( $attr['textColor'] ) ) {
 					$style .= '	color: ' . $this->get_attr_value( $attr['textColor'] ) . ';' . "\n";
@@ -54,6 +55,7 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 				if ( isset( $attr['borderSize'] ) ) {
 					$style .= '	border-width: ' . $this->get_attr_value( $attr['borderSize'], 0 ) . 'px;' . "\n";
 					$style .= '	border-style: solid;' . "\n";
+					$width += $this->get_attr_value( $attr['borderSize'], 0 ) * 2;
 				}
 				if ( isset( $attr['borderRadius'] ) ) {
 					$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'], 0 ) . '%;' . "\n";
@@ -61,6 +63,21 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 				if ( isset( $attr['margin'] ) ) {
 					$style .= '	margin: ' . $this->get_attr_value( $attr['margin'] ) . 'px;' . "\n";
 				}
+				if ( isset( $attr['fontSize'] ) ) {
+					$width += $this->get_attr_value( $attr['fontSize'], 0 );
+				} else {
+					$width += 16;
+				}
+				if ( isset( $attr['padding'] ) ) {
+					$width += $this->get_attr_value( $attr['padding'], 5 ) * 2;
+				} else {
+					$width += 5 * 2;
+				}
+
+				if ( $width > 0 ) {
+					$style .= '	width: ' . $width . 'px;' . "\n";
+				}
+
 				$style .= '}' . "\n \n";
 			}
 
@@ -79,9 +96,9 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 			}
 
 			if ( isset( $attr['textColor'] ) ) {
-				$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container a {' . "\n";
-					$style .= '	color: ' . $this->get_attr_value( $attr['textColor'] ) . ';' . "\n";
-				$style     .= '}' . "\n \n";
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container a {' . "\n";
+				$style .= '	color: ' . $this->get_attr_value( $attr['textColor'] ) . ';' . "\n";
+				$style .= '}' . "\n \n";
 			}
 
 			if ( isset( $attr['borderRadius'] ) || isset( $attr['fontSize'] ) || isset( $attr['padding'] ) ) {
