@@ -43,7 +43,7 @@ const Library = ({
 
 	useEffect( () => {
 		const fetchData = async() => {
-			if ( ! Boolean( themeisleGutenberg.isCompatible ) ) {
+			if ( ! Boolean( window.themeisleGutenberg.isCompatible ) ) {
 				createNotice(
 					'warning',
 					__( 'You are using an older version of Otter. Use the latest version of Otter to have maximum compatibility with Template Library.' ),
@@ -54,7 +54,7 @@ const Library = ({
 						actions: [
 							{
 								label: __( 'Update Now' ),
-								url: themeisleGutenberg.updatePath
+								url: window.themeisleGutenberg.updatePath
 							}
 						]
 					}
@@ -166,6 +166,19 @@ const Library = ({
 
 			if ( data.__file && data.content && 'wp_export' === data.__file ) {
 				data = parse( data.content );
+			}
+
+			if ( url.includes( 'https://raw.githubusercontent.com/Codeinwp/' ) && window.themeisleGutenberg.dataLogging.templates && Boolean( window.themeisleGutenberg.canTrack ) ) {
+				const obj = window.themeisleGutenberg.dataLogging.templates.find( template => template.url === url );
+
+				if ( obj ) {
+					obj.instances = obj.instances + 1;
+				} else {
+					window.themeisleGutenberg.dataLogging.templates.push({
+						url,
+						instances: 1
+					});
+				}
 			}
 
 			importBlocks( data );

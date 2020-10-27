@@ -102,12 +102,12 @@ const Edit = ({
 					{
 						label: __( 'Grid' ),
 						value: 'grid',
-						image: themeisleGutenberg.assetsPath + '/icons/posts-grid.jpg'
+						image: window.themeisleGutenberg.assetsPath + '/icons/posts-grid.jpg'
 					},
 					{
 						label: __( 'List' ),
 						value: 'list',
-						image: themeisleGutenberg.assetsPath + '/icons/posts-list.jpg'
+						image: window.themeisleGutenberg.assetsPath + '/icons/posts-list.jpg'
 					}
 				] }
 				onChange={ changeStyle }

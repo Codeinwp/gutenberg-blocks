@@ -31,6 +31,19 @@ class Main {
 	 * @var bool $is_map_loaded Is Map loaded?
 	 */
 	public static $is_map_loaded = false;
+	/**
+	 * Flag to mark that progress bar scripts has been loaded.
+	 *
+	 * @var bool $is_progress_bar_loaded Is Map loaded?
+	 */
+	public static $is_progress_bar_loaded = false;
+
+	/**
+	 * Flag to mark that lottie scripts has been loaded.
+	 *
+	 * @var bool $is_lottie_loaded Is Lottie loaded?
+	 */
+	public static $is_lottie_loaded = false;
 
 	/**
 	 * Define assets version.
@@ -75,7 +88,7 @@ class Main {
 	 */
 	public function init() {
 		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
-			define( 'THEMEISLE_BLOCKS_VERSION', '1.5.3' );
+			define( 'THEMEISLE_BLOCKS_VERSION', '1.5.6' );
 			define( 'THEMEISLE_BLOCKS_DEV', false );
 		}
 
@@ -85,12 +98,19 @@ class Main {
 			self::$assets_version = THEMEISLE_BLOCKS_VERSION;
 		}
 
+		$allow_json = get_option( 'themeisle_allow_json_upload' );
+
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
 		add_action( 'init', array( $this, 'load_server_side_blocks' ), 11 );
 		add_action( 'block_categories', array( $this, 'block_categories' ) );
 		add_filter( 'render_block', array( $this, 'render_amp' ), 10, 3 );
+
+		if ( isset( $allow_json ) && true === (bool) $allow_json && ! function_exists( 'is_wpcom_vip' ) ) {
+			add_filter( 'upload_mimes', array( $this, 'allow_json' ) ); //phpcs:ignore WordPressVIPMinimum.Filters.RestrictedHook.UploadMimes
+			add_filter( 'wp_check_filetype_and_ext', array( $this, 'fix_mime_type_json' ), 75, 4 );
+		}
 	}
 
 	/**
@@ -117,7 +137,7 @@ class Main {
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
-			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs' ),
+			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player' ),
 			self::$assets_version,
 			true
 		);
@@ -125,7 +145,15 @@ class Main {
 		wp_enqueue_script(
 			'glidejs',
 			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.min.js',
-			array(),
+			[],
+			self::$assets_version,
+			true
+		);
+
+		wp_enqueue_script(
+			'lottie-player',
+			plugin_dir_url( $this->get_dir() ) . 'assets/lottie/lottie-player.min.js',
+			[],
 			self::$assets_version,
 			true
 		);
@@ -140,8 +168,11 @@ class Main {
 				'packagePath'   => plugin_dir_url( $this->get_dir() ) . 'build/',
 				'assetsPath'    => plugin_dir_url( $this->get_dir() ) . 'assets',
 				'updatePath'    => admin_url( 'update-core.php' ),
+				'optionsPath'   => admin_url( 'options-general.php?page=otter' ),
 				'mapsAPI'       => $api,
 				'themeDefaults' => $this->get_global_defaults(),
+				'isWPVIP'       => function_exists( 'is_wpcom_vip' ),
+				'canTrack'      => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
 			)
 		);
 
@@ -216,7 +247,7 @@ class Main {
 			wp_enqueue_script(
 				'glidejs',
 				plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.min.js',
-				array(),
+				[],
 				self::$assets_version,
 				true
 			);
@@ -245,6 +276,48 @@ class Main {
 
 			self::$is_glide_loaded = true;
 		}
+
+		if ( ! self::$is_progress_bar_loaded && has_block( 'themeisle-blocks/progress-bar', $post ) ) {
+
+			wp_enqueue_script(
+				'themeisle-gutenberg-progress-bar',
+				plugin_dir_url( $this->get_dir() ) . 'build/progress-bar.js',
+				array( 'wp-dom-ready' ),
+				self::$assets_version,
+				true
+			);
+
+			self::$is_progress_bar_loaded = true;
+		}
+		
+		if ( ! self::$is_lottie_loaded && has_block( 'themeisle-blocks/lottie', $post ) ) {
+			wp_enqueue_script(
+				'lottie-player',
+				plugin_dir_url( $this->get_dir() ) . 'assets/lottie/lottie-player.min.js',
+				[],
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_script(
+				'lottie-interactivity',
+				plugin_dir_url( $this->get_dir() ) . 'assets/lottie/lottie-interactivity.min.js',
+				array( 'lottie-player' ),
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_script(
+				'themeisle-gutenberg-lottie',
+				plugin_dir_url( $this->get_dir() ) . 'build/lottie.js',
+				array( 'wp-dom-ready', 'lottie-player', 'lottie-interactivity' ),
+				self::$assets_version,
+				true
+			);
+
+			self::$is_lottie_loaded = true;
+		}
+		
 	}
 
 	/**
@@ -285,6 +358,7 @@ class Main {
 				return $content;
 			}
 		);
+		
 	}
 
 	/**
@@ -441,21 +515,77 @@ class Main {
 	 * @access public
 	 */
 	public function render_amp( $block_content, $block ) {
-		if ( 'themeisle-blocks/slider' !== $block['blockName'] || ! ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) ) {
-			return $block_content;
+		if ( 'themeisle-blocks/slider' === $block['blockName'] && function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			$html5  = new HTML5();
+			$dom    = $html5->loadHTML( $block['innerHTML'] );
+			$id     = $block['attrs']['id'];
+			$images = $dom->getElementsByTagName( 'figure' );
+			$output = '<amp-carousel id="' . $id . '" class="wp-block-themeisle-blocks-slider" width="400" height="300" layout="responsive" type="slides" autoplay delay="2000">';
+			foreach ( $images as $image ) {
+				$output .= $html5->saveHTML( $image );
+			}
+			$output .= '</amp-carousel>';
+			return $output;
 		}
 
-		$html5  = new HTML5();
-		$dom    = $html5->loadHTML( $block['innerHTML'] );
-		$id     = $block['attrs']['id'];
-		$images = $dom->getElementsByTagName( 'figure' );
-		$output = '<amp-carousel id="' . $id . '" class="wp-block-themeisle-blocks-slider" width="400" height="300" layout="responsive" type="slides" autoplay delay="2000">';
-		foreach ( $images as $image ) {
-			$output .= $html5->saveHTML( $image );
-		}
-		$output .= '</amp-carousel>';
+		if ( 'themeisle-blocks/lottie' === $block['blockName'] && function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			if ( ! isset( $block['attrs']['file'] ) ) {
+				return $block_content;
+			}
 
-		return $output;
+			$file = $block['attrs']['file'];
+			$size = isset( $block['attrs']['width'] ) ? $block['attrs']['width'] : 400;
+			$loop = ( isset( $block['attrs']['loop'] ) && true === $block['attrs']['loop'] ) ? 'true' : 'false';
+			if ( isset( $block['attrs']['count'] ) ) {
+				$loop = intval( $block['attrs']['count'] );
+			}
+
+			$output = '<amp-bodymovin-animation layout="responsive" width="' . intval( $size ) . '" height="' . intval( $size ) . '" loop="' . $loop . '" src="' . esc_url( $file['url'] ) . '"></amp-bodymovin-animation>';
+			return $output;
+		}
+
+		return $block_content;
+	}
+
+	/**
+	 * Allow JSON uploads
+	 *
+	 * @param array $mimes Supported mimes.
+	 *
+	 * @return array
+	 *
+	 * @since  1.5.7
+	 * @access public
+	 */
+	public function allow_json( $mimes ) {
+		$mimes['json'] = 'application/json';
+		return $mimes;
+	}
+
+	/**
+	 * Allow JSON uploads
+	 *
+	 * @param null $data File data.
+	 * @param null $file File object.
+	 * @param null $filename File name.
+	 * @param null $mimes Supported mimes.
+	 *
+	 * @return array
+	 *
+	 * @since  1.5.7
+	 * @access public
+	 */
+	public function fix_mime_type_json( $data = null, $file = null, $filename = null, $mimes = null ) {
+		$ext = isset( $data['ext'] ) ? $data['ext'] : '';
+		if ( 1 > strlen( $ext ) ) {
+			$exploded = explode( '.', $filename );
+			$ext      = strtolower( end( $exploded ) );
+		}
+		if ( 'json' === $ext ) {
+			$data['type'] = 'application/json';
+			$data['ext']  = 'json';
+		}
+		return $data;
 	}
 
 	/**

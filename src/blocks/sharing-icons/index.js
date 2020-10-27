@@ -26,7 +26,6 @@ registerBlockType( 'themeisle-blocks/sharing-icons', {
 	],
 	attributes,
 	supports: {
-		html: true,
 		align: [ 'left', 'center', 'right' ]
 	},
 	styles: [
