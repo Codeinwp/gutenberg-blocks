@@ -8,7 +8,10 @@ import classnames from 'classnames';
  */
 const { __ } = wp.i18n;
 
-const { range, isEqual } = lodash;
+const {
+	isEqual,
+	range
+} = lodash;
 
 const { ResizableBox } = wp.components;
 
@@ -24,14 +27,12 @@ const { RichText } = wp.blockEditor;
 /**
  * Internal dependencies
  */
+import defaultAttributes from './attributes.js';
 import Inspector from './inspector.js';
 import CircularProgressBar from './components/CircleCounter.js';
-
-import defaultAttributes from './attributes.js';
 import defaults from '../../plugins/options/global-defaults/defaults.js';
 
 const IDs = [];
-
 
 const CircularProgressBarBlock = ({
 	attributes,
@@ -41,7 +42,6 @@ const CircularProgressBarBlock = ({
 	toggleSelection,
 	className
 }) => {
-
 	useEffect( () => {
 		initBlock();
 	}, []);
@@ -96,7 +96,6 @@ const CircularProgressBarBlock = ({
 
 
 	useEffect( () => {
-
 		if ( ! progressRef.current || ! progressRef.current || 0 === attributes.duration ) {
 			return;
 		}
@@ -122,9 +121,8 @@ const CircularProgressBarBlock = ({
 				clearInterval( interv );
 			}
 		}, step );
+
 		changeInterval( interv );
-
-
 	}, [ attributes.duration ]);
 
 	useEffect( () => {
@@ -156,30 +154,28 @@ const CircularProgressBarBlock = ({
 				setAttributes={ setAttributes }
 				onFontSizeChange={ onHeightChange }
 			/>
+
 			<div
 				className={ classnames( className ) }
 				id={ attributes.id }
 			>
-				{
-					( 'default' === attributes.titleStyle ) && (
-						<div
-							className="wp-block-themeisle-blocks-circle-counter-title__area"
-						>
-							<RichText
-								tagName="span"
-								className="wp-block-themeisle-blocks-circle-counter-title__value"
-								placeholder={ isSelected ? __( 'Write caption…' ) : null }
-								value={ attributes.title }
-								onChange={ onTitleChange }
-								multiline={ false }
-								style={{
-									color: attributes.titleColor,
-									fontSize: attributes.fontSizeTitle + 'px'
-								}}
-							/>
-						</div>
-					)
-				}
+				{ ( 'default' === attributes.titleStyle ) && (
+					<div className="wp-block-themeisle-blocks-circle-counter-title__area">
+						<RichText
+							tagName="span"
+							className="wp-block-themeisle-blocks-circle-counter-title__value"
+							placeholder={ isSelected ? __( 'Write caption…' ) : null }
+							value={ attributes.title }
+							onChange={ onTitleChange }
+							multiline={ false }
+							style={ {
+								color: attributes.titleColor,
+								fontSize: attributes.fontSizeTitle + 'px'
+							} }
+						/>
+					</div>
+				) }
+
 				<ResizableBox
 					size={ {
 						height: attributes.height,
@@ -208,26 +204,23 @@ const CircularProgressBarBlock = ({
 						valueRef={ valueRef }
 					/>
 				</ResizableBox>
-				{
-					( 'bottom' === attributes.titleStyle ) && (
-						<div
-							className="wp-block-themeisle-blocks-circle-counter-title__area"
-						>
-							<RichText
-								tagName="span"
-								className="wp-block-themeisle-blocks-circle-counter-title__value"
-								placeholder={ isSelected ? __( 'Write caption…' ) : null }
-								value={ attributes.title }
-								onChange={ onTitleChange }
-								multiline={ false }
-								style={{
-									color: attributes.titleColor,
-									fontSize: attributes.fontSizeTitle + 'px'
-								}}
-							/>
-						</div>
-					)
-				}
+
+				{ ( 'bottom' === attributes.titleStyle ) && (
+					<div className="wp-block-themeisle-blocks-circle-counter-title__area">
+						<RichText
+							tagName="span"
+							className="wp-block-themeisle-blocks-circle-counter-title__value"
+							placeholder={ isSelected ? __( 'Write caption…' ) : null }
+							value={ attributes.title }
+							onChange={ onTitleChange }
+							multiline={ false }
+							style={ {
+								color: attributes.titleColor,
+								fontSize: attributes.fontSizeTitle + 'px'
+							} }
+						/>
+					</div>
+				) }
 			</div>
 		</Fragment>
 

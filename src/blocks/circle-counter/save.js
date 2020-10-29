@@ -1,11 +1,7 @@
-/*
-	TODO: Move CSS to PHP when block is ready
-*/
 const Save = ({
 	attributes,
 	className
 }) => {
-
 	return (
 		<div
 			className={ className }
@@ -18,36 +14,23 @@ const Save = ({
 			data-background-stroke={ attributes.backgroundColor }
 			data-progress-stroke={ attributes.progressColor }
 		>
-			{
-				( 'default' === attributes.titleStyle ) && (
-					<div
-						className="wp-block-themeisle-blocks-circle-counter-title__area"
-					>
-						<span
-							className="wp-block-themeisle-blocks-circle-counter-title__value"
-						>
-							{ attributes.title }
-						</span>
-					</div>
-				)
-			}
-			<div
-				className="wp-block-themeisle-blocks-circle-counter__bar"
-			>
-			</div>
-			{
-				( 'bottom' === attributes.titleStyle ) && (
-					<div
-						className="wp-block-themeisle-blocks-circle-counter-title__area"
-					>
-						<span
-							className="wp-block-themeisle-blocks-circle-counter-title__value"
-						>
-							{ attributes.title }
-						</span>
-					</div>
-				)
-			}
+			{ ( 'default' === attributes.titleStyle ) && (
+				<div className="wp-block-themeisle-blocks-circle-counter-title__area">
+					<span className="wp-block-themeisle-blocks-circle-counter-title__value">
+						{ attributes.title }
+					</span>
+				</div>
+			) }
+
+			<div className="wp-block-themeisle-blocks-circle-counter__bar"></div>
+
+			{ ( 'bottom' === attributes.titleStyle ) && (
+				<div className="wp-block-themeisle-blocks-circle-counter-title__area">
+					<span className="wp-block-themeisle-blocks-circle-counter-title__value">
+						{ attributes.title }
+					</span>
+				</div>
+			) }
 		</div>
 	);
 };

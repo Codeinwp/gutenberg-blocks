@@ -2,7 +2,11 @@
  * WordPress dependencies
  */
 const { createBlock } = wp.blocks;
-const { omit, clamp } = lodash;
+
+const {
+	clamp,
+	omit
+} = lodash;
 
 const transform = {
 	from: [

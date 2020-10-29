@@ -162,7 +162,7 @@ const ProgressBar = ({
 						{ 'outer' === attributes.titleStyle && (
 							<span
 								className="wp-block-themeisle-blocks-progress-bar__outer__title"
-								style={{ color: attributes.titleColor }}
+								style={ { color: attributes.titleColor } }
 							>
 								{ attributes.title }
 							</span>
@@ -171,7 +171,7 @@ const ProgressBar = ({
 						{ 'outer' === attributes.percentagePosition && showPercentage && (
 							<div
 								className="wp-block-themeisle-blocks-progress-bar__progress wp-block-themeisle-blocks-progress-bar__outer__value"
-								style={{ color: attributes.percentageColor }}
+								style={ { color: attributes.percentageColor } }
 							>
 								{ `${ attributes.percentage }%` }
 							</div>
@@ -246,7 +246,7 @@ const ProgressBar = ({
 							{ 'tooltip' === attributes.percentagePosition && showPercentage && (
 								<span
 									className="wp-block-themeisle-blocks-progress-bar__area__tooltip show"
-									style={{ color: attributes.percentageColor }}
+									style={ { color: attributes.percentageColor } }
 								>
 									{ `${ attributes.percentage }%` }
 									<span className="wp-block-themeisle-blocks-progress-bar__area__arrow"></span>

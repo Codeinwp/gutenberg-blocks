@@ -56,6 +56,7 @@ const Inspector = ({
 		if ( value === undefined ) {
 			return ;
 		}
+
 		value = clamp( value, 0, 3 );
 		setAttributes({ duration: value });
 	};
@@ -107,8 +108,7 @@ const Inspector = ({
 					] }
 					onChange={ selectTitleStyle }
 				/>
-
-		   		</PanelBody>
+	   		</PanelBody>
 
 			<PanelBody
 				title={ __( 'Style' ) }
@@ -152,16 +152,13 @@ const Inspector = ({
 					max={ Math.round( attributes.height  * 0.27 ) }
 				/>
 
-				{
-					( 'hide' !== attributes.titleStyle ) && (
-						<ColorGradientControl
-							label={ __( 'Title Color' ) }
-							colorValue={ attributes.titleColor }
-							onColorChange={ onTitleColorChange }
-						/>
-					)
-				}
-
+				{ ( 'hide' !== attributes.titleStyle ) && (
+					<ColorGradientControl
+						label={ __( 'Title Color' ) }
+						colorValue={ attributes.titleColor }
+						onColorChange={ onTitleColorChange }
+					/>
+				) }
 
 				<ColorGradientControl
 					label={ __( 'Progress Color' ) }

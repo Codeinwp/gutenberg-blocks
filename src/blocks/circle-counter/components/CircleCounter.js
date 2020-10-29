@@ -16,10 +16,10 @@ const CircularProgressBar = ({
 	return (
 		<div
 			className="wp-block-themeisle-blocks-circle-counter__bar"
-			style={{
+			style={ {
 				height: size + 'px',
 				width: size + 'px'
-			}}
+			} }
 		>
 			<svg
 				className="wp-block-themeisle-blocks-circle-counter-container"
@@ -32,9 +32,9 @@ const CircularProgressBar = ({
 					cy={ center }
 					r={ radius }
 					strokeWidth={ attributes.strokeWidth }
-					style={{
+					style={ {
 						stroke: attributes.backgroundColor
-					}}
+					} }
 				/>
 				<circle
 					ref={ progressRef }
@@ -44,19 +44,19 @@ const CircularProgressBar = ({
 					r={ radius }
 					strokeWidth={ attributes.strokeWidth }
 					strokeDasharray={ circumference }
-					style={{
+					style={ {
 						stroke: attributes.progressColor
-					}}
+					} }
 				/>
 				<text
 					ref={ valueRef }
 					className="wp-block-themeisle-blocks-circle-counter-text"
 					x="50%"
 					y="50%"
-					style={{
+					style={ {
 						fill: attributes.progressColor,
 						fontSize: attributes.fontSizePercent + 'px'
-					}}
+					} }
 				>
 					{ attributes.percentage }%
 				</text>
