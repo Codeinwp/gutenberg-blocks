@@ -28,7 +28,7 @@ export const formatDate = date => {
 	return day + ' ' + monthNames[monthIndex] + ', ' + year;
 };
 
-// Create a list with numbers from interval [start, end)
+// Create a list with numbers from interval [start, end]
 export const range = ( start, end, step ) => {
 	const range = [];
 	const typeofStart = typeof start;
