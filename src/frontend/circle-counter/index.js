@@ -6,7 +6,7 @@ const domReady = wp.domReady;
 /**
  * Internal dependencies
  */
-import { range, linear } from './utils.js';
+import { range, linear } from './../../helpers/helper-functions.js';
 
 domReady( () => {
 	const progressBars = document.querySelectorAll( '.wp-block-themeisle-blocks-circle-counter' );
