@@ -140,7 +140,11 @@ const CircularProgressBarBlock = ({
 		const innerTextFontSizeRatio = ( attributes.fontSizePercent || 27 ) / attributes.height;
 		const titleFontSizeRatio = ( attributes.fontSizeTitle || 37 ) / attributes.height;
 
-		setAttributes({ height: value, fontSizePercent: value * innerTextFontSizeRatio, fontSizeTitle: value * titleFontSizeRatio  });
+		setAttributes({
+			height: value,
+			fontSizePercent: Math.round( value * innerTextFontSizeRatio ),
+			fontSizeTitle: Math.round( value * titleFontSizeRatio )
+		});
 	};
 
 	const onTitleChange = value => {
@@ -152,7 +156,7 @@ const CircularProgressBarBlock = ({
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
-				onFontSizeChange={ onHeightChange }
+				onHeightChange={ onHeightChange }
 			/>
 
 			<div

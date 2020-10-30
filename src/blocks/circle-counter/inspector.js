@@ -18,7 +18,8 @@ const { clamp } = lodash;
 
 const Inspector = ({
 	attributes,
-	setAttributes
+	setAttributes,
+	onHeightChange
 }) => {
 
 	const onPercentageChange = value => {
@@ -27,13 +28,6 @@ const Inspector = ({
 		}
 		value = clamp( value, 0, 100 );
 		setAttributes({ percentage: value });
-	};
-
-	const onHeightChange = value => {
-		const innerTextFontSizeRatio = ( attributes.fontSizePercent || 27 ) / attributes.height;
-		const titleFontSizeRatio = ( attributes.fontSizeTitle || 37 ) / attributes.height;
-
-		setAttributes({ height: value, fontSizePercent: value * innerTextFontSizeRatio, fontSizeTitle: value * titleFontSizeRatio });
 	};
 
 	const selectTitleStyle = value => {
