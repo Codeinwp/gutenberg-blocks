@@ -22,6 +22,9 @@ module.exports = {
 		'progress-bar': [
 			...glob.sync( './src/frontend/progress-bar/index.js' )
 		],
+		'circle-counter': [
+			...glob.sync( './src/frontend/circle-counter/index.js' )
+		],
 		lottie: [
 			...glob.sync( './src/frontend/lottie/index.js' )
 		]
