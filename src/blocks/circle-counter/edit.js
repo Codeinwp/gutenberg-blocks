@@ -112,12 +112,18 @@ const CircularProgressBarBlock = ({
 		valueRef.current.innerText = '0%';
 
 		const interv = setInterval( () => {
+
+			if ( ! progressRef.current ) {
+				clearInterval( interv );
+				return;
+			}
+
 			const percentage = Math.round( percentageValues.pop() );
 
 			progressRef.current.style.strokeDashoffset = ( ( 100 - percentage ) / 100 ) * circumference;
 			valueRef.current.innerHTML = percentage + '%';
 
-			if ( 0 === percentageValues.length || ! progressRef.current || ! progressRef.current ) {
+			if ( 0 === percentageValues.length ) {
 				clearInterval( interv );
 			}
 		}, step );
