@@ -30,8 +30,9 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 	 * @access  public
 	 */
 	public function render_css( $block ) {
-		$attr  = $block['attrs'];
-		$style = '';
+		$attr               = $block['attrs'];
+		$style              = '';
+		$is_themeisle_icons = isset( $attr['library'] ) && 'themeisle-icons' === $this->get_attr_value( $attr['library'], 'fontawesome' );
 
 		if ( isset( $attr['id'] ) ) {
 			if ( isset( $attr['align'] ) ) {
@@ -62,6 +63,9 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 				}
 				if ( isset( $attr['margin'] ) ) {
 					$style .= '	margin: ' . $this->get_attr_value( $attr['margin'] ) . 'px;' . "\n";
+				}
+				if ( $is_themeisle_icons && isset( $attr['padding'] ) ) {
+					$style .= '	padding: ' . $this->get_attr_value( $attr['padding'] ) . 'px;' . "\n";
 				}
 				if ( isset( $attr['fontSize'] ) ) {
 					$width += $this->get_attr_value( $attr['fontSize'], 0 );
@@ -95,22 +99,44 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 				$style .= '}' . "\n \n";
 			}
 
-			if ( isset( $attr['textColor'] ) ) {
-				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container a {' . "\n";
-				$style .= '	color: ' . $this->get_attr_value( $attr['textColor'] ) . ';' . "\n";
+			if ( isset( $attr['textColorHover'] ) && $is_themeisle_icons ) {
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container:hover svg {' . "\n";
+				$style .= '	fill: ' . $this->get_attr_value( $attr['textColorHover'] ) . ';' . "\n";
 				$style .= '}' . "\n \n";
 			}
 
+			if ( isset( $attr['textColor'] ) ) {
+				if ( $is_themeisle_icons ) {
+					$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container svg {' . "\n";
+					$style .= '	fill: ' . $this->get_attr_value( $attr['textColor'] ) . ';' . "\n";
+					$style .= '}' . "\n \n";
+				} else {
+					$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container a {' . "\n";
+					$style .= '	color: ' . $this->get_attr_value( $attr['textColor'] ) . ';' . "\n";
+					$style .= '}' . "\n \n";
+				}
+			}
+
 			if ( isset( $attr['borderRadius'] ) || isset( $attr['fontSize'] ) || isset( $attr['padding'] ) ) {
-				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container i {' . "\n";
+				if ( $is_themeisle_icons ) {
+					$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container svg {' . "\n";
+				} else {
+					$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-font-awesome-icons-container i {' . "\n";
+					if ( isset( $attr['padding'] ) ) {
+						$style .= '	padding: ' . $this->get_attr_value( $attr['padding'] ) . 'px;' . "\n";
+					}
+				}
+
 				if ( isset( $attr['borderRadius'] ) ) {
 					$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . '%;' . "\n";
 				}
+
 				if ( isset( $attr['fontSize'] ) ) {
-					$style .= '	font-size: ' . $this->get_attr_value( $attr['fontSize'] ) . 'px;' . "\n";
-				}
-				if ( isset( $attr['padding'] ) ) {
-					$style .= '	padding: ' . $this->get_attr_value( $attr['padding'] ) . 'px;' . "\n";
+					if ( $is_themeisle_icons ) {
+						$style .= '	width: ' . $this->get_attr_value( $attr['fontSize'] ) . 'px;' . "\n";
+					} else {
+						$style .= '	font-size: ' . $this->get_attr_value( $attr['fontSize'] ) . 'px;' . "\n";
+					}
 				}
 				$style .= '}' . "\n";
 			}

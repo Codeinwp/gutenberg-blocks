@@ -137,7 +137,7 @@ class Main {
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
-			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player' ),
+			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player' ),
 			self::$assets_version,
 			true
 		);

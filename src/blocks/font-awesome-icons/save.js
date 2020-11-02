@@ -1,7 +1,14 @@
+/**
+ * Internal dependencies
+ */
+import themeIsleIcons from './../../helpers/themeisle-icons';
+
 const Save = ({
 	attributes,
 	className
 }) => {
+	const Icon = themeIsleIcons.icons[ attributes.icon ];
+
 	return (
 		<p
 			className={ className }
@@ -14,10 +21,15 @@ const Save = ({
 						target={ attributes.newTab ? '_blank' : '_self' }
 						rel="noopener noreferrer"
 					>
-						<i className={ `${ attributes.prefix } fa-${ attributes.icon }` }></i>
+						{ 'themeisle-icons' === attributes.library ?
+							<Icon/> :
+							<i className={ `${ attributes.prefix } fa-${ attributes.icon }` }></i>
+						}
 					</a>
 				) : (
-					<i className={ `${ attributes.prefix } fa-${ attributes.icon }` }></i>
+					'themeisle-icons' === attributes.library ?
+						<Icon/> :
+						<i className={ `${ attributes.prefix } fa-${ attributes.icon }` }></i>
 				) }
 			</span>
 		</p>

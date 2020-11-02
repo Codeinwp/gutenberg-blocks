@@ -37,6 +37,14 @@ const Inspector = ({
 }) => {
 	const [ hover, setHover ] = useState( false );
 
+	const changeLibrary = value => {
+		setAttributes({
+			library: value,
+			icon: 'fontawesome' === value ? 'themeisle' : 'balance',
+			prefix: 'fab'
+		});
+	};
+
 	const changeIcon = value => {
 		if ( 'object' === typeof value ) {
 			setAttributes({
@@ -100,8 +108,10 @@ const Inspector = ({
 				<Suspense fallback={<Placeholder><Spinner/></Placeholder>}>
 					<IconPickerControl
 						label={ __( 'Icon Picker' ) }
+						library={ attributes.library }
 						prefix={ attributes.prefix }
 						icon={ attributes.icon }
+						changeLibrary={ changeLibrary }
 						onChange={ changeIcon }
 					/>
 				</Suspense>
