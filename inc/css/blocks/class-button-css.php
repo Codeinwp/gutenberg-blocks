@@ -43,7 +43,7 @@ class Button_CSS extends Base_CSS {
 				$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['background'] ) ? $attr['background'] : $attr['backgroundGradient'] ) ) . ';' . "\n";
 			}
 
-			if ( isset( $attr['borderSize'] ) && ! empty( $attr['borderSize'] ) ) {
+			if ( isset( $attr['borderSize'] ) ) {
 				$style .= '	border-width: ' . $this->get_attr_value( ( isset( $attr['borderSize'] ) ? $attr['borderSize'] : null ) ) . 'px;' . "\n";
 
 				if ( isset( $attr['border'] ) && ! empty( $attr['border'] ) ) {
