@@ -199,16 +199,75 @@ class Main {
 	}
 
 	/**
+	 * Loop through block content to find specified blocks.
+	 *
+	 * @param array $blocks Parsed array of blocks.
+	 * @param string $blockName name of the block.
+	 * @param array $target Target variable.
+	 */
+	public function loop_blocks( $blocks, $blockName, $target = array() ) {
+		if ( is_array( $blockName ) ) {
+			foreach ( $blockName as $name ) {
+				$target = $this->loop_blocks( $blocks, $name, $target );
+			}
+		} else {
+			foreach ( $blocks as $block ) {
+				if ( $blockName === $block['blockName'] ) {
+					array_push( $target, $block );
+				}
+	
+				if ( count( $block['innerBlocks'] ) ) {
+					$target = $this->loop_blocks( $block['innerBlocks'], $blockName, $target );
+				}
+			}
+		}
+
+		return $target;
+	}
+
+	/**
 	 * Handler which checks the blocks used and enqueue the assets which needs.
 	 *
 	 * @param null $post Current post.
 	 */
 	public function enqueue_dependencies( $post = null ) {
 		if ( ! self::$is_fa_loaded && ( has_block( 'themeisle-blocks/button-group', $post ) || has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/sharing-icons', $post ) || has_block( 'themeisle-blocks/plugin-cards', $post ) || has_block( 'block', $post ) ) ) {
-			wp_enqueue_style( 'font-awesome-5' );
-			wp_enqueue_style( 'font-awesome-4-shims' );
+			$has_fa = false;
 
-			self::$is_fa_loaded = true;
+			if ( ( ! has_block( 'themeisle-blocks/sharing-icons', $post ) && ! has_block( 'themeisle-blocks/plugin-cards', $post ) && ! has_block( 'block', $post ) ) && ( has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) ) ) {
+				if ( empty( $post ) ) {
+					$post = get_the_ID();
+				}
+	
+				$content = get_the_content( $post );
+				$blocks = parse_blocks( $content );
+	
+				$used_blocks = $this->loop_blocks(
+					$blocks,
+					array(
+						'themeisle-blocks/button',
+						'themeisle-blocks/font-awesome-icons'
+					)
+				);
+
+				foreach ( $used_blocks as $block ) {
+					if ( ! $has_fa && isset( $block['attrs']['library'] ) && 'themeisle-icons' === $block['attrs']['library'] ) {
+						$has_fa = false;
+						continue;
+					}
+
+					$has_fa = true;
+				}
+			} else {
+				$has_fa = true;
+			}
+
+			if ( $has_fa ) {
+				wp_enqueue_style( 'font-awesome-5' );
+				wp_enqueue_style( 'font-awesome-4-shims' );
+	
+				self::$is_fa_loaded = true;
+			}
 		}
 
 		// On AMP context, we don't load JS files.
@@ -220,27 +279,25 @@ class Main {
 			$apikey = get_option( 'themeisle_google_map_block_api_key' );
 
 			// Don't output anything if there is no API key.
-			if ( null === $apikey || empty( $apikey ) ) {
-				return;
+			if ( null !== $apikey && ! empty( $apikey ) ) {
+				wp_enqueue_script(
+					'themeisle-gutenberg-google-maps',
+					plugin_dir_url( $this->get_dir() ) . 'build/maps.js',
+					'',
+					self::$assets_version,
+					true
+				);
+	
+				wp_enqueue_script( //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion
+					'google-maps',
+					'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $apikey ) . '&libraries=places&callback=initMapScript',
+					array( 'themeisle-gutenberg-google-maps' ),
+					'',
+					true
+				);
+	
+				self::$is_map_loaded = true;
 			}
-
-			wp_enqueue_script(
-				'themeisle-gutenberg-google-maps',
-				plugin_dir_url( $this->get_dir() ) . 'build/maps.js',
-				'',
-				self::$assets_version,
-				true
-			);
-
-			wp_enqueue_script( //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion
-				'google-maps',
-				'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $apikey ) . '&libraries=places&callback=initMapScript',
-				array( 'themeisle-gutenberg-google-maps' ),
-				'',
-				true
-			);
-
-			self::$is_map_loaded = true;
 		}
 
 		if ( ! self::$is_glide_loaded && has_block( 'themeisle-blocks/slider', $post ) ) {
@@ -317,7 +374,6 @@ class Main {
 
 			self::$is_lottie_loaded = true;
 		}
-		
 	}
 
 	/**
