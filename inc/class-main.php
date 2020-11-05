@@ -202,7 +202,7 @@ class Main {
 	 * Loop through block content to find specified blocks.
 	 *
 	 * @param array  $blocks Parsed array of blocks.
-	 * @param string $blockName name of the block.
+	 * @param string $block_name name of the block.
 	 * @param array  $target Target variable.
 	 */
 	public function loop_blocks( $blocks, $block_name, $target = array() ) {
