@@ -5,6 +5,10 @@ const attributes = {
 	align: {
 		type: 'string'
 	},
+	library: {
+		type: 'string',
+		default: 'fontawesome'
+	},
 	prefix: {
 		type: 'string',
 		default: 'fab'
