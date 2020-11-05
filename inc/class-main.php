@@ -201,23 +201,23 @@ class Main {
 	/**
 	 * Loop through block content to find specified blocks.
 	 *
-	 * @param array $blocks Parsed array of blocks.
+	 * @param array  $blocks Parsed array of blocks.
 	 * @param string $blockName name of the block.
-	 * @param array $target Target variable.
+	 * @param array  $target Target variable.
 	 */
-	public function loop_blocks( $blocks, $blockName, $target = array() ) {
-		if ( is_array( $blockName ) ) {
-			foreach ( $blockName as $name ) {
+	public function loop_blocks( $blocks, $block_name, $target = array() ) {
+		if ( is_array( $block_name ) ) {
+			foreach ( $block_name as $name ) {
 				$target = $this->loop_blocks( $blocks, $name, $target );
 			}
 		} else {
 			foreach ( $blocks as $block ) {
-				if ( $blockName === $block['blockName'] ) {
+				if ( $block_name === $block['blockName'] ) {
 					array_push( $target, $block );
 				}
 	
 				if ( count( $block['innerBlocks'] ) ) {
-					$target = $this->loop_blocks( $block['innerBlocks'], $blockName, $target );
+					$target = $this->loop_blocks( $block['innerBlocks'], $block_name, $target );
 				}
 			}
 		}
@@ -240,13 +240,13 @@ class Main {
 				}
 	
 				$content = get_the_content( $post );
-				$blocks = parse_blocks( $content );
+				$blocks  = parse_blocks( $content );
 	
 				$used_blocks = $this->loop_blocks(
 					$blocks,
 					array(
 						'themeisle-blocks/button',
-						'themeisle-blocks/font-awesome-icons'
+						'themeisle-blocks/font-awesome-icons',
 					)
 				);
 
