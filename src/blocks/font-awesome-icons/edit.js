@@ -133,15 +133,14 @@ const Edit = ({
 					className="wp-block-themeisle-blocks-font-awesome-icons-container"
 					style={ containerStyle }
 				>
-					{ 'themeisle-icons' === attributes.library ? (
-						<Icon style={ iconStyle } />
-					) : (
+					{ 'themeisle-icons' === attributes.library ?
+						<Icon style={ iconStyle } /> :
 						<i
 							className={ `${ attributes.prefix } fa-${ attributes.icon }` }
 							style={ iconStyle }
 						>
 						</i>
-					) }
+					}
 				</span>
 			</p>
 		</Fragment>

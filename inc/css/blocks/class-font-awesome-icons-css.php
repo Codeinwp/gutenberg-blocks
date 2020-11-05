@@ -125,10 +125,10 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 					if ( isset( $attr['padding'] ) ) {
 						$style .= '	padding: ' . $this->get_attr_value( $attr['padding'] ) . 'px;' . "\n";
 					}
-				}
 
-				if ( isset( $attr['borderRadius'] ) ) {
-					$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . '%;' . "\n";
+					if ( isset( $attr['borderRadius'] ) ) {
+						$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . '%;' . "\n";
+					}
 				}
 
 				if ( isset( $attr['fontSize'] ) ) {

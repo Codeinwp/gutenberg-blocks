@@ -18,6 +18,19 @@
 	}
 
 	.wp-block-themeisle-blocks-button {
+		svg {
+			fill: currentColor;
+			display: inline-block;
+			width: 16px;
+
+			&.margin-left {
+				margin-left: 10px;
+			}
+		
+			&.margin-right {
+				margin-right: 10px;
+			}
+		}
 
 		i {
 			&.margin-left {
