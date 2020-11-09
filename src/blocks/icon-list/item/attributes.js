@@ -11,6 +11,9 @@ const attributes = {
 	iconColor: {
 		type: 'string'
 	},
+	library: {
+		type: 'string'
+	},
 	iconPrefix: {
 		type: 'string'
 	},

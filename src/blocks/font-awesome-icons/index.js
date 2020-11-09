@@ -17,8 +17,8 @@ import edit from './edit.js';
 import save from './save.js';
 
 registerBlockType( 'themeisle-blocks/font-awesome-icons', {
-	title: __( 'Font Awesome Icons' ),
-	description: __( 'Share buttons for your website visitors to share content on any social sharing service.' ),
+	title: __( 'Icon' ),
+	description: __( 'Add icons from Font Awesome or ThemeIsle Icons library to your website.' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [

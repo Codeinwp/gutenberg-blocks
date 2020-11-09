@@ -19,6 +19,7 @@ import defaultAttributes from './attributes.js';
 import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Inspector from './inspector.js';
 
+
 const IDs = [];
 
 const Edit = ({

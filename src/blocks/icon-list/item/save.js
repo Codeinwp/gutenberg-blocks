@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 
 const { RichText } = wp.blockEditor;
+import themeIsleIcons from './../../../helpers/themeisle-icons.js';
 
 
 const Edit = ({
@@ -9,21 +10,37 @@ const Edit = ({
 }) => {
 
 	const iconClassName =  `${ attributes.iconPrefix } fa-${ attributes.icon }`;
+	const Icon = themeIsleIcons.icons[ attributes.icon ];
 
 	return (
 		<div
 			className={ className }
 			id={ attributes.id }
 		>
-			<i
-				className={
-					classnames(
-						iconClassName,
-						{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
-						{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
-					)
-				}
-			></i>
+			{
+				'themeisle-icons' === attributes.library && attributes.icon ? (
+					<Icon
+						className={
+							classnames(
+								iconClassName,
+								{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
+								{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
+							)
+						}
+
+					/>
+				) : (
+					<i
+						className={
+							classnames(
+								iconClassName,
+								{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
+								{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
+							)
+						}
+					></i>
+				)
+			}
 			<RichText.Content
 				tagName="p"
 				className={

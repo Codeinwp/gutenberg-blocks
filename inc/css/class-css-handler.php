@@ -50,7 +50,7 @@ class CSS_Handler extends Base_CSS {
 					'callback'            => array( $this, 'save_post_meta' ),
 					'args'                => array(
 						'id' => array(
-							'type'              => 'intval',
+							'type'              => 'integer',
 							'required'          => true,
 							'description'       => __( 'ID of the Post.', 'textdomain' ),
 							'validate_callback' => function ( $param, $request, $key ) {
@@ -74,7 +74,7 @@ class CSS_Handler extends Base_CSS {
 					'callback'            => array( $this, 'save_block_meta' ),
 					'args'                => array(
 						'id' => array(
-							'type'              => 'intval',
+							'type'              => 'integer',
 							'required'          => true,
 							'description'       => __( 'ID of the Reusable Block.', 'textdomain' ),
 							'validate_callback' => function ( $param, $request, $key ) {

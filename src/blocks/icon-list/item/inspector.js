@@ -39,6 +39,14 @@ const Inspector = ({
 		setHasCustomIcon( true );
 	};
 
+	const changeLibrary = value => {
+		setAttributes({
+			library: value,
+			icon: undefined,
+			iconPrefix: 'fab'
+		});
+	};
+
 	const onDefaultTitleColorChange = value => {
 		setAttributes({ titleColor: value });
 	};
@@ -56,8 +64,10 @@ const Inspector = ({
 				<Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
 					<IconPickerControl
 						label={ __( 'Icon Picker' ) }
+						library={ attributes.library }
 						prefix={ attributes.iconPrefix }
 						icon={ attributes.icon }
+						changeLibrary={ changeLibrary }
 						onChange={ changeIcon }
 					/>
 				</Suspense>

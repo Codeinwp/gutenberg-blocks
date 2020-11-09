@@ -27,11 +27,19 @@ const Inspector = ({
 	setAttributes
 }) => {
 
+	const changeLibrary = value => {
+		setAttributes({
+			defaultLibrary: value,
+			defaultIcon: undefined,
+			defaultPrefix: 'fab'
+		});
+	};
+
 	const changeIcon = value => {
 		if ( 'object' === typeof value ) {
 			setAttributes({
 				defaultIcon: value.name,
-				defaultIconPrefix: value.prefix
+				defaultPrefix: value.prefix
 			});
 		} else {
 			setAttributes({ defaultIcon: value });
@@ -63,8 +71,10 @@ const Inspector = ({
 				<Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
 					<IconPickerControl
 						label={ __( 'Icon Picker' ) }
-						prefix={ attributes.defaultIconPrefix }
+						library={ attributes.defaultLibrary }
+						prefix={ attributes.defaultPrefix }
 						icon={ attributes.defaultIcon }
+						changeLibrary={ changeLibrary }
 						onChange={ changeIcon }
 					/>
 				</Suspense>

@@ -52,6 +52,21 @@ class Icon_List_Item_CSS extends Base_CSS {
 			
 			$style .= '}' . "\n \n";
 			
+			if ( isset( $attr['size'] ) && isset( $attr['library'] ) ) {
+				if ( 'fontawesome' === $attr['library'] ) {
+					$style .= '#' . $attr['id'] . '  i {' . "\n";
+					$style .= '	font-size: ' . $this->get_attr_value( $attr['size'] ) . 'px;' . "\n";	
+					$style .= '}' . "\n \n";
+				}
+			}
+			
+			if ( isset( $attr['size'] ) && isset( $attr['library'] ) ) {
+				if ( 'themeisle-icons' === $attr['library'] ) {
+					$style .= '#' . $attr['id'] . '  svg {' . "\n";
+					$style .= '	width: ' . $this->get_attr_value( $attr['size'] ) . 'px;' . "\n";	
+					$style .= '}' . "\n \n";
+				}
+			}
 		}
 			
 		return $style;

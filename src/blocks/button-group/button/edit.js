@@ -3,7 +3,10 @@
 /**
  * External dependencies
  */
-import { css, jsx } from '@emotion/core';
+import {
+	css,
+	jsx
+} from '@emotion/core';
 import classnames from 'classnames';
 import hexToRgba from 'hex-rgba';
 
@@ -30,6 +33,7 @@ import defaultAttributes from './attributes.js';
 import Controls from './controls.js';
 import Inspector from './inspector.js';
 import defaults from '../../../plugins/options/global-defaults/defaults.js';
+import themeIsleIcons from './../../../helpers/themeisle-icons';
 
 const IDs = [];
 
@@ -152,7 +156,18 @@ const Edit = ({
 			border-color: ${ attributes.hoverBorder } !important;
 			${ attributes.boxShadow && `box-shadow: ${ attributes.hoverBoxShadowHorizontal }px ${ attributes.hoverBoxShadowVertical }px ${ attributes.hoverBoxShadowBlur }px ${ attributes.hoverBoxShadowSpread }px ${  hexToRgba( ( attributes.hoverBoxShadowColor ? attributes.hoverBoxShadowColor : '#000000' ), attributes.hoverBoxShadowColorOpacity ) } !important;` }
 		}
+
+		&:hover svg {
+			fill: ${ attributes.hoverColor } !important;
+		}
 	`;
+
+	const iconStyles = {
+		fill: attributes.color,
+		width: parentAttributes.fontSize && `${ parentAttributes.fontSize }px`
+	};
+
+	const Icon = themeIsleIcons.icons[ attributes.icon ];
 
 	return (
 		<Fragment>
@@ -182,15 +197,24 @@ const Edit = ({
 						css={ hoverStyles }
 					>
 						{ ( 'left' === attributes.iconType || 'only' === attributes.iconType ) && (
-							<i
-								className={ classnames(
-									attributes.prefix,
-									'fa-fw',
-									`fa-${ attributes.icon }`,
-									{ 'margin-right': 'left' === attributes.iconType }
-								) }
-							>
-							</i>
+							'themeisle-icons' === attributes.library && attributes.icon ? (
+								<Icon
+									className={ classnames(
+										{ 'margin-right': 'left' === attributes.iconType }
+									) }
+									style={ iconStyles }
+								/>
+							) : (
+								<i
+									className={ classnames(
+										attributes.prefix,
+										'fa-fw',
+										`fa-${ attributes.icon }`,
+										{ 'margin-right': 'left' === attributes.iconType }
+									) }
+								>
+								</i>
+							)
 						) }
 
 						{ 'only' !== attributes.iconType && (
@@ -204,7 +228,14 @@ const Edit = ({
 						) }
 
 						{ 'right' === attributes.iconType && (
-							<i className={ `${ attributes.prefix } fa-fw fa-${ attributes.icon } margin-left` }></i>
+							'themeisle-icons' === attributes.library && attributes.icon ? (
+								<Icon
+									className="margin-left"
+									style={ iconStyles }
+								/>
+							) : (
+								<i className={ `${ attributes.prefix } fa-fw fa-${ attributes.icon } margin-left` }></i>
+							)
 						) }
 					</div>
 				) : (

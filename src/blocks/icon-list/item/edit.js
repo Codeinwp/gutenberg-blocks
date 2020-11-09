@@ -20,6 +20,7 @@ const { RichText } = wp.blockEditor;
 import defaultAttributes from './attributes.js';
 import defaults from '../../../plugins/options/global-defaults/defaults.js';
 import Inspector from './inspector.js';
+import themeIsleIcons from './../../../helpers/themeisle-icons.js';
 
 const IDs = [];
 
@@ -111,6 +112,7 @@ const Edit = ({
 			iconClassName =  `${ parentAttributes.defaultIconPrefix } fa-${ parentAttributes.defaultIcon }`;
 
 			setAttributes({
+				library: parentAttributes.defaultLibrary,
 				icon: parentAttributes.defaultIcon,
 				iconPrefix: parentAttributes.defaultIconPrefix
 			});
@@ -150,6 +152,8 @@ const Edit = ({
 		setAttributes({ title: value });
 	};
 
+	const Icon = themeIsleIcons.icons[ attributes.icon ];
+
 	return (
 		<Fragment>
 			<Inspector
@@ -161,16 +165,35 @@ const Edit = ({
 				className={ className }
 				style={ itemStyle }
 			>
-				<i
-					className={
-						classnames(
-							iconClassName,
-							{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
-							{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
-						)
-					}
-					style={ iconStyle }
-				></i>
+				{
+					'themeisle-icons' === attributes.library && attributes.icon ? (
+						<Icon
+							className={
+								classnames(
+									iconClassName,
+									{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
+									{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
+								)
+							}
+							style={{
+								...iconStyle,
+								width: parentAttributes.defaultSize + 'px'
+							}}
+						/>
+					) : (
+						<i
+							className={
+								classnames(
+									iconClassName,
+									{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
+									{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
+								)
+							}
+							style={ iconStyle }
+						></i>
+					)
+				}
+
 				<RichText
 					tagName="p"
 					placeholder={ __( 'Write a title…' ) }

@@ -18,15 +18,11 @@ const Controls = ({
 	setAttributes,
 	isSelected
 }) => {
-	const changeAlignment = value => {
-		setAttributes({ align: value });
-	};
-
 	return (
 		<BlockControls>
 			<AlignmentToolbar
 				value={ attributes.align }
-				onChange={ changeAlignment }
+				onChange={ e => setAttributes({ align: e }) }
 				alignmentControls={ [
 					{
 						icon: 'editor-alignleft',

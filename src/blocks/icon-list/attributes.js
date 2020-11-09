@@ -2,6 +2,10 @@ const attributes = {
 	id: {
 		type: 'string'
 	},
+	defaultLibrary: {
+		type: 'string',
+		default: 'fontawesome'
+	},
 	defaultIconPrefix: {
 		type: 'string',
 		default: 'fab'

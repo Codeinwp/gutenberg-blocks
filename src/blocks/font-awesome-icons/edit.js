@@ -15,6 +15,7 @@ import defaultAttributes from './attributes.js';
 import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Controls from './controls.js';
 import Inspector from './inspector.js';
+import themeIsleIcons from './../../helpers/themeisle-icons';
 
 const IDs = [];
 
@@ -70,11 +71,18 @@ const Edit = ({
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
-	const iconStyle = {
+	let iconStyle = {
 		borderRadius: attributes.borderRadius + '%',
 		fontSize: attributes.fontSize + 'px',
 		padding: attributes.padding + 'px'
 	};
+
+	if ( 'themeisle-icons' === attributes.library ) {
+		iconStyle = {
+			fill: attributes.textColor,
+			padding: attributes.padding + 'px'
+		};
+	}
 
 	const containerStyle = {
 		color: attributes.textColor,
@@ -83,9 +91,11 @@ const Edit = ({
 		borderRadius: attributes.borderRadius + '%',
 		borderStyle: 'solid',
 		borderWidth: attributes.borderSize + 'px',
-		display: 'inline-block',
-		margin: attributes.margin + 'px'
+		margin: attributes.margin + 'px',
+		width: attributes.fontSize + attributes.padding * 2 + attributes.borderSize * 2
 	};
+
+	const Icon = themeIsleIcons.icons[ attributes.icon ];
 
 	return (
 		<Fragment>
@@ -101,11 +111,17 @@ const Edit = ({
 			/>
 
 			<style>
-				{ `#${ attributes.id } .${ className }-container:hover {
+				{
+					`#${ attributes.id } .${ className }-container:hover {
 						color: ${ attributes.textColorHover ? attributes.textColorHover : attributes.textColor } !important;
 						background: ${ attributes.backgroundColorHover ? attributes.backgroundColorHover : attributes.backgroundColor } !important;
 						border-color: ${ attributes.borderColorHover ? attributes.borderColorHover : attributes.borderColor } !important;
-					}` }
+					}
+					
+					#${ attributes.id } .${ className }-container:hover svg {
+						fill: ${ attributes.textColorHover ? attributes.textColorHover : attributes.textColor } !important;
+					}`
+				}
 			</style>
 
 			<p
@@ -117,11 +133,14 @@ const Edit = ({
 					className="wp-block-themeisle-blocks-font-awesome-icons-container"
 					style={ containerStyle }
 				>
-					<i
-						className={ `${ attributes.prefix } fa-${ attributes.icon }` }
-						style={ iconStyle }
-					>
-					</i>
+					{ 'themeisle-icons' === attributes.library ?
+						<Icon style={ iconStyle } /> :
+						<i
+							className={ `${ attributes.prefix } fa-${ attributes.icon }` }
+							style={ iconStyle }
+						>
+						</i>
+					}
 				</span>
 			</p>
 		</Fragment>

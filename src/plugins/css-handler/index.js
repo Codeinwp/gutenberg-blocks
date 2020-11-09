@@ -25,15 +25,25 @@ subscribe( () => {
 		isSavingPost,
 		isPublishingPost,
 		isAutosavingPost,
-		__experimentalGetReusableBlocks,
 		__experimentalIsSavingReusableBlock
 	} = select( 'core/editor' );
+
+	const { __experimentalReusableBlocks } = select( 'core/block-editor' ).getSettings();
+
+	const { isSavingEntityRecord } = select( 'core' );
+
+	let isSavingReusableBlock;
+
+	if ( __experimentalIsSavingReusableBlock ) {
+		isSavingReusableBlock = id => __experimentalIsSavingReusableBlock( id );
+	} else {
+		isSavingReusableBlock = id => isSavingEntityRecord( 'postType', 'wp_block', id );
+	}
 
 	const isAutoSaving = isAutosavingPost();
 	const isPublishing = isPublishingPost();
 	const isSaving = isSavingPost();
-	const isSavingReusableBlock = id => __experimentalIsSavingReusableBlock( id );
-	const getReusableBlocks = __experimentalGetReusableBlocks();
+	const getReusableBlocks = __experimentalReusableBlocks || [];
 	const postPublished = isCurrentPostPublished();
 
 	getReusableBlocks.map( block => {

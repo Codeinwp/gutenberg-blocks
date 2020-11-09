@@ -37,6 +37,14 @@ const Inspector = ({
 }) => {
 	const [ hover, setHover ] = useState( false );
 
+	const changeLibrary = value => {
+		setAttributes({
+			library: value,
+			icon: 'fontawesome' === value ? 'themeisle' : 'balance',
+			prefix: 'fab'
+		});
+	};
+
 	const changeIcon = value => {
 		if ( 'object' === typeof value ) {
 			setAttributes({
@@ -48,50 +56,6 @@ const Inspector = ({
 		}
 	};
 
-	const changeFontSize = value => {
-		setAttributes({ fontSize: value });
-	};
-
-	const changePadding = value => {
-		setAttributes({ padding: value });
-	};
-
-	const changeMargin = value => {
-		setAttributes({ margin: value });
-	};
-
-	const changeBackgroundColor = value => {
-		setAttributes({ backgroundColor: value });
-	};
-
-	const changeTextColor = value => {
-		setAttributes({ textColor: value });
-	};
-
-	const changeBorderColor = value => {
-		setAttributes({ borderColor: value });
-	};
-
-	const changeBackgroundColorHover = value => {
-		setAttributes({ backgroundColorHover: value });
-	};
-
-	const changeTextColorHover = value => {
-		setAttributes({ textColorHover: value });
-	};
-
-	const changeBorderColorHover = value => {
-		setAttributes({ borderColorHover: value });
-	};
-
-	const changeBorderSize = value => {
-		setAttributes({ borderSize: value });
-	};
-
-	const changeBorderRadius = value => {
-		setAttributes({ borderRadius: value });
-	};
-
 	return (
 		<InspectorControls>
 			<PanelBody
@@ -100,8 +64,10 @@ const Inspector = ({
 				<Suspense fallback={<Placeholder><Spinner/></Placeholder>}>
 					<IconPickerControl
 						label={ __( 'Icon Picker' ) }
+						library={ attributes.library }
 						prefix={ attributes.prefix }
 						icon={ attributes.icon }
+						changeLibrary={ changeLibrary }
 						onChange={ changeIcon }
 					/>
 				</Suspense>
@@ -115,7 +81,7 @@ const Inspector = ({
 					label={ __( 'Icon Size' ) }
 					value={ attributes.fontSize || '' }
 					initialPosition={ 16 }
-					onChange={ changeFontSize }
+					onChange={ e => setAttributes({ fontSize: e }) }
 					min={ 12 }
 					max={ 140 }
 				/>
@@ -124,7 +90,7 @@ const Inspector = ({
 					label={ __( 'Padding' ) }
 					value={ attributes.padding || '' }
 					initialPosition={ 5 }
-					onChange={ changePadding }
+					onChange={ e => setAttributes({ padding: e }) }
 					min={ 0 }
 					max={ 100 }
 				/>
@@ -133,7 +99,7 @@ const Inspector = ({
 					label={ __( 'Margin' ) }
 					value={ attributes.margin || '' }
 					initialPosition={ 5 }
-					onChange={ changeMargin }
+					onChange={ e => setAttributes({ margin: e }) }
 					min={ 0 }
 					max={ 100 }
 				/>
@@ -172,7 +138,7 @@ const Inspector = ({
 							<ColorPalette
 								label={ 'Hover Background' }
 								value={ attributes.backgroundColorHover }
-								onChange={ changeBackgroundColorHover }
+								onChange={ e => setAttributes({ backgroundColorHover: e }) }
 							/>
 						</ColorBaseControl>
 
@@ -183,7 +149,7 @@ const Inspector = ({
 							<ColorPalette
 								label={ 'Hover Icon' }
 								value={ attributes.textColorHover }
-								onChange={ changeTextColorHover }
+								onChange={ e => setAttributes({ textColorHover: e }) }
 							/>
 						</ColorBaseControl>
 
@@ -194,7 +160,7 @@ const Inspector = ({
 							<ColorPalette
 								label={ 'Hover Border' }
 								value={ attributes.borderColorHover }
-								onChange={ changeBorderColorHover }
+								onChange={ e => setAttributes({ borderColorHover: e }) }
 							/>
 						</ColorBaseControl>
 
@@ -214,7 +180,7 @@ const Inspector = ({
 							<ColorPalette
 								label={ 'Background' }
 								value={ attributes.backgroundColor }
-								onChange={ changeBackgroundColor }
+								onChange={ e => setAttributes({ backgroundColor: e }) }
 							/>
 						</ColorBaseControl>
 
@@ -225,7 +191,7 @@ const Inspector = ({
 							<ColorPalette
 								label={ 'Icon' }
 								value={ attributes.textColor }
-								onChange={ changeTextColor }
+								onChange={ e => setAttributes({ textColor: e }) }
 							/>
 						</ColorBaseControl>
 
@@ -236,7 +202,7 @@ const Inspector = ({
 							<ColorPalette
 								label={ 'Border' }
 								value={ attributes.borderColor }
-								onChange={ changeBorderColor }
+								onChange={ e => setAttributes({ borderColor: e }) }
 							/>
 						</ColorBaseControl>
 
@@ -257,7 +223,7 @@ const Inspector = ({
 				<RangeControl
 					label={ __( 'Border Size' ) }
 					value={ attributes.borderSize }
-					onChange={ changeBorderSize }
+					onChange={ e => setAttributes({ borderSize: e }) }
 					min={ 0 }
 					max={ 120 }
 				/>
@@ -265,7 +231,7 @@ const Inspector = ({
 				<RangeControl
 					label={ __( 'Border Radius' ) }
 					value={ attributes.borderRadius }
-					onChange={ changeBorderRadius }
+					onChange={ e => setAttributes({ borderRadius: e }) }
 					min={ 0 }
 					max={ 100 }
 				/>

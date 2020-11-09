@@ -71,17 +71,31 @@ class Icon_List_CSS extends Base_CSS {
 			if ( isset( $attr['defaultIconColor'] ) ) {
 				$style .= '	color: ' . $this->get_attr_value( $attr['defaultIconColor'] ) . ';' . "\n";
 			}
-			if ( isset( $attr['defaultSize'] ) ) {
-				$style .= '	font-size: ' . $this->get_attr_value( $attr['defaultSize'] ) . 'px;' . "\n";
-			}
+			// if ( isset( $attr['defaultSize'] ) && isset( $attr['defaultLibrary'] ) ) {
+			// 	if ( 'fontawesome' === $attr['defaultLibrary'] ) {
+			// 		$style .= '	font-size: ' . $this->get_attr_value( $attr['defaultSize'] ) . 'px;' . "\n";
+			// 	}
+			// }
+			// if ( isset( $attr['defaultSize'] ) && isset( $attr['defaultLibrary'] ) ) {
+			// 	if ( 'themeisle-icons' === $attr['defaultLibrary'] ) {
+			// 		$style .= '	width: ' . $this->get_attr_value( $attr['defaultSize'] ) . 'px;' . "\n";
+			// 	}
+			// }
 			$style .= '}' . "\n \n";
 
 			// Icon Custom.
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-icon-custom {' . "\n";
-			if ( isset( $attr['defaultSize'] ) ) {
-				$style .= '	font-size: ' . $this->get_attr_value( $attr['defaultSize'] ) . 'px;' . "\n";
-			}
-			$style .= '}' . "\n \n";
+			// $style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-icon-custom {' . "\n";
+			// if ( isset( $attr['defaultSize'] ) && isset( $attr['defaultLibrary'] ) ) {
+			// 	if ( 'fontawesome' === $attr['defaultLibrary'] ) {
+			// 		$style .= '	font-size: ' . $this->get_attr_value( $attr['defaultSize'] ) . 'px;' . "\n";
+			// 	}
+			// }
+			// if ( isset( $attr['defaultSize'] ) && isset( $attr['defaultLibrary'] ) ) {
+			// 	if ( 'themeisle-icons' === $attr['defaultLibrary'] ) {
+			// 		$style .= '	width: ' . $this->get_attr_value( $attr['defaultSize'] ) . 'px;' . "\n";
+			// 	}
+			// }
+			// $style .= '}' . "\n \n";
 			
 		}
 			
