@@ -77,6 +77,12 @@ class Button_Group_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n";
 
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button .wp-block-button__link svg {' . "\n";
+			if ( isset( $attr['fontSize'] ) ) {
+				$style .= '	width: ' . $this->get_attr_value( ( isset( $attr['fontSize'] ) ? $attr['fontSize'] : null ) ) . 'px;' . "\n";
+			}
+			$style .= '}' . "\n \n";
+
 			$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button:first-child {' . "\n";
 				$style .= '	margin-left: 0;' . "\n";
 			$style     .= '}' . "\n \n";

@@ -293,9 +293,10 @@
 			display: inline-block;
 			font-size: 12px;
 
-			svg {
+			.dashicon {
 				display: block;
 				margin: 0 auto;
+				font-size: 20px;
 			}
 		}
 	}
@@ -315,6 +316,7 @@
 
 .wp-block-themeisle-icon-buttom-group {
 	display: flex;
+	margin-top: 12px;
 
 	&.components-button-group {
 		.components-button {

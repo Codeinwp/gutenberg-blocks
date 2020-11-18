@@ -43,7 +43,7 @@ class Button_CSS extends Base_CSS {
 				$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['background'] ) ? $attr['background'] : $attr['backgroundGradient'] ) ) . ';' . "\n";
 			}
 
-			if ( isset( $attr['borderSize'] ) && ! empty( $attr['borderSize'] ) ) {
+			if ( isset( $attr['borderSize'] ) ) {
 				$style .= '	border-width: ' . $this->get_attr_value( ( isset( $attr['borderSize'] ) ? $attr['borderSize'] : null ) ) . 'px;' . "\n";
 
 				if ( isset( $attr['border'] ) && ! empty( $attr['border'] ) ) {
@@ -76,6 +76,18 @@ class Button_CSS extends Base_CSS {
 
 			if ( isset( $attr['boxShadow'] ) && true === $attr['boxShadow'] ) {
 				$style .= '	box-shadow: ' . $this->get_attr_value( ( isset( $attr['hoverBoxShadowHorizontal'] ) ? $attr['hoverBoxShadowHorizontal'] : null ), 0 ) . 'px ' . $this->get_attr_value( ( isset( $attr['hoverBoxShadowVertical'] ) ? $attr['hoverBoxShadowVertical'] : null ), 0 ) . 'px ' . $this->get_attr_value( ( isset( $attr['hoverBoxShadowBlur'] ) ? $attr['hoverBoxShadowBlur'] : null ), 5 ) . 'px ' . $this->get_attr_value( ( isset( $attr['hoverBoxShadowSpread'] ) ? $attr['hoverBoxShadowSpread'] : null ), 1 ) . 'px ' . $this->hex2rgba( $this->get_attr_value( ( isset( $attr['hoverBoxShadowColor'] ) ? $attr['hoverBoxShadowColor'] : null ), '#000' ), $this->get_attr_value( ( isset( $attr['hoverBoxShadowColorOpacity'] ) ? $attr['hoverBoxShadowColorOpacity'] : null ), '50' ) / 100 ) . ';' . "\n";
+			}
+			$style .= '}' . "\n \n";
+
+			$style .= '#' . $attr['id'] . ' .wp-block-button__link svg {' . "\n";
+			if ( isset( $attr['color'] ) && ! empty( $attr['color'] ) ) {
+				$style .= '	fill: ' . $this->get_attr_value( ( isset( $attr['color'] ) ? $attr['color'] : null ) ) . ';' . "\n";
+			}
+			$style .= '}' . "\n \n";
+
+			$style .= '#' . $attr['id'] . ' .wp-block-button__link:hover svg {' . "\n";
+			if ( isset( $attr['hoverColor'] ) && ! empty( $attr['hoverColor'] ) ) {
+				$style .= '	fill: ' . $this->get_attr_value( ( isset( $attr['hoverColor'] ) ? $attr['hoverColor'] : null ) ) . ';' . "\n";
 			}
 			$style .= '}' . "\n \n";
 		}

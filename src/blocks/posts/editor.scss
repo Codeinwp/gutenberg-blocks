@@ -234,6 +234,7 @@
 	}
 
 	.wp-block-themeisle-blocks-posts-grid-builder-control-area {
+		background: #ffffff;
 		border: 1px solid #d5dadf;
 		border-top: none;
 		padding: 10px 15px;
@@ -241,6 +242,14 @@
 
 		&.opened {
 			display: block;
+
+			.components-base-control {
+				margin: 24px 0;
+
+				&:first-child {
+					margin-top: 8px;
+				}
+			}
 		}
 	}
 }
