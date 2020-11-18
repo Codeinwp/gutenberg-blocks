@@ -231,7 +231,7 @@ export const SortableList = SortableContainer( ({
 		<div>
 			{ template.map( ( value, index ) => (
 				<SortableItemContainer
-					key={`item-${ index }`}
+					key={`item-${ value }`}
 					index={ index }
 					value={ value }
 					getFields={ getFields }
