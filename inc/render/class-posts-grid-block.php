@@ -157,16 +157,13 @@ class Posts_Grid_Block extends Base_Block {
 
 			$list_items_markup .= '<div class="wp-block-themeisle-blocks-posts-grid-post-blog wp-block-themeisle-blocks-posts-grid-post-plain"><div class="wp-block-themeisle-blocks-posts-grid-post">';
 
-            $image_id = get_post_thumbnail_id();
-
-
 			if ( isset( $attributes['displayFeaturedImage'] ) && $attributes['displayFeaturedImage'] ) {
 				if ( $thumbnail ) {
 					$list_items_markup .= sprintf(
-						'<div class="wp-block-themeisle-blocks-posts-grid-post-image"><a href="%1$s"><img src="%2$s" srcset="%3$s" sizes="100vw"/></a></div>',
+						'<div class="wp-block-themeisle-blocks-posts-grid-post-image"><a href="%1$s">%2$s</a></div>',
 						esc_url( get_the_permalink( $id ) ),
-                        wp_get_attachment_image_url( $image_id, $size ),
-                        wp_get_attachment_image_srcset( $image_id, array( 300, 200  ) )
+						wp_get_attachment_image( get_post_thumbnail_id( $id ), $size ),
+						esc_html( get_the_title( $id ) )
 					);
 				}
 			}
