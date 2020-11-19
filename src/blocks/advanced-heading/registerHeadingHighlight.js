@@ -1,4 +1,9 @@
 /**
+ * External dependencies.
+ */
+import { brush } from '@wordpress/icons';
+
+/**
  * WordPress dependencies.
  */
 const { __ } = wp.i18n;
@@ -15,13 +20,13 @@ const {
 
 const { Fragment } = wp.element;
 
-const name = 'themeisle-blocks/mark';
+const name = 'themeisle-blocks/highlight';
 
 registerFormatType( name, {
 	name,
 	title: __( 'Highlight' ),
-	tagName: 'mark',
-	className: null,
+	tagName: 'span',
+	className: 'highlight',
 
 	edit: ({ isActive, value, onChange }) => {
 		const onToggle = () => onChange( toggleFormat( value, { type: name }) );
@@ -30,17 +35,17 @@ registerFormatType( name, {
 			<Fragment>
 				<RichTextShortcut
 					type="primary"
-					character="m"
+					character="h"
 					onUse={ onToggle }
 				/>
 
 				<RichTextToolbarButton
-					icon="admin-customizer"
+					icon={ brush }
 					title={ __( 'Highlight' ) }
 					onClick={ onToggle }
 					isActive={ isActive }
 					shortcutType="access"
-					shortcutCharacter="m"
+					shortcutCharacter="h"
 				/>
 			</Fragment>
 		);

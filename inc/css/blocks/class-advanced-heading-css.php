@@ -102,7 +102,8 @@ class Advanced_Heading_CSS extends Base_CSS {
 			$style .= '}' . "\n \n";
 
 			if ( isset( $attr['highlightColor'] ) || isset( $attr['highlightBackground'] ) ) {
-				$style .= '#' . $attr['id'] . ' mark {' . "\n";
+				$style .= '#' . $attr['id'] . ' mark,' . "\n";
+				$style .= '#' . $attr['id'] . ' .highlight {' . "\n";
 				if ( isset( $attr['highlightColor'] ) ) {
 					$style .= '	color: ' . $this->get_attr_value( ( isset( $attr['highlightColor'] ) ? $attr['highlightColor'] : null ) ) . ';' . "\n";
 				}
