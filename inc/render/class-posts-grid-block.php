@@ -160,9 +160,9 @@ class Posts_Grid_Block extends Base_Block {
 			if ( isset( $attributes['displayFeaturedImage'] ) && $attributes['displayFeaturedImage'] ) {
 				if ( $thumbnail ) {
 					$list_items_markup .= sprintf(
-						'<div class="wp-block-themeisle-blocks-posts-grid-post-image"><a href="%1$s"><img src="%2$s" alt="%3$s" /></a></div>',
+						'<div class="wp-block-themeisle-blocks-posts-grid-post-image"><a href="%1$s">%2$s</a></div>',
 						esc_url( get_the_permalink( $id ) ),
-						esc_url( $thumbnail[0] ),
+						wp_get_attachment_image( get_post_thumbnail_id( $id ), $size ),
 						esc_html( get_the_title( $id ) )
 					);
 				}
