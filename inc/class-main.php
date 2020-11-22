@@ -258,7 +258,7 @@ class Main {
 					$post = get_the_ID();
 				}
 
-				$blocks  = parse_blocks( $content );
+				$blocks = parse_blocks( $content );
 	
 				$used_blocks = $this->loop_blocks(
 					$blocks,
