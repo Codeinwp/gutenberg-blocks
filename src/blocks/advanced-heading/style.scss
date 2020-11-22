@@ -2,4 +2,9 @@ span {
 	&.wp-block-themeisle-blocks-advanced-heading {
 		display: block;
 	}
+
+	&.highlight {
+		background-color: yellow;
+		color: black;
+	}
 }

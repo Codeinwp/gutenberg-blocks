@@ -1,8 +1,3 @@
-/**
- * Helper Functions
- */
-const { __ } = wp.i18n;
-
 // HTML to Plaintext
 export const unescapeHTML = value => {
 	const htmlNode = document.createElement( 'div' );
@@ -16,11 +11,12 @@ export const unescapeHTML = value => {
 // Format Date
 export const formatDate = date => {
 	const monthNames = [
-		__( 'January' ), __( 'February' ), __( 'March' ),
-		__( 'April' ), __( 'May' ), __( 'June' ), __( 'July' ),
-		__( 'August' ), __( 'September' ), __( 'October' ),
-		__( 'November' ), __( 'December' )
+		'January', 'February', 'March',
+		'April', 'May', 'June', 'July',
+		'August', 'September', 'October',
+		'November', 'December'
 	];
+
 	date = new Date( date );
 	const day = date.getDate();
 	const monthIndex = date.getMonth();
@@ -51,12 +47,10 @@ export const range = ( start, end, step ) => {
 	}
 
 	if ( 'number' === typeofStart ) {
-
 		while ( 0 < step ? end >= start : end <= start ) {
 			range.push( start );
 			start += step;
 		}
-
 	} else if ( 'string' === typeofStart ) {
 		if ( 1 != start.length || 1 != end.length ) {
 			throw TypeError( 'Only strings with one character are supported.' );
@@ -69,13 +63,11 @@ export const range = ( start, end, step ) => {
 			range.push( String.fromCharCode( start ) );
 			start += step;
 		}
-
 	} else {
 		throw TypeError( 'Only string and number types are supported' );
 	}
 
 	return range;
-
 };
 
 // Easing functions for animation
