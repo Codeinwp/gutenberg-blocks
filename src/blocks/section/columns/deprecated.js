@@ -7,6 +7,8 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies
  */
+const { omit } = lodash;
+
 const { InnerBlocks } = wp.blockEditor;
 
 const {
@@ -1277,6 +1279,181 @@ const deprecated = [ {
 		align: [ 'wide', 'full' ],
 		html: false
 	},
+
+	save: ({
+		attributes,
+		className
+	}) => {
+		const Tag = attributes.columnsHTMLTag;
+
+		const desktopLayout = attributes.hide ? '' : `has-desktop-${ attributes.layout }-layout`;
+		const tabletLayout = attributes.hideTablet ? '' : `has-tablet-${ attributes.layoutTablet }-layout`;
+		const mobileLayout = attributes.hideMobile ? '' : `has-mobile-${ attributes.layoutMobile }-layout`;
+
+		const classes = classnames(
+			className,
+			`has-${ attributes.columns }-columns`,
+			desktopLayout,
+			tabletLayout,
+			mobileLayout,
+			{ 'hide-in-desktop': attributes.hide },
+			{ 'hide-in-tablet': attributes.hideTablet },
+			{ 'hide-in-mobile': attributes.hideMobile },
+			{ 'has-reverse-columns-tablet': ( attributes.reverseColumnsTablet && ! attributes.hideTablet && 'collapsedRows' === attributes.layoutTablet ) },
+			{ 'has-reverse-columns-mobile': ( attributes.reverseColumnsMobile && ! attributes.hideMobile && 'collapsedRows' === attributes.layoutMobile ) },
+			`has-${ attributes.columnsGap }-gap`,
+			`has-vertical-${ attributes.verticalAlign }`
+		);
+
+		return (
+			<Tag
+				className={ classes }
+				id={ attributes.id }
+			>
+				<div className="wp-block-themeisle-blocks-advanced-columns-overlay"></div>
+
+				<SeparatorsNew
+					type="top"
+					front={ true }
+					style={ attributes.dividerTopType }
+					fill={ attributes.dividerTopColor }
+					invert={ attributes.dividerTopInvert }
+				/>
+
+				<div className="innerblocks-wrap">
+					<InnerBlocks.Content />
+				</div>
+
+				<SeparatorsNew
+					type="bottom"
+					front={ true }
+					style={ attributes.dividerBottomType }
+					fill={ attributes.dividerBottomColor }
+					invert={ attributes.dividerBottomInvert }
+				/>
+			</Tag>
+		);
+	}
+}, {
+	attributes: {
+		...attributes,
+		paddingTablet: {
+			type: 'number'
+		},
+		paddingMobile: {
+			type: 'number'
+		},
+		paddingTopTablet: {
+			type: 'number'
+		},
+		paddingTopMobile: {
+			type: 'number'
+		},
+		paddingRightTablet: {
+			type: 'number'
+		},
+		paddingRightMobile: {
+			type: 'number'
+		},
+		paddingBottomTablet: {
+			type: 'number'
+		},
+		paddingBottomMobile: {
+			type: 'number'
+		},
+		paddingLeftTablet: {
+			type: 'number'
+		},
+		paddingLeftMobile: {
+			type: 'number'
+		},
+		marginTablet: {
+			type: 'number'
+		},
+		marginMobile: {
+			type: 'number'
+		},
+		marginTopTablet: {
+			type: 'number'
+		},
+		marginTopMobile: {
+			type: 'number'
+		},
+		marginBottomTablet: {
+			type: 'number'
+		},
+		marginBottomMobile: {
+			type: 'number'
+		},
+		reverseColumnsTablet: {
+			type: 'boolean',
+			default: false
+		},
+		reverseColumnsMobile: {
+			type: 'boolean',
+			default: false
+		}
+	},
+
+	supports: {
+		align: [ 'wide', 'full' ],
+		html: false
+	},
+
+	migrate: ( oldAttributes ) => {
+		let backgroundGradient = '';
+		let backgroundOverlayGradient = '';
+
+		if ( 'gradient' === oldAttributes.backgroundType ) {
+			let direction = '';
+
+			if ( 'linear' === oldAttributes.backgroundGradientType ) {
+				direction = `${ oldAttributes.backgroundGradientAngle }deg, `;
+			}
+
+			backgroundGradient = `${ oldAttributes.backgroundGradientType }-gradient(${ direction }${ hexToRgba( oldAttributes.backgroundGradientFirstColor ) || 'rgba( 0, 0, 0, 0 )' } ${ oldAttributes.backgroundGradientFirstLocation }%, ${ hexToRgba( oldAttributes.backgroundGradientSecondColor ) || 'rgba( 0, 0, 0, 0 )' } ${ oldAttributes.backgroundGradientSecondLocation }%)`;
+		}
+
+		if ( 'gradient' === oldAttributes.backgroundOverlayType ) {
+			let direction = '';
+
+			if ( 'linear' === oldAttributes.backgroundOverlayGradientType ) {
+				direction = `${ oldAttributes.backgroundOverlayGradientAngle }deg, `;
+			}
+
+			backgroundOverlayGradient = `${ oldAttributes.backgroundOverlayGradientType }-gradient(${ direction }${ hexToRgba( oldAttributes.backgroundOverlayGradientFirstColor ) || 'rgba( 0, 0, 0, 0 )' } ${ oldAttributes.backgroundOverlayGradientFirstLocation }%, ${ hexToRgba( oldAttributes.backgroundOverlayGradientSecondColor ) || 'rgba( 0, 0, 0, 0 )' } ${ oldAttributes.backgroundOverlayGradientSecondLocation }%)`;
+		}
+
+		const attributes = {
+			...omit(
+				oldAttributes,
+				[
+					'backgroundGradientFirstColor',
+					'backgroundGradientFirstLocation',
+					'backgroundGradientSecondColor',
+					'backgroundGradientSecondLocation',
+					'backgroundGradientType',
+					'backgroundGradientAngle',
+					'backgroundGradientPosition',
+					'backgroundOverlayGradientFirstColor',
+					'backgroundOverlayGradientFirstLocation',
+					'backgroundOverlayGradientSecondColor',
+					'backgroundOverlayGradientSecondLocation',
+					'backgroundOverlayGradientType',
+					'backgroundOverlayGradientAngle',
+					'backgroundOverlayGradientPosition'
+				]
+			),
+			backgroundGradient,
+			backgroundOverlayGradient
+		};
+
+		return {
+			...attributes
+		};
+	},
+
+	isEligible: attributes => ( 'gradient' === attributes.backgroundType && undefined !== attributes.backgroundGradientFirstColor ) || ( 'gradient' === attributes.backgroundOverlayType && undefined !== attributes.backgroundOverlayGradientFirstColor ),
 
 	save: ({
 		attributes,
