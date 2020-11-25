@@ -1,3 +1,7 @@
+##### [Version 1.5.10](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.9...v1.5.10) (2020-11-25)
+
+- Do not add the background image to the Section when the URL is not set.
+
 ##### [Version 1.5.9](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.8...v1.5.9) (2020-11-22)
 
 - Responsive Images in Posts Block.
