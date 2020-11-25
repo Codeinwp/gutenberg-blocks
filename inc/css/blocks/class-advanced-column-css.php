@@ -75,7 +75,7 @@ class Advanced_Column_CSS extends Base_CSS {
 			}
 
 			if ( 'image' === $this->get_attr_value( ( isset( $attr['backgroundType'] ) ? $attr['backgroundType'] : null ), 'color' ) ) {
-				if ( isset( $attr['backgroundImageURL'] ) ) {
+				if ( ! empty( $attr['backgroundImageURL'] ) ) {
 					$style .= '	background-image: url( ' . $this->get_attr_value( ( isset( $attr['backgroundImageURL'] ) ? $attr['backgroundImageURL'] : null ) ) . ' );' . "\n";
 				}
 

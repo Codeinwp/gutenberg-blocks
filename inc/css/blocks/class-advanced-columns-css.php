@@ -75,7 +75,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 			}
 
 			if ( 'image' === $this->get_attr_value( ( isset( $attr['backgroundType'] ) ? $attr['backgroundType'] : null ), 'color' ) ) {
-				if ( isset( $attr['backgroundImageURL'] ) ) {
+				if ( ! empty( $attr['backgroundImageURL'] ) ) {
 					$style .= '	background-image: url( ' . $this->get_attr_value( ( isset( $attr['backgroundImageURL'] ) ? $attr['backgroundImageURL'] : null ) ) . ' );' . "\n";
 				}
 
@@ -148,7 +148,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 			}
 	
 			if ( 'image' === $this->get_attr_value( ( isset( $attr['backgroundOverlayType'] ) ? $attr['backgroundOverlayType'] : null ), 'color' ) ) {
-				if ( isset( $attr['backgroundOverlayImageURL'] ) ) {
+				if ( ! empty( $attr['backgroundOverlayImageURL'] ) ) {
 					$style .= '	background-image: url( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayImageURL'] ) ? $attr['backgroundOverlayImageURL'] : null ) ) . ' );' . "\n";
 					$style .= '	opacity: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayOpacity'] ) ? $attr['backgroundOverlayOpacity'] : null ), 50 ) / 100 . ';' . "\n";
 				}
