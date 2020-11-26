@@ -12,7 +12,7 @@ const attributes = {
 	},
 	defaultIcon: {
 		type: 'string',
-		default: 'themeisle'
+		default: 'angle-right'
 	},
 	defaultTitleColor: {
 		type: 'string'
@@ -25,7 +25,8 @@ const attributes = {
 		default: 20
 	},
 	gap: {
-		type: 'number'
+		type: 'number',
+		default: 5
 	}
 };
 

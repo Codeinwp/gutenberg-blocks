@@ -1,4 +1,13 @@
 /**
+ * External dependencies.
+ */
+import {
+	alignCenter,
+	alignLeft,
+	alignRight
+} from '@wordpress/icons';
+
+/**
  * WordPress dependencies.
  */
 const { __ } = wp.i18n;
@@ -19,17 +28,17 @@ const Controls = ({
 				onChange={ e => setAttributes({ align: e }) }
 				alignmentControls={ [
 					{
-						icon: 'editor-alignleft',
+						icon: alignLeft,
 						title: __( 'Align left' ),
 						align: 'left'
 					},
 					{
-						icon: 'editor-aligncenter',
+						icon: alignCenter,
 						title: __( 'Align center' ),
 						align: 'center'
 					},
 					{
-						icon: 'editor-alignright',
+						icon: alignRight,
 						title: __( 'Align right' ),
 						align: 'right'
 					}

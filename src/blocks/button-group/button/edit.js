@@ -6,7 +6,7 @@
 import {
 	css,
 	jsx
-} from '@emotion/core';
+} from '@emotion/react';
 import classnames from 'classnames';
 import hexToRgba from 'hex-rgba';
 

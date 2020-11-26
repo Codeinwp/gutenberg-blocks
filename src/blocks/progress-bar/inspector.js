@@ -83,7 +83,6 @@ const Inspector = ({
 		<InspectorControls>
 			<PanelBody
 				title={ __( 'Settings' ) }
-				initialOpen={ true }
 			>
 				<TextControl
 					label={ __( 'Title' ) }
@@ -139,6 +138,7 @@ const Inspector = ({
 
 			<PanelBody
 				title={ __( 'Style' ) }
+				initialOpen={ false }
 			>
 				<RangeControl
 					label={ __( 'Height' ) }

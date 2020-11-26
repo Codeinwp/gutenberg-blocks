@@ -94,7 +94,7 @@ class Main {
 	 */
 	public function init() {
 		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
-			define( 'THEMEISLE_BLOCKS_VERSION', '1.5.6' );
+			define( 'THEMEISLE_BLOCKS_VERSION', '1.5.10' );
 			define( 'THEMEISLE_BLOCKS_DEV', false );
 		}
 
@@ -237,6 +237,19 @@ class Main {
 	 * @param null $post Current post.
 	 */
 	public function enqueue_dependencies( $post = null ) {
+		$content = get_the_content( $post );
+
+		if ( strpos( $content, '<!-- wp:' ) === false ) {
+			return false;
+		}
+
+		wp_enqueue_style(
+			'themeisle-block_styles',
+			plugin_dir_url( $this->get_dir() ) . 'build/style.css',
+			[],
+			self::$assets_version
+		);
+
 		if ( ! self::$is_fa_loaded && ( has_block( 'themeisle-blocks/button-group', $post ) || has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/sharing-icons', $post ) || has_block( 'themeisle-blocks/plugin-cards', $post ) || has_block( 'block', $post ) ) ) {
 			$has_fa = false;
 
@@ -244,9 +257,8 @@ class Main {
 				if ( empty( $post ) ) {
 					$post = get_the_ID();
 				}
-	
-				$content = get_the_content( $post );
-				$blocks  = parse_blocks( $content );
+
+				$blocks = parse_blocks( $content );
 	
 				$used_blocks = $this->loop_blocks(
 					$blocks,
@@ -341,7 +353,6 @@ class Main {
 		}
 
 		if ( ! self::$is_progress_bar_loaded && has_block( 'themeisle-blocks/progress-bar', $post ) ) {
-
 			wp_enqueue_script(
 				'themeisle-gutenberg-progress-bar',
 				plugin_dir_url( $this->get_dir() ) . 'build/progress-bar.js',
@@ -354,7 +365,6 @@ class Main {
 		}
 
 		if ( ! self::$is_circle_counter_loaded && has_block( 'themeisle-blocks/circle-counter', $post ) ) {
-
 			wp_enqueue_script(
 				'themeisle-gutenberg-circle-counter',
 				plugin_dir_url( $this->get_dir() ) . 'build/circle-counter.js',
@@ -407,13 +417,6 @@ class Main {
 		if ( is_admin() ) {
 			return;
 		}
-
-		wp_enqueue_style(
-			'themeisle-block_styles',
-			plugin_dir_url( $this->get_dir() ) . 'build/style.css',
-			[],
-			self::$assets_version
-		);
 
 		if ( is_singular() ) {
 			$this->enqueue_dependencies();

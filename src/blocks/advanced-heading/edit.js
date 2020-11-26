@@ -236,7 +236,7 @@ const Edit = ({
 	return (
 		<Fragment>
 			<style>
-				{ `.${ attributes.id } mark {
+				{ `.${ attributes.id } mark, .${ attributes.id } .highlight {
 						color: ${ attributes.highlightColor };
 						background: ${ attributes.highlightBackground };
 					}` }
@@ -280,8 +280,8 @@ const Edit = ({
 				value={ attributes.content }
 				placeholder={ __( 'Write heading…' ) }
 				tagName={ attributes.tag }
-				formattingControls={ [ 'bold', 'italic', 'link', 'strikethrough', 'mark' ] }
-				allowedFormats={ [ 'core/bold', 'core/italic', 'core/link', 'core/strikethrough', 'themeisle-blocks/mark' ] }
+				formattingControls={ [ 'bold', 'italic', 'link', 'strikethrough', 'highlight' ] }
+				allowedFormats={ [ 'core/bold', 'core/italic', 'core/link', 'core/strikethrough', 'themeisle-blocks/highlight' ] }
 				onMerge={ mergeBlocks }
 				unstableOnSplit={
 					insertBlocksAfter ?

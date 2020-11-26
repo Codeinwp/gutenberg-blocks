@@ -46,6 +46,7 @@ const MarkerWrapper = ({
 				{ markers.map( marker => {
 					return (
 						<Marker
+							key={ marker.id }
 							marker={ marker }
 							isOpen={ isOpen }
 							isPlaceAPIAvailable={ isPlaceAPIAvailable }
