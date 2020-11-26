@@ -134,7 +134,7 @@ const Edit = ({
 		if ( parentId ) {
 
 			const parentClassname = document.querySelector( '#' + parentId );
-			console.log( parentId, parentClassname );
+			
 
 			if ( parentClassname?.classList.contains( 'is-style-horizontal' ) ) {
 				itemStyle = {

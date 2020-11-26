@@ -8,7 +8,7 @@ const attributes = {
 	},
 	defaultIconPrefix: {
 		type: 'string',
-		default: 'fab'
+		default: 'fas'
 	},
 	defaultIcon: {
 		type: 'string',
@@ -21,7 +21,8 @@ const attributes = {
 		type: 'string'
 	},
 	defaultSize: {
-		type: 'number'
+		type: 'number',
+		default: 20
 	},
 	gap: {
 		type: 'number'

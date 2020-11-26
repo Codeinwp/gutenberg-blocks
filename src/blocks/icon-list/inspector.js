@@ -31,7 +31,7 @@ const Inspector = ({
 		setAttributes({
 			defaultLibrary: value,
 			defaultIcon: undefined,
-			defaultPrefix: 'fab'
+			defaultPrefix: 'fas'
 		});
 	};
 
