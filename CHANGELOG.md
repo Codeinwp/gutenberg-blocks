@@ -1,3 +1,7 @@
+##### [Version 1.5.11](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.10...v1.5.11) (2020-12-12)
+
+- Fix ThemeIsle icons not appearing on WebKit browsers
+
 ##### [Version 1.5.10](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.9...v1.5.10) (2020-11-25)
 
 - Do not add the background image to the Section when the URL is not set.
