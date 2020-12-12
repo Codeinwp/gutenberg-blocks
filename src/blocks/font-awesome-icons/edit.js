@@ -80,7 +80,8 @@ const Edit = ({
 	if ( 'themeisle-icons' === attributes.library ) {
 		iconStyle = {
 			fill: attributes.textColor,
-			padding: attributes.padding + 'px'
+			padding: attributes.padding + 'px',
+			width: attributes.fontSize + attributes.padding * 2 + attributes.borderSize * 2
 		};
 	}
 
