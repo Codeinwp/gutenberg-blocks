@@ -2,7 +2,7 @@
   "name": "codeinwp/gutenberg-blocks",
   "description": "A set of awesome Gutenberg Blocks!",
   "type": "library",
-  "version": "1.5.6",
+  "version": "1.5.11",
   "license": "GPL-2.0-or-later",
   "homepage": "https://github.com/Codeinwp/gutenberg-blocks",
   "authors": [
@@ -29,7 +29,10 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "config": {
-    "optimize-autoloader": true
+    "optimize-autoloader": true,
+    "platform": {
+      "php": "5.6"
+    }
   },
   "extra": {
     "installer-disable": "true"

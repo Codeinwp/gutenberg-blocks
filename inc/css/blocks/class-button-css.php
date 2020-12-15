@@ -35,6 +35,11 @@ class Button_CSS extends Base_CSS {
 
 		if ( isset( $attr['id'] ) ) {
 			$style .= '#' . $attr['id'] . ' .wp-block-button__link {' . "\n";
+			if ( isset( $attr['library'] ) && 'themeisle-icons' === $attr['library'] ) {
+				$style .= '	display: inline-flex;' . "\n";
+				$style .= '	align-items: center;' . "\n";
+			}
+
 			if ( isset( $attr['color'] ) && ! empty( $attr['color'] ) ) {
 				$style .= '	color: ' . $this->get_attr_value( ( isset( $attr['color'] ) ? $attr['color'] : null ) ) . ';' . "\n";
 			}
