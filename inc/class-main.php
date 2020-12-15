@@ -270,7 +270,10 @@ class Main {
 
 				foreach ( $used_blocks as $block ) {
 					if ( ! $has_fa && isset( $block['attrs']['library'] ) && 'themeisle-icons' === $block['attrs']['library'] ) {
-						$has_fa = false;
+						continue;
+					}
+
+					if ( 'themeisle-blocks/button' === $block['blockName'] && ! isset( $block['attrs']['iconType'] ) ) {
 						continue;
 					}
 

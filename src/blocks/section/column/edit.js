@@ -278,19 +278,9 @@ const Edit = ({
 	}
 
 	if ( 'gradient' === attributes.backgroundType ) {
-		let direction;
-
-		if ( 'linear' === attributes.backgroundGradientType ) {
-			direction = `${ attributes.backgroundGradientAngle }deg`;
-		} else {
-			direction = `at ${ attributes.backgroundGradientPosition }`;
-		}
-
-		if ( attributes.backgroundGradientFirstColor || attributes.backgroundGradientSecondColor ) {
-			background = {
-				background: `${ attributes.backgroundGradientType }-gradient( ${ direction }, ${ attributes.backgroundGradientFirstColor || 'rgba( 0, 0, 0, 0 )' } ${ attributes.backgroundGradientFirstLocation }%, ${ attributes.backgroundGradientSecondColor || 'rgba( 0, 0, 0, 0 )' } ${ attributes.backgroundGradientSecondLocation }% )`
-			};
-		}
+		background = {
+			background: attributes.backgroundGradient
+		};
 	}
 
 	if ( 'linked' === attributes.borderType ) {
