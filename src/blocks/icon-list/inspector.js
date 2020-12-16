@@ -48,8 +48,8 @@ const Inspector = ({
 		}
 	};
 
-	const onDefaultTitleColorChange = value => {
-		setAttributes({ defaultTitleColor: value });
+	const onDefaultContentColorChange = value => {
+		setAttributes({ defaultContentColor: value });
 	};
 
 	const onDefaultIconColorChange = value => {
@@ -82,7 +82,7 @@ const Inspector = ({
 
 				<RangeControl
 					label={ __( 'Font Size' ) }
-					help={ __( 'The size of the font size of the title and icon.' ) }
+					help={ __( 'The size of the font size of the content and icon.' ) }
 					value={ attributes.defaultSize }
 					onChange={ onDefaultSizeChange }
 					min={ 0 }
@@ -99,9 +99,9 @@ const Inspector = ({
 				/>
 
 				<ColorGradientControl
-					label={ __( 'Title Color' ) }
-					colorValue={ attributes.defaultTitleColor }
-					onColorChange={ onDefaultTitleColorChange }
+					label={ __( 'Content Color' ) }
+					colorValue={ attributes.defaultContentColor }
+					onColorChange={ onDefaultContentColorChange }
 				/>
 
 				<ColorGradientControl

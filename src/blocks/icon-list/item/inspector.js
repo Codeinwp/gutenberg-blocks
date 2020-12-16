@@ -49,8 +49,8 @@ const Inspector = ({
 		});
 	};
 
-	const onDefaultTitleColorChange = value => {
-		setAttributes({ titleColor: value });
+	const onDefaultContentColorChange = value => {
+		setAttributes({ contentColor: value });
 	};
 
 	const onDefaultIconColorChange = value => {
@@ -75,9 +75,9 @@ const Inspector = ({
 				</Suspense>
 
 				<ColorGradientControl
-					label={ __( 'Title Color' ) }
-					colorValue={ attributes.titleColor }
-					onColorChange={ onDefaultTitleColorChange }
+					label={ __( 'Content Color' ) }
+					colorValue={ attributes.contentColor }
+					onColorChange={ onDefaultContentColorChange }
 				/>
 
 				<ColorGradientControl

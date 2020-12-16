@@ -106,7 +106,7 @@ const Edit = ({
 	};
 
 	let iconClassName;
-	let titleStyle;
+	let contentStyle;
 	let iconStyle;
 	let itemStyle;
 
@@ -123,8 +123,8 @@ const Edit = ({
 			iconClassName = `${ attributes.iconPrefix } fa-${ attributes.icon }`;
 		}
 
-		titleStyle = {
-			color: attributes.titleColor || parentAttributes.defaultTitleColor,
+		contentStyle = {
+			color: attributes.contentColor || parentAttributes.defaultContentColor,
 			fontSize: parentAttributes.defaultSize + 'px'
 		};
 
@@ -148,8 +148,8 @@ const Edit = ({
 		}
 	};
 
-	const changeTitle = value => {
-		setAttributes({ title: value });
+	const changeContent = value => {
+		setAttributes({ content: value });
 	};
 
 	const Icon = themeIsleIcons.icons[ attributes.icon ];
@@ -190,16 +190,16 @@ const Edit = ({
 				) }
 
 				<RichText
-					identifier="title"
+					identifier="content"
 					tagName="p"
-					placeholder={ __( 'Write a title…' ) }
+					placeholder={ __( 'Write your content…' ) }
 					className={ classnames(
-						{ 'wp-block-themeisle-blocks-icon-list-item-title': ! attributes.titleColor },
-						{ 'wp-block-themeisle-blocks-icon-list-item-title-custom': attributes.titleColor }
+						{ 'wp-block-themeisle-blocks-icon-list-item-content': ! attributes.contentColor },
+						{ 'wp-block-themeisle-blocks-icon-list-item-content-custom': attributes.contentColor }
 					) }
-					style={ titleStyle }
-					value={ attributes.title }
-					onChange={ changeTitle }
+					style={ contentStyle }
+					value={ attributes.content }
+					onChange={ changeContent }
 					onSplit={ ( value ) => {
 						if ( ! value ) {
 							return createBlock( name );
@@ -207,7 +207,7 @@ const Edit = ({
 
 						return createBlock( name, {
 							...attributes,
-							title: value
+							content: value
 						});
 					} }
 					onMerge={ mergeBlocks }

@@ -14,7 +14,7 @@ const attributes = {
 		type: 'string',
 		default: 'angle-right'
 	},
-	defaultTitleColor: {
+	defaultContentColor: {
 		type: 'string'
 	},
 	defaultIconColor: {

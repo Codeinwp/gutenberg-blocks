@@ -27,7 +27,7 @@ registerBlockType( 'themeisle-blocks/icon-list-item', {
 	],
 	merge( attributes, attributesToMerge ) {
 		return {
-			title: ( attributes.title || '' ) + ( attributesToMerge.title || '' )
+			content: ( attributes.content || '' ) + ( attributesToMerge.content || '' )
 		};
 	},
 	edit,

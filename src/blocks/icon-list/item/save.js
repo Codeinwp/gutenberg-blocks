@@ -46,10 +46,10 @@ const Edit = ({
 			<RichText.Content
 				tagName="p"
 				className={ classnames(
-					{ 'wp-block-themeisle-blocks-icon-list-item-title': ! attributes.titleColor },
-					{ 'wp-block-themeisle-blocks-icon-list-item-title-custom': attributes.titleColor }
+					{ 'wp-block-themeisle-blocks-icon-list-item-content': ! attributes.contentColor },
+					{ 'wp-block-themeisle-blocks-icon-list-item-content-custom': attributes.contentColor }
 				) }
-				value={ attributes.title }
+				value={ attributes.content }
 			/>
 		</div>
 	);

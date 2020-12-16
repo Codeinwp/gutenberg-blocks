@@ -48,18 +48,18 @@ class Icon_List_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n"; 
 
-			// Title.
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-title {' . "\n";
-			if ( isset( $attr['defaultTitleColor'] ) ) {
-				$style .= '	color: ' . $this->get_attr_value( $attr['defaultTitleColor'] ) . ';' . "\n";
+			// Content.
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-content {' . "\n";
+			if ( isset( $attr['defaultContentColor'] ) ) {
+				$style .= '	color: ' . $this->get_attr_value( $attr['defaultContentColor'] ) . ';' . "\n";
 			}
 			if ( isset( $attr['defaultSize'] ) ) {
 				$style .= '	font-size: ' . $this->get_attr_value( $attr['defaultSize'] ) . 'px;' . "\n";
 			}
 			$style .= '}' . "\n \n";
 
-			// Title Custom.
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-title-custom {' . "\n";
+			// Content Custom.
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-content-custom {' . "\n";
 			if ( isset( $attr['defaultSize'] ) ) {
 				$style .= '	font-size: ' . $this->get_attr_value( $attr['defaultSize'] ) . 'px;' . "\n";
 			}

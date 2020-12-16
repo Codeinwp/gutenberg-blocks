@@ -2,10 +2,10 @@ const attributes = {
 	id: {
 		type: 'string'
 	},
-	title: {
+	content: {
 		type: 'string'
 	},
-	titleColor: {
+	contentColor: {
 		type: 'string'
 	},
 	iconColor: {

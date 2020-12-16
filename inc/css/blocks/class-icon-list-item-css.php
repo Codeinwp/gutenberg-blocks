@@ -35,10 +35,10 @@ class Icon_List_Item_CSS extends Base_CSS {
 
 		if ( isset( $attr['id'] ) ) {
 
-			// Title.
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item-title-custom {' . "\n";
-			if ( isset( $attr['titleColor'] ) ) {
-				$style .= '	color: ' . $this->get_attr_value( $attr['titleColor'] ) . ';' . "\n";
+			// Content.
+			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item-content-custom {' . "\n";
+			if ( isset( $attr['contentColor'] ) ) {
+				$style .= '	color: ' . $this->get_attr_value( $attr['contentColor'] ) . ';' . "\n";
 			}
 			
 			$style .= '}' . "\n \n";
