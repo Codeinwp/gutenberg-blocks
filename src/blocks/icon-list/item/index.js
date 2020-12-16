@@ -8,7 +8,7 @@ const { registerBlockType } = wp.blocks;
 /**
  * Internal dependencies
  */
-import { postsIcon as icon } from '../../../helpers/icons.js';
+import { faIcon as icon } from '../../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
 import save from './save.js';
@@ -25,6 +25,11 @@ registerBlockType( 'themeisle-blocks/icon-list-item', {
 		'icon',
 		'list'
 	],
+	merge( attributes, attributesToMerge ) {
+		return {
+			title: ( attributes.title || '' ) + ( attributesToMerge.title || '' )
+		};
+	},
 	edit,
 	save
 });

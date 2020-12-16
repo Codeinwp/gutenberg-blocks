@@ -10,7 +10,7 @@ const { registerBlockType } = wp.blocks;
  */
 import './style.scss';
 import './editor.scss';
-import { postsIcon as icon } from '../../helpers/icons.js';
+import { faIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
 import save from './save.js';
@@ -26,8 +26,6 @@ registerBlockType( 'themeisle-blocks/icon-list', {
 		'items'
 	],
 	attributes,
-	edit,
-	save,
 	styles: [
 		{
 			name: 'vertical',
@@ -38,5 +36,7 @@ registerBlockType( 'themeisle-blocks/icon-list', {
 			name: 'horizontal',
 			label: __( 'Horizontal' )
 		}
-	]
+	],
+	edit,
+	save
 });

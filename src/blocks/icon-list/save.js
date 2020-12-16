@@ -1,10 +1,12 @@
+/**
+ * WordPress dependencies.
+ */
 const { InnerBlocks } = wp.blockEditor;
 
 const Edit = ({
 	attributes,
 	className
 }) => {
-
 	return (
 		<div
 			className={ className }

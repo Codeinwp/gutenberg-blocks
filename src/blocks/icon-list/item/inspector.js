@@ -19,6 +19,9 @@ const {
 	Suspense
 } = wp.element;
 
+/**
+ * Internal dependencies
+ */
 const IconPickerControl = lazy( () => import( '../../../components/icon-picker-control/index.js' ) );
 
 const Inspector = ({
@@ -26,7 +29,6 @@ const Inspector = ({
 	setAttributes,
 	setHasCustomIcon
 }) => {
-
 	const changeIcon = value => {
 		if ( 'object' === typeof value ) {
 			setAttributes({
@@ -71,11 +73,13 @@ const Inspector = ({
 						onChange={ changeIcon }
 					/>
 				</Suspense>
+
 				<ColorGradientControl
 					label={ __( 'Title Color' ) }
 					colorValue={ attributes.titleColor }
 					onColorChange={ onDefaultTitleColorChange }
 				/>
+
 				<ColorGradientControl
 					label={ __( 'Icon Color' ) }
 					colorValue={ attributes.iconColor }
@@ -83,7 +87,6 @@ const Inspector = ({
 				/>
 			</PanelBody>
 		</InspectorControls>
-
 	);
 };
 

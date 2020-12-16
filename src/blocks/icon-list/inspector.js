@@ -20,13 +20,15 @@ const {
 	Suspense
 } = wp.element;
 
+/**
+ * Internal dependencies
+ */
 const IconPickerControl = lazy( () => import( '../../components/icon-picker-control/index.js' ) );
 
 const Inspector = ({
 	attributes,
 	setAttributes
 }) => {
-
 	const changeLibrary = value => {
 		setAttributes({
 			defaultLibrary: value,
@@ -66,7 +68,6 @@ const Inspector = ({
 		<InspectorControls>
 			<PanelBody
 				title={ __( 'Settings' ) }
-				initialOpen={true}
 			>
 				<Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
 					<IconPickerControl
@@ -78,6 +79,7 @@ const Inspector = ({
 						onChange={ changeIcon }
 					/>
 				</Suspense>
+
 				<RangeControl
 					label={ __( 'Font Size' ) }
 					help={ __( 'The size of the font size of the title and icon.' ) }
@@ -86,6 +88,7 @@ const Inspector = ({
 					min={ 0 }
 					max={ 60 }
 				/>
+
 				<RangeControl
 					label={ __( 'Gap' ) }
 					help={ __( 'The distance between the items.' ) }
@@ -94,11 +97,13 @@ const Inspector = ({
 					min={ 0 }
 					max={ 60 }
 				/>
+
 				<ColorGradientControl
 					label={ __( 'Title Color' ) }
 					colorValue={ attributes.defaultTitleColor }
 					onColorChange={ onDefaultTitleColorChange }
 				/>
+
 				<ColorGradientControl
 					label={ __( 'Icon Color' ) }
 					colorValue={ attributes.defaultIconColor }
@@ -106,7 +111,6 @@ const Inspector = ({
 				/>
 			</PanelBody>
 		</InspectorControls>
-
 	);
 };
 

@@ -1,11 +1,9 @@
-
 /**
  * WordPress dependencies.
  */
+const { isEqual } = lodash;
 
 const { InnerBlocks } = wp.blockEditor;
-
-const { isEqual } = lodash;
 
 const {
 	Fragment,
@@ -19,7 +17,6 @@ import defaultAttributes from './attributes.js';
 import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Inspector from './inspector.js';
 
-
 const IDs = [];
 
 const Edit = ({
@@ -29,7 +26,6 @@ const Edit = ({
 	name,
 	className
 }) => {
-
 	useEffect( () => {
 		initBlock();
 	}, []);
@@ -75,10 +71,14 @@ const Edit = ({
 	};
 	return (
 		<Fragment>
-			<Inspector attributes={ attributes } setAttributes={ setAttributes } />
+			<Inspector
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+			/>
+
 			<div
-				className={ className }
 				id={ attributes.id }
+				className={ className }
 			>
 				<InnerBlocks
 					allowedBlocks={ [ 'themeisle-blocks/icon-list-item' ] }
@@ -87,7 +87,6 @@ const Edit = ({
 					template={ [ [ 'themeisle-blocks/icon-list-item' ] ] }
 					renderAppender={ InnerBlocks.DefaultAppender }
 				/>
-
 			</div>
 		</Fragment>
 	);

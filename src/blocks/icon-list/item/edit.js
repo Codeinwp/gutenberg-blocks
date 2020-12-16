@@ -1,9 +1,14 @@
+/**
+ * External dependencies
+ */
 import classnames from 'classnames';
 
 /**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
+
+const { createBlock } = wp.blocks;
 
 const { useSelect } = wp.data;
 
@@ -29,9 +34,11 @@ const Edit = ({
 	setAttributes,
 	className,
 	name,
-	clientId
+	clientId,
+	onReplace,
+	onRemove,
+	mergeBlocks
 }) => {
-
 	const [ hasCustomIcon, setHasCustomIcon ] = useState( false );
 
 	const {
@@ -46,8 +53,6 @@ const Edit = ({
 
 		const parentClientId = getBlockRootClientId( clientId );
 		const parentBlock = getBlock( parentClientId );
-
-		// console.log( parentBlock );
 
 		return {
 			hasParent: parentBlock ? true : false,
@@ -100,14 +105,12 @@ const Edit = ({
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
-
 	let iconClassName;
 	let titleStyle;
 	let iconStyle;
 	let itemStyle;
 
 	if ( hasParent ) {
-
 		if ( ! hasCustomIcon ) {
 			iconClassName =  `${ parentAttributes.defaultIconPrefix } fa-${ parentAttributes.defaultIcon }`;
 
@@ -120,7 +123,6 @@ const Edit = ({
 			iconClassName = `${ attributes.iconPrefix } fa-${ attributes.icon }`;
 		}
 
-
 		titleStyle = {
 			color: attributes.titleColor || parentAttributes.defaultTitleColor,
 			fontSize: parentAttributes.defaultSize + 'px'
@@ -132,9 +134,7 @@ const Edit = ({
 		};
 
 		if ( parentId ) {
-
 			const parentClassname = document.querySelector( '#' + parentId );
-			
 
 			if ( parentClassname?.classList.contains( 'is-style-horizontal' ) ) {
 				itemStyle = {
@@ -161,52 +161,58 @@ const Edit = ({
 				setAttributes={ setAttributes }
 				setHasCustomIcon={ setHasCustomIcon}
 			/>
+
 			<div
 				className={ className }
 				style={ itemStyle }
 			>
-				{
-					'themeisle-icons' === attributes.library && attributes.icon ? (
-						<Icon
-							className={
-								classnames(
-									iconClassName,
-									{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
-									{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
-								)
-							}
-							style={{
-								...iconStyle,
-								width: parentAttributes.defaultSize + 'px'
-							}}
-						/>
-					) : (
-						<i
-							className={
-								classnames(
-									iconClassName,
-									{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
-									{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
-								)
-							}
-							style={ iconStyle }
-						></i>
-					)
-				}
+				{ 'themeisle-icons' === attributes.library && attributes.icon ? (
+					<Icon
+						className={ classnames(
+							iconClassName,
+							{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
+							{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
+						) }
+						style={ {
+							...iconStyle,
+							width: parentAttributes.defaultSize + 'px'
+						} }
+					/>
+				) : (
+					<i
+						className={ classnames(
+							iconClassName,
+							{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
+							{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
+						) }
+						style={ iconStyle }
+					></i>
+				) }
 
 				<RichText
+					identifier="title"
 					tagName="p"
 					placeholder={ __( 'Write a title…' ) }
-					className={
-						classnames(
-							{ 'wp-block-themeisle-blocks-icon-list-item-title': ! attributes.titleColor },
-							{ 'wp-block-themeisle-blocks-icon-list-item-title-custom': attributes.titleColor }
-						)
-					}
+					className={ classnames(
+						{ 'wp-block-themeisle-blocks-icon-list-item-title': ! attributes.titleColor },
+						{ 'wp-block-themeisle-blocks-icon-list-item-title-custom': attributes.titleColor }
+					) }
 					style={ titleStyle }
 					value={ attributes.title }
 					onChange={ changeTitle }
-					multiline={ false }
+					onSplit={ ( value ) => {
+						if ( ! value ) {
+							return createBlock( name );
+						}
+
+						return createBlock( name, {
+							...attributes,
+							title: value
+						});
+					} }
+					onMerge={ mergeBlocks }
+					onReplace={ onReplace }
+					onRemove={ onRemove }
 					keepPlaceholderOnFocus={ true }
 				/>
 			</div>
