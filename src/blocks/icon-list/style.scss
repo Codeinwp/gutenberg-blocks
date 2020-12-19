@@ -1,21 +1,10 @@
 .wp-block-themeisle-blocks-icon-list { 
 	display: flex;
-
-	&.is-style-vertical {
-		flex-direction: column;
-
-		> *:not(:last-child) {
-			margin-bottom: 50px;
-		}
-	}
+	flex-direction: column;
 
 	&.is-style-horizontal {
 		flex-wrap: wrap;
-		align-items: center;
-
-		> *:not(:last-child) {
-			margin-right: 50px;
-		}
+		flex-direction: row;
 	}
 
 	.wp-block-themeisle-blocks-icon-list-item {
@@ -23,18 +12,9 @@
 		align-items: center;
 		transition: margin 0.10s linear;
 
-		.wp-block-themeisle-blocks-icon-list-item-content {
-			margin-top: 0px;
-			margin-bottom: 0px;
-			margin-left: 10px;
-			margin-right: 10px;
-
-			&-custom {
-				margin-top: 0px;
-				margin-bottom: 0px;
-				margin-left: 10px;
-				margin-right: 10px;
-			}
+		.wp-block-themeisle-blocks-icon-list-item-content,
+		.wp-block-themeisle-blocks-icon-list-item-content-custom {
+			margin: 0 10px;
 		}
 
 		p {

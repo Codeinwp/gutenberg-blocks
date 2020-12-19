@@ -43,7 +43,7 @@ const Edit = ({
 
 	const {
 		hasParent,
-		parentId,
+		parentClass,
 		parentAttributes
 	} = useSelect( select => {
 		const {
@@ -56,7 +56,7 @@ const Edit = ({
 
 		return {
 			hasParent: parentBlock ? true : false,
-			parentId: parentBlock?.attributes?.id,
+			parentClass: parentBlock.attributes.className || '',
 			parentAttributes: parentBlock ? parentBlock.attributes : {}
 		};
 	}, []);
@@ -111,7 +111,7 @@ const Edit = ({
 	let itemStyle;
 
 	if ( hasParent ) {
-		if ( ! hasCustomIcon ) {
+		if ( ! hasCustomIcon && ! attributes.library ) {
 			iconClassName =  `${ parentAttributes.defaultIconPrefix } fa-${ parentAttributes.defaultIcon }`;
 
 			setAttributes({
@@ -130,21 +130,18 @@ const Edit = ({
 
 		iconStyle = {
 			color: attributes.iconColor || parentAttributes.defaultIconColor,
+			fill: attributes.iconColor || parentAttributes.defaultIconColor,
 			fontSize: parentAttributes.defaultSize + 'px'
 		};
 
-		if ( parentId ) {
-			const parentClassname = document.querySelector( '#' + parentId );
-
-			if ( parentClassname?.classList.contains( 'is-style-horizontal' ) ) {
-				itemStyle = {
-					marginRight: parentAttributes.gap + 'px'
-				};
-			} else {
-				itemStyle = {
-					marginBottom: parentAttributes.gap + 'px'
-				};
-			}
+		if ( parentClass.includes( 'is-style-horizontal' ) ) {
+			itemStyle = {
+				marginRight: parentAttributes.gap + 'px'
+			};
+		} else {
+			itemStyle = {
+				marginBottom: parentAttributes.gap + 'px'
+			};
 		}
 	};
 
@@ -159,7 +156,7 @@ const Edit = ({
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
-				setHasCustomIcon={ setHasCustomIcon}
+				setHasCustomIcon={ setHasCustomIcon }
 			/>
 
 			<div

@@ -38,6 +38,7 @@ const Inspector = ({
 		} else {
 			setAttributes({ icon: value });
 		}
+
 		setHasCustomIcon( true );
 	};
 
@@ -47,6 +48,8 @@ const Inspector = ({
 			icon: undefined,
 			iconPrefix: 'fab'
 		});
+
+		setHasCustomIcon( true );
 	};
 
 	const onDefaultContentColorChange = value => {
@@ -61,7 +64,6 @@ const Inspector = ({
 		<InspectorControls>
 			<PanelBody
 				title={ __( 'Settings' ) }
-				initialOpen={true}
 			>
 				<Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
 					<IconPickerControl
