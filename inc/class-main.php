@@ -265,7 +265,7 @@ class Main {
 					array(
 						'themeisle-blocks/button',
 						'themeisle-blocks/font-awesome-icons',
-						'themeisle-blocks/icon-list-item'
+						'themeisle-blocks/icon-list-item',
 					)
 				);
 

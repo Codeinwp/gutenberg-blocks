@@ -62,10 +62,10 @@ class Icon_List_CSS extends Base_CSS {
 			$style .= '}' . "\n \n";
 
 			if ( isset( $attr['defaultIconColor'] ) ) {
-				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-icon {' . "\n";
+				$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-icon {' . "\n";
 					$style .= '	color: ' . $this->get_attr_value( $attr['defaultIconColor'] ) . ';' . "\n";
 					$style .= '	fill: ' . $this->get_attr_value( $attr['defaultIconColor'] ) . ';' . "\n";
-				$style .= '}' . "\n \n";
+				$style     .= '}' . "\n \n";
 			}
 
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item i {' . "\n";
