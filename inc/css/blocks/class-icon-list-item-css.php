@@ -35,17 +35,17 @@ class Icon_List_Item_CSS extends Base_CSS {
 
 		if ( isset( $attr['id'] ) ) {
 			if ( isset( $attr['contentColor'] ) ) {
-				$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item-content-custom {' . "\n";
-					$style .= '	color: ' . $this->get_attr_value( $attr['contentColor'] ) . ';' . "\n";
-					$style .= '	fill: ' . $this->get_attr_value( $attr['contentColor'] ) . ';' . "\n";
-				$style     .= '}' . "\n \n";
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item-content-custom {' . "\n";
+				$style .= '	color: ' . $this->get_attr_value( $attr['contentColor'] ) . ';' . "\n";
+				$style .= '	fill: ' . $this->get_attr_value( $attr['contentColor'] ) . ';' . "\n";
+				$style .= '}' . "\n \n";
 			}
 
 			if ( isset( $attr['iconColor'] ) ) {
-				$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item-icon-custom {' . "\n";
-					$style .= '	color: ' . $this->get_attr_value( $attr['iconColor'] ) . ';' . "\n";
-					$style .= '	fill: ' . $this->get_attr_value( $attr['iconColor'] ) . ';' . "\n";
-				$style     .= '}' . "\n \n";
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item-icon-custom {' . "\n";
+				$style .= '	color: ' . $this->get_attr_value( $attr['iconColor'] ) . ';' . "\n";
+				$style .= '	fill: ' . $this->get_attr_value( $attr['iconColor'] ) . ';' . "\n";
+				$style .= '}' . "\n \n";
 			}
 		}
 
