@@ -28,7 +28,6 @@ const Edit = ({
 			{ 'themeisle-icons' === attributes.library && attributes.icon ? (
 				<Icon
 					className={ classnames(
-						iconClassName,
 						{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
 						{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
 					) }

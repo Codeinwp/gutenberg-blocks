@@ -6,7 +6,11 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
+const { isEqual } = lodash;
+
 const { __ } = wp.i18n;
+
+const { RichText } = wp.blockEditor;
 
 const { createBlock } = wp.blocks;
 
@@ -18,10 +22,9 @@ const {
 	useState
 } = wp.element;
 
-const { isEqual } = lodash;
-
-const { RichText } = wp.blockEditor;
-
+/**
+ * Internal dependencies
+ */
 import defaultAttributes from './attributes.js';
 import defaults from '../../../plugins/options/global-defaults/defaults.js';
 import Inspector from './inspector.js';
@@ -166,7 +169,6 @@ const Edit = ({
 				{ 'themeisle-icons' === attributes.library && attributes.icon ? (
 					<Icon
 						className={ classnames(
-							iconClassName,
 							{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
 							{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
 						) }

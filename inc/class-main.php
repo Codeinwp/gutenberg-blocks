@@ -253,7 +253,7 @@ class Main {
 		if ( ! self::$is_fa_loaded && ( has_block( 'themeisle-blocks/button-group', $post ) || has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/icon-list-item', $post ) || has_block( 'themeisle-blocks/sharing-icons', $post ) || has_block( 'themeisle-blocks/plugin-cards', $post ) || has_block( 'block', $post ) ) ) {
 			$has_fa = false;
 
-			if ( ( ! has_block( 'themeisle-blocks/sharing-icons', $post ) && ! has_block( 'themeisle-blocks/plugin-cards', $post ) && ! has_block( 'block', $post ) ) && ( has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) ) ) {
+			if ( ( ! has_block( 'themeisle-blocks/sharing-icons', $post ) && ! has_block( 'themeisle-blocks/plugin-cards', $post ) && ! has_block( 'block', $post ) ) && ( has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/icon-list-item', $post ) ) ) {
 				if ( empty( $post ) ) {
 					$post = get_the_ID();
 				}
@@ -265,6 +265,7 @@ class Main {
 					array(
 						'themeisle-blocks/button',
 						'themeisle-blocks/font-awesome-icons',
+						'themeisle-blocks/icon-list',
 						'themeisle-blocks/icon-list-item',
 					)
 				);
@@ -274,7 +275,11 @@ class Main {
 						continue;
 					}
 
-					if ( 'themeisle-blocks/button' === $block['blockName'] && ! isset( $block['attrs']['iconType'] ) ) {
+					if ( ! $has_fa && 'themeisle-blocks/button' === $block['blockName'] && ! isset( $block['attrs']['iconType'] ) ) {
+						continue;
+					}
+
+					if ( ! $has_fa && 'themeisle-blocks/icon-list' === $block['blockName'] && isset( $block['attrs']['defaultLibrary'] ) && 'themeisle-icons' === $block['attrs']['defaultLibrary'] ) {
 						continue;
 					}
 
