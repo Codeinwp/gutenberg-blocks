@@ -134,6 +134,7 @@ class Font_Awesome_Icons_CSS extends Base_CSS {
 				if ( isset( $attr['fontSize'] ) ) {
 					if ( $is_themeisle_icons ) {
 						$style .= '	width: ' . $this->get_attr_value( $attr['fontSize'] ) . 'px;' . "\n";
+						$style .= '	height: ' . $this->get_attr_value( $attr['fontSize'] ) . 'px;' . "\n";
 					} else {
 						$style .= '	font-size: ' . $this->get_attr_value( $attr['fontSize'] ) . 'px;' . "\n";
 					}
