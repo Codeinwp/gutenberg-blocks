@@ -9,6 +9,7 @@ import classnames from 'classnames';
 const { __ } = wp.i18n;
 
 const {
+	__experimentalColorGradientControl: ColorGradientControl,
 	ColorPalette,
 	InspectorControls,
 	MediaPlaceholder
@@ -40,7 +41,6 @@ import ColorBaseControl from '../../../components/color-base-control/index.js';
 import SizingControl from '../../../components/sizing-control/index.js';
 import ResponsiveControl from '../../../components/responsive-control/index.js';
 import BackgroundControl from '../components/background-control/index.js';
-import GradientPickerControl from '../../../components/gradient-picker-control/index.js';
 import ControlPanelControl from '../../../components/control-panel-control/index.js';
 
 const Inspector = ({
@@ -420,32 +420,8 @@ const Inspector = ({
 		setAttributes({ backgroundSize: value });
 	};
 
-	const changeBackgroundGradient = ( firstColor, firstLocation, secondColor, secondLocation, type, angle, position ) => {
-		setAttributes({
-			backgroundGradientFirstColor: firstColor,
-			backgroundGradientFirstLocation: firstLocation,
-			backgroundGradientSecondColor: secondColor,
-			backgroundGradientSecondLocation: secondLocation,
-			backgroundGradientType: type,
-			backgroundGradientAngle: angle,
-			backgroundGradientPosition: position
-		});
-	};
-
-	const changeBackgroundGradientValue = object => {
-		const options = {
-			firstColor: 'backgroundGradientFirstColor',
-			firstLocation: 'backgroundGradientFirstLocation',
-			secondColor: 'backgroundGradientSecondColor',
-			secondLocation: 'backgroundGradientSecondLocation',
-			type: 'backgroundGradientType',
-			angle: 'backgroundGradientAngle',
-			position: 'backgroundGradientPosition'
-		};
-
-		for ( const key in object ) {
-			setAttributes({ [options[key]]: object[key] });
-		}
+	const changeBackgroundGradient = value => {
+		setAttributes({ backgroundGradient: value });
 	};
 
 	const changeBorderType = value => {
@@ -610,7 +586,6 @@ const Inspector = ({
 			</PanelBody>
 
 			{ 'layout' === tab && (
-
 				<Fragment>
 					<PanelBody
 						title={ __( 'Spacing' ) }
@@ -694,9 +669,7 @@ const Inspector = ({
 						</ResponsiveControl>
 					</PanelBody>
 				</Fragment>
-
 			) || 'style' === tab && (
-
 				<Fragment>
 					<PanelBody
 						title={ __( 'Background Settings' ) }
@@ -755,7 +728,6 @@ const Inspector = ({
 									<ControlPanelControl
 										label={ 'Background Settings' }
 									>
-
 										<SelectControl
 											label={ __( 'Background Attachment' ) }
 											value={ attributes.backgroundAttachment }
@@ -805,7 +777,6 @@ const Inspector = ({
 											] }
 											onChange={ changeBackgroundSize }
 										/>
-
 									</ControlPanelControl>
 								</Fragment> :
 
@@ -822,19 +793,11 @@ const Inspector = ({
 								/>
 
 						) || 'gradient' === attributes.backgroundType && (
-							<GradientPickerControl
+							<ColorGradientControl
 								label={ 'Background Gradient' }
-								value={ {
-									firstColor: attributes.backgroundGradientFirstColor,
-									firstLocation: attributes.backgroundGradientFirstLocation,
-									secondColor: attributes.backgroundGradientSecondColor,
-									secondLocation: attributes.backgroundGradientSecondLocation,
-									type: attributes.backgroundGradientType,
-									angle: attributes.backgroundGradientAngle,
-									position: attributes.backgroundGradientPosition
-								} }
-								onChange={ changeBackgroundGradient }
-								onChangeValue={ changeBackgroundGradientValue }
+								gradientValue={ attributes.backgroundGradient }
+								disableCustomColors={ true }
+								onGradientChange={ changeBackgroundGradient }
 							/>
 						) }
 					</PanelBody>
@@ -925,7 +888,6 @@ const Inspector = ({
 
 						{ attributes.boxShadow && (
 							<Fragment>
-
 								<ColorBaseControl
 									label={ __( 'Shadow Color' ) }
 									colorValue={ attributes.boxShadowColor }
@@ -980,14 +942,11 @@ const Inspector = ({
 										max={ 100 }
 									/>
 								</ControlPanelControl>
-
 							</Fragment>
 						) }
 					</PanelBody>
 				</Fragment>
-
 			) || 'advanced' === tab && (
-
 				<PanelBody
 					title={ __( 'Section Settings' ) }
 				>
@@ -1005,7 +964,6 @@ const Inspector = ({
 						onChange={ changeColumnsHTMLTag }
 					/>
 				</PanelBody>
-
 			) }
 		</InspectorControls>
 	);

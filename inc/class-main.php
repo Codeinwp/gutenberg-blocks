@@ -94,7 +94,7 @@ class Main {
 	 */
 	public function init() {
 		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
-			define( 'THEMEISLE_BLOCKS_VERSION', '1.5.10' );
+			define( 'THEMEISLE_BLOCKS_VERSION', '1.5.11' );
 			define( 'THEMEISLE_BLOCKS_DEV', false );
 		}
 
@@ -271,7 +271,10 @@ class Main {
 
 				foreach ( $used_blocks as $block ) {
 					if ( ! $has_fa && isset( $block['attrs']['library'] ) && 'themeisle-icons' === $block['attrs']['library'] ) {
-						$has_fa = false;
+						continue;
+					}
+
+					if ( 'themeisle-blocks/button' === $block['blockName'] && ! isset( $block['attrs']['iconType'] ) ) {
 						continue;
 					}
 
