@@ -48,7 +48,6 @@ class Progress_Bar_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n";
 
-
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area {' . "\n";
 			if ( isset( $attr['backgroundColor'] ) ) {
 				$style .= '	background: ' . $this->get_attr_value( $attr['backgroundColor'] ) . ';' . "\n";
@@ -60,8 +59,6 @@ class Progress_Bar_CSS extends Base_CSS {
 				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
 			}
 			$style .= '}' . "\n \n";
-
-
 
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title {' . "\n";
 			if ( isset( $attr['height'] ) ) {
@@ -142,6 +139,20 @@ class Progress_Bar_CSS extends Base_CSS {
 			if ( isset( $attr['height'] ) ) {
 				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
 			}
+			$style .= '}' . "\n \n";
+
+			$style .= '@media ( max-width: 600px ) {' . "\n";
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area,' . "\n";
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title,' . "\n";
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title span,' . "\n";
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__progress,' . "\n";
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar,' . "\n";
+				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar .wp-block-themeisle-blocks-progress-bar__progress__append {' . "\n";
+					if ( isset( $attr['height'] ) ) {
+						$style .= '	font-size: 20px;' . "\n";
+						$style .= '	height: 20px;' . "\n";
+					}
+					$style .= '}' . "\n \n";
 			$style .= '}' . "\n \n";
 		}
 

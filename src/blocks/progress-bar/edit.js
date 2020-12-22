@@ -164,6 +164,7 @@ const ProgressBar = ({
 						{ 'outer' === attributes.titleStyle && (
 							<RichText
 								tagName="span"
+								allowedFormats={ [] }
 								className="wp-block-themeisle-blocks-progress-bar__outer__title"
 								value={ attributes.title }
 								style={ { color: attributes.titleColor } }
@@ -227,6 +228,7 @@ const ProgressBar = ({
 							>
 								<RichText
 									tagName="span"
+									allowedFormats={ [] }
 									value={ attributes.title }
 									style={ {
 										height: `${ attributes.height }px`,

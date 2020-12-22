@@ -173,6 +173,7 @@ const CircularProgressBarBlock = ({
 					<div className="wp-block-themeisle-blocks-circle-counter-title__area">
 						<RichText
 							tagName="span"
+							allowedFormats={ [] }
 							className="wp-block-themeisle-blocks-circle-counter-title__value"
 							placeholder={ isSelected ? __( 'Write caption…' ) : null }
 							value={ attributes.title }
@@ -219,6 +220,7 @@ const CircularProgressBarBlock = ({
 					<div className="wp-block-themeisle-blocks-circle-counter-title__area">
 						<RichText
 							tagName="span"
+							allowedFormats={ [] }
 							className="wp-block-themeisle-blocks-circle-counter-title__value"
 							placeholder={ isSelected ? __( 'Write caption…' ) : null }
 							value={ attributes.title }
