@@ -148,10 +148,10 @@ class Progress_Bar_CSS extends Base_CSS {
 			$style .= '	#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__progress,' . "\n";
 			$style .= '	#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar,' . "\n";
 			$style .= '	#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar .wp-block-themeisle-blocks-progress-bar__progress__append {' . "\n";
-				if ( isset( $attr['height'] ) ) {
-					$style .= '	font-size: 20px;' . "\n";
-					$style .= '	height: 20px;' . "\n";
-				}
+			if ( isset( $attr['height'] ) ) {
+				$style .= '	font-size: 20px;' . "\n";
+				$style .= '	height: 20px;' . "\n";
+			}
 			$style .= '	}' . "\n \n";
 			$style .= '}' . "\n \n";
 		}
