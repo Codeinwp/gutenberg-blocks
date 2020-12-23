@@ -1,7 +1,7 @@
 <?php
 /**
  * Css generator.
- * 
+ *
  * Inspired by https://github.com/kirki-framework/wp-css-generator
  *
  * @package ThemeIsle\GutenbergBlocks\CSS
@@ -9,23 +9,23 @@
 
 /**
  * $css = new CSS_Utility( $block );
- * 
+ *
  * $css->add_item( array(
- *	'global'     => 'global',
- *	'selector'   => ' .wp-block',
- * 	'properties' => array(
- * 		array(
- * 			'property' => 'margin-left',
- * 			'value'    => 'spacing',
- * 			'unit'     => 'px',
- * 			'default'  => 20,
- * 			'format'   => function( $value ) {
- * 				return $value / 2;
- * 			}
- * 		),
- * 	),
+ *  'global'     => 'global',
+ *  'selector'   => ' .wp-block',
+ *  'properties' => array(
+ *      array(
+ *          'property' => 'margin-left',
+ *          'value'    => 'spacing',
+ *          'unit'     => 'px',
+ *          'default'  => 20,
+ *          'format'   => function( $value ) {
+ *              return $value / 2;
+ *          }
+ *      ),
+ *  ),
  * ) );
- * 
+ *
  * $style = $css->generate();
  */
 
@@ -109,22 +109,22 @@ class CSS_Utility {
 			foreach ( $css_items as $selector => $properties ) {
 				$item_style = '';
 
-				foreach( $properties as $property ) {
+				foreach ( $properties as $property ) {
 					$property = wp_parse_args(
 						$property,
 						array(
-							'unit'   => ''
+							'unit' => '',
 						)
 					);
 
 					if ( isset( $property['property'] ) && ( ( isset( $property['value'] ) && isset( $attrs[ $property['value'] ] ) ) || isset( $property['default'] ) ) ) {
-						$value = ( ( isset ( $property['value'] ) && isset( $attrs[ $property['value'] ] ) ) ? $attrs[ $property['value'] ] : $property['default'] );
+						$value = ( ( isset( $property['value'] ) && isset( $attrs[ $property['value'] ] ) ) ? $attrs[ $property['value'] ] : $property['default'] );
 
 						if ( isset( $property['format'] ) && is_callable( $property['format'] ) ) {
 							$value = $property['format']( $value );
 						}
 
-						$value = $value . $property['unit'];
+						$value       = $value . $property['unit'];
 						$item_style .= $property['property'] . ': ' . $value . ';' . "\n";
 					}
 				}
