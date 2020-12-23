@@ -34,33 +34,37 @@ class Icon_List_Item_CSS extends Base_CSS {
 	public function render_css( $block ) {
 		$css = new CSS_Utility( $block );
 
-		$css->add_item( array(
-			'selector' => ' .wp-block-themeisle-blocks-icon-list-item-content-custom',
-			'properties' => array(
-				array(
-					'property' => 'color',
-					'value'    => 'contentColor',
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-icon-list-item-content-custom',
+				'properties' => array(
+					array(
+						'property' => 'color',
+						'value'    => 'contentColor',
+					),
+					array(
+						'property' => 'fill',
+						'value'    => 'contentColor',
+					),
 				),
-				array(
-					'property' => 'fill',
-					'value'    => 'contentColor',
-				),
-			),
-		) );
+			)
+		);
 
-		$css->add_item( array(
-			'selector' => ' .wp-block-themeisle-blocks-icon-list-item-icon-custom',
-			'properties' => array(
-				array(
-					'property' => 'color',
-					'value'    => 'iconColor',
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-icon-list-item-icon-custom',
+				'properties' => array(
+					array(
+						'property' => 'color',
+						'value'    => 'iconColor',
+					),
+					array(
+						'property' => 'fill',
+						'value'    => 'iconColor',
+					),
 				),
-				array(
-					'property' => 'fill',
-					'value'    => 'iconColor',
-				),
-			),
-		) );
+			)
+		);
 
 		$style = $css->generate();
 

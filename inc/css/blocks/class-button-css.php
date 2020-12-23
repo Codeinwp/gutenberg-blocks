@@ -70,11 +70,11 @@ class Button_CSS extends Base_CSS {
 			if ( isset( $attr['hoverColor'] ) && ! empty( $attr['hoverColor'] ) ) {
 				$style .= '	color: ' . $this->get_attr_value( ( isset( $attr['hoverColor'] ) ? $attr['hoverColor'] : null ) ) . ';' . "\n";
 			}
-	
+
 			if ( ( isset( $attr['hoverBackground'] ) && ! empty( $attr['hoverBackground'] ) ) || ( isset( $attr['hoverBackgroundGradient'] ) && ! empty( $attr['hoverBackgroundGradient'] ) ) ) {
 				$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['hoverBackground'] ) ? $attr['hoverBackground'] : $attr['hoverBackgroundGradient'] ) ) . ';' . "\n";
 			}
-	
+
 			if ( isset( $attr['hoverBorder'] ) && ! empty( $attr['hoverBorder'] ) ) {
 				$style .= '	border-color: ' . $this->get_attr_value( ( isset( $attr['hoverBorder'] ) ? $attr['hoverBorder'] : null ) ) . ';' . "\n";
 			}

@@ -101,13 +101,13 @@ class Advanced_Column_CSS extends Base_CSS {
 					$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundGradient'] ) ? $attr['backgroundGradient'] : 'linear-gradient(90deg,rgba(54,209,220,1) 0%,rgba(91,134,229,1) 100%)' ) ) . ';' . "\n";
 				} else {
 					$direction;
-	
+
 					if ( 'linear' === $this->get_attr_value( ( isset( $attr['backgroundGradientType'] ) ? $attr['backgroundGradientType'] : null ), 'linear' ) ) {
 						$direction = $this->get_attr_value( ( isset( $attr['backgroundGradientAngle'] ) ? $attr['backgroundGradientAngle'] : null ), 90 ) . 'deg';
 					} else {
 						$direction = 'at ' . $this->get_attr_value( ( isset( $attr['backgroundGradientPosition'] ) ? $attr['backgroundGradientPosition'] : null ), 'center center' );
 					}
-	
+
 					$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundGradientType'] ) ? $attr['backgroundGradientType'] : null ), 'linear' ) . '-gradient( ' . $direction . ', ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstColor'] ) ? $attr['backgroundGradientFirstColor'] : null ), '#36d1dc' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstLocation'] ) ? $attr['backgroundGradientFirstLocation'] : null ), 0 ) . '%, ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondColor'] ) ? $attr['backgroundGradientSecondColor'] : null ), '#5b86e5' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondLocation'] ) ? $attr['backgroundGradientSecondLocation'] : null ), 100 ) . '% );' . "\n";
 				}
 			}
@@ -159,7 +159,7 @@ class Advanced_Column_CSS extends Base_CSS {
 					$style .= '		padding: ' . $this->get_attr_value( $attr['paddingTablet'] ) . 'px;' . "\n";
 				}
 			}
-	
+
 			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['paddingTypeTablet'] ) ? $attr['paddingTypeTablet'] : null ), 'linked' ) ) {
 				if ( isset( $attr['paddingTopTablet'] ) ) {
 					$style .= '		padding-top: ' . $this->get_attr_value( $attr['paddingTopTablet'] ) . 'px;' . "\n";
@@ -183,7 +183,7 @@ class Advanced_Column_CSS extends Base_CSS {
 					$style .= '		margin: ' . $this->get_attr_value( $attr['marginTablet'] ) . 'px;' . "\n";
 				}
 			}
-	
+
 			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeTablet'] ) ? $attr['marginTypeTablet'] : null ), 'unlinked' ) ) {
 				if ( isset( $attr['marginTopTablet'] ) ) {
 					$style .= '		margin-top: ' . $this->get_attr_value( $attr['marginTopTablet'] ) . 'px;' . "\n";
@@ -213,7 +213,7 @@ class Advanced_Column_CSS extends Base_CSS {
 					$style .= '		padding: ' . $this->get_attr_value( $attr['paddingMobile'] ) . 'px;' . "\n";
 				}
 			}
-	
+
 			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['paddingTypeMobile'] ) ? $attr['paddingTypeMobile'] : null ), 'linked' ) ) {
 				if ( isset( $attr['paddingTopMobile'] ) ) {
 					$style .= '		padding-top: ' . $this->get_attr_value( $attr['paddingTopMobile'] ) . 'px;' . "\n";
@@ -237,7 +237,7 @@ class Advanced_Column_CSS extends Base_CSS {
 					$style .= '		margin: ' . $this->get_attr_value( $attr['marginMobile'] ) . 'px;' . "\n";
 				}
 			}
-	
+
 			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeMobile'] ) ? $attr['marginTypeMobile'] : null ), 'unlinked' ) ) {
 				if ( isset( $attr['marginTopMobile'] ) ) {
 					$style .= '		margin-top: ' . $this->get_attr_value( $attr['marginTopMobile'] ) . 'px;' . "\n";

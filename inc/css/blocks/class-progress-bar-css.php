@@ -64,7 +64,7 @@ class Progress_Bar_CSS extends Base_CSS {
 			if ( isset( $attr['height'] ) ) {
 				$style .= '	font-size: ' . $this->get_attr_value( $attr['height'] ) * $ratio . 'px;' . "\n";
 			}
-			
+
 			if ( isset( $attr['height'] ) ) {
 				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
 			}
@@ -73,15 +73,13 @@ class Progress_Bar_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n";
 
-
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title.highlight {' . "\n";
-			
+
 			if ( isset( $attr['barBackgroundColor'] ) ) {
 				$style .= '	background: ' . $this->get_attr_value( $attr['barBackgroundColor'] ) . ';' . "\n";
 			}
-			
-			$style .= '}' . "\n \n";
 
+			$style .= '}' . "\n \n";
 
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title span {' . "\n";
 			if ( isset( $attr['height'] ) ) {
@@ -95,7 +93,6 @@ class Progress_Bar_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n";
 
-
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar {' . "\n";
 			if ( isset( $attr['barBackgroundColor'] ) ) {
 				$style .= '	background: ' . $this->get_attr_value( $attr['barBackgroundColor'] ) . ';' . "\n";
@@ -108,13 +105,11 @@ class Progress_Bar_CSS extends Base_CSS {
 			}
 			$style .= '}' . "\n \n";
 
-
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar .wp-block-themeisle-blocks-progress-bar__area__tooltip {' . "\n";
 			if ( isset( $attr['percentageColor'] ) ) {
 				$style .= '	color: ' . $this->get_attr_value( $attr['percentageColor'] ) . ';' . "\n";
 			}
 			$style .= '}' . "\n \n";
-
 
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__progress {' . "\n";
 			if ( isset( $attr['height'] ) ) {
@@ -127,7 +122,6 @@ class Progress_Bar_CSS extends Base_CSS {
 				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
 			}
 			$style .= '}' . "\n \n";
-
 
 			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar .wp-block-themeisle-blocks-progress-bar__progress__append {' . "\n";
 			if ( isset( $attr['height'] ) ) {

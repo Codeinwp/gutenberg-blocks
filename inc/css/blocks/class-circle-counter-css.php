@@ -34,20 +34,22 @@ class Circle_Counter_CSS extends Base_CSS {
 	public function render_css( $block ) {
 		$css = new CSS_Utility( $block );
 
-		$css->add_item( array(
-			'selector' => ' .wp-block-themeisle-blocks-circle-counter-title__area .wp-block-themeisle-blocks-circle-counter-title__value',
-			'properties' => array(
-				array(
-					'property' => 'color',
-					'value'    => 'titleColor',
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-circle-counter-title__area .wp-block-themeisle-blocks-circle-counter-title__value',
+				'properties' => array(
+					array(
+						'property' => 'color',
+						'value'    => 'titleColor',
+					),
+					array(
+						'property' => 'font-size',
+						'value'    => 'fontSizeTitle',
+						'unit'     => 'px',
+					),
 				),
-				array(
-					'property' => 'font-size',
-					'value'    => 'fontSizeTitle',
-					'unit'     => 'px',
-				),
-			),
-		) );
+			)
+		);
 
 		$style = $css->generate();
 

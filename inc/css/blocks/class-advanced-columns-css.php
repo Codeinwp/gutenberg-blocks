@@ -150,42 +150,42 @@ class Advanced_Columns_CSS extends Base_CSS {
 					$style .= '	opacity: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayOpacity'] ) ? $attr['backgroundOverlayOpacity'] : null ), 50 ) / 100 . ';' . "\n";
 				}
 			}
-	
+
 			if ( 'image' === $this->get_attr_value( ( isset( $attr['backgroundOverlayType'] ) ? $attr['backgroundOverlayType'] : null ), 'color' ) ) {
 				if ( ! empty( $attr['backgroundOverlayImageURL'] ) ) {
 					$style .= '	background-image: url( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayImageURL'] ) ? $attr['backgroundOverlayImageURL'] : null ) ) . ' );' . "\n";
 					$style .= '	opacity: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayOpacity'] ) ? $attr['backgroundOverlayOpacity'] : null ), 50 ) / 100 . ';' . "\n";
 				}
-	
+
 				if ( isset( $attr['backgroundOverlayAttachment'] ) ) {
 					$style .= '	background-attachment: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayAttachment'] ) ? $attr['backgroundOverlayAttachment'] : null ), 'scroll' ) . ';' . "\n";
 				}
-	
+
 				if ( isset( $attr['backgroundOverlayPosition'] ) ) {
 					$style .= '	background-position: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayPosition'] ) ? $attr['backgroundOverlayPosition'] : null ), 'top left' ) . ';' . "\n";
 				}
-	
+
 				if ( isset( $attr['backgroundOverlayRepeat'] ) ) {
 					$style .= '	background-repeat: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayRepeat'] ) ? $attr['backgroundOverlayRepeat'] : null ), 'repeat' ) . ';' . "\n";
 				}
-	
+
 				if ( isset( $attr['backgroundOverlaySize'] ) ) {
 					$style .= '	background-size: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlaySize'] ) ? $attr['backgroundOverlaySize'] : null ), 'auto' ) . ';' . "\n";
 				}
 			}
-	
+
 			if ( 'gradient' === $this->get_attr_value( ( isset( $attr['backgroundOverlayType'] ) ? $attr['backgroundOverlayType'] : null ), 'color' ) ) {
 				if ( isset( $attr['backgroundOverlayGradient'] ) ) {
 					$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradient'] ) ? $attr['backgroundOverlayGradient'] : 'linear-gradient(90deg,rgba(54,209,220,1) 0%,rgba(91,134,229,1) 100%)' ) ) . ';' . "\n";
 				} else {
 					$direction;
-		
+
 					if ( 'linear' === $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientType'] ) ? $attr['backgroundOverlayGradientType'] : null ), 'linear' ) ) {
 						$direction = $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientAngle'] ) ? $attr['backgroundOverlayGradientAngle'] : null ), 90 ) . 'deg';
 					} else {
 						$direction = 'at ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientPosition'] ) ? $attr['backgroundOverlayGradientPosition'] : null ), 'center center' );
 					}
-		
+
 					$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientType'] ) ? $attr['backgroundOverlayGradientType'] : null ), 'linear' ) . '-gradient( ' . $direction . ', ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientFirstColor'] ) ? $attr['backgroundOverlayGradientFirstColor'] : null ), '#36d1dc' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientFirstLocation'] ) ? $attr['backgroundOverlayGradientFirstLocation'] : null ), 0 ) . '%, ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientSecondColor'] ) ? $attr['backgroundOverlayGradientSecondColor'] : null ), '#5b86e5' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientSecondLocation'] ) ? $attr['backgroundOverlayGradientSecondLocation'] : null ), 100 ) . '% );' . "\n";
 				}
 				$style .= '	opacity: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayOpacity'] ) ? $attr['backgroundOverlayOpacity'] : null ), 50 ) / 100 . ';' . "\n";
@@ -238,7 +238,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 					$style .= '		padding: ' . $this->get_attr_value( $attr['paddingTablet'] ) . 'px;' . "\n";
 				}
 			}
-	
+
 			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['paddingTypeTablet'] ) ? $attr['paddingTypeTablet'] : null ), 'linked' ) ) {
 				if ( isset( $attr['paddingTopTablet'] ) ) {
 					$style .= '		padding-top: ' . $this->get_attr_value( $attr['paddingTopTablet'] ) . 'px;' . "\n";
@@ -266,7 +266,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 					$style .= '		margin-bottom: ' . $this->get_attr_value( $attr['marginTablet'] ) . 'px;' . "\n";
 				}
 			}
-	
+
 			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeTablet'] ) ? $attr['marginTypeTablet'] : null ), 'unlinked' ) ) {
 				if ( isset( $attr['marginTopTablet'] ) ) {
 					$style .= '		margin-top: ' . $this->get_attr_value( $attr['marginTopTablet'] ) . 'px;' . "\n";
@@ -287,19 +287,19 @@ class Advanced_Columns_CSS extends Base_CSS {
 					$style .= '		transform: scaleX( ' . $this->get_attr_value( ( isset( $attr['dividerTopWidthTablet'] ) ? $attr['dividerTopWidthTablet'] : null ) ) / 100 . ' );' . "\n";
 				$style     .= '	}' . "\n \n";
 			}
-	
+
 			if ( isset( $attr['dividerTopHeightTablet'] ) ) {
 				$style     .= '	#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-separators.top svg {' . "\n";
 					$style .= '		height: ' . $this->get_attr_value( ( isset( $attr['dividerTopHeightTablet'] ) ? $attr['dividerTopHeightTablet'] : null ) ) . 'px;' . "\n";
 				$style     .= '	}' . "\n \n";
 			}
-	
+
 			if ( isset( $attr['dividerBottomWidthTablet'] ) ) {
 				$style     .= '	#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-separators.bottom {' . "\n";
 					$style .= '		transform: scaleX( ' . $this->get_attr_value( ( isset( $attr['dividerBottomWidthTablet'] ) ? $attr['dividerBottomWidthTablet'] : null ) ) / 100 . ' );' . "\n";
 				$style     .= '	}' . "\n \n";
 			}
-	
+
 			if ( isset( $attr['dividerBottomHeightTablet'] ) ) {
 				$style     .= '	#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-separators.bottom svg {' . "\n";
 					$style .= '		height: ' . $this->get_attr_value( ( isset( $attr['dividerBottomHeightTablet'] ) ? $attr['dividerBottomHeightTablet'] : null ) ) . 'px;' . "\n";
@@ -316,7 +316,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 					$style .= '		padding: ' . $this->get_attr_value( $attr['paddingMobile'] ) . 'px;' . "\n";
 				}
 			}
-	
+
 			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['paddingTypeMobile'] ) ? $attr['paddingTypeMobile'] : null ), 'linked' ) ) {
 				if ( isset( $attr['paddingTopMobile'] ) ) {
 					$style .= '		padding-top: ' . $this->get_attr_value( $attr['paddingTopMobile'] ) . 'px;' . "\n";
@@ -344,7 +344,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 					$style .= '		margin-bottom: ' . $this->get_attr_value( $attr['marginMobile'] ) . 'px;' . "\n";
 				}
 			}
-	
+
 			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeMobile'] ) ? $attr['marginTypeMobile'] : null ), 'unlinked' ) ) {
 				if ( isset( $attr['marginTopMobile'] ) ) {
 					$style .= '		margin-top: ' . $this->get_attr_value( $attr['marginTopMobile'] ) . 'px;' . "\n";
@@ -365,19 +365,19 @@ class Advanced_Columns_CSS extends Base_CSS {
 					$style .= '		transform: scaleX( ' . $this->get_attr_value( ( isset( $attr['dividerTopWidthMobile'] ) ? $attr['dividerTopWidthMobile'] : null ) ) / 100 . ' );' . "\n";
 				$style     .= '	}' . "\n \n";
 			}
-	
+
 			if ( isset( $attr['dividerTopHeightMobile'] ) ) {
 				$style     .= '	#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-separators.top svg {' . "\n";
 					$style .= '		height: ' . $this->get_attr_value( ( isset( $attr['dividerTopHeightMobile'] ) ? $attr['dividerTopHeightMobile'] : null ) ) . 'px;' . "\n";
 				$style     .= '	}' . "\n \n";
 			}
-	
+
 			if ( isset( $attr['dividerBottomWidthMobile'] ) ) {
 				$style     .= '	#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-separators.bottom {' . "\n";
 					$style .= '		transform: scaleX( ' . $this->get_attr_value( ( isset( $attr['dividerBottomWidthMobile'] ) ? $attr['dividerBottomWidthMobile'] : null ) ) / 100 . ' );' . "\n";
 				$style     .= '	}' . "\n \n";
 			}
-	
+
 			if ( isset( $attr['dividerBottomHeightMobile'] ) ) {
 				$style     .= '	#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-separators.bottom svg {' . "\n";
 					$style .= '		height: ' . $this->get_attr_value( ( isset( $attr['dividerBottomHeightMobile'] ) ? $attr['dividerBottomHeightMobile'] : null ) ) . 'px;' . "\n";

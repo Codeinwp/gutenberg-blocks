@@ -38,119 +38,129 @@ class Button_Group_CSS extends Base_CSS {
 
 		$css = new CSS_Utility( $block );
 
-		$css->add_item( array(
-			'selector' => ' .wp-block-themeisle-blocks-button',
-			'properties' => array(
-				array(
-					'property' => 'margin-left',
-					'value'    => 'spacing',
-					'unit'     => 'px',
-					'default'  => 20,
-					'format'   => function( $value ) {
-						return $value / 2;
-					},
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-button',
+				'properties' => array(
+					array(
+						'property' => 'margin-left',
+						'value'    => 'spacing',
+						'unit'     => 'px',
+						'default'  => 20,
+						'format'   => function( $value ) {
+							return $value / 2;
+						},
+					),
+					array(
+						'property' => 'margin-right',
+						'value'    => 'spacing',
+						'unit'     => 'px',
+						'default'  => 20,
+						'format'   => function( $value ) {
+							return $value / 2;
+						},
+					),
 				),
-				array(
-					'property' => 'margin-right',
-					'value'    => 'spacing',
-					'unit'     => 'px',
-					'default'  => 20,
-					'format'   => function( $value ) {
-						return $value / 2;
-					},
-				),
-			),
-		) );
+			)
+		);
 
-		$css->add_item( array(
-			'selector' => ' .wp-block-themeisle-blocks-button .wp-block-button__link',
-			'properties' => array(
-				array(
-					'property' => 'padding-top',
-					'value'    => 'paddingTopBottom',
-					'unit'     => 'px',
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-button .wp-block-button__link',
+				'properties' => array(
+					array(
+						'property' => 'padding-top',
+						'value'    => 'paddingTopBottom',
+						'unit'     => 'px',
+					),
+					array(
+						'property' => 'padding-bottom',
+						'value'    => 'paddingTopBottom',
+						'unit'     => 'px',
+					),
+					array(
+						'property' => 'padding-left',
+						'value'    => 'paddingLeftRight',
+						'unit'     => 'px',
+					),
+					array(
+						'property' => 'padding-right',
+						'value'    => 'paddingLeftRight',
+						'unit'     => 'px',
+					),
+					array(
+						'property' => 'font-size',
+						'value'    => 'fontSize',
+						'unit'     => 'px',
+					),
+					array(
+						'property' => 'font-family',
+						'value'    => 'fontFamily',
+					),
+					array(
+						'property' => 'font-weight',
+						'value'    => 'fontVariant',
+						'format'   => function( $value ) {
+							return 'regular' === $value ? 'normal' : $value;
+						},
+					),
+					array(
+						'property' => 'text-transform',
+						'value'    => 'textTransform',
+						'default'  => 'none',
+					),
+					array(
+						'property' => 'font-style',
+						'value'    => 'fontStyle',
+						'default'  => 'normal',
+					),
+					array(
+						'property' => 'line-height',
+						'value'    => 'lineHeight',
+						'unit'     => 'px',
+					),
 				),
-				array(
-					'property' => 'padding-bottom',
-					'value'    => 'paddingTopBottom',
-					'unit'     => 'px',
-				),
-				array(
-					'property' => 'padding-left',
-					'value'    => 'paddingLeftRight',
-					'unit'     => 'px',
-				),
-				array(
-					'property' => 'padding-right',
-					'value'    => 'paddingLeftRight',
-					'unit'     => 'px',
-				),
-				array(
-					'property' => 'font-size',
-					'value'    => 'fontSize',
-					'unit'     => 'px',
-				),
-				array(
-					'property' => 'font-family',
-					'value'    => 'fontFamily',
-				),
-				array(
-					'property' => 'font-weight',
-					'value'    => 'fontVariant',
-					'format'   => function( $value ) {
-						return 'regular' === $value ? 'normal' : $value;
-					},
-				),
-				array(
-					'property' => 'text-transform',
-					'value'    => 'textTransform',
-					'default'  => 'none',
-				),
-				array(
-					'property' => 'font-style',
-					'value'    => 'fontStyle',
-					'default'  => 'normal',
-				),
-				array(
-					'property' => 'line-height',
-					'value'    => 'lineHeight',
-					'unit'     => 'px',
-				),
-			),
-		) );
+			)
+		);
 
-		$css->add_item( array(
-			'selector' => ' .wp-block-themeisle-blocks-button .wp-block-button__link svg',
-			'properties' => array(
-				array(
-					'property' => 'width',
-					'value'    => 'fontSize',
-					'unit'     => 'px',
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-button .wp-block-button__link svg',
+				'properties' => array(
+					array(
+						'property' => 'width',
+						'value'    => 'fontSize',
+						'unit'     => 'px',
+					),
 				),
-			),
-		) );
+			)
+		);
 
-		$css->add_item( array(
-			'selector' => ' .wp-block-themeisle-blocks-button:first-child',
-			'properties' => array(
-				array(
-					'property' => 'margin-left',
-					'unit'     => 'px',
-					'default'  => '0',
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-button:first-child',
+				'properties' => array(
+					array(
+						'property' => 'margin-left',
+						'unit'     => 'px',
+						'default'  => '0',
+					),
 				),
-			),
-		) );
+			)
+		);
 
-		$css->add_item( array(
-			'selector' => ' .wp-block-themeisle-blocks-button:last-child',
-			'properties' => array(
-				array(
-					'property' => 'margin-left',
-					'unit'     => 'px',
-					'default'  => '0',
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-button:last-child',
+				'properties' => array(
+					array(
+						'property' => 'margin-left',
+						'unit'     => 'px',
+						'default'  => '0',
+					),
 				),
-			),
-		) );
+			)
+		);
 
 		$style = $css->generate();
 
