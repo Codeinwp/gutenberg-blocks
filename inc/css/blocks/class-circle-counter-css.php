@@ -9,6 +9,8 @@ namespace ThemeIsle\GutenbergBlocks\CSS\Blocks;
 
 use ThemeIsle\GutenbergBlocks\Base_CSS;
 
+use ThemeIsle\GutenbergBlocks\CSS\CSS_Utility;
+
 /**
  * Class Circular_Counter_CSS
  */
@@ -30,22 +32,24 @@ class Circle_Counter_CSS extends Base_CSS {
 	 * @access  public
 	 */
 	public function render_css( $block ) {
-		$attr  = $block['attrs'];
-		$style = '';
-		
+		$css = new CSS_Utility( $block );
 
-		if ( isset( $attr['id'] ) ) {
+		$css->add_item( array(
+			'selector' => ' .wp-block-themeisle-blocks-circle-counter-title__area .wp-block-themeisle-blocks-circle-counter-title__value',
+			'properties' => array(
+				array(
+					'property' => 'color',
+					'value'    => 'titleColor',
+				),
+				array(
+					'property' => 'font-size',
+					'value'    => 'fontSizeTitle',
+					'unit'     => 'px',
+				),
+			),
+		) );
 
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-circle-counter-title__area .wp-block-themeisle-blocks-circle-counter-title__value {' . "\n";
-			if ( isset( $attr['titleColor'] ) ) {
-				$style .= '	color: ' . $this->get_attr_value( $attr['titleColor'] ) . ';' . "\n";
-			}
-			if ( isset( $attr['fontSizeTitle'] ) ) {
-				$style .= '	font-size: ' . $this->get_attr_value( $attr['fontSizeTitle'] ) . 'px;' . "\n";
-			}
-			$style .= '}' . "\n \n";
-
-		}
+		$style = $css->generate();
 
 		return $style;
 	}
