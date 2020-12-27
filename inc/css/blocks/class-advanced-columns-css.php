@@ -147,35 +147,31 @@ class Advanced_Columns_CSS extends Base_CSS {
 						},
 					),
 					array(
-						'property'  => 'background-attachment',
-						'value'     => 'backgroundAttachment',
-						'default'   => 'scroll',
-						'condition' => function( $attrs ) {
-							return isset( $attrs['backgroundType'] ) && 'image' === $attrs['backgroundType'];
-						},
-					),
-					array(
-						'property'  => 'background-position',
-						'value'     => 'backgroundPosition',
-						'default'   => 'top left',
-						'condition' => function( $attrs ) {
-							return isset( $attrs['backgroundType'] ) && 'image' === $attrs['backgroundType'];
-						},
-					),
-					array(
-						'property'  => 'background-repeat',
-						'value'     => 'backgroundRepeat',
-						'default'   => 'repeat',
-						'condition' => function( $attrs ) {
-							return isset( $attrs['backgroundType'] ) && 'image' === $attrs['backgroundType'];
-						},
-					),
-					array(
-						'property'  => 'background-size',
-						'value'     => 'backgroundSize',
-						'default'   => 'auto',
-						'condition' => function( $attrs ) {
-							return isset( $attrs['backgroundType'] ) && 'image' === $attrs['backgroundType'];
+						'property'       => 'background',
+						'pattern'        => 'url( \'imageURL\' ) repeat attachment position/size',
+						'pattern_values' => array(
+							'imageURL'   => array(
+								'value' => 'backgroundImageURL',
+							),
+							'repeat'     => array(
+								'value'   => 'backgroundRepeat',
+								'default' => 'repeat',
+							),
+							'attachment' => array(
+								'value'   => 'backgroundAttachment',
+								'default' => 'scroll',
+							),
+							'position'   => array(
+								'value'   => 'backgroundPosition',
+								'default' => 'top left',
+							),
+							'size'       => array(
+								'value'   => 'backgroundSize',
+								'default' => 'auto',
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['backgroundType'] ) && 'image' === $attrs['backgroundType'] && isset( $attrs['backgroundImageURL'] );
 						},
 					),
 					array(
@@ -184,6 +180,206 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'default'   => 'linear-gradient(90deg,rgba(54,209,220,1) 0%,rgba(91,134,229,1) 100%)',
 						'condition' => function( $attrs ) {
 							return isset( $attrs['backgroundType'] ) && 'gradient' === $attrs['backgroundType'] && isset( $attrs['backgroundGradient'] );
+						},
+					),
+					array(
+						'property'       => 'background',
+						'pattern'        => 'linear-gradient( angle, firstColor firstLocation, secondColor secondLocation )',
+						'pattern_values' => array(
+							'angle'          => array(
+								'value'   => 'backgroundGradientAngle',
+								'unit'    => 'deg',
+								'default' => 90,
+							),
+							'firstColor'     => array(
+								'value'   => 'backgroundGradientFirstColor',
+								'default' => '#36d1dc',
+							),
+							'firstLocation'  => array(
+								'value'   => 'backgroundGradientFirstLocation',
+								'unit'    => '%',
+								'default' => 0,
+							),
+							'secondColor'    => array(
+								'value'   => 'backgroundGradientSecondColor',
+								'default' => '#5b86e5',
+							),
+							'secondLocation' => array(
+								'value'   => 'backgroundGradientSecondLocation',
+								'unit'    => '%',
+								'default' => 1000,
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['backgroundType'] ) && 'gradient' === $attrs['backgroundType'] && ! isset( $attrs['backgroundGradient'] );
+						},
+					),
+					array(
+						'property'       => 'background',
+						'pattern'        => 'radial-gradient( at position, firstColor firstLocation, secondColor secondLocation )',
+						'pattern_values' => array(
+							'position'       => array(
+								'value'   => 'backgroundGradientPosition',
+								'default' => 'center center',
+							),
+							'firstColor'     => array(
+								'value'   => 'backgroundGradientFirstColor',
+								'default' => '#36d1dc',
+							),
+							'firstLocation'  => array(
+								'value'   => 'backgroundGradientFirstLocation',
+								'unit'    => '%',
+								'default' => 0,
+							),
+							'secondColor'    => array(
+								'value'   => 'backgroundGradientSecondColor',
+								'default' => '#5b86e5',
+							),
+							'secondLocation' => array(
+								'value'   => 'backgroundGradientSecondLocation',
+								'unit'    => '%',
+								'default' => 1000,
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['backgroundType'] ) && 'gradient' === $attrs['backgroundType'] && isset( $attrs['backgroundGradientType'] ) && 'radial' === $attrs['backgroundGradientType'];
+						},
+					),
+					array(
+						'property'       => 'border',
+						'pattern'        => 'width solid color',
+						'pattern_values' => array(
+							'width' => array(
+								'value'   => 'border',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'color' => array(
+								'value'   => 'borderColor',
+								'default' => '#000000',
+							),
+						),
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['borderType'] ) && 'unlinked' === $attrs['borderType'] );
+						},
+					),
+					array(
+						'property'       => 'border-width',
+						'pattern'        => 'top right bottom left',
+						'pattern_values' => array(
+							'top'    => array(
+								'value'   => 'borderTop',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'right'  => array(
+								'value'   => 'borderRight',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'bottom' => array(
+								'value'   => 'borderBottom',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'left'   => array(
+								'value'   => 'borderLeft',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+						),
+						'condition' => function( $attrs ) {
+							return isset( $attrs['borderType'] ) && 'unlinked' === $attrs['borderType'];
+						},
+					),
+					array(
+						'property'  => 'border-style',
+						'default'   => 'solid',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['borderType'] ) && 'unlinked' === $attrs['borderType'];
+						},
+					),
+					array(
+						'property'  => 'border-color',
+						'value'     => 'borderColor',
+						'default'   => '#000000',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['borderType'] ) && 'unlinked' === $attrs['borderType'];
+						},
+					),
+					array(
+						'property'  => 'border-radius',
+						'value'     => 'borderRadius',
+						'unit'      => 'px',
+						'default'   => 0,
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['borderRadiusType'] ) && 'unlinked' === $attrs['borderRadiusType'] );
+						},
+					),
+					array(
+						'property'       => 'border-radius',
+						'pattern'        => 'top-left top-right bottom-right bottom-left',
+						'pattern_values' => array(
+							'top-left'     => array(
+								'value'   => 'borderRadiusTop',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'top-right'    => array(
+								'value'   => 'borderRadiusRight',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'bottom-right' => array(
+								'value'   => 'borderRadiusBottom',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'bottom-left'  => array(
+								'value'   => 'borderRadiusLeft',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+						),
+						'condition' => function( $attrs ) {
+							return isset( $attrs['borderRadiusType'] ) && 'unlinked' === $attrs['borderRadiusType'];
+						},
+					),
+					array(
+						'property'       => 'box-shadow',
+						'pattern'        => 'horizontal vertical blur spread color',
+						'pattern_values' => array(
+							'horizontal' => array(
+								'value'   => 'boxShadowHorizontal',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'vertical'   => array(
+								'value'   => 'boxShadowVertical',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'blur'       => array(
+								'value'   => 'boxShadowBlur',
+								'unit'    => 'px',
+								'default' => 5,
+							),
+							'spread'     => array(
+								'value'   => 'boxShadowSpread',
+								'unit'    => 'px',
+								'default' => 1,
+							),
+							'color'      => array(
+								'value'   => 'boxShadowColor',
+								'default' => '#000',
+								'format'  => function( $value, $attrs ) {
+									$opacity = ( isset( $attrs['boxShadowColorOpacity'] ) ? $attrs['boxShadowColorOpacity'] : 50 ) / 100;
+									return $this->hex2rgba( $value, $opacity );
+								},
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['boxShadow'] ) && true === $attrs['boxShadow'];
 						},
 					),
 				),
@@ -532,56 +728,6 @@ class Advanced_Columns_CSS extends Base_CSS {
 		$style = $css->generate();
 
 		return $style;
-
-		// $style .= '#' . $attr['id'] . ' {' . "\n";
-		// if ( 'image' === $this->get_attr_value( ( isset( $attr['backgroundType'] ) ? $attr['backgroundType'] : null ), 'color' ) ) {
-		// 	if ( ! empty( $attr['backgroundImageURL'] ) ) {
-		// 		$style .= '	background-image: url( ' . $this->get_attr_value( ( isset( $attr['backgroundImageURL'] ) ? $attr['backgroundImageURL'] : null ) ) . ' );' . "\n";
-		// 	}
-		// }
-
-		// if ( 'gradient' === $this->get_attr_value( ( isset( $attr['backgroundType'] ) ? $attr['backgroundType'] : null ), 'color' ) ) {
-		// 	$direction;
-
-		// 	if ( 'linear' === $this->get_attr_value( ( isset( $attr['backgroundGradientType'] ) ? $attr['backgroundGradientType'] : null ), 'linear' ) ) {
-		// 		$direction = $this->get_attr_value( ( isset( $attr['backgroundGradientAngle'] ) ? $attr['backgroundGradientAngle'] : null ), 90 ) . 'deg';
-		// 	} else {
-		// 		$direction = 'at ' . $this->get_attr_value( ( isset( $attr['backgroundGradientPosition'] ) ? $attr['backgroundGradientPosition'] : null ), 'center center' );
-		// 	}
-
-		// 	$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundGradientType'] ) ? $attr['backgroundGradientType'] : null ), 'linear' ) . '-gradient( ' . $direction . ', ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstColor'] ) ? $attr['backgroundGradientFirstColor'] : null ), '#36d1dc' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstLocation'] ) ? $attr['backgroundGradientFirstLocation'] : null ), 0 ) . '%, ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondColor'] ) ? $attr['backgroundGradientSecondColor'] : null ), '#5b86e5' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondLocation'] ) ? $attr['backgroundGradientSecondLocation'] : null ), 100 ) . '% );' . "\n";
-		// }
-
-		// if ( 'linked' === $this->get_attr_value( ( isset( $attr['borderType'] ) ? $attr['borderType'] : null ), 'linked' ) ) {
-		// 	$style .= '	border-width: ' . $this->get_attr_value( ( isset( $attr['border'] ) ? $attr['border'] : null ), 0 ) . 'px;' . "\n";
-		// 	$style .= '	border-style: solid;' . "\n";
-		// 	$style .= '	border-color: ' . $this->get_attr_value( ( isset( $attr['borderColor'] ) ? $attr['borderColor'] : null ), '#000000' ) . ';' . "\n";
-		// }
-
-		// if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['borderType'] ) ? $attr['borderType'] : null ), 'linked' ) ) {
-		// 	$style .= '	border-top-width: ' . $this->get_attr_value( ( isset( $attr['borderTop'] ) ? $attr['borderTop'] : null ), 0 ) . 'px;' . "\n";
-		// 	$style .= '	border-right-width: ' . $this->get_attr_value( ( isset( $attr['borderRight'] ) ? $attr['borderRight'] : null ), 0 ) . 'px;' . "\n";
-		// 	$style .= '	border-bottom-width: ' . $this->get_attr_value( ( isset( $attr['borderBottom'] ) ? $attr['borderBottom'] : null ), 0 ) . 'px;' . "\n";
-		// 	$style .= '	border-left-width: ' . $this->get_attr_value( ( isset( $attr['borderLeft'] ) ? $attr['borderLeft'] : null ), 0 ) . 'px;' . "\n";
-		// 	$style .= '	border-style: solid;' . "\n";
-		// 	$style .= '	border-color: ' . $this->get_attr_value( ( isset( $attr['borderColor'] ) ? $attr['borderColor'] : null ), '#000000' ) . ';' . "\n";
-		// }
-
-		// if ( 'linked' === $this->get_attr_value( ( isset( $attr['borderRadiusType'] ) ? $attr['borderRadiusType'] : null ), 'linked' ) ) {
-		// 	$style .= '	border-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadius'] ) ? $attr['borderRadius'] : null ), 0 ) . 'px;' . "\n";
-		// }
-
-		// if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['borderRadiusType'] ) ? $attr['borderRadiusType'] : null ), 'linked' ) ) {
-		// 	$style .= '	border-top-left-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadiusTop'] ) ? $attr['borderRadiusTop'] : null ), 0 ) . 'px;' . "\n";
-		// 	$style .= '	border-top-right-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadiusRight'] ) ? $attr['borderRadiusRight'] : null ), 0 ) . 'px;' . "\n";
-		// 	$style .= '	border-bottom-right-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadiusBottom'] ) ? $attr['borderRadiusBottom'] : null ), 0 ) . 'px;' . "\n";
-		// 	$style .= '	border-bottom-left-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadiusLeft'] ) ? $attr['borderRadiusLeft'] : null ), 0 ) . 'px;' . "\n";
-		// }
-
-		// if ( isset( $attr['boxShadow'] ) && true === $attr['boxShadow'] ) {
-		// 	$style .= '	box-shadow: ' . $this->get_attr_value( ( isset( $attr['boxShadowHorizontal'] ) ? $attr['boxShadowHorizontal'] : null ), 0 ) . 'px ' . $this->get_attr_value( ( isset( $attr['boxShadowVertical'] ) ? $attr['boxShadowVertical'] : null ), 0 ) . 'px ' . $this->get_attr_value( ( isset( $attr['boxShadowBlur'] ) ? $attr['boxShadowBlur'] : null ), 5 ) . 'px ' . $this->get_attr_value( ( isset( $attr['boxShadowSpread'] ) ? $attr['boxShadowSpread'] : null ), 1 ) . 'px ' . $this->hex2rgba( $this->get_attr_value( ( isset( $attr['boxShadowColor'] ) ? $attr['boxShadowColor'] : null ), '#000' ), $this->get_attr_value( ( isset( $attr['boxShadowColorOpacity'] ) ? $attr['boxShadowColorOpacity'] : null ), '50' ) / 100 ) . ';' . "\n";
-		// }
-		// $style .= '}' . "\n \n";
 
 		// $style .= '#' . $attr['id'] . ' > .wp-block-themeisle-blocks-advanced-columns-overlay {' . "\n";
 		// if ( 'image' === $this->get_attr_value( ( isset( $attr['backgroundOverlayType'] ) ? $attr['backgroundOverlayType'] : null ), 'color' ) ) {

@@ -149,6 +149,32 @@ class CSS_Utility {
 						$value       = $value . $property['unit'];
 						$item_style .= $property['property'] . ': ' . $value . ';' . "\n";
 					}
+
+					if ( isset( $property['property'] ) && ( isset( $property['pattern'] ) && isset( $property['pattern_values'] ) ) ) {
+						$pattern = $property['pattern'];
+
+						foreach ( $property['pattern_values'] as $value_key => $pattern_value ) {
+							$pattern_value = wp_parse_args(
+								$pattern_value,
+								array(
+									'unit' => '',
+								)
+							);
+
+							if (  ( ( isset( $pattern_value['value'] ) && isset( $attrs[ $pattern_value['value'] ] ) ) || isset( $pattern_value['default'] ) ) ) {
+								$value = ( ( isset( $pattern_value['value'] ) && isset( $attrs[ $pattern_value['value'] ] ) ) ? $attrs[ $pattern_value['value'] ] : $pattern_value['default'] );
+
+								if ( isset( $pattern_value['format'] ) && is_callable( $pattern_value['format'] ) ) {
+									$value = $pattern_value['format']( $value, $attrs );
+								}
+
+								$value = $value . $pattern_value['unit'];
+								$pattern = preg_replace( '/\b' . $value_key . '\b/', $value, $pattern );
+							}
+						}
+
+						$item_style .= $property['property'] . ': ' . $pattern . ';' . "\n";
+					}
 				}
 
 				if ( '' !== $item_style ) {

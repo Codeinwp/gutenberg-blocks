@@ -105,6 +105,19 @@ class Progress_Bar_CSS extends Base_CSS {
 						'value'    => 'height',
 						'unit'     => 'px',
 					),
+					array(
+						'property'       => 'border-radius',
+						'pattern'        => 'borderRadius 0 0 borderRadius',
+						'pattern_values' => array(
+							'borderRadius' => array(
+								'value' => 'borderRadius',
+								'unit'  => 'px',
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['borderRadius'] );
+						},
+					),
 				),
 			)
 		);
@@ -140,6 +153,19 @@ class Progress_Bar_CSS extends Base_CSS {
 							}
 
 							return isset( $attrs['titleStyle'] ) && 'outer' !== $attrs['titleStyle'];
+						},
+					),
+					array(
+						'property'       => 'border-radius',
+						'pattern'        => 'borderRadius 0 0 borderRadius',
+						'pattern_values' => array(
+							'borderRadius' => array(
+								'value' => 'borderRadius',
+								'unit'  => 'px',
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['borderRadius'] );
 						},
 					),
 				),
@@ -252,26 +278,6 @@ class Progress_Bar_CSS extends Base_CSS {
 		);
 
 		$style = $css->generate();
-
-		return $style;
-
-		$attr  = $block['attrs'];
-		$style = '';
-		$ratio = 0.65;
-
-		if ( isset( $attr['id'] ) ) {
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title {' . "\n";
-			if ( isset( $attr['borderRadius'] ) ) {
-				$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px 0 0 ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px;' . "\n";
-			}
-			$style .= '}' . "\n \n";
-
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title span {' . "\n";
-			if ( isset( $attr['borderRadius'] ) ) {
-				$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px 0 0 ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px;' . "\n";
-			}
-			$style .= '}' . "\n \n";
-		}
 
 		return $style;
 	}

@@ -168,6 +168,38 @@ class Advanced_Heading_CSS extends Base_CSS {
 							return ! ( isset( $attrs['marginType'] ) && 'linked' === $attrs['marginType'] );
 						},
 					),
+					array(
+						'property'       => 'text-shadow',
+						'pattern'        => 'horizontal vertical blur color',
+						'pattern_values' => array(
+							'horizontal' => array(
+								'value'   => 'textShadowHorizontal',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'vertical'   => array(
+								'value'   => 'textShadowVertical',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'blur'       => array(
+								'value'   => 'textShadowBlur',
+								'unit'    => 'px',
+								'default' => 5,
+							),
+							'color'      => array(
+								'value'   => 'textShadowColor',
+								'default' => '#000',
+								'format'  => function( $value, $attrs ) {
+									$opacity = ( isset( $attrs['textShadowColorOpacity'] ) ? $attrs['textShadowColorOpacity'] : 50 ) / 100;
+									return $this->hex2rgba( $value, $opacity );
+								},
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['textShadow'] );
+						},
+					),
 				),
 			)
 		);
@@ -378,11 +410,5 @@ class Advanced_Heading_CSS extends Base_CSS {
 		$style = $css->generate();
 
 		return $style;
-
-		if ( isset( $attr['id'] ) ) {
-			if ( isset( $attr['textShadow'] ) ) {
-				$style .= '	text-shadow: ' . $this->get_attr_value( ( isset( $attr['textShadowHorizontal'] ) ? $attr['textShadowHorizontal'] : null ), 0 ) . 'px ' . $this->get_attr_value( ( isset( $attr['textShadowVertical'] ) ? $attr['textShadowVertical'] : null ), 0 ) . 'px ' . $this->get_attr_value( ( isset( $attr['textShadowBlur'] ) ? $attr['textShadowBlur'] : null ), 5 ) . 'px ' . $this->hex2rgba( $this->get_attr_value( ( isset( $attr['textShadowColor'] ) ? $attr['textShadowColor'] : null ), '#000' ), $this->get_attr_value( ( isset( $attr['textShadowColorOpacity'] ) ? $attr['textShadowColorOpacity'] : null ), '50' ) / 100 ) . ';' . "\n";
-			}
-		}
 	}
 }
