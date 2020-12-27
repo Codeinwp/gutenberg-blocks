@@ -47,7 +47,7 @@ class Button_Group_CSS extends Base_CSS {
 						'value'    => 'spacing',
 						'unit'     => 'px',
 						'default'  => 20,
-						'format'   => function( $value ) {
+						'format'   => function( $value, $attrs ) {
 							return $value / 2;
 						},
 					),
@@ -56,7 +56,7 @@ class Button_Group_CSS extends Base_CSS {
 						'value'    => 'spacing',
 						'unit'     => 'px',
 						'default'  => 20,
-						'format'   => function( $value ) {
+						'format'   => function( $value, $attrs ) {
 							return $value / 2;
 						},
 					),
@@ -100,7 +100,7 @@ class Button_Group_CSS extends Base_CSS {
 					array(
 						'property' => 'font-weight',
 						'value'    => 'fontVariant',
-						'format'   => function( $value ) {
+						'format'   => function( $value, $attrs ) {
 							return 'regular' === $value ? 'normal' : $value;
 						},
 					),

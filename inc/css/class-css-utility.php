@@ -2,12 +2,6 @@
 /**
  * Css generator.
  *
- * Inspired by https://github.com/kirki-framework/wp-css-generator
- *
- * @package ThemeIsle\GutenbergBlocks\CSS
- */
-
-/**
  * $css = new CSS_Utility( $block );
  *
  * $css->add_item( array(
@@ -15,18 +9,42 @@
  *  'selector'   => ' .wp-block',
  *  'properties' => array(
  *      array(
- *          'property' => 'margin-left',
- *          'value'    => 'spacing',
- *          'unit'     => 'px',
- *          'default'  => 20,
- *          'format'   => function( $value ) {
+ *          'property'    => 'margin',
+ *          'value'       => 'spacing',
+ *          'unit'        => 'px',
+ *          'default'     => 20,
+ *          'format'      => function( $value, $attrs ) {
  *              return $value / 2;
- *          }
+ *          },
+ *          'condition'   => function( $attrs ) {
+ *              return true;
+ *          },
+ *      ),
+ *      array(
+ *          'property'       => 'margin',
+ *          'pattern'        => '20px marginLeftRight',
+ *          'pattern_values' => array(
+ *              'marginLeftRight' => array(
+ *                  'value'   => 'marginLeftRight',
+ *                  'unit'    => 'px',
+ *                  'default' => 20,
+ *                  'format'  => function( $value, $attrs ) {
+ *                      return $value / 2;
+ *                  },
+ *              ),
+ *          ),
+ *          'condition'      => function( $attrs ) {
+ *              return true;
+ *          },
  *      ),
  *  ),
  * ) );
  *
  * $style = $css->generate();
+ * 
+ * Inspired by https://github.com/kirki-framework/wp-css-generator
+ *
+ * @package ThemeIsle\GutenbergBlocks\CSS
  */
 
 namespace ThemeIsle\GutenbergBlocks\CSS;
@@ -54,6 +72,7 @@ class CSS_Utility {
 	 * Constructor
 	 *
 	 * @access public
+	 * @param array $block Block object.
 	 */
 	public function __construct( $block ) {
 		$this->block = $block;
@@ -64,7 +83,7 @@ class CSS_Utility {
 	 *
 	 * @access public
 	 * @since 1.6.0
-	 * @param array $params CSS object parameters
+	 * @param array $params CSS object parameters.
 	 */
 	public function add_item( $params ) {
 		$params = wp_parse_args(
@@ -92,7 +111,6 @@ class CSS_Utility {
 	 *
 	 * @access public
 	 * @since 1.6.0
-	 * @param array $params CSS object parameters
 	 */
 	public function generate() {
 		$style = '';
@@ -104,7 +122,7 @@ class CSS_Utility {
 		}
 
 		foreach ( $this->css_array as $media_query => $css_items ) {
-			$style .= ( 'global' !== $media_query ) ? $media_query . '{' : '';
+			$style .= ( 'global' !== $media_query ) ? $media_query . '{'  . "\n" : '';
 
 			foreach ( $css_items as $selector => $properties ) {
 				$item_style = '';
@@ -117,11 +135,15 @@ class CSS_Utility {
 						)
 					);
 
+					if ( isset( $property['condition'] ) && is_callable( $property['condition'] ) && ! $property['condition']( $attrs ) ) {
+						continue;
+					}
+
 					if ( isset( $property['property'] ) && ( ( isset( $property['value'] ) && isset( $attrs[ $property['value'] ] ) ) || isset( $property['default'] ) ) ) {
 						$value = ( ( isset( $property['value'] ) && isset( $attrs[ $property['value'] ] ) ) ? $attrs[ $property['value'] ] : $property['default'] );
 
 						if ( isset( $property['format'] ) && is_callable( $property['format'] ) ) {
-							$value = $property['format']( $value );
+							$value = $property['format']( $value, $attrs );
 						}
 
 						$value       = $value . $property['unit'];
@@ -136,6 +158,10 @@ class CSS_Utility {
 
 			$style .= ( 'global' !== $media_query ) ? '}' : '';
 		}
+
+		echo '<pre>';
+		print_r( $style );
+		echo '</pre>';
 
 		return $style;
 	}
