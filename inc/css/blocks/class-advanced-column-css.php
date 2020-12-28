@@ -195,7 +195,7 @@ class Advanced_Column_CSS extends Base_CSS {
 							'secondLocation' => array(
 								'value'   => 'backgroundGradientSecondLocation',
 								'unit'    => '%',
-								'default' => 1000,
+								'default' => 100,
 							),
 						),
 						'condition'      => function( $attrs ) {
@@ -226,7 +226,7 @@ class Advanced_Column_CSS extends Base_CSS {
 							'secondLocation' => array(
 								'value'   => 'backgroundGradientSecondLocation',
 								'unit'    => '%',
-								'default' => 1000,
+								'default' => 100,
 							),
 						),
 						'condition'      => function( $attrs ) {

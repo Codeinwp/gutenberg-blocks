@@ -207,7 +207,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 							'secondLocation' => array(
 								'value'   => 'backgroundGradientSecondLocation',
 								'unit'    => '%',
-								'default' => 1000,
+								'default' => 100,
 							),
 						),
 						'condition'      => function( $attrs ) {
@@ -238,7 +238,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 							'secondLocation' => array(
 								'value'   => 'backgroundGradientSecondLocation',
 								'unit'    => '%',
-								'default' => 1000,
+								'default' => 100,
 							),
 						),
 						'condition'      => function( $attrs ) {
@@ -406,35 +406,31 @@ class Advanced_Columns_CSS extends Base_CSS {
 						},
 					),
 					array(
-						'property'  => 'background-attachment',
-						'value'     => 'backgroundOverlayAttachment',
-						'default'   => 'scroll',
-						'condition' => function( $attrs ) {
-							return isset( $attrs['backgroundOverlayType'] ) && 'image' === $attrs['backgroundOverlayType'];
-						},
-					),
-					array(
-						'property'  => 'background-position',
-						'value'     => 'backgroundOverlayPosition',
-						'default'   => 'top left',
-						'condition' => function( $attrs ) {
-							return isset( $attrs['backgroundOverlayType'] ) && 'image' === $attrs['backgroundOverlayType'];
-						},
-					),
-					array(
-						'property'  => 'background-repeat',
-						'value'     => 'backgroundOverlayRepeat',
-						'default'   => 'repeat',
-						'condition' => function( $attrs ) {
-							return isset( $attrs['backgroundOverlayType'] ) && 'image' === $attrs['backgroundOverlayType'];
-						},
-					),
-					array(
-						'property'  => 'background-size',
-						'value'     => 'backgroundOverlaySize',
-						'default'   => 'auto',
-						'condition' => function( $attrs ) {
-							return isset( $attrs['backgroundOverlayType'] ) && 'image' === $attrs['backgroundOverlayType'];
+						'property'       => 'background',
+						'pattern'        => 'url( \'imageURL\' ) repeat attachment position/size',
+						'pattern_values' => array(
+							'imageURL'   => array(
+								'value' => 'backgroundOverlayImageURL',
+							),
+							'repeat'     => array(
+								'value'   => 'backgroundOverlayRepeat',
+								'default' => 'repeat',
+							),
+							'attachment' => array(
+								'value'   => 'backgroundOverlayAttachment',
+								'default' => 'scroll',
+							),
+							'position'   => array(
+								'value'   => 'backgroundOverlayPosition',
+								'default' => 'top left',
+							),
+							'size'       => array(
+								'value'   => 'backgroundOverlaySize',
+								'default' => 'auto',
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['backgroundOverlayType'] ) && 'image' === $attrs['backgroundOverlayType'] && isset( $attrs['backgroundOverlayImageURL'] );
 						},
 					),
 					array(
@@ -443,6 +439,119 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'default'   => 'linear-gradient(90deg,rgba(54,209,220,1) 0%,rgba(91,134,229,1) 100%)',
 						'condition' => function( $attrs ) {
 							return isset( $attrs['backgroundOverlayType'] ) && 'gradient' === $attrs['backgroundOverlayType'] && isset( $attrs['backgroundGradient'] );
+						},
+					),
+					array(
+						'property'       => 'background',
+						'pattern'        => 'linear-gradient( angle, firstColor firstLocation, secondColor secondLocation )',
+						'pattern_values' => array(
+							'angle'          => array(
+								'value'   => 'backgroundOverlayGradientAngle',
+								'unit'    => 'deg',
+								'default' => 90,
+							),
+							'firstColor'     => array(
+								'value'   => 'backgroundOverlayGradientFirstColor',
+								'default' => '#36d1dc',
+							),
+							'firstLocation'  => array(
+								'value'   => 'backgroundOverlayGradientFirstLocation',
+								'unit'    => '%',
+								'default' => 0,
+							),
+							'secondColor'    => array(
+								'value'   => 'backgroundOverlayGradientSecondColor',
+								'default' => '#5b86e5',
+							),
+							'secondLocation' => array(
+								'value'   => 'backgroundOverlayGradientSecondLocation',
+								'unit'    => '%',
+								'default' => 100,
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['backgroundOverlayType'] ) && 'gradient' === $attrs['backgroundOverlayType'] && ! isset( $attrs['backgroundOverlayGradient'] );
+						},
+					),
+					array(
+						'property'       => 'background',
+						'pattern'        => 'radial-gradient( at position, firstColor firstLocation, secondColor secondLocation )',
+						'pattern_values' => array(
+							'position'       => array(
+								'value'   => 'backgroundOverlayGradientPosition',
+								'default' => 'center center',
+							),
+							'firstColor'     => array(
+								'value'   => 'backgroundOverlayGradientFirstColor',
+								'default' => '#36d1dc',
+							),
+							'firstLocation'  => array(
+								'value'   => 'backgroundOverlayGradientFirstLocation',
+								'unit'    => '%',
+								'default' => 0,
+							),
+							'secondColor'    => array(
+								'value'   => 'backgroundOverlayGradientSecondColor',
+								'default' => '#5b86e5',
+							),
+							'secondLocation' => array(
+								'value'   => 'backgroundOverlayGradientSecondLocation',
+								'unit'    => '%',
+								'default' => 100,
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['backgroundOverlayType'] ) && 'gradient' === $attrs['backgroundOverlayType'] && isset( $attrs['backgroundOverlayGradientType'] ) && 'radial' === $attrs['backgroundOverlayGradientType'];
+						},
+					),
+					array(
+						'property'       => 'filter',
+						'pattern'        => 'blur( filterBlur ) brightness( filterBrightness ) contrast( filterContrast ) grayscale( filterGrayscale ) hue-rotate( filterHue ) saturate( filterSaturate )',
+						'pattern_values' => array(
+							'filterBlur'       => array(
+								'value'   => 'backgroundOverlayFilterBlur',
+								'unit'    => 'px',
+								'default' => 0,
+								'format'  => function( $value, $attrs ) {
+									return $value / 10;
+								},
+							),
+							'filterBrightness' => array(
+								'value'   => 'backgroundOverlayFilterBrightness',
+								'default' => 10,
+								'format'  => function( $value, $attrs ) {
+									return $value / 10;
+								},
+							),
+							'filterContrast'   => array(
+								'value'   => 'backgroundOverlayFilterContrast',
+								'default' => 10,
+								'format'  => function( $value, $attrs ) {
+									return $value / 10;
+								},
+							),
+							'filterGrayscale'  => array(
+								'value'   => 'backgroundOverlayFilterGrayscale',
+								'default' => 0,
+								'format'  => function( $value, $attrs ) {
+									return $value / 100;
+								},
+							),
+							'filterHue'        => array(
+								'value'   => 'backgroundOverlayFilterHue',
+								'unit'    => 'deg',
+								'default' => 0,
+							),
+							'filterSaturate'   => array(
+								'value'   => 'backgroundOverlayFilterSaturate',
+								'default' => 10,
+								'format'  => function( $value, $attrs ) {
+									return $value / 10;
+								},
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['backgroundOverlayFilterBlur'] );
 						},
 					),
 					array(
@@ -463,6 +572,21 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'value'    => 'dividerTopHeight',
 						'unit'     => 'px',
 					),
+					array(
+						'property'       => 'transform',
+						'pattern'        => 'scaleX( width )',
+						'pattern_values' => array(
+							'width' => array(
+								'value'   => 'dividerTopWidth',
+								'format'  => function( $value, $attrs ) {
+									return $value / 100;
+								},
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['dividerTopWidth'] );
+						},
+					),
 				),
 			)
 		);
@@ -475,6 +599,21 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'property' => 'height',
 						'value'    => 'dividerBottomHeight',
 						'unit'     => 'px',
+					),
+					array(
+						'property'       => 'transform',
+						'pattern'        => 'scaleX( width )',
+						'pattern_values' => array(
+							'width' => array(
+								'value'   => 'dividerBottomWidth',
+								'format'  => function( $value, $attrs ) {
+									return $value / 100;
+								},
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['dividerBottomWidth'] );
+						},
 					),
 				),
 			)
@@ -591,6 +730,21 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'value'    => 'dividerTopHeightTablet',
 						'unit'     => 'px',
 					),
+					array(
+						'property'       => 'transform',
+						'pattern'        => 'scaleX( width )',
+						'pattern_values' => array(
+							'width' => array(
+								'value'   => 'dividerTopWidthTablet',
+								'format'  => function( $value, $attrs ) {
+									return $value / 100;
+								},
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['dividerTopWidthTablet'] );
+						},
+					),
 				),
 			)
 		);
@@ -604,6 +758,21 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'property' => 'height',
 						'value'    => 'dividerBottomHeightTablet',
 						'unit'     => 'px',
+					),
+					array(
+						'property'       => 'transform',
+						'pattern'        => 'scaleX( width )',
+						'pattern_values' => array(
+							'width' => array(
+								'value'   => 'dividerBottomWidthTablet',
+								'format'  => function( $value, $attrs ) {
+									return $value / 100;
+								},
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['dividerBottomWidthTablet'] );
+						},
 					),
 				),
 			)
@@ -707,6 +876,21 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'value'    => 'dividerTopHeightMobile',
 						'unit'     => 'px',
 					),
+					array(
+						'property'       => 'transform',
+						'pattern'        => 'scaleX( width )',
+						'pattern_values' => array(
+							'width' => array(
+								'value'   => 'dividerTopWidthMobile',
+								'format'  => function( $value, $attrs ) {
+									return $value / 100;
+								},
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['dividerTopWidthMobile'] );
+						},
+					),
 				),
 			)
 		);
@@ -721,6 +905,21 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'value'    => 'dividerBottomHeightMobile',
 						'unit'     => 'px',
 					),
+					array(
+						'property'       => 'transform',
+						'pattern'        => 'scaleX( width )',
+						'pattern_values' => array(
+							'width' => array(
+								'value'   => 'dividerBottomWidthMobile',
+								'format'  => function( $value, $attrs ) {
+									return $value / 100;
+								},
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['dividerBottomWidthMobile'] );
+						},
+					),
 				),
 			)
 		);
@@ -728,69 +927,5 @@ class Advanced_Columns_CSS extends Base_CSS {
 		$style = $css->generate();
 
 		return $style;
-
-		// $style .= '#' . $attr['id'] . ' > .wp-block-themeisle-blocks-advanced-columns-overlay {' . "\n";
-		// if ( 'image' === $this->get_attr_value( ( isset( $attr['backgroundOverlayType'] ) ? $attr['backgroundOverlayType'] : null ), 'color' ) ) {
-		// 	if ( ! empty( $attr['backgroundOverlayImageURL'] ) ) {
-		// 		$style .= '	background-image: url( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayImageURL'] ) ? $attr['backgroundOverlayImageURL'] : null ) ) . ' );' . "\n";
-		// 	}
-		// }
-
-		// if ( 'gradient' === $this->get_attr_value( ( isset( $attr['backgroundOverlayType'] ) ? $attr['backgroundOverlayType'] : null ), 'color' ) ) {
-		// 	$direction;
-
-		// 	if ( 'linear' === $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientType'] ) ? $attr['backgroundOverlayGradientType'] : null ), 'linear' ) ) {
-		// 		$direction = $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientAngle'] ) ? $attr['backgroundOverlayGradientAngle'] : null ), 90 ) . 'deg';
-		// 	} else {
-		// 		$direction = 'at ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientPosition'] ) ? $attr['backgroundOverlayGradientPosition'] : null ), 'center center' );
-		// 	}
-
-		// 	$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientType'] ) ? $attr['backgroundOverlayGradientType'] : null ), 'linear' ) . '-gradient( ' . $direction . ', ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientFirstColor'] ) ? $attr['backgroundOverlayGradientFirstColor'] : null ), '#36d1dc' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientFirstLocation'] ) ? $attr['backgroundOverlayGradientFirstLocation'] : null ), 0 ) . '%, ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientSecondColor'] ) ? $attr['backgroundOverlayGradientSecondColor'] : null ), '#5b86e5' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayGradientSecondLocation'] ) ? $attr['backgroundOverlayGradientSecondLocation'] : null ), 100 ) . '% );' . "\n";
-		// }
-
-		// if ( isset( $attr['backgroundOverlayFilterBlur'] ) ) {
-		// 	$style .= '	filter: blur( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterBlur'] ) ? ( $attr['backgroundOverlayFilterBlur'] / 10 ) : 0 ) ) . 'px ) brightness( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterBrightness'] ) ? ( $attr['backgroundOverlayFilterBrightness'] / 10 ) : 1 ) ) . ' ) contrast( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterContrast'] ) ? ( $attr['backgroundOverlayFilterContrast'] / 10 ) : 1 ) ) . ' ) grayscale( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterGrayscale'] ) ? ( $attr['backgroundOverlayFilterGrayscale'] / 100 ) : 0 ) ) . ' ) hue-rotate( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterHue'] ) ? $attr['backgroundOverlayFilterHue'] : 0 ) ) . 'deg ) saturate( ' . $this->get_attr_value( ( isset( $attr['backgroundOverlayFilterSaturate'] ) ? ( $attr['backgroundOverlayFilterSaturate'] / 10 ) : 1 ) ) . ' );' . "\n";
-		// }
-		// $style .= '}' . "\n \n";
-
-		// if ( isset( $attr['dividerTopWidth'] ) ) {
-		// 	$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-separators.top {' . "\n";
-		// 		$style .= '	transform: scaleX( ' . $this->get_attr_value( ( isset( $attr['dividerTopWidth'] ) ? $attr['dividerTopWidth'] : null ) ) / 100 . ' );' . "\n";
-		// 	$style     .= '}' . "\n \n";
-		// }
-
-		// if ( isset( $attr['dividerBottomWidth'] ) ) {
-		// 	$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-separators.bottom {' . "\n";
-		// 		$style .= '	transform: scaleX( ' . $this->get_attr_value( ( isset( $attr['dividerBottomWidth'] ) ? $attr['dividerBottomWidth'] : null ) ) / 100 . ' );' . "\n";
-		// 	$style     .= '}' . "\n \n";
-		// }
-
-		// $style .= '@media ( min-width: 600px ) and ( max-width: 960px ) {' . "\n";
-		// if ( isset( $attr['dividerTopWidthTablet'] ) ) {
-		// 	$style     .= '	#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-separators.top {' . "\n";
-		// 		$style .= '		transform: scaleX( ' . $this->get_attr_value( ( isset( $attr['dividerTopWidthTablet'] ) ? $attr['dividerTopWidthTablet'] : null ) ) / 100 . ' );' . "\n";
-		// 	$style     .= '	}' . "\n \n";
-		// }
-
-		// if ( isset( $attr['dividerBottomWidthTablet'] ) ) {
-		// 	$style     .= '	#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-separators.bottom {' . "\n";
-		// 		$style .= '		transform: scaleX( ' . $this->get_attr_value( ( isset( $attr['dividerBottomWidthTablet'] ) ? $attr['dividerBottomWidthTablet'] : null ) ) / 100 . ' );' . "\n";
-		// 	$style     .= '	}' . "\n \n";
-		// }
-		// $style .= '}' . "\n \n";
-
-		// $style .= '@media ( max-width: 600px ) {' . "\n";
-		// if ( isset( $attr['dividerTopWidthMobile'] ) ) {
-		// 	$style     .= '	#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-separators.top {' . "\n";
-		// 		$style .= '		transform: scaleX( ' . $this->get_attr_value( ( isset( $attr['dividerTopWidthMobile'] ) ? $attr['dividerTopWidthMobile'] : null ) ) / 100 . ' );' . "\n";
-		// 	$style     .= '	}' . "\n \n";
-		// }
-
-		// if ( isset( $attr['dividerBottomWidthMobile'] ) ) {
-		// 	$style     .= '	#' . $attr['id'] . ' .wp-block-themeisle-blocks-advanced-columns-separators.bottom {' . "\n";
-		// 		$style .= '		transform: scaleX( ' . $this->get_attr_value( ( isset( $attr['dividerBottomWidthMobile'] ) ? $attr['dividerBottomWidthMobile'] : null ) ) / 100 . ' );' . "\n";
-		// 	$style     .= '	}' . "\n \n";
-		// }
-		// $style .= '}' . "\n \n";
 	}
 }

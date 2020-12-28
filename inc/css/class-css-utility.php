@@ -1,12 +1,12 @@
 <?php
 /**
- * Css generator.
+ * CSS generator.
  *
  * $css = new CSS_Utility( $block );
  *
  * $css->add_item( array(
- *  'global'     => 'global',
- *  'selector'   => ' .wp-block',
+ *  'global'     => 'global', // Put your media query selector here. It's global by default.
+ *  'selector'   => ' .wp-block', // ID of the Block will be prefixed to your selector. If you want to target the root, drop this property.
  *  'properties' => array(
  *      array(
  *          'property'    => 'margin',
@@ -122,7 +122,7 @@ class CSS_Utility {
 		}
 
 		foreach ( $this->css_array as $media_query => $css_items ) {
-			$style .= ( 'global' !== $media_query ) ? $media_query . '{' . "\n" : '';
+			$style .= ( 'global' !== $media_query ) ? $media_query . '{' : '';
 
 			foreach ( $css_items as $selector => $properties ) {
 				$item_style = '';
@@ -147,7 +147,7 @@ class CSS_Utility {
 						}
 
 						$value       = $value . $property['unit'];
-						$item_style .= $property['property'] . ': ' . $value . ';' . "\n";
+						$item_style .= $property['property'] . ': ' . $value . ';';
 					}
 
 					if ( isset( $property['property'] ) && ( isset( $property['pattern'] ) && isset( $property['pattern_values'] ) ) ) {
@@ -173,12 +173,12 @@ class CSS_Utility {
 							}
 						}
 
-						$item_style .= $property['property'] . ': ' . $pattern . ';' . "\n";
+						$item_style .= $property['property'] . ': ' . $pattern . ';';
 					}
 				}
 
 				if ( '' !== $item_style ) {
-					$style .= '#' . $attrs['id'] . $selector . ' {' . "\n" . $item_style . '}' . "\n \n";
+					$style .= '#' . $attrs['id'] . $selector . ' {' . $item_style . '}';
 				}
 			}
 
