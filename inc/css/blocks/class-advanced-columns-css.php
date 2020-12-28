@@ -38,10 +38,10 @@ class Advanced_Columns_CSS extends Base_CSS {
 			array(
 				'properties' => array(
 					array(
-						'property' => 'padding',
-						'value'    => 'padding',
-						'unit'     => 'px',
-						'default'  => 20,
+						'property'  => 'padding',
+						'value'     => 'padding',
+						'unit'      => 'px',
+						'default'   => 20,
 						'condition' => function( $attrs ) {
 							return ! ( isset( $attrs['paddingType'] ) && 'unlinked' === $attrs['paddingType'] );
 						},
@@ -83,37 +83,37 @@ class Advanced_Columns_CSS extends Base_CSS {
 						},
 					),
 					array(
-						'property' => 'margin-top',
-						'value'    => 'margin',
-						'unit'     => 'px',
-						'default'  => 20,
+						'property'  => 'margin-top',
+						'value'     => 'margin',
+						'unit'      => 'px',
+						'default'   => 20,
 						'condition' => function( $attrs ) {
 							return isset( $attrs['marginType'] ) && 'linked' === $attrs['marginType'];
 						},
 					),
 					array(
-						'property' => 'margin-bottom',
-						'value'    => 'margin',
-						'unit'     => 'px',
-						'default'  => 20,
+						'property'  => 'margin-bottom',
+						'value'     => 'margin',
+						'unit'      => 'px',
+						'default'   => 20,
 						'condition' => function( $attrs ) {
 							return isset( $attrs['marginType'] ) && 'linked' === $attrs['marginType'];
 						},
 					),
 					array(
-						'property' => 'margin-top',
-						'value'    => 'marginTop',
-						'unit'     => 'px',
-						'default'  => 20,
+						'property'  => 'margin-top',
+						'value'     => 'marginTop',
+						'unit'      => 'px',
+						'default'   => 20,
 						'condition' => function( $attrs ) {
 							return ! ( isset( $attrs['marginType'] ) && 'linked' === $attrs['marginType'] );
 						},
 					),
 					array(
-						'property' => 'margin-bottom',
-						'value'    => 'marginBottom',
-						'unit'     => 'px',
-						'default'  => 20,
+						'property'  => 'margin-bottom',
+						'value'     => 'marginBottom',
+						'unit'      => 'px',
+						'default'   => 20,
 						'condition' => function( $attrs ) {
 							return ! ( isset( $attrs['marginType'] ) && 'linked' === $attrs['marginType'] );
 						},
@@ -124,17 +124,17 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'default'  => 'unset',
 					),
 					array(
-						'property' => 'min-height',
-						'value'    => 'columnsHeight',
-						'default'  => 'auto',
+						'property'  => 'min-height',
+						'value'     => 'columnsHeight',
+						'default'   => 'auto',
 						'condition' => function( $attrs ) {
 							return ! isset( $attrs['columnsHeight'] ) || 'custom' !== $attrs['columnsHeight'];
 						},
 					),
 					array(
-						'property' => 'min-height',
-						'value'    => 'columnsHeightCustom',
-						'unit'     => 'px',
+						'property'  => 'min-height',
+						'value'     => 'columnsHeightCustom',
+						'unit'      => 'px',
 						'condition' => function( $attrs ) {
 							return isset( $attrs['columnsHeight'] ) && 'custom' === $attrs['columnsHeight'];
 						},
@@ -259,7 +259,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 								'default' => '#000000',
 							),
 						),
-						'condition' => function( $attrs ) {
+						'condition'      => function( $attrs ) {
 							return ! ( isset( $attrs['borderType'] ) && 'unlinked' === $attrs['borderType'] );
 						},
 					),
@@ -288,7 +288,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 								'default' => 0,
 							),
 						),
-						'condition' => function( $attrs ) {
+						'condition'      => function( $attrs ) {
 							return isset( $attrs['borderType'] ) && 'unlinked' === $attrs['borderType'];
 						},
 					),
@@ -341,7 +341,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 								'default' => 0,
 							),
 						),
-						'condition' => function( $attrs ) {
+						'condition'      => function( $attrs ) {
 							return isset( $attrs['borderRadiusType'] ) && 'unlinked' === $attrs['borderRadiusType'];
 						},
 					),
@@ -398,9 +398,9 @@ class Advanced_Columns_CSS extends Base_CSS {
 						},
 					),
 					array(
-						'property'  => 'opacity',
-						'value'     => 'backgroundOverlayOpacity',
-						'default'   => 50,
+						'property' => 'opacity',
+						'value'    => 'backgroundOverlayOpacity',
+						'default'  => 50,
 						'format'   => function( $value, $attrs ) {
 							return $value / 100;
 						},
@@ -446,9 +446,9 @@ class Advanced_Columns_CSS extends Base_CSS {
 						},
 					),
 					array(
-						'property'  => 'mix-blend-mode',
-						'value'     => 'backgroundOverlayBlend',
-						'default'   => 'normal',
+						'property' => 'mix-blend-mode',
+						'value'    => 'backgroundOverlayBlend',
+						'default'  => 'normal',
 					),
 				),
 			)
@@ -570,9 +570,9 @@ class Advanced_Columns_CSS extends Base_CSS {
 						},
 					),
 					array(
-						'property' => 'min-height',
-						'value'    => 'columnsHeightCustomTablet',
-						'unit'     => 'px',
+						'property'  => 'min-height',
+						'value'     => 'columnsHeightCustomTablet',
+						'unit'      => 'px',
 						'condition' => function( $attrs ) {
 							return isset( $attrs['columnsHeight'] ) && 'custom' === $attrs['columnsHeight'];
 						},
@@ -686,9 +686,9 @@ class Advanced_Columns_CSS extends Base_CSS {
 						},
 					),
 					array(
-						'property' => 'min-height',
-						'value'    => 'columnsHeightCustomMobile',
-						'unit'     => 'px',
+						'property'  => 'min-height',
+						'value'     => 'columnsHeightCustomMobile',
+						'unit'      => 'px',
 						'condition' => function( $attrs ) {
 							return isset( $attrs['columnsHeight'] ) && 'custom' === $attrs['columnsHeight'];
 						},

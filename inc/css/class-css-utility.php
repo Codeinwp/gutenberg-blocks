@@ -122,7 +122,7 @@ class CSS_Utility {
 		}
 
 		foreach ( $this->css_array as $media_query => $css_items ) {
-			$style .= ( 'global' !== $media_query ) ? $media_query . '{'  . "\n" : '';
+			$style .= ( 'global' !== $media_query ) ? $media_query . '{' . "\n" : '';
 
 			foreach ( $css_items as $selector => $properties ) {
 				$item_style = '';
@@ -161,14 +161,14 @@ class CSS_Utility {
 								)
 							);
 
-							if (  ( ( isset( $pattern_value['value'] ) && isset( $attrs[ $pattern_value['value'] ] ) ) || isset( $pattern_value['default'] ) ) ) {
+							if ( ( ( isset( $pattern_value['value'] ) && isset( $attrs[ $pattern_value['value'] ] ) ) || isset( $pattern_value['default'] ) ) ) {
 								$value = ( ( isset( $pattern_value['value'] ) && isset( $attrs[ $pattern_value['value'] ] ) ) ? $attrs[ $pattern_value['value'] ] : $pattern_value['default'] );
 
 								if ( isset( $pattern_value['format'] ) && is_callable( $pattern_value['format'] ) ) {
 									$value = $pattern_value['format']( $value, $attrs );
 								}
 
-								$value = $value . $pattern_value['unit'];
+								$value   = $value . $pattern_value['unit'];
 								$pattern = preg_replace( '/\b' . $value_key . '\b/', $value, $pattern );
 							}
 						}
@@ -184,10 +184,6 @@ class CSS_Utility {
 
 			$style .= ( 'global' !== $media_query ) ? '}' : '';
 		}
-
-		echo '<pre>';
-		print_r( $style );
-		echo '</pre>';
 
 		return $style;
 	}

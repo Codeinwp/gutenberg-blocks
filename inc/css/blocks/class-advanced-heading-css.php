@@ -86,7 +86,38 @@ class Advanced_Heading_CSS extends Base_CSS {
 						'value'    => 'letterSpacing',
 						'unit'     => 'px',
 					),
-					// array( 'text-shadow' ),
+					array(
+						'property'       => 'text-shadow',
+						'pattern'        => 'horizontal vertical blur color',
+						'pattern_values' => array(
+							'horizontal' => array(
+								'value'   => 'textShadowHorizontal',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'vertical'   => array(
+								'value'   => 'textShadowVertical',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'blur'       => array(
+								'value'   => 'textShadowBlur',
+								'unit'    => 'px',
+								'default' => 5,
+							),
+							'color'      => array(
+								'value'   => 'textShadowColor',
+								'default' => '#000',
+								'format'  => function( $value, $attrs ) {
+									$opacity = ( isset( $attrs['textShadowColorOpacity'] ) ? $attrs['textShadowColorOpacity'] : 50 ) / 100;
+									return $this->hex2rgba( $value, $opacity );
+								},
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['textShadow'] );
+						},
+					),
 					array(
 						'property'  => 'padding',
 						'value'     => 'padding',
@@ -166,38 +197,6 @@ class Advanced_Heading_CSS extends Base_CSS {
 						'default'   => 20,
 						'condition' => function( $attrs ) {
 							return ! ( isset( $attrs['marginType'] ) && 'linked' === $attrs['marginType'] );
-						},
-					),
-					array(
-						'property'       => 'text-shadow',
-						'pattern'        => 'horizontal vertical blur color',
-						'pattern_values' => array(
-							'horizontal' => array(
-								'value'   => 'textShadowHorizontal',
-								'unit'    => 'px',
-								'default' => 0,
-							),
-							'vertical'   => array(
-								'value'   => 'textShadowVertical',
-								'unit'    => 'px',
-								'default' => 0,
-							),
-							'blur'       => array(
-								'value'   => 'textShadowBlur',
-								'unit'    => 'px',
-								'default' => 5,
-							),
-							'color'      => array(
-								'value'   => 'textShadowColor',
-								'default' => '#000',
-								'format'  => function( $value, $attrs ) {
-									$opacity = ( isset( $attrs['textShadowColorOpacity'] ) ? $attrs['textShadowColorOpacity'] : 50 ) / 100;
-									return $this->hex2rgba( $value, $opacity );
-								},
-							),
-						),
-						'condition'      => function( $attrs ) {
-							return isset( $attrs['textShadow'] );
 						},
 					),
 				),

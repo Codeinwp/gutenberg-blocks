@@ -38,10 +38,10 @@ class Advanced_Column_CSS extends Base_CSS {
 			array(
 				'properties' => array(
 					array(
-						'property' => 'padding',
-						'value'    => 'padding',
-						'unit'     => 'px',
-						'default'  => 20,
+						'property'  => 'padding',
+						'value'     => 'padding',
+						'unit'      => 'px',
+						'default'   => 20,
 						'condition' => function( $attrs ) {
 							return ! ( isset( $attrs['paddingType'] ) && 'unlinked' === $attrs['paddingType'] );
 						},
@@ -83,10 +83,10 @@ class Advanced_Column_CSS extends Base_CSS {
 						},
 					),
 					array(
-						'property' => 'margin',
-						'value'    => 'margin',
-						'unit'     => 'px',
-						'default'  => 20,
+						'property'  => 'margin',
+						'value'     => 'margin',
+						'unit'      => 'px',
+						'default'   => 20,
 						'condition' => function( $attrs ) {
 							return isset( $attrs['marginType'] ) && 'linked' === $attrs['marginType'];
 						},
@@ -247,7 +247,7 @@ class Advanced_Column_CSS extends Base_CSS {
 								'default' => '#000000',
 							),
 						),
-						'condition' => function( $attrs ) {
+						'condition'      => function( $attrs ) {
 							return ! ( isset( $attrs['borderType'] ) && 'unlinked' === $attrs['borderType'] );
 						},
 					),
@@ -276,7 +276,7 @@ class Advanced_Column_CSS extends Base_CSS {
 								'default' => 0,
 							),
 						),
-						'condition' => function( $attrs ) {
+						'condition'      => function( $attrs ) {
 							return isset( $attrs['borderType'] ) && 'unlinked' === $attrs['borderType'];
 						},
 					),
@@ -329,7 +329,7 @@ class Advanced_Column_CSS extends Base_CSS {
 								'default' => 0,
 							),
 						),
-						'condition' => function( $attrs ) {
+						'condition'      => function( $attrs ) {
 							return isset( $attrs['borderRadiusType'] ) && 'unlinked' === $attrs['borderRadiusType'];
 						},
 					),
@@ -383,7 +383,7 @@ class Advanced_Column_CSS extends Base_CSS {
 						'value'    => 'columnWidth',
 						'unit'     => '%',
 						'format'   => function( $value, $attrs ) {
-							return floatval( $value );	
+							return floatval( $value );
 						},
 					),
 				),
