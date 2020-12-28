@@ -577,8 +577,8 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'pattern'        => 'scaleX( width )',
 						'pattern_values' => array(
 							'width' => array(
-								'value'   => 'dividerTopWidth',
-								'format'  => function( $value, $attrs ) {
+								'value'  => 'dividerTopWidth',
+								'format' => function( $value, $attrs ) {
 									return $value / 100;
 								},
 							),
@@ -605,8 +605,8 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'pattern'        => 'scaleX( width )',
 						'pattern_values' => array(
 							'width' => array(
-								'value'   => 'dividerBottomWidth',
-								'format'  => function( $value, $attrs ) {
+								'value'  => 'dividerBottomWidth',
+								'format' => function( $value, $attrs ) {
 									return $value / 100;
 								},
 							),
@@ -735,8 +735,8 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'pattern'        => 'scaleX( width )',
 						'pattern_values' => array(
 							'width' => array(
-								'value'   => 'dividerTopWidthTablet',
-								'format'  => function( $value, $attrs ) {
+								'value'  => 'dividerTopWidthTablet',
+								'format' => function( $value, $attrs ) {
 									return $value / 100;
 								},
 							),
@@ -764,8 +764,8 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'pattern'        => 'scaleX( width )',
 						'pattern_values' => array(
 							'width' => array(
-								'value'   => 'dividerBottomWidthTablet',
-								'format'  => function( $value, $attrs ) {
+								'value'  => 'dividerBottomWidthTablet',
+								'format' => function( $value, $attrs ) {
 									return $value / 100;
 								},
 							),
@@ -881,8 +881,8 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'pattern'        => 'scaleX( width )',
 						'pattern_values' => array(
 							'width' => array(
-								'value'   => 'dividerTopWidthMobile',
-								'format'  => function( $value, $attrs ) {
+								'value'  => 'dividerTopWidthMobile',
+								'format' => function( $value, $attrs ) {
 									return $value / 100;
 								},
 							),
@@ -910,8 +910,8 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'pattern'        => 'scaleX( width )',
 						'pattern_values' => array(
 							'width' => array(
-								'value'   => 'dividerBottomWidthMobile',
-								'format'  => function( $value, $attrs ) {
+								'value'  => 'dividerBottomWidthMobile',
+								'format' => function( $value, $attrs ) {
 									return $value / 100;
 								},
 							),
