@@ -38,10 +38,10 @@ class TestCSS extends WP_UnitTestCase {
 
 		$style = $css->generate();
 
-        $this->assertEquals(
+		$this->assertEquals(
 			$style,
-            '#wp-block {margin: 10px;}'
-        );
+			'#wp-block {margin: 10px;}'
+		);
 	}
 
 	/**
@@ -72,10 +72,10 @@ class TestCSS extends WP_UnitTestCase {
 
 		$style = $css->generate();
 
-        $this->assertEquals(
+		$this->assertEquals(
 			$style,
-            '#wp-block .wp-block {margin: 20px;}'
-        );
+			'#wp-block .wp-block {margin: 20px;}'
+		);
 	}
 
 	/**
@@ -109,10 +109,10 @@ class TestCSS extends WP_UnitTestCase {
 
 		$style = $css->generate();
 
-        $this->assertEquals(
+		$this->assertEquals(
 			$style,
-            '#wp-block .wp-block {margin: 5px;}'
-        );
+			'#wp-block .wp-block {margin: 5px;}'
+		);
 	}
 
 	/**
@@ -150,10 +150,10 @@ class TestCSS extends WP_UnitTestCase {
 
 		$style = $css->generate();
 
-        $this->assertNotEquals(
+		$this->assertNotEquals(
 			$style,
-            '#wp-block .wp-block {margin: 10px;}'
-        );
+			'#wp-block .wp-block {margin: 10px;}'
+		);
 	}
 
 	/**
@@ -189,9 +189,9 @@ class TestCSS extends WP_UnitTestCase {
 
 		$style = $css->generate();
 
-        $this->assertEquals(
+		$this->assertEquals(
 			$style,
-            '#wp-block .wp-block {margin: 10px 20px;}'
-        );
+			'#wp-block .wp-block {margin: 10px 20px;}'
+		);
 	}
 }
