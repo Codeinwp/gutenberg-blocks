@@ -1232,6 +1232,7 @@ const Inspector = ({
 									gradientValue={ attributes.backgroundGradient }
 									disableCustomColors={ true }
 									onGradientChange={ changeBackgroundGradient }
+									clearable={ false }
 								/>
 							) }
 						</PanelBody>
@@ -1374,6 +1375,7 @@ const Inspector = ({
 									gradientValue={ attributes.backgroundOverlayGradient }
 									disableCustomColors={ true }
 									onGradientChange={ changeBackgroundOverlayGradient }
+									clearable={ false }
 								/>
 							) }
 
