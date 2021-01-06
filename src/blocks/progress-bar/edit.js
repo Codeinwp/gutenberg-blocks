@@ -10,6 +10,8 @@ const { isEqual } = lodash;
 
 const { ResizableBox } = wp.components;
 
+const { RichText } = wp.editor;
+
 const {
 	Fragment,
 	useEffect,
@@ -160,12 +162,14 @@ const ProgressBar = ({
 				{ ( 'outer' === attributes.titleStyle || 'outer' === attributes.percentagePosition ) && (
 					<div className="wp-block-themeisle-blocks-progress-bar__outer">
 						{ 'outer' === attributes.titleStyle && (
-							<span
+							<RichText
+								tagName="span"
+								allowedFormats={ [] }
 								className="wp-block-themeisle-blocks-progress-bar__outer__title"
+								value={ attributes.title }
 								style={ { color: attributes.titleColor } }
-							>
-								{ attributes.title }
-							</span>
+								onChange={ e => setAttributes({ title: e }) }
+							/>
 						) }
 
 						{ 'outer' === attributes.percentagePosition && showPercentage && (
@@ -222,15 +226,17 @@ const ProgressBar = ({
 									height: `${ attributes.height }px`
 								} }
 							>
-								<span
+								<RichText
+									tagName="span"
+									allowedFormats={ [] }
+									value={ attributes.title }
 									style={ {
 										height: `${ attributes.height }px`,
 										color: attributes.titleColor,
 										borderRadius: `${ attributes.borderRadius }px 0px 0px ${ attributes.borderRadius }px`
 									} }
-								>
-									{ attributes.title }
-								</span>
+									onChange={ e => setAttributes({ title: e }) }
+								/>
 							</div>
 						) }
 

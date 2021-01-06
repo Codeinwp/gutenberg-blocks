@@ -9,6 +9,8 @@ namespace ThemeIsle\GutenbergBlocks\CSS\Blocks;
 
 use ThemeIsle\GutenbergBlocks\Base_CSS;
 
+use ThemeIsle\GutenbergBlocks\CSS\CSS_Utility;
+
 /**
  * Class Button_Group_CSS
  */
@@ -30,67 +32,137 @@ class Button_Group_CSS extends Base_CSS {
 	 * @access  public
 	 */
 	public function render_css( $block ) {
-		$attr  = $block['attrs'];
-		$style = '';
-
-		if ( isset( $attr['id'] ) ) {
-			$this->get_google_fonts( $attr );
-
-			$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button {' . "\n";
-				$style .= '	margin-left: ' . $this->get_attr_value( ( isset( $attr['spacing'] ) ? $attr['spacing'] : null ), 20 ) / 2 . 'px;' . "\n";
-				$style .= '	margin-right: ' . $this->get_attr_value( ( isset( $attr['spacing'] ) ? $attr['spacing'] : null ), 20 ) / 2 . 'px;' . "\n";
-			$style     .= '}' . "\n \n";
-
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button .wp-block-button__link {' . "\n";
-			if ( isset( $attr['paddingTopBottom'] ) ) {
-				$style .= '	padding-top: ' . $this->get_attr_value( ( isset( $attr['paddingTopBottom'] ) ? $attr['paddingTopBottom'] : null ) ) . 'px;' . "\n";
-				$style .= '	padding-bottom: ' . $this->get_attr_value( ( isset( $attr['paddingTopBottom'] ) ? $attr['paddingTopBottom'] : null ) ) . 'px;' . "\n";
-			}
-
-			if ( isset( $attr['paddingLeftRight'] ) ) {
-				$style .= '	padding-left: ' . $this->get_attr_value( ( isset( $attr['paddingLeftRight'] ) ? $attr['paddingLeftRight'] : null ) ) . 'px;' . "\n";
-				$style .= '	padding-right: ' . $this->get_attr_value( ( isset( $attr['paddingLeftRight'] ) ? $attr['paddingLeftRight'] : null ) ) . 'px;' . "\n";
-			}
-
-			if ( isset( $attr['fontSize'] ) ) {
-				$style .= '	font-size: ' . $this->get_attr_value( ( isset( $attr['fontSize'] ) ? $attr['fontSize'] : null ) ) . 'px;' . "\n";
-			}
-	
-			if ( isset( $attr['fontFamily'] ) ) {
-				$style .= '	font-family: ' . $this->get_attr_value( ( isset( $attr['fontFamily'] ) ? $attr['fontFamily'] : null ) ) . ';' . "\n";
-			}
-	
-			if ( isset( $attr['fontVariant'] ) ) {
-				$style .= '	font-weight: ' . ( 'regular' === $this->get_attr_value( ( isset( $attr['fontVariant'] ) ? $attr['fontVariant'] : null ) ) ? 'normal' : $this->get_attr_value( ( isset( $attr['fontVariant'] ) ? $attr['fontVariant'] : null ) ) ) . ';' . "\n";
-			}
-	
-			if ( isset( $attr['textTransform'] ) ) {
-				$style .= '	text-transform: ' . $this->get_attr_value( ( isset( $attr['textTransform'] ) ? $attr['textTransform'] : null ), 'none' ) . ';' . "\n";
-			}
-	
-			if ( isset( $attr['fontStyle'] ) ) {
-				$style .= '	font-style: ' . $this->get_attr_value( ( isset( $attr['fontStyle'] ) ? $attr['fontStyle'] : null ), 'normal' ) . ';' . "\n";
-			}
-	
-			if ( isset( $attr['lineHeight'] ) ) {
-				$style .= '	line-height: ' . $this->get_attr_value( ( isset( $attr['lineHeight'] ) ? $attr['lineHeight'] : null ) ) . 'px;' . "\n";
-			}
-			$style .= '}' . "\n \n";
-
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button .wp-block-button__link svg {' . "\n";
-			if ( isset( $attr['fontSize'] ) ) {
-				$style .= '	width: ' . $this->get_attr_value( ( isset( $attr['fontSize'] ) ? $attr['fontSize'] : null ) ) . 'px;' . "\n";
-			}
-			$style .= '}' . "\n \n";
-
-			$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button:first-child {' . "\n";
-				$style .= '	margin-left: 0;' . "\n";
-			$style     .= '}' . "\n \n";
-
-			$style     .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-button:last-child {' . "\n";
-				$style .= '	margin-right: 0;' . "\n";
-			$style     .= '}' . "\n \n";
+		if ( isset( $block['attrs']['id'] ) ) {
+			$this->get_google_fonts( $block['attrs'] );
 		}
+
+		$css = new CSS_Utility( $block );
+
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-button',
+				'properties' => array(
+					array(
+						'property' => 'margin-left',
+						'value'    => 'spacing',
+						'unit'     => 'px',
+						'default'  => 20,
+						'format'   => function( $value, $attrs ) {
+							return $value / 2;
+						},
+					),
+					array(
+						'property' => 'margin-right',
+						'value'    => 'spacing',
+						'unit'     => 'px',
+						'default'  => 20,
+						'format'   => function( $value, $attrs ) {
+							return $value / 2;
+						},
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-button .wp-block-button__link',
+				'properties' => array(
+					array(
+						'property' => 'padding-top',
+						'value'    => 'paddingTopBottom',
+						'unit'     => 'px',
+					),
+					array(
+						'property' => 'padding-bottom',
+						'value'    => 'paddingTopBottom',
+						'unit'     => 'px',
+					),
+					array(
+						'property' => 'padding-left',
+						'value'    => 'paddingLeftRight',
+						'unit'     => 'px',
+					),
+					array(
+						'property' => 'padding-right',
+						'value'    => 'paddingLeftRight',
+						'unit'     => 'px',
+					),
+					array(
+						'property' => 'font-size',
+						'value'    => 'fontSize',
+						'unit'     => 'px',
+					),
+					array(
+						'property' => 'font-family',
+						'value'    => 'fontFamily',
+					),
+					array(
+						'property' => 'font-weight',
+						'value'    => 'fontVariant',
+						'format'   => function( $value, $attrs ) {
+							return 'regular' === $value ? 'normal' : $value;
+						},
+					),
+					array(
+						'property' => 'text-transform',
+						'value'    => 'textTransform',
+						'default'  => 'none',
+					),
+					array(
+						'property' => 'font-style',
+						'value'    => 'fontStyle',
+						'default'  => 'normal',
+					),
+					array(
+						'property' => 'line-height',
+						'value'    => 'lineHeight',
+						'unit'     => 'px',
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-button .wp-block-button__link svg',
+				'properties' => array(
+					array(
+						'property' => 'width',
+						'value'    => 'fontSize',
+						'unit'     => 'px',
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-button:first-child',
+				'properties' => array(
+					array(
+						'property' => 'margin-left',
+						'unit'     => 'px',
+						'default'  => '0',
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-button:last-child',
+				'properties' => array(
+					array(
+						'property' => 'margin-left',
+						'unit'     => 'px',
+						'default'  => '0',
+					),
+				),
+			)
+		);
+
+		$style = $css->generate();
 
 		return $style;
 	}

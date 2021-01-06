@@ -221,7 +221,7 @@ class Main {
 				if ( $block_name === $block['blockName'] ) {
 					array_push( $target, $block );
 				}
-	
+
 				if ( count( $block['innerBlocks'] ) ) {
 					$target = $this->loop_blocks( $block['innerBlocks'], $block_name, $target );
 				}
@@ -250,27 +250,36 @@ class Main {
 			self::$assets_version
 		);
 
-		if ( ! self::$is_fa_loaded && ( has_block( 'themeisle-blocks/button-group', $post ) || has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/sharing-icons', $post ) || has_block( 'themeisle-blocks/plugin-cards', $post ) || has_block( 'block', $post ) ) ) {
+		if ( ! self::$is_fa_loaded && ( has_block( 'themeisle-blocks/button-group', $post ) || has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/icon-list-item', $post ) || has_block( 'themeisle-blocks/sharing-icons', $post ) || has_block( 'themeisle-blocks/plugin-cards', $post ) || has_block( 'block', $post ) ) ) {
 			$has_fa = false;
 
-			if ( ( ! has_block( 'themeisle-blocks/sharing-icons', $post ) && ! has_block( 'themeisle-blocks/plugin-cards', $post ) && ! has_block( 'block', $post ) ) && ( has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) ) ) {
+			if ( ( ! has_block( 'themeisle-blocks/sharing-icons', $post ) && ! has_block( 'themeisle-blocks/plugin-cards', $post ) && ! has_block( 'block', $post ) ) && ( has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/icon-list-item', $post ) ) ) {
 				if ( empty( $post ) ) {
 					$post = get_the_ID();
 				}
 
 				$blocks = parse_blocks( $content );
-	
+
 				$used_blocks = $this->loop_blocks(
 					$blocks,
 					array(
 						'themeisle-blocks/button',
 						'themeisle-blocks/font-awesome-icons',
+						'themeisle-blocks/icon-list',
+						'themeisle-blocks/icon-list-item',
 					)
 				);
 
 				foreach ( $used_blocks as $block ) {
 					if ( ! $has_fa && isset( $block['attrs']['library'] ) && 'themeisle-icons' === $block['attrs']['library'] ) {
-						$has_fa = false;
+						continue;
+					}
+
+					if ( ! $has_fa && 'themeisle-blocks/button' === $block['blockName'] && ! isset( $block['attrs']['iconType'] ) ) {
+						continue;
+					}
+
+					if ( ! $has_fa && 'themeisle-blocks/icon-list' === $block['blockName'] && isset( $block['attrs']['defaultLibrary'] ) && 'themeisle-icons' === $block['attrs']['defaultLibrary'] ) {
 						continue;
 					}
 
@@ -283,7 +292,7 @@ class Main {
 			if ( $has_fa ) {
 				wp_enqueue_style( 'font-awesome-5' );
 				wp_enqueue_style( 'font-awesome-4-shims' );
-	
+
 				self::$is_fa_loaded = true;
 			}
 		}
@@ -305,7 +314,7 @@ class Main {
 					self::$assets_version,
 					true
 				);
-	
+
 				wp_enqueue_script( //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion
 					'google-maps',
 					'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $apikey ) . '&libraries=places&callback=initMapScript',
@@ -313,7 +322,7 @@ class Main {
 					'',
 					true
 				);
-	
+
 				self::$is_map_loaded = true;
 			}
 		}
@@ -375,7 +384,7 @@ class Main {
 
 			self::$is_circle_counter_loaded = true;
 		}
-		
+
 		if ( ! self::$is_lottie_loaded && has_block( 'themeisle-blocks/lottie', $post ) ) {
 			wp_enqueue_script(
 				'lottie-player',
@@ -436,7 +445,7 @@ class Main {
 				return $content;
 			}
 		);
-		
+
 	}
 
 	/**

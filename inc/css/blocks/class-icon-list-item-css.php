@@ -12,19 +12,19 @@ use ThemeIsle\GutenbergBlocks\Base_CSS;
 use ThemeIsle\GutenbergBlocks\CSS\CSS_Utility;
 
 /**
- * Class Circular_Counter_CSS
+ * Class Icon_List_CSS
  */
-class Circle_Counter_CSS extends Base_CSS {
+class Icon_List_Item_CSS extends Base_CSS {
 
 	/**
 	 * The namespace under which the blocks are registered.
 	 *
 	 * @var string
 	 */
-	public $block_prefix = 'circle-counter';
+	public $block_prefix = 'icon-list-item';
 
 	/**
-	 * Generate Circle Counter CSS
+	 * Generate Icon List Item CSS
 	 *
 	 * @param mixed $block Block data.
 	 * @return string
@@ -36,16 +36,31 @@ class Circle_Counter_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-circle-counter-title__area .wp-block-themeisle-blocks-circle-counter-title__value',
+				'selector'   => ' .wp-block-themeisle-blocks-icon-list-item-content-custom',
 				'properties' => array(
 					array(
 						'property' => 'color',
-						'value'    => 'titleColor',
+						'value'    => 'contentColor',
 					),
 					array(
-						'property' => 'font-size',
-						'value'    => 'fontSizeTitle',
-						'unit'     => 'px',
+						'property' => 'fill',
+						'value'    => 'contentColor',
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-icon-list-item-icon-custom',
+				'properties' => array(
+					array(
+						'property' => 'color',
+						'value'    => 'iconColor',
+					),
+					array(
+						'property' => 'fill',
+						'value'    => 'iconColor',
 					),
 				),
 			)

@@ -9,6 +9,8 @@ namespace ThemeIsle\GutenbergBlocks\CSS\Blocks;
 
 use ThemeIsle\GutenbergBlocks\Base_CSS;
 
+use ThemeIsle\GutenbergBlocks\CSS\CSS_Utility;
+
 /**
  * Class Progress_Bar_CSS
  */
@@ -30,120 +32,252 @@ class Progress_Bar_CSS extends Base_CSS {
 	 * @access  public
 	 */
 	public function render_css( $block ) {
-		$attr  = $block['attrs'];
-		$style = '';
 		$ratio = 0.65;
 
-		if ( isset( $attr['id'] ) ) {
+		$css = new CSS_Utility( $block );
 
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__outer .wp-block-themeisle-blocks-progress-bar__outer__title {' . "\n";
-			if ( isset( $attr['titleColor'] ) ) {
-				$style .= '	color: ' . $this->get_attr_value( $attr['titleColor'] ) . ';' . "\n";
-			}
-			$style .= '}' . "\n \n";
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-progress-bar__outer .wp-block-themeisle-blocks-progress-bar__outer__title',
+				'properties' => array(
+					array(
+						'property'  => 'color',
+						'value'     => 'titleColor',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['titleStyle'] ) && 'outer' === $attrs['titleStyle'];
+						},
+					),
+				),
+			)
+		);
 
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__outer .wp-block-themeisle-blocks-progress-bar__outer__value {' . "\n";
-			if ( isset( $attr['percentageColor'] ) ) {
-				$style .= '	color: ' . $this->get_attr_value( $attr['percentageColor'] ) . ';' . "\n";
-			}
-			$style .= '}' . "\n \n";
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-progress-bar__outer .wp-block-themeisle-blocks-progress-bar__outer__value',
+				'properties' => array(
+					array(
+						'property'  => 'color',
+						'value'     => 'percentageColor',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['percentagePosition'] ) && 'outer' === $attrs['percentagePosition'];
+						},
+					),
+				),
+			)
+		);
 
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-progress-bar__area',
+				'properties' => array(
+					array(
+						'property' => 'background',
+						'value'    => 'backgroundColor',
+					),
+					array(
+						'property' => 'border-radius',
+						'value'    => 'borderRadius',
+						'unit'     => 'px',
+					),
+					array(
+						'property' => 'height',
+						'value'    => 'height',
+						'unit'     => 'px',
+					),
+				),
+			)
+		);
 
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area {' . "\n";
-			if ( isset( $attr['backgroundColor'] ) ) {
-				$style .= '	background: ' . $this->get_attr_value( $attr['backgroundColor'] ) . ';' . "\n";
-			}
-			if ( isset( $attr['borderRadius'] ) ) {
-				$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px;' . "\n";
-			}
-			if ( isset( $attr['height'] ) ) {
-				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
-			}
-			$style .= '}' . "\n \n";
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title',
+				'properties' => array(
+					array(
+						'property' => 'font-size',
+						'value'    => 'height',
+						'unit'     => 'px',
+						'format'   => function( $value ) use ( $ratio ) {
+							return $value * $ratio;
+						},
+					),
+					array(
+						'property' => 'height',
+						'value'    => 'height',
+						'unit'     => 'px',
+					),
+					array(
+						'property'       => 'border-radius',
+						'pattern'        => 'borderRadius 0 0 borderRadius',
+						'pattern_values' => array(
+							'borderRadius' => array(
+								'value' => 'borderRadius',
+								'unit'  => 'px',
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['borderRadius'] );
+						},
+					),
+				),
+			)
+		);
 
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title.highlight',
+				'properties' => array(
+					array(
+						'property' => 'background',
+						'value'    => 'barBackgroundColor',
+						'unit'     => 'px',
+					),
+				),
+			)
+		);
 
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title span',
+				'properties' => array(
+					array(
+						'property' => 'height',
+						'value'    => 'height',
+						'unit'     => 'px',
+					),
+					array(
+						'property'  => 'color',
+						'value'     => 'titleColor',
+						'condition' => function( $attrs ) {
+							if ( ! isset( $attrs['titleStyle'] ) ) {
+								return true;
+							}
 
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title {' . "\n";
-			if ( isset( $attr['height'] ) ) {
-				$style .= '	font-size: ' . $this->get_attr_value( $attr['height'] ) * $ratio . 'px;' . "\n";
-			}
-			
-			if ( isset( $attr['height'] ) ) {
-				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
-			}
-			if ( isset( $attr['borderRadius'] ) ) {
-				$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px 0 0 ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px;' . "\n";
-			}
-			$style .= '}' . "\n \n";
+							return isset( $attrs['titleStyle'] ) && 'outer' !== $attrs['titleStyle'];
+						},
+					),
+					array(
+						'property'       => 'border-radius',
+						'pattern'        => 'borderRadius 0 0 borderRadius',
+						'pattern_values' => array(
+							'borderRadius' => array(
+								'value' => 'borderRadius',
+								'unit'  => 'px',
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['borderRadius'] );
+						},
+					),
+				),
+			)
+		);
 
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar',
+				'properties' => array(
+					array(
+						'property' => 'background',
+						'value'    => 'barBackgroundColor',
+					),
+					array(
+						'property' => 'height',
+						'value'    => 'height',
+						'unit'     => 'px',
+					),
+					array(
+						'property' => 'border-radius',
+						'value'    => 'borderRadius',
+						'unit'     => 'px',
+					),
+				),
+			)
+		);
 
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title.highlight {' . "\n";
-			
-			if ( isset( $attr['barBackgroundColor'] ) ) {
-				$style .= '	background: ' . $this->get_attr_value( $attr['barBackgroundColor'] ) . ';' . "\n";
-			}
-			
-			$style .= '}' . "\n \n";
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar .wp-block-themeisle-blocks-progress-bar__area__tooltip',
+				'properties' => array(
+					array(
+						'property'  => 'color',
+						'value'     => 'percentageColor',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['percentagePosition'] ) && 'tooltip' === $attrs['percentagePosition'];
+						},
+					),
+				),
+			)
+		);
 
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__progress',
+				'properties' => array(
+					array(
+						'property'  => 'font-size',
+						'value'     => 'height',
+						'unit'      => 'px',
+						'format'    => function( $value ) use ( $ratio ) {
+							return $value * $ratio;
+						},
+						'condition' => function( $attrs ) {
+							return ! isset( $attrs['percentagePosition'] );
+						},
+					),
+					array(
+						'property'  => 'color',
+						'value'     => 'percentageColor',
+						'condition' => function( $attrs ) {
+							return ! isset( $attrs['percentagePosition'] );
+						},
+					),
+					array(
+						'property'  => 'height',
+						'value'     => 'height',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return ! isset( $attrs['percentagePosition'] );
+						},
+					),
+				),
+			)
+		);
 
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__title span {' . "\n";
-			if ( isset( $attr['height'] ) ) {
-				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
-			}
-			if ( isset( $attr['titleColor'] ) ) {
-				$style .= '	color: ' . $this->get_attr_value( $attr['titleColor'] ) . ';' . "\n";
-			}
-			if ( isset( $attr['borderRadius'] ) ) {
-				$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px 0 0 ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px;' . "\n";
-			}
-			$style .= '}' . "\n \n";
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar .wp-block-themeisle-blocks-progress-bar__progress__append',
+				'properties' => array(
+					array(
+						'property'  => 'font-size',
+						'value'     => 'height',
+						'unit'      => 'px',
+						'format'    => function( $value ) use ( $ratio ) {
+							return $value * $ratio;
+						},
+						'condition' => function( $attrs ) {
+							return isset( $attrs['percentagePosition'] ) && 'append' === $attrs['percentagePosition'];
+						},
+					),
+					array(
+						'property'  => 'color',
+						'value'     => 'percentageColor',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['percentagePosition'] ) && 'append' === $attrs['percentagePosition'];
+						},
+					),
+					array(
+						'property'  => 'height',
+						'value'     => 'height',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['percentagePosition'] ) && 'append' === $attrs['percentagePosition'];
+						},
+					),
+				),
+			)
+		);
 
-
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar {' . "\n";
-			if ( isset( $attr['barBackgroundColor'] ) ) {
-				$style .= '	background: ' . $this->get_attr_value( $attr['barBackgroundColor'] ) . ';' . "\n";
-			}
-			if ( isset( $attr['height'] ) ) {
-				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
-			}
-			if ( isset( $attr['borderRadius'] ) ) {
-				$style .= '	border-radius: ' . $this->get_attr_value( $attr['borderRadius'] ) . 'px;' . "\n";
-			}
-			$style .= '}' . "\n \n";
-
-
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar .wp-block-themeisle-blocks-progress-bar__area__tooltip {' . "\n";
-			if ( isset( $attr['percentageColor'] ) ) {
-				$style .= '	color: ' . $this->get_attr_value( $attr['percentageColor'] ) . ';' . "\n";
-			}
-			$style .= '}' . "\n \n";
-
-
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__progress {' . "\n";
-			if ( isset( $attr['height'] ) ) {
-				$style .= '	font-size: ' . $this->get_attr_value( $attr['height'] ) * $ratio . 'px;' . "\n";
-			}
-			if ( isset( $attr['percentageColor'] ) ) {
-				$style .= '	color: ' . $this->get_attr_value( $attr['percentageColor'] ) . ';' . "\n";
-			}
-			if ( isset( $attr['height'] ) ) {
-				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
-			}
-			$style .= '}' . "\n \n";
-
-
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar .wp-block-themeisle-blocks-progress-bar__progress__append {' . "\n";
-			if ( isset( $attr['height'] ) ) {
-				$style .= '	font-size: ' . $this->get_attr_value( $attr['height'] ) * $ratio . 'px;' . "\n";
-			}
-			if ( isset( $attr['percentageColor'] ) ) {
-				$style .= '	color: ' . $this->get_attr_value( $attr['percentageColor'] ) . ';' . "\n";
-			}
-			if ( isset( $attr['height'] ) ) {
-				$style .= '	height: ' . $this->get_attr_value( $attr['height'] ) . 'px;' . "\n";
-			}
-			$style .= '}' . "\n \n";
-		}
+		$style = $css->generate();
 
 		return $style;
 	}

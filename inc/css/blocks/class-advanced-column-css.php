@@ -9,6 +9,8 @@ namespace ThemeIsle\GutenbergBlocks\CSS\Blocks;
 
 use ThemeIsle\GutenbergBlocks\Base_CSS;
 
+use ThemeIsle\GutenbergBlocks\CSS\CSS_Utility;
+
 /**
  * Class Advanced_Column_CSS
  */
@@ -30,231 +32,541 @@ class Advanced_Column_CSS extends Base_CSS {
 	 * @access  public
 	 */
 	public function render_css( $block ) {
-		$attr  = $block['attrs'];
-		$style = '';
+		$css = new CSS_Utility( $block );
 
-		if ( isset( $attr['id'] ) ) {
-			$style .= '#' . $attr['id'] . ' {' . "\n";
-			if ( 'linked' === $this->get_attr_value( ( isset( $attr['paddingType'] ) ? $attr['paddingType'] : null ), 'linked' ) ) {
-				$style .= '	padding: ' . $this->get_attr_value( ( isset( $attr['padding'] ) ? $attr['padding'] : null ), 20 ) . 'px;' . "\n";
-			}
+		$css->add_item(
+			array(
+				'properties' => array(
+					array(
+						'property'  => 'padding',
+						'value'     => 'padding',
+						'unit'      => 'px',
+						'default'   => 20,
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['paddingType'] ) && 'unlinked' === $attrs['paddingType'] );
+						},
+					),
+					array(
+						'property'  => 'padding-top',
+						'value'     => 'paddingTop',
+						'unit'      => 'px',
+						'default'   => 20,
+						'condition' => function( $attrs ) {
+							return isset( $attrs['paddingType'] ) && 'unlinked' === $attrs['paddingType'];
+						},
+					),
+					array(
+						'property'  => 'padding-right',
+						'value'     => 'paddingRight',
+						'unit'      => 'px',
+						'default'   => 20,
+						'condition' => function( $attrs ) {
+							return isset( $attrs['paddingType'] ) && 'unlinked' === $attrs['paddingType'];
+						},
+					),
+					array(
+						'property'  => 'padding-bottom',
+						'value'     => 'paddingBottom',
+						'unit'      => 'px',
+						'default'   => 20,
+						'condition' => function( $attrs ) {
+							return isset( $attrs['paddingType'] ) && 'unlinked' === $attrs['paddingType'];
+						},
+					),
+					array(
+						'property'  => 'padding-left',
+						'value'     => 'paddingLeft',
+						'unit'      => 'px',
+						'default'   => 20,
+						'condition' => function( $attrs ) {
+							return isset( $attrs['paddingType'] ) && 'unlinked' === $attrs['paddingType'];
+						},
+					),
+					array(
+						'property'  => 'margin',
+						'value'     => 'margin',
+						'unit'      => 'px',
+						'default'   => 20,
+						'condition' => function( $attrs ) {
+							return isset( $attrs['marginType'] ) && 'linked' === $attrs['marginType'];
+						},
+					),
+					array(
+						'property'  => 'margin-top',
+						'value'     => 'marginTop',
+						'unit'      => 'px',
+						'default'   => 20,
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['marginType'] ) && 'linked' === $attrs['marginType'] );
+						},
+					),
+					array(
+						'property'  => 'margin-right',
+						'value'     => 'marginRight',
+						'unit'      => 'px',
+						'default'   => 0,
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['marginType'] ) && 'linked' === $attrs['marginType'] );
+						},
+					),
+					array(
+						'property'  => 'margin-bottom',
+						'value'     => 'marginBottom',
+						'unit'      => 'px',
+						'default'   => 20,
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['marginType'] ) && 'linked' === $attrs['marginType'] );
+						},
+					),
+					array(
+						'property'  => 'margin-left',
+						'value'     => 'marginLeft',
+						'unit'      => 'px',
+						'default'   => 0,
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['marginType'] ) && 'linked' === $attrs['marginType'] );
+						},
+					),
+					array(
+						'property'  => 'background',
+						'value'     => 'backgroundColor',
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['backgroundType'] ) && 'color' !== $attrs['backgroundType'] );
+						},
+					),
+					array(
+						'property'       => 'background',
+						'pattern'        => 'url( imageURL ) repeat attachment position/size',
+						'pattern_values' => array(
+							'imageURL'   => array(
+								'value' => 'backgroundImageURL',
+							),
+							'repeat'     => array(
+								'value'   => 'backgroundRepeat',
+								'default' => 'repeat',
+							),
+							'attachment' => array(
+								'value'   => 'backgroundAttachment',
+								'default' => 'scroll',
+							),
+							'position'   => array(
+								'value'   => 'backgroundPosition',
+								'default' => 'top left',
+							),
+							'size'       => array(
+								'value'   => 'backgroundSize',
+								'default' => 'auto',
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['backgroundType'] ) && 'image' === $attrs['backgroundType'] && isset( $attrs['backgroundImageURL'] );
+						},
+					),
+					array(
+						'property'  => 'background',
+						'value'     => 'backgroundGradient',
+						'default'   => 'linear-gradient(90deg,rgba(54,209,220,1) 0%,rgba(91,134,229,1) 100%)',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['backgroundType'] ) && 'gradient' === $attrs['backgroundType'] && isset( $attrs['backgroundGradient'] );
+						},
+					),
+					array(
+						'property'       => 'background',
+						'pattern'        => 'linear-gradient( angle, firstColor firstLocation, secondColor secondLocation )',
+						'pattern_values' => array(
+							'angle'          => array(
+								'value'   => 'backgroundGradientAngle',
+								'unit'    => 'deg',
+								'default' => 90,
+							),
+							'firstColor'     => array(
+								'value'   => 'backgroundGradientFirstColor',
+								'default' => '#36d1dc',
+							),
+							'firstLocation'  => array(
+								'value'   => 'backgroundGradientFirstLocation',
+								'unit'    => '%',
+								'default' => 0,
+							),
+							'secondColor'    => array(
+								'value'   => 'backgroundGradientSecondColor',
+								'default' => '#5b86e5',
+							),
+							'secondLocation' => array(
+								'value'   => 'backgroundGradientSecondLocation',
+								'unit'    => '%',
+								'default' => 100,
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['backgroundType'] ) && 'gradient' === $attrs['backgroundType'] && ! isset( $attrs['backgroundGradient'] );
+						},
+					),
+					array(
+						'property'       => 'background',
+						'pattern'        => 'radial-gradient( at position, firstColor firstLocation, secondColor secondLocation )',
+						'pattern_values' => array(
+							'position'       => array(
+								'value'   => 'backgroundGradientPosition',
+								'default' => 'center center',
+							),
+							'firstColor'     => array(
+								'value'   => 'backgroundGradientFirstColor',
+								'default' => '#36d1dc',
+							),
+							'firstLocation'  => array(
+								'value'   => 'backgroundGradientFirstLocation',
+								'unit'    => '%',
+								'default' => 0,
+							),
+							'secondColor'    => array(
+								'value'   => 'backgroundGradientSecondColor',
+								'default' => '#5b86e5',
+							),
+							'secondLocation' => array(
+								'value'   => 'backgroundGradientSecondLocation',
+								'unit'    => '%',
+								'default' => 100,
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['backgroundType'] ) && 'gradient' === $attrs['backgroundType'] && isset( $attrs['backgroundGradientType'] ) && 'radial' === $attrs['backgroundGradientType'];
+						},
+					),
+					array(
+						'property'       => 'border',
+						'pattern'        => 'width solid color',
+						'pattern_values' => array(
+							'width' => array(
+								'value'   => 'border',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'color' => array(
+								'value'   => 'borderColor',
+								'default' => '#000000',
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return ! ( isset( $attrs['borderType'] ) && 'unlinked' === $attrs['borderType'] );
+						},
+					),
+					array(
+						'property'       => 'border-width',
+						'pattern'        => 'top right bottom left',
+						'pattern_values' => array(
+							'top'    => array(
+								'value'   => 'borderTop',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'right'  => array(
+								'value'   => 'borderRight',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'bottom' => array(
+								'value'   => 'borderBottom',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'left'   => array(
+								'value'   => 'borderLeft',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['borderType'] ) && 'unlinked' === $attrs['borderType'];
+						},
+					),
+					array(
+						'property'  => 'border-style',
+						'default'   => 'solid',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['borderType'] ) && 'unlinked' === $attrs['borderType'];
+						},
+					),
+					array(
+						'property'  => 'border-color',
+						'value'     => 'borderColor',
+						'default'   => '#000000',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['borderType'] ) && 'unlinked' === $attrs['borderType'];
+						},
+					),
+					array(
+						'property'  => 'border-radius',
+						'value'     => 'borderRadius',
+						'unit'      => 'px',
+						'default'   => 0,
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['borderRadiusType'] ) && 'unlinked' === $attrs['borderRadiusType'] );
+						},
+					),
+					array(
+						'property'       => 'border-radius',
+						'pattern'        => 'top-left top-right bottom-right bottom-left',
+						'pattern_values' => array(
+							'top-left'     => array(
+								'value'   => 'borderRadiusTop',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'top-right'    => array(
+								'value'   => 'borderRadiusRight',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'bottom-right' => array(
+								'value'   => 'borderRadiusBottom',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'bottom-left'  => array(
+								'value'   => 'borderRadiusLeft',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['borderRadiusType'] ) && 'unlinked' === $attrs['borderRadiusType'];
+						},
+					),
+					array(
+						'property'       => 'box-shadow',
+						'pattern'        => 'horizontal vertical blur spread color',
+						'pattern_values' => array(
+							'horizontal' => array(
+								'value'   => 'boxShadowHorizontal',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'vertical'   => array(
+								'value'   => 'boxShadowVertical',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'blur'       => array(
+								'value'   => 'boxShadowBlur',
+								'unit'    => 'px',
+								'default' => 5,
+							),
+							'spread'     => array(
+								'value'   => 'boxShadowSpread',
+								'unit'    => 'px',
+								'default' => 1,
+							),
+							'color'      => array(
+								'value'   => 'boxShadowColor',
+								'default' => '#000',
+								'format'  => function( $value, $attrs ) {
+									$opacity = ( isset( $attrs['boxShadowColorOpacity'] ) ? $attrs['boxShadowColorOpacity'] : 50 ) / 100;
+									return $this->hex2rgba( $value, $opacity );
+								},
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['boxShadow'] ) && true === $attrs['boxShadow'];
+						},
+					),
+				),
+			)
+		);
 
-			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['paddingType'] ) ? $attr['paddingType'] : null ), 'linked' ) ) {
-				$style .= '	padding-top: ' . $this->get_attr_value( ( isset( $attr['paddingTop'] ) ? $attr['paddingTop'] : null ), 20 ) . 'px;' . "\n";
-				$style .= '	padding-right: ' . $this->get_attr_value( ( isset( $attr['paddingRight'] ) ? $attr['paddingRight'] : null ), 20 ) . 'px;' . "\n";
-				$style .= '	padding-bottom: ' . $this->get_attr_value( ( isset( $attr['paddingBottom'] ) ? $attr['paddingBottom'] : null ), 20 ) . 'px;' . "\n";
-				$style .= '	padding-left: ' . $this->get_attr_value( ( isset( $attr['paddingLeft'] ) ? $attr['paddingLeft'] : null ), 20 ) . 'px;' . "\n";
-			}
+		$css->add_item(
+			array(
+				'query'      => '@media ( min-width: 960px )',
+				'properties' => array(
+					array(
+						'property' => 'flex-basis',
+						'value'    => 'columnWidth',
+						'unit'     => '%',
+						'format'   => function( $value, $attrs ) {
+							return floatval( $value );
+						},
+					),
+				),
+			)
+		);
 
-			if ( 'linked' === $this->get_attr_value( ( isset( $attr['marginType'] ) ? $attr['marginType'] : null ), 'unlinked' ) ) {
-				$style .= '	margin-top: ' . $this->get_attr_value( ( isset( $attr['margin'] ) ? $attr['margin'] : null ), 20 ) . 'px;' . "\n";
-				if ( isset( $attr['margin'] ) ) {
-					$style .= '	margin-right: ' . $this->get_attr_value( ( isset( $attr['margin'] ) ? $attr['margin'] : null ), 20 ) . 'px;' . "\n";
-				}
-				$style .= '	margin-bottom: ' . $this->get_attr_value( ( isset( $attr['margin'] ) ? $attr['margin'] : null ), 20 ) . 'px;' . "\n";
-				if ( isset( $attr['margin'] ) ) {
-					$style .= '	margin-left: ' . $this->get_attr_value( ( isset( $attr['margin'] ) ? $attr['margin'] : null ), 20 ) . 'px;' . "\n";
-				}
-			}
+		$css->add_item(
+			array(
+				'query'      => '@media ( min-width: 600px ) and ( max-width: 960px )',
+				'properties' => array(
+					array(
+						'property'  => 'padding',
+						'value'     => 'paddingTablet',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['paddingTypeTablet'] ) && 'unlinked' === $attrs['paddingTypeTablet'] );
+						},
+					),
+					array(
+						'property'  => 'padding-top',
+						'value'     => 'paddingTopTablet',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['paddingTypeTablet'] ) && 'unlinked' === $attrs['paddingTypeTablet'];
+						},
+					),
+					array(
+						'property'  => 'padding-right',
+						'value'     => 'paddingRightTablet',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['paddingTypeTablet'] ) && 'unlinked' === $attrs['paddingTypeTablet'];
+						},
+					),
+					array(
+						'property'  => 'padding-bottom',
+						'value'     => 'paddingBottomTablet',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['paddingTypeTablet'] ) && 'unlinked' === $attrs['paddingTypeTablet'];
+						},
+					),
+					array(
+						'property'  => 'padding-left',
+						'value'     => 'paddingLeftTablet',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['paddingTypeTablet'] ) && 'unlinked' === $attrs['paddingTypeTablet'];
+						},
+					),
+					array(
+						'property'  => 'margin',
+						'value'     => 'marginTablet',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['marginTypeTablet'] ) && 'linked' === $attrs['marginTypeTablet'];
+						},
+					),
+					array(
+						'property'  => 'margin-top',
+						'value'     => 'marginTopTablet',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['marginTypeTablet'] ) && 'linked' === $attrs['marginTypeTablet'] );
+						},
+					),
+					array(
+						'property'  => 'margin-right',
+						'value'     => 'marginRightTablet',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['marginTypeTablet'] ) && 'linked' === $attrs['marginTypeTablet'] );
+						},
+					),
+					array(
+						'property'  => 'margin-bottom',
+						'value'     => 'marginBottomTablet',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['marginTypeTablet'] ) && 'linked' === $attrs['marginTypeTablet'] );
+						},
+					),
+					array(
+						'property'  => 'margin-left',
+						'value'     => 'marginLeftTablet',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['marginTypeTablet'] ) && 'linked' === $attrs['marginTypeTablet'] );
+						},
+					),
+				),
+			)
+		);
 
-			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginType'] ) ? $attr['marginType'] : null ), 'unlinked' ) ) {
-				$style .= '	margin-top: ' . $this->get_attr_value( ( isset( $attr['marginTop'] ) ? $attr['marginTop'] : null ), 20 ) . 'px;' . "\n";
-				if ( isset( $attr['marginRight'] ) ) {
-					$style .= '	margin-right: ' . $this->get_attr_value( ( isset( $attr['marginRight'] ) ? $attr['marginRight'] : null ), 0 ) . 'px;' . "\n";
-				}
-				$style .= '	margin-bottom: ' . $this->get_attr_value( ( isset( $attr['marginBottom'] ) ? $attr['marginBottom'] : null ), 20 ) . 'px;' . "\n";
-				if ( isset( $attr['marginLeft'] ) ) {
-					$style .= '	margin-left: ' . $this->get_attr_value( ( isset( $attr['marginLeft'] ) ? $attr['marginLeft'] : null ), 0 ) . 'px;' . "\n";
-				}
-			}
+		$css->add_item(
+			array(
+				'query'      => '@media ( max-width: 600px )',
+				'properties' => array(
+					array(
+						'property'  => 'padding',
+						'value'     => 'paddingMobile',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['paddingTypeMobile'] ) && 'unlinked' === $attrs['paddingTypeMobile'] );
+						},
+					),
+					array(
+						'property'  => 'padding-top',
+						'value'     => 'paddingTopMobile',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['paddingTypeMobile'] ) && 'unlinked' === $attrs['paddingTypeMobile'];
+						},
+					),
+					array(
+						'property'  => 'padding-right',
+						'value'     => 'paddingRightMobile',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['paddingTypeMobile'] ) && 'unlinked' === $attrs['paddingTypeMobile'];
+						},
+					),
+					array(
+						'property'  => 'padding-bottom',
+						'value'     => 'paddingBottomMobile',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['paddingTypeMobile'] ) && 'unlinked' === $attrs['paddingTypeMobile'];
+						},
+					),
+					array(
+						'property'  => 'padding-left',
+						'value'     => 'paddingLeftMobile',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['paddingTypeMobile'] ) && 'unlinked' === $attrs['paddingTypeMobile'];
+						},
+					),
+					array(
+						'property'  => 'margin',
+						'value'     => 'marginMobile',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return isset( $attrs['marginTypeMobile'] ) && 'linked' === $attrs['marginTypeMobile'];
+						},
+					),
+					array(
+						'property'  => 'margin-top',
+						'value'     => 'marginTopMobile',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['marginTypeMobile'] ) && 'linked' === $attrs['marginTypeMobile'] );
+						},
+					),
+					array(
+						'property'  => 'margin-right',
+						'value'     => 'marginRightMobile',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['marginTypeMobile'] ) && 'linked' === $attrs['marginTypeMobile'] );
+						},
+					),
+					array(
+						'property'  => 'margin-bottom',
+						'value'     => 'marginBottomMobile',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['marginTypeMobile'] ) && 'linked' === $attrs['marginTypeMobile'] );
+						},
+					),
+					array(
+						'property'  => 'margin-left',
+						'value'     => 'marginLeftMobile',
+						'unit'      => 'px',
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['marginTypeMobile'] ) && 'linked' === $attrs['marginTypeMobile'] );
+						},
+					),
+				),
+			)
+		);
 
-			if ( 'color' === $this->get_attr_value( ( isset( $attr['backgroundType'] ) ? $attr['backgroundType'] : null ), 'color' ) ) {
-				if ( isset( $attr['backgroundColor'] ) ) {
-					$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundColor'] ) ? $attr['backgroundColor'] : null ) ) . ';' . "\n";
-				}
-			}
-
-			if ( 'image' === $this->get_attr_value( ( isset( $attr['backgroundType'] ) ? $attr['backgroundType'] : null ), 'color' ) ) {
-				if ( ! empty( $attr['backgroundImageURL'] ) ) {
-					$style .= '	background-image: url( ' . $this->get_attr_value( ( isset( $attr['backgroundImageURL'] ) ? $attr['backgroundImageURL'] : null ) ) . ' );' . "\n";
-				}
-
-				if ( isset( $attr['backgroundAttachment'] ) ) {
-					$style .= '	background-attachment: ' . $this->get_attr_value( ( isset( $attr['backgroundAttachment'] ) ? $attr['backgroundAttachment'] : null ), 'scroll' ) . ';' . "\n";
-				}
-
-				if ( isset( $attr['backgroundPosition'] ) ) {
-					$style .= '	background-position: ' . $this->get_attr_value( ( isset( $attr['backgroundPosition'] ) ? $attr['backgroundPosition'] : null ), 'top left' ) . ';' . "\n";
-				}
-
-				if ( isset( $attr['backgroundRepeat'] ) ) {
-					$style .= '	background-repeat: ' . $this->get_attr_value( ( isset( $attr['backgroundRepeat'] ) ? $attr['backgroundRepeat'] : null ), 'repeat' ) . ';' . "\n";
-				}
-
-				if ( isset( $attr['backgroundSize'] ) ) {
-					$style .= '	background-size: ' . $this->get_attr_value( ( isset( $attr['backgroundSize'] ) ? $attr['backgroundSize'] : null ), 'auto' ) . ';' . "\n";
-				}
-			}
-
-			if ( 'gradient' === $this->get_attr_value( ( isset( $attr['backgroundType'] ) ? $attr['backgroundType'] : null ), 'color' ) ) {
-				$direction;
-
-				if ( 'linear' === $this->get_attr_value( ( isset( $attr['backgroundGradientType'] ) ? $attr['backgroundGradientType'] : null ), 'linear' ) ) {
-					$direction = $this->get_attr_value( ( isset( $attr['backgroundGradientAngle'] ) ? $attr['backgroundGradientAngle'] : null ), 90 ) . 'deg';
-				} else {
-					$direction = 'at ' . $this->get_attr_value( ( isset( $attr['backgroundGradientPosition'] ) ? $attr['backgroundGradientPosition'] : null ), 'center center' );
-				}
-
-				$style .= '	background: ' . $this->get_attr_value( ( isset( $attr['backgroundGradientType'] ) ? $attr['backgroundGradientType'] : null ), 'linear' ) . '-gradient( ' . $direction . ', ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstColor'] ) ? $attr['backgroundGradientFirstColor'] : null ), '#36d1dc' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientFirstLocation'] ) ? $attr['backgroundGradientFirstLocation'] : null ), 0 ) . '%, ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondColor'] ) ? $attr['backgroundGradientSecondColor'] : null ), '#5b86e5' ) . ' ' . $this->get_attr_value( ( isset( $attr['backgroundGradientSecondLocation'] ) ? $attr['backgroundGradientSecondLocation'] : null ), 100 ) . '% );' . "\n";
-			}
-
-			if ( 'linked' === $this->get_attr_value( ( isset( $attr['borderType'] ) ? $attr['borderType'] : null ), 'linked' ) ) {
-				$style .= '	border-width: ' . $this->get_attr_value( ( isset( $attr['border'] ) ? $attr['border'] : null ), 0 ) . 'px;' . "\n";
-				$style .= '	border-style: solid;' . "\n";
-				$style .= '	border-color: ' . $this->get_attr_value( ( isset( $attr['borderColor'] ) ? $attr['borderColor'] : null ), '#000000' ) . ';' . "\n";
-			}
-
-			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['borderType'] ) ? $attr['borderType'] : null ), 'linked' ) ) {
-				$style .= '	border-top-width: ' . $this->get_attr_value( ( isset( $attr['borderTop'] ) ? $attr['borderTop'] : null ), 0 ) . 'px;' . "\n";
-				$style .= '	border-right-width: ' . $this->get_attr_value( ( isset( $attr['borderRight'] ) ? $attr['borderRight'] : null ), 0 ) . 'px;' . "\n";
-				$style .= '	border-bottom-width: ' . $this->get_attr_value( ( isset( $attr['borderBottom'] ) ? $attr['borderBottom'] : null ), 0 ) . 'px;' . "\n";
-				$style .= '	border-left-width: ' . $this->get_attr_value( ( isset( $attr['borderLeft'] ) ? $attr['borderLeft'] : null ), 0 ) . 'px;' . "\n";
-				$style .= '	border-style: solid;' . "\n";
-				$style .= '	border-color: ' . $this->get_attr_value( ( isset( $attr['borderColor'] ) ? $attr['borderColor'] : null ), '#000000' ) . ';' . "\n";
-			}
-
-			if ( 'linked' === $this->get_attr_value( ( isset( $attr['borderRadiusType'] ) ? $attr['borderRadiusType'] : null ), 'linked' ) ) {
-				$style .= '	border-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadius'] ) ? $attr['borderRadius'] : null ), 0 ) . 'px;' . "\n";
-			}
-
-			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['borderRadiusType'] ) ? $attr['borderRadiusType'] : null ), 'linked' ) ) {
-				$style .= '	border-top-left-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadiusTop'] ) ? $attr['borderRadiusTop'] : null ), 0 ) . 'px;' . "\n";
-				$style .= '	border-top-right-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadiusRight'] ) ? $attr['borderRadiusRight'] : null ), 0 ) . 'px;' . "\n";
-				$style .= '	border-bottom-right-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadiusBottom'] ) ? $attr['borderRadiusBottom'] : null ), 0 ) . 'px;' . "\n";
-				$style .= '	border-bottom-left-radius: ' . $this->get_attr_value( ( isset( $attr['borderRadiusLeft'] ) ? $attr['borderRadiusLeft'] : null ), 0 ) . 'px;' . "\n";
-			}
-
-			if ( isset( $attr['boxShadow'] ) && true === $attr['boxShadow'] ) {
-				$style .= '	box-shadow: ' . $this->get_attr_value( ( isset( $attr['boxShadowHorizontal'] ) ? $attr['boxShadowHorizontal'] : null ), 0 ) . 'px ' . $this->get_attr_value( ( isset( $attr['boxShadowVertical'] ) ? $attr['boxShadowVertical'] : null ), 0 ) . 'px ' . $this->get_attr_value( ( isset( $attr['boxShadowBlur'] ) ? $attr['boxShadowBlur'] : null ), 5 ) . 'px ' . $this->get_attr_value( ( isset( $attr['boxShadowSpread'] ) ? $attr['boxShadowSpread'] : null ), 1 ) . 'px ' . $this->hex2rgba( $this->get_attr_value( ( isset( $attr['boxShadowColor'] ) ? $attr['boxShadowColor'] : null ), '#000' ), $this->get_attr_value( ( isset( $attr['boxShadowColorOpacity'] ) ? $attr['boxShadowColorOpacity'] : null ), '50' ) / 100 ) . ';' . "\n";
-			}
-			$style .= '}' . "\n \n";
-
-			if ( isset( $attr['columnWidth'] ) ) {
-				$style         .= '@media ( min-width: 960px ) {' . "\n";
-					$style     .= '	#' . $attr['id'] . ' {' . "\n";
-						$style .= '		flex-basis: ' . $this->get_attr_value( floatval( $attr['columnWidth'] ) ) . '%;' . "\n";
-					$style     .= '	}' . "\n \n";
-				$style         .= '}' . "\n \n";
-			}
-
-			$style .= '@media ( min-width: 600px ) and ( max-width: 960px ) {' . "\n";
-
-				$style .= '	#' . $attr['id'] . ' {' . "\n";
-			if ( 'linked' === $this->get_attr_value( ( isset( $attr['paddingTypeTablet'] ) ? $attr['paddingTypeTablet'] : null ), 'linked' ) ) {
-				if ( isset( $attr['paddingTablet'] ) ) {
-					$style .= '		padding: ' . $this->get_attr_value( $attr['paddingTablet'] ) . 'px;' . "\n";
-				}
-			}
-	
-			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['paddingTypeTablet'] ) ? $attr['paddingTypeTablet'] : null ), 'linked' ) ) {
-				if ( isset( $attr['paddingTopTablet'] ) ) {
-					$style .= '		padding-top: ' . $this->get_attr_value( $attr['paddingTopTablet'] ) . 'px;' . "\n";
-				}
-
-				if ( isset( $attr['paddingRightTablet'] ) ) {
-					$style .= '		padding-right: ' . $this->get_attr_value( $attr['paddingRightTablet'] ) . 'px;' . "\n";
-				}
-
-				if ( isset( $attr['paddingBottomTablet'] ) ) {
-					$style .= '		padding-bottom: ' . $this->get_attr_value( $attr['paddingBottomTablet'] ) . 'px;' . "\n";
-				}
-
-				if ( isset( $attr['paddingLeftTablet'] ) ) {
-					$style .= '		padding-left: ' . $this->get_attr_value( $attr['paddingLeftTablet'] ) . 'px;' . "\n";
-				}
-			}
-
-			if ( 'linked' === $this->get_attr_value( ( isset( $attr['marginTypeTablet'] ) ? $attr['marginTypeTablet'] : null ), 'unlinked' ) ) {
-				if ( isset( $attr['marginTablet'] ) ) {
-					$style .= '		margin: ' . $this->get_attr_value( $attr['marginTablet'] ) . 'px;' . "\n";
-				}
-			}
-	
-			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeTablet'] ) ? $attr['marginTypeTablet'] : null ), 'unlinked' ) ) {
-				if ( isset( $attr['marginTopTablet'] ) ) {
-					$style .= '		margin-top: ' . $this->get_attr_value( $attr['marginTopTablet'] ) . 'px;' . "\n";
-				}
-
-				if ( isset( $attr['marginRightTablet'] ) ) {
-					$style .= '		margin-right: ' . $this->get_attr_value( $attr['marginRightTablet'] ) . 'px;' . "\n";
-				}
-
-				if ( isset( $attr['marginBottomTablet'] ) ) {
-					$style .= '		margin-bottom: ' . $this->get_attr_value( $attr['marginBottomTablet'] ) . 'px;' . "\n";
-				}
-
-				if ( isset( $attr['marginLeftTablet'] ) ) {
-					$style .= '		margin-left: ' . $this->get_attr_value( $attr['marginLeftTablet'] ) . 'px;' . "\n";
-				}
-			}
-				$style .= '	}' . "\n \n";
-
-			$style .= '}' . "\n \n";
-
-			$style .= '@media ( max-width: 600px ) {' . "\n";
-
-				$style .= '	#' . $attr['id'] . ' {' . "\n";
-			if ( 'linked' === $this->get_attr_value( ( isset( $attr['paddingTypeMobile'] ) ? $attr['paddingTypeMobile'] : null ), 'linked' ) ) {
-				if ( isset( $attr['paddingMobile'] ) ) {
-					$style .= '		padding: ' . $this->get_attr_value( $attr['paddingMobile'] ) . 'px;' . "\n";
-				}
-			}
-	
-			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['paddingTypeMobile'] ) ? $attr['paddingTypeMobile'] : null ), 'linked' ) ) {
-				if ( isset( $attr['paddingTopMobile'] ) ) {
-					$style .= '		padding-top: ' . $this->get_attr_value( $attr['paddingTopMobile'] ) . 'px;' . "\n";
-				}
-
-				if ( isset( $attr['paddingRightMobile'] ) ) {
-					$style .= '		padding-right: ' . $this->get_attr_value( $attr['paddingRightMobile'] ) . 'px;' . "\n";
-				}
-
-				if ( isset( $attr['paddingBottomMobile'] ) ) {
-					$style .= '		padding-bottom: ' . $this->get_attr_value( $attr['paddingBottomMobile'] ) . 'px;' . "\n";
-				}
-
-				if ( isset( $attr['paddingLeftMobile'] ) ) {
-					$style .= '		padding-left: ' . $this->get_attr_value( $attr['paddingLeftMobile'] ) . 'px;' . "\n";
-				}
-			}
-
-			if ( 'linked' === $this->get_attr_value( ( isset( $attr['marginTypeMobile'] ) ? $attr['marginTypeMobile'] : null ), 'unlinked' ) ) {
-				if ( isset( $attr['marginMobile'] ) ) {
-					$style .= '		margin: ' . $this->get_attr_value( $attr['marginMobile'] ) . 'px;' . "\n";
-				}
-			}
-	
-			if ( 'unlinked' === $this->get_attr_value( ( isset( $attr['marginTypeMobile'] ) ? $attr['marginTypeMobile'] : null ), 'unlinked' ) ) {
-				if ( isset( $attr['marginTopMobile'] ) ) {
-					$style .= '		margin-top: ' . $this->get_attr_value( $attr['marginTopMobile'] ) . 'px;' . "\n";
-				}
-
-				if ( isset( $attr['marginRightMobile'] ) ) {
-					$style .= '		margin-right: ' . $this->get_attr_value( $attr['marginRightMobile'] ) . 'px;' . "\n";
-				}
-
-				if ( isset( $attr['marginBottomMobile'] ) ) {
-					$style .= '		margin-bottom: ' . $this->get_attr_value( $attr['marginBottomMobile'] ) . 'px;' . "\n";
-				}
-
-				if ( isset( $attr['marginLeftMobile'] ) ) {
-					$style .= '		margin-left: ' . $this->get_attr_value( $attr['marginLeftMobile'] ) . 'px;' . "\n";
-				}
-			}
-				$style .= '	}' . "\n \n";
-
-			$style .= '}' . "\n \n";
-		}
+		$style = $css->generate();
 
 		return $style;
 	}
