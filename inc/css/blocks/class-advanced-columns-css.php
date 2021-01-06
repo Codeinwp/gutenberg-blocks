@@ -148,7 +148,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 					),
 					array(
 						'property'       => 'background',
-						'pattern'        => 'url( \'imageURL\' ) repeat attachment position/size',
+						'pattern'        => 'url( imageURL ) repeat attachment position/size',
 						'pattern_values' => array(
 							'imageURL'   => array(
 								'value' => 'backgroundImageURL',
@@ -407,7 +407,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 					),
 					array(
 						'property'       => 'background',
-						'pattern'        => 'url( \'imageURL\' ) repeat attachment position/size',
+						'pattern'        => 'url( imageURL ) repeat attachment position/size',
 						'pattern_values' => array(
 							'imageURL'   => array(
 								'value' => 'backgroundOverlayImageURL',
