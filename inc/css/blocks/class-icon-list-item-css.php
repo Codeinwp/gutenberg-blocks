@@ -9,6 +9,8 @@ namespace ThemeIsle\GutenbergBlocks\CSS\Blocks;
 
 use ThemeIsle\GutenbergBlocks\Base_CSS;
 
+use ThemeIsle\GutenbergBlocks\CSS\CSS_Utility;
+
 /**
  * Class Icon_List_CSS
  */
@@ -30,24 +32,41 @@ class Icon_List_Item_CSS extends Base_CSS {
 	 * @access  public
 	 */
 	public function render_css( $block ) {
-		$attr  = $block['attrs'];
-		$style = '';
+		$css = new CSS_Utility( $block );
 
-		if ( isset( $attr['id'] ) ) {
-			if ( isset( $attr['contentColor'] ) ) {
-				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item-content-custom {' . "\n";
-				$style .= '	color: ' . $this->get_attr_value( $attr['contentColor'] ) . ';' . "\n";
-				$style .= '	fill: ' . $this->get_attr_value( $attr['contentColor'] ) . ';' . "\n";
-				$style .= '}' . "\n \n";
-			}
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-icon-list-item-content-custom',
+				'properties' => array(
+					array(
+						'property' => 'color',
+						'value'    => 'contentColor',
+					),
+					array(
+						'property' => 'fill',
+						'value'    => 'contentColor',
+					),
+				),
+			)
+		);
 
-			if ( isset( $attr['iconColor'] ) ) {
-				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item-icon-custom {' . "\n";
-				$style .= '	color: ' . $this->get_attr_value( $attr['iconColor'] ) . ';' . "\n";
-				$style .= '	fill: ' . $this->get_attr_value( $attr['iconColor'] ) . ';' . "\n";
-				$style .= '}' . "\n \n";
-			}
-		}
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-icon-list-item-icon-custom',
+				'properties' => array(
+					array(
+						'property' => 'color',
+						'value'    => 'iconColor',
+					),
+					array(
+						'property' => 'fill',
+						'value'    => 'iconColor',
+					),
+				),
+			)
+		);
+
+		$style = $css->generate();
 
 		return $style;
 	}

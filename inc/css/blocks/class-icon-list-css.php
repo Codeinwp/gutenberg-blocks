@@ -9,6 +9,8 @@ namespace ThemeIsle\GutenbergBlocks\CSS\Blocks;
 
 use ThemeIsle\GutenbergBlocks\Base_CSS;
 
+use ThemeIsle\GutenbergBlocks\CSS\CSS_Utility;
+
 /**
  * Class Icon_List_CSS
  */
@@ -30,46 +32,119 @@ class Icon_List_CSS extends Base_CSS {
 	 * @access  public
 	 */
 	public function render_css( $block ) {
-		$attr  = $block['attrs'];
-		$style = '';
+		$css = new CSS_Utility( $block );
 
-		if ( isset( $attr['id'] ) ) {
-			$style .= '#' . $attr['id'] . ' > * {' . "\n";
-			$style .= '	margin-bottom: ' . $this->get_attr_value( ( isset( $attr['gap'] ) ? $attr['gap'] : null ), 5 ) . 'px;' . "\n";
-			$style .= '}' . "\n \n"; 
- 
-			$style .= '#' . $attr['id'] . '.is-style-horizontal > * {' . "\n";
-			$style .= '	margin-right: ' . $this->get_attr_value( ( isset( $attr['gap'] ) ? $attr['gap'] : null ), 5 ) . 'px;' . "\n";
-			$style .= '	margin-bottom: 0;' . "\n";
-			$style .= '}' . "\n \n"; 
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-icon-list-item',
+				'properties' => array(
+					array(
+						'property' => 'margin-bottom',
+						'value'    => 'gap',
+						'unit'     => 'px',
+						'default'  => 5,
+					),
+				),
+			)
+		);
 
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-content {' . "\n";
-			if ( isset( $attr['defaultContentColor'] ) ) {
-				$style .= '	color: ' . $this->get_attr_value( $attr['defaultContentColor'] ) . ';' . "\n";
-			}
-			$style .= '	font-size: ' . $this->get_attr_value( ( isset( $attr['defaultSize'] ) ? $attr['defaultSize'] : null ), 20 ) . 'px;' . "\n";
-			$style .= '}' . "\n \n";
+		$css->add_item(
+			array(
+				'selector'   => '.is-style-horizontal .wp-block-themeisle-blocks-icon-list-item',
+				'properties' => array(
+					array(
+						'property' => 'margin-right',
+						'value'    => 'gap',
+						'unit'     => 'px',
+						'default'  => 5,
+					),
+					array(
+						'property' => 'margin-bottom',
+						'unit'     => 'px',
+						'default'  => 0,
+					),
+				),
+			)
+		);
 
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-content-custom {' . "\n";
-			$style .= '	font-size: ' . $this->get_attr_value( ( isset( $attr['defaultSize'] ) ? $attr['defaultSize'] : null ), 20 ) . 'px;' . "\n";
-			$style .= '}' . "\n \n";
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-content',
+				'properties' => array(
+					array(
+						'property' => 'color',
+						'value'    => 'defaultContentColor',
+					),
+					array(
+						'property' => 'font-size',
+						'value'    => 'defaultSize',
+						'unit'     => 'px',
+						'default'  => 20,
+					),
+				),
+			)
+		);
 
-			if ( isset( $attr['defaultIconColor'] ) ) {
-				$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-icon {' . "\n";
-				$style .= '	color: ' . $this->get_attr_value( $attr['defaultIconColor'] ) . ';' . "\n";
-				$style .= '	fill: ' . $this->get_attr_value( $attr['defaultIconColor'] ) . ';' . "\n";
-				$style .= '}' . "\n \n";
-			}
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-content-custom',
+				'properties' => array(
+					array(
+						'property' => 'font-size',
+						'value'    => 'defaultSize',
+						'unit'     => 'px',
+						'default'  => 20,
+					),
+				),
+			)
+		);
 
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item i {' . "\n";
-			$style .= '	font-size: ' . $this->get_attr_value( ( isset( $attr['defaultSize'] ) ? $attr['defaultSize'] : null ), 20 ) . 'px;' . "\n";
-			$style .= '}' . "\n \n";
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-icon-list-item .wp-block-themeisle-blocks-icon-list-item-icon',
+				'properties' => array(
+					array(
+						'property' => 'color',
+						'value'    => 'defaultIconColor',
+					),
+					array(
+						'property' => 'fill',
+						'value'    => 'defaultIconColor',
+					),
+				),
+			)
+		);
 
-			$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-icon-list-item svg {' . "\n";
-			$style .= '	width: ' . $this->get_attr_value( ( isset( $attr['defaultSize'] ) ? $attr['defaultSize'] : null ), 20 ) . 'px;' . "\n";
-			$style .= '}' . "\n \n";
-		}
-			
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-icon-list-item i',
+				'properties' => array(
+					array(
+						'property' => 'font-size',
+						'value'    => 'defaultSize',
+						'unit'     => 'px',
+						'default'  => 20,
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-icon-list-item svg',
+				'properties' => array(
+					array(
+						'property' => 'width',
+						'value'    => 'defaultSize',
+						'unit'     => 'px',
+						'default'  => 20,
+					),
+				),
+			)
+		);
+
+		$style = $css->generate();
+
 		return $style;
 	}
 }

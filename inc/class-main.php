@@ -221,7 +221,7 @@ class Main {
 				if ( $block_name === $block['blockName'] ) {
 					array_push( $target, $block );
 				}
-	
+
 				if ( count( $block['innerBlocks'] ) ) {
 					$target = $this->loop_blocks( $block['innerBlocks'], $block_name, $target );
 				}
@@ -259,7 +259,7 @@ class Main {
 				}
 
 				$blocks = parse_blocks( $content );
-	
+
 				$used_blocks = $this->loop_blocks(
 					$blocks,
 					array(
@@ -292,7 +292,7 @@ class Main {
 			if ( $has_fa ) {
 				wp_enqueue_style( 'font-awesome-5' );
 				wp_enqueue_style( 'font-awesome-4-shims' );
-	
+
 				self::$is_fa_loaded = true;
 			}
 		}
@@ -314,7 +314,7 @@ class Main {
 					self::$assets_version,
 					true
 				);
-	
+
 				wp_enqueue_script( //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion
 					'google-maps',
 					'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $apikey ) . '&libraries=places&callback=initMapScript',
@@ -322,7 +322,7 @@ class Main {
 					'',
 					true
 				);
-	
+
 				self::$is_map_loaded = true;
 			}
 		}
@@ -384,7 +384,7 @@ class Main {
 
 			self::$is_circle_counter_loaded = true;
 		}
-		
+
 		if ( ! self::$is_lottie_loaded && has_block( 'themeisle-blocks/lottie', $post ) ) {
 			wp_enqueue_script(
 				'lottie-player',
@@ -445,7 +445,7 @@ class Main {
 				return $content;
 			}
 		);
-		
+
 	}
 
 	/**
