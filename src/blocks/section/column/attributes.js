@@ -155,33 +155,9 @@ const attributes = {
 		type: 'string',
 		default: 'auto'
 	},
-	backgroundGradientFirstColor: {
+	backgroundGradient: {
 		type: 'string',
-		default: '#36d1dc'
-	},
-	backgroundGradientFirstLocation: {
-		type: 'number',
-		default: 0
-	},
-	backgroundGradientSecondColor: {
-		type: 'string',
-		default: '#5b86e5'
-	},
-	backgroundGradientSecondLocation: {
-		type: 'number',
-		default: 100
-	},
-	backgroundGradientType: {
-		type: 'string',
-		default: 'linear'
-	},
-	backgroundGradientAngle: {
-		type: 'number',
-		default: 90
-	},
-	backgroundGradientPosition: {
-		type: 'string',
-		default: 'center center'
+		default: 'linear-gradient(90deg,rgba(54,209,220,1) 0%,rgba(91,134,229,1) 100%)'
 	},
 	borderType: {
 		type: 'string',

@@ -1,8 +1,4 @@
-span {
-	&.wp-block-themeisle-blocks-advanced-heading {
-		display: block;
-	}
-}
+@import 'style';
 
 .wp-block-themeisle-blocks-advanced-heading-header-panel {
 	&.is-opened {
@@ -33,9 +29,10 @@ span {
 			display: inline-block;
 			font-size: 12px;
 
-			svg {
+			.dashicon {
 				display: block;
 				margin: 0 auto;
+				font-size: 20px;
 			}
 		}
 	}

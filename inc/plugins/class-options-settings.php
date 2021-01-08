@@ -29,7 +29,7 @@ class Options_Settings {
 
 	/**
 	 * Register Settings
-	 * 
+	 *
 	 * @since   1.2.0
 	 * @access  public
 	 */
@@ -85,7 +85,7 @@ class Options_Settings {
 
 	/**
 	 * Display Default Block
-	 * 
+	 *
 	 * @since   1.2.0
 	 * @access  public
 	 */

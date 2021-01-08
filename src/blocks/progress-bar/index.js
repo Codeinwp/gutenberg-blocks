@@ -18,6 +18,7 @@ import './editor.scss';
 import attributes from './attributes.js';
 import edit from './edit.js';
 import save from './save.js';
+import transforms from './transforms.js';
 
 registerBlockType( 'themeisle-blocks/progress-bar', {
 	title: __( 'Progress Bar' ),
@@ -30,6 +31,7 @@ registerBlockType( 'themeisle-blocks/progress-bar', {
 		'skills'
 	],
 	attributes,
+	transforms,
 	edit,
 	save
 });

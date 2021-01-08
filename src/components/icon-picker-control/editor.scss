@@ -21,6 +21,12 @@
 					background: #f8f9f9;
 				}
 
+				svg {
+					width: 15px;
+					max-width: 15px;
+					margin-right: 5px;
+				}
+
 				i {
 					margin-right: 5px;
 				}
@@ -29,59 +35,75 @@
 	}
 }
 
-.wp-block-themeisle-blocks-icon-picker-control {
-	.components-dropdown {
-		display: flex;
-	}
-
-	.wp-block-themeisle-blocks-icon-picker-button {
-		background: transparent;
-		position: relative;
-		width: 100%;
-		height: auto;
-		line-height: 28px;
-		padding: 0 12px 2px;
-		box-shadow: 0 0 0 transparent;
-		transition: box-shadow .1s linear;
-		border-radius: 4px;
-		border: 1px solid #8d96a0;
-
-		&.is-button {
+.block-editor-block-inspector {
+	.wp-block-themeisle-blocks-icon-picker-control {
+		margin: 8px 0;
+	
+		.components-dropdown {
+			display: flex;
+			flex-direction: column;
+	
+			.components-base-control {
+				margin: 8px 0;
+			}
+		}
+	
+		.wp-block-themeisle-blocks-icon-picker-button {
 			background: transparent;
-		}
+			position: relative;
+			width: 100%;
+			height: auto;
+			line-height: 28px;
+			padding: 0 12px 2px;
+			box-shadow: 0 0 0 transparent;
+			transition: box-shadow .1s linear;
+			border-radius: 4px;
+			border: 1px solid #8d96a0;
+	
+			&.is-button {
+				background: transparent;
+			}
+	
+			&:hover {
+				background: #fafafa;
+				border-color: #999;
+				box-shadow: inset 0 -1px 0 #999;
+				color: #23282d;
+				text-decoration: none;
+			}
+	
+			&:focus {
+				border: 1px solid black;
+			}
+	
+			&:after {
+				content: "";
+				pointer-events: none;
+				display: block;
+				width: 0;
+				height: 0;
+				border-left: 3px solid transparent;
+				border-right: 3px solid transparent;
+				border-top: 5px solid currentColor;
+				margin-left: 4px;
+				margin-right: 2px;
+				right: 8px;
+				top: 12px;
+				position: absolute;
+			}
+	
+			i {
+				line-height: 1.8;
+				font-size: 15px;
+				margin-right: 5px;
+			}
 
-		&:hover {
-			background: #fafafa;
-			border-color: #999;
-			box-shadow: inset 0 -1px 0 #999;
-			color: #23282d;
-			text-decoration: none;
-		}
-
-		&:focus {
-			border: 1px solid black;
-		}
-
-		&:after {
-			content: "";
-			pointer-events: none;
-			display: block;
-			width: 0;
-			height: 0;
-			border-left: 3px solid transparent;
-			border-right: 3px solid transparent;
-			border-top: 5px solid currentColor;
-			margin-left: 4px;
-			margin-right: 2px;
-			right: 8px;
-			top: 12px;
-			position: absolute;
-		}
-
-		i {
-			line-height: 1.8;
-			font-size: 15px;
-			margin-right: 5px;
+			svg {
+				width: 15px;
+				max-width: 15px;
+				line-height: 1.8;
+				margin-right: 5px;
+			}
 		}
 	}
 }

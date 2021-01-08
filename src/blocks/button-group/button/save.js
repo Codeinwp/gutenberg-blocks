@@ -8,10 +8,17 @@ import classnames from 'classnames';
  */
 const { RichText } = wp.blockEditor;
 
+/**
+ * Internal dependencies
+ */
+import themeIsleIcons from './../../../helpers/themeisle-icons';
+
 const Save = ({
 	attributes,
 	className
 }) => {
+	const Icon = themeIsleIcons.icons[ attributes.icon ];
+
 	return (
 		<div
 			id={ attributes.id }
@@ -27,13 +34,21 @@ const Save = ({
 				className="wp-block-button__link"
 			>
 				{ ( 'left' === attributes.iconType || 'only' === attributes.iconType ) && (
-					<i className={ classnames(
-						attributes.prefix,
-						'fa-fw',
-						`fa-${ attributes.icon }`,
-						{ 'margin-right': 'left' === attributes.iconType }
-					) }>
-					</i>
+					'themeisle-icons' === attributes.library && attributes.icon ? (
+						<Icon
+							className={ classnames(
+								{ 'margin-right': 'left' === attributes.iconType }
+							) }
+						/>
+					) : (
+						<i className={ classnames(
+							attributes.prefix,
+							'fa-fw',
+							`fa-${ attributes.icon }`,
+							{ 'margin-right': 'left' === attributes.iconType }
+						) }>
+						</i>
+					)
 				) }
 
 				{ 'only' !== attributes.iconType && (
@@ -44,7 +59,11 @@ const Save = ({
 				) }
 
 				{ 'right' === attributes.iconType && (
-					<i className={ `${ attributes.prefix } fa-fw fa-${ attributes.icon } margin-left` }></i>
+					'themeisle-icons' === attributes.library && attributes.icon ? (
+						<Icon className="margin-left" />
+					) : (
+						<i className={ `${ attributes.prefix } fa-fw fa-${ attributes.icon } margin-left` }></i>
+					)
 				) }
 			</a>
 		</div>

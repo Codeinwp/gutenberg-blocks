@@ -16,6 +16,7 @@ const {
 	Dropdown,
 	MenuGroup,
 	MenuItem,
+	SelectControl,
 	TextControl
 } = wp.components;
 
@@ -30,11 +31,14 @@ const {
  */
 import './editor.scss';
 import data from './icons.json';
+import themeIsleIcons from './../../helpers/themeisle-icons';
 
 const IconPickerControl = ({
 	label,
+	library,
 	prefix,
 	icon,
+	changeLibrary,
 	onChange
 }) => {
 	const instanceId = useInstanceId( IconPickerControl );
@@ -82,11 +86,74 @@ const IconPickerControl = ({
 	const [ search, setSearch ] = useState( '' );
 	const [ icons, setIcons ] = useState( null );
 
+	const selectedIcons = 'fontawesome' === library ? icons : themeIsleIcons.iconsList;
+
 	const id = `inspector-icon-picker-control-${ instanceId }`;
+
+	const ThemeIsleIcon = ({ itemIcon = icon }) => {
+		const Icon = themeIsleIcons.icons[ itemIcon ];
+		return (
+			<Fragment>
+				<Icon/>
+				{ itemIcon }
+			</Fragment>
+
+		);
+	};
+
+	const FontAwesomeIconsList = ({
+		i,
+		onToggle
+	}) => {
+		return (
+			<MenuItem
+				label={ i.label }
+				className={ classnames(
+					{ 'is-selected': ( i.name === icon && i.prefix === prefix ) }
+				) }
+				onClick={ () => {
+					onToggle();
+					onChange({
+						name: i.name,
+						prefix: i.prefix
+					});
+				}}
+			>
+				<i
+					className={ classnames(
+						i.prefix,
+						`fa-${ i.name }`,
+						'fa-fw'
+					) }
+				>
+				</i>
+				{ i.name }
+			</MenuItem>
+		);
+	};
+
+	const ThemeIsleIconsList = ({
+		i,
+		onToggle
+	}) => {
+		return (
+			<MenuItem
+				label={ i }
+				className={ classnames(
+					{ 'is-selected': i === icon }
+				) }
+				onClick={ () => {
+					onToggle();
+					onChange( i );
+				}}
+			>
+				<ThemeIsleIcon itemIcon={ i} />
+			</MenuItem>
+		);
+	};
 
 	return (
 		<BaseControl
-			label={ label }
 			id={ id }
 			className="wp-block-themeisle-blocks-icon-picker-control"
 		>
@@ -94,61 +161,78 @@ const IconPickerControl = ({
 				contentClassName="wp-block-themeisle-blocks-icon-picker-popover"
 				position="bottom center"
 				renderToggle={ ({ isOpen, onToggle }) => (
-					<Button
-						isLarge
-						className="wp-block-themeisle-blocks-icon-picker-button"
-						onClick={ onToggle }
-						aria-expanded={ isOpen }
-					>
-						{ ( prefix && icon ) ?
-							<Fragment>
-								<i
-									className={ classnames(
-										prefix,
-										`fa-${ icon }`,
-										'fa-fw'
-									) }
-								>
-								</i>
-								{ icon }
-							</Fragment> : __( 'Select Icon' )
-						}
-					</Button>
+					<Fragment>
+						<SelectControl
+							label={ __( 'Icon Library' ) }
+							value={ library }
+							options={ [
+								{ label: __( 'Font Awesome' ), value: 'fontawesome' },
+								{ label: __( 'ThemeIsle Icons' ), value: 'themeisle-icons' }
+							] }
+							onChange={ changeLibrary }
+						/>
+
+						<BaseControl
+							label={ label }
+						>
+							<Button
+								isLarge
+								className="wp-block-themeisle-blocks-icon-picker-button"
+								onClick={ onToggle }
+								aria-expanded={ isOpen }
+							>
+								{ icon ? (
+									<Fragment>
+										{ 'fontawesome' === library && (
+											prefix ? (
+												<Fragment>
+													<i
+														className={ classnames(
+															prefix,
+															`fa-${ icon }`,
+															'fa-fw'
+														) }
+													>
+													</i>
+													{ icon }
+												</Fragment>
+											) :
+												__( 'Select Icon' )
+										) }
+
+										{ 'themeisle-icons' === library && <ThemeIsleIcon/> }
+									</Fragment>
+								) :
+									__( 'Select Icon' )
+								}
+							</Button>
+						</BaseControl>
+					</Fragment>
 				) }
 				renderContent={ ({ onToggle }) => (
-					<MenuGroup label={ __( 'Font Awesome Icons' ) }>
+					<MenuGroup label={ 'fontawesome' === library ? __( 'Font Awesome Icons' ) : __( 'ThemeIsle Icons' ) }>
 						<TextControl
 							value={ search }
 							onChange={ e => setSearch( e ) }
 						/>
 
 						<div className="components-popover__items">
-							{ ( icons ).map( i => {
-								if ( ! search || i.search.some( o => o.toLowerCase().match( search.toLowerCase() ) ) ) {
+							{ selectedIcons.map( i => {
+								if ( 'fontawesome' === library && ( ! search || i.search.some( o => o.toLowerCase().match( search.toLowerCase() ) )  ) ) {
 									return (
-										<MenuItem
-											label={ i.label }
-											className={ classnames(
-												{ 'is-selected': ( i.name === icon && i.prefix === prefix ) }
-											) }
-											onClick={ () => {
-												onToggle();
-												onChange({
-													name: i.name,
-													prefix: i.prefix
-												});
-											}}
-										>
-											<i
-												className={ classnames(
-													i.prefix,
-													`fa-${ i.name }`,
-													'fa-fw'
-												) }
-											>
-											</i>
-											{ i.name }
-										</MenuItem>
+										<FontAwesomeIconsList
+											i={ i }
+											onToggle={ onToggle }
+										/>
+									);
+								}
+
+								if ( 'themeisle-icons' === library && ( ! search || i.toLowerCase().match( search.toLowerCase() ) ) ) {
+									return (
+										<ThemeIsleIconsList
+											i={ i }
+											onToggle={ onToggle }
+										/>
 									);
 								}
 							}) }

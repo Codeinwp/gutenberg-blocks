@@ -158,3 +158,37 @@ $font-size: $height-value * $font-ratio + 0px;
 		}
 	}
 }
+
+@media ( max-width: 600px ) {
+	.wp-block-themeisle-blocks-progress-bar {
+		.wp-block-themeisle-blocks-progress-bar__area {
+			font-size: 20px;
+			height: 20px;
+
+			.wp-block-themeisle-blocks-progress-bar__area__title {
+				font-size: 20px;
+				height: 30px;
+				
+				span {
+					font-size: 20px;
+					height: 30px;
+				}
+			}
+
+			.wp-block-themeisle-blocks-progress-bar__progress {
+				font-size: 20px;
+				height: 30px;
+			}
+
+			.wp-block-themeisle-blocks-progress-bar__area__bar {
+				font-size: 20px;
+				height: 30px;
+
+				.wp-block-themeisle-blocks-progress-bar__progress__append {
+					font-size: 20px;
+					height: 30px;
+				}
+			}
+		}
+	}
+}

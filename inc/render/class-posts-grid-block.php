@@ -137,12 +137,13 @@ class Posts_Grid_Block extends Base_Block {
 
 		$recent_posts = wp_get_recent_posts(
 			array(
-				'numberposts' => $attributes['postsToShow'],
-				'post_status' => 'publish',
-				'order'       => $attributes['order'],
-				'orderby'     => $attributes['orderBy'],
-				'offset'      => $attributes['offset'],
-				'category'    => $categories,
+				'numberposts'      => $attributes['postsToShow'],
+				'post_status'      => 'publish',
+				'order'            => $attributes['order'],
+				'orderby'          => $attributes['orderBy'],
+				'offset'           => $attributes['offset'],
+				'category'         => $categories,
+				'suppress_filters' => false,
 			)
 		);
 
@@ -159,9 +160,9 @@ class Posts_Grid_Block extends Base_Block {
 			if ( isset( $attributes['displayFeaturedImage'] ) && $attributes['displayFeaturedImage'] ) {
 				if ( $thumbnail ) {
 					$list_items_markup .= sprintf(
-						'<div class="wp-block-themeisle-blocks-posts-grid-post-image"><a href="%1$s"><img src="%2$s" alt="%3$s" /></a></div>',
+						'<div class="wp-block-themeisle-blocks-posts-grid-post-image"><a href="%1$s">%2$s</a></div>',
 						esc_url( get_the_permalink( $id ) ),
-						esc_url( $thumbnail[0] ),
+						wp_get_attachment_image( get_post_thumbnail_id( $id ), $size ),
 						esc_html( get_the_title( $id ) )
 					);
 				}
@@ -171,7 +172,7 @@ class Posts_Grid_Block extends Base_Block {
 
 			foreach ( $attributes['template'] as $element ) {
 				if ( 'category' === $element ) {
-					if ( isset( $attributes['displayCategory'] ) && $attributes['displayCategory'] ) {
+					if ( isset( $attributes['displayCategory'] ) && isset( $category[0] ) && $attributes['displayCategory'] ) {
 						$list_items_markup .= sprintf(
 							'<span class="wp-block-themeisle-blocks-posts-grid-post-category">%1$s</span>',
 							esc_html( $category[0]->cat_name )

@@ -37,6 +37,25 @@ const Inspector = ({
 }) => {
 	const [ hover, setHover ] = useState( false );
 
+	const changeLibrary = value => {
+		setAttributes({
+			library: value,
+			icon: undefined,
+			prefix: 'fab'
+		});
+	};
+
+	const changeIcon = value => {
+		if ( 'object' === typeof value ) {
+			setAttributes({
+				icon: value.name,
+				prefix: value.prefix
+			});
+		} else {
+			setAttributes({ icon: value });
+		}
+	};
+
 	const HoverControl = () => {
 		return (
 			<ButtonGroup>
@@ -283,14 +302,11 @@ const Inspector = ({
 					<Suspense fallback={<Placeholder><Spinner/></Placeholder>}>
 						<IconPickerControl
 							label={ __( 'Icon Picker' ) }
+							library={ attributes.library }
 							prefix={ attributes.prefix }
 							icon={ attributes.icon }
-							onChange={ e => {
-								setAttributes({
-									icon: e.name,
-									prefix: e.prefix
-								});
-							}}
+							changeLibrary={ changeLibrary }
+							onChange={ changeIcon }
 						/>
 					</Suspense>
 				) }

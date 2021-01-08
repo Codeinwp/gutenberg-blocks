@@ -9,6 +9,7 @@ import classnames from 'classnames';
 const { __ } = wp.i18n;
 
 const {
+	__experimentalColorGradientControl: ColorGradientControl,
 	ColorPalette,
 	InspectorControls,
 	MediaPlaceholder
@@ -40,7 +41,6 @@ import LayoutControl from './../components/layout-control/index.js';
 import SizingControl from '../../../components/sizing-control/index.js';
 import ResponsiveControl from '../../../components/responsive-control/index.js';
 import BackgroundControl from '../components/background-control/index.js';
-import GradientPickerControl from '../../../components/gradient-picker-control/index.js';
 import ControlPanelControl from '../../../components/control-panel-control/index.js';
 import HTMLAnchorControl from '../../../components/html-anchor-control/index.js';
 
@@ -444,32 +444,8 @@ const Inspector = ({
 		});
 	};
 
-	const changeBackgroundGradient = ( firstColor, firstLocation, secondColor, secondLocation, type, angle, position ) => {
-		setAttributes({
-			backgroundGradientFirstColor: firstColor,
-			backgroundGradientFirstLocation: firstLocation,
-			backgroundGradientSecondColor: secondColor,
-			backgroundGradientSecondLocation: secondLocation,
-			backgroundGradientType: type,
-			backgroundGradientAngle: angle,
-			backgroundGradientPosition: position
-		});
-	};
-
-	const changeBackgroundGradientValue = object => {
-		const options = {
-			firstColor: 'backgroundGradientFirstColor',
-			firstLocation: 'backgroundGradientFirstLocation',
-			secondColor: 'backgroundGradientSecondColor',
-			secondLocation: 'backgroundGradientSecondLocation',
-			type: 'backgroundGradientType',
-			angle: 'backgroundGradientAngle',
-			position: 'backgroundGradientPosition'
-		};
-
-		for ( const key in object ) {
-			setAttributes({ [options[key]]: object[key] });
-		}
+	const changeBackgroundGradient = value => {
+		setAttributes({ backgroundGradient: value });
 	};
 
 	const changeBackgroundOverlayType = value => {
@@ -514,32 +490,8 @@ const Inspector = ({
 		});
 	};
 
-	const changeBackgroundOverlayGradient = ( firstColor, firstLocation, secondColor, secondLocation, type, angle, position ) => {
-		setAttributes({
-			backgroundOverlayGradientFirstColor: firstColor,
-			backgroundOverlayGradientFirstLocation: firstLocation,
-			backgroundOverlayGradientSecondColor: secondColor,
-			backgroundOverlayGradientSecondLocation: secondLocation,
-			backgroundOverlayGradientType: type,
-			backgroundOverlayGradientAngle: angle,
-			backgroundOverlayGradientPosition: position
-		});
-	};
-
-	const changeBackgroundOverlayGradientValue = object => {
-		const options = {
-			firstColor: 'backgroundOverlayGradientFirstColor',
-			firstLocation: 'backgroundOverlayGradientFirstLocation',
-			secondColor: 'backgroundOverlayGradientSecondColor',
-			secondLocation: 'backgroundOverlayGradientSecondLocation',
-			type: 'backgroundOverlayGradientType',
-			angle: 'backgroundOverlayGradientAngle',
-			position: 'backgroundOverlayGradientPosition'
-		};
-
-		for ( const key in object ) {
-			setAttributes({ [options[key]]: object[key] });
-		}
+	const changeBackgroundOverlayGradient = value => {
+		setAttributes({ backgroundOverlayGradient: value });
 	};
 
 	const changebackgroundOverlayFilterBlur = value => {
@@ -1275,19 +1227,12 @@ const Inspector = ({
 									/>
 
 							) || 'gradient' === attributes.backgroundType && (
-								<GradientPickerControl
+								<ColorGradientControl
 									label={ 'Background Gradient' }
-									value={ {
-										firstColor: attributes.backgroundGradientFirstColor,
-										firstLocation: attributes.backgroundGradientFirstLocation,
-										secondColor: attributes.backgroundGradientSecondColor,
-										secondLocation: attributes.backgroundGradientSecondLocation,
-										type: attributes.backgroundGradientType,
-										angle: attributes.backgroundGradientAngle,
-										position: attributes.backgroundGradientPosition
-									} }
-									onChange={ changeBackgroundGradient }
-									onChangeValue={ changeBackgroundGradientValue }
+									gradientValue={ attributes.backgroundGradient }
+									disableCustomColors={ true }
+									onGradientChange={ changeBackgroundGradient }
+									clearable={ false }
 								/>
 							) }
 						</PanelBody>
@@ -1425,19 +1370,12 @@ const Inspector = ({
 									/>
 
 							) || 'gradient' === attributes.backgroundOverlayType && (
-								<GradientPickerControl
+								<ColorGradientControl
 									label={ 'Background Gradient' }
-									value={ {
-										firstColor: attributes.backgroundOverlayGradientFirstColor,
-										firstLocation: attributes.backgroundOverlayGradientFirstLocation,
-										secondColor: attributes.backgroundOverlayGradientSecondColor,
-										secondLocation: attributes.backgroundOverlayGradientSecondLocation,
-										type: attributes.backgroundOverlayGradientType,
-										angle: attributes.backgroundOverlayGradientAngle,
-										position: attributes.backgroundOverlayGradientPosition
-									} }
-									onChange={ changeBackgroundOverlayGradient }
-									onChangeValue={ changeBackgroundOverlayGradientValue }
+									gradientValue={ attributes.backgroundOverlayGradient }
+									disableCustomColors={ true }
+									onGradientChange={ changeBackgroundOverlayGradient }
+									clearable={ false }
 								/>
 							) }
 

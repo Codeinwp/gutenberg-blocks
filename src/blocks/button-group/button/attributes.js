@@ -101,6 +101,10 @@ const attributes = {
 		type: 'string',
 		default: 'none'
 	},
+	library: {
+		type: 'string',
+		default: 'fontawesome'
+	},
 	prefix: {
 		type: 'string'
 	},

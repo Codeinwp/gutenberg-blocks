@@ -37,6 +37,12 @@ class Main {
 	 * @var bool $is_progress_bar_loaded Is Map loaded?
 	 */
 	public static $is_progress_bar_loaded = false;
+	/**
+	 * Flag to mark that circulat progress bar scripts has been loaded.
+	 *
+	 * @var bool $is_circular_progress_bar_loaded Is Map loaded?
+	 */
+	public static $is_circle_counter_loaded = false;
 
 	/**
 	 * Flag to mark that lottie scripts has been loaded.
@@ -88,7 +94,7 @@ class Main {
 	 */
 	public function init() {
 		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
-			define( 'THEMEISLE_BLOCKS_VERSION', '1.5.6' );
+			define( 'THEMEISLE_BLOCKS_VERSION', '1.5.11' );
 			define( 'THEMEISLE_BLOCKS_DEV', false );
 		}
 
@@ -137,7 +143,7 @@ class Main {
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
-			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player' ),
+			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player' ),
 			self::$assets_version,
 			true
 		);
@@ -199,16 +205,96 @@ class Main {
 	}
 
 	/**
+	 * Loop through block content to find specified blocks.
+	 *
+	 * @param array  $blocks Parsed array of blocks.
+	 * @param string $block_name name of the block.
+	 * @param array  $target Target variable.
+	 */
+	public function loop_blocks( $blocks, $block_name, $target = array() ) {
+		if ( is_array( $block_name ) ) {
+			foreach ( $block_name as $name ) {
+				$target = $this->loop_blocks( $blocks, $name, $target );
+			}
+		} else {
+			foreach ( $blocks as $block ) {
+				if ( $block_name === $block['blockName'] ) {
+					array_push( $target, $block );
+				}
+
+				if ( count( $block['innerBlocks'] ) ) {
+					$target = $this->loop_blocks( $block['innerBlocks'], $block_name, $target );
+				}
+			}
+		}
+
+		return $target;
+	}
+
+	/**
 	 * Handler which checks the blocks used and enqueue the assets which needs.
 	 *
 	 * @param null $post Current post.
 	 */
 	public function enqueue_dependencies( $post = null ) {
-		if ( ! self::$is_fa_loaded && ( has_block( 'themeisle-blocks/button-group', $post ) || has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/sharing-icons', $post ) || has_block( 'themeisle-blocks/plugin-cards', $post ) || has_block( 'block', $post ) ) ) {
-			wp_enqueue_style( 'font-awesome-5' );
-			wp_enqueue_style( 'font-awesome-4-shims' );
+		$content = get_the_content( $post );
 
-			self::$is_fa_loaded = true;
+		if ( strpos( $content, '<!-- wp:' ) === false ) {
+			return false;
+		}
+
+		wp_enqueue_style(
+			'themeisle-block_styles',
+			plugin_dir_url( $this->get_dir() ) . 'build/style.css',
+			[],
+			self::$assets_version
+		);
+
+		if ( ! self::$is_fa_loaded && ( has_block( 'themeisle-blocks/button-group', $post ) || has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/icon-list-item', $post ) || has_block( 'themeisle-blocks/sharing-icons', $post ) || has_block( 'themeisle-blocks/plugin-cards', $post ) || has_block( 'block', $post ) ) ) {
+			$has_fa = false;
+
+			if ( ( ! has_block( 'themeisle-blocks/sharing-icons', $post ) && ! has_block( 'themeisle-blocks/plugin-cards', $post ) && ! has_block( 'block', $post ) ) && ( has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/icon-list-item', $post ) ) ) {
+				if ( empty( $post ) ) {
+					$post = get_the_ID();
+				}
+
+				$blocks = parse_blocks( $content );
+
+				$used_blocks = $this->loop_blocks(
+					$blocks,
+					array(
+						'themeisle-blocks/button',
+						'themeisle-blocks/font-awesome-icons',
+						'themeisle-blocks/icon-list',
+						'themeisle-blocks/icon-list-item',
+					)
+				);
+
+				foreach ( $used_blocks as $block ) {
+					if ( ! $has_fa && isset( $block['attrs']['library'] ) && 'themeisle-icons' === $block['attrs']['library'] ) {
+						continue;
+					}
+
+					if ( ! $has_fa && 'themeisle-blocks/button' === $block['blockName'] && ! isset( $block['attrs']['iconType'] ) ) {
+						continue;
+					}
+
+					if ( ! $has_fa && 'themeisle-blocks/icon-list' === $block['blockName'] && isset( $block['attrs']['defaultLibrary'] ) && 'themeisle-icons' === $block['attrs']['defaultLibrary'] ) {
+						continue;
+					}
+
+					$has_fa = true;
+				}
+			} else {
+				$has_fa = true;
+			}
+
+			if ( $has_fa ) {
+				wp_enqueue_style( 'font-awesome-5' );
+				wp_enqueue_style( 'font-awesome-4-shims' );
+
+				self::$is_fa_loaded = true;
+			}
 		}
 
 		// On AMP context, we don't load JS files.
@@ -220,27 +306,25 @@ class Main {
 			$apikey = get_option( 'themeisle_google_map_block_api_key' );
 
 			// Don't output anything if there is no API key.
-			if ( null === $apikey || empty( $apikey ) ) {
-				return;
+			if ( null !== $apikey && ! empty( $apikey ) ) {
+				wp_enqueue_script(
+					'themeisle-gutenberg-google-maps',
+					plugin_dir_url( $this->get_dir() ) . 'build/maps.js',
+					'',
+					self::$assets_version,
+					true
+				);
+
+				wp_enqueue_script( //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion
+					'google-maps',
+					'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $apikey ) . '&libraries=places&callback=initMapScript',
+					array( 'themeisle-gutenberg-google-maps' ),
+					'',
+					true
+				);
+
+				self::$is_map_loaded = true;
 			}
-
-			wp_enqueue_script(
-				'themeisle-gutenberg-google-maps',
-				plugin_dir_url( $this->get_dir() ) . 'build/maps.js',
-				'',
-				self::$assets_version,
-				true
-			);
-
-			wp_enqueue_script( //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion
-				'google-maps',
-				'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $apikey ) . '&libraries=places&callback=initMapScript',
-				array( 'themeisle-gutenberg-google-maps' ),
-				'',
-				true
-			);
-
-			self::$is_map_loaded = true;
 		}
 
 		if ( ! self::$is_glide_loaded && has_block( 'themeisle-blocks/slider', $post ) ) {
@@ -278,7 +362,6 @@ class Main {
 		}
 
 		if ( ! self::$is_progress_bar_loaded && has_block( 'themeisle-blocks/progress-bar', $post ) ) {
-
 			wp_enqueue_script(
 				'themeisle-gutenberg-progress-bar',
 				plugin_dir_url( $this->get_dir() ) . 'build/progress-bar.js',
@@ -289,7 +372,19 @@ class Main {
 
 			self::$is_progress_bar_loaded = true;
 		}
-		
+
+		if ( ! self::$is_circle_counter_loaded && has_block( 'themeisle-blocks/circle-counter', $post ) ) {
+			wp_enqueue_script(
+				'themeisle-gutenberg-circle-counter',
+				plugin_dir_url( $this->get_dir() ) . 'build/circle-counter.js',
+				array( 'wp-dom-ready' ),
+				self::$assets_version,
+				true
+			);
+
+			self::$is_circle_counter_loaded = true;
+		}
+
 		if ( ! self::$is_lottie_loaded && has_block( 'themeisle-blocks/lottie', $post ) ) {
 			wp_enqueue_script(
 				'lottie-player',
@@ -317,7 +412,6 @@ class Main {
 
 			self::$is_lottie_loaded = true;
 		}
-		
 	}
 
 	/**
@@ -332,13 +426,6 @@ class Main {
 		if ( is_admin() ) {
 			return;
 		}
-
-		wp_enqueue_style(
-			'themeisle-block_styles',
-			plugin_dir_url( $this->get_dir() ) . 'build/style.css',
-			[],
-			self::$assets_version
-		);
 
 		if ( is_singular() ) {
 			$this->enqueue_dependencies();
@@ -358,7 +445,7 @@ class Main {
 				return $content;
 			}
 		);
-		
+
 	}
 
 	/**

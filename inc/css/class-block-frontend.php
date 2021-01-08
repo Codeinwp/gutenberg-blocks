@@ -226,7 +226,6 @@ class Block_Frontend extends Base_CSS {
 			return;
 		}
 
-
 		if ( $footer ) {
 			$location = 'wp_footer';
 		}
