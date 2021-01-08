@@ -63,8 +63,9 @@ class Accordion_CSS extends Base_CSS {
 						'pattern'  => 'solid size',
 						'pattern_values' => array(
 							'size' => array(
-								'value' => 'tabsBorderSize',
-								'unit'  => 'px'
+								'value'   => 'tabsBorderSize',
+								'unit'    => 'px',
+								'default' => 2
 							)
 						)
 					),
