@@ -186,7 +186,7 @@ const Edit = ({
 						className={
 							classnames( 'wp-block-themeisle-blocks-accordion-block-tab-label', {'no-front-icon': 'default' !== iconStylePosition})
 						}
-						
+
 						value={ attributes.title }
 						onChange={ changeTitle }
 						multiline={ false }
