@@ -1,193 +1,193 @@
 const attributes = {
 	id: {
-		type: 'string'
+		type: 'string',
 	},
 	content: {
 		type: 'string',
 		source: 'html',
 		selector: 'h1,h2,h3,h4,h5,h6,div,p,span',
-		default: ''
+		default: '',
 	},
 	tag: {
 		default: 'h2',
-		type: 'string'
+		type: 'string',
 	},
 	align: {
-		type: 'string'
+		type: 'string',
 	},
 	alignTablet: {
-		type: 'string'
+		type: 'string',
 	},
 	alignMobile: {
-		type: 'string'
+		type: 'string',
 	},
 	headingColor: {
 		type: 'string',
-		default: '#000000'
+		default: '#000000',
 	},
 	highlightColor: {
-		type: 'string'
+		type: 'string',
 	},
 	highlightBackground: {
-		type: 'string'
+		type: 'string',
 	},
 	fontSize: {
-		type: 'number'
+		type: 'number',
 	},
 	fontSizeTablet: {
-		type: 'number'
+		type: 'number',
 	},
 	fontSizeMobile: {
-		type: 'number'
+		type: 'number',
 	},
 	fontFamily: {
-		type: 'string'
+		type: 'string',
 	},
 	fontVariant: {
-		type: 'string'
+		type: 'string',
 	},
 	fontStyle: {
 		type: 'string',
-		default: 'normal'
+		default: 'normal',
 	},
 	textTransform: {
 		type: 'string',
-		default: 'none'
+		default: 'none',
 	},
 	lineHeight: {
-		type: 'number'
+		type: 'number',
 	},
 	letterSpacing: {
-		type: 'number'
+		type: 'number',
 	},
 	textShadow: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	textShadowColor: {
 		type: 'string',
-		default: '#000000'
+		default: '#000000',
 	},
 	textShadowColorOpacity: {
 		type: 'number',
-		default: 50
+		default: 50,
 	},
 	textShadowBlur: {
 		type: 'number',
-		default: 5
+		default: 5,
 	},
 	textShadowHorizontal: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	textShadowVertical: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	paddingType: {
 		type: 'string',
-		default: 'linked'
+		default: 'linked',
 	},
 	paddingTypeTablet: {
 		type: 'string',
-		default: 'linked'
+		default: 'linked',
 	},
 	paddingTypeMobile: {
 		type: 'string',
-		default: 'linked'
+		default: 'linked',
 	},
 	padding: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	paddingTablet: {
-		type: 'number'
+		type: 'number',
 	},
 	paddingMobile: {
-		type: 'number'
+		type: 'number',
 	},
 	paddingTop: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	paddingTopTablet: {
-		type: 'number'
+		type: 'number',
 	},
 	paddingTopMobile: {
-		type: 'number'
+		type: 'number',
 	},
 	paddingRight: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	paddingRightTablet: {
-		type: 'number'
+		type: 'number',
 	},
 	paddingRightMobile: {
-		type: 'number'
+		type: 'number',
 	},
 	paddingBottom: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	paddingBottomTablet: {
-		type: 'number'
+		type: 'number',
 	},
 	paddingBottomMobile: {
-		type: 'number'
+		type: 'number',
 	},
 	paddingLeft: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	paddingLeftTablet: {
-		type: 'number'
+		type: 'number',
 	},
 	paddingLeftMobile: {
-		type: 'number'
+		type: 'number',
 	},
 	marginType: {
 		type: 'string',
-		default: 'unlinked'
+		default: 'unlinked',
 	},
 	marginTypeTablet: {
 		type: 'string',
-		default: 'unlinked'
+		default: 'unlinked',
 	},
 	marginTypeMobile: {
 		type: 'string',
-		default: 'unlinked'
+		default: 'unlinked',
 	},
 	margin: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	marginTablet: {
-		type: 'number'
+		type: 'number',
 	},
 	marginMobile: {
-		type: 'number'
+		type: 'number',
 	},
 	marginTop: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	marginTopTablet: {
-		type: 'number'
+		type: 'number',
 	},
 	marginTopMobile: {
-		type: 'number'
+		type: 'number',
 	},
 	marginBottom: {
 		type: 'number',
-		default: 25
+		default: 25,
 	},
 	marginBottomTablet: {
-		type: 'number'
+		type: 'number',
 	},
 	marginBottomMobile: {
-		type: 'number'
-	}
+		type: 'number',
+	},
 };
 
 export default attributes;

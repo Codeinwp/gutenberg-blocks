@@ -3,10 +3,7 @@
  */
 const { Disabled } = wp.components;
 
-const {
-	Fragment,
-	useState
-} = wp.element;
+const { Fragment, useState } = wp.element;
 
 const ServerSideRender = wp.serverSideRender;
 
@@ -16,34 +13,30 @@ const ServerSideRender = wp.serverSideRender;
 import Placeholder from './placeholder.js';
 import Controls from './controls.js';
 
-const Edit = ({
-	attributes,
-	setAttributes,
-	className
-}) => {
-	const [ hasError, setError ] = useState( false );
+const Edit = ({ attributes, setAttributes, className }) => {
+	const [hasError, setError] = useState(false);
 
-	if ( ! attributes.slug ) {
+	if (!attributes.slug) {
 		return (
 			<Placeholder
-				attributes={ attributes }
-				setAttributes={ setAttributes }
-				hasError={ hasError }
-				setError={ setError }
-				className={ className }
+				attributes={attributes}
+				setAttributes={setAttributes}
+				hasError={hasError}
+				setError={setError}
+				className={className}
 			/>
 		);
 	}
 
 	return (
 		<Fragment>
-			<Controls setAttributes={ setAttributes }/>
+			<Controls setAttributes={setAttributes} />
 
 			<Disabled>
 				<ServerSideRender
 					block="themeisle-blocks/plugin-cards"
-					className={ attributes.className }
-					attributes={ { ...attributes } }
+					className={attributes.className}
+					attributes={{ ...attributes }}
 				/>
 			</Disabled>
 		</Fragment>

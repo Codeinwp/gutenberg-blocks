@@ -12,22 +12,13 @@ const ServerSideRender = wp.serverSideRender;
  */
 import Controls from './controls.js';
 
-const Edit = ({
-	attributes,
-	setAttributes
-}) => {
+const Edit = ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
-			<Controls
-				attributes={ attributes }
-				setAttributes={ setAttributes }
-			/>
+			<Controls attributes={attributes} setAttributes={setAttributes} />
 
 			<Disabled>
-				<ServerSideRender
-					block="themeisle-blocks/sharing-icons"
-					attributes={ { ...attributes } }
-				/>
+				<ServerSideRender block="themeisle-blocks/sharing-icons" attributes={{ ...attributes }} />
 			</Disabled>
 		</Fragment>
 	);

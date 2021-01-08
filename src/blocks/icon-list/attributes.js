@@ -1,33 +1,33 @@
 const attributes = {
 	id: {
-		type: 'string'
+		type: 'string',
 	},
 	defaultLibrary: {
 		type: 'string',
-		default: 'fontawesome'
+		default: 'fontawesome',
 	},
 	defaultIconPrefix: {
 		type: 'string',
-		default: 'fas'
+		default: 'fas',
 	},
 	defaultIcon: {
 		type: 'string',
-		default: 'angle-right'
+		default: 'angle-right',
 	},
 	defaultContentColor: {
-		type: 'string'
+		type: 'string',
 	},
 	defaultIconColor: {
-		type: 'string'
+		type: 'string',
 	},
 	defaultSize: {
 		type: 'number',
-		default: 20
+		default: 20,
 	},
 	gap: {
 		type: 'number',
-		default: 5
-	}
+		default: 5,
+	},
 };
 
 export default attributes;

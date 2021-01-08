@@ -10,18 +10,14 @@ const { BlockControls } = wp.blockEditor;
  */
 import LinkControl from '../../../components/link-control/index.js';
 
-const Controls = ({
-	attributes,
-	setAttributes,
-	isSelected
-}) => {
+const Controls = ({ attributes, setAttributes, isSelected }) => {
 	return (
 		<BlockControls>
 			<LinkControl
-				isSelected={ isSelected }
-				setAttributes={ setAttributes }
-				url={ attributes.link }
-				opensInNewTab={ attributes.newTab }
+				isSelected={isSelected}
+				setAttributes={setAttributes}
+				url={attributes.link}
+				opensInNewTab={attributes.newTab}
 			/>
 		</BlockControls>
 	);

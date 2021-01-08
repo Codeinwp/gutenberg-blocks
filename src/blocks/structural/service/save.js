@@ -5,8 +5,8 @@ const { InnerBlocks } = wp.blockEditor;
 
 const Save = ({ className }) => {
 	return (
-		<div className={ className } >
-			<InnerBlocks.Content/>
+		<div className={className}>
+			<InnerBlocks.Content />
 		</div>
 	);
 };

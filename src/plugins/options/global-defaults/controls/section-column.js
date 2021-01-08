@@ -3,10 +3,7 @@
  */
 const { __ } = wp.i18n;
 
-const {
-	PanelBody,
-	SelectControl
-} = wp.components;
+const { PanelBody, SelectControl } = wp.components;
 
 const { useSelect } = wp.data;
 
@@ -18,14 +15,10 @@ const { Fragment } = wp.element;
 import ResponsiveControl from '../../../../components/responsive-control/index.js';
 import SizingControl from '../../../../components/sizing-control/index.js';
 
-const SectionColumn = ({
-	blockName,
-	defaults,
-	changeConfig
-}) => {
-	const getView = useSelect( select => {
-		const { getView } = select( 'themeisle-gutenberg/data' );
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+const SectionColumn = ({ blockName, defaults, changeConfig }) => {
+	const getView = useSelect((select) => {
+		const { getView } = select('themeisle-gutenberg/data');
+		const { __experimentalGetPreviewDeviceType } = select('core/edit-post');
 
 		return __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : getView();
 	}, []);
@@ -33,13 +26,13 @@ const SectionColumn = ({
 	let getPaddingType = () => {
 		let value;
 
-		if ( 'Desktop' === getView ) {
+		if ('Desktop' === getView) {
 			value = defaults.paddingType;
 		}
-		if ( 'Tablet' === getView ) {
+		if ('Tablet' === getView) {
 			value = defaults.paddingTypeTablet;
 		}
-		if ( 'Mobile' === getView ) {
+		if ('Mobile' === getView) {
 			value = defaults.paddingTypeMobile;
 		}
 
@@ -48,20 +41,20 @@ const SectionColumn = ({
 
 	getPaddingType = getPaddingType();
 
-	const changePaddingType = value => {
-		if ( 'Desktop' === getView ) {
-			changeConfig( blockName, {
-				paddingType: value
+	const changePaddingType = (value) => {
+		if ('Desktop' === getView) {
+			changeConfig(blockName, {
+				paddingType: value,
 			});
 		}
-		if ( 'Tablet' === getView ) {
-			changeConfig( blockName, {
-				paddingTypeTablet: value
+		if ('Tablet' === getView) {
+			changeConfig(blockName, {
+				paddingTypeTablet: value,
 			});
 		}
-		if ( 'Mobile' === getView ) {
-			changeConfig( blockName, {
-				paddingTypeMobile: value
+		if ('Mobile' === getView) {
+			changeConfig(blockName, {
+				paddingTypeMobile: value,
 			});
 		}
 	};
@@ -70,116 +63,116 @@ const SectionColumn = ({
 		top: 'paddingTop',
 		right: 'paddingRight',
 		bottom: 'paddingBottom',
-		left: 'paddingLeft'
+		left: 'paddingLeft',
 	};
 
 	const tabletPaddingType = {
 		top: 'paddingTopTablet',
 		right: 'paddingRightTablet',
 		bottom: 'paddingBottomTablet',
-		left: 'paddingLeftTablet'
+		left: 'paddingLeftTablet',
 	};
 
 	const mobilePaddingType = {
 		top: 'paddingTopMobile',
 		right: 'paddingRightMobile',
 		bottom: 'paddingBottomMobile',
-		left: 'paddingLeftMobile'
+		left: 'paddingLeftMobile',
 	};
 
-	const changePadding = ( type, value ) => {
-		if ( 'Desktop' === getView ) {
-			if ( 'linked' === defaults.paddingType ) {
-				changeConfig( blockName, {
-					padding: value
+	const changePadding = (type, value) => {
+		if ('Desktop' === getView) {
+			if ('linked' === defaults.paddingType) {
+				changeConfig(blockName, {
+					padding: value,
 				});
 			} else {
-				changeConfig( blockName, {
-					[desktopPaddingType[type]]: value
+				changeConfig(blockName, {
+					[desktopPaddingType[type]]: value,
 				});
 			}
 		}
 
-		if ( 'Tablet' === getView ) {
-			if ( 'linked' === defaults.paddingTypeTablet ) {
-				changeConfig( blockName, {
-					paddingTablet: value
+		if ('Tablet' === getView) {
+			if ('linked' === defaults.paddingTypeTablet) {
+				changeConfig(blockName, {
+					paddingTablet: value,
 				});
 			} else {
-				changeConfig( blockName, {
-					[tabletPaddingType[type]]: value
+				changeConfig(blockName, {
+					[tabletPaddingType[type]]: value,
 				});
 			}
 		}
 
-		if ( 'Mobile' === getView ) {
-			if ( 'linked' === defaults.paddingTypeMobile ) {
-				changeConfig( blockName, {
-					paddingMobile: value
+		if ('Mobile' === getView) {
+			if ('linked' === defaults.paddingTypeMobile) {
+				changeConfig(blockName, {
+					paddingMobile: value,
 				});
 			} else {
-				changeConfig( blockName, {
-					[mobilePaddingType[type]]: value
+				changeConfig(blockName, {
+					[mobilePaddingType[type]]: value,
 				});
 			}
 		}
 	};
 
-	const getPadding = type => {
+	const getPadding = (type) => {
 		let value;
 
-		if ( 'top' == type ) {
-			if ( 'Desktop' === getView ) {
+		if ('top' == type) {
+			if ('Desktop' === getView) {
 				value = 'linked' === defaults.paddingType ? defaults.padding : defaults.paddingTop;
 			}
 
-			if ( 'Tablet' === getView ) {
+			if ('Tablet' === getView) {
 				value = 'linked' === defaults.paddingTypeTablet ? defaults.paddingTablet : defaults.paddingTopTablet;
 			}
 
-			if ( 'Mobile' === getView ) {
+			if ('Mobile' === getView) {
 				value = 'linked' === defaults.paddingTypeMobile ? defaults.paddingMobile : defaults.paddingTopMobile;
 			}
 		}
 
-		if ( 'right' == type ) {
-			if ( 'Desktop' === getView ) {
+		if ('right' == type) {
+			if ('Desktop' === getView) {
 				value = 'linked' === defaults.paddingType ? defaults.padding : defaults.paddingRight;
 			}
 
-			if ( 'Tablet' === getView ) {
+			if ('Tablet' === getView) {
 				value = 'linked' === defaults.paddingTypeTablet ? defaults.paddingTablet : defaults.paddingRightTablet;
 			}
 
-			if ( 'Mobile' === getView ) {
+			if ('Mobile' === getView) {
 				value = 'linked' === defaults.paddingTypeMobile ? defaults.paddingMobile : defaults.paddingRightMobile;
 			}
 		}
 
-		if ( 'bottom' == type ) {
-			if ( 'Desktop' === getView ) {
+		if ('bottom' == type) {
+			if ('Desktop' === getView) {
 				value = 'linked' === defaults.paddingType ? defaults.padding : defaults.paddingBottom;
 			}
 
-			if ( 'Tablet' === getView ) {
+			if ('Tablet' === getView) {
 				value = 'linked' === defaults.paddingTypeTablet ? defaults.paddingTablet : defaults.paddingBottomTablet;
 			}
 
-			if ( 'Mobile' === getView ) {
+			if ('Mobile' === getView) {
 				value = 'linked' === defaults.paddingTypeMobile ? defaults.paddingMobile : defaults.paddingBottomMobile;
 			}
 		}
 
-		if ( 'left' == type ) {
-			if ( 'Desktop' === getView ) {
+		if ('left' == type) {
+			if ('Desktop' === getView) {
 				value = 'linked' === defaults.paddingType ? defaults.padding : defaults.paddingLeft;
 			}
 
-			if ( 'Tablet' === getView ) {
+			if ('Tablet' === getView) {
 				value = 'linked' === defaults.paddingTypeTablet ? defaults.paddingTablet : defaults.paddingLeftTablet;
 			}
 
-			if ( 'Mobile' === getView ) {
+			if ('Mobile' === getView) {
 				value = 'linked' === defaults.paddingTypeMobile ? defaults.paddingMobile : defaults.paddingLeftMobile;
 			}
 		}
@@ -190,13 +183,13 @@ const SectionColumn = ({
 	let getMarginType = () => {
 		let value;
 
-		if ( 'Desktop' === getView ) {
+		if ('Desktop' === getView) {
 			value = defaults.marginType;
 		}
-		if ( 'Tablet' === getView ) {
+		if ('Tablet' === getView) {
 			value = defaults.marginTypeTablet;
 		}
-		if ( 'Mobile' === getView ) {
+		if ('Mobile' === getView) {
 			value = defaults.marginTypeMobile;
 		}
 
@@ -205,20 +198,20 @@ const SectionColumn = ({
 
 	getMarginType = getMarginType();
 
-	const changeMarginType = value => {
-		if ( 'Desktop' === getView ) {
-			changeConfig( blockName, {
-				marginType: value
+	const changeMarginType = (value) => {
+		if ('Desktop' === getView) {
+			changeConfig(blockName, {
+				marginType: value,
 			});
 		}
-		if ( 'Tablet' === getView ) {
-			changeConfig( blockName, {
-				marginTypeTablet: value
+		if ('Tablet' === getView) {
+			changeConfig(blockName, {
+				marginTypeTablet: value,
 			});
 		}
-		if ( 'Mobile' === getView ) {
-			changeConfig( blockName, {
-				marginTypeMobile: value
+		if ('Mobile' === getView) {
+			changeConfig(blockName, {
+				marginTypeMobile: value,
 			});
 		}
 	};
@@ -227,116 +220,116 @@ const SectionColumn = ({
 		top: 'marginTop',
 		right: 'marginRight',
 		bottom: 'marginBottom',
-		left: 'marginLeft'
+		left: 'marginLeft',
 	};
 
 	const tabletMarginType = {
 		top: 'marginTopTablet',
 		right: 'marginRightTablet',
 		bottom: 'marginBottomTablet',
-		left: 'marginLeftTablet'
+		left: 'marginLeftTablet',
 	};
 
 	const mobileMarginType = {
 		top: 'marginTopMobile',
 		right: 'marginRightMobile',
 		bottom: 'marginBottomMobile',
-		left: 'marginLeftMobile'
+		left: 'marginLeftMobile',
 	};
 
-	const changeMargin = ( type, value ) => {
-		if ( 'Desktop' === getView ) {
-			if ( 'linked' === defaults.marginType ) {
-				changeConfig( blockName, {
-					margin: value
+	const changeMargin = (type, value) => {
+		if ('Desktop' === getView) {
+			if ('linked' === defaults.marginType) {
+				changeConfig(blockName, {
+					margin: value,
 				});
 			} else {
-				changeConfig( blockName, {
-					[desktopMarginType[type]]: value
+				changeConfig(blockName, {
+					[desktopMarginType[type]]: value,
 				});
 			}
 		}
 
-		if ( 'Tablet' === getView ) {
-			if ( 'linked' === defaults.marginTypeTablet ) {
-				changeConfig( blockName, {
-					marginTablet: value
+		if ('Tablet' === getView) {
+			if ('linked' === defaults.marginTypeTablet) {
+				changeConfig(blockName, {
+					marginTablet: value,
 				});
 			} else {
-				changeConfig( blockName, {
-					[tabletMarginType[type]]: value
+				changeConfig(blockName, {
+					[tabletMarginType[type]]: value,
 				});
 			}
 		}
 
-		if ( 'Mobile' === getView ) {
-			if ( 'linked' === defaults.marginTypeMobile ) {
-				changeConfig( blockName, {
-					marginMobile: value
+		if ('Mobile' === getView) {
+			if ('linked' === defaults.marginTypeMobile) {
+				changeConfig(blockName, {
+					marginMobile: value,
 				});
 			} else {
-				changeConfig( blockName, {
-					[mobileMarginType[type]]: value
+				changeConfig(blockName, {
+					[mobileMarginType[type]]: value,
 				});
 			}
 		}
 	};
 
-	const getMargin = type => {
+	const getMargin = (type) => {
 		let value;
 
-		if ( 'top' == type ) {
-			if ( 'Desktop' === getView ) {
+		if ('top' == type) {
+			if ('Desktop' === getView) {
 				value = 'linked' === defaults.marginType ? defaults.margin : defaults.marginTop;
 			}
 
-			if ( 'Tablet' === getView ) {
+			if ('Tablet' === getView) {
 				value = 'linked' === defaults.marginTypeTablet ? defaults.marginTablet : defaults.marginTopTablet;
 			}
 
-			if ( 'Mobile' === getView ) {
+			if ('Mobile' === getView) {
 				value = 'linked' === defaults.marginTypeMobile ? defaults.marginMobile : defaults.marginTopMobile;
 			}
 		}
 
-		if ( 'right' == type ) {
-			if ( 'Desktop' === getView ) {
+		if ('right' == type) {
+			if ('Desktop' === getView) {
 				value = 'linked' === defaults.marginType ? defaults.margin : defaults.marginRight;
 			}
 
-			if ( 'Tablet' === getView ) {
+			if ('Tablet' === getView) {
 				value = 'linked' === defaults.marginTypeTablet ? defaults.marginTablet : defaults.marginRightTablet;
 			}
 
-			if ( 'Mobile' === getView ) {
+			if ('Mobile' === getView) {
 				value = 'linked' === defaults.marginTypeMobile ? defaults.marginMobile : defaults.marginRightMobile;
 			}
 		}
 
-		if ( 'bottom' == type ) {
-			if ( 'Desktop' === getView ) {
+		if ('bottom' == type) {
+			if ('Desktop' === getView) {
 				value = 'linked' === defaults.marginType ? defaults.margin : defaults.marginBottom;
 			}
 
-			if ( 'Tablet' === getView ) {
+			if ('Tablet' === getView) {
 				value = 'linked' === defaults.marginTypeTablet ? defaults.marginTablet : defaults.marginBottomTablet;
 			}
 
-			if ( 'Mobile' === getView ) {
+			if ('Mobile' === getView) {
 				value = 'linked' === defaults.marginTypeMobile ? defaults.marginMobile : defaults.marginBottomMobile;
 			}
 		}
 
-		if ( 'left' == type ) {
-			if ( 'Desktop' === getView ) {
+		if ('left' == type) {
+			if ('Desktop' === getView) {
 				value = 'linked' === defaults.marginType ? defaults.margin : defaults.marginLeft;
 			}
 
-			if ( 'Tablet' === getView ) {
+			if ('Tablet' === getView) {
 				value = 'linked' === defaults.marginTypeTablet ? defaults.marginTablet : defaults.marginLeftTablet;
 			}
 
-			if ( 'Mobile' === getView ) {
+			if ('Mobile' === getView) {
 				value = 'linked' === defaults.marginTypeMobile ? defaults.marginMobile : defaults.marginLeftMobile;
 			}
 		}
@@ -346,96 +339,87 @@ const SectionColumn = ({
 
 	return (
 		<Fragment>
-			<PanelBody
-				title={ __( 'Sizing' ) }
-			>
-				<ResponsiveControl
-					label={ 'Padding' }
-				>
+			<PanelBody title={__('Sizing')}>
+				<ResponsiveControl label={'Padding'}>
 					<SizingControl
-						type={ getPaddingType }
-						min={ 0 }
-						max={ 500 }
-						changeType={ changePaddingType }
-						onChange={ changePadding }
-						options={ [
+						type={getPaddingType}
+						min={0}
+						max={500}
+						changeType={changePaddingType}
+						onChange={changePadding}
+						options={[
 							{
-								label: __( 'Top' ),
+								label: __('Top'),
 								type: 'top',
-								value: getPadding( 'top' )
+								value: getPadding('top'),
 							},
 							{
-								label: __( 'Right' ),
+								label: __('Right'),
 								type: 'right',
-								value: getPadding( 'right' )
+								value: getPadding('right'),
 							},
 							{
-								label: __( 'Bottom' ),
+								label: __('Bottom'),
 								type: 'bottom',
-								value: getPadding( 'bottom' )
+								value: getPadding('bottom'),
 							},
 							{
-								label: __( 'Left' ),
+								label: __('Left'),
 								type: 'left',
-								value: getPadding( 'left' )
-							}
-						] }
+								value: getPadding('left'),
+							},
+						]}
 					/>
 				</ResponsiveControl>
 
-				<hr/>
+				<hr />
 
-				<ResponsiveControl
-					label={ 'Margin' }
-				>
+				<ResponsiveControl label={'Margin'}>
 					<SizingControl
-						type={ getMarginType }
-						min={ -500 }
-						max={ 500 }
-						changeType={ changeMarginType }
-						onChange={ changeMargin }
-						options={ [
+						type={getMarginType}
+						min={-500}
+						max={500}
+						changeType={changeMarginType}
+						onChange={changeMargin}
+						options={[
 							{
-								label: __( 'Top' ),
+								label: __('Top'),
 								type: 'top',
-								value: getMargin( 'top' )
+								value: getMargin('top'),
 							},
 							{
-								label: __( 'Right' ),
+								label: __('Right'),
 								type: 'right',
-								value: getMargin( 'right' )
+								value: getMargin('right'),
 							},
 							{
-								label: __( 'Bottom' ),
+								label: __('Bottom'),
 								type: 'bottom',
-								value: getMargin( 'bottom' )
+								value: getMargin('bottom'),
 							},
 							{
-								label: __( 'Left' ),
+								label: __('Left'),
 								type: 'left',
-								value: getMargin( 'left' )
-							}
-						] }
+								value: getMargin('left'),
+							},
+						]}
 					/>
 				</ResponsiveControl>
 			</PanelBody>
 
-			<PanelBody
-				title={ __( 'Section Settings' ) }
-				initialOpen={ false }
-			>
+			<PanelBody title={__('Section Settings')} initialOpen={false}>
 				<SelectControl
-					label={ __( 'HTML Tag' ) }
-					value={ defaults.columnsHTMLTag }
-					options={ [
+					label={__('HTML Tag')}
+					value={defaults.columnsHTMLTag}
+					options={[
 						{ label: 'Default (div)', value: 'div' },
 						{ label: 'section', value: 'section' },
 						{ label: 'header', value: 'header' },
 						{ label: 'footer', value: 'footer' },
 						{ label: 'article', value: 'article' },
-						{ label: 'main', value: 'main' }
-					] }
-					onChange={ value => changeConfig( blockName, { columnsHTMLTag: value }) }
+						{ label: 'main', value: 'main' },
+					]}
+					onChange={(value) => changeConfig(blockName, { columnsHTMLTag: value })}
 				/>
 			</PanelBody>
 		</Fragment>

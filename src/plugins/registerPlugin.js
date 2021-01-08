@@ -16,9 +16,9 @@ import './data/index.js';
 import './data-logging/index.js';
 import './galley-extension/index.js';
 
-const icon = <Icon icon={ otterIcon } />;
+const icon = <Icon icon={otterIcon} />;
 
-registerPlugin( 'themeisle-blocks', {
+registerPlugin('themeisle-blocks', {
 	icon,
-	render: Options
+	render: Options,
 });

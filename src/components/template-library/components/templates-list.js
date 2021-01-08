@@ -28,73 +28,66 @@ const TemplatesList = ({
 	selectedCategory,
 	search,
 	importPreview,
-	importTemplate
+	importTemplate,
 }) => {
-	const isLarger = useViewportMatch( 'large', '>=' );
+	const isLarger = useViewportMatch('large', '>=');
 
-	const isLarge = useViewportMatch( 'large', '<=' );
+	const isLarge = useViewportMatch('large', '<=');
 
-	const isSmall = useViewportMatch( 'small', '>=' );
+	const isSmall = useViewportMatch('small', '>=');
 
-	const isSmaller = useViewportMatch( 'small', '<=' );
+	const isSmaller = useViewportMatch('small', '<=');
 
 	let viewportWidth = 1400;
 
-	const isTablet = ! isLarger && ! isLarge && isSmall && ! isSmaller;
+	const isTablet = !isLarger && !isLarge && isSmall && !isSmaller;
 
-	const isMobile = ! isLarger && ! isLarge && ! isSmall && ! isSmaller;
+	const isMobile = !isLarger && !isLarge && !isSmall && !isSmaller;
 
-	if ( isTablet ) {
+	if (isTablet) {
 		viewportWidth = 960;
-	} else if ( isMobile ) {
+	} else if (isMobile) {
 		viewportWidth = 600;
 	}
 
-	if ( preview ) {
+	if (preview) {
 		return (
 			<div className="library-modal-preview">
-				<BlockPreview
-					blocks={ selectedTemplateContent }
-					viewportWidth={ viewportWidth }
-				/>
+				<BlockPreview blocks={selectedTemplateContent} viewportWidth={viewportWidth} />
 			</div>
 		);
 	}
 
-	if ( isLoading ) {
+	if (isLoading) {
 		return (
 			<div className="library-modal-loader">
-				<Spinner/>
+				<Spinner />
 			</div>
 		);
 	}
 
 	return (
 		<div className="library-modal-content">
-			{ data.map( i => {
+			{data.map((i) => {
 				if (
-					( i.template_url ) &&
-						( 'all' === selectedCategory || i.categories && i.categories.includes( selectedCategory ) ) &&
-						( ! search || i.keywords && i.keywords.some( o => o.toLowerCase().includes( search.toLowerCase() ) ) ) &&
-						( tab === i.type )
+					i.template_url &&
+					('all' === selectedCategory || (i.categories && i.categories.includes(selectedCategory))) &&
+					(!search ||
+						(i.keywords && i.keywords.some((o) => o.toLowerCase().includes(search.toLowerCase())))) &&
+					tab === i.type
 				) {
-					return (
-						<Template
-							template={ i }
-							importPreview={ importPreview }
-							importTemplate={ importTemplate }
-						/>
-					);
+					return <Template template={i} importPreview={importPreview} importTemplate={importTemplate} />;
 				}
-			}) }
+			})}
 
-			<div
-				aria-label={ __( 'Coming Soon' ) }
-				className="library-modal-content__item"
-			>
+			<div aria-label={__('Coming Soon')} className="library-modal-content__item">
 				<div className="library-modal-content__preview">
 					<LazyLoad>
-						<img src={ 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/assets/images/coming-soon.jpg' } />
+						<img
+							src={
+								'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/assets/images/coming-soon.jpg'
+							}
+						/>
 					</LazyLoad>
 				</div>
 			</div>

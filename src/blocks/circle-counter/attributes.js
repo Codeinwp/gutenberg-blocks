@@ -5,47 +5,47 @@ const { __ } = wp.i18n;
 
 const attributes = {
 	id: {
-		type: 'string'
+		type: 'string',
 	},
 	title: {
 		type: 'string',
-		default: __( 'Skill' )
+		default: __('Skill'),
 	},
 	percentage: {
 		type: 'number',
-		default: 50
+		default: 50,
 	},
 	duration: {
 		type: 'number',
-		default: 2
+		default: 2,
 	},
 	titleStyle: {
 		type: 'string',
-		default: 'default'
+		default: 'default',
 	},
 	height: {
 		type: 'number',
-		default: 100
+		default: 100,
 	},
 	fontSizeTitle: {
-		type: 'number'
+		type: 'number',
 	},
 	fontSizePercent: {
-		type: 'number'
+		type: 'number',
 	},
 	strokeWidth: {
 		type: 'number',
-		default: 10
+		default: 10,
 	},
 	backgroundColor: {
-		type: 'string'
+		type: 'string',
 	},
 	progressColor: {
-		type: 'string'
+		type: 'string',
 	},
 	titleColor: {
-		type: 'string'
-	}
+		type: 'string',
+	},
 };
 
 export default attributes;

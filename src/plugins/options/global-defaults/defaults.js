@@ -16,17 +16,17 @@ const defaultsAttrs = {
 		marginTypeMobile: 'unlinked',
 		margin: 0,
 		marginTop: 0,
-		marginBottom: 25
+		marginBottom: 25,
 	},
 	'themeisle-blocks/button-group': {
 		spacing: 20,
-		collapse: 'collapse-none'
+		collapse: 'collapse-none',
 	},
 	'themeisle-blocks/button': {},
 	'themeisle-blocks/font-awesome-icons': {
 		fontSize: 16,
 		padding: 5,
-		margin: 5
+		margin: 5,
 	},
 	'themeisle-blocks/advanced-columns': {
 		columnsGap: 'default',
@@ -50,7 +50,7 @@ const defaultsAttrs = {
 		hide: false,
 		hideTablet: false,
 		hideMobile: false,
-		columnsHTMLTag: 'div'
+		columnsHTMLTag: 'div',
 	},
 	'themeisle-blocks/advanced-column': {
 		paddingType: 'linked',
@@ -69,8 +69,8 @@ const defaultsAttrs = {
 		marginRight: 0,
 		marginBottom: 20,
 		marginLeft: 0,
-		columnsHTMLTag: 'div'
-	}
+		columnsHTMLTag: 'div',
+	},
 };
 
 export default defaultsAttrs;

@@ -5,10 +5,7 @@ const { isEqual } = lodash;
 
 const { InnerBlocks } = wp.blockEditor;
 
-const {
-	Fragment,
-	useEffect
-} = wp.element;
+const { Fragment, useEffect } = wp.element;
 
 /**
  * Internal dependencies
@@ -19,32 +16,32 @@ import Inspector from './inspector.js';
 
 const IDs = [];
 
-const Edit = ({
-	attributes,
-	setAttributes,
-	clientId,
-	name,
-	className
-}) => {
-	useEffect( () => {
+const Edit = ({ attributes, setAttributes, clientId, name, className }) => {
+	useEffect(() => {
 		initBlock();
 	}, []);
 
 	const initBlock = () => {
 		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
 
-		if ( attributes.id === undefined ) {
+		if (attributes.id === undefined) {
 			let attrs;
-			const instanceId = `wp-block-themeisle-blocks-icon-list-${ clientId.substr( 0, 8 ) }`;
+			const instanceId = `wp-block-themeisle-blocks-icon-list-${clientId.substr(0, 8)}`;
 
-			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
+			const globalDefaults = window.themeisleGutenberg.globalDefaults
+				? window.themeisleGutenberg.globalDefaults
+				: undefined;
 
-			if ( undefined !== globalDefaults ) {
-				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
-					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+			if (undefined !== globalDefaults) {
+				if (!isEqual(defaults[name], window.themeisleGutenberg.globalDefaults[name])) {
+					attrs = { ...window.themeisleGutenberg.globalDefaults[name] };
 
-					Object.keys( attrs ).map( i => {
-						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
+					Object.keys(attrs).map((i) => {
+						if (
+							attributes[i] !== attrs[i] &&
+							undefined !== defaultAttributes[i].default &&
+							attributes[i] !== defaultAttributes[i].default
+						) {
 							return delete attrs[i];
 						}
 					});
@@ -53,39 +50,33 @@ const Edit = ({
 
 			setAttributes({
 				...attrs,
-				id: instanceId
+				id: instanceId,
 			});
 
-			IDs.push( instanceId );
-			blockIDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-icon-list-${ clientId.substr( 0, 8 ) }`;
+			IDs.push(instanceId);
+			blockIDs.push(instanceId);
+		} else if (IDs.includes(attributes.id)) {
+			const instanceId = `wp-block-themeisle-blocks-icon-list-${clientId.substr(0, 8)}`;
 			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
+			IDs.push(instanceId);
 		} else {
-			IDs.push( attributes.id );
-			blockIDs.push( attributes.id );
+			IDs.push(attributes.id);
+			blockIDs.push(attributes.id);
 		}
 
-		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
+		window.themeisleGutenberg.blockIDs = [...blockIDs];
 	};
 	return (
 		<Fragment>
-			<Inspector
-				attributes={ attributes }
-				setAttributes={ setAttributes }
-			/>
+			<Inspector attributes={attributes} setAttributes={setAttributes} />
 
-			<div
-				id={ attributes.id }
-				className={ className }
-			>
+			<div id={attributes.id} className={className}>
 				<InnerBlocks
-					allowedBlocks={ [ 'themeisle-blocks/icon-list-item' ] }
+					allowedBlocks={['themeisle-blocks/icon-list-item']}
 					__experimentalMoverDirection="vertical"
 					orientation="vertical"
-					template={ [ [ 'themeisle-blocks/icon-list-item' ] ] }
-					renderAppender={ InnerBlocks.DefaultAppender }
+					template={[['themeisle-blocks/icon-list-item']]}
+					renderAppender={InnerBlocks.DefaultAppender}
 				/>
 			</div>
 		</Fragment>

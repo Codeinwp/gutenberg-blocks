@@ -3,11 +3,7 @@
  */
 const { __ } = wp.i18n;
 
-const {
-	PanelBody,
-	Placeholder,
-	Spinner
-} = wp.components;
+const { PanelBody, Placeholder, Spinner } = wp.components;
 
 /**
  * Internal dependencies
@@ -20,73 +16,56 @@ import FontAwesomeIcons from './controls/font-awesome-icons.js';
 import SectionColumns from './controls/section-columns.js';
 import SectionColumn from './controls/section-column.js';
 
-const GlobalDefaults = ({
-	isAPILoaded,
-	blockDefaults,
-	changeConfig,
-	resetConfig,
-	saveConfig
-}) => {
+const GlobalDefaults = ({ isAPILoaded, blockDefaults, changeConfig, resetConfig, saveConfig }) => {
 	const blocks = [
 		{
 			name: 'themeisle-blocks/advanced-heading',
-			control: AdvancedHeading
+			control: AdvancedHeading,
 		},
 		{
 			name: 'themeisle-blocks/button-group',
-			control: ButtonGroup
+			control: ButtonGroup,
 		},
 		{
 			name: 'themeisle-blocks/button',
-			control: Button
+			control: Button,
 		},
 		{
 			name: 'themeisle-blocks/font-awesome-icons',
-			control: FontAwesomeIcons
+			control: FontAwesomeIcons,
 		},
 		{
 			name: 'themeisle-blocks/advanced-columns',
-			control: SectionColumns
+			control: SectionColumns,
 		},
 		{
 			name: 'themeisle-blocks/advanced-column',
-			control: SectionColumn
-		}
+			control: SectionColumn,
+		},
 	];
 
-	if ( ! isAPILoaded ) {
+	if (!isAPILoaded) {
 		return (
 			<Placeholder>
-				<Spinner/>
+				<Spinner />
 			</Placeholder>
 		);
 	}
 
 	return (
-		<PanelBody
-			title={ 'Global Defaults' }
-			className="wp-block-themeisle-blocks-options-global-defaults"
-		>
-			{ __( 'With Global Defaults, you can set site-wide block defaults for Otter.' ) }
+		<PanelBody title={'Global Defaults'} className="wp-block-themeisle-blocks-options-global-defaults">
+			{__('With Global Defaults, you can set site-wide block defaults for Otter.')}
 
 			<div className="wp-block-themeisle-blocks-options-global-defaults-list">
-				{ blocks.map( i => {
+				{blocks.map((i) => {
 					const Controls = i.control;
 
 					return (
-						<ButtomItem
-							blockName={ i.name }
-							saveConfig={ saveConfig }
-							resetConfig={ resetConfig }
-						>
-							<Controls
-								blockName={ i.name }
-								defaults={ blockDefaults[ i.name ] }
-								changeConfig={ changeConfig }
-							/>
+						<ButtomItem blockName={i.name} saveConfig={saveConfig} resetConfig={resetConfig}>
+							<Controls blockName={i.name} defaults={blockDefaults[i.name]} changeConfig={changeConfig} />
 						</ButtomItem>
 					);
-				}) }
+				})}
 			</div>
 		</PanelBody>
 	);

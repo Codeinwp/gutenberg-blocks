@@ -7,25 +7,15 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies
  */
-const {
-	isEqual,
-	times
-} = lodash;
+const { isEqual, times } = lodash;
 
 const { useViewportMatch } = wp.compose;
 
-const {
-	useDispatch,
-	useSelect
-} = wp.data;
+const { useDispatch, useSelect } = wp.data;
 
 const { InnerBlocks } = wp.blockEditor;
 
-const {
-	Fragment,
-	useEffect,
-	useState
-} = wp.element;
+const { Fragment, useEffect, useState } = wp.element;
 
 /**
  * Internal dependencies
@@ -41,62 +31,65 @@ import Onboarding from '../components/onboarding/index.js';
 
 const IDs = [];
 
-const Edit = ({
-	attributes,
-	setAttributes,
-	className,
-	clientId,
-	name
-}) => {
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
+const Edit = ({ attributes, setAttributes, className, clientId, name }) => {
+	const { updateBlockAttributes } = useDispatch('core/block-editor');
 
-	const {
-		sectionBlock,
-		isViewportAvailable,
-		isPreviewDesktop,
-		isPreviewTablet,
-		isPreviewMobile
-	} = useSelect( select => {
-		const { getBlock } = select( 'core/block-editor' );
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
-		const sectionBlock = getBlock( clientId );
+	const { sectionBlock, isViewportAvailable, isPreviewDesktop, isPreviewTablet, isPreviewMobile } = useSelect(
+		(select) => {
+			const { getBlock } = select('core/block-editor');
+			const { __experimentalGetPreviewDeviceType } = select('core/edit-post');
+			const sectionBlock = getBlock(clientId);
 
-		return {
-			sectionBlock,
-			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
-			isPreviewDesktop: __experimentalGetPreviewDeviceType ? 'Desktop' === __experimentalGetPreviewDeviceType() : false,
-			isPreviewTablet: __experimentalGetPreviewDeviceType ? 'Tablet' === __experimentalGetPreviewDeviceType() : false,
-			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false
-		};
-	}, []);
+			return {
+				sectionBlock,
+				isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
+				isPreviewDesktop: __experimentalGetPreviewDeviceType
+					? 'Desktop' === __experimentalGetPreviewDeviceType()
+					: false,
+				isPreviewTablet: __experimentalGetPreviewDeviceType
+					? 'Tablet' === __experimentalGetPreviewDeviceType()
+					: false,
+				isPreviewMobile: __experimentalGetPreviewDeviceType
+					? 'Mobile' === __experimentalGetPreviewDeviceType()
+					: false,
+			};
+		},
+		[]
+	);
 
-	const isLarger = useViewportMatch( 'large', '>=' );
+	const isLarger = useViewportMatch('large', '>=');
 
-	const isLarge = useViewportMatch( 'large', '<=' );
+	const isLarge = useViewportMatch('large', '<=');
 
-	const isSmall = useViewportMatch( 'small', '>=' );
+	const isSmall = useViewportMatch('small', '>=');
 
-	const isSmaller = useViewportMatch( 'small', '<=' );
+	const isSmaller = useViewportMatch('small', '<=');
 
-	useEffect( () => {
+	useEffect(() => {
 		initBlock();
 	}, []);
 
 	const initBlock = () => {
 		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
 
-		if ( attributes.id === undefined ) {
+		if (attributes.id === undefined) {
 			let attrs;
-			const instanceId = `wp-block-themeisle-blocks-advanced-columns-${ clientId.substr( 0, 8 ) }`;
+			const instanceId = `wp-block-themeisle-blocks-advanced-columns-${clientId.substr(0, 8)}`;
 
-			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
+			const globalDefaults = window.themeisleGutenberg.globalDefaults
+				? window.themeisleGutenberg.globalDefaults
+				: undefined;
 
-			if ( undefined !== globalDefaults ) {
-				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
-					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+			if (undefined !== globalDefaults) {
+				if (!isEqual(defaults[name], window.themeisleGutenberg.globalDefaults[name])) {
+					attrs = { ...window.themeisleGutenberg.globalDefaults[name] };
 
-					Object.keys( attrs ).map( i => {
-						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
+					Object.keys(attrs).map((i) => {
+						if (
+							attributes[i] !== attrs[i] &&
+							undefined !== defaultAttributes[i].default &&
+							attributes[i] !== defaultAttributes[i].default
+						) {
 							return delete attrs[i];
 						}
 					});
@@ -105,33 +98,33 @@ const Edit = ({
 
 			setAttributes({
 				...attrs,
-				id: instanceId
+				id: instanceId,
 			});
 
-			IDs.push( instanceId );
-			blockIDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-advanced-columns-${ clientId.substr( 0, 8 ) }`;
+			IDs.push(instanceId);
+			blockIDs.push(instanceId);
+		} else if (IDs.includes(attributes.id)) {
+			const instanceId = `wp-block-themeisle-blocks-advanced-columns-${clientId.substr(0, 8)}`;
 			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-			blockIDs.push( instanceId );
+			IDs.push(instanceId);
+			blockIDs.push(instanceId);
 		} else {
-			IDs.push( attributes.id );
-			blockIDs.push( attributes.id );
+			IDs.push(attributes.id);
+			blockIDs.push(attributes.id);
 		}
 
-		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
+		window.themeisleGutenberg.blockIDs = [...blockIDs];
 	};
 
-	const [ dividerViewType, setDividerViewType ] = useState( 'top' );
+	const [dividerViewType, setDividerViewType] = useState('top');
 
-	let isDesktop = isLarger && ! isLarge && isSmall && ! isSmaller;
+	let isDesktop = isLarger && !isLarge && isSmall && !isSmaller;
 
-	let isTablet = ! isLarger && ! isLarge && isSmall && ! isSmaller;
+	let isTablet = !isLarger && !isLarge && isSmall && !isSmaller;
 
-	let isMobile = ! isLarger && ! isLarge && ! isSmall && ! isSmaller;
+	let isMobile = !isLarger && !isLarge && !isSmall && !isSmaller;
 
-	if ( isViewportAvailable && ! isMobile ) {
+	if (isViewportAvailable && !isMobile) {
 		isDesktop = isPreviewDesktop;
 		isTablet = isPreviewTablet;
 		isMobile = isPreviewMobile;
@@ -141,101 +134,155 @@ const Edit = ({
 
 	let stylesheet, background, overlayBackground, borderStyle, borderRadiusStyle, boxShadowStyle;
 
-	if ( isDesktop ) {
+	if (isDesktop) {
 		stylesheet = {
-			paddingTop: 'linked' === attributes.paddingType ? `${ attributes.padding }px` : `${ attributes.paddingTop }px`,
-			paddingRight: 'linked' === attributes.paddingType ? `${ attributes.padding }px` : `${ attributes.paddingRight }px`,
-			paddingBottom: 'linked' === attributes.paddingType ? `${ attributes.padding }px` : `${ attributes.paddingBottom }px`,
-			paddingLeft: 'linked' === attributes.paddingType ? `${ attributes.padding }px` : `${ attributes.paddingLeft }px`,
-			marginTop: 'linked' === attributes.marginType ? `${ attributes.margin }px` : `${ attributes.marginTop }px`,
-			marginBottom: 'linked' === attributes.marginType ? `${ attributes.margin }px` : `${ attributes.marginBottom }px`,
-			minHeight: 'custom' === attributes.columnsHeight ? `${ attributes.columnsHeightCustom }px` : attributes.columnsHeight
+			paddingTop: 'linked' === attributes.paddingType ? `${attributes.padding}px` : `${attributes.paddingTop}px`,
+			paddingRight:
+				'linked' === attributes.paddingType ? `${attributes.padding}px` : `${attributes.paddingRight}px`,
+			paddingBottom:
+				'linked' === attributes.paddingType ? `${attributes.padding}px` : `${attributes.paddingBottom}px`,
+			paddingLeft:
+				'linked' === attributes.paddingType ? `${attributes.padding}px` : `${attributes.paddingLeft}px`,
+			marginTop: 'linked' === attributes.marginType ? `${attributes.margin}px` : `${attributes.marginTop}px`,
+			marginBottom:
+				'linked' === attributes.marginType ? `${attributes.margin}px` : `${attributes.marginBottom}px`,
+			minHeight:
+				'custom' === attributes.columnsHeight
+					? `${attributes.columnsHeightCustom}px`
+					: attributes.columnsHeight,
 		};
 	}
 
-	if ( isTablet ) {
+	if (isTablet) {
 		stylesheet = {
-			paddingTop: 'linked' === attributes.paddingTypeTablet ? `${ attributes.paddingTablet }px` : `${ attributes.paddingTopTablet }px`,
-			paddingRight: 'linked' === attributes.paddingTypeTablet ? `${ attributes.paddingTablet }px` : `${ attributes.paddingRightTablet }px`,
-			paddingBottom: 'linked' === attributes.paddingTypeTablet ? `${ attributes.paddingTablet }px` : `${ attributes.paddingBottomTablet }px`,
-			paddingLeft: 'linked' === attributes.paddingTypeTablet ? `${ attributes.paddingTablet }px` : `${ attributes.paddingLeftTablet }px`,
-			marginTop: 'linked' === attributes.marginTypeTablet ? `${ attributes.marginTablet }px` : `${ attributes.marginTopTablet }px`,
-			marginBottom: 'linked' === attributes.marginTypeTablet ? `${ attributes.marginTablet }px` : `${ attributes.marginBottomTablet }px`,
-			minHeight: 'custom' === attributes.columnsHeight ? `${ attributes.columnsHeightCustomTablet }px` : attributes.columnsHeight
+			paddingTop:
+				'linked' === attributes.paddingTypeTablet
+					? `${attributes.paddingTablet}px`
+					: `${attributes.paddingTopTablet}px`,
+			paddingRight:
+				'linked' === attributes.paddingTypeTablet
+					? `${attributes.paddingTablet}px`
+					: `${attributes.paddingRightTablet}px`,
+			paddingBottom:
+				'linked' === attributes.paddingTypeTablet
+					? `${attributes.paddingTablet}px`
+					: `${attributes.paddingBottomTablet}px`,
+			paddingLeft:
+				'linked' === attributes.paddingTypeTablet
+					? `${attributes.paddingTablet}px`
+					: `${attributes.paddingLeftTablet}px`,
+			marginTop:
+				'linked' === attributes.marginTypeTablet
+					? `${attributes.marginTablet}px`
+					: `${attributes.marginTopTablet}px`,
+			marginBottom:
+				'linked' === attributes.marginTypeTablet
+					? `${attributes.marginTablet}px`
+					: `${attributes.marginBottomTablet}px`,
+			minHeight:
+				'custom' === attributes.columnsHeight
+					? `${attributes.columnsHeightCustomTablet}px`
+					: attributes.columnsHeight,
 		};
 	}
 
-	if ( isMobile ) {
+	if (isMobile) {
 		stylesheet = {
-			paddingTop: 'linked' === attributes.paddingTypeMobile ? `${ attributes.paddingMobile }px` : `${ attributes.paddingTopMobile }px`,
-			paddingRight: 'linked' === attributes.paddingTypeMobile ? `${ attributes.paddingMobile }px` : `${ attributes.paddingRightMobile }px`,
-			paddingBottom: 'linked' === attributes.paddingTypeMobile ? `${ attributes.paddingMobile }px` : `${ attributes.paddingBottomMobile }px`,
-			paddingLeft: 'linked' === attributes.paddingTypeMobile ? `${ attributes.paddingMobile }px` : `${ attributes.paddingLeftMobile }px`,
-			marginTop: 'linked' === attributes.marginTypeMobile ? `${ attributes.marginMobile }px` : `${ attributes.marginTopMobile }px`,
-			marginBottom: 'linked' === attributes.marginTypeMobile ? `${ attributes.marginMobile }px` : `${ attributes.marginBottomMobile }px`,
-			minHeight: 'custom' === attributes.columnsHeight ? `${ attributes.columnsHeightCustomMobile }px` : attributes.columnsHeight
+			paddingTop:
+				'linked' === attributes.paddingTypeMobile
+					? `${attributes.paddingMobile}px`
+					: `${attributes.paddingTopMobile}px`,
+			paddingRight:
+				'linked' === attributes.paddingTypeMobile
+					? `${attributes.paddingMobile}px`
+					: `${attributes.paddingRightMobile}px`,
+			paddingBottom:
+				'linked' === attributes.paddingTypeMobile
+					? `${attributes.paddingMobile}px`
+					: `${attributes.paddingBottomMobile}px`,
+			paddingLeft:
+				'linked' === attributes.paddingTypeMobile
+					? `${attributes.paddingMobile}px`
+					: `${attributes.paddingLeftMobile}px`,
+			marginTop:
+				'linked' === attributes.marginTypeMobile
+					? `${attributes.marginMobile}px`
+					: `${attributes.marginTopMobile}px`,
+			marginBottom:
+				'linked' === attributes.marginTypeMobile
+					? `${attributes.marginMobile}px`
+					: `${attributes.marginBottomMobile}px`,
+			minHeight:
+				'custom' === attributes.columnsHeight
+					? `${attributes.columnsHeightCustomMobile}px`
+					: attributes.columnsHeight,
 		};
 	}
 
-	if ( 'color' === attributes.backgroundType ) {
+	if ('color' === attributes.backgroundType) {
 		background = {
-			background: attributes.backgroundColor
+			background: attributes.backgroundColor,
 		};
 	}
 
-	if ( 'image' === attributes.backgroundType ) {
+	if ('image' === attributes.backgroundType) {
 		background = {
-			backgroundImage: `url( '${ attributes.backgroundImageURL }' )`,
+			backgroundImage: `url( '${attributes.backgroundImageURL}' )`,
 			backgroundAttachment: attributes.backgroundAttachment,
 			backgroundPosition: attributes.backgroundPosition,
 			backgroundRepeat: attributes.backgroundRepeat,
-			backgroundSize: attributes.backgroundSize
+			backgroundSize: attributes.backgroundSize,
 		};
 	}
 
-	if ( 'gradient' === attributes.backgroundType ) {
+	if ('gradient' === attributes.backgroundType) {
 		background = {
-			background: attributes.backgroundGradient
+			background: attributes.backgroundGradient,
 		};
 	}
 
-	if ( 'linked' === attributes.borderType ) {
+	if ('linked' === attributes.borderType) {
 		borderStyle = {
-			borderWidth: `${ attributes.border }px`,
+			borderWidth: `${attributes.border}px`,
 			borderStyle: 'solid',
-			borderColor: attributes.borderColor
+			borderColor: attributes.borderColor,
 		};
 	}
 
-	if ( 'unlinked' === attributes.borderType ) {
+	if ('unlinked' === attributes.borderType) {
 		borderStyle = {
-			borderTopWidth: `${ attributes.borderTop }px`,
-			borderRightWidth: `${ attributes.borderRight }px`,
-			borderBottomWidth: `${ attributes.borderBottom }px`,
-			borderLeftWidth: `${ attributes.borderLeft }px`,
+			borderTopWidth: `${attributes.borderTop}px`,
+			borderRightWidth: `${attributes.borderRight}px`,
+			borderBottomWidth: `${attributes.borderBottom}px`,
+			borderLeftWidth: `${attributes.borderLeft}px`,
 			borderStyle: 'solid',
-			borderColor: attributes.borderColor
+			borderColor: attributes.borderColor,
 		};
 	}
 
-	if ( 'linked' === attributes.borderRadiusType ) {
+	if ('linked' === attributes.borderRadiusType) {
 		borderRadiusStyle = {
-			borderRadius: `${ attributes.borderRadius }px`
+			borderRadius: `${attributes.borderRadius}px`,
 		};
 	}
 
-	if ( 'unlinked' === attributes.borderRadiusType ) {
+	if ('unlinked' === attributes.borderRadiusType) {
 		borderRadiusStyle = {
-			borderTopLeftRadius: `${ attributes.borderRadiusTop }px`,
-			borderTopRightRadius: `${ attributes.borderRadiusRight }px`,
-			borderBottomRightRadius: `${ attributes.borderRadiusBottom }px`,
-			borderBottomLeftRadius: `${ attributes.borderRadiusLeft }px`
+			borderTopLeftRadius: `${attributes.borderRadiusTop}px`,
+			borderTopRightRadius: `${attributes.borderRadiusRight}px`,
+			borderBottomRightRadius: `${attributes.borderRadiusBottom}px`,
+			borderBottomLeftRadius: `${attributes.borderRadiusLeft}px`,
 		};
 	}
 
-	if ( true === attributes.boxShadow ) {
+	if (true === attributes.boxShadow) {
 		boxShadowStyle = {
-			boxShadow: `${ attributes.boxShadowHorizontal }px ${ attributes.boxShadowVertical }px ${ attributes.boxShadowBlur }px ${ attributes.boxShadowSpread }px ${  hexToRgba( ( attributes.boxShadowColor ? attributes.boxShadowColor : '#000000' ), attributes.boxShadowColorOpacity ) }`
+			boxShadow: `${attributes.boxShadowHorizontal}px ${attributes.boxShadowVertical}px ${
+				attributes.boxShadowBlur
+			}px ${attributes.boxShadowSpread}px ${hexToRgba(
+				attributes.boxShadowColor ? attributes.boxShadowColor : '#000000',
+				attributes.boxShadowColorOpacity
+			)}`,
 		};
 	}
 
@@ -244,86 +291,102 @@ const Edit = ({
 		...background,
 		...borderStyle,
 		...borderRadiusStyle,
-		...boxShadowStyle
+		...boxShadowStyle,
 	};
 
-	if ( 'color' === attributes.backgroundOverlayType ) {
+	if ('color' === attributes.backgroundOverlayType) {
 		overlayBackground = {
 			background: attributes.backgroundOverlayColor,
-			opacity: attributes.backgroundOverlayOpacity / 100
+			opacity: attributes.backgroundOverlayOpacity / 100,
 		};
 	}
 
-	if ( 'image' === attributes.backgroundOverlayType ) {
+	if ('image' === attributes.backgroundOverlayType) {
 		overlayBackground = {
-			backgroundImage: `url( '${ attributes.backgroundOverlayImageURL }' )`,
+			backgroundImage: `url( '${attributes.backgroundOverlayImageURL}' )`,
 			backgroundAttachment: attributes.backgroundOverlayAttachment,
 			backgroundPosition: attributes.backgroundOverlayPosition,
 			backgroundRepeat: attributes.backgroundOverlayRepeat,
 			backgroundSize: attributes.backgroundOverlaySize,
-			opacity: attributes.backgroundOverlayOpacity / 100
+			opacity: attributes.backgroundOverlayOpacity / 100,
 		};
 	}
 
-	if ( 'gradient' === attributes.backgroundOverlayType ) {
+	if ('gradient' === attributes.backgroundOverlayType) {
 		overlayBackground = {
 			background: attributes.backgroundOverlayGradient,
-			opacity: attributes.backgroundOverlayOpacity / 100
+			opacity: attributes.backgroundOverlayOpacity / 100,
 		};
 	}
 
 	const overlayStyle = {
 		...overlayBackground,
 		mixBlendMode: attributes.backgroundOverlayBlend,
-		filter: `blur( ${ attributes.backgroundOverlayFilterBlur / 10 }px ) brightness( ${ attributes.backgroundOverlayFilterBrightness / 10 } ) contrast( ${ attributes.backgroundOverlayFilterContrast / 10 } ) grayscale( ${ attributes.backgroundOverlayFilterGrayscale / 100 } ) hue-rotate( ${ attributes.backgroundOverlayFilterHue }deg ) saturate( ${ attributes.backgroundOverlayFilterSaturate / 10 } )`
+		filter: `blur( ${attributes.backgroundOverlayFilterBlur / 10}px ) brightness( ${
+			attributes.backgroundOverlayFilterBrightness / 10
+		} ) contrast( ${attributes.backgroundOverlayFilterContrast / 10} ) grayscale( ${
+			attributes.backgroundOverlayFilterGrayscale / 100
+		} ) hue-rotate( ${attributes.backgroundOverlayFilterHue}deg ) saturate( ${
+			attributes.backgroundOverlayFilterSaturate / 10
+		} )`,
 	};
 
 	let innerStyle = {};
 
-	if ( attributes.columnsWidth ) {
+	if (attributes.columnsWidth) {
 		innerStyle = {
-			maxWidth: attributes.columnsWidth + 'px'
+			maxWidth: attributes.columnsWidth + 'px',
 		};
 	}
 
 	const classes = classnames(
 		className,
-		`has-${ attributes.columns }-columns`,
-		`has-desktop-${ attributes.layout }-layout`,
-		`has-tablet-${ attributes.layoutTablet }-layout`,
-		`has-mobile-${ attributes.layoutMobile }-layout`,
-		`has-${ attributes.columnsGap }-gap`,
-		`has-vertical-${ attributes.verticalAlign }`,
-		`has-horizontal-${ attributes.horizontalAlign }`,
-		{ 'has-reverse-columns-tablet': ( attributes.reverseColumnsTablet && ! attributes.hideTablet && 'collapsedRows' === attributes.layoutTablet ) },
-		{ 'has-reverse-columns-mobile': ( attributes.reverseColumnsMobile && ! attributes.hideMobile && 'collapsedRows' === attributes.layoutMobile ) },
+		`has-${attributes.columns}-columns`,
+		`has-desktop-${attributes.layout}-layout`,
+		`has-tablet-${attributes.layoutTablet}-layout`,
+		`has-mobile-${attributes.layoutMobile}-layout`,
+		`has-${attributes.columnsGap}-gap`,
+		`has-vertical-${attributes.verticalAlign}`,
+		`has-horizontal-${attributes.horizontalAlign}`,
+		{
+			'has-reverse-columns-tablet':
+				attributes.reverseColumnsTablet &&
+				!attributes.hideTablet &&
+				'collapsedRows' === attributes.layoutTablet,
+		},
+		{
+			'has-reverse-columns-mobile':
+				attributes.reverseColumnsMobile &&
+				!attributes.hideMobile &&
+				'collapsedRows' === attributes.layoutMobile,
+		},
 		{ 'has-viewport-desktop': isDesktop },
 		{ 'has-viewport-tablet': isTablet },
 		{ 'has-viewport-mobile': isMobile }
 	);
 
-	const updateColumnsWidth = ( columns, layout ) => {
-		( sectionBlock.innerBlocks ).map( ( innerBlock, i ) => {
-			updateBlockAttributes( innerBlock.clientId, {
-				columnWidth: layouts[columns][layout][i]
+	const updateColumnsWidth = (columns, layout) => {
+		sectionBlock.innerBlocks.map((innerBlock, i) => {
+			updateBlockAttributes(innerBlock.clientId, {
+				columnWidth: layouts[columns][layout][i],
 			});
 		});
 	};
 
-	const setupColumns = ( columns, layout ) => {
-		if ( 1 >= columns ) {
+	const setupColumns = (columns, layout) => {
+		if (1 >= columns) {
 			setAttributes({
 				columns,
 				layout,
 				layoutTablet: 'equal',
-				layoutMobile: 'equal'
+				layoutMobile: 'equal',
 			});
 		} else {
 			setAttributes({
 				columns,
 				layout,
 				layoutTablet: 'equal',
-				layoutMobile: 'collapsedRows'
+				layoutMobile: 'collapsedRows',
 			});
 		}
 	};
@@ -331,15 +394,15 @@ const Edit = ({
 	let getDividerTopWidth = () => {
 		let value;
 
-		if ( isDesktop ) {
+		if (isDesktop) {
 			value = attributes.dividerTopWidth;
 		}
 
-		if ( isTablet ) {
+		if (isTablet) {
 			value = attributes.dividerTopWidthTablet;
 		}
 
-		if ( isMobile ) {
+		if (isMobile) {
 			value = attributes.dividerTopWidthMobile;
 		}
 
@@ -351,15 +414,15 @@ const Edit = ({
 	let getDividerBottomWidth = () => {
 		let value;
 
-		if ( isDesktop ) {
+		if (isDesktop) {
 			value = attributes.dividerBottomWidth;
 		}
 
-		if ( isTablet ) {
+		if (isTablet) {
 			value = attributes.dividerBottomWidthTablet;
 		}
 
-		if ( isMobile ) {
+		if (isMobile) {
 			value = attributes.dividerBottomWidthMobile;
 		}
 
@@ -371,15 +434,15 @@ const Edit = ({
 	let getDividerTopHeight = () => {
 		let value;
 
-		if ( isDesktop ) {
+		if (isDesktop) {
 			value = attributes.dividerTopHeight;
 		}
 
-		if ( isTablet ) {
+		if (isTablet) {
 			value = attributes.dividerTopHeightTablet;
 		}
 
-		if ( isMobile ) {
+		if (isMobile) {
 			value = attributes.dividerTopHeightMobile;
 		}
 
@@ -391,15 +454,15 @@ const Edit = ({
 	let getDividerBottomHeight = () => {
 		let value;
 
-		if ( isDesktop ) {
+		if (isDesktop) {
 			value = attributes.dividerBottomHeight;
 		}
 
-		if ( isTablet ) {
+		if (isTablet) {
 			value = attributes.dividerBottomHeightTablet;
 		}
 
-		if ( isMobile ) {
+		if (isMobile) {
 			value = attributes.dividerBottomHeightMobile;
 		}
 
@@ -408,74 +471,58 @@ const Edit = ({
 
 	getDividerBottomHeight = getDividerBottomHeight();
 
-	const getColumnsTemplate = columns => {
-		return times( columns, i => [ 'themeisle-blocks/advanced-column', { columnWidth: layouts[columns][attributes.layout][i] } ]);
+	const getColumnsTemplate = (columns) => {
+		return times(columns, (i) => [
+			'themeisle-blocks/advanced-column',
+			{ columnWidth: layouts[columns][attributes.layout][i] },
+		]);
 	};
 
-	if ( ! attributes.columns ) {
-		return (
-			<Onboarding
-				clientId={ clientId }
-				setupColumns={ setupColumns }
-			/>
-		);
+	if (!attributes.columns) {
+		return <Onboarding clientId={clientId} setupColumns={setupColumns} />;
 	}
 
 	return (
 		<Fragment>
-			<BlockNavigatorControl clientId={ clientId } />
+			<BlockNavigatorControl clientId={clientId} />
 
-			<Controls
-				attributes={ attributes }
-				setAttributes={ setAttributes }
-			/>
+			<Controls attributes={attributes} setAttributes={setAttributes} />
 
 			<Inspector
-				attributes={ attributes }
-				setAttributes={ setAttributes }
-				updateColumnsWidth={ updateColumnsWidth }
-				dividerViewType={ dividerViewType }
-				setDividerViewType={ setDividerViewType }
+				attributes={attributes}
+				setAttributes={setAttributes}
+				updateColumnsWidth={updateColumnsWidth}
+				dividerViewType={dividerViewType}
+				setDividerViewType={setDividerViewType}
 			/>
 
-			<Tag
-				className={ classes }
-				id={ attributes.id }
-				style={ style }
-			>
-				<div
-					className="wp-block-themeisle-blocks-advanced-columns-overlay"
-					style={ overlayStyle }
-				>
-				</div>
+			<Tag className={classes} id={attributes.id} style={style}>
+				<div className="wp-block-themeisle-blocks-advanced-columns-overlay" style={overlayStyle}></div>
 
 				<Separators
 					type="top"
-					style={ attributes.dividerTopType }
-					fill={ attributes.dividerTopColor }
-					invert={ attributes.dividerTopInvert }
-					width={ getDividerTopWidth }
-					height={ getDividerTopHeight }
+					style={attributes.dividerTopType}
+					fill={attributes.dividerTopColor}
+					invert={attributes.dividerTopInvert}
+					width={getDividerTopWidth}
+					height={getDividerTopHeight}
 				/>
 
-				<div
-					className="innerblocks-wrap"
-					style={ innerStyle }
-				>
+				<div className="innerblocks-wrap" style={innerStyle}>
 					<InnerBlocks
-						allowedBlocks={ [ 'themeisle-blocks/advanced-column' ] }
-						template={ getColumnsTemplate( attributes.columns ) }
+						allowedBlocks={['themeisle-blocks/advanced-column']}
+						template={getColumnsTemplate(attributes.columns)}
 						templateLock="all"
 					/>
 				</div>
 
 				<Separators
 					type="bottom"
-					style={ attributes.dividerBottomType }
-					fill={ attributes.dividerBottomColor }
-					invert={ attributes.dividerBottomInvert }
-					width={ getDividerBottomWidth }
-					height={ getDividerBottomHeight }
+					style={attributes.dividerBottomType}
+					fill={attributes.dividerBottomColor}
+					invert={attributes.dividerBottomInvert}
+					width={getDividerBottomWidth}
+					height={getDividerBottomHeight}
 				/>
 			</Tag>
 		</Fragment>

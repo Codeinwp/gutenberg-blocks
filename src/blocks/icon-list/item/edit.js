@@ -16,11 +16,7 @@ const { createBlock } = wp.blocks;
 
 const { useSelect } = wp.data;
 
-const {
-	Fragment,
-	useEffect,
-	useState
-} = wp.element;
+const { Fragment, useEffect, useState } = wp.element;
 
 /**
  * Internal dependencies
@@ -32,57 +28,47 @@ import themeIsleIcons from './../../../helpers/themeisle-icons.js';
 
 const IDs = [];
 
-const Edit = ({
-	attributes,
-	setAttributes,
-	className,
-	name,
-	clientId,
-	onReplace,
-	onRemove,
-	mergeBlocks
-}) => {
-	const [ hasCustomIcon, setHasCustomIcon ] = useState( false );
+const Edit = ({ attributes, setAttributes, className, name, clientId, onReplace, onRemove, mergeBlocks }) => {
+	const [hasCustomIcon, setHasCustomIcon] = useState(false);
 
-	const {
-		hasParent,
-		parentClass,
-		parentAttributes
-	} = useSelect( select => {
-		const {
-			getBlock,
-			getBlockRootClientId
-		} = select( 'core/block-editor' );
+	const { hasParent, parentClass, parentAttributes } = useSelect((select) => {
+		const { getBlock, getBlockRootClientId } = select('core/block-editor');
 
-		const parentClientId = getBlockRootClientId( clientId );
-		const parentBlock = getBlock( parentClientId );
+		const parentClientId = getBlockRootClientId(clientId);
+		const parentBlock = getBlock(parentClientId);
 
 		return {
 			hasParent: parentBlock ? true : false,
 			parentClass: parentBlock.attributes.className || '',
-			parentAttributes: parentBlock ? parentBlock.attributes : {}
+			parentAttributes: parentBlock ? parentBlock.attributes : {},
 		};
 	}, []);
 
-	useEffect( () => {
+	useEffect(() => {
 		initBlock();
 	}, []);
 
 	const initBlock = () => {
 		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
 
-		if ( attributes.id === undefined ) {
+		if (attributes.id === undefined) {
 			let attrs;
-			const instanceId = `wp-block-themeisle-blocks-icon-list-item-${ clientId.substr( 0, 8 ) }`;
+			const instanceId = `wp-block-themeisle-blocks-icon-list-item-${clientId.substr(0, 8)}`;
 
-			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
+			const globalDefaults = window.themeisleGutenberg.globalDefaults
+				? window.themeisleGutenberg.globalDefaults
+				: undefined;
 
-			if ( undefined !== globalDefaults ) {
-				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
-					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+			if (undefined !== globalDefaults) {
+				if (!isEqual(defaults[name], window.themeisleGutenberg.globalDefaults[name])) {
+					attrs = { ...window.themeisleGutenberg.globalDefaults[name] };
 
-					Object.keys( attrs ).map( i => {
-						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
+					Object.keys(attrs).map((i) => {
+						if (
+							attributes[i] !== attrs[i] &&
+							undefined !== defaultAttributes[i].default &&
+							attributes[i] !== defaultAttributes[i].default
+						) {
 							return delete attrs[i];
 						}
 					});
@@ -91,21 +77,21 @@ const Edit = ({
 
 			setAttributes({
 				...attrs,
-				id: instanceId
+				id: instanceId,
 			});
 
-			IDs.push( instanceId );
-			blockIDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-icon-list-item-${ clientId.substr( 0, 8 ) }`;
+			IDs.push(instanceId);
+			blockIDs.push(instanceId);
+		} else if (IDs.includes(attributes.id)) {
+			const instanceId = `wp-block-themeisle-blocks-icon-list-item-${clientId.substr(0, 8)}`;
 			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
+			IDs.push(instanceId);
 		} else {
-			IDs.push( attributes.id );
-			blockIDs.push( attributes.id );
+			IDs.push(attributes.id);
+			blockIDs.push(attributes.id);
 		}
 
-		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
+		window.themeisleGutenberg.blockIDs = [...blockIDs];
 	};
 
 	let iconClassName;
@@ -113,106 +99,99 @@ const Edit = ({
 	let iconStyle;
 	let itemStyle;
 
-	if ( hasParent ) {
-		if ( ! hasCustomIcon && ! attributes.library ) {
-			iconClassName =  `${ parentAttributes.defaultIconPrefix } fa-${ parentAttributes.defaultIcon }`;
+	if (hasParent) {
+		if (!hasCustomIcon && !attributes.library) {
+			iconClassName = `${parentAttributes.defaultIconPrefix} fa-${parentAttributes.defaultIcon}`;
 
 			setAttributes({
 				library: parentAttributes.defaultLibrary,
 				icon: parentAttributes.defaultIcon,
-				iconPrefix: parentAttributes.defaultIconPrefix
+				iconPrefix: parentAttributes.defaultIconPrefix,
 			});
 		} else {
-			iconClassName = `${ attributes.iconPrefix } fa-${ attributes.icon }`;
+			iconClassName = `${attributes.iconPrefix} fa-${attributes.icon}`;
 		}
 
 		contentStyle = {
 			color: attributes.contentColor || parentAttributes.defaultContentColor,
-			fontSize: parentAttributes.defaultSize + 'px'
+			fontSize: parentAttributes.defaultSize + 'px',
 		};
 
 		iconStyle = {
 			color: attributes.iconColor || parentAttributes.defaultIconColor,
 			fill: attributes.iconColor || parentAttributes.defaultIconColor,
-			fontSize: parentAttributes.defaultSize + 'px'
+			fontSize: parentAttributes.defaultSize + 'px',
 		};
 
-		if ( parentClass.includes( 'is-style-horizontal' ) ) {
+		if (parentClass.includes('is-style-horizontal')) {
 			itemStyle = {
-				marginRight: parentAttributes.gap + 'px'
+				marginRight: parentAttributes.gap + 'px',
 			};
 		} else {
 			itemStyle = {
-				marginBottom: parentAttributes.gap + 'px'
+				marginBottom: parentAttributes.gap + 'px',
 			};
 		}
-	};
+	}
 
-	const changeContent = value => {
+	const changeContent = (value) => {
 		setAttributes({ content: value });
 	};
 
-	const Icon = themeIsleIcons.icons[ attributes.icon ];
+	const Icon = themeIsleIcons.icons[attributes.icon];
 
 	return (
 		<Fragment>
-			<Inspector
-				attributes={ attributes }
-				setAttributes={ setAttributes }
-				setHasCustomIcon={ setHasCustomIcon }
-			/>
+			<Inspector attributes={attributes} setAttributes={setAttributes} setHasCustomIcon={setHasCustomIcon} />
 
-			<div
-				className={ className }
-				style={ itemStyle }
-			>
-				{ 'themeisle-icons' === attributes.library && attributes.icon ? (
+			<div className={className} style={itemStyle}>
+				{'themeisle-icons' === attributes.library && attributes.icon ? (
 					<Icon
-						className={ classnames(
-							{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
+						className={classnames(
+							{ 'wp-block-themeisle-blocks-icon-list-item-icon': !attributes.iconColor },
 							{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
-						) }
-						style={ {
+						)}
+						style={{
 							...iconStyle,
-							width: parentAttributes.defaultSize + 'px'
-						} }
+							width: parentAttributes.defaultSize + 'px',
+						}}
 					/>
 				) : (
 					<i
-						className={ classnames(
+						className={classnames(
 							iconClassName,
-							{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },
+							{ 'wp-block-themeisle-blocks-icon-list-item-icon': !attributes.iconColor },
 							{ 'wp-block-themeisle-blocks-icon-list-item-icon-custom': attributes.iconColor }
-						) }
-						style={ iconStyle }
+						)}
+						style={iconStyle}
 					></i>
-				) }
+				)}
 
 				<RichText
 					identifier="content"
 					tagName="p"
-					placeholder={ __( 'Write your content…' ) }
-					className={ classnames(
-						{ 'wp-block-themeisle-blocks-icon-list-item-content': ! attributes.contentColor },
+					placeholder={__('Write your content…')}
+					className={classnames(
+						{ 'wp-block-themeisle-blocks-icon-list-item-content': !attributes.contentColor },
 						{ 'wp-block-themeisle-blocks-icon-list-item-content-custom': attributes.contentColor }
-					) }
-					style={ contentStyle }
-					value={ attributes.content }
-					onChange={ changeContent }
-					onSplit={ ( value ) => {
-						if ( ! value ) {
-							return createBlock( name );
+					)}
+					style={contentStyle}
+					value={attributes.content}
+					onChange={changeContent}
+					onSplit={(value) => {
+						if (!value) {
+							return createBlock(name);
 						}
 
-						return createBlock( name, {
+						return createBlock(name, {
 							...attributes,
-							content: value
+							content: value,
 						});
-					} }
-					onMerge={ mergeBlocks }
-					onReplace={ onReplace }
-					onRemove={ onRemove }
-					keepPlaceholderOnFocus={ true }
+					}}
+					onMerge={mergeBlocks}
+					onReplace={onReplace}
+					onRemove={onRemove}
+					keepPlaceholderOnFocus={true}
 				/>
 			</div>
 		</Fragment>

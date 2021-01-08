@@ -18,19 +18,15 @@ import transforms from './transforms.js';
 import edit from './edit.js';
 import save from './save.js';
 
-registerBlockType( 'themeisle-blocks/advanced-heading', {
-	title: __( 'Advanced Heading' ),
-	description: __( 'Advanced Heading gives a spin to editor\'s Heading block with much needed customization options.' ),
+registerBlockType('themeisle-blocks/advanced-heading', {
+	title: __('Advanced Heading'),
+	description: __("Advanced Heading gives a spin to editor's Heading block with much needed customization options."),
 	icon,
 	category: 'themeisle-blocks',
-	keywords: [
-		__( 'heading' ),
-		__( 'title' ),
-		__( 'advanced heading' )
-	],
+	keywords: [__('heading'), __('title'), __('advanced heading')],
 	attributes,
 	deprecated,
 	transforms,
 	edit,
-	save
+	save,
 });

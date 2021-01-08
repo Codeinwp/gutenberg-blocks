@@ -11,12 +11,7 @@ const { __ } = wp.i18n;
 
 const { ResizableBox } = wp.components;
 
-const {
-	Fragment,
-	useEffect,
-	useRef,
-	useState
-} = wp.element;
+const { Fragment, useEffect, useRef, useState } = wp.element;
 
 /**
  * Internal dependencies
@@ -30,193 +25,186 @@ import styles from './components/styles.js';
 
 const IDs = [];
 
-const Edit = ({
-	attributes,
-	setAttributes,
-	className,
-	clientId,
-	isSelected,
-	toggleSelection
-}) => {
-	useEffect( () => {
+const Edit = ({ attributes, setAttributes, className, clientId, isSelected, toggleSelection }) => {
+	useEffect(() => {
 		initBlock();
 
 		window.isMapLoaded = window.isMapLoaded || false;
-		window[`removeMarker_${ clientId.substr( 0, 8 ) }`] = removeMarker;
+		window[`removeMarker_${clientId.substr(0, 8)}`] = removeMarker;
 
-		linkRef.current = document.createElement( 'script' );
+		linkRef.current = document.createElement('script');
 		linkRef.current.type = 'text/javascript';
 		linkRef.current.async = true;
 		linkRef.current.defer = true;
 		linkRef.current.id = 'themeisle-google-map-api-loading';
 	}, []);
 
-	useEffect( () => {
-		if ( false !== isAPISaved && undefined !== window.google ) {
+	useEffect(() => {
+		if (false !== isAPISaved && undefined !== window.google) {
 			mapRef.current.setOptions({
 				mapTypeControl: isSelected ? true : attributes.mapTypeControl,
 				zoomControl: isSelected ? true : attributes.zoomControl,
 				fullscreenControl: isSelected ? true : attributes.fullscreenControl,
-				streetViewControl: isSelected ? true : attributes.streetViewControl
+				streetViewControl: isSelected ? true : attributes.streetViewControl,
 			});
 		}
-	}, [ isSelected ]);
+	}, [isSelected]);
 
-	useEffect( () => {
-		markersAttrRef.current = [ ...attributes.markers ];
-	}, [ attributes.markers ]);
+	useEffect(() => {
+		markersAttrRef.current = [...attributes.markers];
+	}, [attributes.markers]);
 
 	const markersRef = useRef([]);
-	const settingsRef = useRef( null );
-	const linkRef = useRef( null );
-	const mapRef = useRef( null );
-	const lastInfoWindowRef = useRef( null );
-	const markersAttrRef = useRef([ ...attributes.markers ]);
+	const settingsRef = useRef(null);
+	const linkRef = useRef(null);
+	const mapRef = useRef(null);
+	const lastInfoWindowRef = useRef(null);
+	const markersAttrRef = useRef([...attributes.markers]);
 
-	const [ api, setAPI ] = useState( '' );
-	const [ isAPILoaded, setAPILoaded ] = useState( false );
-	const [ isAPISaved, setAPISaved ] = useState( false );
-	const [ isMapLoaded, setMapLoaded ] = useState( false );
-	const [ isSaving, setSaving ] = useState( false );
-	const [ isPlaceAPIAvailable, setPlaceAPIAvailable ] = useState( true );
-	const [ displayMap, setDisplayMap ] = useState( false );
-	const [ isMarkerOpen, setMarkerOpen ] = useState( false );
-	const [ isSelectingMarker, setSelectingMarker ] = useState( false );
-	const [ isModalOpen, setModalOpen ] = useState( false );
-	const [ isAdvanced, setAdvanced ] = useState( false );
-	const [ selectedMarker, setSelectedMarker ] = useState({});
+	const [api, setAPI] = useState('');
+	const [isAPILoaded, setAPILoaded] = useState(false);
+	const [isAPISaved, setAPISaved] = useState(false);
+	const [isMapLoaded, setMapLoaded] = useState(false);
+	const [isSaving, setSaving] = useState(false);
+	const [isPlaceAPIAvailable, setPlaceAPIAvailable] = useState(true);
+	const [displayMap, setDisplayMap] = useState(false);
+	const [isMarkerOpen, setMarkerOpen] = useState(false);
+	const [isSelectingMarker, setSelectingMarker] = useState(false);
+	const [isModalOpen, setModalOpen] = useState(false);
+	const [isAdvanced, setAdvanced] = useState(false);
+	const [selectedMarker, setSelectedMarker] = useState({});
 
-	const initBlock = async() => {
-		if ( attributes.id === undefined ) {
-			const instanceId = `wp-block-themeisle-blocks-google-map-${ clientId.substr( 0, 8 ) }`;
+	const initBlock = async () => {
+		if (attributes.id === undefined) {
+			const instanceId = `wp-block-themeisle-blocks-google-map-${clientId.substr(0, 8)}`;
 			await setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-google-map-${ clientId.substr( 0, 8 ) }`;
+			IDs.push(instanceId);
+		} else if (IDs.includes(attributes.id)) {
+			const instanceId = `wp-block-themeisle-blocks-google-map-${clientId.substr(0, 8)}`;
 			await setAttributes({ id: instanceId });
-			IDs.push( instanceId );
+			IDs.push(instanceId);
 		} else {
-			IDs.push( attributes.id );
+			IDs.push(attributes.id);
 		}
 
-		await wp.api.loadPromise.then( () => {
+		await wp.api.loadPromise.then(() => {
 			settingsRef.current = new wp.api.models.Settings();
 		});
 
-		if ( false === Boolean( window.themeisleGutenberg.mapsAPI ) ) {
-			if ( ! isAPILoaded ) {
-				settingsRef.current.fetch().then( response => {
-					setAPI( response.themeisle_google_map_block_api_key );
-					setAPILoaded( true );
+		if (false === Boolean(window.themeisleGutenberg.mapsAPI)) {
+			if (!isAPILoaded) {
+				settingsRef.current.fetch().then((response) => {
+					setAPI(response.themeisle_google_map_block_api_key);
+					setAPILoaded(true);
 
-					if ( '' !== response.themeisle_google_map_block_api_key ) {
-						setAPISaved( true );
-						enqueueScript( response.themeisle_google_map_block_api_key );
+					if ('' !== response.themeisle_google_map_block_api_key) {
+						setAPISaved(true);
+						enqueueScript(response.themeisle_google_map_block_api_key);
 					}
 				});
 			}
 		} else {
-			if ( ! isAPILoaded ) {
-				setAPI( window.themeisleGutenberg.mapsAPI );
-				setAPILoaded( true );
-				setAPISaved( true );
-				enqueueScript( window.themeisleGutenberg.mapsAPI );
+			if (!isAPILoaded) {
+				setAPI(window.themeisleGutenberg.mapsAPI);
+				setAPILoaded(true);
+				setAPISaved(true);
+				enqueueScript(window.themeisleGutenberg.mapsAPI);
 			}
 		}
 	};
 
-	const enqueueScript = api => {
-		if ( ! window.isMapLoaded ) {
+	const enqueueScript = (api) => {
+		if (!window.isMapLoaded) {
 			window.isMapLoaded = true;
 			linkRef.current.onload = () => {
-				const script = document.getElementById( 'themeisle-google-map-api-loading' );
+				const script = document.getElementById('themeisle-google-map-api-loading');
 				script.id = 'themeisle-google-map-api';
-				setDisplayMap( true );
+				setDisplayMap(true);
 			};
-			linkRef.current.src = `https://maps.googleapis.com/maps/api/js?key=${ api }&libraries=places&cache=${ Math.random() }`;
-			document.head.appendChild( linkRef.current );
+			linkRef.current.src = `https://maps.googleapis.com/maps/api/js?key=${api}&libraries=places&cache=${Math.random()}`;
+			document.head.appendChild(linkRef.current);
 		}
 
-		const loaded = document.getElementById( 'themeisle-google-map-api' );
+		const loaded = document.getElementById('themeisle-google-map-api');
 
-		if ( loaded ) {
-			setDisplayMap( true );
+		if (loaded) {
+			setDisplayMap(true);
 		}
 	};
 
 	const initMap = () => {
-		mapRef.current = new google.maps.Map( document.getElementById( attributes.id ), {
+		mapRef.current = new google.maps.Map(document.getElementById(attributes.id), {
 			center: {
-				lat: Number( attributes.latitude ) || 41.4036299,
-				lng: Number( attributes.longitude ) || 2.1743558000000576
+				lat: Number(attributes.latitude) || 41.4036299,
+				lng: Number(attributes.longitude) || 2.1743558000000576,
 			},
 			gestureHandling: 'cooperative',
 			zoom: attributes.zoom,
 			mapTypeId: attributes.type,
-			styles: styles[ attributes.style ]
+			styles: styles[attributes.style],
 		});
 
-		if ( attributes.location && ( undefined === attributes.latitude && undefined === attributes.longitude ) ) {
+		if (attributes.location && undefined === attributes.latitude && undefined === attributes.longitude) {
 			const request = {
 				query: attributes.location,
-				fields: [ 'name', 'geometry' ]
+				fields: ['name', 'geometry'],
 			};
 
-			const service = new google.maps.places.PlacesService( mapRef.current );
+			const service = new google.maps.places.PlacesService(mapRef.current);
 
-			service.findPlaceFromQuery( request, ( results, status ) => {
-				if ( status === google.maps.places.PlacesServiceStatus.OK ) {
-					if ( 0 < results.length ) {
-						mapRef.current.setCenter( results[0].geometry.location );
+			service.findPlaceFromQuery(request, (results, status) => {
+				if (status === google.maps.places.PlacesServiceStatus.OK) {
+					if (0 < results.length) {
+						mapRef.current.setCenter(results[0].geometry.location);
 					}
 				}
 			});
 		}
 
-		google.maps.event.addListenerOnce( mapRef.current, 'idle', () => {
-			setMapLoaded( true );
+		google.maps.event.addListenerOnce(mapRef.current, 'idle', () => {
+			setMapLoaded(true);
 		});
 
-		mapRef.current.addListener( 'zoom_changed', () => {
+		mapRef.current.addListener('zoom_changed', () => {
 			const zoom = mapRef.current.getZoom();
 			setAttributes({ zoom });
 		});
 
-		mapRef.current.addListener( 'maptypeid_changed', () => {
+		mapRef.current.addListener('maptypeid_changed', () => {
 			const type = mapRef.current.getMapTypeId();
 			setAttributes({ type });
 		});
 
-		mapRef.current.addListener( 'bounds_changed', () => {
+		mapRef.current.addListener('bounds_changed', () => {
 			const location = mapRef.current.getCenter();
 			const latitude = location.lat();
 			const longitude = location.lng();
 			setAttributes({
 				latitude: latitude.toString(),
-				longitude: longitude.toString()
+				longitude: longitude.toString(),
 			});
 		});
 
-		if ( 0 < attributes.markers.length ) {
-			cycleMarkers( attributes.markers );
+		if (0 < attributes.markers.length) {
+			cycleMarkers(attributes.markers);
 		}
 
 		const request = {
 			query: attributes.location,
-			fields: [ 'name', 'geometry' ]
+			fields: ['name', 'geometry'],
 		};
 
-		const service = new google.maps.places.PlacesService( mapRef.current );
+		const service = new google.maps.places.PlacesService(mapRef.current);
 
-		service.findPlaceFromQuery( request, ( results, status ) => {
-			if ( 'REQUEST_DENIED' === status ) {
-				setPlaceAPIAvailable( false );
+		service.findPlaceFromQuery(request, (results, status) => {
+			if ('REQUEST_DENIED' === status) {
+				setPlaceAPIAvailable(false);
 			}
 		});
 	};
 
-	const addMarker = ( location, title, icon, description, latitude, longitude ) => {
-		const latLng = new google.maps.LatLng( latitude, longitude );
+	const addMarker = (location, title, icon, description, latitude, longitude) => {
+		const latLng = new google.maps.LatLng(latitude, longitude);
 
 		const id = uuidv4();
 
@@ -225,20 +213,20 @@ const Edit = ({
 			map: mapRef.current,
 			title,
 			draggable: true,
-			icon
+			icon,
 		});
 
-		google.maps.event.addListener( mark, 'dragend', event => {
+		google.maps.event.addListener(mark, 'dragend', (event) => {
 			const lat = event.latLng.lat();
 			const lng = event.latLng.lng();
 
-			changeMarkerProp( id, 'latitude', lat );
-			changeMarkerProp( id, 'longitude', lng );
+			changeMarkerProp(id, 'latitude', lat);
+			changeMarkerProp(id, 'longitude', lng);
 		});
 
-		markersRef.current.push( mark );
+		markersRef.current.push(mark);
 
-		const markers = [ ...attributes.markers ];
+		const markers = [...attributes.markers];
 
 		const marker = {
 			id,
@@ -247,93 +235,98 @@ const Edit = ({
 			icon,
 			description,
 			latitude,
-			longitude
+			longitude,
 		};
 
-		markers.push( marker );
+		markers.push(marker);
 
 		setAttributes({ markers });
 
-		google.maps.event.addListener( mark, 'click', () => {
-			if ( lastInfoWindowRef.current ) {
+		google.maps.event.addListener(mark, 'click', () => {
+			if (lastInfoWindowRef.current) {
 				lastInfoWindowRef.current.close();
 			}
 		});
 
-		addInfoWindow( mark, marker.id, title, description );
-		setModalOpen( false );
-		setSelectingMarker( false );
+		addInfoWindow(mark, marker.id, title, description);
+		setModalOpen(false);
+		setSelectingMarker(false);
 	};
 
-	const addInfoWindow = ( marker, id, title, description ) => {
-		const contentString = `<div class="wp-block-themeisle-blocks-map-overview"><h6 class="wp-block-themeisle-blocks-map-overview-title">${ title }</h6><div class="wp-block-themeisle-blocks-map-overview-content">${ description ? `<p>${ description }</p>` : '' }<a class="wp-block-themeisle-blocks-map-overview-delete" onclick="removeMarker_${ clientId.substr( 0, 8 ) }( '${ id }' )">${ __( 'Delete Marker' ) }</a></div></div>`;
+	const addInfoWindow = (marker, id, title, description) => {
+		const contentString = `<div class="wp-block-themeisle-blocks-map-overview"><h6 class="wp-block-themeisle-blocks-map-overview-title">${title}</h6><div class="wp-block-themeisle-blocks-map-overview-content">${
+			description ? `<p>${description}</p>` : ''
+		}<a class="wp-block-themeisle-blocks-map-overview-delete" onclick="removeMarker_${clientId.substr(
+			0,
+			8
+		)}( '${id}' )">${__('Delete Marker')}</a></div></div>`;
 
 		const infowindow = new google.maps.InfoWindow({
-			content: contentString
+			content: contentString,
 		});
 
-		marker.addListener( 'click', () => {
+		marker.addListener('click', () => {
 			lastInfoWindowRef.current = infowindow;
-			infowindow.open( mapRef.current, marker );
+			infowindow.open(mapRef.current, marker);
 		});
 
-		google.maps.event.addListener( infowindow, 'domready', () => {
-			setMarkerOpen( id );
+		google.maps.event.addListener(infowindow, 'domready', () => {
+			setMarkerOpen(id);
 		});
 
-		google.maps.event.addListener( infowindow, 'closeclick', () => {
-			setMarkerOpen( false );
+		google.maps.event.addListener(infowindow, 'closeclick', () => {
+			setMarkerOpen(false);
 		});
 	};
 
-	const cycleMarkers = markers => {
-		markers.forEach( marker => {
+	const cycleMarkers = (markers) => {
+		markers.forEach((marker) => {
 			const latitude = marker.latitude;
 			const longitude = marker.longitude;
-			const position = new google.maps.LatLng( latitude, longitude );
+			const position = new google.maps.LatLng(latitude, longitude);
 
 			let mark = new google.maps.Marker({
 				position,
 				map: mapRef.current,
 				title: marker.title,
 				draggable: true,
-				icon: marker.icon || 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
+				icon: marker.icon || 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
 			});
 
-			google.maps.event.addListener( mark, 'dragend', event => {
+			google.maps.event.addListener(mark, 'dragend', (event) => {
 				const lat = event.latLng.lat();
 				const lng = event.latLng.lng();
 
-				changeMarkerProp( marker.id, 'latitude', lat );
-				changeMarkerProp( marker.id, 'longitude', lng );
+				changeMarkerProp(marker.id, 'latitude', lat);
+				changeMarkerProp(marker.id, 'longitude', lng);
 			});
 
-			markersRef.current.push( mark );
+			markersRef.current.push(mark);
 
-			google.maps.event.addListener( mark, 'click', () => {
-				if ( lastInfoWindowRef.current ) {
+			google.maps.event.addListener(mark, 'click', () => {
+				if (lastInfoWindowRef.current) {
 					lastInfoWindowRef.current.close();
 				}
 			});
 
-			addInfoWindow( mark, marker.id, marker.title, marker.description );
+			addInfoWindow(mark, marker.id, marker.title, marker.description);
 		});
 	};
 
 	const selectMarker = () => {
-		setSelectingMarker( ! isSelectingMarker );
+		setSelectingMarker(!isSelectingMarker);
 
-		if ( ! isSelectingMarker ) {
-			mapRef.current.addListener( 'click', e => {
-				google.maps.event.clearListeners( mapRef.current, 'click' );
+		if (!isSelectingMarker) {
+			mapRef.current.addListener('click', (e) => {
+				google.maps.event.clearListeners(mapRef.current, 'click');
 
 				const id = uuidv4();
-				const title = __( 'Custom Marker' );
+				const title = __('Custom Marker');
 				const latitude = e.latLng.lat();
 				const longitude = e.latLng.lng();
 
-				setModalOpen( true );
-				setAdvanced( false );
+				setModalOpen(true);
+				setAdvanced(false);
 				setSelectedMarker({
 					id,
 					location: '',
@@ -341,23 +334,23 @@ const Edit = ({
 					icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
 					description: '',
 					latitude,
-					longitude
+					longitude,
 				});
 			});
 		} else {
-			google.maps.event.clearListeners( mapRef.current, 'click' );
+			google.maps.event.clearListeners(mapRef.current, 'click');
 		}
 	};
 
 	const addMarkerManual = () => {
 		const id = uuidv4();
-		const title = __( 'Custom Marker' );
+		const title = __('Custom Marker');
 		const location = mapRef.current.getCenter();
 		const latitude = location.lat();
 		const longitude = location.lng();
 
-		setModalOpen( true );
-		setAdvanced( true );
+		setModalOpen(true);
+		setAdvanced(true);
 		setSelectedMarker({
 			id,
 			location: '',
@@ -365,84 +358,84 @@ const Edit = ({
 			icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
 			description: '',
 			latitude,
-			longitude
+			longitude,
 		});
 	};
 
-	const changeMarkerProp = ( id, prop, value ) => {
-		const markers = [ ...markersAttrRef.current ];
-		markers.map( marker => {
-			if ( marker.id === id ) {
-				return marker[ prop ] = value.toString();
+	const changeMarkerProp = (id, prop, value) => {
+		const markers = [...markersAttrRef.current];
+		markers.map((marker) => {
+			if (marker.id === id) {
+				return (marker[prop] = value.toString());
 			}
 		});
 
 		removeMarkers();
-		cycleMarkers( markers );
+		cycleMarkers(markers);
 		setAttributes({ markers });
 	};
 
-	const removeMarker = id => {
-		let markers = [ ...markersAttrRef.current ];
-		markers = markers.filter( marker => marker.id !== id );
+	const removeMarker = (id) => {
+		let markers = [...markersAttrRef.current];
+		markers = markers.filter((marker) => marker.id !== id);
 		setAttributes({ markers });
 		removeMarkers();
-		setMarkerOpen( false );
+		setMarkerOpen(false);
 
-		if ( 0 < markers.length ) {
-			cycleMarkers( markers );
+		if (0 < markers.length) {
+			cycleMarkers(markers);
 		}
 	};
 
 	const removeMarkers = () => {
-		for ( let i = 0; i < markersRef.current.length; i++ ) {
-			markersRef.current[i].setMap( null );
+		for (let i = 0; i < markersRef.current.length; i++) {
+			markersRef.current[i].setMap(null);
 		}
 
 		markersRef.current = [];
 	};
 
 	const saveAPIKey = () => {
-		if ( false === Boolean( window.themeisleGutenberg.mapsAPI ) ) {
-			setSaving( true );
+		if (false === Boolean(window.themeisleGutenberg.mapsAPI)) {
+			setSaving(true);
 
 			const model = new wp.api.models.Settings({
 				// eslint-disable-next-line camelcase
-				themeisle_google_map_block_api_key: api
+				themeisle_google_map_block_api_key: api,
 			});
 
-			model.save().then( response => {
+			model.save().then((response) => {
 				let saved = false;
 
-				if ( '' !== response.themeisle_google_map_block_api_key ) {
+				if ('' !== response.themeisle_google_map_block_api_key) {
 					saved = true;
 				}
 
-				setSaving( false );
-				setAPISaved( saved );
+				setSaving(false);
+				setAPISaved(saved);
 
-				if ( '' !== response.themeisle_google_map_block_api_key ) {
+				if ('' !== response.themeisle_google_map_block_api_key) {
 					window.isMapLoaded = false;
-					enqueueScript( response.themeisle_google_map_block_api_key );
+					enqueueScript(response.themeisle_google_map_block_api_key);
 				}
 			});
 		}
 	};
 
-	const changeStyle = value => {
+	const changeStyle = (value) => {
 		setAttributes({ style: value });
-		mapRef.current.setOptions({ styles: styles[ value ] });
+		mapRef.current.setOptions({ styles: styles[value] });
 	};
 
-	if ( ! isAPILoaded || ! isAPISaved ) {
+	if (!isAPILoaded || !isAPISaved) {
 		return (
 			<Placeholder
-				className={ className }
-				api={ api }
-				isAPILoaded={ isAPILoaded }
-				isAPISaved={ isAPISaved }
-				changeAPI={ setAPI }
-				saveAPIKey={ saveAPIKey }
+				className={className}
+				api={api}
+				isAPILoaded={isAPILoaded}
+				isAPISaved={isAPISaved}
+				changeAPI={setAPI}
+				saveAPIKey={saveAPIKey}
 			/>
 		);
 	}
@@ -450,104 +443,101 @@ const Edit = ({
 	return (
 		<Fragment>
 			<StyleSwitcherBlockControl
-				label={ __( 'Block Styles' ) }
-				value={ attributes.style }
-				options={ [
+				label={__('Block Styles')}
+				value={attributes.style}
+				options={[
 					{
-						label: __( 'Standard' ),
+						label: __('Standard'),
 						value: 'standard',
-						image: window.themeisleGutenberg.assetsPath + '/icons/map-standard.png'
+						image: window.themeisleGutenberg.assetsPath + '/icons/map-standard.png',
 					},
 					{
-						label: __( 'Silver' ),
+						label: __('Silver'),
 						value: 'silver',
-						image: window.themeisleGutenberg.assetsPath + '/icons/map-silver.png'
+						image: window.themeisleGutenberg.assetsPath + '/icons/map-silver.png',
 					},
 					{
-						label: __( 'Retro' ),
+						label: __('Retro'),
 						value: 'retro',
-						image: window.themeisleGutenberg.assetsPath + '/icons/map-retro.png'
+						image: window.themeisleGutenberg.assetsPath + '/icons/map-retro.png',
 					},
 					{
-						label: __( 'Dark' ),
+						label: __('Dark'),
 						value: 'dark',
-						image: window.themeisleGutenberg.assetsPath + '/icons/map-dark.png'
+						image: window.themeisleGutenberg.assetsPath + '/icons/map-dark.png',
 					},
 					{
-						label: __( 'Night' ),
+						label: __('Night'),
 						value: 'night',
-						image: window.themeisleGutenberg.assetsPath + '/icons/map-night.png'
+						image: window.themeisleGutenberg.assetsPath + '/icons/map-night.png',
 					},
 					{
-						label: __( 'Aubergine' ),
+						label: __('Aubergine'),
 						value: 'aubergine',
-						image: window.themeisleGutenberg.assetsPath + '/icons/map-aubergine.png'
-					}
-				] }
-				onChange={ changeStyle }
+						image: window.themeisleGutenberg.assetsPath + '/icons/map-aubergine.png',
+					},
+				]}
+				onChange={changeStyle}
 			/>
 
 			<Inspector
-				attributes={ attributes }
-				setAttributes={ setAttributes }
-				map={ mapRef.current }
-				changeStyle={ changeStyle }
-				isPlaceAPIAvailable={ isPlaceAPIAvailable }
-				isMarkerOpen={ isMarkerOpen }
-				setMarkerOpen={ setMarkerOpen }
-				removeMarker={ removeMarker }
-				changeMarkerProp={ changeMarkerProp }
-				addMarkerManual={ addMarkerManual }
-				api={ api }
-				isSaving={ isSaving }
-				changeAPI={ setAPI }
-				saveAPIKey={ saveAPIKey }
+				attributes={attributes}
+				setAttributes={setAttributes}
+				map={mapRef.current}
+				changeStyle={changeStyle}
+				isPlaceAPIAvailable={isPlaceAPIAvailable}
+				isMarkerOpen={isMarkerOpen}
+				setMarkerOpen={setMarkerOpen}
+				removeMarker={removeMarker}
+				changeMarkerProp={changeMarkerProp}
+				addMarkerManual={addMarkerManual}
+				api={api}
+				isSaving={isSaving}
+				changeAPI={setAPI}
+				saveAPIKey={saveAPIKey}
 			/>
 
-			{ isModalOpen && (
+			{isModalOpen && (
 				<MarkerModal
-					marker={ selectedMarker }
-					isAdvanced={ isAdvanced }
-					isPlaceAPIAvailable={ isPlaceAPIAvailable }
-					close={ () => setModalOpen( false ) }
-					addMarker={ addMarker }
+					marker={selectedMarker}
+					isAdvanced={isAdvanced}
+					isPlaceAPIAvailable={isPlaceAPIAvailable}
+					close={() => setModalOpen(false)}
+					addMarker={addMarker}
 				/>
-			) }
+			)}
 
 			<ResizableBox
-				size={ {
-					height: attributes.height
-				} }
-				enable={ {
+				size={{
+					height: attributes.height,
+				}}
+				enable={{
 					top: false,
 					right: false,
 					bottom: true,
-					left: false
-				} }
-				minHeight={ 100 }
-				maxHeight={ 1400 }
-				onResizeStart={ () => {
-					toggleSelection( false );
-				} }
-				onResizeStop={ ( event, direction, elt, delta ) => {
+					left: false,
+				}}
+				minHeight={100}
+				maxHeight={1400}
+				onResizeStart={() => {
+					toggleSelection(false);
+				}}
+				onResizeStop={(event, direction, elt, delta) => {
 					setAttributes({
-						height: parseInt( attributes.height + delta.height, 10 )
+						height: parseInt(attributes.height + delta.height, 10),
 					});
-					toggleSelection( true );
-				} }
-				className={ classnames(
-					'wp-block-themeisle-blocks-google-map-resizer',
-					{ 'is-focused': isSelected }
-				) }
+					toggleSelection(true);
+				}}
+				className={classnames('wp-block-themeisle-blocks-google-map-resizer', { 'is-focused': isSelected })}
 			>
 				<Map
-					attributes={ attributes }
-					className={ className }
-					initMap={ initMap }
-					displayMap={ displayMap }
-					isMapLoaded={ isMapLoaded }
-					selectMarker={ selectMarker }
-					isSelectingMarker={ isSelectingMarker }
+					attributes={attributes}
+					className={className}
+					initMap={initMap}
+					displayMap={displayMap}
+					isMapLoaded={isMapLoaded}
+					selectMarker={selectMarker}
+					isSelectingMarker={isSelectingMarker}
 				/>
 			</ResizableBox>
 		</Fragment>

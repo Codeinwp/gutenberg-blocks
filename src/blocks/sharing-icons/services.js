@@ -5,29 +5,29 @@ const { __ } = wp.i18n;
 
 const SERVICES = {
 	facebook: {
-		label: __( 'Facebook' ),
-		icon: 'facebook-f'
+		label: __('Facebook'),
+		icon: 'facebook-f',
 	},
 	twitter: {
-		label: __( 'Twitter' ),
-		icon: 'twitter'
+		label: __('Twitter'),
+		icon: 'twitter',
 	},
 	linkedin: {
-		label: __( 'Linkedin' ),
-		icon: 'linkedin-in'
+		label: __('Linkedin'),
+		icon: 'linkedin-in',
 	},
 	pinterest: {
-		label: __( 'Pinterest' ),
-		icon: 'pinterest-p'
+		label: __('Pinterest'),
+		icon: 'pinterest-p',
 	},
 	tumblr: {
-		label: __( 'Tumblr' ),
-		icon: 'tumblr'
+		label: __('Tumblr'),
+		icon: 'tumblr',
 	},
 	reddit: {
-		label: __( 'Reddit' ),
-		icon: 'reddit-alien'
-	}
+		label: __('Reddit'),
+		icon: 'reddit-alien',
+	},
 };
 
 export default SERVICES;

@@ -8,19 +8,13 @@ import classnames from 'classnames';
  */
 const { RichText } = wp.blockEditor;
 
-const Save = ({
-	attributes,
-	className
-}) => {
+const Save = ({ attributes, className }) => {
 	return (
 		<RichText.Content
-			tagName={ attributes.tag }
-			value={ attributes.content }
-			id={ attributes.id }
-			className={ classnames(
-				attributes.id,
-				className
-			) }
+			tagName={attributes.tag}
+			value={attributes.content}
+			id={attributes.id}
+			className={classnames(attributes.id, className)}
 		/>
 	);
 };

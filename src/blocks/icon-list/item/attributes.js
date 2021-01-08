@@ -1,25 +1,25 @@
 const attributes = {
 	id: {
-		type: 'string'
+		type: 'string',
 	},
 	content: {
-		type: 'string'
+		type: 'string',
 	},
 	contentColor: {
-		type: 'string'
+		type: 'string',
 	},
 	iconColor: {
-		type: 'string'
+		type: 'string',
 	},
 	library: {
-		type: 'string'
+		type: 'string',
 	},
 	iconPrefix: {
-		type: 'string'
+		type: 'string',
 	},
 	icon: {
-		type: 'string'
-	}
+		type: 'string',
+	},
 };
 
 export default attributes;

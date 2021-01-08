@@ -3,15 +3,9 @@
  */
 const { InnerBlocks } = wp.blockEditor;
 
-const Edit = ({
-	attributes,
-	className
-}) => {
+const Edit = ({ attributes, className }) => {
 	return (
-		<div
-			className={ className }
-			id={ attributes.id }
-		>
+		<div className={className} id={attributes.id}>
 			<InnerBlocks.Content />
 		</div>
 	);

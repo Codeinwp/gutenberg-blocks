@@ -8,46 +8,36 @@ import { brush } from '@wordpress/icons';
  */
 const { __ } = wp.i18n;
 
-const {
-	registerFormatType,
-	toggleFormat
-} = wp.richText;
+const { registerFormatType, toggleFormat } = wp.richText;
 
-const {
-	RichTextShortcut,
-	RichTextToolbarButton
-} = wp.blockEditor;
+const { RichTextShortcut, RichTextToolbarButton } = wp.blockEditor;
 
 const { Fragment } = wp.element;
 
 const name = 'themeisle-blocks/highlight';
 
-registerFormatType( name, {
+registerFormatType(name, {
 	name,
-	title: __( 'Highlight' ),
+	title: __('Highlight'),
 	tagName: 'span',
 	className: 'highlight',
 
 	edit: ({ isActive, value, onChange }) => {
-		const onToggle = () => onChange( toggleFormat( value, { type: name }) );
+		const onToggle = () => onChange(toggleFormat(value, { type: name }));
 
 		return (
 			<Fragment>
-				<RichTextShortcut
-					type="primary"
-					character="h"
-					onUse={ onToggle }
-				/>
+				<RichTextShortcut type="primary" character="h" onUse={onToggle} />
 
 				<RichTextToolbarButton
-					icon={ brush }
-					title={ __( 'Highlight' ) }
-					onClick={ onToggle }
-					isActive={ isActive }
+					icon={brush}
+					title={__('Highlight')}
+					onClick={onToggle}
+					isActive={isActive}
 					shortcutType="access"
 					shortcutCharacter="h"
 				/>
 			</Fragment>
 		);
-	}
+	},
 });

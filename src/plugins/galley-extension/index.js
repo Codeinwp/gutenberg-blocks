@@ -18,44 +18,37 @@ const { addFilter } = wp.hooks;
  */
 import ImageGrid from './../../components/image-grid/index.js';
 
-const withGalleryExtension = createHigherOrderComponent( BlockEdit => {
-	return ( props ) => {
-		const onSelectImages = images => {
+const withGalleryExtension = createHigherOrderComponent((BlockEdit) => {
+	return (props) => {
+		const onSelectImages = (images) => {
 			props.setAttributes({
-				images: images.map( image => ({
+				images: images.map((image) => ({
 					id: image.id,
 					url: image.url,
 					alt: image.alt,
-					caption: image.caption
-				}) )
+					caption: image.caption,
+				})),
 			});
 		};
 
-		if ( 'core/gallery' === props.name ) {
+		if ('core/gallery' === props.name) {
 			return (
 				<Fragment>
-					<BlockEdit { ...props } />
+					<BlockEdit {...props} />
 
-					{ !! props.attributes.images.length && (
+					{!!props.attributes.images.length && (
 						<InspectorControls>
-							<PanelBody
-								title={ __( 'Images' ) }
-								initialOpen={ false }
-							>
-								<ImageGrid
-									attributes={ props.attributes }
-									onSelectImages={ onSelectImages }
-								/>
+							<PanelBody title={__('Images')} initialOpen={false}>
+								<ImageGrid attributes={props.attributes} onSelectImages={onSelectImages} />
 							</PanelBody>
 						</InspectorControls>
-					) }
+					)}
 				</Fragment>
 			);
 		}
 
-		return <BlockEdit { ...props } />;
+		return <BlockEdit {...props} />;
 	};
-}, 'withGalleryExtension' );
+}, 'withGalleryExtension');
 
-addFilter( 'editor.BlockEdit', 'themeisle-gutenberg/gallery-extension', withGalleryExtension );
-
+addFilter('editor.BlockEdit', 'themeisle-gutenberg/gallery-extension', withGalleryExtension);

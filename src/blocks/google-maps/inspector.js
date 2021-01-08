@@ -11,7 +11,7 @@ const {
 	RangeControl,
 	SelectControl,
 	TextControl,
-	ToggleControl
+	ToggleControl,
 } = wp.components;
 
 const { InspectorControls } = wp.blockEditor;
@@ -35,294 +35,269 @@ const Inspector = ({
 	api,
 	isSaving,
 	changeAPI,
-	saveAPIKey
+	saveAPIKey,
 }) => {
-	const searchRef = useRef( null );
+	const searchRef = useRef(null);
 
 	const initSearch = () => {
-		const elements = document.getElementsByClassName( 'pac-container' );
+		const elements = document.getElementsByClassName('pac-container');
 
-		Object.keys( elements ).forEach( e => elements[e].remove() );
+		Object.keys(elements).forEach((e) => elements[e].remove());
 
-		const searchBox = new google.maps.places.SearchBox( searchRef.current );
+		const searchBox = new google.maps.places.SearchBox(searchRef.current);
 
-		searchBox.addListener( 'places_changed', () => {
+		searchBox.addListener('places_changed', () => {
 			const places = searchBox.getPlaces();
 
-			if ( places && ( 0 < places.length ) ) {
-				places.forEach( place => {
+			if (places && 0 < places.length) {
+				places.forEach((place) => {
 					const latitude = place.geometry.location.lat();
 					const longitude = place.geometry.location.lng();
-					const latLng = new google.maps.LatLng( latitude, longitude );
-					map.setCenter( latLng );
+					const latLng = new google.maps.LatLng(latitude, longitude);
+					map.setCenter(latLng);
 					setAttributes({
 						location: place.formatted_address || place.name,
 						latitude: latitude.toString(),
-						longitude: longitude.toString()
+						longitude: longitude.toString(),
 					});
 				});
 			}
 		});
 	};
 
-	const changeLocation = value => {
+	const changeLocation = (value) => {
 		setAttributes({ location: value.target.value });
 	};
 
-	const changeLatitude = value => {
+	const changeLatitude = (value) => {
 		setAttributes({ latitude: value.toString() });
-		const latitude = Number( value );
+		const latitude = Number(value);
 		const longitude = attributes.longitude;
-		const latLng = new google.maps.LatLng( latitude, longitude );
-		map.setCenter( latLng );
+		const latLng = new google.maps.LatLng(latitude, longitude);
+		map.setCenter(latLng);
 	};
 
-	const changeLongitude = value => {
+	const changeLongitude = (value) => {
 		setAttributes({ longitude: value.toString() });
 		const latitude = attributes.latitude;
-		const longitude = Number( value );
-		const latLng = new google.maps.LatLng( latitude, longitude );
-		map.setCenter( latLng );
+		const longitude = Number(value);
+		const latLng = new google.maps.LatLng(latitude, longitude);
+		map.setCenter(latLng);
 	};
 
-	const changeMapType = value => {
+	const changeMapType = (value) => {
 		setAttributes({ type: value });
-		map.setMapTypeId( google.maps.MapTypeId[ value.toUpperCase() ]);
+		map.setMapTypeId(google.maps.MapTypeId[value.toUpperCase()]);
 	};
 
-	const changeZoom = value => {
+	const changeZoom = (value) => {
 		setAttributes({ zoom: value });
-		map.setZoom( value );
+		map.setZoom(value);
 	};
 
-	const changeHeight = value => {
+	const changeHeight = (value) => {
 		setAttributes({ height: value });
 	};
 
 	const toggleDraggable = () => {
-		setAttributes({ draggable: ! attributes.draggable });
+		setAttributes({ draggable: !attributes.draggable });
 	};
 
 	const toggleMapTypeControl = () => {
-		setAttributes({ mapTypeControl: ! attributes.mapTypeControl });
+		setAttributes({ mapTypeControl: !attributes.mapTypeControl });
 	};
 
 	const toggleZoomControl = () => {
-		setAttributes({ zoomControl: ! attributes.zoomControl });
+		setAttributes({ zoomControl: !attributes.zoomControl });
 	};
 
 	const toggleFullScreenControl = () => {
-		setAttributes({ fullscreenControl: ! attributes.fullscreenControl });
+		setAttributes({ fullscreenControl: !attributes.fullscreenControl });
 	};
 
 	const toggleStreetViewControl = () => {
-		setAttributes({ streetViewControl: ! attributes.streetViewControl });
+		setAttributes({ streetViewControl: !attributes.streetViewControl });
 	};
 
 	return (
 		<InspectorControls>
-			<PanelBody
-				title={ __( 'Styles' ) }
-				initialOpen={ false }
-			>
+			<PanelBody title={__('Styles')} initialOpen={false}>
 				<StyleSwitcherInspectorControl
-					value={ attributes.style }
-					options={ [
+					value={attributes.style}
+					options={[
 						{
-							label: __( 'Standard' ),
+							label: __('Standard'),
 							value: 'standard',
-							image: window.themeisleGutenberg.assetsPath + '/icons/map-standard.png'
+							image: window.themeisleGutenberg.assetsPath + '/icons/map-standard.png',
 						},
 						{
-							label: __( 'Silver' ),
+							label: __('Silver'),
 							value: 'silver',
-							image: window.themeisleGutenberg.assetsPath + '/icons/map-silver.png'
+							image: window.themeisleGutenberg.assetsPath + '/icons/map-silver.png',
 						},
 						{
-							label: __( 'Retro' ),
+							label: __('Retro'),
 							value: 'retro',
-							image: window.themeisleGutenberg.assetsPath + '/icons/map-retro.png'
+							image: window.themeisleGutenberg.assetsPath + '/icons/map-retro.png',
 						},
 						{
-							label: __( 'Dark' ),
+							label: __('Dark'),
 							value: 'dark',
-							image: window.themeisleGutenberg.assetsPath + '/icons/map-dark.png'
+							image: window.themeisleGutenberg.assetsPath + '/icons/map-dark.png',
 						},
 						{
-							label: __( 'Night' ),
+							label: __('Night'),
 							value: 'night',
-							image: window.themeisleGutenberg.assetsPath + '/icons/map-night.png'
+							image: window.themeisleGutenberg.assetsPath + '/icons/map-night.png',
 						},
 						{
-							label: __( 'Aubergine' ),
+							label: __('Aubergine'),
 							value: 'aubergine',
-							image: window.themeisleGutenberg.assetsPath + '/icons/map-aubergine.png'
-						}
-					] }
-					onChange={ changeStyle }
+							image: window.themeisleGutenberg.assetsPath + '/icons/map-aubergine.png',
+						},
+					]}
+					onChange={changeStyle}
 				/>
 			</PanelBody>
 
-			<PanelBody
-				title={ __( 'Location' ) }
-			>
-				<BaseControl
-					label={ __( 'Location' ) }
-					id="wp-block-themeisle-blocks-google-map-search"
-				>
+			<PanelBody title={__('Location')}>
+				<BaseControl label={__('Location')} id="wp-block-themeisle-blocks-google-map-search">
 					<input
 						type="text"
 						id="wp-block-themeisle-blocks-google-map-search"
-						placeholder={ __( 'Enter a location…' ) }
-						value={ attributes.location }
+						placeholder={__('Enter a location…')}
+						value={attributes.location}
 						className="wp-block-themeisle-blocks-google-map-search"
-						ref={ searchRef }
-						onFocus={ initSearch }
-						onChange={ changeLocation }
-						disabled={ ! isPlaceAPIAvailable }
+						ref={searchRef}
+						onFocus={initSearch}
+						onChange={changeLocation}
+						disabled={!isPlaceAPIAvailable}
 					/>
 
-					{ ! isPlaceAPIAvailable && (
+					{!isPlaceAPIAvailable && (
 						<p>
-							{ __( 'To enable locations earch, please ensure Places API is activated in the Google Developers Console.' ) + ' ' }
+							{__(
+								'To enable locations earch, please ensure Places API is activated in the Google Developers Console.'
+							) + ' '}
 							<ExternalLink href="https://developers.google.com/places/web-service/intro">
-								{ __( 'More info.' ) }
+								{__('More info.')}
 							</ExternalLink>
 						</p>
-					) }
+					)}
 				</BaseControl>
 
 				<TextControl
-					label={ __( 'Latitude' ) }
+					label={__('Latitude')}
 					type="text"
-					placeholder={ __( 'Enter latitude…' ) }
-					value={ attributes.latitude }
-					onChange={ changeLatitude }
+					placeholder={__('Enter latitude…')}
+					value={attributes.latitude}
+					onChange={changeLatitude}
 				/>
 
 				<TextControl
-					label={ __( 'Longitude' ) }
+					label={__('Longitude')}
 					type="text"
-					placeholder={ __( 'Enter longitude' ) }
-					value={ attributes.longitude }
-					onChange={ changeLongitude }
+					placeholder={__('Enter longitude')}
+					value={attributes.longitude}
+					onChange={changeLongitude}
 				/>
 			</PanelBody>
 
-			<PanelBody
-				title={ __( 'Positioning & Zooming' ) }
-				initialOpen={ false }
-			>
+			<PanelBody title={__('Positioning & Zooming')} initialOpen={false}>
 				<SelectControl
-					label={ __( 'Map Type' ) }
-					value={ attributes.type }
-					options={ [
-						{ label: __( 'Road Map' ), value: 'roadmap' },
-						{ label: __( 'Satellite View' ), value: 'satellite' },
-						{ label: __( 'Hybrid' ), value: 'hybrid' },
-						{ label: __( 'Terrain' ), value: 'terrain' }
-					] }
-					onChange={ changeMapType }
+					label={__('Map Type')}
+					value={attributes.type}
+					options={[
+						{ label: __('Road Map'), value: 'roadmap' },
+						{ label: __('Satellite View'), value: 'satellite' },
+						{ label: __('Hybrid'), value: 'hybrid' },
+						{ label: __('Terrain'), value: 'terrain' },
+					]}
+					onChange={changeMapType}
 				/>
 
 				<RangeControl
-					label={ __( 'Map Zoom Level' ) }
-					value={ attributes.zoom }
-					onChange={ changeZoom }
-					min={ 0 }
-					max={ 20 }
+					label={__('Map Zoom Level')}
+					value={attributes.zoom}
+					onChange={changeZoom}
+					min={0}
+					max={20}
 				/>
 
 				<RangeControl
-					label={ __( 'Map Height' ) }
-					value={ attributes.height }
-					onChange={ changeHeight }
-					min={ 100 }
-					max={ 1400 }
+					label={__('Map Height')}
+					value={attributes.height}
+					onChange={changeHeight}
+					min={100}
+					max={1400}
 				/>
 			</PanelBody>
 
-			<PanelBody
-				title={ __( 'Controls' ) }
-				initialOpen={ false }
-			>
+			<PanelBody title={__('Controls')} initialOpen={false}>
 				<BaseControl>
-					{ __( 'The following changes will not affect block preview during the editing process. You can click outside the block to see the changes take effect.' ) }
+					{__(
+						'The following changes will not affect block preview during the editing process. You can click outside the block to see the changes take effect.'
+					)}
 				</BaseControl>
 
+				<ToggleControl label={'Draggable Map'} checked={attributes.draggable} onChange={toggleDraggable} />
+
 				<ToggleControl
-					label={ 'Draggable Map' }
-					checked={ attributes.draggable }
-					onChange={ toggleDraggable }
+					label={'Map Type Control'}
+					checked={attributes.mapTypeControl}
+					onChange={toggleMapTypeControl}
+				/>
+
+				<ToggleControl label={'Zoom Control'} checked={attributes.zoomControl} onChange={toggleZoomControl} />
+
+				<ToggleControl
+					label={'Full Screen Control'}
+					checked={attributes.fullscreenControl}
+					onChange={toggleFullScreenControl}
 				/>
 
 				<ToggleControl
-					label={ 'Map Type Control' }
-					checked={ attributes.mapTypeControl }
-					onChange={ toggleMapTypeControl }
-				/>
-
-				<ToggleControl
-					label={ 'Zoom Control' }
-					checked={ attributes.zoomControl }
-					onChange={ toggleZoomControl }
-				/>
-
-				<ToggleControl
-					label={ 'Full Screen Control' }
-					checked={ attributes.fullscreenControl }
-					onChange={ toggleFullScreenControl }
-				/>
-
-				<ToggleControl
-					label={ 'Streen View Control' }
-					checked={ attributes.streetViewControl }
-					onChange={ toggleStreetViewControl }
+					label={'Streen View Control'}
+					checked={attributes.streetViewControl}
+					onChange={toggleStreetViewControl}
 				/>
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Markers' ) }
-				initialOpen={ false }
-				opened={ false !== isMarkerOpen ? true : undefined }
-				onToggle={ () => {
-					if ( false !== isMarkerOpen ) {
-						setMarkerOpen( true );
+				title={__('Markers')}
+				initialOpen={false}
+				opened={false !== isMarkerOpen ? true : undefined}
+				onToggle={() => {
+					if (false !== isMarkerOpen) {
+						setMarkerOpen(true);
 					}
-				} }
+				}}
 			>
 				<MarkerWrapper
-					markers={ attributes.markers }
-					removeMarker={ removeMarker }
-					changeMarkerProp={ changeMarkerProp }
-					addMarker={ addMarkerManual }
-					isPlaceAPIAvailable={ isPlaceAPIAvailable }
-					initialOpen={ isMarkerOpen }
+					markers={attributes.markers}
+					removeMarker={removeMarker}
+					changeMarkerProp={changeMarkerProp}
+					addMarker={addMarkerManual}
+					isPlaceAPIAvailable={isPlaceAPIAvailable}
+					initialOpen={isMarkerOpen}
 				/>
 			</PanelBody>
 
-			<PanelBody
-				title={ __( 'Global Settings' ) }
-				initialOpen={ false }
-			>
+			<PanelBody title={__('Global Settings')} initialOpen={false}>
 				<TextControl
-					label={ __( 'Google Maps API Key' ) }
+					label={__('Google Maps API Key')}
 					type="text"
-					placeholder={ __( 'Google Maps API Key' ) }
-					value={ api }
+					placeholder={__('Google Maps API Key')}
+					value={api}
 					className="components-placeholder__input"
-					onChange={ changeAPI }
-					help={ __( 'Changing the API key effects all Google Map Embed blocks. You will have to refresh the page after changing your API keys.' ) }
+					onChange={changeAPI}
+					help={__(
+						'Changing the API key effects all Google Map Embed blocks. You will have to refresh the page after changing your API keys.'
+					)}
 				/>
 
-				<Button
-					isLarge
-					isSecondary
-					type="submit"
-					onClick={ saveAPIKey }
-					isBusy={ isSaving }
-				>
-					{ __( 'Save API Key' ) }
+				<Button isLarge isSecondary type="submit" onClick={saveAPIKey} isBusy={isSaving}>
+					{__('Save API Key')}
 				</Button>
 			</PanelBody>
 		</InspectorControls>

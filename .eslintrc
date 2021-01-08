@@ -3,7 +3,11 @@
         "browser": true,
         "es6": true
     },
-    "extends": "wordpress",
+    "extends": [
+        "wordpress",
+        "prettier",
+        "prettier/react"
+    ],
     "parser": "babel-eslint",
     "parserOptions": {
         "allowImportExportEverywhere": true,
@@ -14,7 +18,8 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "react-hooks"
     ],
     "rules": {
         "indent": [
@@ -41,6 +46,8 @@
             }
         ],
         "react/jsx-uses-react": "error",
-        "react/jsx-uses-vars": "error"
+        "react/jsx-uses-vars": "error",
+        "react-hooks/rules-of-hooks": "warn",
+        "react-hooks/exhaustive-deps": "warn"
     }
 }

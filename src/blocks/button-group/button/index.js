@@ -13,25 +13,21 @@ import attributes from './attributes.js';
 import edit from './edit.js';
 import save from './save.js';
 
-registerBlockType( 'themeisle-blocks/button', {
-	title: __( 'Button' ),
-	description: __( 'Prompt visitors to take action with a button group.' ),
-	parent: [ 'themeisle-blocks/button-group' ],
+registerBlockType('themeisle-blocks/button', {
+	title: __('Button'),
+	description: __('Prompt visitors to take action with a button group.'),
+	parent: ['themeisle-blocks/button-group'],
 	icon,
 	category: 'themeisle-blocks',
-	keywords: [
-		__( 'button' ),
-		__( 'buttons' ),
-		__( 'button group' )
-	],
+	keywords: [__('button'), __('buttons'), __('button group')],
 	attributes,
 	supports: {
-		reusable: false
+		reusable: false,
 	},
 	styles: [
-		{ name: 'fill', label: __( 'Fill' ), isDefault: true },
-		{ name: 'outline', label: __( 'Outline' ) }
+		{ name: 'fill', label: __('Fill'), isDefault: true },
+		{ name: 'outline', label: __('Outline') },
 	],
 	edit,
-	save
+	save,
 });

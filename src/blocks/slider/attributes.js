@@ -1,6 +1,6 @@
 const attributes = {
 	id: {
-		type: 'string'
+		type: 'string',
 	},
 	images: {
 		type: 'array',
@@ -12,61 +12,61 @@ const attributes = {
 				type: 'number',
 				source: 'attribute',
 				selector: 'img',
-				attribute: 'data-id'
+				attribute: 'data-id',
 			},
 			url: {
 				type: 'string',
 				source: 'attribute',
 				selector: 'img',
-				attribute: 'src'
+				attribute: 'src',
 			},
 			alt: {
 				type: 'string',
 				source: 'attribute',
 				selector: 'img',
 				attribute: 'alt',
-				default: ''
+				default: '',
 			},
 			caption: {
 				type: 'string',
 				source: 'html',
 				selector: 'figcaption',
-				default: ''
-			}
-		}
+				default: '',
+			},
+		},
 	},
 	perView: {
 		type: 'number',
-		default: 1
+		default: 1,
 	},
 	gap: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	peek: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	autoplay: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	delay: {
 		type: 'number',
-		default: 2
+		default: 2,
 	},
 	hideArrows: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	hideBullets: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	height: {
 		type: 'number',
-		default: 400
-	}
+		default: 400,
+	},
 };
 
 export default attributes;

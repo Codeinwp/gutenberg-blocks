@@ -4,14 +4,14 @@
 const { registerStore } = wp.data;
 
 const DEFAULT_STATE = {
-	viewType: 'Desktop'
+	viewType: 'Desktop',
 };
 
-registerStore( 'themeisle-gutenberg/data', {
-	reducer( state = DEFAULT_STATE, action ) {
-		if ( 'UPDATE_VIEW' === action.type ) {
+registerStore('themeisle-gutenberg/data', {
+	reducer(state = DEFAULT_STATE, action) {
+		if ('UPDATE_VIEW' === action.type) {
 			return {
-				viewType: action.viewType
+				viewType: action.viewType,
 			};
 		}
 
@@ -19,17 +19,17 @@ registerStore( 'themeisle-gutenberg/data', {
 	},
 
 	selectors: {
-		getView( state ) {
+		getView(state) {
 			return state.viewType;
-		}
+		},
 	},
 
 	actions: {
-		updateView( viewType ) {
+		updateView(viewType) {
 			return {
 				type: 'UPDATE_VIEW',
-				viewType
+				viewType,
 			};
-		}
-	}
+		},
+	},
 });

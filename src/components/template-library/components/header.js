@@ -6,21 +6,11 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const {
-	startCase,
-	toLower
-} = lodash;
+const { startCase, toLower } = lodash;
 
 const { __ } = wp.i18n;
 
-const {
-	Button,
-	Dashicon,
-	Icon,
-	TextControl,
-	Tooltip,
-	SelectControl
-} = wp.components;
+const { Button, Dashicon, Icon, TextControl, Tooltip, SelectControl } = wp.components;
 
 /**
  * Internal dependencies
@@ -40,22 +30,19 @@ const Header = ({
 	close,
 	importTemplate,
 	selectCategory,
-	changeSearch
+	changeSearch,
 }) => {
 	const getOptions = () => {
 		let categories = {};
 
-		categories = ( 'block' === tab ? blocksCategories : templateCategories ).map( i => {
-			return i = {
-				label: startCase( toLower( i ) ),
-				value: i
-			};
+		categories = ('block' === tab ? blocksCategories : templateCategories).map((i) => {
+			return (i = {
+				label: startCase(toLower(i)),
+				value: i,
+			});
 		});
 
-		const options = [
-			{ label: __( 'All Categories' ), value: 'all' },
-			...categories
-		];
+		const options = [{ label: __('All Categories'), value: 'all' }, ...categories];
 
 		return options;
 	};
@@ -66,64 +53,62 @@ const Header = ({
 		<div className="library-modal-control-panel">
 			<div className="library-modal-header">
 				<div className="library-modal-header-logo">
-					{ preview ? (
+					{preview ? (
 						<Button
 							className="library-modal-header-tabs-button back-to-library"
-							aria-label={ __( 'Back to Library' ) }
-							onClick={ () => setPreview( false ) }
+							aria-label={__('Back to Library')}
+							onClick={() => setPreview(false)}
 						>
-							<Dashicon icon="arrow-left-alt" /> { __( 'Back to Library' ) }
+							<Dashicon icon="arrow-left-alt" /> {__('Back to Library')}
 						</Button>
-					) :
+					) : (
 						<div className="library-modal-header-tabs-button">
-							<Icon icon={ otterIcon } />
+							<Icon icon={otterIcon} />
 						</div>
-					}
+					)}
 				</div>
 
-				{ ! preview && (
+				{!preview && (
 					<div className="library-modal-header-tabs">
 						<Button
-							className={ classnames(
-								'library-modal-header-tabs-button',
-								{ 'is-selected': 'block' === tab }
-							) }
-							onClick={ () => changeTab( 'block' ) }
+							className={classnames('library-modal-header-tabs-button', {
+								'is-selected': 'block' === tab,
+							})}
+							onClick={() => changeTab('block')}
 						>
 							<Dashicon icon="screenoptions" />
-							{ __( 'Blocks' ) }
+							{__('Blocks')}
 						</Button>
 
 						<Button
-							className={ classnames(
-								'library-modal-header-tabs-button',
-								{ 'is-selected': 'template' === tab }
-							) }
-							onClick={ () => changeTab( 'template' ) }
+							className={classnames('library-modal-header-tabs-button', {
+								'is-selected': 'template' === tab,
+							})}
+							onClick={() => changeTab('template')}
 						>
 							<Dashicon icon="editor-table" />
-							{ __( 'Templates' ) }
+							{__('Templates')}
 						</Button>
 					</div>
-				) }
+				)}
 
 				<div className="library-modal-header-actions">
-					{ preview && (
+					{preview && (
 						<Button
 							className="library-modal-header-tabs-button insert-button"
-							onClick={ () => importTemplate( selectedTemplate.template_url ) }
+							onClick={() => importTemplate(selectedTemplate.template_url)}
 							tabindex="0"
 						>
-							<Dashicon icon="arrow-down-alt" size={ 16 } />
-							{ __( 'Insert' ) }
+							<Dashicon icon="arrow-down-alt" size={16} />
+							{__('Insert')}
 						</Button>
-					) }
+					)}
 
-					<Tooltip text={ __( 'Close' ) }>
+					<Tooltip text={__('Close')}>
 						<Button
 							className="library-modal-header-tabs-button"
-							aria-label={ __( 'Close settings' ) }
-							onClick={ close }
+							aria-label={__('Close settings')}
+							onClick={close}
 						>
 							<Dashicon icon="no-alt" />
 						</Button>
@@ -131,24 +116,24 @@ const Header = ({
 				</div>
 			</div>
 
-			{ ! preview && (
+			{!preview && (
 				<div className="library-modal-actions">
 					<SelectControl
 						className="library-modal-category-control"
-						value={ 'all' === selectedCategory ? 'all' : selectedCategory }
-						onChange={ selectCategory }
-						options={ options }
+						value={'all' === selectedCategory ? 'all' : selectedCategory}
+						onChange={selectCategory}
+						options={options}
 					/>
 
 					<TextControl
 						type="text"
-						value={ search || '' }
-						placeholder={ __( 'Search' ) }
+						value={search || ''}
+						placeholder={__('Search')}
 						className="library-modal-search-control"
-						onChange={ changeSearch }
+						onChange={changeSearch}
 					/>
 				</div>
-			) }
+			)}
 		</div>
 	);
 };

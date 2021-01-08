@@ -8,21 +8,11 @@ import classnames from 'classnames';
  */
 const { __ } = wp.i18n;
 
-const {
-	Button,
-	Dropdown,
-	Icon
-} = wp.components;
+const { Button, Dropdown, Icon } = wp.components;
 
-const {
-	useInstanceId,
-	useViewportMatch
-} = wp.compose;
+const { useInstanceId, useViewportMatch } = wp.compose;
 
-const {
-	useSelect,
-	useDispatch
-} = wp.data;
+const { useSelect, useDispatch } = wp.data;
 
 /**
  * Internal dependencies
@@ -31,111 +21,95 @@ import './editor.scss';
 
 import { checkIcon } from '../../helpers/icons.js';
 
-const ResponsiveControl = ({
-	label,
-	className,
-	children
-}) => {
-	const instanceId = useInstanceId( ResponsiveControl );
+const ResponsiveControl = ({ label, className, children }) => {
+	const instanceId = useInstanceId(ResponsiveControl);
 
-	const isLarger = useViewportMatch( 'large', '>=' );
+	const isLarger = useViewportMatch('large', '>=');
 
-	const isLarge = useViewportMatch( 'large', '<=' );
+	const isLarge = useViewportMatch('large', '<=');
 
-	const isSmall = useViewportMatch( 'small', '>=' );
+	const isSmall = useViewportMatch('small', '>=');
 
-	const isSmaller = useViewportMatch( 'small', '<=' );
+	const isSmaller = useViewportMatch('small', '<=');
 
-	const isMobile = ! isLarger && ! isLarge && ! isSmall && ! isSmaller;
+	const isMobile = !isLarger && !isLarge && !isSmall && !isSmaller;
 
-	const getView = useSelect( select => {
-		const { getView } = select( 'themeisle-gutenberg/data' );
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+	const getView = useSelect((select) => {
+		const { getView } = select('themeisle-gutenberg/data');
+		const { __experimentalGetPreviewDeviceType } = select('core/edit-post');
 
-		return __experimentalGetPreviewDeviceType && ! isMobile ? __experimentalGetPreviewDeviceType() : getView();
+		return __experimentalGetPreviewDeviceType && !isMobile ? __experimentalGetPreviewDeviceType() : getView();
 	});
 
-	const { updateView } = useDispatch( 'themeisle-gutenberg/data' );
-	const { __experimentalSetPreviewDeviceType } = useDispatch( 'core/edit-post' );
+	const { updateView } = useDispatch('themeisle-gutenberg/data');
+	const { __experimentalSetPreviewDeviceType } = useDispatch('core/edit-post');
 
-	const setView = __experimentalSetPreviewDeviceType && ! isMobile ? __experimentalSetPreviewDeviceType : updateView;
+	const setView = __experimentalSetPreviewDeviceType && !isMobile ? __experimentalSetPreviewDeviceType : updateView;
 
-	const id = `inspector-responsive-control-${ instanceId }`;
+	const id = `inspector-responsive-control-${instanceId}`;
 
 	return (
-		<div
-			id={ id }
-			className={ classnames(
-				'wp-block-themeisle-blocks-responsive-control',
-				className
-			) }
-		>
+		<div id={id} className={classnames('wp-block-themeisle-blocks-responsive-control', className)}>
 			<div className="components-base-control__field">
 				<div className="components-base-control__title">
-					<label className="components-base-control__label">{ label }</label>
+					<label className="components-base-control__label">{label}</label>
 					<div className="floating-controls">
 						<Dropdown
 							position="top left"
-							renderToggle={ ({ isOpen, onToggle }) => (
+							renderToggle={({ isOpen, onToggle }) => (
 								<Button
-									icon={ 'Mobile' === getView ? 'smartphone' : getView.toLowerCase() }
-									label={ __( 'Responsiveness Settings' ) }
-									showTooltip={ true }
+									icon={'Mobile' === getView ? 'smartphone' : getView.toLowerCase()}
+									label={__('Responsiveness Settings')}
+									showTooltip={true}
 									className="is-button"
-									onClick={ onToggle }
-									aria-expanded={ isOpen }
+									onClick={onToggle}
+									aria-expanded={isOpen}
 								/>
-							) }
-							renderContent={ () => (
+							)}
+							renderContent={() => (
 								<div className="wp-block-themeisle-blocks-responsive-control-settings">
 									<div className="wp-block-themeisle-blocks-responsive-control-settings-title">
-										{ __( 'View' ) }
+										{__('View')}
 									</div>
 
 									<Button
-										className={ classnames(
+										className={classnames(
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'Desktop' === getView }
-										) }
-										onClick={ () => setView( 'Desktop' ) }
+										)}
+										onClick={() => setView('Desktop')}
 									>
-										{ 'Desktop' === getView && <Icon icon={ checkIcon } /> }
-										<span className="popover-title">
-											{ __( 'Desktop' ) }
-										</span>
+										{'Desktop' === getView && <Icon icon={checkIcon} />}
+										<span className="popover-title">{__('Desktop')}</span>
 									</Button>
 
 									<Button
-										className={ classnames(
+										className={classnames(
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'Tablet' === getView }
-										) }
-										onClick={ () => setView( 'Tablet' ) }
+										)}
+										onClick={() => setView('Tablet')}
 									>
-										{ 'Tablet' === getView && <Icon icon={ checkIcon } /> }
-										<span className="popover-title">
-											{ __( 'Tablet' ) }
-										</span>
+										{'Tablet' === getView && <Icon icon={checkIcon} />}
+										<span className="popover-title">{__('Tablet')}</span>
 									</Button>
 
 									<Button
-										className={ classnames(
+										className={classnames(
 											'wp-block-themeisle-blocks-responsive-control-settings-item',
 											{ 'is-selected': 'Mobile' === getView }
-										) }
-										onClick={ () => setView( 'Mobile' ) }
+										)}
+										onClick={() => setView('Mobile')}
 									>
-										{ 'Mobile' === getView && <Icon icon={ checkIcon } /> }
-										<span className="popover-title">
-											{ __( 'Mobile' ) }
-										</span>
+										{'Mobile' === getView && <Icon icon={checkIcon} />}
+										<span className="popover-title">{__('Mobile')}</span>
 									</Button>
 								</div>
-							) }
+							)}
 						/>
 					</div>
 				</div>
-				{ children }
+				{children}
 			</div>
 		</div>
 	);

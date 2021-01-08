@@ -15,22 +15,18 @@ import attributes from './attributes.js';
 import deprecated from './deprecated.js';
 import edit from './edit.js';
 
-registerBlockType( 'themeisle-blocks/posts-grid', {
-	title: __( 'Posts' ),
-	description: __( 'Display a list of your most recent posts in a beautiful layout.' ),
+registerBlockType('themeisle-blocks/posts-grid', {
+	title: __('Posts'),
+	description: __('Display a list of your most recent posts in a beautiful layout.'),
 	icon,
 	category: 'themeisle-blocks',
-	keywords: [
-		'posts',
-		'grid',
-		'news'
-	],
+	keywords: ['posts', 'grid', 'news'],
 	attributes,
 	supports: {
-		align: [ 'wide', 'full' ],
-		html: false
+		align: ['wide', 'full'],
+		html: false,
 	},
 	deprecated,
 	edit,
-	save: () => null
+	save: () => null,
 });

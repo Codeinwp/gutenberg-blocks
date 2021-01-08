@@ -5,55 +5,49 @@ const { isEmpty } = lodash;
 
 const { useEffect } = wp.element;
 
-const LottiePlayer = ({
-	attributes,
-	className,
-	isSelected,
-	playerRef
-}) => {
-	useEffect( () => {
-		if ( ! isEmpty( attributes.file ) && attributes.loop && null !== playerRef.current ) {
-			playerRef.current.addEventListener( 'complete', initLoop );
+const LottiePlayer = ({ attributes, className, isSelected, playerRef }) => {
+	useEffect(() => {
+		if (!isEmpty(attributes.file) && attributes.loop && null !== playerRef.current) {
+			playerRef.current.addEventListener('complete', initLoop);
 		}
 	}, []);
 
-	useEffect( () => {
-		if ( isSelected ) {
+	useEffect(() => {
+		if (isSelected) {
 			playerRef.current.play();
 
-			if ( attributes.direction ) {
-				playerRef.current.seek( '100%' );
+			if (attributes.direction) {
+				playerRef.current.seek('100%');
 			}
-		} else  {
+		} else {
 			playerRef.current.stop();
 		}
-	}, [ isSelected ]);
+	}, [isSelected]);
 
 	const initLoop = () => {
-		if ( playerRef.current ) {
-			playerRef.current.setLooping( attributes.loop );
+		if (playerRef.current) {
+			playerRef.current.setLooping(attributes.loop);
 			playerRef.current.play();
-			playerRef.current.removeEventListener( 'complete', initLoop );
+			playerRef.current.removeEventListener('complete', initLoop);
 		}
 	};
 
 	return (
 		<lottie-player
-			id={ attributes.id }
-			className={ className }
-			ref={ playerRef }
-			src={ attributes.file.url }
+			id={attributes.id}
+			className={className}
+			ref={playerRef}
+			src={attributes.file.url}
 			autoplay
-			count={ attributes.count }
-			speed={ attributes.speed }
-			direction={ attributes.direction ? -1 : 1 }
-			style={ {
+			count={attributes.count}
+			speed={attributes.speed}
+			direction={attributes.direction ? -1 : 1}
+			style={{
 				width: attributes.width,
-				height: 'auto'
-			} }
+				height: 'auto',
+			}}
 			mode="normal"
-		>
-		</lottie-player>
+		></lottie-player>
 	);
 };
 

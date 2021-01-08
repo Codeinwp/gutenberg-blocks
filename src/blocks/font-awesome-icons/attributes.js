@@ -1,67 +1,67 @@
 const attributes = {
 	id: {
-		type: 'string'
+		type: 'string',
 	},
 	align: {
-		type: 'string'
+		type: 'string',
 	},
 	library: {
 		type: 'string',
-		default: 'fontawesome'
+		default: 'fontawesome',
 	},
 	prefix: {
 		type: 'string',
-		default: 'fab'
+		default: 'fab',
 	},
 	icon: {
 		type: 'string',
-		default: 'themeisle'
+		default: 'themeisle',
 	},
 	link: {
-		type: 'string'
+		type: 'string',
 	},
 	newTab: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	fontSize: {
 		type: 'number',
-		default: 16
+		default: 16,
 	},
 	padding: {
 		type: 'number',
-		default: 5
+		default: 5,
 	},
 	margin: {
 		type: 'number',
-		default: 5
+		default: 5,
 	},
 	backgroundColor: {
-		type: 'string'
+		type: 'string',
 	},
 	textColor: {
-		type: 'string'
+		type: 'string',
 	},
 	borderColor: {
-		type: 'string'
+		type: 'string',
 	},
 	backgroundColorHover: {
-		type: 'string'
+		type: 'string',
 	},
 	textColorHover: {
-		type: 'string'
+		type: 'string',
 	},
 	borderColorHover: {
-		type: 'string'
+		type: 'string',
 	},
 	borderSize: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	borderRadius: {
 		type: 'number',
-		default: 0
-	}
+		default: 0,
+	},
 };
 
 export default attributes;

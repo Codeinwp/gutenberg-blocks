@@ -9,99 +9,76 @@ import { backup, Icon } from '@wordpress/icons';
  */
 const { __ } = wp.i18n;
 
-const {
-	Button,
-	Dropdown
-} = wp.components;
+const { Button, Dropdown } = wp.components;
 
 const { useInstanceId } = wp.compose;
 
-const {
-	Fragment,
-	useEffect,
-	useState
-} = wp.element;
+const { Fragment, useEffect, useState } = wp.element;
 
 /**
  * Internal dependencies
  */
 import './editor.scss';
 
-const ControlPanelControl = ({
-	label,
-	attributes,
-	setAttributes,
-	resetValues,
-	onClick,
-	children
-}) => {
-	useEffect( () => {
-		for ( const key in resetValues ) {
-			if ( resetValues[ key ] !== attributes[ key ]) {
-				return setActive( true );
+const ControlPanelControl = ({ label, attributes, setAttributes, resetValues, onClick, children }) => {
+	useEffect(() => {
+		for (const key in resetValues) {
+			if (resetValues[key] !== attributes[key]) {
+				return setActive(true);
 			}
 
-			setActive( false );
+			setActive(false);
 		}
-	}, [ attributes ]);
+	}, [attributes]);
 
-	const instanceId = useInstanceId( ControlPanelControl );
+	const instanceId = useInstanceId(ControlPanelControl);
 
-	const [ isActive, setActive ] = useState( false );
+	const [isActive, setActive] = useState(false);
 
-	const id = `inspector-control-panel-control-${ instanceId }`;
+	const id = `inspector-control-panel-control-${instanceId}`;
 
 	return (
 		<div className="wp-block-themeisle-blocks-control-panel-control">
 			<div className="components-base-control__field">
 				<div className="components-base-control__title">
-					<label
-						className="components-base-control__label"
-						for={ id }
-					>
-						{ label }
+					<label className="components-base-control__label" for={id}>
+						{label}
 					</label>
 
 					<div className="floating-controls">
 						<Dropdown
 							position="top left"
-							headerTitle={ label }
-							expandOnMobile={ true }
-							renderToggle={ ({ isOpen, onToggle }) => (
+							headerTitle={label}
+							expandOnMobile={true}
+							renderToggle={({ isOpen, onToggle }) => (
 								<Fragment>
-									{ isActive && (
+									{isActive && (
 										<Button
-											icon={ <Icon icon={ backup } /> }
-											label={ __( 'Reset to default' ) }
-											shotTooltip={ true }
+											icon={<Icon icon={backup} />}
+											label={__('Reset to default')}
+											shotTooltip={true}
 											isTertiary
-											onClick={ () => setAttributes({ ...resetValues }) }
+											onClick={() => setAttributes({ ...resetValues })}
 										/>
-									) }
+									)}
 
 									<Button
-										id={ id }
+										id={id}
 										icon="admin-settings"
-										label={ label }
-										shotTooltip={ true }
-										onClick={ () => {
+										label={label}
+										shotTooltip={true}
+										onClick={() => {
 											onToggle();
-											if ( onClick ) {
+											if (onClick) {
 												onClick();
 											}
-										} }
-										aria-expanded={ isOpen }
-										className={ classnames(
-											{ 'is-active': isActive }
-										) }
+										}}
+										aria-expanded={isOpen}
+										className={classnames({ 'is-active': isActive })}
 									/>
 								</Fragment>
-							) }
-							renderContent={ () => (
-								<div className="wp-block-themeisle-popover-settings">
-									{ children }
-								</div>
-							) }
+							)}
+							renderContent={() => <div className="wp-block-themeisle-popover-settings">{children}</div>}
 						/>
 					</div>
 				</div>

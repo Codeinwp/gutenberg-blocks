@@ -3,11 +3,7 @@
  */
 const { __ } = wp.i18n;
 
-const {
-	PanelBody,
-	RangeControl,
-	SelectControl
-} = wp.components;
+const { PanelBody, RangeControl, SelectControl } = wp.components;
 
 const { Fragment } = wp.element;
 
@@ -17,119 +13,110 @@ const { Fragment } = wp.element;
 import SizingControl from '../../../../components/sizing-control/index.js';
 import GoogleFontsControl from '../../../../components/google-fonts-control/index.js';
 
-const ButtonGroupBlock = ({
-	blockName,
-	defaults,
-	changeConfig
-}) => {
-	const changeFontFamily = value => {
-		if ( ! value ) {
-			changeConfig( blockName, {
+const ButtonGroupBlock = ({ blockName, defaults, changeConfig }) => {
+	const changeFontFamily = (value) => {
+		if (!value) {
+			changeConfig(blockName, {
 				fontFamily: value,
-				fontVariant: value
+				fontVariant: value,
 			});
 		} else {
-			changeConfig( blockName, {
+			changeConfig(blockName, {
 				fontFamily: value,
 				fontVariant: 'normal',
-				fontStyle: 'normal'
+				fontStyle: 'normal',
 			});
 		}
 	};
 
 	return (
 		<Fragment>
-			<PanelBody
-				title={ __( 'Spacing' ) }
-			>
+			<PanelBody title={__('Spacing')}>
 				<SizingControl
-					label={ __( 'Button Padding' ) }
-					min={ 0 }
-					max={ 100 }
-					onChange={ ( key, value ) => changeConfig( blockName, { [key]: value }) }
-					options={ [
+					label={__('Button Padding')}
+					min={0}
+					max={100}
+					onChange={(key, value) => changeConfig(blockName, { [key]: value })}
+					options={[
 						{
-							label: __( 'Top' ),
+							label: __('Top'),
 							type: 'paddingTopBottom',
-							value: defaults.paddingTopBottom
+							value: defaults.paddingTopBottom,
 						},
 						{
-							label: __( 'Right' ),
+							label: __('Right'),
 							type: 'paddingLeftRight',
-							value: defaults.paddingLeftRight
+							value: defaults.paddingLeftRight,
 						},
 						{
-							label: __( 'Bottom' ),
+							label: __('Bottom'),
 							type: 'paddingTopBottom',
-							value: defaults.paddingTopBottom
+							value: defaults.paddingTopBottom,
 						},
 						{
-							label: __( 'Left' ),
+							label: __('Left'),
 							type: 'paddingLeftRight',
-							value: defaults.paddingLeftRight
-						}
-					] }
+							value: defaults.paddingLeftRight,
+						},
+					]}
 				/>
 
-				<hr/>
+				<hr />
 
 				<RangeControl
-					label={ __( 'Group Spacing' ) }
-					value={ defaults.spacing }
-					onChange={ value => changeConfig( blockName, { spacing: value }) }
-					min={ 0 }
-					max={ 50 }
+					label={__('Group Spacing')}
+					value={defaults.spacing}
+					onChange={(value) => changeConfig(blockName, { spacing: value })}
+					min={0}
+					max={50}
 				/>
 
-				<hr/>
+				<hr />
 
 				<SelectControl
-					label={ __( 'Collapse On' ) }
-					value={ defaults.collapse }
-					options={ [
+					label={__('Collapse On')}
+					value={defaults.collapse}
+					options={[
 						{ label: 'None', value: 'collapse-none' },
 						{ label: 'Desktop', value: 'collapse-desktop' },
 						{ label: 'Tablet', value: 'collapse-tablet' },
-						{ label: 'Mobile', value: 'collapse-mobile' }
-					] }
-					onChange={ value => changeConfig( blockName, { collapse: value }) }
+						{ label: 'Mobile', value: 'collapse-mobile' },
+					]}
+					onChange={(value) => changeConfig(blockName, { collapse: value })}
 				/>
 			</PanelBody>
 
-			<PanelBody
-				title={ __( 'Typography Settings' ) }
-				initialOpen={ false }
-			>
+			<PanelBody title={__('Typography Settings')} initialOpen={false}>
 				<RangeControl
-					label={ __( 'Font Size' ) }
-					value={ defaults.fontSize || '' }
-					onChange={ value => changeConfig( blockName, { fontSize: value }) }
-					min={ 0 }
-					max={ 50 }
+					label={__('Font Size')}
+					value={defaults.fontSize || ''}
+					onChange={(value) => changeConfig(blockName, { fontSize: value })}
+					min={0}
+					max={50}
 				/>
 
-				<hr/>
+				<hr />
 
 				<GoogleFontsControl
-					label={ __( 'Font Family' ) }
-					value={ defaults.fontFamily }
-					onChangeFontFamily={ changeFontFamily }
-					valueVariant={ defaults.fontVariant }
-					onChangeFontVariant={ value => changeConfig( blockName, { fontVariant: value }) }
-					valueStyle={ defaults.fontStyle }
-					onChangeFontStyle={ value => changeConfig( blockName, { fontStyle: value }) }
-					valueTransform={ defaults.textTransform }
-					onChangeTextTransform={ value => changeConfig( blockName, { textTransform: value }) }
+					label={__('Font Family')}
+					value={defaults.fontFamily}
+					onChangeFontFamily={changeFontFamily}
+					valueVariant={defaults.fontVariant}
+					onChangeFontVariant={(value) => changeConfig(blockName, { fontVariant: value })}
+					valueStyle={defaults.fontStyle}
+					onChangeFontStyle={(value) => changeConfig(blockName, { fontStyle: value })}
+					valueTransform={defaults.textTransform}
+					onChangeTextTransform={(value) => changeConfig(blockName, { textTransform: value })}
 				/>
 
-				<hr/>
+				<hr />
 
 				<RangeControl
-					label={ __( 'Line Height' ) }
-					value={ defaults.lineHeight || '' }
-					onChange={ value => changeConfig( blockName, { lineHeight: value }) }
-					min={ 0 }
-					max={ 200 }
+					label={__('Line Height')}
+					value={defaults.lineHeight || ''}
+					onChange={(value) => changeConfig(blockName, { lineHeight: value })}
+					min={0}
+					max={200}
 				/>
 			</PanelBody>
 		</Fragment>

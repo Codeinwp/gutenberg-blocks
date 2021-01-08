@@ -1,87 +1,82 @@
 const attributes = {
 	style: {
 		type: 'string',
-		default: 'grid'
+		default: 'grid',
 	},
 	columns: {
 		type: 'number',
-		default: 3
+		default: 3,
 	},
 	template: {
 		type: 'array',
-		default: [
-			'category',
-			'title',
-			'meta',
-			'description'
-		]
+		default: ['category', 'title', 'meta', 'description'],
 	},
 	categories: {
 		type: 'array',
 		items: {
-			type: 'object'
-		}
+			type: 'object',
+		},
 	},
 	postsToShow: {
 		type: 'number',
-		default: 5
+		default: 5,
 	},
 	order: {
 		type: 'string',
-		default: 'desc'
+		default: 'desc',
 	},
 	orderBy: {
 		type: 'string',
-		default: 'date'
+		default: 'date',
 	},
 	offset: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	imageSize: {
 		type: 'string',
-		default: 'full'
+		default: 'full',
 	},
 	imageBoxShadow: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	displayFeaturedImage: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	displayCategory: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	displayTitle: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	titleTag: {
 		type: 'string',
-		default: 'h5'
+		default: 'h5',
 	},
 	displayMeta: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	displayDescription: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	excerptLength: {
 		type: 'number',
-		default: 100
+		default: 100,
 	},
 	displayDate: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	displayAuthor: {
 		type: 'boolean',
-		default: true
-	}
+		default: true,
+	},
 };
 
 export default attributes;

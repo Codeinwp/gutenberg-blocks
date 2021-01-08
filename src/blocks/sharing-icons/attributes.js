@@ -1,28 +1,28 @@
 const attributes = {
 	facebook: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	twitter: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	linkedin: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	pinterest: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	tumblr: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	reddit: {
 		type: 'boolean',
-		default: false
-	}
+		default: false,
+	},
 };
 
 export default attributes;

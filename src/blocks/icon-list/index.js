@@ -15,28 +15,24 @@ import attributes from './attributes.js';
 import edit from './edit.js';
 import save from './save.js';
 
-registerBlockType( 'themeisle-blocks/icon-list', {
-	title: __( 'Icon List' ),
-	description: __( 'Display an icon list in a beautiful layout.' ),
+registerBlockType('themeisle-blocks/icon-list', {
+	title: __('Icon List'),
+	description: __('Display an icon list in a beautiful layout.'),
 	icon,
 	category: 'themeisle-blocks',
-	keywords: [
-		'icon',
-		'list',
-		'items'
-	],
+	keywords: ['icon', 'list', 'items'],
 	attributes,
 	styles: [
 		{
 			name: 'vertical',
-			label: __( 'Vertical' ),
-			isDefault: true
+			label: __('Vertical'),
+			isDefault: true,
 		},
 		{
 			name: 'horizontal',
-			label: __( 'Horizontal' )
-		}
+			label: __('Horizontal'),
+		},
 	],
 	edit,
-	save
+	save,
 });

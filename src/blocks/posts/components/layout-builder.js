@@ -17,43 +17,30 @@ const { Fragment } = wp.element;
  */
 import { SortableItem, SortableList } from './sortable.js';
 
-const LayoutBuilder = ({
-	attributes,
-	setAttributes,
-	getFields,
-	toggleFields,
-	imageSize,
-	titleTag,
-	excerptLimit
-}) => {
-	const onSortEnd = ({ oldIndex, newIndex })  => {
-		const template = arrayMove( attributes.template, oldIndex, newIndex );
+const LayoutBuilder = ({ attributes, setAttributes, getFields, toggleFields, imageSize, titleTag, excerptLimit }) => {
+	const onSortEnd = ({ oldIndex, newIndex }) => {
+		const template = arrayMove(attributes.template, oldIndex, newIndex);
 		setAttributes({ template });
 	};
 
 	return (
 		<Fragment>
-			<div
-				className={ classnames(
-					'wp-block-themeisle-blocks-posts-grid-builder',
-					attributes.style
-				) }
-			>
+			<div className={classnames('wp-block-themeisle-blocks-posts-grid-builder', attributes.style)}>
 				<SortableItem
-					value={ __( 'image' ) }
-					disabled={ true }
-					getFields={ getFields }
-					toggleFields={ toggleFields }
-					imageSize={ imageSize }
+					value={__('image')}
+					disabled={true}
+					getFields={getFields}
+					toggleFields={toggleFields}
+					imageSize={imageSize}
 				/>
 
 				<SortableList
-					template={ attributes.template }
-					onSortEnd={ onSortEnd }
-					getFields={ getFields }
-					toggleFields={ toggleFields }
-					titleTag={ titleTag }
-					excerptLimit={ excerptLimit }
+					template={attributes.template}
+					onSortEnd={onSortEnd}
+					getFields={getFields}
+					toggleFields={toggleFields}
+					titleTag={titleTag}
+					excerptLimit={excerptLimit}
 					useDragHandle
 					axis="y"
 					lockAxis="y"

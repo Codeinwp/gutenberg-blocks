@@ -14,15 +14,9 @@ const { parse } = wp.blocks;
 
 const { Modal } = wp.components;
 
-const {
-	useSelect,
-	useDispatch
-} = wp.data;
+const { useSelect, useDispatch } = wp.data;
 
-const {
-	useEffect,
-	useState
-} = wp.element;
+const { useEffect, useState } = wp.element;
 
 /**
  * Internal dependencies
@@ -32,31 +26,30 @@ import Header from './components/header.js';
 import Notices from './components/notices.js';
 import TemplatesList from './components/templates-list.js';
 
-const Library = ({
-	clientId,
-	close
-}) => {
-	const block = useSelect( select => select( 'core/block-editor' ).getBlock( clientId ) );
+const Library = ({ clientId, close }) => {
+	const block = useSelect((select) => select('core/block-editor').getBlock(clientId));
 
-	const { replaceBlocks } = useDispatch( 'core/block-editor' );
-	const { createNotice } = useDispatch( 'core/notices' );
+	const { replaceBlocks } = useDispatch('core/block-editor');
+	const { createNotice } = useDispatch('core/notices');
 
-	useEffect( () => {
-		const fetchData = async() => {
-			if ( ! Boolean( window.themeisleGutenberg.isCompatible ) ) {
+	useEffect(() => {
+		const fetchData = async () => {
+			if (!Boolean(window.themeisleGutenberg.isCompatible)) {
 				createNotice(
 					'warning',
-					__( 'You are using an older version of Otter. Use the latest version of Otter to have maximum compatibility with Template Library.' ),
+					__(
+						'You are using an older version of Otter. Use the latest version of Otter to have maximum compatibility with Template Library.'
+					),
 					{
 						context: 'themeisle-blocks/notices/template-library',
 						id: 'compatibility-warning',
 						isDismissible: false,
 						actions: [
 							{
-								label: __( 'Update Now' ),
-								url: window.themeisleGutenberg.updatePath
-							}
-						]
+								label: __('Update Now'),
+								url: window.themeisleGutenberg.updatePath,
+							},
+						],
 					}
 				);
 			}
@@ -67,175 +60,163 @@ const Library = ({
 				let blocksCategories = [];
 				let templateCategories = [];
 
-				data.map( i => {
-					if ( i.categories && i.template_url ) {
-						if ( 'block' === i.type ) {
-							i.categories.map( o => {
-								blocksCategories.push( o );
+				data.map((i) => {
+					if (i.categories && i.template_url) {
+						if ('block' === i.type) {
+							i.categories.map((o) => {
+								blocksCategories.push(o);
 							});
 						}
 
-						if ( 'template' === i.type ) {
-							i.categories.map( o => {
-								templateCategories.push( o );
+						if ('template' === i.type) {
+							i.categories.map((o) => {
+								templateCategories.push(o);
 							});
 						}
 					}
 				});
 
-				blocksCategories = blocksCategories.filter( ( item, i, ar ) => ar.indexOf( item ) === i ).sort();
-				templateCategories = templateCategories.filter( ( item, i, ar ) => ar.indexOf( item ) === i ).sort();
+				blocksCategories = blocksCategories.filter((item, i, ar) => ar.indexOf(item) === i).sort();
+				templateCategories = templateCategories.filter((item, i, ar) => ar.indexOf(item) === i).sort();
 
-				setBlocksCategories( blocksCategories );
-				setTemplateCategories( templateCategories );
-				setData( data );
-			} catch ( error ) {
-				createNotice(
-					'error',
-					__( 'There seems to be an error. Please try again.' ),
-					{
-						context: 'themeisle-blocks/notices/template-library',
-						isDismissible: true
-					}
-				);
+				setBlocksCategories(blocksCategories);
+				setTemplateCategories(templateCategories);
+				setData(data);
+			} catch (error) {
+				createNotice('error', __('There seems to be an error. Please try again.'), {
+					context: 'themeisle-blocks/notices/template-library',
+					isDismissible: true,
+				});
 			}
 
-			setLoading( false );
+			setLoading(false);
 		};
 
 		fetchData();
 	}, []);
 
-	const [ tab, setTab ] = useState( 'block' );
-	const [ isLoading, setLoading ] = useState( true );
-	const [ selectedCategory, setSelectedCategory ] = useState( 'all' );
-	const [ search, setSearch ] = useState( '' );
-	const [ blocksCategories, setBlocksCategories ] = useState([]);
-	const [ templateCategories, setTemplateCategories ] = useState([]);
-	const [ data, setData ] = useState([]);
-	const [ preview, setPreview ] = useState( false );
-	const [ selectedTemplate, setSelectedTemplate ] = useState( null );
-	const [ selectedTemplateContent, setSelectedTemplateContent ] = useState( null );
+	const [tab, setTab] = useState('block');
+	const [isLoading, setLoading] = useState(true);
+	const [selectedCategory, setSelectedCategory] = useState('all');
+	const [search, setSearch] = useState('');
+	const [blocksCategories, setBlocksCategories] = useState([]);
+	const [templateCategories, setTemplateCategories] = useState([]);
+	const [data, setData] = useState([]);
+	const [preview, setPreview] = useState(false);
+	const [selectedTemplate, setSelectedTemplate] = useState(null);
+	const [selectedTemplateContent, setSelectedTemplateContent] = useState(null);
 
-	const importBlocks = content => replaceBlocks(
-		block.clientId,
-		content
-	);
+	const importBlocks = (content) => replaceBlocks(block.clientId, content);
 
-	const changeTab = value => {
-		setTab( value );
-		setSelectedCategory( 'all' );
-		setSearch( '' );
+	const changeTab = (value) => {
+		setTab(value);
+		setSelectedCategory('all');
+		setSearch('');
 	};
 
-	const importPreview = async( template = null ) => {
-		setLoading( true );
+	const importPreview = async (template = null) => {
+		setLoading(true);
 
 		try {
-			let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ template.template_url }&preview=true` });
+			let data = await apiFetch({
+				path: `themeisle-gutenberg-blocks/v1/import_template?url=${template.template_url}&preview=true`,
+			});
 
-			if ( data.__file && data.content && 'wp_export' === data.__file ) {
-				data = parse( data.content );
+			if (data.__file && data.content && 'wp_export' === data.__file) {
+				data = parse(data.content);
 			}
 
-			setSelectedTemplate( template );
-			setSelectedTemplateContent( data );
-			setPreview( true );
-		} catch ( error ) {
-			if ( error.message ) {
-				createNotice(
-					'error',
-					error.message,
-					{
-						context: 'themeisle-blocks/notices/template-library',
-						isDismissible: true
-					}
-				);
+			setSelectedTemplate(template);
+			setSelectedTemplateContent(data);
+			setPreview(true);
+		} catch (error) {
+			if (error.message) {
+				createNotice('error', error.message, {
+					context: 'themeisle-blocks/notices/template-library',
+					isDismissible: true,
+				});
 			}
 		}
 
-		setLoading( false );
+		setLoading(false);
 	};
 
-	const importTemplate = async url => {
-		setPreview( false );
-		setLoading( true );
+	const importTemplate = async (url) => {
+		setPreview(false);
+		setLoading(true);
 
 		try {
-			let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ url }` });
+			let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${url}` });
 
-			if ( data.__file && data.content && 'wp_export' === data.__file ) {
-				data = parse( data.content );
+			if (data.__file && data.content && 'wp_export' === data.__file) {
+				data = parse(data.content);
 			}
 
-			if ( url.includes( 'https://raw.githubusercontent.com/Codeinwp/' ) && window.themeisleGutenberg.dataLogging.templates && Boolean( window.themeisleGutenberg.canTrack ) ) {
-				const obj = window.themeisleGutenberg.dataLogging.templates.find( template => template.url === url );
+			if (
+				url.includes('https://raw.githubusercontent.com/Codeinwp/') &&
+				window.themeisleGutenberg.dataLogging.templates &&
+				Boolean(window.themeisleGutenberg.canTrack)
+			) {
+				const obj = window.themeisleGutenberg.dataLogging.templates.find((template) => template.url === url);
 
-				if ( obj ) {
+				if (obj) {
 					obj.instances = obj.instances + 1;
 				} else {
 					window.themeisleGutenberg.dataLogging.templates.push({
 						url,
-						instances: 1
+						instances: 1,
 					});
 				}
 			}
 
-			importBlocks( data );
-		} catch ( error ) {
-			if ( error.message ) {
-				createNotice(
-					'error',
-					error.message,
-					{
-						context: 'themeisle-blocks/notices/template-library',
-						isDismissible: true
-					}
-				);
+			importBlocks(data);
+		} catch (error) {
+			if (error.message) {
+				createNotice('error', error.message, {
+					context: 'themeisle-blocks/notices/template-library',
+					isDismissible: true,
+				});
 			}
 
-			setLoading( false );
+			setLoading(false);
 		}
 	};
 
 	return (
 		<Modal
-			className={ classnames(
-				'wp-block-themeisle-library-modal',
-				{ 'is-preview': preview }
-			) }
-			onRequestClose={ close }
-			isDismissable={ false }
-			shouldCloseOnClickOutside={ false }
+			className={classnames('wp-block-themeisle-library-modal', { 'is-preview': preview })}
+			onRequestClose={close}
+			isDismissable={false}
+			shouldCloseOnClickOutside={false}
 		>
 			<Header
-				preview={ preview }
-				tab={ tab }
-				changeTab={ changeTab }
-				blocksCategories={ blocksCategories }
-				templateCategories={ templateCategories }
-				selectedTemplate={ selectedTemplate }
-				selectedCategory={ selectedCategory }
-				search={ search }
-				setPreview={ setPreview }
-				close={ close }
-				importTemplate={ importTemplate }
-				selectCategory={ e => setSelectedCategory( e ) }
-				changeSearch={ e => setSearch( e ) }
+				preview={preview}
+				tab={tab}
+				changeTab={changeTab}
+				blocksCategories={blocksCategories}
+				templateCategories={templateCategories}
+				selectedTemplate={selectedTemplate}
+				selectedCategory={selectedCategory}
+				search={search}
+				setPreview={setPreview}
+				close={close}
+				importTemplate={importTemplate}
+				selectCategory={(e) => setSelectedCategory(e)}
+				changeSearch={(e) => setSearch(e)}
 			/>
 
-			<Notices/>
+			<Notices />
 
 			<TemplatesList
-				preview={ preview }
-				isLoading={ isLoading }
-				data={ data }
-				tab={ tab }
-				selectedTemplateContent={ selectedTemplateContent }
-				selectedCategory={ selectedCategory }
-				search={ search }
-				importPreview={ importPreview }
-				importTemplate={ importTemplate }
+				preview={preview}
+				isLoading={isLoading}
+				data={data}
+				tab={tab}
+				selectedTemplateContent={selectedTemplateContent}
+				selectedCategory={selectedCategory}
+				search={search}
+				importPreview={importPreview}
+				importTemplate={importTemplate}
 			/>
 		</Modal>
 	);

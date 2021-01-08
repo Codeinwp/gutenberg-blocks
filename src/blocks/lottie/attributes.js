@@ -1,33 +1,33 @@
 const attributes = {
 	id: {
-		type: 'string'
+		type: 'string',
 	},
 	file: {
-		type: 'object'
+		type: 'object',
 	},
 	trigger: {
 		type: 'string',
-		default: 'none'
+		default: 'none',
 	},
 	loop: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	count: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	speed: {
 		type: 'number',
-		default: 1
+		default: 1,
 	},
 	direction: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	width: {
-		type: 'number'
-	}
+		type: 'number',
+	},
 };
 
 export default attributes;

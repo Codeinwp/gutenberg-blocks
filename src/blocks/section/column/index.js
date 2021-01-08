@@ -14,10 +14,10 @@ import deprecated from './deprecated.js';
 import edit from './edit.js';
 import save from './save.js';
 
-registerBlockType( 'themeisle-blocks/advanced-column', {
-	title: __( 'Section Column' ),
-	description: __( 'A single column within a Section block.' ),
-	parent: [ 'themeisle-blocks/advanced-columns' ],
+registerBlockType('themeisle-blocks/advanced-column', {
+	title: __('Section Column'),
+	description: __('A single column within a Section block.'),
+	parent: ['themeisle-blocks/advanced-columns'],
 	icon,
 	category: 'themeisle-blocks',
 	attributes,
@@ -25,8 +25,8 @@ registerBlockType( 'themeisle-blocks/advanced-column', {
 	supports: {
 		inserter: false,
 		reusable: false,
-		html: false
+		html: false,
 	},
 	edit,
-	save
+	save,
 });

@@ -14,21 +14,17 @@ import { mapIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
 
-registerBlockType( 'themeisle-blocks/google-map', {
-	title: __( 'Google Maps' ),
-	description: __( 'Display Google Maps on your website with Google Map block.' ),
+registerBlockType('themeisle-blocks/google-map', {
+	title: __('Google Maps'),
+	description: __('Display Google Maps on your website with Google Map block.'),
 	icon,
 	category: 'themeisle-blocks',
-	keywords: [
-		'map',
-		'google',
-		'orbitfox'
-	],
+	keywords: ['map', 'google', 'orbitfox'],
 	attributes,
 	supports: {
-		align: [ 'wide', 'full' ],
-		html: false
+		align: ['wide', 'full'],
+		html: false,
 	},
 	edit,
-	save: () => null
+	save: () => null,
 });

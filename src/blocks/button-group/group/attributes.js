@@ -1,42 +1,42 @@
 const attributes = {
 	id: {
-		type: 'string'
+		type: 'string',
 	},
 	align: {
-		type: 'string'
+		type: 'string',
 	},
 	spacing: {
 		type: 'number',
-		default: 20
+		default: 20,
 	},
 	paddingTopBottom: {
-		type: 'number'
+		type: 'number',
 	},
 	paddingLeftRight: {
-		type: 'number'
+		type: 'number',
 	},
 	collapse: {
 		type: 'string',
-		default: 'collapse-none'
+		default: 'collapse-none',
 	},
 	fontSize: {
-		type: 'number'
+		type: 'number',
 	},
 	fontFamily: {
-		type: 'string'
+		type: 'string',
 	},
 	fontVariant: {
-		type: 'string'
+		type: 'string',
 	},
 	textTransform: {
-		type: 'string'
+		type: 'string',
 	},
 	fontStyle: {
-		type: 'string'
+		type: 'string',
 	},
 	lineHeight: {
-		type: 'number'
-	}
+		type: 'number',
+	},
 };
 
 export default attributes;

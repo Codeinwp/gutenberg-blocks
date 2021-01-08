@@ -1,57 +1,57 @@
 const attributes = {
 	id: {
-		type: 'string'
+		type: 'string',
 	},
 	style: {
 		type: 'string',
-		default: 'standard'
+		default: 'standard',
 	},
 	location: {
 		type: 'string',
-		default: 'La Sagrada Familia, Barcelona, Spain'
+		default: 'La Sagrada Familia, Barcelona, Spain',
 	},
 	latitude: {
-		type: 'string'
+		type: 'string',
 	},
 	longitude: {
-		type: 'string'
+		type: 'string',
 	},
 	type: {
 		type: 'string',
-		default: 'roadmap'
+		default: 'roadmap',
 	},
 	zoom: {
 		type: 'number',
-		default: 15
+		default: 15,
 	},
 	height: {
 		type: 'number',
-		default: 400
+		default: 400,
 	},
 	draggable: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	mapTypeControl: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	zoomControl: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	fullscreenControl: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	streetViewControl: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	markers: {
 		type: 'array',
-		default: []
-	}
+		default: [],
+	},
 };
 
 export default attributes;

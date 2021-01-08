@@ -1,7 +1,7 @@
 const attributes = {
 	slug: {
-		type: 'string'
-	}
+		type: 'string',
+	},
 };
 
 export default attributes;

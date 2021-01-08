@@ -20,18 +20,14 @@ import edit from './edit.js';
 import save from './save.js';
 import transforms from './transforms.js';
 
-registerBlockType( 'themeisle-blocks/circle-counter', {
-	title: __( 'Circle Counter' ),
-	description: __( 'Show your progress with a beautiful Circle Counter block.' ),
+registerBlockType('themeisle-blocks/circle-counter', {
+	title: __('Circle Counter'),
+	description: __('Show your progress with a beautiful Circle Counter block.'),
 	icon,
 	category: 'themeisle-blocks',
-	keywords: [
-		'progress',
-		'circle',
-		'counter'
-	],
+	keywords: ['progress', 'circle', 'counter'],
 	attributes,
 	transforms,
 	edit,
-	save
+	save,
 });

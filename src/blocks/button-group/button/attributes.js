@@ -1,116 +1,116 @@
 const attributes = {
 	id: {
-		type: 'string'
+		type: 'string',
 	},
 	text: {
 		type: 'string',
 		source: 'html',
-		selector: 'span'
+		selector: 'span',
 	},
 	link: {
 		type: 'string',
 		source: 'attribute',
 		selector: 'a',
-		attribute: 'href'
+		attribute: 'href',
 	},
 	newTab: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	color: {
-		type: 'string'
+		type: 'string',
 	},
 	background: {
-		type: 'string'
+		type: 'string',
 	},
 	backgroundGradient: {
-		type: 'string'
+		type: 'string',
 	},
 	border: {
-		type: 'string'
+		type: 'string',
 	},
 	hoverColor: {
-		type: 'string'
+		type: 'string',
 	},
 	hoverBackground: {
-		type: 'string'
+		type: 'string',
 	},
 	hoverBackgroundGradient: {
-		type: 'string'
+		type: 'string',
 	},
 	hoverBorder: {
-		type: 'string'
+		type: 'string',
 	},
 	borderSize: {
-		type: 'number'
+		type: 'number',
 	},
 	borderRadius: {
-		type: 'number'
+		type: 'number',
 	},
 	boxShadow: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	boxShadowColor: {
-		type: 'string'
+		type: 'string',
 	},
 	boxShadowColorOpacity: {
 		type: 'number',
-		default: 50
+		default: 50,
 	},
 	boxShadowBlur: {
 		type: 'number',
-		default: 5
+		default: 5,
 	},
 	boxShadowSpread: {
 		type: 'number',
-		default: 1
+		default: 1,
 	},
 	boxShadowHorizontal: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	boxShadowVertical: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	hoverBoxShadowColor: {
-		type: 'string'
+		type: 'string',
 	},
 	hoverBoxShadowColorOpacity: {
 		type: 'number',
-		default: 50
+		default: 50,
 	},
 	hoverBoxShadowBlur: {
 		type: 'number',
-		default: 5
+		default: 5,
 	},
 	hoverBoxShadowSpread: {
 		type: 'number',
-		default: 1
+		default: 1,
 	},
 	hoverBoxShadowHorizontal: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	hoverBoxShadowVertical: {
 		type: 'number',
-		default: 0
+		default: 0,
 	},
 	iconType: {
 		type: 'string',
-		default: 'none'
+		default: 'none',
 	},
 	library: {
 		type: 'string',
-		default: 'fontawesome'
+		default: 'fontawesome',
 	},
 	prefix: {
-		type: 'string'
+		type: 'string',
 	},
 	icon: {
-		type: 'string'
-	}
+		type: 'string',
+	},
 };
 
 export default attributes;

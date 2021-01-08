@@ -6,33 +6,19 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const {
-	startCase,
-	toLower
-} = lodash;
+const { startCase, toLower } = lodash;
 
 const { __ } = wp.i18n;
 
 const { useInstanceId } = wp.compose;
 
-const {
-	Button,
-	BaseControl,
-	Dropdown,
-	MenuGroup,
-	MenuItem,
-	SelectControl,
-	TextControl
-} = wp.components;
+const { Button, BaseControl, Dropdown, MenuGroup, MenuItem, SelectControl, TextControl } = wp.components;
 
-const {
-	useEffect,
-	useState
-} = wp.element;
+const { useEffect, useState } = wp.element;
 
 /**
-* Internal dependencies
-*/
+ * Internal dependencies
+ */
 import './editor.scss';
 
 const GoogleFontsControl = ({
@@ -45,217 +31,209 @@ const GoogleFontsControl = ({
 	onChangeFontFamily,
 	onChangeFontVariant,
 	onChangeFontStyle,
-	onChangeTextTransform
+	onChangeTextTransform,
 }) => {
-	const instanceId = useInstanceId( GoogleFontsControl );
+	const instanceId = useInstanceId(GoogleFontsControl);
 
-	useEffect( () => {
-		fetch( 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyClGdkPJ1BvgLOol5JAkQY4Mv2lkLYu00k' )
-			.then( blob => blob.json() )
-			.then( data => {
-				setFonts( data.items );
-				if ( value ) {
-					data.items.find( i => {
-						if ( value === i.family ) {
-							const variants = ( i.variants )
-								.filter( o => false === o.includes( 'italic' ) )
-								.map( o => {
-									return o = {
-										'label': startCase( toLower( o ) ),
-										'value': o
-									};
+	useEffect(() => {
+		fetch('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyClGdkPJ1BvgLOol5JAkQY4Mv2lkLYu00k')
+			.then((blob) => blob.json())
+			.then((data) => {
+				setFonts(data.items);
+				if (value) {
+					data.items.find((i) => {
+						if (value === i.family) {
+							const variants = i.variants
+								.filter((o) => false === o.includes('italic'))
+								.map((o) => {
+									return (o = {
+										label: startCase(toLower(o)),
+										value: o,
+									});
 								});
-							return setVariants( variants );
+							return setVariants(variants);
 						}
 					});
 				}
 			});
 	}, []);
 
-	const [ fonts, setFonts ] = useState( null );
-	const [ variants, setVariants ] = useState( null );
-	const [ search, setSearch ] = useState( '' );
+	const [fonts, setFonts] = useState(null);
+	const [variants, setVariants] = useState(null);
+	const [search, setSearch] = useState('');
 
-	const id = `inspector-google-fonts-control-${ instanceId }`;
+	const id = `inspector-google-fonts-control-${instanceId}`;
 
 	return (
 		<div className="wp-block-themeisle-blocks-google-fonts-control">
-			<BaseControl
-				label={ label }
-				id={ id }
-			>
-				{ ( null !== fonts ) ? (
-					( isSelect ) ? (
+			<BaseControl label={label} id={id}>
+				{null !== fonts ? (
+					isSelect ? (
 						<SelectControl
-							value={ value || '' }
-							id={ id }
-							options={ [
+							value={value || ''}
+							id={id}
+							options={[
 								{
-									label: __( 'Default' ),
-									value: ''
+									label: __('Default'),
+									value: '',
 								},
-								...fonts.map( i => {
-									return i = {
+								...fonts.map((i) => {
+									return (i = {
 										label: i.family,
-										value: i.family
-									};
-								})
-							] }
-							onChange={ e => {
+										value: i.family,
+									});
+								}),
+							]}
+							onChange={(e) => {
 								let variants = [];
 
-								if ( '' === e ) {
+								if ('' === e) {
 									variants = [
 										{
-											'label': __( 'Regular' ),
-											'value': 'regular'
+											label: __('Regular'),
+											value: 'regular',
 										},
 										{
-											'label': __( 'Italic' ),
-											'value': 'italic'
-										}
+											label: __('Italic'),
+											value: 'italic',
+										},
 									];
-									onChangeFontFamily( undefined );
-									setVariants( variants );
+									onChangeFontFamily(undefined);
+									setVariants(variants);
 									return;
 								}
 
-								onChangeFontFamily( e );
+								onChangeFontFamily(e);
 
-								const font = fonts.find( i => e === i.family );
+								const font = fonts.find((i) => e === i.family);
 
-								variants = ( font.variants )
-									.filter( o => false === o.includes( 'italic' ) )
-									.map( o => {
-										return o = {
-											'label': startCase( toLower( o ) ),
-											'value': o
-										};
+								variants = font.variants
+									.filter((o) => false === o.includes('italic'))
+									.map((o) => {
+										return (o = {
+											label: startCase(toLower(o)),
+											value: o,
+										});
 									});
 
-								setVariants( variants );
-							} }
+								setVariants(variants);
+							}}
 						/>
 					) : (
 						<Dropdown
 							contentClassName="wp-block-themeisle-blocks-google-fonts-popover"
 							position="bottom center"
-							renderToggle={ ({ isOpen, onToggle }) => (
+							renderToggle={({ isOpen, onToggle }) => (
 								<Button
 									isLarge
 									className="wp-block-themeisle-blocks-google-fonts-button"
-									id={ id }
-									onClick={ onToggle }
-									aria-expanded={ isOpen }
+									id={id}
+									onClick={onToggle}
+									aria-expanded={isOpen}
 								>
-									{ value ? value : __( 'Select Font Family' ) }
+									{value ? value : __('Select Font Family')}
 								</Button>
-							) }
-							renderContent={ ({ onToggle }) => (
-								<MenuGroup label={ __( 'Google Fonts' ) }>
-									<TextControl
-										value={ search }
-										onChange={ e => setSearch( e ) }
-									/>
+							)}
+							renderContent={({ onToggle }) => (
+								<MenuGroup label={__('Google Fonts')}>
+									<TextControl value={search} onChange={(e) => setSearch(e)} />
 
 									<div className="components-popover__items">
 										<MenuItem
-											onClick={ () => {
+											onClick={() => {
 												onToggle();
-												onChangeFontFamily( undefined );
+												onChangeFontFamily(undefined);
 												setVariants([]);
-												setSearch( '' );
+												setSearch('');
 											}}
 										>
-											{ __( 'Default' ) }
+											{__('Default')}
 										</MenuItem>
 
-										{ ( fonts ).map( i => {
-											if ( ! search || i.family.toLowerCase().includes( search.toLowerCase() ) ) {
+										{fonts.map((i) => {
+											if (!search || i.family.toLowerCase().includes(search.toLowerCase())) {
 												return (
 													<MenuItem
-														className={ classnames(
-															{ 'is-selected': ( i.family === value ) }
-														) }
-														onClick={ () => {
+														className={classnames({ 'is-selected': i.family === value })}
+														onClick={() => {
 															onToggle();
-															onChangeFontFamily( i.family );
+															onChangeFontFamily(i.family);
 
-															const variants = ( i.variants )
-																.filter( o => false === o.includes( 'italic' ) )
-																.map( o => {
-																	return o = {
-																		'label': startCase( toLower( o ) ),
-																		'value': o
-																	};
+															const variants = i.variants
+																.filter((o) => false === o.includes('italic'))
+																.map((o) => {
+																	return (o = {
+																		label: startCase(toLower(o)),
+																		value: o,
+																	});
 																});
 
-															setVariants( variants );
-															setSearch( '' );
+															setVariants(variants);
+															setSearch('');
 														}}
 													>
-														{ i.family }
+														{i.family}
 													</MenuItem>
 												);
 											}
-										}) }
+										})}
 									</div>
 								</MenuGroup>
-							) }
+							)}
 						/>
 					)
 				) : (
-					__( 'Loading…' )
-				) }
+					__('Loading…')
+				)}
 			</BaseControl>
 
-			{ variants && (
+			{variants && (
 				<SelectControl
-					label={ __( 'Font Width' ) }
-					value={ valueVariant || 'regular' }
-					options={ variants }
-					onChange={ onChangeFontVariant }
+					label={__('Font Width')}
+					value={valueVariant || 'regular'}
+					options={variants}
+					onChange={onChangeFontVariant}
 				/>
-			) }
+			)}
 
 			<SelectControl
-				label={ __( 'Font Style' ) }
-				value={ valueStyle }
-				options={ [
+				label={__('Font Style')}
+				value={valueStyle}
+				options={[
 					{
-						label: __( 'Regular' ),
-						value: 'normal'
+						label: __('Regular'),
+						value: 'normal',
 					},
 					{
-						label: __( 'Italic' ),
-						value: 'italic'
-					}
-				] }
-				onChange={ onChangeFontStyle }
+						label: __('Italic'),
+						value: 'italic',
+					},
+				]}
+				onChange={onChangeFontStyle}
 			/>
 
 			<SelectControl
-				label={ __( 'Font Transform' ) }
-				value={ valueTransform }
-				options={ [
+				label={__('Font Transform')}
+				value={valueTransform}
+				options={[
 					{
-						label: __( 'Default' ),
-						value: 'none'
+						label: __('Default'),
+						value: 'none',
 					},
 					{
-						label: __( 'Uppercase' ),
-						value: 'uppercase'
+						label: __('Uppercase'),
+						value: 'uppercase',
 					},
 					{
-						label: __( 'Lowercase' ),
-						value: 'lowercase'
+						label: __('Lowercase'),
+						value: 'lowercase',
 					},
 					{
-						label: __( 'Capitalize' ),
-						value: 'capitalize'
-					}
-				] }
-				onChange={ onChangeTextTransform }
+						label: __('Capitalize'),
+						value: 'capitalize',
+					},
+				]}
+				onChange={onChangeTextTransform}
 			/>
 		</div>
 	);
