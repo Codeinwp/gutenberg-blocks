@@ -1,1 +1,124 @@
-!function(e){var t={};function r(n){if(t[n])return t[n].exports;var o=t[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}r.m=e,r.c=t,r.d=function(e,t,n){r.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},r.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r.t=function(e,t){if(1&t&&(e=r(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)r.d(n,o,function(t){return e[t]}.bind(null,o));return n},r.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return r.d(t,"a",t),t},r.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},r.p="",r(r.s=99)}({100:function(e,t,r){"use strict";r.r(t);var n=r(11);(0,wp.domReady)((function(){var e=document.querySelectorAll(".wp-block-themeisle-blocks-circle-counter");Array.from(e).forEach((function(e){var t=1e3*e.dataset.duration,r=e.dataset.percentage,o=e.dataset.height,s=e.dataset.strokeWidth,i=e.dataset.fontSizePercent,c=e.dataset.backgroundStroke,u=e.dataset.progressStroke,a=o/2,l=a-s/2,f=2*Math.PI*l;if(!(0>l)){var d=e.querySelector(".wp-block-themeisle-blocks-circle-counter__bar");d.style.height=o+"px",d.style.width=o+"px";var p=document.createElementNS("http://www.w3.org/2000/svg","svg");p.classList.add("wp-block-themeisle-blocks-circle-counter-container"),p.setAttribute("height",o),p.setAttribute("width",o);var b=document.createElementNS("http://www.w3.org/2000/svg","circle");b.classList.add("wp-block-themeisle-blocks-circle-counter-bg"),b.setAttribute("cx",a),b.setAttribute("cy",a),b.setAttribute("r",l),b.style.stroke=c,b.style.strokeWidth=s;var y=document.createElementNS("http://www.w3.org/2000/svg","circle");y.classList.add("wp-block-themeisle-blocks-circle-counter-progress"),y.setAttribute("cx",a),y.setAttribute("cy",a),y.setAttribute("r",l),y.style.stroke=u,y.style.strokeWidth=s,y.style.strokeDasharray=f;var h=document.createElementNS("http://www.w3.org/2000/svg","text");if(h.classList.add("wp-block-themeisle-blocks-circle-counter-text"),h.setAttribute("x","50%"),h.setAttribute("y","50%"),h.style.fill=u,h.style.fontSize=i+"px",p.appendChild(b),p.appendChild(y),p.appendChild(h),d.appendChild(p),t){y.style.strokeDashoffset=f,h.innerText="0%";var m,v=new IntersectionObserver((function(o){o.forEach((function(o){if(o.isIntersecting){if(0>=o.intersectionRect.height)return y.style.strokeDashoffset=(100-r)/100*f,h.innerHTML=r+"%",void v.unobserve(bar);m&&clearInterval(m);var s=parseInt(r),i=Object(n.c)(0,t,20).map((function(e){return Object(n.b)(e/t)*s})).reverse();m=setInterval((function(){var t=Math.round(i.pop());y.style.strokeDashoffset=(100-t)/100*f,h.innerHTML=t+"%",i.length||(v.unobserve(e),clearInterval(m))}),20)}}))}),{root:null,rootMargin:"0px",threshold:[.6]});setTimeout((function(){return v.observe(e)}),100)}else y.style.strokeDashoffset=(100-r)/100*f,h.innerHTML=r+"%"}}))}))},11:function(e,t,r){"use strict";function n(e){return(n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}r.d(t,"d",(function(){return o})),r.d(t,"a",(function(){return s})),r.d(t,"c",(function(){return i})),r.d(t,"b",(function(){return c}));var o=function(e){var t=document.createElement("div");return t.innerHTML=e,void 0!==t.innerText?t.innerText:t.textContent},s=function(e){var t=(e=new Date(e)).getDate(),r=e.getMonth(),n=e.getFullYear();return t+" "+["January","February","March","April","May","June","July","August","September","October","November","December"][r]+", "+n},i=function(e,t,r){var o=[],s=n(e),i=n(t);if(0===r)throw TypeError("Step cannot be zero.");if(void 0===s||void 0===i)throw TypeError("Must pass start and end arguments.");if(s!==i)throw TypeError("Start and end arguments must be of same type.");if(void 0===n(r)&&(r=1),t<e&&(r=-r),"number"===s)for(;0<r?t>=e:t<=e;)o.push(e),e+=r;else{if("string"!==s)throw TypeError("Only string and number types are supported");if(1!=e.length||1!=t.length)throw TypeError("Only strings with one character are supported.");for(e=e.charCodeAt(0),t=t.charCodeAt(0);0<r?t>=e:t<=e;)o.push(String.fromCharCode(e)),e+=r}return o},c=function(e){return e}},99:function(e,t,r){e.exports=r(100)}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/frontend/circle-counter/index.js":
+/*!**********************************************!*\
+  !*** ./src/frontend/circle-counter/index.js ***!
+  \**********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _helpers_helper_functions_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../helpers/helper-functions.js */ \"./src/helpers/helper-functions.js\");\n/**\n * WordPress dependencies\n */\nvar domReady = wp.domReady;\n/**\n * Internal dependencies\n */\n\n\ndomReady(function () {\n  var progressBars = document.querySelectorAll('.wp-block-themeisle-blocks-circle-counter');\n  Array.from(progressBars).forEach(function (progressBar) {\n    /*\n    \tDataset\n    */\n    var duration = progressBar.dataset.duration * 1000;\n    var percentage = progressBar.dataset.percentage;\n    var size = progressBar.dataset.height;\n    var strokeWidth = progressBar.dataset.strokeWidth;\n    var fontSize = progressBar.dataset.fontSizePercent;\n    var backgroundStroke = progressBar.dataset.backgroundStroke;\n    var progressStroke = progressBar.dataset.progressStroke;\n    var center = size / 2;\n    var radius = center - strokeWidth / 2;\n    var circumference = 2 * Math.PI * radius;\n\n    if (0 > radius) {\n      return;\n    }\n    /*\n    \tCreate SVG\n    */\n\n\n    var parent = progressBar.querySelector('.wp-block-themeisle-blocks-circle-counter__bar');\n    parent.style.height = size + 'px';\n    parent.style.width = size + 'px';\n    var container = document.createElementNS('http://www.w3.org/2000/svg', 'svg');\n    container.classList.add('wp-block-themeisle-blocks-circle-counter-container');\n    container.setAttribute('height', size);\n    container.setAttribute('width', size);\n    var backgroundCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');\n    backgroundCircle.classList.add('wp-block-themeisle-blocks-circle-counter-bg');\n    backgroundCircle.setAttribute('cx', center);\n    backgroundCircle.setAttribute('cy', center);\n    backgroundCircle.setAttribute('r', radius);\n    backgroundCircle.style.stroke = backgroundStroke;\n    backgroundCircle.style.strokeWidth = strokeWidth;\n    var progressCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');\n    progressCircle.classList.add('wp-block-themeisle-blocks-circle-counter-progress');\n    progressCircle.setAttribute('cx', center);\n    progressCircle.setAttribute('cy', center);\n    progressCircle.setAttribute('r', radius);\n    progressCircle.style.stroke = progressStroke;\n    progressCircle.style.strokeWidth = strokeWidth;\n    progressCircle.style.strokeDasharray = circumference;\n    var value = document.createElementNS('http://www.w3.org/2000/svg', 'text');\n    value.classList.add('wp-block-themeisle-blocks-circle-counter-text');\n    value.setAttribute('x', '50%');\n    value.setAttribute('y', '50%');\n    value.style.fill = progressStroke;\n    value.style.fontSize = fontSize + 'px';\n    /*\n    \tAdd to page\n    */\n\n    container.appendChild(backgroundCircle);\n    container.appendChild(progressCircle);\n    container.appendChild(value);\n    parent.appendChild(container);\n    /*\n    \tAdd animation\n    */\n\n    if (!duration) {\n      progressCircle.style.strokeDashoffset = (100 - percentage) / 100 * circumference;\n      value.innerHTML = percentage + '%';\n    } else {\n      progressCircle.style.strokeDashoffset = circumference;\n      value.innerText = '0%';\n      var options = {\n        root: null,\n        rootMargin: '0px',\n        threshold: [0.6]\n      };\n      var interval;\n      var observer = new IntersectionObserver(function (entries) {\n        entries.forEach(function (entry) {\n          if (entry.isIntersecting) {\n            if (0 >= entry.intersectionRect.height) {\n              progressCircle.style.strokeDashoffset = (100 - percentage) / 100 * circumference;\n              value.innerHTML = percentage + '%';\n              observer.unobserve(bar);\n              return;\n            }\n\n            if (interval) {\n              clearInterval(interval);\n            }\n\n            var step = 20; // for a more smother animation, decrease the value\n\n            var totalPercent = parseInt(percentage);\n            var percentPerTime = Object(_helpers_helper_functions_js__WEBPACK_IMPORTED_MODULE_0__[\"range\"])(0, duration, step).map(function (x) {\n              return Object(_helpers_helper_functions_js__WEBPACK_IMPORTED_MODULE_0__[\"linear\"])(x / duration) * totalPercent;\n            }).reverse();\n            interval = setInterval(function () {\n              var valuePercent = Math.round(percentPerTime.pop());\n              progressCircle.style.strokeDashoffset = (100 - valuePercent) / 100 * circumference;\n              value.innerHTML = valuePercent + '%';\n\n              if (!percentPerTime.length) {\n                observer.unobserve(progressBar);\n                clearInterval(interval);\n              }\n            }, step);\n          }\n        });\n      }, options);\n      setTimeout(function () {\n        return observer.observe(progressBar);\n      }, 100);\n    }\n  });\n});\n\n//# sourceURL=webpack:///./src/frontend/circle-counter/index.js?");
+
+/***/ }),
+
+/***/ "./src/helpers/helper-functions.js":
+/*!*****************************************!*\
+  !*** ./src/helpers/helper-functions.js ***!
+  \*****************************************/
+/*! exports provided: unescapeHTML, formatDate, range, linear, easeInSine, easeOutSine, easeInOutSine */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"unescapeHTML\", function() { return unescapeHTML; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"formatDate\", function() { return formatDate; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"range\", function() { return range; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"linear\", function() { return linear; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"easeInSine\", function() { return easeInSine; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"easeOutSine\", function() { return easeOutSine; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"easeInOutSine\", function() { return easeInOutSine; });\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; if (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }; } return _typeof(obj); }\n\n// HTML to Plaintext\nvar unescapeHTML = function unescapeHTML(value) {\n  var htmlNode = document.createElement('div');\n  htmlNode.innerHTML = value;\n\n  if (htmlNode.innerText !== undefined) {\n    return htmlNode.innerText;\n  }\n\n  return htmlNode.textContent;\n}; // Format Date\n\nvar formatDate = function formatDate(date) {\n  var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];\n  date = new Date(date);\n  var day = date.getDate();\n  var monthIndex = date.getMonth();\n  var year = date.getFullYear();\n  return day + ' ' + monthNames[monthIndex] + ', ' + year;\n}; // Create a list with numbers from interval [start, end]\n\nvar range = function range(start, end, step) {\n  var range = [];\n\n  var typeofStart = _typeof(start);\n\n  var typeofEnd = _typeof(end);\n\n  if (0 === step) {\n    throw TypeError('Step cannot be zero.');\n  }\n\n  if (undefined === typeofStart || undefined === typeofEnd) {\n    throw TypeError('Must pass start and end arguments.');\n  } else if (typeofStart !== typeofEnd) {\n    throw TypeError('Start and end arguments must be of same type.');\n  }\n\n  undefined === _typeof(step) && (step = 1);\n\n  if (end < start) {\n    step = -step;\n  }\n\n  if ('number' === typeofStart) {\n    while (0 < step ? end >= start : end <= start) {\n      range.push(start);\n      start += step;\n    }\n  } else if ('string' === typeofStart) {\n    if (1 != start.length || 1 != end.length) {\n      throw TypeError('Only strings with one character are supported.');\n    }\n\n    start = start.charCodeAt(0);\n    end = end.charCodeAt(0);\n\n    while (0 < step ? end >= start : end <= start) {\n      range.push(String.fromCharCode(start));\n      start += step;\n    }\n  } else {\n    throw TypeError('Only string and number types are supported');\n  }\n\n  return range;\n}; // Easing functions for animation\n\nvar linear = function linear(x) {\n  return x;\n};\nvar easeInSine = function easeInSine(x) {\n  return 1 - Math.cos(x * Math.PI / 2);\n};\nvar easeOutSine = function easeOutSine(x) {\n  return Math.sin(x * Math.PI / 2);\n};\nvar easeInOutSine = function easeInOutSine(x) {\n  return -(Math.cos(Math.PI * x) - 1) / 2;\n};\n\n//# sourceURL=webpack:///./src/helpers/helper-functions.js?");
+
+/***/ }),
+
+/***/ 4:
+/*!****************************************************!*\
+  !*** multi ./src/frontend/circle-counter/index.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__(/*! ./src/frontend/circle-counter/index.js */\"./src/frontend/circle-counter/index.js\");\n\n\n//# sourceURL=webpack:///multi_./src/frontend/circle-counter/index.js?");
+
+/***/ })
+
+/******/ });

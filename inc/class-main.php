@@ -52,6 +52,13 @@ class Main {
 	public static $is_lottie_loaded = false;
 
 	/**
+	 * Flag to mark that Leaflet scripts has been loaded.
+	 *
+	 * @var bool $is_lottie_loaded Is Lottie loaded?
+	 */
+	public static $is_leaflet_loaded = false;
+
+	/**
 	 * Define assets version.
 	 *
 	 * @var string $assets_version Holds assets version.
@@ -411,6 +418,25 @@ class Main {
 			);
 
 			self::$is_lottie_loaded = true;
+		}
+
+		if ( ! self::$is_leaflet_loaded && has_block( 'themeisle-blocks/map-block', $post ) ) {
+			wp_enqueue_script(
+				'themeisle-gutenberg-map-block',
+				plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet.js',
+				array( 'wp-dom-ready' ),
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_style(
+				'glidejs-theme',
+				plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet.css',
+				[],
+				self::$assets_version
+			);
+
+			self::$is_leaflet_loaded = true;
 		}
 	}
 
