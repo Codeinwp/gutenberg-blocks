@@ -12,7 +12,7 @@ const Save = ({
 }) => {
 
 	const ratio = 36 / 20;
-	
+
 	let iconSize = 36;
 	let iconStylePosition = 'default';
 
@@ -45,7 +45,7 @@ const Save = ({
 					className={
 						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-label', {'no-front-icon': 'default' !== iconStylePosition})
 					}
-					
+
 					value={ attributes.title }
 				/>
 				{ ( 'end' === iconStylePosition ) && (
