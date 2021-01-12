@@ -209,6 +209,21 @@ class Main {
 			[],
 			self::$assets_version
 		);
+
+		wp_enqueue_script(
+			'themeisle-gutenberg-map-block',
+			plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet.js',
+			array( 'wp-dom-ready' ),
+			self::$assets_version,
+			true
+		);
+
+		wp_enqueue_style(
+			'leaflet-theme',
+			plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet.css',
+			[],
+			self::$assets_version
+		);
 	}
 
 	/**
@@ -430,7 +445,7 @@ class Main {
 			);
 
 			wp_enqueue_style(
-				'glidejs-theme',
+				'leaflet-theme',
 				plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet.css',
 				[],
 				self::$assets_version

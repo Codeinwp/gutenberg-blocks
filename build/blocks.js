@@ -1036,7 +1036,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nvar attributes = {\n  id: {\n    type: 'string'\n  }\n};\n/* harmony default export */ __webpack_exports__[\"default\"] = (attributes);\n\n//# sourceURL=webpack:///./src/blocks/leaflet-map/attributes.js?");
+eval("__webpack_require__.r(__webpack_exports__);\nvar attributes = {\n  id: {\n    type: 'string'\n  },\n  location: {\n    type: 'string',\n    default: 'La Sagrada Familia, Barcelona, Spain'\n  },\n  latitude: {\n    type: 'string'\n  },\n  longitude: {\n    type: 'string'\n  },\n  zoom: {\n    type: 'number',\n    default: 15\n  },\n  height: {\n    type: 'number',\n    default: 400\n  }\n};\n/* harmony default export */ __webpack_exports__[\"default\"] = (attributes);\n\n//# sourceURL=webpack:///./src/blocks/leaflet-map/attributes.js?");
 
 /***/ }),
 
@@ -1048,7 +1048,7 @@ eval("__webpack_require__.r(__webpack_exports__);\nvar attributes = {\n  id: {\n
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _emotion_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @emotion/react */ \"./node_modules/@emotion/react/dist/emotion-react.browser.esm.js\");\n\n\n/**\n * External dependencies\n */\n\n/**\n * WordPress dependencies\n*/\nvar _wp$element = wp.element,\n    useEffect = _wp$element.useEffect,\n    useRef = _wp$element.useRef;\n/**\n * Internal dependencies\n */\n\nvar Edit = function Edit(attributes, setAttributes, className) {\n  var mapRef = useRef(null);\n  useEffect(function () {\n    console.log(L);\n\n    if (!mapRef.current) {\n      return;\n    }\n\n    var map = L.map(mapRef.current).setView([51.505, -0.09], 13);\n    console.log(map);\n  }, []);\n  return wp.element.createElement(\"div\", {\n    ref: mapRef,\n    className: className\n  });\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Edit);\n\n//# sourceURL=webpack:///./src/blocks/leaflet-map/edit.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _emotion_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @emotion/react */ \"./node_modules/@emotion/react/dist/emotion-react.browser.esm.js\");\n\n\n/**\n * External dependencies\n */\n\n/**\n * WordPress dependencies\n*/\nvar _wp$element = wp.element,\n    useEffect = _wp$element.useEffect,\n    useRef = _wp$element.useRef;\n/**\n * Internal dependencies\n */\n\nvar Edit = function Edit(attributes, setAttributes, className) {\n  var mapRef = useRef(null);\n  useEffect(function () {\n    console.log(L);\n\n    if (!mapRef.current) {\n      return;\n    } // Create the map\n\n\n    var map = L.map(mapRef.current).setView([51.505, -0.09], attributes.zoom); // Add Open Street Map as source\n\n    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {\n      attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>',\n      subdomains: ['a', 'b', 'c']\n    }).addTo(map);\n  }, []);\n  return wp.element.createElement(\"div\", {\n    ref: mapRef,\n    className: className,\n    style: {\n      width: 600,\n      height: attributes.height\n    }\n  });\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Edit);\n\n//# sourceURL=webpack:///./src/blocks/leaflet-map/edit.js?");
 
 /***/ }),
 

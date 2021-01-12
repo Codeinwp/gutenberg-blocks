@@ -30,14 +30,19 @@ const Edit = (
 			return ;
 		}
 
-		const map = L.map( mapRef.current ).setView([ 51.505, -0.09 ], 13 );
+		// Create the map
+		const map = L.map( mapRef.current ).setView([ 51.505, -0.09 ], attributes.zoom );
 
-		console.log( map );
+		// Add Open Street Map as source
+		L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+			subdomains: [ 'a', 'b', 'c' ]
+		}).addTo( map );
 
 	}, []);
 
 	return (
-		<div ref={mapRef} className={className}>
+		<div ref={mapRef} className={className} style={{width: 600, height: attributes.height}}>
 
 		</div>
 	);
