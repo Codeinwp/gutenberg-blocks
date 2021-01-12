@@ -1,19 +1,43 @@
 
 // reference https://nominatim.org/release-docs/develop/api/Search/
-export async function makeSearchRequest( location ) {
+async function makeSearchRequest( location ) {
 
 	if ( 'string' !== typeof location ) {
+		console.log( typeof location );
 		throw 'Location must be a string';
 	}
 
 	// Create the query
-	const query = location.split( ' ' ).join( '+' );
+	const query = location.split( ' ' ).map( s => encodeURIComponent( s ) ).join( '+' );
 
-	const response = await fetch( 'https://nominatim.openstreetmap.org/search?' + query );
+	const url = 'https://nominatim.openstreetmap.org/search?q=' + query + '&format=geojson';
+
+	console.log( url );
+
+	const response = await fetch( url );
 
 	if ( response.ok && 200 === response.status ) {
 		return response.json();
 	}
 	console.log( `An error has occured: ${response.status}` );
+	return {};
+}
+
+export async function getLocation( location ) {
+	const data = await makeSearchRequest( location );
+
+	console.log( data );
+
+	if ( data?.features.length ) {
+		const feature = data.features[0];
+
+		if ( feature?.geometry?.coordinates.length ) {
+			return {
+				longitude: feature.geometry.coordinates[0],
+				latitude: feature.geometry.coordinates[1]
+			};
+		}
+	}
+
 	return {};
 }

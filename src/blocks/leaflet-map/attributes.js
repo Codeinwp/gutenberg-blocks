@@ -14,7 +14,7 @@ const attributes = {
 	},
 	zoom: {
 		type: 'number',
-		default: 15
+		default: 13
 	},
 	height: {
 		type: 'number',
