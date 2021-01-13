@@ -7,7 +7,8 @@ const { __ } = wp.i18n;
 
 const {
 	PanelBody,
-	TextControl
+	TextControl,
+	RangeControl
 } = wp.components;
 
 const { InspectorControls } = wp.blockEditor;
@@ -38,13 +39,21 @@ const Inspector = ({
 		setAttributes({ longitude: value.toString() });
 	};
 
+	const changeHeight = value => {
+		setAttributes({ height: value });
+	};
+
+	const changeZoom = value => {
+		setAttributes({ zoom: value });
+	};
+
 	return (
 		<InspectorControls>
 			<PanelBody
 				title={ __( 'Location' ) }
 			>
 				<TextControl
-					label={ __( 'Lacation' ) }
+					label={ __( 'Location' ) }
 					type="text"
 					placeholder={ __( 'Enter latitude…' ) }
 					value={ attributes.location }
@@ -67,6 +76,27 @@ const Inspector = ({
 					onChange={ changeLongitude }
 				/>
 			</PanelBody>
+			<PanelBody
+				title={ __( 'Positioning & Zooming' ) }
+				initialOpen={ false }
+			>
+				<RangeControl
+					label={ __( 'Map Zoom Level' ) }
+					value={ attributes.zoom }
+					onChange={ changeZoom }
+					min={ 0 }
+					max={ 20 }
+				/>
+
+				<RangeControl
+					label={ __( 'Map Height' ) }
+					value={ attributes.height }
+					onChange={ changeHeight }
+					min={ 100 }
+					max={ 1400 }
+				/>
+			</PanelBody>
+
 		</InspectorControls>
 	);
 };
