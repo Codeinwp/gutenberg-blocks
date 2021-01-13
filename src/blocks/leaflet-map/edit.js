@@ -2,6 +2,7 @@
  * External dependencies
  */
 
+import Inspector from './inspector';
 import { getLocation } from './utility';
 
 /**
@@ -9,6 +10,7 @@ import { getLocation } from './utility';
 */
 
 const {
+	Fragment,
 	useEffect,
 	useState,
 	useRef
@@ -20,22 +22,24 @@ const {
 
 const Edit = ({
 	attributes,
+	setAttributes,
 	className
 }) => {
 
 	const mapRef = useRef( null );
 	const [ map, setMap ] = useState( null );
 
+	/**
+	 * Initialize the map
+	 */
 	useEffect( () => {
-
-		console.log( attributes );
 
 		if ( ! mapRef.current && ! L ) {
 			return ;
 		}
 
 		// Create the map
-		const _map = L.map( mapRef.current ).setView([ 51.505, -0.09 ], 13 );
+		const _map = L.map( mapRef.current );
 
 		// Add Open Street Map as source
 		L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -47,26 +51,46 @@ const Edit = ({
 
 	}, []);
 
+	/**
+	 * Get Location from Nominatim
+	 */
 	useEffect( () => {
-
 		const fetchData = async() => {
-
 			const location = await getLocation( attributes.location );
 
-			console.log( location );
-
-			if ( map ) {
-				map.setView([ location.latitude, location.longitude ]);
+			if ( location ) {
+				setAttributes({
+					latitude: location.latitude,
+					longitude: location.longitude
+				});
 			}
 		};
 
-		fetchData();
-	}, [ map ]);
+		if ( map ) {
+			fetchData();
+		}
+
+	}, [ attributes.location, map ]);
+
+	/**
+	 * Set View on the map
+	 */
+	useEffect( () => {
+		if ( attributes.latitude && attributes.longitude && map ) {
+			map.setView([ attributes.latitude, attributes.longitude ], 13 );
+		}
+	}, [ attributes.latitude, attributes.longitude, map ]);
 
 	return (
-		<div ref={mapRef} className={className} style={{width: 600, height: attributes.height || 400}}>
+		<Fragment>
+			<Inspector
+				attributes={attributes}
+				setAttributes={setAttributes}
+			/>
+			<div ref={mapRef} className={className} style={{width: 600, height: attributes.height || 400}}>
 
-		</div>
+			</div>
+		</Fragment>
 	);
 };
 

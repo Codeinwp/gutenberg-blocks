@@ -26,9 +26,10 @@ async function makeSearchRequest( location ) {
 export async function getLocation( location ) {
 	const data = await makeSearchRequest( location );
 
-	console.log( data );
-
+	// Check if we have received the some coordinates
 	if ( data?.features.length ) {
+
+		// Take only the first result
 		const feature = data.features[0];
 
 		if ( feature?.geometry?.coordinates.length ) {

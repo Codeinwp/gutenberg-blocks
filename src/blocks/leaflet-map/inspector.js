@@ -1,3 +1,5 @@
+
+
 /**
  * WordPress dependencies
  */
@@ -17,6 +19,15 @@ const Inspector = ({
 
 	const changeLocation = value => {
 		setAttributes({ location: value });
+
+		// const coords = getLocation( value );
+
+		// if ( coords ) {
+		// 	setAttributes({
+		// 		latitude: coords.latitude,
+		// 		longitude: coords.longitude
+		// 	});
+		// }
 	};
 
 	const changeLatitude = value => {
