@@ -47,6 +47,16 @@ const Edit = ({
 			subdomains: [ 'a', 'b', 'c' ]
 		}).addTo( _map );
 
+
+		/**
+		 * Defines event handlers
+		 */
+		_map.on( 'zoom', (  ) => {
+			setAttributes({
+				zoom: _map.getZoom()
+			});
+		});
+
 		setMap( _map );
 
 	}, []);
