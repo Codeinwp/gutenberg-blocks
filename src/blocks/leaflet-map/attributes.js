@@ -19,6 +19,10 @@ const attributes = {
 	height: {
 		type: 'number',
 		default: 400
+	},
+	markers: {
+		type: 'array',
+		default: []
 	}
 };
 

@@ -38,6 +38,7 @@ const Inspector = ({
 		setAttributes({ zoom: value });
 	};
 
+
 	return (
 		<InspectorControls>
 			<PanelBody

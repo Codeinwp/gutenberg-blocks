@@ -97,7 +97,7 @@ const Edit = ({
 				attributes={attributes}
 				setAttributes={setAttributes}
 			/>
-			<div ref={mapRef} className={className} style={{width: 600, height: attributes.height || 400}}>
+			<div ref={mapRef} className={className} style={{width: 600, height: attributes.height || 400, marginBottom: 70}}>
 
 			</div>
 		</Fragment>
