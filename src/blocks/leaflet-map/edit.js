@@ -29,6 +29,16 @@ const Edit = ({
 	const mapRef = useRef( null );
 	const [ map, setMap ] = useState( null );
 
+
+	const [ mapMarkers, setMarkers ] = useState({old: [], new: []});
+
+	// const [ isMarkerOpen, setMarkerOpen ] = useState( false );
+	// const [ isSelectingMarker, setSelectingMarker ] = useState( false );
+	// const [ isModalOpen, setModalOpen ] = useState( false );
+
+	// const [ isAdvanced, setAdvanced ] = useState( false );
+	// const [ selectedMarker, setSelectedMarker ] = useState({});
+
 	/**
 	 * Initialize the map
 	 */
@@ -88,8 +98,96 @@ const Edit = ({
 	useEffect( () => {
 		if ( attributes.latitude && attributes.longitude && map ) {
 			map.setView([ attributes.latitude, attributes.longitude ], attributes.zoom || 13 );
+
+			// test add marker
+			addMarker({
+				title: 'Test',
+				longitude: attributes.longitude,
+				latitude: attributes.latitude,
+				description: 'The best of the best'
+			});
 		}
 	}, [ attributes.latitude, attributes.longitude, attributes.zoom, map ]);
+
+	/**
+	 * Set Markers on the map
+	 */
+	useEffect( () => {
+
+		// Clean up the old markers
+		mapMarkers.old.filter( mapMarker => map.hasLayer( mapMarker ) ).map( mapMarker => map.removeLayer( mapMarker ) );
+
+		// Add the new markers
+		mapMarkers.new.map( mapMarker => map.addLayer( mapMarker ) );
+	}, [ mapMarkers, map ]);
+
+	/**
+	 * Marker Handlers
+	 */
+	const addMarker = ( marker ) => {
+
+		if ( L && map ) {
+
+			// Create the marker on the map
+			const mapMarker = new L.marker([ marker.latitude, marker.longitude ], {
+				title: marker.title,
+				draggable: true
+			});
+
+			// Show information in popup when clicked
+			mapMarker.bindPopup(
+				`<div class="wp-block-themeisle-blocks-map-overview">
+					<h6 class="wp-block-themeisle-blocks-map-overview-title">
+						${ marker.title }
+					</h6>
+					<div class="wp-block-themeisle-blocks-map-overview-content">
+						${ marker.description ? `<p>${ marker.description }</p>` : '' }
+					</div>
+				</div>`
+			);
+
+			// Change coords when dragging
+			mapMarker.on( 'move', ({latlng}) => {
+				marker.latitude = latlng.lat;
+				marker.longitude = latlng.lng;
+			});
+
+			// Save the marker
+			setMarkers({
+				old: mapMarkers.new,
+				new: [ ...mapMarkers.new, mapMarker ]
+			});
+
+		}
+
+		// Save the marker
+		attributes.markers.push( marker );
+		setAttributes([ ...attributes.markers ]);
+
+		// setModalOpen( false );
+		// setSelectingMarker( false );
+	};
+
+	// const selectMarker = () => {
+	// 	setSelectingMarker( ! isSelectingMarker );
+
+	// 	if ( ! isSelectingMarker ) {
+
+	// 		map.on( '' );
+
+	// 		setModalOpen( true );
+	// 		setAdvanced( false );
+	// 		setSelectedMarker({
+	// 			id,
+	// 			location: '',
+	// 			title,
+	// 			icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
+	// 			description: '',
+	// 			latitude,
+	// 			longitude
+	// 		});
+	// 	}
+	// };
 
 	return (
 		<Fragment>

@@ -88,6 +88,25 @@ const Inspector = ({
 					max={ 1400 }
 				/>
 			</PanelBody>
+			{/* <PanelBody
+				title={ __( 'Markers' ) }
+				initialOpen={ false }
+				opened={ false !== isMarkerOpen ? true : undefined }
+				onToggle={ () => {
+					if ( false !== isMarkerOpen ) {
+						setMarkerOpen( true );
+					}
+				} }
+			>
+				<MarkerWrapper
+					markers={ attributes.markers }
+					removeMarker={ removeMarker }
+					changeMarkerProp={ changeMarkerProp }
+					addMarker={ addMarkerManual }
+					isPlaceAPIAvailable={ isPlaceAPIAvailable }
+					initialOpen={ isMarkerOpen }
+				/>
+			</PanelBody> */}
 
 		</InspectorControls>
 	);
