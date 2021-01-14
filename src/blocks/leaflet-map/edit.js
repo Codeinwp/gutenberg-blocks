@@ -166,16 +166,16 @@ const Edit = ({
 			mapMarker.markerId = marker.id;
 
 			// Show information in popup when clicked
-			// mapMarker.bindPopup(
-			// 	`<div class="wp-block-themeisle-blocks-map-overview">
-			// 		<h6 class="wp-block-themeisle-blocks-map-overview-title">
-			// 			${ marker.title }
-			// 		</h6>
-			// 		<div class="wp-block-themeisle-blocks-map-overview-content">
-			// 			${ marker.description ? `<p>${ marker.description }</p>` : '' }
-			// 		</div>
-			// 	</div>`
-			// );
+			mapMarker.bindPopup(
+				`<div class="wp-block-themeisle-blocks-map-overview">
+					<h6 class="wp-block-themeisle-blocks-map-overview-title">
+						${ marker.title }
+					</h6>
+					<div class="wp-block-themeisle-blocks-map-overview-content">
+						${ marker.description ? `<p>${ marker.description }</p>` : '' }
+					</div>
+				</div>`
+			);
 
 			// Change coords when dragging
 			mapMarker.on( 'move', ({latlng}) => {
