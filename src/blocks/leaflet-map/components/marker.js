@@ -9,14 +9,14 @@ import classnames from 'classnames';
 const { __ } = wp.i18n;
 
 const {
-	BaseControl,
+	useState
+} = wp.element;
+
+const {
 	Button,
-	ExternalLink,
-	SelectControl,
 	TextControl
 } = wp.components;
 
-const { useRef } = wp.element;
 
 /**
  * Internal dependencies
@@ -26,35 +26,20 @@ import MarkerEditor from './marker-editor.js';
 const Marker = ({
 	marker,
 	isOpen,
-	isPlaceAPIAvailable,
 	openMarker,
 	removeMarker,
-	changeMarkerProp
+	changeMarkerProps
 }) => {
-	const searchRef = useRef( null );
 
-	const initSearch = () => {
-		const elements = document.getElementsByClassName( 'pac-container' );
+	/**
+	 * Use local state for updating the interface
+	 */
 
-		Object.keys( elements ).forEach( e => elements[e].remove() );
-
-		const searchBox = new google.maps.places.SearchBox( searchRef.current );
-
-		searchBox.addListener( 'places_changed', () => {
-			const places = searchBox.getPlaces();
-
-			if ( places && ( 0 < places.length ) ) {
-				places.forEach( place => {
-					const location = place.formatted_address || place.name;
-					const latitude = place.geometry.location.lat();
-					const longitude = place.geometry.location.lng();
-					changeMarkerProp( marker.id, 'location', location );
-					changeMarkerProp( marker.id, 'latitude', latitude );
-					changeMarkerProp( marker.id, 'longitude', longitude );
-				});
-			}
-		});
-	};
+	const [ location, setLocation ] = useState( marker.location );
+	const [ lng, setLng ] = useState( marker.longitude );
+	const [ lat, setLat ] = useState( marker.latitude );
+	const [ title, setTitle ] = useState( marker.title );
+	const [ description, setDescription ] = useState( marker.description );
 
 	return (
 		<div className="wp-block-themeisle-blocks-google-map-marker">
@@ -81,47 +66,44 @@ const Marker = ({
 					{ 'opened': marker.id === isOpen }
 				) }
 			>
-				<BaseControl
+				<TextControl
 					label={ __( 'Location' ) }
-					id={ `themeisle-location-search-${ marker.id }` }
-				>
-					<input
-						type="text"
-						id={ `themeisle-location-search-${ marker.id }` }
-						placeholder={ __( 'Enter a location…' ) }
-						value={ marker.location }
-						className="wp-block-themeisle-blocks-google-map-search"
-						ref={ searchRef }
-						onFocus={ initSearch }
-						onChange={ e => changeMarkerProp( marker.id, 'location', e.target.value ) }
-						disabled={ ! isPlaceAPIAvailable }
-					/>
-
-					{ ! isPlaceAPIAvailable && (
-						<p>
-							{ __( 'To enable locations earch, please ensure Places API is activated in the Google Developers Console.' ) + ' ' }
-							<ExternalLink href="https://developers.google.com/places/web-service/intro">
-								{ __( 'More info.' ) }
-							</ExternalLink>
-						</p>
-					) }
-				</BaseControl>
+					type="text"
+					value={ location }
+					onChange={ e => {
+						setLocation( e );
+						changeMarkerProps( marker.id, {
+							location: e
+						});
+					} }
+				/>
 
 				<TextControl
 					label={ __( 'Latitude' ) }
 					type="text"
-					value={ marker.latitude }
-					onChange={ e => changeMarkerProp( marker.id, 'latitude', e ) }
+					value={ lat }
+					onChange={ e => {
+						setLat( e );
+						changeMarkerProps( marker.id, {
+							latitude: e
+						});
+					} }
+
 				/>
 
 				<TextControl
 					label={ __( 'Longitude' ) }
 					type="text"
-					value={ marker.longitude }
-					onChange={ e => changeMarkerProp( marker.id, 'longitude', e ) }
+					value={ lng }
+					onChange={ e => {
+						setLng( e );
+						changeMarkerProps( marker.id, {
+							longitude: e
+						});
+					} }
 				/>
 
-				<SelectControl
+				{/* <SelectControl
 					label={ __( 'Map Icon' ) }
 					value={ marker.icon || 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' }
 					options={ [
@@ -131,21 +113,31 @@ const Marker = ({
 						{ label: __( 'Green' ), value: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png' },
 						{ label: __( 'Orange' ), value: 'https://maps.google.com/mapfiles/ms/icons/orange-dot.png' }
 					] }
-					onChange={ e => changeMarkerProp( marker.id, 'icon', e ) }
-				/>
+					onChange={ e => changeMarkerProps( marker.id, 'icon', e ) }
+				/> */}
 
 				<TextControl
 					label={ __( 'Title' ) }
 					type="text"
-					value={ marker.title }
-					onChange={ e => changeMarkerProp( marker.id, 'title', e ) }
+					value={ title }
+					onChange={ e => {
+						setTitle( e );
+						changeMarkerProps( marker.id, {
+							title: e
+						});
+					} }
 				/>
 
 				<MarkerEditor
 					label={ __( 'Description' ) }
 					type="text"
-					value={ marker.description }
-					onChange={ e => changeMarkerProp( marker.id, 'description', e ) }
+					value={ description }
+					onChange={ e => {
+						setDescription( description );
+						changeMarkerProps( marker.id, {
+							description: e
+						});
+					} }
 				/>
 			</div>
 		</div>

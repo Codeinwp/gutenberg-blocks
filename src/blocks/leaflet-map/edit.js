@@ -73,16 +73,16 @@ const Edit = ({
 	}, []);
 
 	/**
-	 * Get Location from Nominatim
+	 * Get Location from Nominatim when location is changed
 	 */
 	useEffect( () => {
 		const fetchData = async() => {
-			const location = await getLocation( attributes.location );
+			const LngLat = await getLocation( attributes.location );
 
-			if ( location ) {
+			if ( LngLat ) {
 				setAttributes({
-					latitude: location.latitude,
-					longitude: location.longitude
+					latitude: LngLat.latitude,
+					longitude: LngLat.longitude
 				});
 			}
 		};
@@ -101,13 +101,13 @@ const Edit = ({
 			map.setView([ attributes.latitude, attributes.longitude ], attributes.zoom || 13 );
 
 			// test add marker
-			addMarker({
-				id: uuidv4(),
-				title: 'Test',
-				longitude: attributes.longitude,
-				latitude: attributes.latitude,
-				description: 'The best of the best'
-			});
+			// addMarker({
+			// 	id: uuidv4(),
+			// 	title: 'Test',
+			// 	longitude: attributes.longitude,
+			// 	latitude: attributes.latitude,
+			// 	description: 'The best of the best'
+			// });
 		}
 	}, [ attributes.latitude, attributes.longitude, attributes.zoom, map ]);
 
@@ -143,7 +143,6 @@ const Edit = ({
 	/**
 	 * Marker Handlers
 	 */
-
 	const removeMarker = ( id ) => {
 		console.log( 'ON REMOVE', id, attributes.markers );
 		setAttributes({
@@ -156,14 +155,20 @@ const Edit = ({
 
 		if ( L && map ) {
 
+			// Check for undefined
+			marker.id ??= uuidv4();
+			marker.latitude ??= map.getCenter().lat;
+			marker.longitude ??= map.getCenter().lng;
+			marker.title ??= 'Add a title';
+
 			// Create the marker on the map
-			const mapMarker = new L.marker([ marker.latitude, marker.longitude ], {
+			const mapMarker = new L.marker([ marker.latitude, marker.longitude ] || map.getCenter(), {
 				title: marker.title,
 				draggable: true
 			});
 
-			// Add the identification code
 			mapMarker.markerId = marker.id;
+
 
 			// Show information in popup when clicked
 			mapMarker.bindPopup(
@@ -183,7 +188,7 @@ const Edit = ({
 				marker.longitude = latlng.lng;
 			});
 
-			// Test remove function on double clicl
+			// Test remove function on double click
 			mapMarker.on( 'dblclick', () => {
 				removeMarker( mapMarker.markerId );
 			});
@@ -197,12 +202,38 @@ const Edit = ({
 
 		// Save the marker
 		attributes.markers.push( marker );
-		setAttributes([ ...attributes.markers ]);
+		setAttributes({ ...attributes });
 
 		// setModalOpen( false );
 		// setSelectingMarker( false );
 	};
 
+	const changeMarkerProps = async( id, props ) => {
+
+		// Find the index of marker
+		const index =  attributes.markers.findIndex( marker => marker.id === id );
+
+		// Check if the location has changed
+		if ( props.location && attributes.markers[index].location !== props.location ) {
+
+			// Update the coordinates
+			const LngLat = await getLocation( attributes.location );
+
+			if ( LngLat ) {
+				props.latitude = LngLat.latitude;
+				props.longitude = LngLat.longitude;
+			}
+
+			console.log( 'Update coords', LngLat );
+		}
+
+		// Override it with the given props
+		attributes.markers[index] = { ...attributes.markers[index], ...props};
+
+		setAttributes({
+			...attributes
+		});
+	};
 
 	// const selectMarker = () => {
 	// 	setSelectingMarker( ! isSelectingMarker );
@@ -230,6 +261,9 @@ const Edit = ({
 			<Inspector
 				attributes={attributes}
 				setAttributes={setAttributes}
+				addMarker={addMarker}
+				removeMarker={removeMarker}
+				changeMarkerProps={changeMarkerProps}
 			/>
 			<div ref={mapRef} className={className} style={{width: 600, height: attributes.height || 400, marginBottom: 70}}>
 

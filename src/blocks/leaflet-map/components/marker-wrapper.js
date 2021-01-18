@@ -7,7 +7,6 @@ const { Button } = wp.components;
 
 const {
 	Fragment,
-	useEffect,
 	useState
 } = wp.element;
 
@@ -17,18 +16,11 @@ const {
 import Marker from './marker.js';
 
 const MarkerWrapper = ({
-	initialOpen,
 	markers,
-	isPlaceAPIAvailable,
 	addMarker,
 	removeMarker,
-	changeMarkerProp
+	changeMarkerProps
 }) => {
-	useEffect( () => {
-		if ( false !== initialOpen ) {
-			setOpen( initialOpen );
-		}
-	}, [ initialOpen ]);
 
 	const [ isOpen, setOpen ] = useState( null );
 
@@ -49,10 +41,9 @@ const MarkerWrapper = ({
 							key={ marker.id }
 							marker={ marker }
 							isOpen={ isOpen }
-							isPlaceAPIAvailable={ isPlaceAPIAvailable }
 							openMarker={ openMarker }
 							removeMarker={ removeMarker }
-							changeMarkerProp={ changeMarkerProp }
+							changeMarkerProps={ changeMarkerProps }
 						/>
 					);
 				}) }

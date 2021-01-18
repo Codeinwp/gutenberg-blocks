@@ -13,9 +13,14 @@ const {
 
 const { InspectorControls } = wp.blockEditor;
 
+import MarkerWrapper from './components/marker-wrapper.js';
+
 const Inspector = ({
 	attributes,
-	setAttributes
+	setAttributes,
+	addMarker,
+	removeMarker,
+	changeMarkerProps
 }) => {
 
 	const changeLocation = value => {
@@ -88,25 +93,17 @@ const Inspector = ({
 					max={ 1400 }
 				/>
 			</PanelBody>
-			{/* <PanelBody
+			<PanelBody
 				title={ __( 'Markers' ) }
-				initialOpen={ false }
-				opened={ false !== isMarkerOpen ? true : undefined }
-				onToggle={ () => {
-					if ( false !== isMarkerOpen ) {
-						setMarkerOpen( true );
-					}
-				} }
+				initialOpen={ true }
 			>
 				<MarkerWrapper
 					markers={ attributes.markers }
 					removeMarker={ removeMarker }
-					changeMarkerProp={ changeMarkerProp }
-					addMarker={ addMarkerManual }
-					isPlaceAPIAvailable={ isPlaceAPIAvailable }
-					initialOpen={ isMarkerOpen }
+					changeMarkerProps={ changeMarkerProps }
+					addMarker={ addMarker }
 				/>
-			</PanelBody> */}
+			</PanelBody>
 
 		</InspectorControls>
 	);
