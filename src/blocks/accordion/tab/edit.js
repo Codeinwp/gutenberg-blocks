@@ -153,6 +153,8 @@ const Edit = ({
 			.filter( blockType => ! bannedBlocks.includes( blockType ) );
 	};
 
+	console.log( className );
+
 	return (
 		<Fragment>
 			<Inspector attributes={ attributes } setAttributes={ setAttributes } />

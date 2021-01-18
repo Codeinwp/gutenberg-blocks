@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Css handling logic for icons.
  *
@@ -14,7 +15,8 @@ use ThemeIsle\GutenbergBlocks\CSS\CSS_Utility;
 /**
  * Class Progress_Bar_CSS
  */
-class Accordion_Tab_CSS extends Base_CSS {
+class Accordion_Tab_CSS extends Base_CSS
+{
 
 	/**
 	 * The namespace under which the blocks are registered.
@@ -31,7 +33,8 @@ class Accordion_Tab_CSS extends Base_CSS {
 	 * @since   1.3.0
 	 * @access  public
 	 */
-	public function render_css( $block ) {
+	public function render_css($block)
+	{
 		$attr  = $block['attrs'];
 		// $style = '';
 
@@ -56,7 +59,7 @@ class Accordion_Tab_CSS extends Base_CSS {
 		// 	$style .= '}' . "\n \n";
 		// }
 
-		$css = new CSS_Utility( $block );
+		$css = new CSS_Utility($block);
 
 		$css->add_item(
 			array(
@@ -87,7 +90,7 @@ class Accordion_Tab_CSS extends Base_CSS {
 				)
 			)
 		);
-			
+
 		$style = $css->generate();
 
 		return $style;

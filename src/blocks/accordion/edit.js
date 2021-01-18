@@ -28,6 +28,8 @@ const Edit = ({
 	className
 }) => {
 
+	console.log( className );
+
 	useEffect( () => {
 		initBlock();
 	}, []);
