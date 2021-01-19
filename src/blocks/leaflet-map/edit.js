@@ -29,6 +29,7 @@ const Edit = ({
 
 	const mapRef = useRef( null );
 	const [ map, setMap ] = useState( null );
+	const [ error, setError ] = useState({ type: '', target: '', id: '' });
 
 
 	const [ mapMarkers, setMarkers ] = useState({previous: [], current: []});
@@ -83,6 +84,14 @@ const Edit = ({
 				setAttributes({
 					latitude: LngLat.latitude,
 					longitude: LngLat.longitude
+				});
+				if ( 'LOCATION' === error.type && 'INSPECTOR' === error.target ) {
+					setError({});
+				}
+			} else {
+				setError({
+					type: 'LOCATION',
+					target: 'INSPECTOR'
 				});
 			}
 		};
@@ -222,6 +231,12 @@ const Edit = ({
 			if ( LngLat ) {
 				props.latitude = LngLat.latitude;
 				props.longitude = LngLat.longitude;
+			} else {
+				setError({
+					type: 'LOCATION',
+					target: 'MARKER',
+					id: id
+				});
 			}
 
 			console.log( 'Update coords', LngLat );
@@ -264,6 +279,7 @@ const Edit = ({
 				addMarker={addMarker}
 				removeMarker={removeMarker}
 				changeMarkerProps={changeMarkerProps}
+				error={error}
 			/>
 			<div ref={mapRef} className={className} style={{width: 600, height: attributes.height || 400, marginBottom: 70}}>
 

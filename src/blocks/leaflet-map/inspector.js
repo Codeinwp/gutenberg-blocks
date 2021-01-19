@@ -1,4 +1,4 @@
-
+import classnames from 'classnames';
 
 /**
  * WordPress dependencies
@@ -6,7 +6,13 @@
 const { __ } = wp.i18n;
 
 const {
+	useState
+} = wp.element;
+
+
+const {
 	PanelBody,
+	Button,
 	TextControl,
 	RangeControl
 } = wp.components;
@@ -20,11 +26,14 @@ const Inspector = ({
 	setAttributes,
 	addMarker,
 	removeMarker,
-	changeMarkerProps
+	changeMarkerProps,
+	error
 }) => {
 
-	const changeLocation = value => {
-		setAttributes({ location: value });
+	const [ location, setLocation ] = useState( attributes.location );
+
+	const search = () => {
+		setAttributes({ location: location});
 	};
 
 	const changeLatitude = value => {
@@ -49,13 +58,27 @@ const Inspector = ({
 			<PanelBody
 				title={ __( 'Location' ) }
 			>
+
 				<TextControl
 					label={ __( 'Location' ) }
 					type="text"
+					className={ classnames({'wp-block-themeisle-blocks-leaflet-map-input-error': 'LOCATION' === error.type && 'INSPECTOR' === error.target})}
 					placeholder={ __( 'Enter latitude…' ) }
-					value={ attributes.location }
-					onChange={ changeLocation }
+					value={ location }
+					onChange={ ( value ) => setLocation( value ) }
 				/>
+
+				<Button
+					isPrimary
+					isSmall
+					label={ __( 'Search location' ) }
+					onClick={ () => {
+						console.log( 'Search' );
+						search();
+					}}
+				>
+					{ __( 'Search location' )}
+				</Button>
 
 				<TextControl
 					label={ __( 'Latitude' ) }
@@ -72,6 +95,8 @@ const Inspector = ({
 					value={ attributes.longitude }
 					onChange={ changeLongitude }
 				/>
+
+
 			</PanelBody>
 			<PanelBody
 				title={ __( 'Positioning & Zooming' ) }

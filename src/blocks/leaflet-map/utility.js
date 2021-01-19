@@ -20,7 +20,7 @@ async function makeSearchRequest( location ) {
 		return response.json();
 	}
 	console.log( `An error has occured: ${response.status}` );
-	return {};
+	return null;
 }
 
 export async function getLocation( location ) {
@@ -40,5 +40,5 @@ export async function getLocation( location ) {
 		}
 	}
 
-	return {};
+	return null;
 }
