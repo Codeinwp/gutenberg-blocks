@@ -1,5 +1,5 @@
 /**
- * WordPress dependencies
+ * External dependencies
  */
 import classnames from 'classnames';
 
@@ -22,6 +22,7 @@ const {
  * Internal dependencies
  */
 import MarkerEditor from './marker-editor.js';
+import { getLocation } from './../utility.js';
 
 const Marker = ({
 	marker,
@@ -40,12 +41,39 @@ const Marker = ({
 	const [ lat, setLat ] = useState( marker.latitude );
 	const [ title, setTitle ] = useState( marker.title );
 	const [ description, setDescription ] = useState( marker.description );
+	const [ error, setError ] = useState({ target: '', reason: '' });
+
+	const search = async() => {
+
+		const LngLat = await getLocation( location );
+
+		if ( LngLat ) {
+
+			changeMarkerProps( marker.id, {
+				location: location,
+				latitude: LngLat.latitude,
+				longitude: LngLat.longitude
+			});
+
+			setLat( LngLat.latitude );
+			setLng( LngLat.longitude );
+
+			if ( 'LOCATION' === error.target ) {
+				setError({});
+			}
+		} else {
+			setError({
+				target: 'LOCATION',
+				reason: 'Location couldn\'t been found!'
+			});
+		}
+	};
 
 	return (
-		<div className="wp-block-themeisle-blocks-google-map-marker">
-			<div className="wp-block-themeisle-blocks-google-map-marker-title-area">
+		<div className="wp-block-themeisle-blocks-leaflet-map-marker">
+			<div className="wp-block-themeisle-blocks-leaflet-map-marker-title-area">
 				<Button
-					className="wp-block-themeisle-blocks-google-map-marker-title"
+					className="wp-block-themeisle-blocks-leaflet-map-marker-title"
 					onClick={ () => openMarker( marker.id ) }
 				>
 					{ marker.title || __( 'Custom Marker' ) }
@@ -55,28 +83,38 @@ const Marker = ({
 					icon="no-alt"
 					label={ __( 'Remove Marker' ) }
 					showTooltip={ true }
-					className="wp-block-themeisle-blocks-google-map-marker-remove"
+					className="wp-block-themeisle-blocks-leaflet-map-marker-remove"
 					onClick={ () => removeMarker( marker.id ) }
 				/>
 			</div>
 
 			<div
 				className={ classnames(
-					'wp-block-themeisle-blocks-google-map-marker-control-area',
+					'wp-block-themeisle-blocks-leaflet-map-marker-control-area',
 					{ 'opened': marker.id === isOpen }
 				) }
 			>
 				<TextControl
 					label={ __( 'Location' ) }
 					type="text"
+					className={ classnames({'wp-block-themeisle-blocks-leaflet-map-input-error': 'LOCATION' === error.target })}
 					value={ location }
 					onChange={ e => {
 						setLocation( e );
-						changeMarkerProps( marker.id, {
-							location: e
-						});
 					} }
 				/>
+
+				<Button
+					isPrimary
+					isSmall
+					label={ __( 'Search location' ) }
+					onClick={ () => {
+						console.log( 'Search' );
+						search();
+					}}
+				>
+					{ __( 'Search location' )}
+				</Button>
 
 				<TextControl
 					label={ __( 'Latitude' ) }
@@ -105,7 +143,7 @@ const Marker = ({
 
 				{/* <SelectControl
 					label={ __( 'Map Icon' ) }
-					value={ marker.icon || 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' }
+					value={ marker.icon || 'https://maps.leaflet.com/mapfiles/ms/icons/red-dot.png' }
 					options={ [
 						{ label: __( 'Red' ), value: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' },
 						{ label: __( 'Blue' ), value: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' },

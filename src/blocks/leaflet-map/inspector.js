@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import classnames from 'classnames';
 
 /**
@@ -19,6 +22,11 @@ const {
 
 const { InspectorControls } = wp.blockEditor;
 
+/**
+ * Internal dependencies
+ */
+import { getLocation } from './utility';
+
 import MarkerWrapper from './components/marker-wrapper.js';
 
 const Inspector = ({
@@ -26,14 +34,32 @@ const Inspector = ({
 	setAttributes,
 	addMarker,
 	removeMarker,
-	changeMarkerProps,
-	error
+	changeMarkerProps
 }) => {
 
 	const [ location, setLocation ] = useState( attributes.location );
+	const [ error, setError ] = useState({ target: '', reason: '' });
 
-	const search = () => {
+	const search = async() => {
 		setAttributes({ location: location});
+
+		const LngLat = await getLocation( attributes.location );
+
+		if ( LngLat ) {
+			setAttributes({
+				latitude: LngLat.latitude,
+				longitude: LngLat.longitude
+			});
+
+			if ( 'LOCATION' === error.target ) {
+				setError({});
+			}
+		} else {
+			setError({
+				target: 'LOCATION',
+				reason: 'Location couldn\'t been found!'
+			});
+		}
 	};
 
 	const changeLatitude = value => {
@@ -62,8 +88,8 @@ const Inspector = ({
 				<TextControl
 					label={ __( 'Location' ) }
 					type="text"
-					className={ classnames({'wp-block-themeisle-blocks-leaflet-map-input-error': 'LOCATION' === error.type && 'INSPECTOR' === error.target})}
-					placeholder={ __( 'Enter latitude…' ) }
+					className={ classnames({'wp-block-themeisle-blocks-leaflet-map-input-error': 'LOCATION' === error.target })}
+					placeholder={ __( 'Enter location…' ) }
 					value={ location }
 					onChange={ ( value ) => setLocation( value ) }
 				/>

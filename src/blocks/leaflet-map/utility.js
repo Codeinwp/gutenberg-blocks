@@ -12,7 +12,7 @@ async function makeSearchRequest( location ) {
 
 	const url = 'https://nominatim.openstreetmap.org/search?q=' + query + '&format=geojson';
 
-	console.log( url );
+	console.log( 'Link: ' + url );
 
 	const response = await fetch( url );
 
@@ -26,7 +26,7 @@ async function makeSearchRequest( location ) {
 export async function getLocation( location ) {
 	const data = await makeSearchRequest( location );
 
-	// Check if we have received the some coordinates
+	// Check if we have received some coordinates
 	if ( data?.features.length ) {
 
 		// Take only the first result
