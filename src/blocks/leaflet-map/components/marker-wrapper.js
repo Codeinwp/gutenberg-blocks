@@ -24,24 +24,17 @@ const MarkerWrapper = ({
 
 	const [ isOpen, setOpen ] = useState( null );
 
-	const openMarker = ( id ) => {
-		if ( isOpen === id ) {
-			id = null;
-		}
-
-		setOpen( id );
-	};
 
 	return (
 		<Fragment>
 			<div className="wp-block-themeisle-blocks-google-map-marker-group">
-				{ markers.map( marker => {
+				{ markers.map(  marker => {
 					return (
 						<Marker
 							key={ marker.id }
 							marker={ marker }
-							isOpen={ isOpen }
-							openMarker={ openMarker }
+							isOpen={ isOpen === marker.id }
+							openMarker={ () => setOpen( isOpen !== marker.id ? marker.id : null ) }
 							removeMarker={ removeMarker }
 							changeMarkerProps={ changeMarkerProps }
 						/>
@@ -53,7 +46,7 @@ const MarkerWrapper = ({
 				isSecondary
 				isLarge
 				className="wp-block-themeisle-blocks-google-map-marker-add"
-				onClick={ addMarker }
+				onClick={ () => addMarker({}) }
 			>
 				{ __( 'Add Marker' ) }
 			</Button>

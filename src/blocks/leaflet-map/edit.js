@@ -33,6 +33,7 @@ const Edit = ({
 
 	const [ mapMarkers, setMarkers ] = useState({previous: [], current: []});
 
+
 	// const [ isMarkerOpen, setMarkerOpen ] = useState( false );
 	// const [ isSelectingMarker, setSelectingMarker ] = useState( false );
 	// const [ isModalOpen, setModalOpen ] = useState( false );
@@ -124,6 +125,12 @@ const Edit = ({
 	 */
 	useEffect( () => {
 
+		if ( ! map ) {
+			return ;
+		}
+
+		console.log( 'State: ' + mapMarkers.current.length, mapMarkers.current );
+
 		// Check if a marker has been deleted
 		if ( attributes.markers.length < mapMarkers.current.length ) {
 			console.log( 'Remove Marker from map!' );
@@ -135,17 +142,37 @@ const Edit = ({
 				previous: mapMarkers.current,
 				current: filteredMarker
 			});
+		} else if ( 0 < attributes.markers.length && 0 === mapMarkers.current.length ) {
+			console.log( 'Initialize' );
+
+			// Initialize the markers from attributes
+			attributes.markers.forEach( marker => {
+				addMarker( marker, false );
+			});
 		}
 
 		console.log( 'Clean Marker on the map!' );
 
 		// Clean up the previous markers
-		mapMarkers.previous.filter( mapMarker => map.hasLayer( mapMarker ) ).map( mapMarker => map.removeLayer( mapMarker ) );
+		// mapMarkers.previous.filter( mapMarker => map.hasLayer( mapMarker ) ).map( mapMarker => map.removeLayer( mapMarker ) );
+		const markersOnTheMap = mapMarkers.previous.filter( mapMarker => map.hasLayer( mapMarker ) );
+
+		markersOnTheMap.forEach( marker => {
+			if ( map.hasLayer( marker ) ) {
+				console.log( 'On the map: ' + marker.markerId );
+				map.removeLayer( marker );
+			}
+		});
 
 		console.log( 'Set Marker on the map!' );
 
 		// Add the current markers
-		mapMarkers.current.map( mapMarker => map.addLayer( mapMarker ) );
+		// mapMarkers.current.forEach( mapMarker => {
+		// 	console.log( mapMarker );
+		// 	mapMarker.addTo( map );
+		// });
+
+		L.layerGroup( mapMarkers.current ).addTo( map );
 	}, [ mapMarkers, map, attributes.markers ]);
 
 	/**
@@ -159,7 +186,20 @@ const Edit = ({
 		});
 	};
 
-	const addMarker = ( marker ) => {
+	const changeMarkerProps = async( id, props ) => {
+
+		// Find the index of marker
+		const index =  attributes.markers.findIndex( marker => marker.id === id );
+
+		// Override it with the given props
+		attributes.markers[index] = { ...attributes.markers[index], ...props};
+
+		setAttributes({
+			...attributes
+		});
+	};
+
+	const addMarker = ( marker, addToAttributes = true ) => {
 
 		if ( L && map ) {
 
@@ -170,7 +210,7 @@ const Edit = ({
 			marker.title ??= 'Add a title';
 
 			// Create the marker on the map
-			const mapMarker = new L.marker([ marker.latitude, marker.longitude ] || map.getCenter(), {
+			const mapMarker = L.marker([ marker.latitude, marker.longitude ] || map.getCenter(), {
 				title: marker.title,
 				draggable: true
 			});
@@ -192,8 +232,10 @@ const Edit = ({
 
 			// Change coords when dragging
 			mapMarker.on( 'move', ({latlng}) => {
-				marker.latitude = latlng.lat;
-				marker.longitude = latlng.lng;
+				changeMarkerProps( marker.id, {
+					latitude: latlng.lat,
+					longitude: latlng.lng
+				});
 			});
 
 			// Test remove function on double click
@@ -206,69 +248,17 @@ const Edit = ({
 				previous: mapMarkers.current,
 				current: [ ...mapMarkers.current, mapMarker ]
 			});
+
+			if ( addToAttributes ) {
+
+				// Save the marker
+				attributes.markers.push( marker );
+				setAttributes({ ...attributes });
+			}
 		}
 
-		// Save the marker
-		attributes.markers.push( marker );
-		setAttributes({ ...attributes });
-
-		// setModalOpen( false );
-		// setSelectingMarker( false );
 	};
 
-	const changeMarkerProps = async( id, props ) => {
-
-		// Find the index of marker
-		const index =  attributes.markers.findIndex( marker => marker.id === id );
-
-		// Check if the location has changed
-		// if ( props.location && attributes.markers[index].location !== props.location ) {
-
-		// 	// Update the coordinates
-		// 	const LngLat = await getLocation( attributes.location );
-
-		// 	if ( LngLat ) {
-		// 		props.latitude = LngLat.latitude;
-		// 		props.longitude = LngLat.longitude;
-		// 	} else {
-		// 		setError({
-		// 			type: 'LOCATION',
-		// 			target: 'MARKER',
-		// 			id: id
-		// 		});
-		// 	}
-
-		// 	console.log( 'Update coords', LngLat );
-		// }
-
-		// Override it with the given props
-		attributes.markers[index] = { ...attributes.markers[index], ...props};
-
-		setAttributes({
-			...attributes
-		});
-	};
-
-	// const selectMarker = () => {
-	// 	setSelectingMarker( ! isSelectingMarker );
-
-	// 	if ( ! isSelectingMarker ) {
-
-	// 		map.on( '' );
-
-	// 		setModalOpen( true );
-	// 		setAdvanced( false );
-	// 		setSelectedMarker({
-	// 			id,
-	// 			location: '',
-	// 			title,
-	// 			icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
-	// 			description: '',
-	// 			latitude,
-	// 			longitude
-	// 		});
-	// 	}
-	// };
 
 	return (
 		<Fragment>
@@ -279,7 +269,7 @@ const Edit = ({
 				removeMarker={removeMarker}
 				changeMarkerProps={changeMarkerProps}
 			/>
-			<div ref={mapRef} className={className} style={{width: 600, height: attributes.height || 400, marginBottom: 70}}>
+			<div ref={mapRef} className={className} style={{width: 600, height: attributes.height || 400, marginBottom: 70, marginTop: 70 }}>
 
 			</div>
 		</Fragment>
