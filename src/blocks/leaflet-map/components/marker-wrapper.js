@@ -27,7 +27,7 @@ const MarkerWrapper = ({
 
 	return (
 		<Fragment>
-			<div className="wp-block-themeisle-blocks-google-map-marker-group">
+			<div className="wp-block-themeisle-blocks-leaflet-map-marker-group">
 				{ markers.map(  marker => {
 					return (
 						<Marker
@@ -45,7 +45,7 @@ const MarkerWrapper = ({
 			<Button
 				isSecondary
 				isLarge
-				className="wp-block-themeisle-blocks-google-map-marker-add"
+				className="wp-block-themeisle-blocks-leaflet-map-marker-add"
 				onClick={ () => addMarker({}) }
 			>
 				{ __( 'Add Marker' ) }
