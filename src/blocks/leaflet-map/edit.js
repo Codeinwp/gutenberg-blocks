@@ -31,7 +31,7 @@ const Edit = ({
 	const [ map, setMap ] = useState( null );
 
 
-	const [ mapMarkers, setMarkers ] = useState({previous: [], current: []});
+	const [ mapMarkers, setMarkers ] = useState([]);
 
 
 	// const [ isMarkerOpen, setMarkerOpen ] = useState( false );
@@ -125,54 +125,45 @@ const Edit = ({
 	 */
 	useEffect( () => {
 
-		if ( ! map ) {
+		if ( ! map && ! L ) {
 			return ;
 		}
 
-		console.log( 'State: ' + mapMarkers.current.length, mapMarkers.current );
+		console.log( 'State: ' + mapMarkers.length, mapMarkers );
 
-		// Check if a marker has been deleted
-		if ( attributes.markers.length < mapMarkers.current.length ) {
-			console.log( 'Remove Marker from map!' );
-			const currentIds = attributes.markers.map( marker => marker.id );
+		if ( mapMarkers.length > attributes.markers.length ) {
 
-			// Remove the map markers
-			const filteredMarker = mapMarkers.current.filter( ({markerId}) => currentIds.includes( markerId ) );
-			setMarkers({
-				previous: mapMarkers.current,
-				current: filteredMarker
+			// Check if a marker has been removed. If true, delete it from the map
+			const markersIds = attributes.markers.map( ({id}) => id );
+			const oldMarkers = mapMarkers.filter( ({markerId}) => ! markersIds.includes( markerId ) );
+			oldMarkers.forEach( marker => {
+				console.log( 'Check marker ' + marker.markerId );
+				if ( map.hasLayer( marker ) ) {
+					console.log( 'Delete marker ' + marker.markerId );
+					map.removeLayer( marker );
+				}
 			});
-		} else if ( 0 < attributes.markers.length && 0 === mapMarkers.current.length ) {
-			console.log( 'Initialize' );
+			setMarkers( mapMarkers.filter( ({markerId}) => markersIds.includes( markerId ) ) );
+		} else if ( mapMarkers.length === attributes.markers.length ) {
 
-			// Initialize the markers from attributes
-			attributes.markers.forEach( marker => {
-				addMarker( marker, false );
+			// Check if a marker has been created. If true, add it to the map
+			console.log( 'Add markers to map' );
+			mapMarkers.filter( marker => ! map.hasLayer( marker ) ).forEach( marker => {
+				map.addLayer( marker );
 			});
+
+		} else {
+
+			// Create markers
+			const markersIds = mapMarkers.map( ({markerId}) => markerId );
+			attributes.markers.filter( ({id}) => ! markersIds.includes( id ) ).forEach(
+				marker => {
+					console.log( 'Creater Marker' );
+					addMarker( marker, false );
+				}
+			);
 		}
 
-		console.log( 'Clean Marker on the map!' );
-
-		// Clean up the previous markers
-		// mapMarkers.previous.filter( mapMarker => map.hasLayer( mapMarker ) ).map( mapMarker => map.removeLayer( mapMarker ) );
-		const markersOnTheMap = mapMarkers.previous.filter( mapMarker => map.hasLayer( mapMarker ) );
-
-		markersOnTheMap.forEach( marker => {
-			if ( map.hasLayer( marker ) ) {
-				console.log( 'On the map: ' + marker.markerId );
-				map.removeLayer( marker );
-			}
-		});
-
-		console.log( 'Set Marker on the map!' );
-
-		// Add the current markers
-		// mapMarkers.current.forEach( mapMarker => {
-		// 	console.log( mapMarker );
-		// 	mapMarker.addTo( map );
-		// });
-
-		L.layerGroup( mapMarkers.current ).addTo( map );
 	}, [ mapMarkers, map, attributes.markers ]);
 
 	/**
@@ -194,6 +185,26 @@ const Edit = ({
 		// Override it with the given props
 		attributes.markers[index] = { ...attributes.markers[index], ...props};
 
+		const mapMarker = mapMarkers.filter( ({markerId}) => markerId === id )[0];
+
+		if ( mapMarker ) {
+			mapMarker.setLatLng( L.latLng( Number( attributes.markers[index].latitude ), Number( attributes.markers[index].longitude ) ) );
+
+			// Show information in popup when clicked
+			mapMarker.bindPopup(
+				`<div class="wp-block-themeisle-blocks-map-overview">
+						<h6 class="wp-block-themeisle-blocks-map-overview-title">
+							${ attributes.markers[index].title }
+						</h6>
+						<div class="wp-block-themeisle-blocks-map-overview-content">
+							<p>
+								${ attributes.markers[index].description }
+							</p
+						</div>
+					</div>`
+			);
+		}
+
 		setAttributes({
 			...attributes
 		});
@@ -208,6 +219,7 @@ const Edit = ({
 			marker.latitude ??= map.getCenter().lat;
 			marker.longitude ??= map.getCenter().lng;
 			marker.title ??= 'Add a title';
+			marker.description ??= '';
 
 			// Create the marker on the map
 			const mapMarker = L.marker([ marker.latitude, marker.longitude ] || map.getCenter(), {
@@ -217,18 +229,19 @@ const Edit = ({
 
 			mapMarker.markerId = marker.id;
 
-
-			// Show information in popup when clicked
 			mapMarker.bindPopup(
 				`<div class="wp-block-themeisle-blocks-map-overview">
-					<h6 class="wp-block-themeisle-blocks-map-overview-title">
-						${ marker.title }
-					</h6>
-					<div class="wp-block-themeisle-blocks-map-overview-content">
-						${ marker.description ? `<p>${ marker.description }</p>` : '' }
-					</div>
-				</div>`
+						<h6 class="wp-block-themeisle-blocks-map-overview-title">
+							${ marker.title }
+						</h6>
+						<div class="wp-block-themeisle-blocks-map-overview-content">
+							<p>
+								${ marker.description }
+							</p
+						</div>
+					</div>`
 			);
+
 
 			// Change coords when dragging
 			mapMarker.on( 'move', ({latlng}) => {
@@ -244,10 +257,9 @@ const Edit = ({
 			});
 
 			// Save the map marker
-			setMarkers({
-				previous: mapMarkers.current,
-				current: [ ...mapMarkers.current, mapMarker ]
-			});
+			setMarkers(
+				[ ...mapMarkers, mapMarker ]
+			);
 
 			if ( addToAttributes ) {
 
@@ -255,8 +267,10 @@ const Edit = ({
 				attributes.markers.push( marker );
 				setAttributes({ ...attributes });
 			}
-		}
 
+			return mapMarker;
+		}
+		return null;
 	};
 
 

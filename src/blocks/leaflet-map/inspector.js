@@ -43,7 +43,7 @@ const Inspector = ({
 	const search = async() => {
 		setAttributes({ location: location});
 
-		const LngLat = await getLocation( attributes.location );
+		const LngLat = await getLocation( location );
 
 		if ( LngLat ) {
 			setAttributes({
@@ -99,7 +99,6 @@ const Inspector = ({
 					isSmall
 					label={ __( 'Search location' ) }
 					onClick={ () => {
-						console.log( 'Search' );
 						search();
 					}}
 				>
