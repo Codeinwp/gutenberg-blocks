@@ -129,11 +129,7 @@
       border: 1px solid #d5dadf;
       border-top: none;
       padding: 10px 15px;
-      display: none;
-
-      &.opened {
-        display: block;
-      }
+      display: block;
     }
   }
 }

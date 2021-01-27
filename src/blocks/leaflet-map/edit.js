@@ -34,13 +34,6 @@ const Edit = ({
 	const [ mapMarkers, setMarkers ] = useState([]);
 
 
-	// const [ isMarkerOpen, setMarkerOpen ] = useState( false );
-	// const [ isSelectingMarker, setSelectingMarker ] = useState( false );
-	// const [ isModalOpen, setModalOpen ] = useState( false );
-
-	// const [ isAdvanced, setAdvanced ] = useState( false );
-	// const [ selectedMarker, setSelectedMarker ] = useState({});
-
 	/**
 	 * Initialize the map
 	 */
@@ -74,49 +67,11 @@ const Edit = ({
 	}, []);
 
 	/**
-	 * Get Location from Nominatim when location is changed
-	 */
-	// useEffect( () => {
-	// 	const fetchData = async() => {
-	// 		const LngLat = await getLocation( attributes.location );
-
-	// 		if ( LngLat ) {
-	// 			setAttributes({
-	// 				latitude: LngLat.latitude,
-	// 				longitude: LngLat.longitude
-	// 			});
-	// 			if ( 'LOCATION' === error.type && 'INSPECTOR' === error.target ) {
-	// 				setError({});
-	// 			}
-	// 		} else {
-	// 			setError({
-	// 				type: 'LOCATION',
-	// 				target: 'INSPECTOR'
-	// 			});
-	// 		}
-	// 	};
-
-	// 	if ( map ) {
-	// 		fetchData();
-	// 	}
-
-	// }, [ attributes.location, map ]);
-
-	/**
 	 * Set View on the map
 	 */
 	useEffect( () => {
 		if ( attributes.latitude && attributes.longitude && map ) {
 			map.setView([ attributes.latitude, attributes.longitude ], attributes.zoom || 13 );
-
-			// test add marker
-			// addMarker({
-			// 	id: uuidv4(),
-			// 	title: 'Test',
-			// 	longitude: attributes.longitude,
-			// 	latitude: attributes.latitude,
-			// 	description: 'The best of the best'
-			// });
 		}
 	}, [ attributes.latitude, attributes.longitude, attributes.zoom, map ]);
 
@@ -249,11 +204,6 @@ const Edit = ({
 					latitude: latlng.lat,
 					longitude: latlng.lng
 				});
-			});
-
-			// Test remove function on double click
-			mapMarker.on( 'dblclick', () => {
-				removeMarker( mapMarker.markerId );
 			});
 
 			// Save the map marker
