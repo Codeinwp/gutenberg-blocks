@@ -8,10 +8,7 @@ const attributes = {
 	title: {
 		type: 'string'
 	},
-	titleBackgroundColor: {
-		type: 'string'
-	},
-	contentBackgroundColor: {
+	content: {
 		type: 'string'
 	}
 };

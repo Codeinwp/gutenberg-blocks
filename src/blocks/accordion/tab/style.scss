@@ -27,17 +27,31 @@ $toggler-background-color: rgb(255, 255, 255);
         transform: rotate(90deg);
       }
     }
+
+    &:checked + .wp-block-themeisle-blocks-accordion-block-tab-title {
+      .wp-block-themeisle-blocks-accordion-block-tab-title__icon__end {
+        .wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__2 {
+          transform: rotate(90deg);
+        }
+      }
+    }
   }
 
   .wp-block-themeisle-blocks-accordion-block-tab-title {
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
     margin-bottom: 0px;
     cursor: pointer;
+    padding-left: 5px;
+    padding-right: 15px;
+    padding-top: 8px;
+    padding-bottom: 5px;
 
     .wp-block-themeisle-blocks-accordion-block-tab-label {
-      display: block;
+      display: flex;
+      align-items: center;
       background-color: transparent;
       color: #444;
       font-weight: bold;
@@ -49,10 +63,8 @@ $toggler-background-color: rgb(255, 255, 255);
       transition: 0.4s;
       margin-top: 0px;
       margin-bottom: 0px;
-
-      &.no-front-icon {
-        margin-left: 10px;
-      }
+      line-height: 1.2;
+      margin-left: 4px;
     }
 
     label {
@@ -66,16 +78,41 @@ $toggler-background-color: rgb(255, 255, 255);
     }
 
     .wp-block-themeisle-blocks-accordion-block-tab-title__icon__end {
-      transform: rotate(-90deg);
+      width: 2.5rem;
+      height: 2.5rem;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      .wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__1,
+      .wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__2 {
+        display: block;
+        position: absolute;
+        width: 1.6rem;
+        height: 0.2rem;
+        background-color: black;
+        transition: all 0.2s;
+      }
+
+      .wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__1 {
+        transform: rotate(90deg);
+      }
+
+      &.show {
+        display: flex;
+      }
     }
   }
 
   .wp-block-themeisle-blocks-accordion-block-tab-content {
-    padding: 0 18px;
+    padding: 0 9px;
     background-color: transparent;
     max-height: 0;
     opacity: 0;
     overflow: hidden;
     transition: max-height 0.2s;
+
+    .wp-block-themeisle-blocks-accordion-block-tab-content__input {
+      line-height: 1.1;
+    }
   }
 }

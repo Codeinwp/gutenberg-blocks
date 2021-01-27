@@ -1,4 +1,3 @@
-import { Icon, chevronRight } from '@wordpress/icons';
 import classnames from 'classnames';
 
 /**
@@ -15,16 +14,12 @@ const { isEqual } = lodash;
 
 const { RichText } = wp.blockEditor;
 
-const { InnerBlocks } = wp.blockEditor;
-
 const { useSelect } = wp.data;
-
-const { getBlockTypes } = wp.blocks;
-
 
 import defaultAttributes from './attributes.js';
 import defaults from '../../../plugins/options/global-defaults/defaults.js';
-import Inspector from './inspector.js';
+
+// import Inspector from './inspector.js';
 
 const IDs = [];
 
@@ -65,7 +60,6 @@ const Edit = ({
 		};
 	}, []);
 
-	const ratio = 36 / 20;
 
 	const initBlock = () => {
 		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
@@ -111,10 +105,16 @@ const Edit = ({
 		setAttributes({ title: value });
 	};
 
+	const changeContent = value => {
+		setAttributes({ content: value });
+	};
+
 	let titleStyle;
+	let contentStyle;
 	let tabStyle;
-	let iconStyle;
-	let iconSize;
+
+	// let iconStyle;
+	// let iconSize;
 	let iconStylePosition = 'default';
 
 	if ( hasParent ) {
@@ -130,34 +130,27 @@ const Edit = ({
 			marginBottom: parentAttributes.tabsGap + 'px'
 		};
 
-		iconStyle = {
-			fill: parentAttributes.tabsTitleColor
+		contentStyle = {
+			color: parentAttributes.tabsContentColor,
+			fontSize: parentAttributes.tabsContentFontSize + 'px'
 		};
 
-		iconSize = parentAttributes.tabsTitleFontSize * ratio;
+		// iconStyle = {
+		// 	fill: parentAttributes.tabsTitleColor
+		// };
+
+		// iconSize = parentAttributes.tabsTitleFontSize * 36 / 12;
 
 		iconStylePosition = parentAttributes.iconStyle || iconStylePosition;
 
 		setAttributes({ parentAttributes: parentAttributes });
 	};
 
-	const getAllowedTypeBlocks = () => {
-
-		const bannedBlocks = [
-			'themeisle-blocks/progress-bar',
-			'themeisle-blocks/circular-counter'
-		];
-
-		return getBlockTypes()
-			.map( block => block.name )
-			.filter( blockType => ! bannedBlocks.includes( blockType ) );
-	};
-
 	console.log( className );
 
 	return (
 		<Fragment>
-			<Inspector attributes={ attributes } setAttributes={ setAttributes } />
+			{/* <Inspector attributes={ attributes } setAttributes={ setAttributes } /> */}
 			<div
 				className={ className }
 				id={ attributes.id }
@@ -168,25 +161,23 @@ const Edit = ({
 				<input type="checkbox" id={ attributes.htmlFor } class="wp-block-themeisle-blocks-accordion-block-tab-toggle" checked disabled/>
 
 				<label className="wp-block-themeisle-blocks-accordion-block-tab-title"
-					style={{
-						backgroundColor: attributes.titleBackgroundColor
-					}}
 					htmlFor={ attributes.htmlFor }
 				>
-
-					{ ( 'default' === iconStylePosition ) && (
-						<Icon
-							icon={ chevronRight }
-							style={{ ...iconStyle }}
-							size={ iconSize || 36 }
-							className="wp-block-themeisle-blocks-accordion-block-tab-title__icon__start"
-						/>
-					)}
+					<div className={
+						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end', { 'show': 'start' === iconStylePosition  })
+					}>
+						<div className={
+							classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__1' )
+						}></div>
+						<div className={
+							classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__2' )
+						}></div>
+					</div>
 					<RichText
 						tagName="p"
 						placeholder={ __( 'Write a title…' ) }
 						className={
-							classnames( 'wp-block-themeisle-blocks-accordion-block-tab-label', {'no-front-icon': 'default' !== iconStylePosition})
+							classnames( 'wp-block-themeisle-blocks-accordion-block-tab-label' )
 						}
 
 						value={ attributes.title }
@@ -194,30 +185,37 @@ const Edit = ({
 						multiline={ false }
 						keepPlaceholderOnFocus={ true }
 						style={{
-							...titleStyle,
-							backgroundColor: attributes.titleBackgroundColor
+							...titleStyle
 						}}
 					/>
-					{ ( 'end' === iconStylePosition ) && (
-						<Icon
-							icon={ chevronRight }
-							style={{ ...iconStyle }}
-							size={ iconSize || 36 }
-							className="wp-block-themeisle-blocks-accordion-block-tab-title__icon__end"
-						/>
-					)}
+					<div className={
+						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end', { 'show': 'default' === iconStylePosition  })
+					}>
+						<div className={
+							classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__1' )
+						}></div>
+						<div className={
+							classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__2' )
+						}></div>
+					</div>
 				</label>
 				<div
 					className="wp-block-themeisle-blocks-accordion-block-tab-content"
-					style={{
-						backgroundColor: attributes.contentBackgroundColor
-					}}
 				>
-					<InnerBlocks
-						allowedBlocks={ getAllowedTypeBlocks() }
-						__experimentalMoverDirection="vertical"
-						orientation="vertical"
-						renderAppender={ InnerBlocks.ButtonBlockAppender }
+					<RichText
+						tagName="p"
+						placeholder={ __( 'Write some content…' ) }
+						className={
+							classnames( 'wp-block-themeisle-blocks-accordion-block-tab-content__input' )
+						}
+
+						value={ attributes.content }
+						onChange={ changeContent }
+						multiline={ false }
+						keepPlaceholderOnFocus={ true }
+						style={{
+							...contentStyle
+						}}
 					/>
 				</div>
 			</div>

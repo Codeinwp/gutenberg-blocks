@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Css handling logic for icons.
  *
@@ -14,7 +15,8 @@ use ThemeIsle\GutenbergBlocks\CSS\CSS_Utility;
 /**
  * Class Progress_Bar_CSS
  */
-class Accordion_CSS extends Base_CSS {
+class Accordion_CSS extends Base_CSS
+{
 
 	/**
 	 * The namespace under which the blocks are registered.
@@ -31,9 +33,10 @@ class Accordion_CSS extends Base_CSS {
 	 * @since   1.3.0
 	 * @access  public
 	 */
-	public function render_css( $block ) {
+	public function render_css($block)
+	{
 
-		$css = new CSS_Utility( $block );
+		$css = new CSS_Utility($block);
 
 		// LABEL
 		$css->add_item(
@@ -47,6 +50,24 @@ class Accordion_CSS extends Base_CSS {
 					array(
 						'property' => 'font-size',
 						'value'    => 'tabsTitleFontSize',
+						'unit'     => 'px'
+					)
+				)
+			)
+		);
+
+		// CONTENT
+		$css->add_item(
+			array(
+				'selector'    => ' .wp-block-themeisle-blocks-accordion-block-tabs .wp-block-themeisle-blocks-accordion-tab .wp-block-themeisle-blocks-accordion-block-tab-content',
+				'properties'  => array(
+					array(
+						'property' => 'color',
+						'value'    => 'tabsContentColor',
+					),
+					array(
+						'property' => 'font-size',
+						'value'    => 'tabsContentFontSize',
 						'unit'     => 'px'
 					)
 				)
@@ -92,7 +113,7 @@ class Accordion_CSS extends Base_CSS {
 			)
 		);
 
-		
+
 
 
 
@@ -126,11 +147,11 @@ class Accordion_CSS extends Base_CSS {
 		// 		$style .= '	margin-bottom: ' . $this->get_attr_value( $attr['tabsGap'] ) . 'px;' . "\n";
 		// 	}
 		// 	$style .= '}' . "\n \n";
-			
+
 		// }
 
-		
-			
+
+
 		$style = $css->generate();
 
 		return $style;

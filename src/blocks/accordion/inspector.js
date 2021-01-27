@@ -24,6 +24,10 @@ const Inspector = ({
 		setAttributes({ tabsTitleColor: value });
 	};
 
+	const changeTabsContentColor = value => {
+		setAttributes({ tabsContentColor: value });
+	};
+
 	const changeTabsBorderColor = value => {
 		setAttributes({ tabsBorderColor: value });
 	};
@@ -36,6 +40,10 @@ const Inspector = ({
 		setAttributes({ tabsTitleFontSize: value});
 	};
 
+	const onTabsContentFontSizeChange = value => {
+		setAttributes({ tabsContentFontSize: value});
+	};
+
 	const onTabsBorderSizeChange = value => {
 		setAttributes({ tabsBorderSize: value});
 	};
@@ -45,6 +53,7 @@ const Inspector = ({
 	};
 
 	const selectIconStyle = value => {
+		console.log( value );
 		setAttributes({ iconStyle: value });
 	};
 
@@ -59,7 +68,7 @@ const Inspector = ({
 					value={ attributes.iconStyle }
 					options={ [
 						{ label: __( 'Default' ), value: 'default' },
-						{ label: __( 'End' ), value: 'end' },
+						{ label: __( 'Start' ), value: 'start' },
 						{ label: __( 'Hide' ), value: 'hide' }
 					] }
 					onChange={ selectIconStyle }
@@ -73,6 +82,16 @@ const Inspector = ({
 					min={ 0 }
 					max={ 60 }
 					initialPosition={ 20 }
+				/>
+
+				<RangeControl
+					label={ __( 'Content Font Size' ) }
+					help={ __( 'The font size of the content.' ) }
+					value={ attributes.tabsContentFontSize }
+					onChange={ onTabsContentFontSizeChange }
+					min={ 0 }
+					max={ attributes.tabsTitleFontSize }
+					initialPosition={ 16 }
 				/>
 
 				<RangeControl
@@ -109,6 +128,12 @@ const Inspector = ({
 					label={ __( 'Title Color' ) }
 					colorValue={ attributes.tabsTitleColor }
 					onColorChange={ changeTabsTitleColor }
+				/>
+
+				<ColorGradientControl
+					label={ __( 'Content Color' ) }
+					colorValue={ attributes.tabsContentColor }
+					onColorChange={ changeTabsContentColor }
 				/>
 
 				<ColorGradientControl

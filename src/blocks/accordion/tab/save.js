@@ -1,8 +1,5 @@
-import { Icon, chevronRight } from '@wordpress/icons';
-
 const { RichText } = wp.blockEditor;
 
-const { InnerBlocks } = wp.blockEditor;
 import classnames from 'classnames';
 
 
@@ -11,14 +8,9 @@ const Save = ({
 	className
 }) => {
 
-	const ratio = 36 / 20;
-
-	let iconSize = 36;
 	let iconStylePosition = 'default';
 
 	if ( attributes.parentAttributes ) {
-
-		iconSize =  attributes.parentAttributes.tabsTitleFontSize * ratio || iconSize;
 		iconStylePosition =  attributes.parentAttributes.iconStyle || iconStylePosition;
 	}
 
@@ -33,33 +25,46 @@ const Save = ({
 				className="wp-block-themeisle-blocks-accordion-block-tab-title"
 				htmlFor={ attributes.htmlFor }
 			>
-				{ ( 'default' === iconStylePosition ) && (
-					<Icon
-						icon={ chevronRight }
-						size={ iconSize }
-						className="wp-block-themeisle-blocks-accordion-block-tab-title__icon__start"
-					/>
-				)}
+				<div className={
+					classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end', { 'show': 'start' === iconStylePosition  })
+				}>
+					<div className={
+						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__1' )
+					}></div>
+					<div className={
+						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__2' )
+					}></div>
+				</div>
 				<RichText.Content
 					tagName="p"
 					className={
-						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-label', {'no-front-icon': 'default' !== iconStylePosition})
+						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-label' )
 					}
 
 					value={ attributes.title }
 				/>
-				{ ( 'end' === iconStylePosition ) && (
-					<Icon
-						icon={ chevronRight }
-						size={ iconSize }
-						className="wp-block-themeisle-blocks-accordion-block-tab-title__icon__end"
-					/>
-				)}
+				<div className={
+					classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end', { 'show': 'default' === iconStylePosition  })
+				}>
+					<div className={
+						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__1' )
+					}></div>
+					<div className={
+						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__2' )
+					}></div>
+				</div>
 			</label>
 			<div
 				className="wp-block-themeisle-blocks-accordion-block-tab-content"
 			>
-				<InnerBlocks.Content />
+				<RichText.Content
+					tagName="p"
+					className={
+						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-content__input' )
+					}
+
+					value={ attributes.content }
+				/>
 			</div>
 		</div>
 	);

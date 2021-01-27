@@ -8,6 +8,12 @@ const attributes = {
 	tabsTitleFontSize: {
 		type: 'number'
 	},
+	tabsContentColor: {
+		type: 'string'
+	},
+	tabsContentFontSize: {
+		type: 'number'
+	},
 	tabsBorderSize: {
 		type: 'number'
 	},
