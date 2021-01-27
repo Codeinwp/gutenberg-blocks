@@ -10,6 +10,9 @@ const attributes = {
 	},
 	content: {
 		type: 'string'
+	},
+	parentAttributes: {
+		type: 'object'
 	}
 };
 
