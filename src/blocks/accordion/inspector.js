@@ -11,7 +11,8 @@ const {
 const {
 	PanelBody,
 	RangeControl,
-	SelectControl
+	SelectControl,
+	CheckboxControl
 } = wp.components;
 
 
@@ -53,8 +54,11 @@ const Inspector = ({
 	};
 
 	const selectIconStyle = value => {
-		console.log( value );
 		setAttributes({ iconStyle: value });
+	};
+
+	const checkShadows = value => {
+		setAttributes({ hasShadows: value });
 	};
 
 	return (
@@ -72,6 +76,12 @@ const Inspector = ({
 						{ label: __( 'Hide' ), value: 'hide' }
 					] }
 					onChange={ selectIconStyle }
+				/>
+
+				<CheckboxControl
+					label={ __( 'Add shadow' ) }
+					checked={ attributes.hasShadows }
+					onChange={ checkShadows }
 				/>
 
 				<RangeControl

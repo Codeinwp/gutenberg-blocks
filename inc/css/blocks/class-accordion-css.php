@@ -109,6 +109,13 @@ class Accordion_CSS extends Base_CSS
 						'value'    => 'tabsGap',
 						'unit'     => 'px'
 					),
+					array(
+						'property'  => 'box-shadow',
+						'default'	=> '3px 3px 6px #ddd, -3px 3px 6px #ddd',
+						'condition' => function ($attrs) {
+							return isset($attrs['hasShadows']) && true === $attrs['hasShadows'];
+						}
+					),
 				)
 			)
 		);

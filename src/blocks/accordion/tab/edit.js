@@ -135,6 +135,13 @@ const Edit = ({
 			fontSize: parentAttributes.tabsContentFontSize + 'px'
 		};
 
+		if ( parentAttributes.hasShadows ) {
+			tabStyle = {
+				...tabStyle,
+				boxShadow: '3px 3px 6px #ddd, -3px 3px 6px #ddd'
+			};
+		}
+
 		// iconStyle = {
 		// 	fill: parentAttributes.tabsTitleColor
 		// };

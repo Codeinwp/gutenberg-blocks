@@ -29,6 +29,10 @@ const attributes = {
 	iconStyle: {
 		type: 'string',
 		default: 'default'
+	},
+	hasShadows: {
+		type: 'boolean',
+		default: false
 	}
 };
 
