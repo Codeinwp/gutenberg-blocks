@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Css handling logic for icons.
  *
@@ -15,8 +14,7 @@ use ThemeIsle\GutenbergBlocks\CSS\CSS_Utility;
 /**
  * Class Progress_Bar_CSS
  */
-class Accordion_Tab_CSS extends Base_CSS
-{
+class Accordion_Tab_CSS extends Base_CSS {
 
 	/**
 	 * The namespace under which the blocks are registered.
@@ -33,31 +31,8 @@ class Accordion_Tab_CSS extends Base_CSS
 	 * @since   1.3.0
 	 * @access  public
 	 */
-	public function render_css($block)
-	{
-		// $attr  = $block['attrs'];	
-		// $style = '';
-		// if ( isset( $attr['id'] ) ) {
-		// 	$style .= '#' . $attr['id'] . '  .wp-block-themeisle-blocks-accordion-block-tab-title {' . "\n";
-		// 	if ( isset( $attr['titleBackgroundColor'] ) ) {
-		// 		$style .= '	background-color: ' . $this->get_attr_value( $attr['titleBackgroundColor'] ) . ';' . "\n";
-		// 	}
-		// 	$style .= '}' . "\n \n";
-
-		// 	$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-accordion-block-tab-title .wp-block-themeisle-blocks-accordion-block-tab-label {' . "\n";
-		// 	if ( isset( $attr['titleBackgroundColor'] ) ) {
-		// 		$style .= '	background-color: ' . $this->get_attr_value( $attr['titleBackgroundColor'] ) . ';' . "\n";
-		// 	}
-		// 	$style .= '}' . "\n \n";
-
-		// 	$style .= '#' . $attr['id'] . ' .wp-block-themeisle-blocks-accordion-block-tab-toggle:checked + .wp-block-themeisle-blocks-accordion-block-tab-title + .wp-block-themeisle-blocks-accordion-block-tab-content {' . "\n";
-		// 	if ( isset( $attr['contentBackgroundColor'] ) ) {
-		// 		$style .= '	background-color: ' . $this->get_attr_value( $attr['contentBackgroundColor'] ) . ';' . "\n";
-		// 	}
-		// 	$style .= '}' . "\n \n";
-		// }
-
-		$css = new CSS_Utility($block);
+	public function render_css( $block ) {
+		$css = new CSS_Utility( $block );
 
 		$css->add_item(
 			array(
@@ -65,7 +40,7 @@ class Accordion_Tab_CSS extends Base_CSS
 				'properties' => array(
 					'property' => 'background-color',
 					'value'    => 'titleBackgroundColor',
-				)
+				),
 			)
 		);
 
@@ -75,7 +50,7 @@ class Accordion_Tab_CSS extends Base_CSS
 				'properties' => array(
 					'property' => 'background-color',
 					'value'    => 'titleBackgroundColor',
-				)
+				),
 			)
 		);
 
@@ -85,7 +60,7 @@ class Accordion_Tab_CSS extends Base_CSS
 				'properties' => array(
 					'property' => 'background-color',
 					'value'    => 'contentBackgroundColor',
-				)
+				),
 			)
 		);
 

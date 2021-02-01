@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Css handling logic for icons.
  *
@@ -35,7 +34,7 @@ class Accordion_CSS extends Base_CSS {
 	public function render_css( $block ) {
 
 		$css = new CSS_Utility( $block );
-		// LABEL
+		// LABEL.
 		$css->add_item( 
 			array(
 				'selector'   => ' .wp-block-themeisle-blocks-accordion-block-tabs .wp-block-themeisle-blocks-accordion-tab .wp-block-themeisle-blocks-accordion-block-tab-title .wp-block-themeisle-blocks-accordion-block-tab-label ',
@@ -52,7 +51,7 @@ class Accordion_CSS extends Base_CSS {
 				),
 			)
 		);
-		// CONTENT
+		// CONTENT.
 		$css->add_item(
 			array(
 				'selector'   => ' .wp-block-themeisle-blocks-accordion-block-tabs .wp-block-themeisle-blocks-accordion-tab .wp-block-themeisle-blocks-accordion-block-tab-content',
@@ -69,13 +68,13 @@ class Accordion_CSS extends Base_CSS {
 				),
 			)
 		);
-		// BORDER
+		// BORDER.
 		$css->add_item(
 			array(
 				'selector'   => ' .wp-block-themeisle-blocks-accordion-block-tabs .wp-block-themeisle-blocks-accordion-tab ',
 				'properties' => array(
 					array(
-						'property' 		 => 'border',
+						'property'       => 'border',
 						'pattern'        => 'solid size',
 						'pattern_values' => array(
 							'size' => array(
@@ -106,9 +105,9 @@ class Accordion_CSS extends Base_CSS {
 					),
 					array(
 						'property'  => 'box-shadow',
-						'default'	=> '3px 3px 6px #ddd, -3px 3px 6px #ddd',
+						'default'   => '3px 3px 6px #ddd, -3px 3px 6px #ddd',
 						'condition' => function ( $attrs ) {
-							return isset($attrs['hasShadows']) && true === $attrs['hasShadows'];
+							return isset( $attrs['hasShadows'] ) && true === $attrs['hasShadows'];
 						},
 					),
 				),
