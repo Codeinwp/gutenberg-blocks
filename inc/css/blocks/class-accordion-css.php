@@ -12,7 +12,7 @@ use ThemeIsle\GutenbergBlocks\Base_CSS;
 use ThemeIsle\GutenbergBlocks\CSS\CSS_Utility;
 
 /**
- * Class Progress_Bar_CSS
+ * Class Progress_Bar_CSS.
  */
 class Accordion_CSS extends Base_CSS {
 
@@ -32,7 +32,6 @@ class Accordion_CSS extends Base_CSS {
 	 * @access  public
 	 */
 	public function render_css( $block ) {
-
 		$css = new CSS_Utility( $block );
 		// LABEL.
 		$css->add_item( 
@@ -69,8 +68,8 @@ class Accordion_CSS extends Base_CSS {
 			)
 		);
 		// BORDER.
-		$css->add_item(
-			array(
+		$css->add_item( 
+			array( 
 				'selector'   => ' .wp-block-themeisle-blocks-accordion-block-tabs .wp-block-themeisle-blocks-accordion-tab ',
 				'properties' => array(
 					array(
@@ -109,8 +108,8 @@ class Accordion_CSS extends Base_CSS {
 						'condition' => function ( $attrs ) {
 							return isset( $attrs['hasShadows'] ) && true === $attrs['hasShadows'];
 						},
-					),
-				),
+					), 
+				), 
 			)
 		);
 
