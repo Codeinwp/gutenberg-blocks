@@ -29,10 +29,10 @@ const Save = ({
 					classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end', { 'show': 'start' === iconStylePosition  })
 				}>
 					<div className={
-						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__1' )
+						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__plus__1' )
 					}></div>
 					<div className={
-						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__2' )
+						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__plus__2' )
 					}></div>
 				</div>
 				<RichText.Content
@@ -47,10 +47,10 @@ const Save = ({
 					classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end', { 'show': 'default' === iconStylePosition  })
 				}>
 					<div className={
-						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__1' )
+						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__plus__1' )
 					}></div>
 					<div className={
-						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__end__2' )
+						classnames( 'wp-block-themeisle-blocks-accordion-block-tab-title__icon__plus__2' )
 					}></div>
 				</div>
 			</label>
