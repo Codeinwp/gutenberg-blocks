@@ -35,11 +35,9 @@ class Accordion_Tab_CSS extends Base_CSS
 	 */
 	public function render_css($block)
 	{
-		$attr  = $block['attrs'];
+		// $attr  = $block['attrs'];	
 		// $style = '';
-
 		// if ( isset( $attr['id'] ) ) {
-
 		// 	$style .= '#' . $attr['id'] . '  .wp-block-themeisle-blocks-accordion-block-tab-title {' . "\n";
 		// 	if ( isset( $attr['titleBackgroundColor'] ) ) {
 		// 		$style .= '	background-color: ' . $this->get_attr_value( $attr['titleBackgroundColor'] ) . ';' . "\n";
@@ -63,30 +61,30 @@ class Accordion_Tab_CSS extends Base_CSS
 
 		$css->add_item(
 			array(
-				'selector' => ' .wp-block-themeisle-blocks-accordion-block-tab-title',
+				'selector'   => ' .wp-block-themeisle-blocks-accordion-block-tab-title',
 				'properties' => array(
 					'property' => 'background-color',
-					'value' => 'titleBackgroundColor'
+					'value'    => 'titleBackgroundColor',
 				)
 			)
 		);
 
 		$css->add_item(
 			array(
-				'selector' => ' .wp-block-themeisle-blocks-accordion-block-tab-title .wp-block-themeisle-blocks-accordion-block-tab-label',
+				'selector'   => ' .wp-block-themeisle-blocks-accordion-block-tab-title .wp-block-themeisle-blocks-accordion-block-tab-label',
 				'properties' => array(
 					'property' => 'background-color',
-					'value' => 'titleBackgroundColor'
+					'value'    => 'titleBackgroundColor',
 				)
 			)
 		);
 
 		$css->add_item(
 			array(
-				'selector' => ' .wp-block-themeisle-blocks-accordion-block-tab-toggle:checked + .wp-block-themeisle-blocks-accordion-block-tab-title + .wp-block-themeisle-blocks-accordion-block-tab-content',
+				'selector'   => ' .wp-block-themeisle-blocks-accordion-block-tab-toggle:checked + .wp-block-themeisle-blocks-accordion-block-tab-title + .wp-block-themeisle-blocks-accordion-block-tab-content',
 				'properties' => array(
 					'property' => 'background-color',
-					'value' => 'contentBackgroundColor'
+					'value'    => 'contentBackgroundColor',
 				)
 			)
 		);

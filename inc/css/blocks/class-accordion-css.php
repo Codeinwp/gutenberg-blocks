@@ -50,7 +50,7 @@ class Accordion_CSS extends Base_CSS
 					array(
 						'property' => 'font-size',
 						'value'    => 'tabsTitleFontSize',
-						'unit'     => 'px'
+						'unit'     => 'px',
 					)
 				)
 			)
@@ -68,7 +68,7 @@ class Accordion_CSS extends Base_CSS
 					array(
 						'property' => 'font-size',
 						'value'    => 'tabsContentFontSize',
-						'unit'     => 'px'
+						'unit'     => 'px',
 					)
 				)
 			)
@@ -86,7 +86,7 @@ class Accordion_CSS extends Base_CSS
 							'size' => array(
 								'value'   => 'tabsBorderSize',
 								'unit'    => 'px',
-								'default' => 2
+								'default' => 2,
 							)
 						)
 					),
@@ -97,24 +97,24 @@ class Accordion_CSS extends Base_CSS
 					array(
 						'property' => 'border-radius',
 						'value'    => 'tabsBorderRadius',
-						'unit'     => 'px'
+						'unit'     => 'px',
 					),
 					array(
 						'property' => 'border-bottom',
 						'value'    => 'tabsBorderBottom',
-						'unit'     => 'px'
+						'unit'     => 'px',
 					),
 					array(
 						'property' => 'margin-bottom',
 						'value'    => 'tabsGap',
-						'unit'     => 'px'
+						'unit'     => 'px',
 					),
 					array(
 						'property'  => 'box-shadow',
 						'default'	=> '3px 3px 6px #ddd, -3px 3px 6px #ddd',
 						'condition' => function ($attrs) {
 							return isset($attrs['hasShadows']) && true === $attrs['hasShadows'];
-						}
+						},
 					),
 				)
 			)
