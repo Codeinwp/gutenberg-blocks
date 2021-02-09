@@ -32,9 +32,7 @@ import MarkerWrapper from './components/marker-wrapper.js';
 const Inspector = ({
 	attributes,
 	setAttributes,
-	addMarker,
-	removeMarker,
-	changeMarkerProps
+	dispatch
 }) => {
 
 	const [ location, setLocation ] = useState( attributes.location );
@@ -149,9 +147,7 @@ const Inspector = ({
 			>
 				<MarkerWrapper
 					markers={ attributes.markers }
-					removeMarker={ removeMarker }
-					changeMarkerProps={ changeMarkerProps }
-					addMarker={ addMarker }
+					dispatch={ dispatch }
 				/>
 			</PanelBody>
 

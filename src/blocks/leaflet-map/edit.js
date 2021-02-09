@@ -14,12 +14,25 @@ const {
 	Fragment,
 	useEffect,
 	useState,
-	useRef
+	useRef,
+	useReducer
 } = wp.element;
+
+const {
+	merge
+} = lodash;
 
 /**
  * Internal dependencies
  */
+
+export const ActionType = {
+	ADD: 'ADD',
+	REMOVE: 'REMOVE',
+	UPDATE: 'UPDATE',
+	INIT: 'INIT'
+};
+
 
 const Edit = ({
 	attributes,
@@ -30,9 +43,115 @@ const Edit = ({
 	const mapRef = useRef( null );
 	const [ map, setMap ] = useState( null );
 
+	const createMarker = ( markerProps, dispatch ) => {
 
-	const [ mapMarkers, setMarkers ] = useState([]);
+		if ( L && map ) {
 
+			// Check for undefined
+			markerProps.id ??= uuidv4();
+			markerProps.latitude ??= map.getCenter().lat;
+			markerProps.longitude ??= map.getCenter().lng;
+			markerProps.title ??= 'Add a title';
+			markerProps.description ??= '';
+
+			// Create the marker on the map
+			const markerMap = L.marker([ markerProps.latitude, markerProps.longitude ] || map.getCenter(), {
+				title: markerProps.title,
+				draggable: true
+			});
+
+			markerMap.bindPopup(
+				`<div class="wp-block-themeisle-blocks-map-overview">
+						<h6 class="wp-block-themeisle-blocks-map-overview-title">
+							${ markerProps.title }
+						</h6>
+						<div class="wp-block-themeisle-blocks-map-overview-content">
+							<p>
+								${ markerProps.description }
+							</p
+						</div>
+					</div>`
+			);
+
+			// Change coords when dragging
+			markerMap.on( 'moveend', () => {
+				const latlng = markerMap.getLatLng();
+				console.log( latlng );
+				dispatch({
+					type: ActionType.UPDATE,
+					ids: [ markerProps.id ],
+					updatedProps: {
+						latitude: latlng.lat,
+						longitude: latlng.lng
+					}
+				});
+			});
+
+			markerMap.markerProps = markerProps;
+
+			return markerMap;
+		}
+		return null;
+	};
+
+	const markerReducer = ( oldState, action ) => {
+		console.log( 'Event: ' + action.type );
+		switch ( action.type ) {
+		case ActionType.ADD:
+			const newMarker = createMarker( action.marker, action.dispatch );
+			return [ ...oldState, newMarker ];
+
+		case ActionType.REMOVE:
+			oldState.filter( ({ markerProps }) => action.ids.includes( markerProps.id ) ).forEach( marker => {
+				if ( map.hasLayer( marker ) ) {
+					map.removeLayer( marker );
+				}
+			});
+			return oldState.filter( ({ markerProps }) => ! action.ids.includes( markerProps.id ) );
+
+		case ActionType.INIT:
+			const storedMarkers = action.markers.map(
+				marker => {
+					return createMarker( marker, action.dispatch );
+				}
+			);
+
+			return [ ...oldState, ...storedMarkers ];
+
+		case ActionType.UPDATE:
+			return oldState.map( marker => {
+				const props = marker.markerProps;
+
+				if ( action.ids.includes( props.id )  ) {
+					marker.markerProps = merge( marker.markerProps, action.updatedProps );
+					console.log( action.updatedProps, marker.markerProps );
+
+					// Show information in popup when clicked
+					marker.bindPopup(
+						`<div class="wp-block-themeisle-blocks-map-overview">
+							<h6 class="wp-block-themeisle-blocks-map-overview-title">
+								${ props.title }
+							</h6>
+							<div class="wp-block-themeisle-blocks-map-overview-content">
+								<p>
+									${ props.description }
+								</p
+							</div>
+						</div>`
+					);
+				}
+
+				return marker;
+			});
+
+		default:
+			console.warn( 'The action for the leaflet block do not have an action in marker reducer: ' + action.type );
+		}
+
+		return oldState;
+	};
+
+	const [ markersStore, dispatch ] = useReducer( markerReducer, []);
 
 	/**
 	 * Initialize the map
@@ -63,6 +182,7 @@ const Edit = ({
 		});
 
 		setMap( _map );
+		dispatch({ type: ActionType.INIT, markers: attributes.markers, dispatch: dispatch });
 
 	}, []);
 
@@ -75,153 +195,28 @@ const Edit = ({
 		}
 	}, [ attributes.latitude, attributes.longitude, attributes.zoom, map ]);
 
-	/**
-	 * Set/Remove Markers on the map
-	 */
 	useEffect( () => {
+		if ( markersStore ) {
+			setAttributes({ markers: markersStore.map( ({markerProps}) => markerProps ) });
 
-		if ( ! map && ! L ) {
-			return ;
-		}
+			// map?.eachLayer( layer => {
+			// 	if ( layer.markerProps?.id ) {
+			// 		map.removeLayer( layer );
+			// 	}
+			// });
 
-		console.log( 'State: ' + mapMarkers.length, mapMarkers );
-
-		if ( mapMarkers.length > attributes.markers.length ) {
-
-			// Check if a marker has been removed. If true, delete it from the map
-			const markersIds = attributes.markers.map( ({id}) => id );
-			const oldMarkers = mapMarkers.filter( ({markerId}) => ! markersIds.includes( markerId ) );
-			oldMarkers.forEach( marker => {
-				console.log( 'Check marker ' + marker.markerId );
-				if ( map.hasLayer( marker ) ) {
-					console.log( 'Delete marker ' + marker.markerId );
-					map.removeLayer( marker );
+			markersStore.forEach( marker => {
+				if ( ! map.hasLayer( marker ) ) {
+					map.addLayer( marker );
 				}
 			});
-			setMarkers( mapMarkers.filter( ({markerId}) => markersIds.includes( markerId ) ) );
-		} else if ( mapMarkers.length === attributes.markers.length ) {
-
-			// Check if a marker has been created. If true, add it to the map
-			console.log( 'Add markers to map' );
-			mapMarkers.filter( marker => ! map.hasLayer( marker ) ).forEach( marker => {
-				map.addLayer( marker );
-			});
-
-		} else {
-
-			// Create markers
-			const markersIds = mapMarkers.map( ({markerId}) => markerId );
-			attributes.markers.filter( ({id}) => ! markersIds.includes( id ) ).forEach(
-				marker => {
-					console.log( 'Creater Marker' );
-					addMarker( marker, false );
-				}
-			);
 		}
+	}, [ markersStore ]);
 
-	}, [ mapMarkers, map, attributes.markers ]);
+	console.log( 'Store', markersStore );
+	console.log( 'Attr', attributes.markers );
 
-	/**
-	 * Marker Handlers
-	 */
-	const removeMarker = ( id ) => {
-		console.log( 'ON REMOVE', id, attributes.markers );
-		setAttributes({
-			...attributes,
-			markers: attributes.markers.filter( marker => marker.id !== id )
-		});
-	};
-
-	const changeMarkerProps = async( id, props ) => {
-
-		// Find the index of marker
-		const index =  attributes.markers.findIndex( marker => marker.id === id );
-
-		// Override it with the given props
-		attributes.markers[index] = { ...attributes.markers[index], ...props};
-
-		const mapMarker = mapMarkers.filter( ({markerId}) => markerId === id )[0];
-
-		if ( mapMarker ) {
-			mapMarker.setLatLng( L.latLng( Number( attributes.markers[index].latitude ), Number( attributes.markers[index].longitude ) ) );
-
-			// Show information in popup when clicked
-			mapMarker.bindPopup(
-				`<div class="wp-block-themeisle-blocks-map-overview">
-						<h6 class="wp-block-themeisle-blocks-map-overview-title">
-							${ attributes.markers[index].title }
-						</h6>
-						<div class="wp-block-themeisle-blocks-map-overview-content">
-							<p>
-								${ attributes.markers[index].description }
-							</p
-						</div>
-					</div>`
-			);
-		}
-
-		setAttributes({
-			...attributes
-		});
-	};
-
-	const addMarker = ( marker, addToAttributes = true ) => {
-
-		if ( L && map ) {
-
-			// Check for undefined
-			marker.id ??= uuidv4();
-			marker.latitude ??= map.getCenter().lat;
-			marker.longitude ??= map.getCenter().lng;
-			marker.title ??= 'Add a title';
-			marker.description ??= '';
-
-			// Create the marker on the map
-			const mapMarker = L.marker([ marker.latitude, marker.longitude ] || map.getCenter(), {
-				title: marker.title,
-				draggable: true
-			});
-
-			mapMarker.markerId = marker.id;
-
-			mapMarker.bindPopup(
-				`<div class="wp-block-themeisle-blocks-map-overview">
-						<h6 class="wp-block-themeisle-blocks-map-overview-title">
-							${ marker.title }
-						</h6>
-						<div class="wp-block-themeisle-blocks-map-overview-content">
-							<p>
-								${ marker.description }
-							</p
-						</div>
-					</div>`
-			);
-
-
-			// Change coords when dragging
-			mapMarker.on( 'move', ({latlng}) => {
-				changeMarkerProps( marker.id, {
-					latitude: latlng.lat,
-					longitude: latlng.lng
-				});
-			});
-
-			// Save the map marker
-			setMarkers(
-				[ ...mapMarkers, mapMarker ]
-			);
-
-			if ( addToAttributes ) {
-
-				// Save the marker
-				attributes.markers.push( marker );
-				setAttributes({ ...attributes });
-			}
-
-			return mapMarker;
-		}
-		return null;
-	};
+	// console.log( 'Layers', map );
 
 
 	return (
@@ -229,9 +224,7 @@ const Edit = ({
 			<Inspector
 				attributes={attributes}
 				setAttributes={setAttributes}
-				addMarker={addMarker}
-				removeMarker={removeMarker}
-				changeMarkerProps={changeMarkerProps}
+				dispatch={dispatch}
 			/>
 			<div ref={mapRef} className={className} style={{width: 600, height: attributes.height || 400, marginBottom: 70, marginTop: 70 }}>
 

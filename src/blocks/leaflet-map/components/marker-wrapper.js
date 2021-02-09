@@ -1,3 +1,6 @@
+
+import { v4 as uuidv4 } from 'uuid';
+
 /**
  * WordPress dependencies
  */
@@ -10,6 +13,8 @@ const {
 	useState
 } = wp.element;
 
+import { ActionType } from '../edit.js';
+
 /**
  * Internal dependencies
  */
@@ -17,9 +22,7 @@ import Marker from './marker.js';
 
 const MarkerWrapper = ({
 	markers,
-	addMarker,
-	removeMarker,
-	changeMarkerProps
+	dispatch
 }) => {
 
 	const [ isOpen, setOpen ] = useState( null );
@@ -35,8 +38,7 @@ const MarkerWrapper = ({
 							marker={ marker }
 							isOpen={ isOpen === marker.id }
 							openMarker={ () => setOpen( isOpen !== marker.id ? marker.id : null ) }
-							removeMarker={ removeMarker }
-							changeMarkerProps={ changeMarkerProps }
+							dispatch={ dispatch }
 						/>
 					);
 				}) }
@@ -46,7 +48,10 @@ const MarkerWrapper = ({
 				isSecondary
 				isLarge
 				className="wp-block-themeisle-blocks-leaflet-map-marker-add"
-				onClick={ () => addMarker({}) }
+				onClick={ () => {
+					console.count( 'Click' );
+					dispatch({type: ActionType.ADD, marker: {id: uuidv4()}, dispatch: dispatch});
+				}}
 			>
 				{ __( 'Add Marker' ) }
 			</Button>

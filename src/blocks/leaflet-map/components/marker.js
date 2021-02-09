@@ -23,13 +23,13 @@ const {
  */
 import MarkerEditor from './marker-editor.js';
 import { getLocation } from './../utility.js';
+import { ActionType } from '../edit.js';
 
 const Marker = ({
 	marker,
 	isOpen,
 	openMarker,
-	removeMarker,
-	changeMarkerProps
+	dispatch
 }) => {
 
 	/**
@@ -50,10 +50,14 @@ const Marker = ({
 
 		if ( LngLat ) {
 
-			changeMarkerProps( marker.id, {
-				location: location,
-				latitude: LngLat.latitude,
-				longitude: LngLat.longitude
+			dispatch({
+				type: ActionType.UPDATE,
+				ids: [ marker.id ],
+				updatedProps: {
+					location: location,
+					latitude: LngLat.latitude,
+					longitude: LngLat.longitude
+				}
 			});
 
 			setLat( LngLat.latitude );
@@ -85,7 +89,7 @@ const Marker = ({
 					label={ __( 'Remove Marker' ) }
 					showTooltip={ true }
 					className="wp-block-themeisle-blocks-leaflet-map-marker-remove"
-					onClick={ () => removeMarker( marker.id ) }
+					onClick={ () => dispatch({type: ActionType.REMOVE, ids: [ marker.id ]}) }
 				/>
 			</div>
 
@@ -125,8 +129,12 @@ const Marker = ({
 							value={ lat }
 							onChange={ e => {
 								setLat( e );
-								changeMarkerProps( marker.id, {
-									latitude: e
+								dispatch({
+									type: ActionType.UPDATE,
+									ids: [ marker.id ],
+									updatedProps: {
+										latitude: e
+									}
 								});
 							} }
 
@@ -138,8 +146,12 @@ const Marker = ({
 							value={ lng }
 							onChange={ e => {
 								setLng( e );
-								changeMarkerProps( marker.id, {
-									longitude: e
+								dispatch({
+									type: ActionType.UPDATE,
+									ids: [ marker.id ],
+									updatedProps: {
+										longitude: e
+									}
 								});
 							} }
 						/>
@@ -163,8 +175,12 @@ const Marker = ({
 							value={ title }
 							onChange={ e => {
 								setTitle( e );
-								changeMarkerProps( marker.id, {
-									title: e
+								dispatch({
+									type: ActionType.UPDATE,
+									ids: [ marker.id ],
+									updatedProps: {
+										title: e
+									}
 								});
 							} }
 						/>
@@ -175,8 +191,12 @@ const Marker = ({
 							value={ description }
 							onChange={ e => {
 								setDescription( description );
-								changeMarkerProps( marker.id, {
-									description: e
+								dispatch({
+									type: ActionType.UPDATE,
+									ids: [ marker.id ],
+									updatedProps: {
+										description: e
+									}
 								});
 							} }
 						/>
