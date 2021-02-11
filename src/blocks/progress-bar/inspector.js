@@ -134,7 +134,7 @@ const Inspector = ({
 					] }
 					onChange={ selectPercentagePosition }
 				/>
-		   		</PanelBody>
+			</PanelBody>
 
 			<PanelBody
 				title={ __( 'Style' ) }
@@ -183,7 +183,7 @@ const Inspector = ({
 					onColorChange={ onBackgroundColorChange }
 				/>
 			</PanelBody>
-	   </InspectorControls>
+		</InspectorControls>
 	);
 };
 

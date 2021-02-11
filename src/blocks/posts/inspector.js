@@ -65,10 +65,10 @@ const Inspector = ({
 			}
 		} else {
 			if ( '' !== value ) {
-				categories = [ {
+				categories = [{
 					id: value,
 					name: categoriesList.find( e => e.id === Number( value ) ).name
-				} ];
+				}];
 			}
 		}
 

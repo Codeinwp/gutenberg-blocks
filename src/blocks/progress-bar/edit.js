@@ -156,7 +156,7 @@ const ProgressBar = ({
 			/>
 
 			<div
-				className={ classnames( className, {'has-tooltip': 'tooltip' === attributes.percentagePosition }) }
+				className={ classnames( className, { 'has-tooltip': 'tooltip' === attributes.percentagePosition }) }
 				id={ attributes.id }
 			>
 				{ ( 'outer' === attributes.titleStyle || 'outer' === attributes.percentagePosition ) && (

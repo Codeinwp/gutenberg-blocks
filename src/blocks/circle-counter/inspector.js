@@ -102,7 +102,7 @@ const Inspector = ({
 					] }
 					onChange={ selectTitleStyle }
 				/>
-	   		</PanelBody>
+			</PanelBody>
 
 			<PanelBody
 				title={ __( 'Style' ) }
@@ -166,7 +166,7 @@ const Inspector = ({
 					onColorChange={ onBackgroundColorChange }
 				/>
 			</PanelBody>
-	   </InspectorControls>
+		</InspectorControls>
 	);
 };
 

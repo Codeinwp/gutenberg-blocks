@@ -4,19 +4,25 @@
         "es6": true
     },
     "extends": "wordpress",
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
     "parserOptions": {
         "allowImportExportEverywhere": true,
         "ecmaFeatures": {
             "jsx": true
         },
         "ecmaVersion": 2018,
-        "sourceType": "module"
+        "sourceType": "module",
+        "babelOptions": {
+           "configFile": "./.babelrc.js"
+        }
     },
     "plugins": [
-        "react"
+        "react",
+        "@babel"
     ],
     "rules": {
+        "object-curly-spacing": ["warn", "always"],
+        "array-bracket-spacing": ["error", "always", { "arraysInArrays": false, "objectsInArrays": false }],
         "indent": [
             "error",
             "tab"
@@ -29,7 +35,7 @@
             "error",
             "single"
         ],
-        "semi": [
+        "@babel/semi": [
             "error",
             "always"
         ],
