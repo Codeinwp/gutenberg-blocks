@@ -149,6 +149,14 @@ class Main {
 		);
 
 		wp_enqueue_script(
+			'themeisle-gutenberg-blocks-typescript',
+			plugin_dir_url( $this->get_dir() ) . 'build/blocks-v2.js',
+			array( 'react', 'react-dom', 'wp-polyfill' ,'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player' ),
+			self::$assets_version,
+			true
+		);
+
+		wp_enqueue_script(
 			'glidejs',
 			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.min.js',
 			[],
@@ -168,6 +176,22 @@ class Main {
 
 		wp_localize_script(
 			'themeisle-gutenberg-blocks',
+			'themeisleGutenberg',
+			array(
+				'isCompatible'  => $this->is_compatible(),
+				'packagePath'   => plugin_dir_url( $this->get_dir() ) . 'build/',
+				'assetsPath'    => plugin_dir_url( $this->get_dir() ) . 'assets',
+				'updatePath'    => admin_url( 'update-core.php' ),
+				'optionsPath'   => admin_url( 'options-general.php?page=otter' ),
+				'mapsAPI'       => $api,
+				'themeDefaults' => $this->get_global_defaults(),
+				'isWPVIP'       => function_exists( 'is_wpcom_vip' ),
+				'canTrack'      => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
+			)
+		);
+
+		wp_localize_script(
+			'themeisle-gutenberg-blocks-typescript',
 			'themeisleGutenberg',
 			array(
 				'isCompatible'  => $this->is_compatible(),

@@ -4,6 +4,7 @@
 import classnames from 'classnames';
 
 const Save = ({ attributes, className }) => {
+
 	return (
 		<div
 			className={ classnames( className, {'has-tooltip': 'tooltip' === attributes.percentagePosition }) }

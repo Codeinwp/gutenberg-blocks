@@ -7,11 +7,15 @@ const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' );
 
 module.exports = {
 	mode: NODE_ENV,
+	stats: 'minimal',
 	entry: {
 		blocks: [
 			'./src/index.js',
 			'./src/plugins/registerPlugin.js',
 			...glob.sync( './src/blocks/**/index.js' )
+		],
+		'blocks-v2': [
+			...glob.sync( './src/blocks/**/index.@(ts|tsx)' )
 		],
 		maps: [
 			...glob.sync( './src/frontend/google-map/index.js' )
@@ -32,7 +36,10 @@ module.exports = {
 	externals: {
 		'react': 'React',
 		'react-dom': 'ReactDOM',
-		'lodash': 'lodash'
+		'lodash': 'lodash',
+		'@wordpress/blocks': 'wp.blocks',
+		'@wordpress/block-editor': 'wp.editor',
+		'@wordpress/element': 'wp.element'
 	},
 	output: {
 		path: path.resolve( __dirname, 'build' ),
@@ -42,6 +49,11 @@ module.exports = {
 	},
 	module: {
 		rules: [
+			{
+				test: /\.tsx?$/,
+				use: 'ts-loader',
+				exclude: /node_modules/
+			},
 			{
 				test: /.js?$/,
 				use: [ {
@@ -113,5 +125,8 @@ module.exports = {
 			chunkFilename: 'editor.css'
 		}),
 		new CleanWebpackPlugin()
-	]
+	],
+	resolve: {
+		extensions: [ '.ts', '.tsx', '.js', '.json' ]
+	}
 };
