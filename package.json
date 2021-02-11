@@ -6,6 +6,7 @@
 		"build": "cross-env BABEL_ENV=default NODE_ENV=production webpack",
 		"dev": "cross-env BABEL_ENV=default NODE_ENV=development webpack --watch",
 		"lint": "eslint src/*/*/*.js",
+		"lint:typescript": "eslint -c tsconfig.eslintrc.js  src/*/*/*.tsx",
 		"release": "semantic-release"
 	},
 	"engines": {
@@ -38,6 +39,8 @@
 		"@semantic-release/git": "^9.0.0",
 		"@types/wordpress__block-editor": "^2.2.9",
 		"@types/wordpress__blocks": "^6.4.12",
+		"@typescript-eslint/eslint-plugin": "^4.15.0",
+		"@typescript-eslint/parser": "^4.15.0",
 		"@wordpress/block-editor": "^5.2.6",
 		"@wordpress/blocks": "^7.0.3",
 		"@wordpress/element": "^2.19.1",
@@ -49,7 +52,7 @@
 		"conventional-changelog-simple-preset": "^1.0.14",
 		"cross-env": "7.0.3",
 		"css-loader": "^5.0.1",
-		"eslint": "^7.17.0",
+		"eslint": "^7.19.0",
 		"eslint-config-wordpress": "^2.0.0",
 		"eslint-loader": "^4.0.2",
 		"eslint-plugin-react": "^7.22.0",
