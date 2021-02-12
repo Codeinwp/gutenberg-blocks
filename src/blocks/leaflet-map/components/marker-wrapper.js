@@ -9,8 +9,7 @@ const { __ } = wp.i18n;
 const { Button } = wp.components;
 
 const {
-	Fragment,
-	useState
+	Fragment
 } = wp.element;
 
 import { ActionType } from '../edit.js';
@@ -22,11 +21,9 @@ import Marker from './marker.js';
 
 const MarkerWrapper = ({
 	markers,
-	dispatch
+	dispatch,
+	markersInteraction: { openMarker, setOpenMarker }
 }) => {
-
-	const [ isOpen, setOpen ] = useState( null );
-
 
 	return (
 		<Fragment>
@@ -36,8 +33,8 @@ const MarkerWrapper = ({
 						<Marker
 							key={ marker.id }
 							marker={ marker }
-							isOpen={ isOpen === marker.id }
-							openMarker={ () => setOpen( isOpen !== marker.id ? marker.id : null ) }
+							isOpen={ openMarker === marker.id }
+							openMarker={ () => setOpenMarker( markersInteraction.openMarker !== marker.id ? marker.id : null ) }
 							dispatch={ dispatch }
 						/>
 					);

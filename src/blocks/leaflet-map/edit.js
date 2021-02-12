@@ -42,6 +42,7 @@ const Edit = ({
 
 	const mapRef = useRef( null );
 	const [ map, setMap ] = useState( null );
+	const [ openMarker, setOpenMarker ] = useState( null );
 
 	const createMarker = ( markerProps, dispatch ) => {
 
@@ -85,6 +86,10 @@ const Edit = ({
 						longitude: latlng.lng
 					}
 				});
+			});
+
+			markerMap.on( 'click', () => {
+				setOpenMarker( markerProps.id );
 			});
 
 			markerMap.markerProps = markerProps;
@@ -234,6 +239,10 @@ const Edit = ({
 				attributes={attributes}
 				setAttributes={setAttributes}
 				dispatch={dispatch}
+				markersInteraction={{
+					openMarker: openMarker,
+					setOpenMarker: setOpenMarker
+				}}
 			/>
 			<div ref={mapRef} className={className} style={{width: 600, height: attributes.height || 400, marginBottom: 70, marginTop: 70 }}>
 

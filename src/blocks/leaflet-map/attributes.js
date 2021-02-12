@@ -7,12 +7,12 @@ const attributes = {
 		default: 'La Sagrada Familia, Barcelona, Spain'
 	},
 	latitude: {
-		type: 'number',
-		default: 41.4034789
+		type: 'string',
+		default: '41.4034789'
 	},
 	longitude: {
-		type: 'number',
-		default: 2.174410333009705
+		type: 'string',
+		default: '2.174410333009705'
 	},
 	zoom: {
 		type: 'number',
