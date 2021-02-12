@@ -175,9 +175,18 @@ const Edit = ({
 		/**
 		 * Defines event handlers
 		 */
-		_map.on( 'zoom', (  ) => {
+		_map.on( 'zoom', () => {
 			setAttributes({
 				zoom: _map.getZoom()
+			});
+		});
+
+		_map.on( 'moveend', () => {
+			const latlng = _map.getCenter();
+			console.log( latlng );
+			setAttributes({
+				latitude: latlng.lat,
+				longitude: latlng.lng
 			});
 		});
 

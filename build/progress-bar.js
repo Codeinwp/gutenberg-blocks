@@ -1,1 +1,124 @@
-!function(e){var t={};function r(n){if(t[n])return t[n].exports;var o=t[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}r.m=e,r.c=t,r.d=function(e,t,n){r.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},r.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r.t=function(e,t){if(1&t&&(e=r(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)r.d(n,o,function(t){return e[t]}.bind(null,o));return n},r.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return r.d(t,"a",t),t},r.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},r.p="",r(r.s=99)}({100:function(e,t,r){"use strict";r.r(t);var n=r(11);(0,wp.domReady)((function(){var e=document.querySelectorAll(".wp-block-themeisle-blocks-progress-bar");Array.from(e).forEach((function(e){var t,r=1e3*e.dataset.duration,o=e.querySelector(".wp-block-themeisle-blocks-progress-bar__area__bar"),i=window.getComputedStyle(o).borderTopLeftRadius.replace("px","")||0,c=e.querySelector(".wp-block-themeisle-blocks-progress-bar__number"),a=e.querySelector(".wp-block-themeisle-blocks-progress-bar__area__tooltip"),u=e.querySelector(".wp-block-themeisle-blocks-progress-bar__progress__append"),s=e.querySelector(".wp-block-themeisle-blocks-progress-bar__outer__title"),l=e.querySelector(".wp-block-themeisle-blocks-progress-bar__area__title");s?t=s.getBoundingClientRect().width:l&&(t=l.getBoundingClientRect().width);var p=.5*window.getComputedStyle(o).height.replace("px","");if(a&&!s&&(a.style.opacity=1),0===r)o.style.width="".concat(parseInt(e.dataset.percent),"%"),c.innerHTML="".concat(parseInt(e.dataset.percent),"%"),o.style.opacity=1,a&&(a.style.opacity=1),u&&(u.style.opacity=1);else{c&&(c.innerText="0%"),l&&l.classList.contains("highlight")&&(i*=2);var y=new IntersectionObserver((function(f){f.forEach((function(f){if(f.isIntersecting){if(0>=f.intersectionRect.height)return o.style.width="".concat(parseInt(e.dataset.percent),"%"),c.innerHTML="".concat(parseInt(e.dataset.percent),"%"),o.style.opacity=1,a&&(a.style.opacity=1),u&&(u.style.opacity=1),void y.unobserve(o);var d;d&&clearInterval(d);var b=parseInt(e.dataset.percent),h=Object(n.c)(0,r,20).map((function(e){return Object(n.b)(e/r)*b})).reverse();d=setInterval((function(){var e=h.pop();o.style.width="".concat(e,"%"),c&&(c.innerText="".concat(Math.ceil(e),"%"));var r=o.getBoundingClientRect().width;r>i&&(o.style.opacity=1),a&&s&&r>t+10&&(a.style.opacity=1),u&&(l?r>t+1.5*p&&(u.style.opacity=1):r>1.8*p&&(u.style.opacity=1)),h.length||(y.unobserve(o),clearInterval(d))}),20)}}))}),{root:null,rootMargin:"0px",threshold:[.6]});setTimeout((function(){return y.observe(o)}),100)}}))}))},11:function(e,t,r){"use strict";function n(e){return(n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}r.d(t,"d",(function(){return o})),r.d(t,"a",(function(){return i})),r.d(t,"c",(function(){return c})),r.d(t,"b",(function(){return a}));var o=function(e){var t=document.createElement("div");return t.innerHTML=e,void 0!==t.innerText?t.innerText:t.textContent},i=function(e){var t=(e=new Date(e)).getDate(),r=e.getMonth(),n=e.getFullYear();return t+" "+["January","February","March","April","May","June","July","August","September","October","November","December"][r]+", "+n},c=function(e,t,r){var o=[],i=n(e),c=n(t);if(0===r)throw TypeError("Step cannot be zero.");if(void 0===i||void 0===c)throw TypeError("Must pass start and end arguments.");if(i!==c)throw TypeError("Start and end arguments must be of same type.");if(void 0===n(r)&&(r=1),t<e&&(r=-r),"number"===i)for(;0<r?t>=e:t<=e;)o.push(e),e+=r;else{if("string"!==i)throw TypeError("Only string and number types are supported");if(1!=e.length||1!=t.length)throw TypeError("Only strings with one character are supported.");for(e=e.charCodeAt(0),t=t.charCodeAt(0);0<r?t>=e:t<=e;)o.push(String.fromCharCode(e)),e+=r}return o},a=function(e){return e}},99:function(e,t,r){e.exports=r(100)}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/frontend/progress-bar/index.js":
+/*!********************************************!*\
+  !*** ./src/frontend/progress-bar/index.js ***!
+  \********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _helpers_helper_functions_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../helpers/helper-functions.js */ \"./src/helpers/helper-functions.js\");\n/**\n * WordPress dependencies\n */\nvar domReady = wp.domReady;\n/**\n * Internal dependencies\n */\n\n\ndomReady(function () {\n  var progressBars = document.querySelectorAll('.wp-block-themeisle-blocks-progress-bar');\n  Array.from(progressBars).forEach(function (progressBar) {\n    var duration = progressBar.dataset.duration * 1000;\n    var bar = progressBar.querySelector('.wp-block-themeisle-blocks-progress-bar__area__bar');\n    var borderRadius = window.getComputedStyle(bar).borderTopLeftRadius.replace('px', '') || 0;\n    var number = progressBar.querySelector('.wp-block-themeisle-blocks-progress-bar__number');\n    var tooltip = progressBar.querySelector('.wp-block-themeisle-blocks-progress-bar__area__tooltip');\n    var append = progressBar.querySelector('.wp-block-themeisle-blocks-progress-bar__progress__append');\n    var outerTitle = progressBar.querySelector('.wp-block-themeisle-blocks-progress-bar__outer__title');\n    var innerTitle = progressBar.querySelector('.wp-block-themeisle-blocks-progress-bar__area__title');\n    var titleWidth;\n\n    if (outerTitle) {\n      titleWidth = outerTitle.getBoundingClientRect().width;\n    } else if (innerTitle) {\n      titleWidth = innerTitle.getBoundingClientRect().width;\n    }\n\n    var numberWidth = window.getComputedStyle(bar).height.replace('px', '') * 0.5;\n\n    if (tooltip && !outerTitle) {\n      tooltip.style.opacity = 1;\n    }\n\n    if (0 === duration) {\n      bar.style.width = \"\".concat(parseInt(progressBar.dataset.percent), \"%\");\n      number.innerHTML = \"\".concat(parseInt(progressBar.dataset.percent), \"%\");\n      bar.style.opacity = 1;\n\n      if (tooltip) {\n        tooltip.style.opacity = 1;\n      }\n\n      if (append) {\n        append.style.opacity = 1;\n      }\n    } else {\n      if (number) {\n        number.innerText = '0%';\n      }\n\n      if (innerTitle && innerTitle.classList.contains('highlight')) {\n        borderRadius *= 2;\n      }\n\n      var options = {\n        root: null,\n        rootMargin: '0px',\n        threshold: [0.6]\n      };\n      var observer = new IntersectionObserver(function (entries) {\n        entries.forEach(function (entry) {\n          if (entry.isIntersecting) {\n            if (0 >= entry.intersectionRect.height) {\n              bar.style.width = \"\".concat(parseInt(progressBar.dataset.percent), \"%\");\n              number.innerHTML = \"\".concat(parseInt(progressBar.dataset.percent), \"%\");\n              bar.style.opacity = 1;\n\n              if (tooltip) {\n                tooltip.style.opacity = 1;\n              }\n\n              if (append) {\n                append.style.opacity = 1;\n              }\n\n              observer.unobserve(bar);\n              return;\n            }\n\n            var interval;\n\n            if (interval) {\n              clearInterval(interval);\n            }\n\n            var step = 20; // for a more smother animation, decrease the value\n\n            var totalPercent = parseInt(progressBar.dataset.percent);\n            var percentPerTime = Object(_helpers_helper_functions_js__WEBPACK_IMPORTED_MODULE_0__[\"range\"])(0, duration, step).map(function (x) {\n              return Object(_helpers_helper_functions_js__WEBPACK_IMPORTED_MODULE_0__[\"linear\"])(x / duration) * totalPercent;\n            }).reverse();\n            interval = setInterval(function () {\n              var value = percentPerTime.pop();\n              bar.style.width = \"\".concat(value, \"%\");\n\n              if (number) {\n                number.innerText = \"\".concat(Math.ceil(value), \"%\");\n              }\n\n              var currentWidth = bar.getBoundingClientRect().width;\n\n              if (currentWidth > borderRadius) {\n                bar.style.opacity = 1;\n              }\n\n              if (tooltip && outerTitle) {\n                if (currentWidth > titleWidth + 10) {\n                  tooltip.style.opacity = 1;\n                }\n              }\n\n              if (append) {\n                if (innerTitle) {\n                  if (currentWidth > titleWidth + numberWidth * 1.5) {\n                    append.style.opacity = 1;\n                  }\n                } else {\n                  if (currentWidth > numberWidth * 1.8) {\n                    append.style.opacity = 1;\n                  }\n                }\n              }\n\n              if (!percentPerTime.length) {\n                observer.unobserve(bar);\n                clearInterval(interval);\n              }\n            }, step);\n          }\n        });\n      }, options);\n      setTimeout(function () {\n        return observer.observe(bar);\n      }, 100);\n    }\n  });\n});\n\n//# sourceURL=webpack:///./src/frontend/progress-bar/index.js?");
+
+/***/ }),
+
+/***/ "./src/helpers/helper-functions.js":
+/*!*****************************************!*\
+  !*** ./src/helpers/helper-functions.js ***!
+  \*****************************************/
+/*! exports provided: unescapeHTML, formatDate, range, linear, easeInSine, easeOutSine, easeInOutSine */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"unescapeHTML\", function() { return unescapeHTML; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"formatDate\", function() { return formatDate; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"range\", function() { return range; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"linear\", function() { return linear; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"easeInSine\", function() { return easeInSine; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"easeOutSine\", function() { return easeOutSine; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"easeInOutSine\", function() { return easeInOutSine; });\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; if (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }; } return _typeof(obj); }\n\n// HTML to Plaintext\nvar unescapeHTML = function unescapeHTML(value) {\n  var htmlNode = document.createElement('div');\n  htmlNode.innerHTML = value;\n\n  if (htmlNode.innerText !== undefined) {\n    return htmlNode.innerText;\n  }\n\n  return htmlNode.textContent;\n}; // Format Date\n\nvar formatDate = function formatDate(date) {\n  var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];\n  date = new Date(date);\n  var day = date.getDate();\n  var monthIndex = date.getMonth();\n  var year = date.getFullYear();\n  return day + ' ' + monthNames[monthIndex] + ', ' + year;\n}; // Create a list with numbers from interval [start, end]\n\nvar range = function range(start, end, step) {\n  var range = [];\n\n  var typeofStart = _typeof(start);\n\n  var typeofEnd = _typeof(end);\n\n  if (0 === step) {\n    throw TypeError('Step cannot be zero.');\n  }\n\n  if (undefined === typeofStart || undefined === typeofEnd) {\n    throw TypeError('Must pass start and end arguments.');\n  } else if (typeofStart !== typeofEnd) {\n    throw TypeError('Start and end arguments must be of same type.');\n  }\n\n  undefined === _typeof(step) && (step = 1);\n\n  if (end < start) {\n    step = -step;\n  }\n\n  if ('number' === typeofStart) {\n    while (0 < step ? end >= start : end <= start) {\n      range.push(start);\n      start += step;\n    }\n  } else if ('string' === typeofStart) {\n    if (1 != start.length || 1 != end.length) {\n      throw TypeError('Only strings with one character are supported.');\n    }\n\n    start = start.charCodeAt(0);\n    end = end.charCodeAt(0);\n\n    while (0 < step ? end >= start : end <= start) {\n      range.push(String.fromCharCode(start));\n      start += step;\n    }\n  } else {\n    throw TypeError('Only string and number types are supported');\n  }\n\n  return range;\n}; // Easing functions for animation\n\nvar linear = function linear(x) {\n  return x;\n};\nvar easeInSine = function easeInSine(x) {\n  return 1 - Math.cos(x * Math.PI / 2);\n};\nvar easeOutSine = function easeOutSine(x) {\n  return Math.sin(x * Math.PI / 2);\n};\nvar easeInOutSine = function easeInOutSine(x) {\n  return -(Math.cos(Math.PI * x) - 1) / 2;\n};\n\n//# sourceURL=webpack:///./src/helpers/helper-functions.js?");
+
+/***/ }),
+
+/***/ 3:
+/*!**************************************************!*\
+  !*** multi ./src/frontend/progress-bar/index.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__(/*! ./src/frontend/progress-bar/index.js */\"./src/frontend/progress-bar/index.js\");\n\n\n//# sourceURL=webpack:///multi_./src/frontend/progress-bar/index.js?");
+
+/***/ })
+
+/******/ });
