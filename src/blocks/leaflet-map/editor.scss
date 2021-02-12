@@ -6,6 +6,17 @@
   }
 }
 
+.wp-block-themeisle-blocks-leaflet-map-add-marker-control {
+  display: block;
+  background-color: #fff;
+  color: #000000;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  cursor: auto;
+  background-clip: padding-box;
+  font-size: 16px;
+}
+
 .wp-block-themeisle-blocks-leaflet-map {
   &.components-placeholder {
     padding: 40px 20px;

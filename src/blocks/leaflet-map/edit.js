@@ -171,6 +171,30 @@ const Edit = ({
 			});
 		});
 
+		/**
+		 * Create the Add Marker button on the map
+		 * Reference: https://leafletjs.com/examples/extending/extending-3-controls.html
+		 */
+		L.Control.AddMarker = L.Control.extend({
+			onAdd: () => {
+				const button = L.DomUtil.create( 'button' );
+				L.DomUtil.addClass( button, 'wp-block-themeisle-blocks-leaflet-map-add-marker-control' );
+				button.innerHTML = 'Add Marker';
+				button.onclick = () => {
+					dispatch({type: ActionType.ADD, marker: {} });
+				};
+
+				return button;
+			},
+			onRemove: () => {
+
+			}
+		});
+		L.control.addmarker = ( opts ) => {
+			return new L.Control.AddMarker( opts );
+		};
+		L.control.addmarker({ position: 'bottomleft' }).addTo( _map );
+
 		setMap( _map );
 		dispatch({ type: ActionType.INIT, markers: attributes.markers, dispatch: dispatch });
 
@@ -251,7 +275,7 @@ const Edit = ({
 					setOpenMarker: setOpenMarker
 				}}
 			/>
-			<div ref={mapRef} className={className} style={{width: 600, height: attributes.height || 400, marginBottom: 70, marginTop: 70 }}>
+			<div ref={mapRef} className={className} style={{width: '100%', height: attributes.height || 400, marginBottom: 70, marginTop: 70 }}>
 
 			</div>
 		</Fragment>
