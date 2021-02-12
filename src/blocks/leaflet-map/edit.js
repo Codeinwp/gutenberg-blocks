@@ -44,6 +44,7 @@ const Edit = ({
 	const [ map, setMap ] = useState( null );
 	const [ openMarker, setOpenMarker ] = useState( null );
 
+
 	const createMarker = ( markerProps, dispatch ) => {
 
 		if ( L && map ) {
@@ -61,18 +62,6 @@ const Edit = ({
 				draggable: true
 			});
 
-			markerMap.bindPopup(
-				`<div class="wp-block-themeisle-blocks-map-overview">
-						<h6 class="wp-block-themeisle-blocks-map-overview-title">
-							${ markerProps.title }
-						</h6>
-						<div class="wp-block-themeisle-blocks-map-overview-content">
-							<p>
-								${ markerProps.description }
-							</p
-						</div>
-					</div>`
-			);
 
 			// Change coords when dragging
 			markerMap.on( 'moveend', () => {
@@ -131,19 +120,6 @@ const Edit = ({
 					marker.markerProps = merge( marker.markerProps, action.updatedProps );
 					console.log( action.updatedProps, marker.markerProps );
 
-					// Show information in popup when clicked
-					marker.bindPopup(
-						`<div class="wp-block-themeisle-blocks-map-overview">
-							<h6 class="wp-block-themeisle-blocks-map-overview-title">
-								${ props.title }
-							</h6>
-							<div class="wp-block-themeisle-blocks-map-overview-content">
-								<p>
-									${ props.description }
-								</p
-							</div>
-						</div>`
-					);
 				}
 
 				return marker;
@@ -209,20 +185,51 @@ const Edit = ({
 		}
 	}, [ attributes.latitude, attributes.longitude, attributes.zoom, map ]);
 
+
+	const createPopupContent = ( markerProps, dispatch ) => {
+
+		/**
+		 * The Popup can take a string or a HTMLElement
+		 * For simple use, a string is enough.
+		 * But we need interaction, in our case, to remove the marker.
+		 * So, creating an HTMLElement will allow us to bind function very easily.
+		 */
+		const container = document.createElement( 'div' );
+		const title = document.createElement( 'h6' );
+		const content = document.createElement( 'div' );
+		const description = document.createElement( 'p' );
+		const deleteButton = document.createElement( 'button' );
+
+		title.innerHTML = markerProps.title;
+		description.innerHTML = markerProps.description;
+		deleteButton.onclick = () => dispatch({ type: ActionType.REMOVE, ids: [ markerProps.id ]});
+		deleteButton.innerHTML = 'Delete Marker';
+
+		container.classList.add( 'wp-block-themeisle-blocks-map-overview' );
+		content.classList.add( 'wp-block-themeisle-blocks-map-overview-content' );
+		title.classList.add( 'wp-block-themeisle-blocks-map-overview-title' );
+		deleteButton.classList.add( 'wp-block-themeisle-blocks-map-overview-delete' );
+
+		container.appendChild( title );
+		container.appendChild( content );
+		container.appendChild( deleteButton );
+
+		content.appendChild( description );
+
+		return container;
+	};
+
 	useEffect( () => {
 		if ( markersStore ) {
 			setAttributes({ markers: markersStore.map( ({markerProps}) => markerProps ) });
-
-			// map?.eachLayer( layer => {
-			// 	if ( layer.markerProps?.id ) {
-			// 		map.removeLayer( layer );
-			// 	}
-			// });
 
 			markersStore.forEach( marker => {
 				if ( ! map.hasLayer( marker ) ) {
 					map.addLayer( marker );
 				}
+
+
+				marker.bindPopup( createPopupContent( marker.markerProps, dispatch ) );
 			});
 		}
 	}, [ markersStore ]);
