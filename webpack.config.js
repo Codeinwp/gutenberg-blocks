@@ -39,7 +39,8 @@ module.exports = {
 		'lodash': 'lodash',
 		'@wordpress/blocks': 'wp.blocks',
 		'@wordpress/block-editor': 'wp.editor',
-		'@wordpress/element': 'wp.element'
+		'@wordpress/element': 'wp.element',
+		'@wordpress/components': 'wp.components'
 	},
 	output: {
 		path: path.resolve( __dirname, 'build' ),
@@ -76,7 +77,7 @@ module.exports = {
 						]
 					}
 				},
-				'eslint-loader' ]
+				 ]
 			},
 			{
 				test: /\.(css|scss)$/,
@@ -127,6 +128,6 @@ module.exports = {
 		new CleanWebpackPlugin()
 	],
 	resolve: {
-		extensions: [ '.ts', '.tsx', '.js', '.json' ]
+		extensions: [ '.ts', '.tsx', '.js', '.json', '.scss' ]
 	}
 };

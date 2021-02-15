@@ -15,6 +15,7 @@
 	},
 	"dependencies": {
 		"@emotion/react": "^11.1.4",
+		"@wordpress/components": "^12.0.6",
 		"@wordpress/icons": "^2.9.0",
 		"array-move": "^3.0.1",
 		"classnames": "^2.2.6",
