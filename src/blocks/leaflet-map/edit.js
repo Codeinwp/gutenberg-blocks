@@ -9,6 +9,8 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * WordPress dependencies
 */
+const { isEqual } = lodash;
+const IDs = [];
 
 const {
 	Fragment,
@@ -26,6 +28,8 @@ const {
  * Internal dependencies
  */
 
+import defaults from '../../plugins/options/global-defaults/defaults.js';
+
 export const ActionType = {
 	ADD: 'ADD',
 	REMOVE: 'REMOVE',
@@ -35,10 +39,56 @@ export const ActionType = {
 
 
 const Edit = ({
+	clientId,
 	attributes,
 	setAttributes,
 	className
 }) => {
+
+	const initBlock = () => {
+		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
+
+		if ( attributes.id === undefined ) {
+			let attrs;
+			const instanceId = `wp-block-themeisle-blocks-map-${ clientId.substr( 0, 8 ) }`;
+
+			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
+
+			if ( undefined !== globalDefaults ) {
+				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
+					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+
+					Object.keys( attrs ).map( i => {
+						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
+							return delete attrs[i];
+						}
+					});
+				}
+			}
+
+			setAttributes({
+				...attrs,
+				id: instanceId
+			});
+
+			IDs.push( instanceId );
+			blockIDs.push( instanceId );
+		} else if ( IDs.includes( attributes.id ) ) {
+			const instanceId = `wp-block-themeisle-blocks-map-${ clientId.substr( 0, 8 ) }`;
+			setAttributes({ id: instanceId });
+			IDs.push( instanceId );
+		} else {
+			IDs.push( attributes.id );
+			blockIDs.push( attributes.id );
+		}
+
+		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
+	};
+
+	useEffect( () => {
+		initBlock();
+	}, []);
+
 
 	const mapRef = useRef( null );
 	const [ map, setMap ] = useState( null );
@@ -275,7 +325,7 @@ const Edit = ({
 					setOpenMarker: setOpenMarker
 				}}
 			/>
-			<div ref={mapRef} className={className} style={{width: '100%', height: attributes.height || 400, marginBottom: 70, marginTop: 70 }}>
+			<div id={ attributes.id } ref={mapRef} className={className} style={{width: '100%', height: attributes.height || 400, marginBottom: 70, marginTop: 70 }}>
 
 			</div>
 		</Fragment>
