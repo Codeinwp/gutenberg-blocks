@@ -564,6 +564,9 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'value'     => 'borderRadius',
 						'unit'      => 'px',
 						'default'   => 0,
+						'format'    => function( $value, $attrs ) {
+						    return $value / 2;
+						},
 						'condition' => function( $attrs ) {
 							return ! ( isset( $attrs['borderRadiusType'] ) && 'unlinked' === $attrs['borderRadiusType'] );
 						},
