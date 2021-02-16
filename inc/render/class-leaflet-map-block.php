@@ -96,7 +96,7 @@ class Leaflet_Map_Block extends Base_Block {
 		$output  = '<div class="' . esc_attr( $class ) . '" id="' . esc_attr( $id ) . '"></div>' . "\n";
 		$output .= '<script type="text/javascript">' . "\n";
 		$output .= '	/* <![CDATA[ */' . "\n";
-		$output .= '		if ( ! window.themeisleGoogleMaps ) window.themeisleLeafletMaps =[];' . "\n";
+		$output .= '		if ( ! window.themeisleLeafletMaps ) window.themeisleLeafletMaps =[];' . "\n";
 		$output .= '		window.themeisleLeafletMaps.push( { container: "' . $id . '", attributes: ' . wp_json_encode( $attributes ) . ' } );' . "\n";
 		$output .= '	/* ]]> */' . "\n";
 		$output .= '</script>' . "\n";

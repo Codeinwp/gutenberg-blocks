@@ -3,13 +3,80 @@
  */
 const domReady = wp.domReady;
 
-const createLeafletMap = ( container, attributes ) => {
-	console.log( container, attributes );
+const createPopupContent = ( markerProps ) => {
+
+	/**
+     * The Popup can take a string or a HTMLElement
+     * For simple use, a string is enough.
+     * But we need interaction, in our case, to remove the marker.
+     * So, creating an HTMLElement will allow us to bind function very easily.
+     */
+	const container = document.createElement( 'div' );
+	const title = document.createElement( 'h6' );
+	const content = document.createElement( 'div' );
+	const description = document.createElement( 'p' );
+
+	title.innerHTML = markerProps.title;
+	description.innerHTML = markerProps.description;
+
+	container.classList.add( 'wp-block-themeisle-blocks-map-overview' );
+	content.classList.add( 'wp-block-themeisle-blocks-map-overview-content' );
+	title.classList.add( 'wp-block-themeisle-blocks-map-overview-title' );
+
+	container.appendChild( title );
+	container.appendChild( content );
+
+	content.appendChild( description );
+
+	return container;
+};
+
+const createMarker = ( markerProps ) => {
+	const markerMap = L.marker([ markerProps.latitude, markerProps.longitude ], {
+		title: markerProps.title
+	});
+
+	markerMap.bindPopup( createPopupContent( markerProps ) );
+
+	return markerMap;
+};
+
+const createLeafletMap = ( containerId, attributes ) => {
+	console.log( containerId, attributes );
+	const container = document.querySelector( `#${containerId}` );
+
+	if ( ! container ) {
+		console.warn( `The placeholer for the leaflet map block with id: ${containerId} does not exist!` );
+		return;
+	}
+
+	// Add the height of the map first
+	container.style.height = attributes.height + 'px';
+
+	// Create the map
+	const map = L.map( container );
+	L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+		subdomains: [ 'a', 'b', 'c' ]
+	}).addTo( map );
+
+
+	// Set the view
+	map.setView([ attributes.latitude, attributes.longitude ], attributes.zoom || 13 );
+
+	attributes.markers.map( markerProps => createMarker( markerProps ) ).forEach( marker => {
+		map.addLayer( marker );
+	});
 };
 
 domReady( () => {
 	if ( ! window.themeisleLeafletMaps ) {
 		console.warn( 'The leaflet map attributes did not load on the page!' );
+		return;
+	}
+
+	if ( ! L ) {
+		console.warn( 'The leaflet script did not load on the page!' );
 		return;
 	}
 
