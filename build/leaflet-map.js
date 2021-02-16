@@ -81,30 +81,30 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/frontend/lottie/index.js":
-/*!**************************************!*\
-  !*** ./src/frontend/lottie/index.js ***!
-  \**************************************/
+/***/ "./src/frontend/leaflet-map/index.js":
+/*!*******************************************!*\
+  !*** ./src/frontend/leaflet-map/index.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("/**\n * WordPress dependencies\n */\nvar domReady = wp.domReady;\ndomReady(function () {\n  var animations = document.querySelectorAll('.wp-block-themeisle-blocks-lottie');\n\n  var initAnimation = function initAnimation(animation) {\n    if ('false' === animation.dataset.loop) {\n      animation.setLooping(false);\n\n      if (-1 === animation.__direction) {\n        animation.seek('100%');\n      }\n    }\n\n    if (-1 === animation.__direction && 'true' === animation.dataset.loop) {\n      animation.setLooping(true);\n\n      if (Boolean(animation.__count)) {\n        animation.addEventListener('frame', function (e) {\n          if (e.target.getLottie().playCount === animation.__count && e.target.getLottie().currentFrame) {\n            animation.stop();\n          }\n        });\n      }\n    }\n  };\n\n  animations.forEach(function (animation) {\n    animation.addEventListener('load', function () {\n      var trigger = animation.getAttribute('trigger');\n\n      if ('scroll' === trigger) {\n        return LottieInteractivity.create({\n          mode: 'scroll',\n          player: \"#\".concat(animation.id),\n          actions: [{\n            visibility: [0, 1],\n            type: 'seek',\n            frames: [0, animation.getLottie().totalFrames]\n          }]\n        });\n      }\n\n      if ('hover' === trigger) {\n        animation.addEventListener('mouseover', function () {\n          animation.play();\n        });\n        animation.addEventListener('mouseout', function () {\n          animation.stop();\n        });\n        initAnimation(animation);\n        return animation.stop();\n      }\n\n      if ('click' === trigger) {\n        animation.addEventListener('click', function () {\n          animation.play();\n        });\n        animation.addEventListener('complete', function () {\n          return animation.stop();\n        });\n        initAnimation(animation);\n        return animation.stop();\n      }\n\n      return initAnimation(animation);\n    });\n\n    if (animation.getAttribute('width')) {\n      animation.style.width = \"\".concat(animation.getAttribute('width'), \"px\");\n      animation.style.height = 'auto';\n    }\n  });\n});\n\n//# sourceURL=webpack:///./src/frontend/lottie/index.js?");
+eval("/**\n * WordPress dependencies\n */\nvar domReady = wp.domReady;\ndomReady(function () {\n  if (!window.themeisleLeafletMaps) {\n    console.warn('The leaflet map attributes were not loaded in the page!');\n    return;\n  }\n});\n\n//# sourceURL=webpack:///./src/frontend/leaflet-map/index.js?");
 
 /***/ }),
 
-/***/ 6:
-/*!********************************************!*\
-  !*** multi ./src/frontend/lottie/index.js ***!
-  \********************************************/
+/***/ 1:
+/*!*************************************************!*\
+  !*** multi ./src/frontend/leaflet-map/index.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = __webpack_require__(/*! ./src/frontend/lottie/index.js */\"./src/frontend/lottie/index.js\");\n\n\n//# sourceURL=webpack:///multi_./src/frontend/lottie/index.js?");
+eval("module.exports = __webpack_require__(/*! ./src/frontend/leaflet-map/index.js */\"./src/frontend/leaflet-map/index.js\");\n\n\n//# sourceURL=webpack:///multi_./src/frontend/leaflet-map/index.js?");
 
 /***/ })
 

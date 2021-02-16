@@ -14,6 +14,9 @@ module.exports = {
 			'./src/plugins/registerPlugin.js',
 			...glob.sync( './src/blocks/**/index.js' )
 		],
+		'leaflet-map': [
+			...glob.sync( './src/frontend/leaflet-map/index.js' )
+		],
 		maps: [
 			...glob.sync( './src/frontend/google-map/index.js' )
 		],

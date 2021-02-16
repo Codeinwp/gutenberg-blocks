@@ -437,7 +437,7 @@ class Main {
 
 		if ( ! self::$is_leaflet_loaded && has_block( 'themeisle-blocks/map-block', $post ) ) {
 			wp_enqueue_script(
-				'themeisle-gutenberg-map-block',
+				'themeisle-gutenberg-map-leaflet',
 				plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet.js',
 				array( 'wp-dom-ready' ),
 				self::$assets_version,
@@ -445,10 +445,18 @@ class Main {
 			);
 
 			wp_enqueue_style(
-				'leaflet-theme',
+				'leaflet-css',
 				plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet.css',
 				[],
 				self::$assets_version
+			);
+
+			wp_enqueue_script(
+				'themeisle-gutenberg-leaflet-block',
+				plugin_dir_url( $this->get_dir() ) . 'build/leaflet-map.js',
+				array( 'wp-dom-ready', 'themeisle-gutenberg-map-leaflet' ),
+				self::$assets_version,
+				true
 			);
 
 			self::$is_leaflet_loaded = true;

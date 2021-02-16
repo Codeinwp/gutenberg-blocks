@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -110,7 +110,7 @@ eval("__webpack_require__.r(__webpack_exports__);\nvar styles = {\n  standard: [
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /*!************************************************!*\
   !*** multi ./src/frontend/google-map/index.js ***!
   \************************************************/
