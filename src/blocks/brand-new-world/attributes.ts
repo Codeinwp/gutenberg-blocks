@@ -1,13 +1,15 @@
-import { BlockAttribute } from '@wordpress/blocks';
+import { AttributeSource, BlockAttribute } from '@wordpress/blocks';
 
 type Attributes = {
     id: BlockAttribute<string>,
-    text: BlockAttribute<string>
+    text: BlockAttribute<string>,
+	number: BlockAttribute<number>
 }
 
 export type BrandNewWorldAttrs = {
-    id: string,
-    text: string
+    id?: string,
+    text?: string,
+	number?: number
 }
 
 const attributes: Attributes  = {
@@ -17,6 +19,10 @@ const attributes: Attributes  = {
 	text: {
 		type: 'string',
 		default: 'Hallo'
+	},
+	number: {
+		type: 'number',
+		default: 0
 	}
 };
 
