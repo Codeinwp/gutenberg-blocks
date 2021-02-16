@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("/**\n * WordPress dependencies\n */\nvar domReady = wp.domReady;\ndomReady(function () {\n  if (!window.themeisleLeafletMaps) {\n    console.warn('The leaflet map attributes were not loaded in the page!');\n    return;\n  }\n});\n\n//# sourceURL=webpack:///./src/frontend/leaflet-map/index.js?");
+eval("/**\n * WordPress dependencies\n */\nvar domReady = wp.domReady;\n\nvar createLeafletMap = function createLeafletMap(container, attributes) {\n  console.log(container, attributes);\n};\n\ndomReady(function () {\n  if (!window.themeisleLeafletMaps) {\n    console.warn('The leaflet map attributes did not load on the page!');\n    return;\n  }\n\n  window.themeisleLeafletMaps.forEach(function (block) {\n    createLeafletMap(block.container, block.attributes);\n  });\n});\n\n//# sourceURL=webpack:///./src/frontend/leaflet-map/index.js?");
 
 /***/ }),
 
