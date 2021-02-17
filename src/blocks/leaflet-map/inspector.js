@@ -88,7 +88,8 @@ const Inspector = ({
 					label={ __( 'Location' ) }
 					type="text"
 					className={ classnames({'wp-block-themeisle-blocks-leaflet-map-input-error': 'LOCATION' === error.target })}
-					placeholder={ __( 'Enter location…' ) }
+					placeholder={ __( 'Enter location. E.g: La Sagrada Familia, Barcelona, Spain' ) }
+					help={ __( 'Press Enter to search the location' ) }
 					value={ location }
 					onChange={ ( value ) => setLocation( value ) }
 				/>

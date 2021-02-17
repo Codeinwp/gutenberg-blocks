@@ -85,6 +85,9 @@ const Edit = ({
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
+	/**
+	 * Add an ID to the block.
+	 */
 	useEffect( () => {
 		initBlock();
 	}, []);
@@ -99,7 +102,7 @@ const Edit = ({
 
 		if ( L && map ) {
 
-			// Check for undefined
+			// Check for undefined and set a default value if it is the case.
 			markerProps.id ??= uuidv4();
 			markerProps.latitude ??= map.getCenter().lat;
 			markerProps.longitude ??= map.getCenter().lng;
@@ -176,7 +179,7 @@ const Edit = ({
 			});
 
 		default:
-			console.warn( 'The action for the leaflet block do not have an action in marker reducer: ' + action.type );
+			console.warn( 'The action for the leaflet block do not have a defined action in marker\'s reducer: ' + action.type );
 		}
 
 		return oldState;
@@ -184,9 +187,6 @@ const Edit = ({
 
 	const [ markersStore, dispatch ] = useReducer( markerReducer, []);
 
-	/**
-	 * Initialize the map
-	 */
 	const createMap = () => {
 
 		if ( ! mapRef.current && ! L ) {
@@ -194,6 +194,7 @@ const Edit = ({
 		}
 
 		// Create the map
+		mapRef.current.innerHTML = '';
 		const _map = L.map( mapRef.current );
 
 		// Add Open Street Map as source
@@ -219,6 +220,10 @@ const Edit = ({
 				latitude: latlng.lat,
 				longitude: latlng.lng
 			});
+		});
+
+		_map.on( 'resize', ( oldSize, newSize ) => {
+			console.log( oldSize, newSize );
 		});
 
 		/**
@@ -250,19 +255,24 @@ const Edit = ({
 
 	};
 
+	/**
+	 * Initialize the map.
+	 */
 	useEffect( () => {
 		createMap();
 	}, []);
 
+	/**
+	 * Triger the update size function the map when height is changed to prevent an incorrect display on the bottom of the map.
+	 */
 	useEffect( () => {
-		if ( attributes.height ) {
-			mapRef.current.innerHTML = '';
-			createMap();
+		if ( attributes.height && map ) {
+			map.invalidateSize( true );
 		}
-	}, [ attributes.height ]);
+	}, [ attributes.height, map ]);
 
 	/**
-	 * Set View on the map
+	 * Set View location on the map
 	 */
 	useEffect( () => {
 		if ( attributes.latitude && attributes.longitude && map ) {
@@ -322,9 +332,6 @@ const Edit = ({
 	console.log( 'Store', markersStore );
 	console.log( 'Attr', attributes.markers );
 
-	// console.log( 'Layers', map );
-
-
 	return (
 		<Fragment>
 			<Inspector
@@ -337,7 +344,6 @@ const Edit = ({
 				}}
 			/>
 			<div id={ attributes.id } ref={mapRef} className={className} style={{width: '100%', height: attributes.height || 400, marginBottom: 70, marginTop: 70 }}>
-
 			</div>
 		</Fragment>
 	);
