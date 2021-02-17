@@ -187,7 +187,7 @@ const Edit = ({
 	/**
 	 * Initialize the map
 	 */
-	useEffect( () => {
+	const createMap = () => {
 
 		if ( ! mapRef.current && ! L ) {
 			return ;
@@ -248,7 +248,18 @@ const Edit = ({
 		setMap( _map );
 		dispatch({ type: ActionType.INIT, markers: attributes.markers, dispatch: dispatch });
 
+	};
+
+	useEffect( () => {
+		createMap();
 	}, []);
+
+	useEffect( () => {
+		if ( attributes.height ) {
+			mapRef.current.innerHTML = '';
+			createMap();
+		}
+	}, [ attributes.height ]);
 
 	/**
 	 * Set View on the map
