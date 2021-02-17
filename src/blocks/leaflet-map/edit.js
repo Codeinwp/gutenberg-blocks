@@ -213,8 +213,8 @@ const Edit = ({
 		_map.on( 'moveend', () => {
 			const latlng = _map.getCenter();
 			setAttributes({
-				latitude: latlng.lat,
-				longitude: latlng.lng
+				latitude: latlng.lat.toString(),
+				longitude: latlng.lng.toString()
 			});
 		});
 

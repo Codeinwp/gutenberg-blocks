@@ -48,8 +48,8 @@ const Inspector = ({
 
 		if ( LngLat ) {
 			setAttributes({
-				latitude: LngLat.latitude,
-				longitude: LngLat.longitude
+				latitude: LngLat.latitude.toString(),
+				longitude: LngLat.longitude.toString()
 			});
 
 			if ( 'LOCATION' === error.target ) {
