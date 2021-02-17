@@ -100,7 +100,7 @@ const Edit = ({
 
 	const createMarker = ( markerProps, dispatch ) => {
 
-		if ( L && map ) {
+		if ( L && map && dispatch && markerProps ) {
 
 			// Check for undefined and set a default value if it is the case.
 			markerProps.id ??= uuidv4();
@@ -228,7 +228,7 @@ const Edit = ({
 				L.DomUtil.addClass( button, 'wp-block-themeisle-blocks-leaflet-map-add-marker-control' );
 				button.innerHTML = 'Add Marker';
 				button.onclick = () => {
-					dispatch({type: ActionType.ADD, marker: {} });
+					dispatch({type: ActionType.ADD, marker: {}, dispatch: dispatch });
 				};
 
 				return button;
