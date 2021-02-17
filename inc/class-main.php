@@ -435,7 +435,7 @@ class Main {
 			self::$is_lottie_loaded = true;
 		}
 
-		if ( ! self::$is_leaflet_loaded && has_block( 'themeisle-blocks/map-block', $post ) ) {
+		if ( ! self::$is_leaflet_loaded && has_block( 'themeisle-blocks/leaflet-map-block', $post ) ) {
 			wp_enqueue_script(
 				'themeisle-gutenberg-map-leaflet',
 				plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet.js',

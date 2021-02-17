@@ -23,7 +23,7 @@ class Leaflet_Map_Block extends Base_Block
 	 */
 	protected function set_block_slug()
 	{
-		$this->block_slug = 'map-block';
+		$this->block_slug = 'leaflet-map-block';
 	}
 
 	/**

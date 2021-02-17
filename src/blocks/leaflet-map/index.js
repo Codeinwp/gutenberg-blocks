@@ -14,7 +14,7 @@ import { mapIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
 
-registerBlockType( 'themeisle-blocks/map-block', {
+registerBlockType( 'themeisle-blocks/leaflet-map-block', {
 	title: __( 'Maps' ),
 	description: __( 'Display Open Street Maps on your website with Map block.' ),
 	icon,
