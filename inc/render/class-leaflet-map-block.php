@@ -61,6 +61,14 @@ class Leaflet_Map_Block extends Base_Block
 				'type'    => 'object',
 				'default' => [],
 			),
+			'draggable'         => array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
+			'zoomControl'       => array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
 		);
 	}
 

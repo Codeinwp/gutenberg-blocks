@@ -25,6 +25,14 @@ const attributes = {
 	markers: {
 		type: 'array',
 		default: []
+	},
+	zoomControl: {
+		type: 'boolean',
+		default: true
+	},
+	draggable: {
+		type: 'boolean',
+		default: true
 	}
 };
 

@@ -222,10 +222,6 @@ const Edit = ({
 			});
 		});
 
-		_map.on( 'resize', ( oldSize, newSize ) => {
-			console.log( oldSize, newSize );
-		});
-
 		/**
 		 * Create the Add Marker button on the map
 		 * Reference: https://leafletjs.com/examples/extending/extending-3-controls.html

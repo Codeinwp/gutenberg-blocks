@@ -17,7 +17,9 @@ const {
 	PanelBody,
 	Button,
 	TextControl,
-	RangeControl
+	RangeControl,
+	BaseControl,
+	ToggleControl
 } = wp.components;
 
 const { InspectorControls } = wp.blockEditor;
@@ -77,6 +79,13 @@ const Inspector = ({
 		setAttributes({ zoom: value });
 	};
 
+	const toggleDraggable = () => {
+		setAttributes({ draggable: ! attributes.draggable });
+	};
+
+	const toggleZoomControl = () => {
+		setAttributes({ zoomControl: ! attributes.zoomControl });
+	};
 
 	return (
 		<InspectorControls>
@@ -143,6 +152,28 @@ const Inspector = ({
 					max={ 1400 }
 				/>
 			</PanelBody>
+			<PanelBody
+				title={ __( 'Controls' ) }
+				initialOpen={ false }
+			>
+				<BaseControl>
+					{ __( 'The following changes will not affect block preview during the editing process. You can click outside the block to see the changes take effect.' ) }
+				</BaseControl>
+
+				<ToggleControl
+					label={ 'Draggable Map' }
+					checked={ attributes.draggable }
+					onChange={ toggleDraggable }
+				/>
+
+				<ToggleControl
+					label={ 'Zoom Control' }
+					checked={ attributes.zoomControl }
+					onChange={ toggleZoomControl }
+				/>
+
+			</PanelBody>
+
 			<PanelBody
 				title={ __( 'Markers' ) }
 				initialOpen={ true }
