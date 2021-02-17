@@ -25,7 +25,6 @@ const createPopupContent = ( markerProps ) => {
 
 	container.appendChild( title );
 	container.appendChild( content );
-
 	content.appendChild( description );
 
 	return container;
@@ -64,6 +63,7 @@ const createLeafletMap = ( containerId, attributes ) => {
 	// Set the view
 	map.setView([ attributes.latitude, attributes.longitude ], attributes.zoom || 13 );
 
+	// Add the markers
 	attributes.markers.map( markerProps => createMarker( markerProps ) ).forEach( marker => {
 		map.addLayer( marker );
 	});
