@@ -87,6 +87,12 @@ const Inspector = ({
 		setAttributes({ zoomControl: ! attributes.zoomControl });
 	};
 
+	const searchOnPress = ( event, key ) => {
+		if ( event.key === key ) {
+			search();
+		}
+	};
+
 	return (
 		<InspectorControls>
 			<PanelBody
@@ -101,6 +107,7 @@ const Inspector = ({
 					help={ __( 'Press Enter to search the location' ) }
 					value={ location }
 					onChange={ ( value ) => setLocation( value ) }
+					onKeyDown={ ( event ) => searchOnPress( event, 'Enter' ) }
 				/>
 
 				<Button

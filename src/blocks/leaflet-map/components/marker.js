@@ -74,6 +74,12 @@ const Marker = ({
 		}
 	};
 
+	const searchOnPress = ( event, key ) => {
+		if ( event.key === key ) {
+			search();
+		}
+	};
+
 	return (
 		<div className="wp-block-themeisle-blocks-leaflet-map-marker">
 			<div className="wp-block-themeisle-blocks-leaflet-map-marker-title-area">
@@ -109,6 +115,8 @@ const Marker = ({
 							onChange={ e => {
 								setLocation( e );
 							} }
+							help={ __( 'Press Enter to search the location' ) }
+							onKeyDown={ ( event ) => searchOnPress( event, 'Enter' ) }
 						/>
 
 						<Button
