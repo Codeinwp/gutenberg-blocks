@@ -111,7 +111,6 @@ const Edit = ({
 
 			// Create the marker on the map
 			const markerMap = L.marker([ markerProps.latitude, markerProps.longitude ] || map.getCenter(), {
-				title: markerProps.title,
 				draggable: true
 			});
 
@@ -119,7 +118,7 @@ const Edit = ({
 			// Change coords when dragging
 			markerMap.on( 'moveend', () => {
 				const latlng = markerMap.getLatLng();
-				console.log( latlng );
+
 				dispatch({
 					type: ActionType.UPDATE,
 					ids: [ markerProps.id ],
@@ -142,7 +141,7 @@ const Edit = ({
 	};
 
 	const markerReducer = ( oldState, action ) => {
-		console.log( 'Event: ' + action.type );
+
 		switch ( action.type ) {
 		case ActionType.ADD:
 			const newMarker = createMarker( action.marker, action.dispatch );
@@ -171,8 +170,6 @@ const Edit = ({
 
 				if ( action.ids.includes( props.id )  ) {
 					marker.markerProps = merge( marker.markerProps, action.updatedProps );
-					console.log( action.updatedProps, marker.markerProps );
-
 				}
 
 				return marker;
@@ -215,7 +212,6 @@ const Edit = ({
 
 		_map.on( 'moveend', () => {
 			const latlng = _map.getCenter();
-			console.log( latlng );
 			setAttributes({
 				latitude: latlng.lat,
 				longitude: latlng.lng
@@ -318,15 +314,22 @@ const Edit = ({
 				if ( ! map.hasLayer( marker ) ) {
 					map.addLayer( marker );
 				}
+				const { markerProps } = marker;
 
+				// Update the marker location
+				marker.setLatLng([ markerProps.latitude, markerProps.longitude ]);
 
-				marker.bindPopup( createPopupContent( marker.markerProps, dispatch ) );
+				// Update the title
+				marker.bindTooltip( markerProps.title, { direction: 'auto'});
+
+				// Update the content of the Popup
+				marker.bindPopup( createPopupContent( markerProps, dispatch ) );
 			});
 		}
 	}, [ markersStore ]);
 
-	console.log( 'Store', markersStore );
-	console.log( 'Attr', attributes.markers );
+	// console.log( 'Store', markersStore );
+	// console.log( 'Attr', attributes.markers );
 
 	return (
 		<Fragment>

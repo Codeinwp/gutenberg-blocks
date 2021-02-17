@@ -22,8 +22,10 @@ import Marker from './marker.js';
 const MarkerWrapper = ({
 	markers,
 	dispatch,
-	markersInteraction: { openMarker, setOpenMarker }
+	markersInteraction
 }) => {
+
+	const { openMarker, setOpenMarker } = markersInteraction;
 
 	return (
 		<Fragment>

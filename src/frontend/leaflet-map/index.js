@@ -31,17 +31,17 @@ const createPopupContent = ( markerProps ) => {
 };
 
 const createMarker = ( markerProps ) => {
-	const markerMap = L.marker([ markerProps.latitude, markerProps.longitude ], {
-		title: markerProps.title
-	});
+	const markerMap = L.marker([ markerProps.latitude, markerProps.longitude ]);
 
+	markerMap.bindTooltip( markerProps.title, { direction: 'auto'});
 	markerMap.bindPopup( createPopupContent( markerProps ) );
 
 	return markerMap;
 };
 
 const createLeafletMap = ( containerId, attributes ) => {
-	console.log( containerId, attributes );
+
+	// console.log( containerId, attributes );
 	const container = document.querySelector( `#${containerId}` );
 
 	if ( ! container ) {
