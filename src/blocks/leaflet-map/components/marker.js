@@ -119,7 +119,7 @@ const Marker = ({
 							onKeyDown={ ( event ) => searchOnPress( event, 'Enter' ) }
 						/>
 
-						<Button
+						{/* <Button
 							isPrimary
 							isSmall
 							label={ __( 'Search location' ) }
@@ -129,7 +129,7 @@ const Marker = ({
 							}}
 						>
 							{ __( 'Search location' )}
-						</Button>
+						</Button> */}
 
 						<TextControl
 							label={ __( 'Latitude' ) }
@@ -163,19 +163,6 @@ const Marker = ({
 								});
 							} }
 						/>
-
-						{/* <SelectControl
-						label={ __( 'Map Icon' ) }
-						value={ marker.icon || 'https://maps.leaflet.com/mapfiles/ms/icons/red-dot.png' }
-						options={ [
-							{ label: __( 'Red' ), value: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' },
-							{ label: __( 'Blue' ), value: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' },
-							{ label: __( 'Yellow' ), value: 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png' },
-							{ label: __( 'Green' ), value: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png' },
-							{ label: __( 'Orange' ), value: 'https://maps.google.com/mapfiles/ms/icons/orange-dot.png' }
-						] }
-						onChange={ e => changeMarkerProps( marker.id, 'icon', e ) }
-					/> */}
 
 						<TextControl
 							label={ __( 'Title' ) }

@@ -15,7 +15,6 @@ const {
 
 const {
 	PanelBody,
-	Button,
 	TextControl,
 	RangeControl,
 	BaseControl,
@@ -110,7 +109,7 @@ const Inspector = ({
 					onKeyDown={ ( event ) => searchOnPress( event, 'Enter' ) }
 				/>
 
-				<Button
+				{/* <Button
 					isPrimary
 					isSmall
 					label={ __( 'Search location' ) }
@@ -119,7 +118,7 @@ const Inspector = ({
 					}}
 				>
 					{ __( 'Search location' )}
-				</Button>
+				</Button> */}
 
 				<TextControl
 					label={ __( 'Latitude' ) }
