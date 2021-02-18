@@ -32,6 +32,7 @@ import defaults from '../../plugins/options/global-defaults/defaults.js';
 
 export const ActionType = {
 	ADD: 'ADD',
+	ADD_MANUAL: 'ADD_MANUAL',
 	REMOVE: 'REMOVE',
 	UPDATE: 'UPDATE',
 	INIT: 'INIT'
@@ -95,9 +96,10 @@ const Edit = ({
 
 	const mapRef = useRef( null );
 	const [ map, setMap ] = useState( null );
+	const [ isAddingToLocationActive, setActiveAddingToLocation ] = useState( false );
 	const [ openMarker, setOpenMarker ] = useState( null );
 
-
+	// ----------------------------------- Markers -------------------------------------------
 	const createMarker = ( markerProps, dispatch ) => {
 
 		if ( L && map && dispatch && markerProps ) {
@@ -147,6 +149,13 @@ const Edit = ({
 			const newMarker = createMarker( action.marker, action.dispatch );
 			return [ ...oldState, newMarker ];
 
+		case ActionType.ADD_MANUAL:
+			if ( isAddingToLocationActive ) {
+				const newMarker = createMarker( action.marker, action.dispatch );
+				return [ ...oldState, newMarker ];
+			}
+			return oldState;
+
 		case ActionType.REMOVE:
 			oldState.filter( ({ markerProps }) => action.ids.includes( markerProps.id ) ).forEach( marker => {
 				if ( map.hasLayer( marker ) ) {
@@ -184,6 +193,7 @@ const Edit = ({
 
 	const [ markersStore, dispatch ] = useReducer( markerReducer, []);
 
+	// ---------------------------------- Map Interaction ---------------------------------------
 	const createMap = () => {
 
 		if ( ! mapRef.current && ! L ) {
@@ -218,6 +228,15 @@ const Edit = ({
 			});
 		});
 
+		_map.on( 'click', event => {
+			dispatch({
+				type: ActionType.ADD_MANUAL,
+				marker: { latitude: event.latlng.lat, longitude: event.latlng.lng },
+				dispatch
+			});
+			setActiveAddingToLocation( false );
+		});
+
 		/**
 		 * Create the Add Marker button on the map
 		 * Reference: https://leafletjs.com/examples/extending/extending-3-controls.html
@@ -227,9 +246,13 @@ const Edit = ({
 				const button = L.DomUtil.create( 'button' );
 				L.DomUtil.addClass( button, 'wp-block-themeisle-blocks-leaflet-map-add-marker-control' );
 				button.innerHTML = 'Add Marker';
-				button.onclick = () => {
-					dispatch({type: ActionType.ADD, marker: {}, dispatch: dispatch });
-				};
+				L.DomEvent.on( button, 'click', event => {
+
+					// Do not sent this event to the rest of the components
+					L.DomEvent.stopPropagation( event );
+					console.log( isAddingToLocationActive );
+					setActiveAddingToLocation( ! isAddingToLocationActive );
+				});
 
 				return button;
 			},
