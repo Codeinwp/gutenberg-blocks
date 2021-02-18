@@ -16,4 +16,18 @@ export interface OtterEditProps<T extends Record<string, any>> extends BlockEdit
     readonly setAttributes: (attrs: Partial<T & GutenbersCSS>) => void;
 }
 
-export interface OtterInspector<T extends Record<string, any>> extends Pick<OtterEditProps<T>, "attributes" | "setAttributes"> {}
+export interface OtterInspector<T extends Record<string, any>> extends Pick<OtterEditProps<T>, "attributes" | "setAttributes" | "hasCustomCSS" | "customCSS"> {}
+
+/**
+ * Extend window interface
+ */
+
+
+export {}
+declare global {
+    interface Window {
+        themeisleGutenberg?: {
+            blockIDs?: string[]
+        }
+    }
+}
