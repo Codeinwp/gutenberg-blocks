@@ -33,6 +33,10 @@ const attributes = {
 	draggable: {
 		type: 'boolean',
 		default: true
+	},
+	bbox: {
+		type: 'string',
+		default: '2.1207046508789067%2C41.34807736149302%2C2.2288513183593754%2C41.45816618938139'
 	}
 };
 

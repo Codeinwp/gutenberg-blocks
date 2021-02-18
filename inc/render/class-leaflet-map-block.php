@@ -69,6 +69,11 @@ class Leaflet_Map_Block extends Base_Block
 				'type'    => 'boolean',
 				'default' => true,
 			),
+			'bbox'				=> array(
+				'type'    => 'string',
+				'default' => '2.1207046508789067%2C41.34807736149302%2C2.2288513183593754%2C41.45816618938139',
+			)
+
 		);
 	}
 
@@ -86,19 +91,24 @@ class Leaflet_Map_Block extends Base_Block
 	{
 		if (function_exists('is_amp_endpoint') && is_amp_endpoint()) {
 
-			$output  = '<amp-iframe width="400" height="' . intval($attributes['height']) . '" sandbox="allow-scripts allow-same-origin" layout="responsive" src="https://www.embed-leaflet.com/map?center=' . esc_attr($attributes['latitude']) . ',' . esc_attr($attributes['longitude']) . '&zoom=8&style=&marker=false&popup=false&title=&enhancedScroll=true' . '">';
-			$output .= '	<amp-img layout="fill" src="' . plugin_dir_url(__FILE__) . '../../assets/icons/map-standard.png" placeholder></amp-img>';
+			/*
+<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=2.1207046508789067%2C41.34807736149302%2C2.2288513183593754%2C41.45816618938139&amp;layer=mapnik" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/#map=13/41.4031/2.1748">View Larger Map</a></small>
+			*/
+			$link = 'https://www.openstreetmap.org/export/embed.html?bbox='. stripslashes( esc_attr( $attributes['bbox'] ) ) . '&amp;layer=mapnik';
+
+			$output  = '<amp-iframe width="400" height="' . intval( $attributes['height'] ) . '" sandbox="allow-scripts allow-same-origin" layout="responsive" src="' . stripslashes( $link ) .'" style="border: 1px solid black">' ;
+			$output .= '	<amp-img layout="fill" src="' . plugin_dir_url( __FILE__ ) . '../../assets/icons/map-standard.png" placeholder></amp-img>';
 			$output .= '</amp-iframe>';
 
 			return $output;
 		}
 
 		// Set the ID and the class name
-		$id    = isset($attributes['id']) ? $attributes['id'] : 'wp-block-themeisle-blocks-map-' . wp_rand(10, 100);
+		$id    = isset( $attributes['id'] ) ? $attributes['id'] : 'wp-block-themeisle-blocks-map-' . wp_rand( 10, 100 );
 		$class = 'wp-block-themeisle-blocks-map';
 
-		if (isset($attributes['className'])) {
-			$class .= ' ' . esc_attr($attributes['className']);
+		if ( isset( $attributes['className'] ) ) {
+			$class .= ' ' . esc_attr( $attributes['className'] );
 		}
 
 		if (isset($attributes['align'])) {
@@ -106,11 +116,11 @@ class Leaflet_Map_Block extends Base_Block
 		}
 
 		// Load the attributes in the page and make a placeholder to render the map
-		$output  = '<div class="' . esc_attr($class) . '" id="' . esc_attr($id) . '"></div>' . "\n";
+		$output  = '<div class="' . esc_attr( $class ) . '" id="' . esc_attr( $id ) . '"></div>' . "\n";
 		$output .= '<script type="text/javascript">' . "\n";
 		$output .= '	/* <![CDATA[ */' . "\n";
 		$output .= '		if ( ! window.themeisleLeafletMaps ) window.themeisleLeafletMaps =[];' . "\n";
-		$output .= '		window.themeisleLeafletMaps.push( { container: "' . $id . '", attributes: ' . wp_json_encode($attributes) . ' } );' . "\n";
+		$output .= '		window.themeisleLeafletMaps.push( { container: "' . $id . '", attributes: ' . wp_json_encode( $attributes ) . ' } );' . "\n";
 		$output .= '	/* ]]> */' . "\n";
 		$output .= '</script>' . "\n";
 

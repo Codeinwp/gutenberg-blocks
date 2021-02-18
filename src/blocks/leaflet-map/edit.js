@@ -301,9 +301,20 @@ const Edit = ({
 		}
 	}, [ attributes.latitude, attributes.longitude, attributes.zoom, map ]);
 
+	/**
+	 * Activate the visuals for the `Add Marker` button from the map
+	 */
 	useEffect( () => {
 		mapRef.current?.classList.toggle( 'is-selecting-location', isAddingToLocationActive );
 	}, [ isAddingToLocationActive ]);
+
+	useEffect( () => {
+		if ( attributes.latitude && attributes.longitude && map ) {
+			setAttributes({
+				bbox: map.getBounds().toBBoxString()
+			});
+		}
+	}, [ attributes.latitude, attributes.longitude, map ]);
 
 
 	const createPopupContent = ( markerProps, dispatch ) => {
