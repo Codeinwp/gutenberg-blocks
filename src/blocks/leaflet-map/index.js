@@ -15,7 +15,7 @@ import attributes from './attributes.js';
 import edit from './edit.js';
 import transforms from './transforms.js';
 
-registerBlockType( 'themeisle-blocks/leaflet-map-block', {
+registerBlockType( 'themeisle-blocks/leaflet-map', {
 	title: __( 'Maps' ),
 	description: __( 'Display Open Street Maps on your website with Map block.' ),
 	icon,

@@ -2,13 +2,11 @@
  * External dependencies
  */
 
-import Inspector from './inspector';
-
 import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies
-*/
+ */
 const { isEqual } = lodash;
 const IDs = [];
 
@@ -29,6 +27,7 @@ const {
  */
 
 import defaults from '../../plugins/options/global-defaults/defaults.js';
+import Inspector from './inspector';
 
 export const ActionType = {
 	ADD: 'ADD',
@@ -133,6 +132,10 @@ const Edit = ({
 
 			markerMap.on( 'click', () => {
 				setOpenMarker( markerProps.id );
+			});
+
+			markerMap.on( 'popupclose', () => {
+				setOpenMarker( null );
 			});
 
 			markerMap.markerProps = markerProps;
@@ -243,9 +246,9 @@ const Edit = ({
 		 */
 		L.Control.AddMarker = L.Control.extend({
 			onAdd: () => {
-				const button = L.DomUtil.create( 'button' );
-				L.DomUtil.addClass( button, 'wp-block-themeisle-blocks-leaflet-map-add-marker-control' );
-				button.innerHTML = 'Add Marker';
+				const button = L.DomUtil.create( 'button', 'wp-block-themeisle-blocks-leaflet-map-marker-button' );
+				const span = L.DomUtil.create( 'span', 'dashicons dashicons-sticky', button );
+
 				L.DomEvent.on( button, 'click', event => {
 
 					// Do not sent this event to the rest of the components
@@ -253,6 +256,9 @@ const Edit = ({
 					console.log( isAddingToLocationActive );
 					setActiveAddingToLocation( ! isAddingToLocationActive );
 				});
+
+				button.title = 'Add marker on the map with a click';
+				button.appendChild( span );
 
 				return button;
 			},
@@ -294,6 +300,10 @@ const Edit = ({
 			map.setView([ attributes.latitude, attributes.longitude ], attributes.zoom || 13 );
 		}
 	}, [ attributes.latitude, attributes.longitude, attributes.zoom, map ]);
+
+	useEffect( () => {
+		mapRef.current?.classList.toggle( 'is-selecting-location', isAddingToLocationActive );
+	}, [ isAddingToLocationActive ]);
 
 
 	const createPopupContent = ( markerProps, dispatch ) => {
@@ -357,15 +367,15 @@ const Edit = ({
 	return (
 		<Fragment>
 			<Inspector
-				attributes={attributes}
-				setAttributes={setAttributes}
-				dispatch={dispatch}
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				dispatch={ dispatch }
 				markersInteraction={{
 					openMarker: openMarker,
 					setOpenMarker: setOpenMarker
 				}}
 			/>
-			<div id={ attributes.id } ref={mapRef} className={className} style={{width: '100%', height: attributes.height || 400, marginBottom: 70, marginTop: 70 }}>
+			<div id={ attributes.id } ref={ mapRef } className={ className } style={{ width: '100%', height: attributes.height || 400, marginBottom: 70, marginTop: 70 }}>
 			</div>
 		</Fragment>
 	);

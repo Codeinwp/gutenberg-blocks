@@ -762,8 +762,16 @@ span.highlight {
 .wp-block-themeisle-blocks-leaflet-map .gmnoprint:hover * {
   cursor: pointer !important; }
 
-.wp-block-themeisle-blocks-leaflet-map.is-selecting-marker * {
+.wp-block-themeisle-blocks-leaflet-map.is-selecting-location * {
   cursor: crosshair; }
+  .wp-block-themeisle-blocks-leaflet-map.is-selecting-location * .wp-block-themeisle-blocks-leaflet-map-marker-button {
+    background-color: #E7BB41; }
+    .wp-block-themeisle-blocks-leaflet-map.is-selecting-location * .wp-block-themeisle-blocks-leaflet-map-marker-button * {
+      cursor: pointer; }
+    .wp-block-themeisle-blocks-leaflet-map.is-selecting-location * .wp-block-themeisle-blocks-leaflet-map-marker-button .dashicons {
+      color: #fff; }
+      .wp-block-themeisle-blocks-leaflet-map.is-selecting-location * .wp-block-themeisle-blocks-leaflet-map-marker-button .dashicons:before {
+        content: "\f109"; }
 
 .wp-block-themeisle-blocks-leaflet-map-marker-button {
   background-color: #fff;
