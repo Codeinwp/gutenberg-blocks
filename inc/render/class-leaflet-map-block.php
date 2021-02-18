@@ -91,9 +91,6 @@ class Leaflet_Map_Block extends Base_Block
 	{
 		if (function_exists('is_amp_endpoint') && is_amp_endpoint()) {
 
-			/*
-<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=2.1207046508789067%2C41.34807736149302%2C2.2288513183593754%2C41.45816618938139&amp;layer=mapnik" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/#map=13/41.4031/2.1748">View Larger Map</a></small>
-			*/
 			$link = 'https://www.openstreetmap.org/export/embed.html?bbox='. stripslashes( esc_attr( $attributes['bbox'] ) ) . '&amp;layer=mapnik';
 
 			$output  = '<amp-iframe width="400" height="' . intval( $attributes['height'] ) . '" sandbox="allow-scripts allow-same-origin" layout="responsive" src="' . stripslashes( $link ) .'" style="border: 1px solid black">' ;

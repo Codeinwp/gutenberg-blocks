@@ -3,7 +3,8 @@
 async function makeSearchRequest( location ) {
 
 	if ( 'string' !== typeof location ) {
-		console.log( typeof location );
+
+		// console.log( typeof location );
 		throw 'Location must be a string';
 	}
 
@@ -12,14 +13,14 @@ async function makeSearchRequest( location ) {
 
 	const url = 'https://nominatim.openstreetmap.org/search?q=' + query + '&format=geojson';
 
-	console.log( 'Link: ' + url );
+	// console.log( 'Link: ' + url );
 
 	const response = await fetch( url );
 
 	if ( response.ok && 200 === response.status ) {
 		return response.json();
 	}
-	console.log( `An error has occured: ${response.status}` );
+	console.warn( `An error has occured: ${response.status}` );
 	return null;
 }
 
