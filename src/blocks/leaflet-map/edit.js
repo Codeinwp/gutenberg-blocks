@@ -29,6 +29,9 @@ const {
 import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Inspector from './inspector';
 
+/**
+ * Definition of the action type for the marker reducer
+ */
 export const ActionType = {
 	ADD: 'ADD',
 	ADD_MANUAL: 'ADD_MANUAL',
@@ -160,6 +163,8 @@ const Edit = ({
 			return oldState;
 
 		case ActionType.REMOVE:
+
+			// Remove the visual markers from the map
 			oldState.filter( ({ markerProps }) => action.ids.includes( markerProps.id ) ).forEach( marker => {
 				if ( map.hasLayer( marker ) ) {
 					map.removeLayer( marker );
@@ -194,6 +199,12 @@ const Edit = ({
 		return oldState;
 	};
 
+	/**
+	 * Since we are working with callbacks to interact with the Leaflet Map,
+	 * all the functions used will make a snapshot of the state's value at the moment of creation and be used until we rebind them again.
+	 * To avoid this, we will use a dispatch function that doesn't need to know the updated state;
+	 * he will send the data and let the reducer manipulate it using the current states.
+	 */
 	const [ markersStore, dispatch ] = useReducer( markerReducer, []);
 
 	// ---------------------------------- Map Interaction ---------------------------------------
@@ -253,7 +264,6 @@ const Edit = ({
 
 					// Do not sent this event to the rest of the components
 					L.DomEvent.stopPropagation( event );
-					console.log( isAddingToLocationActive );
 					setActiveAddingToLocation( ! isAddingToLocationActive );
 				});
 
@@ -272,6 +282,8 @@ const Edit = ({
 		L.control.addmarker({ position: 'bottomleft' }).addTo( _map );
 
 		setMap( _map );
+
+		// Render the saved markers
 		dispatch({ type: ActionType.INIT, markers: attributes.markers, dispatch: dispatch });
 
 	};
@@ -308,6 +320,10 @@ const Edit = ({
 		mapRef.current?.classList.toggle( 'is-selecting-location', isAddingToLocationActive );
 	}, [ isAddingToLocationActive ]);
 
+	/**
+	 * Get the bounding box information everytime when change the coords of the map
+	 * This will be used for embeding in AMP
+	 */
 	useEffect( () => {
 		if ( attributes.latitude && attributes.longitude && map ) {
 			setAttributes({
