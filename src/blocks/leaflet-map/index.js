@@ -13,6 +13,7 @@ import './editor.scss';
 import { mapIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
+import transforms from './transforms.js';
 
 registerBlockType( 'themeisle-blocks/leaflet-map-block', {
 	title: __( 'Maps' ),
@@ -29,6 +30,7 @@ registerBlockType( 'themeisle-blocks/leaflet-map-block', {
 		align: [ 'wide', 'full' ],
 		html: false
 	},
+	transforms,
 	edit,
 	save: () => null
 });
