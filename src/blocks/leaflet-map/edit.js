@@ -1,14 +1,12 @@
 /**
  * External dependencies
  */
-
 import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies
  */
 const { isEqual } = lodash;
-const IDs = [];
 
 const {
 	Fragment,
@@ -25,7 +23,6 @@ const {
 /**
  * Internal dependencies
  */
-
 import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Inspector from './inspector';
 
@@ -40,6 +37,7 @@ export const ActionType = {
 	INIT: 'INIT'
 };
 
+const IDs = [];
 
 const Edit = ({
 	clientId,
@@ -47,7 +45,6 @@ const Edit = ({
 	setAttributes,
 	className
 }) => {
-
 	const initBlock = () => {
 		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
 
@@ -95,31 +92,23 @@ const Edit = ({
 		initBlock();
 	}, []);
 
-
 	const mapRef = useRef( null );
 	const [ map, setMap ] = useState( null );
 	const [ isAddingToLocationActive, setActiveAddingToLocation ] = useState( false );
 	const [ openMarker, setOpenMarker ] = useState( null );
 
-	// ----------------------------------- Markers -------------------------------------------
 	const createMarker = ( markerProps, dispatch ) => {
-
 		if ( L && map && dispatch && markerProps ) {
-
-			// Check for undefined and set a default value if it is the case.
 			markerProps.id ??= uuidv4();
 			markerProps.latitude ??= map.getCenter().lat;
 			markerProps.longitude ??= map.getCenter().lng;
 			markerProps.title ??= 'Add a title';
 			markerProps.description ??= '';
 
-			// Create the marker on the map
 			const markerMap = L.marker([ markerProps.latitude, markerProps.longitude ] || map.getCenter(), {
 				draggable: true
 			});
 
-
-			// Change coords when dragging
 			markerMap.on( 'moveend', () => {
 				const latlng = markerMap.getLatLng();
 
@@ -145,11 +134,11 @@ const Edit = ({
 
 			return markerMap;
 		}
+
 		return null;
 	};
 
 	const markerReducer = ( oldState, action ) => {
-
 		switch ( action.type ) {
 		case ActionType.ADD:
 			const newMarker = createMarker( action.marker, action.dispatch );
@@ -163,8 +152,6 @@ const Edit = ({
 			return oldState;
 
 		case ActionType.REMOVE:
-
-			// Remove the visual markers from the map
 			oldState.filter( ({ markerProps }) => action.ids.includes( markerProps.id ) ).forEach( marker => {
 				if ( map.hasLayer( marker ) ) {
 					map.removeLayer( marker );
@@ -193,7 +180,7 @@ const Edit = ({
 			});
 
 		default:
-			console.warn( 'The action for the leaflet block do not have a defined action in marker\'s reducer: ' + action.type );
+			console.warn( __( 'The action for the leaflet block do not have a defined action in marker\'s reducer: ' ) + action.type );
 		}
 
 		return oldState;
@@ -206,8 +193,6 @@ const Edit = ({
 	 * he will send the data and let the reducer manipulate it using the current states.
 	 */
 	const [ markersStore, dispatch ] = useReducer( markerReducer, []);
-
-	// ---------------------------------- Map Interaction ---------------------------------------
 	const createMap = () => {
 
 		if ( ! mapRef.current && ! L ) {
@@ -223,7 +208,6 @@ const Edit = ({
 			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			subdomains: [ 'a', 'b', 'c' ]
 		}).addTo( _map );
-
 
 		/**
 		 * Defines event handlers
@@ -272,20 +256,23 @@ const Edit = ({
 
 				return button;
 			},
-			onRemove: () => {
-
-			}
+			onRemove: () => {}
 		});
+
 		L.control.addmarker = ( opts ) => {
 			return new L.Control.AddMarker( opts );
 		};
+
 		L.control.addmarker({ position: 'bottomleft' }).addTo( _map );
 
 		setMap( _map );
 
 		// Render the saved markers
-		dispatch({ type: ActionType.INIT, markers: attributes.markers, dispatch: dispatch });
-
+		dispatch({
+			type: ActionType.INIT,
+			markers: attributes.markers,
+			dispatch: dispatch
+		});
 	};
 
 	/**
@@ -331,7 +318,6 @@ const Edit = ({
 			});
 		}
 	}, [ attributes.latitude, attributes.longitude, map ]);
-
 
 	const createPopupContent = ( markerProps, dispatch ) => {
 
@@ -388,9 +374,6 @@ const Edit = ({
 		}
 	}, [ markersStore ]);
 
-	// console.log( 'Store', markersStore );
-	// console.log( 'Attr', attributes.markers );
-
 	return (
 		<Fragment>
 			<Inspector
@@ -402,7 +385,17 @@ const Edit = ({
 					setOpenMarker: setOpenMarker
 				}}
 			/>
-			<div id={ attributes.id } ref={ mapRef } className={ className } style={{ width: '100%', height: attributes.height || 400, marginBottom: 70, marginTop: 70 }}>
+
+			<div
+				id={ attributes.id }
+				ref={ mapRef }
+				className={ className }
+				style={ {
+					width: '100%',
+					height: attributes.height || 400,
+					marginBottom: 70,
+					marginTop: 70
+				} }>
 			</div>
 		</Fragment>
 	);

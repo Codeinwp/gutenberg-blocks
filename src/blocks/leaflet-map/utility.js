@@ -1,36 +1,32 @@
+/**
+ * WordPress dependencies
+ */
+const { __ } = wp.i18n;
 
 // reference https://nominatim.org/release-docs/develop/api/Search/
 async function makeSearchRequest( location ) {
-
 	if ( 'string' !== typeof location ) {
-
-		// console.log( typeof location );
-		throw 'Location must be a string';
+		throw __( 'Location must be a string' );
 	}
 
-	// Create the query
 	const query = location.split( ' ' ).map( s => encodeURIComponent( s ) ).join( '+' );
 
 	const url = 'https://nominatim.openstreetmap.org/search?q=' + query + '&format=geojson';
-
-	// console.log( 'Link: ' + url );
 
 	const response = await fetch( url );
 
 	if ( response.ok && 200 === response.status ) {
 		return response.json();
 	}
-	console.warn( `An error has occured: ${response.status}` );
-	return null;
+
+	return console.warn( __( 'An error has occured: ' ) + response.status );
 }
 
 export async function getLocation( location ) {
 	const data = await makeSearchRequest( location );
 
-	// Check if we have received some coordinates
 	if ( data?.features.length ) {
 
-		// Take only the first result
 		const feature = data.features[0];
 
 		if ( feature?.geometry?.coordinates.length ) {

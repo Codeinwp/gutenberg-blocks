@@ -8,11 +8,11 @@ const transform = {
 	to: [
 		{
 			type: 'block',
-			blocks: [ 'themeisle-blocks/leaflet-map-block' ],
+			blocks: [ 'themeisle-blocks/leaflet-map' ],
 			transform: ( attributes ) => {
 				const commonProps = omit( attributes, [ 'style', 'mapTypeControl', 'fullscreenControl', 'streetViewControl' ]);
 
-				return createBlock( 'themeisle-blocks/leaflet-map-block', {
+				return createBlock( 'themeisle-blocks/leaflet-map', {
 					...commonProps
 				});
 			}

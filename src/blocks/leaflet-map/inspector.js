@@ -12,7 +12,6 @@ const {
 	useState
 } = wp.element;
 
-
 const {
 	PanelBody,
 	TextControl,
@@ -36,12 +35,15 @@ const Inspector = ({
 	dispatch,
 	markersInteraction
 }) => {
-
 	const [ location, setLocation ] = useState( attributes.location );
-	const [ error, setError ] = useState({ target: '', reason: '' });
+
+	const [ error, setError ] = useState({
+		target: '',
+		reason: ''
+	});
 
 	const search = async() => {
-		setAttributes({ location: location});
+		setAttributes({ location });
 
 		const LngLat = await getLocation( location );
 
@@ -57,7 +59,7 @@ const Inspector = ({
 		} else {
 			setError({
 				target: 'LOCATION',
-				reason: 'Location couldn\'t been found!'
+				reason: __( 'Location couldn\'t been found!' )
 			});
 		}
 	};
@@ -97,28 +99,18 @@ const Inspector = ({
 			<PanelBody
 				title={ __( 'Location' ) }
 			>
-
 				<TextControl
 					label={ __( 'Location' ) }
 					type="text"
-					className={ classnames({'wp-block-themeisle-blocks-leaflet-map-input-error': 'LOCATION' === error.target })}
+					className={ classnames(
+						{ 'wp-block-themeisle-blocks-leaflet-map-input-error': 'LOCATION' === error.target }
+					) }
 					placeholder={ __( 'Enter location. E.g: La Sagrada Familia, Barcelona, Spain' ) }
 					help={ __( 'Press Enter to search the location' ) }
 					value={ location }
-					onChange={ ( value ) => setLocation( value ) }
-					onKeyDown={ ( event ) => searchOnPress( event, 'Enter' ) }
+					onChange={ setLocation }
+					onKeyDown={ event => searchOnPress( event, 'Enter' ) }
 				/>
-
-				{/* <Button
-					isPrimary
-					isSmall
-					label={ __( 'Search location' ) }
-					onClick={ () => {
-						search();
-					}}
-				>
-					{ __( 'Search location' )}
-				</Button> */}
 
 				<TextControl
 					label={ __( 'Latitude' ) }
@@ -135,9 +127,8 @@ const Inspector = ({
 					value={ attributes.longitude }
 					onChange={ changeLongitude }
 				/>
-
-
 			</PanelBody>
+
 			<PanelBody
 				title={ __( 'Positioning & Zooming' ) }
 				initialOpen={ false }
@@ -158,6 +149,7 @@ const Inspector = ({
 					max={ 1400 }
 				/>
 			</PanelBody>
+
 			<PanelBody
 				title={ __( 'Controls' ) }
 				initialOpen={ false }
@@ -177,7 +169,6 @@ const Inspector = ({
 					checked={ attributes.zoomControl }
 					onChange={ toggleZoomControl }
 				/>
-
 			</PanelBody>
 
 			<PanelBody
@@ -190,7 +181,6 @@ const Inspector = ({
 					markersInteraction={ markersInteraction }
 				/>
 			</PanelBody>
-
 		</InspectorControls>
 	);
 };

@@ -17,13 +17,13 @@ import transforms from './transforms.js';
 
 registerBlockType( 'themeisle-blocks/leaflet-map', {
 	title: __( 'Maps' ),
-	description: __( 'Display Open Street Maps on your website with Map block.' ),
+	description: __( 'Display Open Street Maps on your website with Maps block.' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [
 		'map',
 		'opeenstreetmap',
-		'orbitfox'
+		'location'
 	],
 	attributes,
 	supports: {
