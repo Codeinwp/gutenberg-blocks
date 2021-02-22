@@ -131,9 +131,9 @@ const Edit = ({
 				setOpenMarker( markerProps.id );
 			});
 
-			markerMap.on( 'popupclose', () => {
-				setOpenMarker( null );
-			});
+			// markerMap.on( 'popupclose', () => {
+			// 	setOpenMarker( null );
+			// });
 
 			markerMap.markerProps = markerProps;
 
@@ -179,6 +179,7 @@ const Edit = ({
 
 				if ( action.ids.includes( props.id )  ) {
 					marker.markerProps = merge( marker.markerProps, action.updatedProps );
+					console.log( marker.markerProps );
 				}
 
 				return marker;
@@ -371,10 +372,12 @@ const Edit = ({
 				marker.setLatLng([ markerProps.latitude, markerProps.longitude ]);
 
 				// Update the title
+				marker.closeTooltip();
 				marker.unbindTooltip();
 				marker.bindTooltip( markerProps.title, { direction: 'auto'});
 
 				// Update the content of the Popup
+				marker.closePopup();
 				marker.unbindPopup();
 				marker.bindPopup( createPopupContent( markerProps, dispatch ) );
 			});
