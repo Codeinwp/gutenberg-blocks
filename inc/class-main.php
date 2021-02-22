@@ -105,7 +105,7 @@ class Main {
 		}
 
 		$allow_json = get_option( 'themeisle_allow_json_upload' );
-
+		
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
