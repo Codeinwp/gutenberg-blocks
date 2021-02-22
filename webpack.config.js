@@ -4,6 +4,7 @@ const glob = require( 'glob' );
 const path = require( 'path' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' );
+const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
 
 module.exports = {
 	mode: NODE_ENV,
@@ -36,11 +37,7 @@ module.exports = {
 	externals: {
 		'react': 'React',
 		'react-dom': 'ReactDOM',
-		'lodash': 'lodash',
-		'@wordpress/blocks': 'wp.blocks',
-		'@wordpress/block-editor': 'wp.blockEditor',
-		'@wordpress/element': 'wp.element',
-		'@wordpress/components': 'wp.components'
+		'lodash': 'lodash'
 	},
 	output: {
 		path: path.resolve( __dirname, 'build' ),
@@ -125,7 +122,11 @@ module.exports = {
 			filename: 'style.css',
 			chunkFilename: 'editor.css'
 		}),
-		new CleanWebpackPlugin()
+		new CleanWebpackPlugin(),
+		new DependencyExtractionWebpackPlugin({
+			combineAssets: true,
+			combinedOutputFile: 'all-blocks.asset.php'
+		})
 	],
 	resolve: {
 		extensions: [ '.ts', '.tsx', '.js', '.json', '.scss' ]

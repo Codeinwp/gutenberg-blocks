@@ -2465,13 +2465,24 @@ eval("__webpack_require__(/*! ./src/index.js */\"./src/index.js\");\n__webpack_r
 /***/ }),
 
 /***/ "@wordpress/element":
-/*!*****************************!*\
-  !*** external "wp.element" ***!
-  \*****************************/
+/*!*********************************!*\
+  !*** external ["wp","element"] ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = wp.element;\n\n//# sourceURL=webpack:///external_%22wp.element%22?");
+eval("(function() { module.exports = window[\"wp\"][\"element\"]; }());\n\n//# sourceURL=webpack:///external_%5B%22wp%22,%22element%22%5D?");
+
+/***/ }),
+
+/***/ "@wordpress/primitives":
+/*!************************************!*\
+  !*** external ["wp","primitives"] ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("(function() { module.exports = window[\"wp\"][\"primitives\"]; }());\n\n//# sourceURL=webpack:///external_%5B%22wp%22,%22primitives%22%5D?");
 
 /***/ }),
 
