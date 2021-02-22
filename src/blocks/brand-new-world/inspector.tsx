@@ -3,7 +3,8 @@ import { BlockEditProps } from "@wordpress/blocks";
 import { PanelBody, RangeControl, TextControl } from "@wordpress/components";
 import * as React from "react";
 import { Dispatch, SetStateAction } from "react";
-import { Inspector, OtterInspector } from "~/src/types/utility";
+import { Inspector } from "../../types/utility";
+
 import { BrandNewWorldAttrs } from "./attributes";
 
 type BrandnewWorldInspector = Inspector<BrandNewWorldAttrs> & {

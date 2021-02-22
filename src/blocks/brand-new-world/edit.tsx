@@ -1,12 +1,16 @@
 import * as React from "react";
 
 import { BlockEditProps } from "@wordpress/blocks";
-import { RichText } from "@wordpress/block-editor";
+
 import { BrandNewWorldAttrs } from "./attributes";
 import Inspector from "./inspector";
-import { OtterEditProps } from "~/src/types/utility";
 import { useState, useEffect } from "@wordpress/element";
-import { createIdBlock } from "~/src/helpers/create-id";
+import { createCustomIdHook } from "../../helpers/customHooks";
+import { RichText } from "@wordpress/block-editor";
+
+
+
+const useIdHook = createCustomIdHook('wp-block-themeisle-blocks-brand-new-world-')
 
 const edit: React.FunctionComponent<BlockEditProps<BrandNewWorldAttrs>> = ({
   attributes,
@@ -15,12 +19,17 @@ const edit: React.FunctionComponent<BlockEditProps<BrandNewWorldAttrs>> = ({
 }) => {
   console.log(attributes);
   const [number, setNumber] = useState<number>(0);
+  const id = useIdHook(clientId, attributes.id)
 
   useEffect( () => {
     setAttributes({
-      id: createIdBlock('wp-block-themeisle-blocks-brand-new-world', clientId)
+      id: id
     })
-  }, [ clientId ])
+  }, [id])
+
+  useEffect( () => {
+    console.log( id, clientId, attributes.id )
+  }, [id, attributes.id, clientId])
 
   return (
     <div>

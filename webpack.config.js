@@ -38,7 +38,7 @@ module.exports = {
 		'react-dom': 'ReactDOM',
 		'lodash': 'lodash',
 		'@wordpress/blocks': 'wp.blocks',
-		'@wordpress/block-editor': 'wp.editor',
+		'@wordpress/block-editor': 'wp.blockEditor',
 		'@wordpress/element': 'wp.element',
 		'@wordpress/components': 'wp.components'
 	},
@@ -57,7 +57,7 @@ module.exports = {
 			},
 			{
 				test: /.js?$/,
-				use: [ {
+				use: [{
 					loader: 'babel-loader',
 					options: {
 						presets: [
@@ -76,12 +76,12 @@ module.exports = {
 							]
 						]
 					}
-				},
-				 ]
+				}
+				]
 			},
 			{
 				test: /\.(css|scss)$/,
-				use: [ {
+				use: [{
 					loader: MiniCssExtractPlugin.loader
 				},
 				'css-loader',

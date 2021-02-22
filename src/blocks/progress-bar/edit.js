@@ -109,6 +109,7 @@ const ProgressBar = ({
 			blockIDs.push( attributes.id );
 		}
 
+		console.log( clientId, attributes.id, blockIDs, IDs );
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 

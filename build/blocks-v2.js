@@ -175,7 +175,7 @@ eval("__webpack_require__.r(__webpack_exports__);\nconst attributes = {\n    id:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ \"@wordpress/block-editor\");\n/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _inspector__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./inspector */ \"./src/blocks/brand-new-world/inspector.tsx\");\n/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ \"@wordpress/element\");\n/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);\n!(function webpackMissingModule() { var e = new Error(\"Cannot find module '~/src/helpers/create-id'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }());\n\n\n\n\n\nconst edit = ({ attributes, setAttributes, clientId }) => {\n    console.log(attributes);\n    const [number, setNumber] = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__[\"useState\"])(0);\n    Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__[\"useEffect\"])(() => {\n        setAttributes({\n            id: !(function webpackMissingModule() { var e = new Error(\"Cannot find module '~/src/helpers/create-id'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }())('wp-block-themeisle-blocks-brand-new-world', clientId)\n        });\n    }, [clientId]);\n    return (react__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"](\"div\", null,\n        react__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"](_inspector__WEBPACK_IMPORTED_MODULE_2__[\"default\"], { attributes: attributes, setAttributes: setAttributes, number: number, setNumber: setNumber }),\n        react__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"](_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__[\"RichText\"], { value: attributes.text || \"\", onChange: (value) => setAttributes({ text: value }) })));\n};\n/* harmony default export */ __webpack_exports__[\"default\"] = (edit);\n\n\n//# sourceURL=webpack:///./src/blocks/brand-new-world/edit.tsx?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _inspector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inspector */ \"./src/blocks/brand-new-world/inspector.tsx\");\n/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ \"@wordpress/element\");\n/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _helpers_customHooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/customHooks */ \"./src/helpers/customHooks.ts\");\n/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/block-editor */ \"@wordpress/block-editor\");\n/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__);\n\n\n\n\n\nconst useIdHook = Object(_helpers_customHooks__WEBPACK_IMPORTED_MODULE_3__[\"createCustomIdHook\"])('wp-block-themeisle-blocks-brand-new-world-');\nconst edit = ({ attributes, setAttributes, clientId }) => {\n    console.log(attributes);\n    const [number, setNumber] = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__[\"useState\"])(0);\n    const id = useIdHook(clientId, attributes.id);\n    Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__[\"useEffect\"])(() => {\n        setAttributes({\n            id: id\n        });\n    }, [id]);\n    Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__[\"useEffect\"])(() => {\n        console.log(id, clientId, attributes.id);\n    }, [id, attributes.id, clientId]);\n    return (react__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"](\"div\", null,\n        react__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"](_inspector__WEBPACK_IMPORTED_MODULE_1__[\"default\"], { attributes: attributes, setAttributes: setAttributes, number: number, setNumber: setNumber }),\n        react__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"](_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__[\"RichText\"], { value: attributes.text || \"\", onChange: (value) => setAttributes({ text: value }) })));\n};\n/* harmony default export */ __webpack_exports__[\"default\"] = (edit);\n\n\n//# sourceURL=webpack:///./src/blocks/brand-new-world/edit.tsx?");
 
 /***/ }),
 
@@ -215,6 +215,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _wor
 
 /***/ }),
 
+/***/ "./src/helpers/customHooks.ts":
+/*!************************************!*\
+  !*** ./src/helpers/customHooks.ts ***!
+  \************************************/
+/*! exports provided: createCustomIdHook */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"createCustomIdHook\", function() { return createCustomIdHook; });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n\nconst createCustomIdHook = (prefix) => {\n    const useId = (clientId, attrId) => {\n        const [id, setId] = Object(react__WEBPACK_IMPORTED_MODULE_0__[\"useState\"])(attrId);\n        Object(react__WEBPACK_IMPORTED_MODULE_0__[\"useEffect\"])(() => {\n            if (id === undefined) {\n                setId(prefix + clientId.substr(0, 8));\n            }\n        }, [attrId]);\n        return id;\n    };\n    return useId;\n};\n\n\n//# sourceURL=webpack:///./src/helpers/customHooks.ts?");
+
+/***/ }),
+
 /***/ 1:
 /*!****************************************************!*\
   !*** multi ./src/blocks/brand-new-world/index.tsx ***!
@@ -227,13 +239,13 @@ eval("module.exports = __webpack_require__(/*! ./src/blocks/brand-new-world/inde
 /***/ }),
 
 /***/ "@wordpress/block-editor":
-/*!****************************!*\
-  !*** external "wp.editor" ***!
-  \****************************/
+/*!*********************************!*\
+  !*** external "wp.blockEditor" ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = wp.editor;\n\n//# sourceURL=webpack:///external_%22wp.editor%22?");
+eval("module.exports = wp.blockEditor;\n\n//# sourceURL=webpack:///external_%22wp.blockEditor%22?");
 
 /***/ }),
 
