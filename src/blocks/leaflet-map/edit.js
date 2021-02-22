@@ -109,6 +109,11 @@ const Edit = ({
 				draggable: true
 			});
 
+			markerMap.on( 'movestart', () => {
+				markerMap.closeTooltip();
+				markerMap.closePopup();
+			});
+
 			markerMap.on( 'moveend', () => {
 				const latlng = markerMap.getLatLng();
 
@@ -366,9 +371,11 @@ const Edit = ({
 				marker.setLatLng([ markerProps.latitude, markerProps.longitude ]);
 
 				// Update the title
+				marker.unbindTooltip();
 				marker.bindTooltip( markerProps.title, { direction: 'auto'});
 
 				// Update the content of the Popup
+				marker.unbindPopup();
 				marker.bindPopup( createPopupContent( markerProps, dispatch ) );
 			});
 		}
