@@ -11,9 +11,10 @@ const {
 	Spinner
 } = wp.components;
 
-const { useSelect } = wp.data;
+const { useSelect, registerGenericStore, dispatch } = wp.data;
 
-const { Fragment } = wp.element;
+const { Fragment, useEffect, useState } = wp.element;
+
 
 /**
  * Internal dependencies
@@ -21,12 +22,56 @@ const { Fragment } = wp.element;
 import { StyleSwitcherBlockControl } from '../../components/style-switcher-control/index.js';
 import Inspector from './inspector.js';
 import Layout from './components/layout/index.js';
+import { getCustomPostTypeSlugs } from '../../helpers/helper-functions.js';
+
+
+/**
+ * Store
+ *
+ */
+
+const createPostStore = () => {
+	let storeChanged = () => {};
+	const store = { slugs: [] };
+
+	const selectors = {
+		getSlugs() {
+			return store.slugs;
+		}
+	};
+
+	const actions = {
+		setSlugs( newSlugs ) {
+			store.slugs = newSlugs;
+			storeChanged();
+		}
+	};
+
+	return {
+		getSelectors() {
+			return selectors;
+		},
+		getActions() {
+			return actions;
+		},
+		subscribe( listener ) {
+			storeChanged = listener;
+		}
+	};
+};
+
+registerGenericStore( 'otter-posts-block', createPostStore() );
 
 const Edit = ({
 	attributes,
 	setAttributes,
 	className
 }) => {
+
+	const [ slugs, setSlugs ] = useState([]);
+
+	// const { setSlugs: setSlugsToStore } = useDispatch( 'otter-posts-block' );
+
 	const {
 		posts,
 		categoriesList,
@@ -42,17 +87,40 @@ const Edit = ({
 			offset: attributes.offset
 		}, ( value ) => ! isUndefined( value ) );
 
+		const slugs = select( 'otter-posts-block' ).getSlugs();
+		const posts = ( 0 < slugs.length ) ? (
+			slugs.map( slug =>  select( 'core' ).getEntityRecords( 'postType', slug, latestPostsQuery ) ).flat()
+		) : select( 'core' ).getEntityRecords( 'postType', 'post', latestPostsQuery );
+
+		console.log( 'Get Posts', slugs, slugs.map( slug =>  select( 'core' ).getEntityRecords( 'postType', slug, latestPostsQuery ) ) );
+
+
 		return {
-			posts: select( 'core' ).getEntityRecords( 'postType', 'post', latestPostsQuery ),
+			posts: posts,
 			// eslint-disable-next-line camelcase
 			categoriesList: select( 'core' ).getEntityRecords( 'taxonomy', 'category', { per_page: 100 }),
 			authors: select( 'core' ).getAuthors()
 		};
 	}, [ attributes.categories, attributes.order, attributes.orderBy, attributes.postsToShow, attributes.offset ]);
 
+
 	const changeStyle = value => {
 		setAttributes({ style: value });
 	};
+
+	console.log( 'Post', posts, slugs, 0 < slugs.length );
+
+	useEffect( () => {
+		const fetch = async() => {
+			setSlugs( await getCustomPostTypeSlugs() );
+		};
+
+		fetch();
+	}, []);
+
+	useEffect( () => {
+		dispatch( 'otter-posts-block' ).setSlugs( slugs );
+	}, [ slugs ]);
 
 	if ( ! posts || ! categoriesList || ! authors ) {
 		return (

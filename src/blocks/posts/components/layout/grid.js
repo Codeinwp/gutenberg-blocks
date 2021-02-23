@@ -33,14 +33,14 @@ const Grid = ({
 			`wp-block-themeisle-blocks-posts-grid-columns-${ attributes.columns }`,
 			{ 'has-shadow': attributes.imageBoxShadow }
 		) }>
-			{ posts.map( post => {
+			{ posts.filter( post => post ).map( post => {
 				let category, author;
 
-				if ( categoriesList ) {
+				if ( categoriesList && 0 < post.categories?.length ) {
 					category = categoriesList.find( item => item.id === post.categories[0]);
 				}
 
-				if ( authors ) {
+				if ( authors && post.author ) {
 					author = authors.find( item => item.id === post.author );
 				}
 
