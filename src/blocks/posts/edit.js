@@ -39,8 +39,6 @@ const Edit = ({
 
 	const [ slugs, setSlugs ] = useState([]);
 
-	// const { setSlugs: setSlugsToStore } = useDispatch( 'otter-posts-block' );
-
 	const {
 		posts,
 		categoriesList,
@@ -61,9 +59,6 @@ const Edit = ({
 			slugs.map( slug =>  select( 'core' ).getEntityRecords( 'postType', slug, latestPostsQuery ) ).flat()
 		) : select( 'core' ).getEntityRecords( 'postType', 'post', latestPostsQuery );
 
-		console.log( 'Get Posts', slugs );
-
-
 		return {
 			posts: posts,
 			// eslint-disable-next-line camelcase
@@ -72,19 +67,16 @@ const Edit = ({
 		};
 	}, [ attributes.categories, attributes.order, attributes.orderBy, attributes.postsToShow, attributes.offset ]);
 
-
 	const changeStyle = value => {
 		setAttributes({ style: value });
 	};
-
-	console.log( 'Post', posts, slugs, 0 < slugs.length );
 
 	useEffect( () => {
 		const fetch = async() => {
 			setSlugs( await getCustomPostTypeSlugs() );
 		};
-
 		fetch();
+		dispatch( 'otter-store' ).setPostsUsedSlugs( attributes.postTypes );
 	}, []);
 
 	useEffect( () => {

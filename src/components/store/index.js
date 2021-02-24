@@ -38,12 +38,12 @@ const createOtterStore = () => {
 			store.posts.slugs = newSlugs;
 			storeChanged();
 		},
-		setPostsUsedSlugs( slug ) {
-			store.posts.usedSlugs.push( slug );
+		setPostsUsedSlugs( slugs ) {
+			store.posts.usedSlugs.push( ...slugs );
 			storeChanged();
 		},
-		removePostsUsedSlugs( slug ) {
-			store.posts.usedSlugs = store.posts.usedSlugs.filter( s => s !== slug );
+		removePostsUsedSlugs( slugs ) {
+			store.posts.usedSlugs = store.posts.usedSlugs.filter( s => ! slugs.includes( s ) );
 			storeChanged();
 		}
 	};

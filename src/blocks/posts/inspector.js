@@ -12,9 +12,11 @@ const {
 	CheckboxControl
 } = wp.components;
 
+const { useEffect } = wp.element;
+
 const { InspectorControls } = wp.blockEditor;
 
-const { dispatch, select } = wp.data;
+const { dispatch, useSelect } = wp.data;
 
 /**
  * Internal dependencies
@@ -29,16 +31,27 @@ const Inspector = ({
 	categoriesList
 }) => {
 
-	const slugs = select( 'otter-store' ).getPostsSlugs();
-	const usedSlugs = select( 'otter-store' ).getPostsUsedSlugs();
+	const {
+		slugs,
+		usedSlugs
+	} = useSelect( select => {
+		return {
+			slugs: select( 'otter-store' ).getPostsSlugs(),
+			usedSlugs: select( 'otter-store' ).getPostsUsedSlugs()
+		};
+	}, [ attributes.postTypes ]);
 
-	console.log( 'Slugs', slugs, usedSlugs );
+	useEffect( () => {
+		setAttributes({
+			postTypes: usedSlugs
+		});
+	}, [ usedSlugs ]);
 
 	const setOrRemoveSlug = ( slug ) => {
 		if ( ! usedSlugs.includes( slug ) ) {
-			dispatch( 'otter-store' ).setPostsUsedSlugs( slug );
+			dispatch( 'otter-store' ).setPostsUsedSlugs([ slug ]);
 		} else {
-			dispatch( 'otter-store' ).removePostsUsedSlugs( slug );
+			dispatch( 'otter-store' ).removePostsUsedSlugs([ slug ]);
 		}
 	};
 
