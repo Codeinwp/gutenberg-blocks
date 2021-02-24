@@ -19,9 +19,9 @@ const createPopupContent = ( markerProps ) => {
 	title.innerHTML = markerProps.title;
 	description.innerHTML = markerProps.description;
 
-	container.classList.add( 'wp-block-themeisle-blocks-map-overview' );
-	content.classList.add( 'wp-block-themeisle-blocks-map-overview-content' );
-	title.classList.add( 'wp-block-themeisle-blocks-map-overview-title' );
+	container.classList.add( 'wp-block-themeisle-blocks-leaflet-map-overview' );
+	content.classList.add( 'wp-block-themeisle-blocks-leaflet-map-overview-content' );
+	title.classList.add( 'wp-block-themeisle-blocks-leaflet-map-overview-title' );
 
 	container.appendChild( title );
 	container.appendChild( content );
@@ -51,6 +51,7 @@ const createLeafletMap = ( containerId, attributes ) => {
 
 	// Add the height of the map first
 	container.style.height = attributes.height + 'px';
+	container.classList.add( 'wp-block-themeisle-leaflet-blocks-map' );
 
 	// Create the map
 	const map = L.map( container, {

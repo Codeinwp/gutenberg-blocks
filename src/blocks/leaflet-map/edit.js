@@ -402,9 +402,10 @@ const Edit = ({
 				className={ className }
 				style={ {
 					width: '100%',
-					height: attributes.height || 400,
-					marginBottom: 70,
-					marginTop: 70
+					height: attributes.height || 400
+
+					// marginBottom: 70,
+					// marginTop: 70
 				} }>
 			</div>
 		</Fragment>
