@@ -11,7 +11,7 @@ const {
 	Spinner
 } = wp.components;
 
-const { useSelect, registerGenericStore, dispatch } = wp.data;
+const { useSelect, dispatch } = wp.data;
 
 const { Fragment, useEffect, useState } = wp.element;
 
@@ -23,44 +23,13 @@ import { StyleSwitcherBlockControl } from '../../components/style-switcher-contr
 import Inspector from './inspector.js';
 import Layout from './components/layout/index.js';
 import { getCustomPostTypeSlugs } from '../../helpers/helper-functions.js';
-
+import '../../components/store/index.js';
 
 /**
  * Store
  *
  */
 
-const createPostStore = () => {
-	let storeChanged = () => {};
-	const store = { slugs: [] };
-
-	const selectors = {
-		getSlugs() {
-			return store.slugs;
-		}
-	};
-
-	const actions = {
-		setSlugs( newSlugs ) {
-			store.slugs = newSlugs;
-			storeChanged();
-		}
-	};
-
-	return {
-		getSelectors() {
-			return selectors;
-		},
-		getActions() {
-			return actions;
-		},
-		subscribe( listener ) {
-			storeChanged = listener;
-		}
-	};
-};
-
-registerGenericStore( 'otter-posts-block', createPostStore() );
 
 const Edit = ({
 	attributes,
@@ -87,12 +56,12 @@ const Edit = ({
 			offset: attributes.offset
 		}, ( value ) => ! isUndefined( value ) );
 
-		const slugs = select( 'otter-posts-block' ).getSlugs();
+		const slugs = select( 'otter-store' ).getPostsUsedSlugs();
 		const posts = ( 0 < slugs.length ) ? (
 			slugs.map( slug =>  select( 'core' ).getEntityRecords( 'postType', slug, latestPostsQuery ) ).flat()
 		) : select( 'core' ).getEntityRecords( 'postType', 'post', latestPostsQuery );
 
-		console.log( 'Get Posts', slugs, slugs.map( slug =>  select( 'core' ).getEntityRecords( 'postType', slug, latestPostsQuery ) ) );
+		console.log( 'Get Posts', slugs );
 
 
 		return {
@@ -119,7 +88,7 @@ const Edit = ({
 	}, []);
 
 	useEffect( () => {
-		dispatch( 'otter-posts-block' ).setSlugs( slugs );
+		dispatch( 'otter-store' ).setPostsSlugs( slugs );
 	}, [ slugs ]);
 
 	if ( ! posts || ! categoriesList || ! authors ) {

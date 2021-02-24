@@ -7,10 +7,14 @@ const {
 	PanelBody,
 	QueryControls,
 	RangeControl,
-	TextControl
+	TextControl,
+	BaseControl,
+	CheckboxControl
 } = wp.components;
 
 const { InspectorControls } = wp.blockEditor;
+
+const { dispatch, select } = wp.data;
 
 /**
  * Internal dependencies
@@ -24,6 +28,20 @@ const Inspector = ({
 	changeStyle,
 	categoriesList
 }) => {
+
+	const slugs = select( 'otter-store' ).getPostsSlugs();
+	const usedSlugs = select( 'otter-store' ).getPostsUsedSlugs();
+
+	console.log( 'Slugs', slugs, usedSlugs );
+
+	const setOrRemoveSlug = ( slug ) => {
+		if ( ! usedSlugs.includes( slug ) ) {
+			dispatch( 'otter-store' ).setPostsUsedSlugs( slug );
+		} else {
+			dispatch( 'otter-store' ).removePostsUsedSlugs( slug );
+		}
+	};
+
 	const categorySuggestions = categoriesList.reduce(
 		( accumulator, category ) => ({
 			...accumulator,
@@ -180,6 +198,25 @@ const Inspector = ({
 					] }
 					onChange={ changeStyle }
 				/>
+			</PanelBody>
+
+			<PanelBody
+				title={ __( 'Custom Post Types' ) }
+			>
+				<BaseControl>
+					{ __( 'Select the types of the post. If none is selected, the default WordPress post will be displayed.' ) }
+				</BaseControl>
+				{
+					slugs.map( slug => {
+						return (
+							<CheckboxControl
+								checked={ usedSlugs.includes( slug ) }
+								onChange={ () => setOrRemoveSlug( slug ) }
+								label={ __( slug.toUpperCase() ) }
+							/>
+						);
+					})
+				}
 			</PanelBody>
 
 			<PanelBody
