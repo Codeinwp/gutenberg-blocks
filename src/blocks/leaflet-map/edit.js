@@ -2,11 +2,14 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
+import classnames from 'classnames';
 
 /**
  * WordPress dependencies
  */
 const { isEqual } = lodash;
+
+const { ResizableBox } = wp.components;
 
 const {
 	Fragment,
@@ -43,7 +46,9 @@ const Edit = ({
 	clientId,
 	attributes,
 	setAttributes,
-	className
+	className,
+	isSelected,
+	toggleSelection
 }) => {
 	const initBlock = () => {
 		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
@@ -396,18 +401,47 @@ const Edit = ({
 				}}
 			/>
 
-			<div
-				id={ attributes.id }
-				ref={ mapRef }
-				className={ className }
-				style={ {
-					width: '100%',
-					height: attributes.height || 400
+			<ResizableBox
+				size={ {
+					height: attributes.height
+				} }
+				enable={ {
+					top: false,
+					right: false,
+					bottom: true,
+					left: false
+				} }
+				minHeight={ 100 }
+				maxHeight={ 1400 }
+				onResizeStart={ () => {
+					toggleSelection( false );
+				} }
+				onResizeStop={ ( event, direction, elt, delta ) => {
+					setAttributes({
+						height: parseInt( attributes.height + delta.height, 10 )
+					});
+					toggleSelection( true );
+				} }
+				className={ classnames(
+					'wp-block-themeisle-blocks-leaflet-map-resizer',
+					{ 'is-focused': isSelected }
+				) }
+			>
+				<div
+					id={ attributes.id }
+					ref={ mapRef }
+					className={ className }
+					style={ {
+						width: '100%',
+						height: attributes.height || 400
 
 					// marginBottom: 70,
 					// marginTop: 70
-				} }>
-			</div>
+					} }>
+				</div>
+			</ResizableBox>
+
+
 		</Fragment>
 	);
 };
