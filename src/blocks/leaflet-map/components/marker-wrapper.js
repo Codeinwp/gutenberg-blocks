@@ -1,4 +1,6 @@
-
+/**
+ * External dependencies
+ */
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -8,9 +10,7 @@ const { __ } = wp.i18n;
 
 const { Button } = wp.components;
 
-const {
-	Fragment
-} = wp.element;
+const { Fragment } = wp.element;
 
 import { ActionType } from '../edit.js';
 
@@ -24,7 +24,6 @@ const MarkerWrapper = ({
 	dispatch,
 	markersInteraction
 }) => {
-
 	const { openMarker, setOpenMarker } = markersInteraction;
 
 	return (
@@ -48,8 +47,13 @@ const MarkerWrapper = ({
 				isLarge
 				className="wp-block-themeisle-blocks-leaflet-map-marker-add"
 				onClick={ () => {
-					console.count( 'Click' );
-					dispatch({type: ActionType.ADD, marker: {id: uuidv4()}, dispatch: dispatch});
+					dispatch({
+						type: ActionType.ADD,
+						marker: {
+							id: uuidv4()
+						},
+						dispatch: dispatch
+					});
 				}}
 			>
 				{ __( 'Add Marker' ) }

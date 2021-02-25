@@ -40,8 +40,6 @@ const createMarker = ( markerProps ) => {
 };
 
 const createLeafletMap = ( containerId, attributes ) => {
-
-	// console.log( containerId, attributes );
 	const container = document.querySelector( `#${containerId}` );
 
 	if ( ! container ) {
