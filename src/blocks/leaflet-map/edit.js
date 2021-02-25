@@ -6,7 +6,12 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * WordPress dependencies
  */
-const { isEqual } = lodash;
+const {
+	isEqual,
+	merge
+} = lodash;
+
+const { __ } = wp.i18n;
 
 const {
 	Fragment,
@@ -15,10 +20,6 @@ const {
 	useRef,
 	useReducer
 } = wp.element;
-
-const {
-	merge
-} = lodash;
 
 /**
  * Internal dependencies
@@ -102,7 +103,7 @@ const Edit = ({
 			markerProps.id ??= uuidv4();
 			markerProps.latitude ??= map.getCenter().lat;
 			markerProps.longitude ??= map.getCenter().lng;
-			markerProps.title ??= 'Add a title';
+			markerProps.title ??= __( 'Add a title' );
 			markerProps.description ??= '';
 
 			const markerMap = L.marker([ markerProps.latitude, markerProps.longitude ] || map.getCenter(), {
@@ -130,10 +131,6 @@ const Edit = ({
 			markerMap.on( 'click', () => {
 				setOpenMarker( markerProps.id );
 			});
-
-			// markerMap.on( 'popupclose', () => {
-			// 	setOpenMarker( null );
-			// });
 
 			markerMap.markerProps = markerProps;
 
@@ -179,7 +176,6 @@ const Edit = ({
 
 				if ( action.ids.includes( props.id )  ) {
 					marker.markerProps = merge( marker.markerProps, action.updatedProps );
-					console.log( marker.markerProps );
 				}
 
 				return marker;
@@ -257,7 +253,7 @@ const Edit = ({
 					setActiveAddingToLocation( ! isAddingToLocationActive );
 				});
 
-				button.title = 'Add marker on the map with a click';
+				button.title = __( 'Add marker on the map with a click' );
 				button.appendChild( span );
 
 				return button;
@@ -403,9 +399,6 @@ const Edit = ({
 				style={ {
 					width: '100%',
 					height: attributes.height || 400
-
-					// marginBottom: 70,
-					// marginTop: 70
 				} }>
 			</div>
 		</Fragment>

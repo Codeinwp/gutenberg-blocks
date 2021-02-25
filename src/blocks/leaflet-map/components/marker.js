@@ -17,7 +17,6 @@ const {
 	TextControl
 } = wp.components;
 
-
 /**
  * Internal dependencies
  */
@@ -35,21 +34,20 @@ const Marker = ({
 	/**
 	 * Use local state for updating the interface
 	 */
-
 	const [ location, setLocation ] = useState( marker.location );
 	const [ lng, setLng ] = useState( marker.longitude );
 	const [ lat, setLat ] = useState( marker.latitude );
 	const [ title, setTitle ] = useState( marker.title );
 	const [ description, setDescription ] = useState( marker.description );
-	const [ error, setError ] = useState({ target: '', reason: '' });
-
+	const [ error, setError ] = useState({
+		target: '',
+		reason: ''
+	});
 
 	const search = async() => {
-
 		const LngLat = await getLocation( location );
 
 		if ( LngLat ) {
-
 			dispatch({
 				type: ActionType.UPDATE,
 				ids: [ marker.id ],
@@ -80,8 +78,6 @@ const Marker = ({
 		}
 	};
 
-	console.log( description );
-
 	return (
 		<div className="wp-block-themeisle-blocks-leaflet-map-marker">
 			<div className="wp-block-themeisle-blocks-leaflet-map-marker-title-area">
@@ -97,18 +93,16 @@ const Marker = ({
 					label={ __( 'Remove Marker' ) }
 					showTooltip={ true }
 					className="wp-block-themeisle-blocks-leaflet-map-marker-remove"
-					onClick={ () => dispatch({type: ActionType.REMOVE, ids: [ marker.id ]}) }
+					onClick={ () => dispatch({
+						type: ActionType.REMOVE,
+						ids: [ marker.id ]
+					}) }
 				/>
 			</div>
 
 			{
 				( isOpen ) && (
-					<div
-						className={ classnames(
-							'wp-block-themeisle-blocks-leaflet-map-marker-control-area'
-
-						) }
-					>
+					<div className="wp-block-themeisle-blocks-leaflet-map-marker-control-area">
 						<TextControl
 							label={ __( 'Location' ) }
 							type="text"
@@ -120,18 +114,6 @@ const Marker = ({
 							help={ __( 'Press Enter to search the location' ) }
 							onKeyDown={ ( event ) => searchOnPress( event, 'Enter' ) }
 						/>
-
-						{/* <Button
-							isPrimary
-							isSmall
-							label={ __( 'Search location' ) }
-							onClick={ () => {
-								console.log( 'Search' );
-								search();
-							}}
-						>
-							{ __( 'Search location' )}
-						</Button> */}
 
 						<TextControl
 							label={ __( 'Latitude' ) }
@@ -147,7 +129,6 @@ const Marker = ({
 									}
 								});
 							} }
-
 						/>
 
 						<TextControl
@@ -200,8 +181,6 @@ const Marker = ({
 					</div>
 				)
 			}
-
-
 		</div>
 	);
 };
