@@ -212,7 +212,9 @@ const Edit = ({
 
 		// Create the map
 		mapRef.current.innerHTML = '';
-		const _map = L.map( mapRef.current );
+
+		// Reference for mobile dragging: https://gis.stackexchange.com/questions/200189/cant-continue-scrolling-on-mobile-devices-when-a-map-occupy-all-the-screen
+		const _map = L.map( mapRef.current, { dragging: ! L.Browser.mobile, tap: ! L.Browser.mobile });
 
 		// Add Open Street Map as source
 		L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

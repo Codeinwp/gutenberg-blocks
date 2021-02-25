@@ -56,7 +56,8 @@ const createLeafletMap = ( containerId, attributes ) => {
 	// Create the map
 	const map = L.map( container, {
 		zoomControl: attributes.zoomControl,
-		dragging: attributes.draggable
+		dragging: attributes.draggable || ! L.Browser.mobile,
+		tap: ! L.Browser.mobile
 	});
 	L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
