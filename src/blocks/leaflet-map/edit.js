@@ -438,17 +438,6 @@ const Edit = ({
 					} }>
 				</div>
 			</ResizableBox>
-
-
-			<div
-				id={ attributes.id }
-				ref={ mapRef }
-				className={ className }
-				style={ {
-					width: '100%',
-					height: attributes.height || 400
-				} }>
-			</div>
 		</Fragment>
 	);
 };
