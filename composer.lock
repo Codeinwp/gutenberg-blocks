@@ -617,6 +617,11 @@
                     "Prophecy\\": "src/Prophecy"
                 }
             },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
