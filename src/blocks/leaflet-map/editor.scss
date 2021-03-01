@@ -18,7 +18,7 @@
 }
 
 .wp-block-themeisle-blocks-leaflet-map {
-	margin-bottom: 65px;
+
 	&.components-placeholder {
 		padding: 40px 20px;
 
@@ -186,6 +186,7 @@
 }
 
 .wp-block-themeisle-blocks-leaflet-map-resizer {
+	margin-bottom: 70px;
 	&.is-focused {
 		.components-resizable-box__handle {
 			display: block;
