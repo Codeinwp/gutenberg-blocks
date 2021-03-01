@@ -1,6 +1,7 @@
 /**
  * WordPress dependencies
  */
+const { __ } = wp.i18n;
 const domReady = wp.domReady;
 
 const createPopupContent = ( markerProps ) => {
@@ -54,8 +55,15 @@ const createLeafletMap = ( containerId, attributes ) => {
 	// Create the map
 	const map = L.map( container, {
 		zoomControl: attributes.zoomControl,
-		dragging: attributes.draggable || ! L.Browser.mobile,
-		tap: ! L.Browser.mobile
+		dragging: attributes.draggable,
+		gestureHandling: true,
+		gestureHandlingOptions: {
+			text: {
+				touch: __ ( 'Use two fingers to move the map' ),
+				scroll: __ ( 'Use ctrl + scroll to zoom the map' ),
+				scrollMac: __ ( 'Use \u2318 + scroll to zoom the map' )
+			}
+		}
 	});
 	L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',

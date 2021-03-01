@@ -224,6 +224,21 @@ class Main {
 			[],
 			self::$assets_version
 		);
+
+		wp_enqueue_script(
+			'themeisle-gutenberg-map-block-gesture',
+			plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet-gesture-handling.min.js',
+			array( 'wp-dom-ready' ),
+			self::$assets_version,
+			true
+		);
+
+		wp_enqueue_style(
+			'leaflet-theme-gesture',
+			plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet-gesture-handling.min.css',
+			[],
+			self::$assets_version
+		);
 	}
 
 	/**
@@ -452,9 +467,24 @@ class Main {
 			);
 
 			wp_enqueue_script(
+				'themeisle-gutenberg-map-leaflet-gesture',
+				plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet-gesture-handling.min.js',
+				array( 'wp-dom-ready' ),
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_style(
+				'leaflet-theme-gesture',
+				plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet-gesture-handling.min.css',
+				[],
+				self::$assets_version
+			);
+
+			wp_enqueue_script(
 				'themeisle-gutenberg-leaflet-block',
 				plugin_dir_url( $this->get_dir() ) . 'build/leaflet-map.js',
-				array( 'wp-dom-ready', 'themeisle-gutenberg-map-leaflet' ),
+				array( 'wp-dom-ready', 'themeisle-gutenberg-map-leaflet', 'themeisle-gutenberg-map-leaflet-gesture', 'wp-i18n' ),
 				self::$assets_version,
 				true
 			);

@@ -56,13 +56,13 @@ const Edit = ({
 
 		if ( attributes.id === undefined ) {
 			let attrs;
-			const instanceId = `wp-block-themeisle-blocks-map-${ clientId.substr( 0, 8 ) }`;
+			const instanceId = `wp-block-themeisle-blocks-map-${clientId.substr( 0, 8 )}`;
 
 			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
 
 			if ( undefined !== globalDefaults ) {
-				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
-					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+				if ( ! isEqual( defaults[name], window.themeisleGutenberg.globalDefaults[name]) ) {
+					attrs = { ...window.themeisleGutenberg.globalDefaults[name] };
 
 					Object.keys( attrs ).map( i => {
 						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
@@ -80,7 +80,7 @@ const Edit = ({
 			IDs.push( instanceId );
 			blockIDs.push( instanceId );
 		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-map-${ clientId.substr( 0, 8 ) }`;
+			const instanceId = `wp-block-themeisle-blocks-map-${clientId.substr( 0, 8 )}`;
 			setAttributes({ id: instanceId });
 			IDs.push( instanceId );
 		} else {
@@ -179,7 +179,7 @@ const Edit = ({
 			return oldState.map( marker => {
 				const props = marker.markerProps;
 
-				if ( action.ids.includes( props.id )  ) {
+				if ( action.ids.includes( props.id ) ) {
 					marker.markerProps = merge( marker.markerProps, action.updatedProps );
 				}
 
@@ -203,14 +203,26 @@ const Edit = ({
 	const createMap = () => {
 
 		if ( ! mapRef.current && ! L ) {
-			return ;
+			return;
 		}
 
 		// Create the map
 		mapRef.current.innerHTML = '';
 
 		// Reference for mobile dragging: https://gis.stackexchange.com/questions/200189/cant-continue-scrolling-on-mobile-devices-when-a-map-occupy-all-the-screen
-		const _map = L.map( mapRef.current, { dragging: ! L.Browser.mobile, tap: ! L.Browser.mobile });
+		const _map = L.map(
+			mapRef.current,
+			{
+				gestureHandling: true,
+				gestureHandlingOptions: {
+					text: {
+						touch: __ ( 'Use two fingers to move the map' ),
+						scroll: __ ( 'Use ctrl + scroll to zoom the map' ),
+						scrollMac: __ ( 'Use \u2318 + scroll to zoom the map' )
+					}
+				}
+			}
+		);
 
 		// Add Open Street Map as source
 		L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -265,7 +277,7 @@ const Edit = ({
 
 				return button;
 			},
-			onRemove: () => {}
+			onRemove: () => { }
 		});
 
 		L.control.addmarker = ( opts ) => {
@@ -344,7 +356,7 @@ const Edit = ({
 
 		title.innerHTML = markerProps.title;
 		description.innerHTML = markerProps.description;
-		deleteButton.onclick = () => dispatch({ type: ActionType.REMOVE, ids: [ markerProps.id ]});
+		deleteButton.onclick = () => dispatch({ type: ActionType.REMOVE, ids: [ markerProps.id ] });
 		deleteButton.innerHTML = 'Delete Marker';
 
 		container.classList.add( 'wp-block-themeisle-blocks-map-overview' );
@@ -363,7 +375,7 @@ const Edit = ({
 
 	useEffect( () => {
 		if ( markersStore ) {
-			setAttributes({ markers: markersStore.map( ({markerProps}) => markerProps ) });
+			setAttributes({ markers: markersStore.map( ({ markerProps }) => markerProps ) });
 
 			markersStore.forEach( marker => {
 				if ( ! map.hasLayer( marker ) ) {
@@ -377,7 +389,7 @@ const Edit = ({
 				// Update the title
 				marker.closeTooltip();
 				marker.unbindTooltip();
-				marker.bindTooltip( markerProps.title, { direction: 'auto'});
+				marker.bindTooltip( markerProps.title, { direction: 'auto' });
 
 				// Update the content of the Popup
 				marker.closePopup();
@@ -390,9 +402,9 @@ const Edit = ({
 	return (
 		<Fragment>
 			<Inspector
-				attributes={ attributes }
-				setAttributes={ setAttributes }
-				dispatch={ dispatch }
+				attributes={attributes}
+				setAttributes={setAttributes}
+				dispatch={dispatch}
 				markersInteraction={{
 					openMarker: openMarker,
 					setOpenMarker: setOpenMarker
@@ -400,42 +412,42 @@ const Edit = ({
 			/>
 
 			<ResizableBox
-				size={ {
+				size={{
 					height: attributes.height
-				} }
-				enable={ {
+				}}
+				enable={{
 					top: false,
 					right: false,
 					bottom: true,
 					left: false
-				} }
-				minHeight={ 100 }
-				maxHeight={ 1400 }
-				onResizeStart={ () => {
+				}}
+				minHeight={100}
+				maxHeight={1400}
+				onResizeStart={() => {
 					toggleSelection( false );
-				} }
-				onResizeStop={ ( event, direction, elt, delta ) => {
+				}}
+				onResizeStop={( event, direction, elt, delta ) => {
 					setAttributes({
 						height: parseInt( attributes.height + delta.height, 10 )
 					});
 					toggleSelection( true );
-				} }
-				className={ classnames(
+				}}
+				className={classnames(
 					'wp-block-themeisle-blocks-leaflet-map-resizer',
 					{ 'is-focused': isSelected }
-				) }
+				)}
 			>
 				<div
-					id={ attributes.id }
-					ref={ mapRef }
-					className={ className }
-					style={ {
+					id={attributes.id}
+					ref={mapRef}
+					className={className}
+					style={{
 						width: '100%',
 						height: attributes.height || 400
 
-					// marginBottom: 70,
-					// marginTop: 70
-					} }>
+						// marginBottom: 70,
+						// marginTop: 70
+					}}>
 				</div>
 			</ResizableBox>
 		</Fragment>
