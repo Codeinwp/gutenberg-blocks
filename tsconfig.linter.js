@@ -20,6 +20,8 @@ module.exports = {
 	],
 
 	rules: {
+		'object-curly-spacing': [ 'warn', 'always' ],
+		'array-bracket-spacing': [ 'error', 'always', { 'arraysInArrays': false, 'objectsInArrays': false }],
 		'indent': [
 			'error',
 			'tab'
