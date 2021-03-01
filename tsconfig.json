@@ -20,7 +20,8 @@
       "moduleResolution": "node",
       /* List of folders to include type definitions from */
       "typeRoots": [
-        "node_modules/@types"
+        "node_modules/@types",
+        "src"
       ],
       /* allow import React instead of import * as React */
       "allowSyntheticDefaultImports": true,
