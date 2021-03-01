@@ -83,16 +83,16 @@ class Leaflet_Map_Block extends Base_Block {
 	 */
 	protected function render( $attributes ) {
 		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
-			$link = 'https://www.openstreetmap.org/export/embed.html?bbox='. stripslashes( esc_attr( $attributes['bbox'] ) ) . '&amp;layer=mapnik';
+			$link = 'https://www.openstreetmap.org/export/embed.html?bbox=' . stripslashes( esc_attr( $attributes['bbox'] ) ) . '&amp;layer=mapnik';
 
-			$output  = '<amp-iframe width="400" height="' . intval( $attributes['height'] ) . '" sandbox="allow-scripts allow-same-origin" layout="responsive" src="' . stripslashes( $link ) .'" style="border: 1px solid black">' ;
+			$output  = '<amp-iframe width="400" height="' . intval( $attributes['height'] ) . '" sandbox="allow-scripts allow-same-origin" layout="responsive" src="' . stripslashes( $link ) . '" style="border: 1px solid black">';
 			$output .= '	<amp-img layout="fill" src="' . plugin_dir_url( __FILE__ ) . '../../assets/icons/map-standard.png" placeholder></amp-img>';
 			$output .= '</amp-iframe>';
 
 			return $output;
 		}
 
-		// Set the ID and the class name
+		// Set the ID and the class name.
 		$id    = isset( $attributes['id'] ) ? $attributes['id'] : 'wp-block-themeisle-blocks-map-' . wp_rand( 10, 100 );
 		$class = 'wp-block-themeisle-blocks-map';
 
@@ -100,11 +100,11 @@ class Leaflet_Map_Block extends Base_Block {
 			$class .= ' ' . esc_attr( $attributes['className'] );
 		}
 
-		if (isset($attributes['align'])) {
-			$class .= ' align' . esc_attr($attributes['align']);
+		if ( isset( $attributes['align'] ) ) {
+			$class .= ' align' . esc_attr( $attributes['align'] );
 		}
 
-		// Load the attributes in the page and make a placeholder to render the map
+		// Load the attributes in the page and make a placeholder to render the map.
 		$output  = '<div class="' . esc_attr( $class ) . '" id="' . esc_attr( $id ) . '"></div>' . "\n";
 		$output .= '<script type="text/javascript">' . "\n";
 		$output .= '	/* <![CDATA[ */' . "\n";
