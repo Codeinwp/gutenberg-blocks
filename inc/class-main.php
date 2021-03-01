@@ -272,7 +272,14 @@ class Main {
 
 		wp_enqueue_style(
 			'themeisle-block_styles',
-			plugin_dir_url( $this->get_dir() ) . 'build/style.css',
+			plugin_dir_url( $this->get_dir() ) . 'build/blocks-style.css',
+			[],
+			self::$assets_version
+		);
+
+		wp_enqueue_style(
+			'themeisle-block_styles',
+			plugin_dir_url( $this->get_dir() ) . 'build/blocks-v2-style.css',
 			[],
 			self::$assets_version
 		);

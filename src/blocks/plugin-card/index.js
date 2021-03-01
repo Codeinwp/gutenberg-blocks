@@ -15,8 +15,8 @@ import { pluginsIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
 
-registerBlockType( 'themeisle-blocks/plugin-cards', {
-	title: __( 'Plugin Card' ),
+registerBlockType( 'themeisle-blocks/plugin-cards-old', {
+	title: __( 'Plugin Card Old' ),
 	description: __( 'Plugin Card block lets you display plugins data in your blog posts.' ),
 	icon,
 	category: 'themeisle-blocks',

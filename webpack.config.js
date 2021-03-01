@@ -119,7 +119,7 @@ module.exports = {
 			'process.env.NODE_ENV': JSON.stringify( NODE_ENV )
 		}),
 		new MiniCssExtractPlugin({
-			filename: 'style.css',
+			filename: '[name]-style.css',
 			chunkFilename: 'editor.css'
 		}),
 		new CleanWebpackPlugin(),

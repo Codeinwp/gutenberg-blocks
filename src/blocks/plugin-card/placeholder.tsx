@@ -12,6 +12,8 @@ import apiFetch from '@wordpress/api-fetch';
 import { Dashicon, Placeholder, Spinner, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n/build-types';
 import { DOWN, ENTER, TAB, UP } from '@wordpress/keycodes';
+import { PluginCardSearchResponse, PluginsCardData } from '../../types/plugin-card';
+import { unescape } from 'lodash';
 
 type BlockPlaceholder = Pick<BlockEditProps<PluginCardAttrs>, 'setAttributes' | 'className'> & {
     hasError: boolean,
@@ -24,14 +26,14 @@ const blockPlaceholder: React.FunctionComponent<BlockPlaceholder> = ({
 	setError,
 	className
 }) => {
-	const searchRef = useRef<HTMLElement>( null );
+	const searchRef = useRef<HTMLDivElement>( null );
 	let scrollingIntoView = false;
-	const suggestionNodes = [];
+	const suggestionNodes: HTMLButtonElement[] = [];
 
 	const [ isLoading, setLoading ] = useState( false );
 	const [ query, setQuery ] = useState( '' );
-	const [ results, setResults ] = useState({});
-	const [ selectedSuggestion, setSelectedSuggestion ] = useState( null );
+	const [ results, setResults ] = useState<PluginsCardData[]>([]);
+	const [ selectedSuggestion, setSelectedSuggestion ] = useState<number | null>( null );
 
 	useEffect( () => {
 		if ( null !== selectedSuggestion && ! scrollingIntoView && searchRef.current ) {
@@ -49,9 +51,11 @@ const blockPlaceholder: React.FunctionComponent<BlockPlaceholder> = ({
 		}
 	}, [ selectedSuggestion ]);
 
-	const bindSuggestionNode = ( index: string ) => {
-		return ( ref ) => {
-			suggestionNodes[ index ] = ref;
+	const bindSuggestionNode = ( index: number ) => {
+		return ( instance: HTMLButtonElement | null ) => {
+			if ( instance ) {
+				suggestionNodes[ index ] = instance;
+			}
 		};
 	};
 
@@ -59,12 +63,12 @@ const blockPlaceholder: React.FunctionComponent<BlockPlaceholder> = ({
 		setAttributes({ slug: '' });
 		setLoading( true );
 		setError( false );
-		const data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/get_plugins?search=${ encodeURIComponent( query ) }` });
+		const data = await apiFetch<PluginCardSearchResponse>({ path: `themeisle-gutenberg-blocks/v1/get_plugins?search=${ encodeURIComponent( query ) }` });
 		if ( data.data.errors ) {
 			setError( true );
 			setLoading( false );
 			setSelectedSuggestion( null );
-			setResults({});
+			setResults([]);
 			return;
 		}
 		setLoading( false );
@@ -72,25 +76,25 @@ const blockPlaceholder: React.FunctionComponent<BlockPlaceholder> = ({
 		setResults( data.data.plugins );
 	};
 
-	const moveUp = event => {
-		if ( Object.keys( results ).length ) {
+	const moveUp = ( event: React.KeyboardEvent<HTMLInputElement> | React.KeyboardEvent<HTMLButtonElement> ) => {
+		if ( results.length ) {
 			event.stopPropagation();
 			event.preventDefault();
-			const previousIndex = ! selectedSuggestion ? Object.keys( results ).length - 1 : selectedSuggestion - 1;
+			const previousIndex = ! selectedSuggestion ? results.length - 1 : selectedSuggestion - 1;
 			setSelectedSuggestion( previousIndex );
 		}
 	};
 
-	const moveDown = event => {
-		if ( Object.keys( results ).length ) {
+	const moveDown = ( event: React.KeyboardEvent<HTMLInputElement> | React.KeyboardEvent<HTMLButtonElement> ) => {
+		if ( results.length ) {
 			event.stopPropagation();
 			event.preventDefault();
-			const nextIndex = null === selectedSuggestion || ( selectedSuggestion === Object.keys( results ).length - 1 ) ? 0 : selectedSuggestion + 1;
+			const nextIndex = null === selectedSuggestion || ( selectedSuggestion === results.length - 1 ) ? 0 : selectedSuggestion + 1;
 			setSelectedSuggestion( nextIndex );
 		}
 	};
 
-	const searchKeyDown = event => {
+	const searchKeyDown = ( event: React.KeyboardEvent<HTMLInputElement> ) => {
 		switch ( event.keyCode ) {
 		case UP: {
 			moveUp( event );
@@ -101,19 +105,19 @@ const blockPlaceholder: React.FunctionComponent<BlockPlaceholder> = ({
 			break;
 		}
 		case TAB: {
-			if ( Object.keys( results ).length && ! event.shiftKey ) {
+			if ( results.length && ! event.shiftKey ) {
 				setSelectedSuggestion( 0 );
 			}
 			break;
 		}
 		case ENTER: {
-			searchPlugins( event.target.value );
+			searchPlugins( event.currentTarget.value );
 			break;
 		}
 		}
 	};
 
-	const listKeyDown = ( event, data ) => {
+	const listKeyDown = ( event: React.KeyboardEvent<HTMLButtonElement>, data: PluginsCardData ) => {
 		switch ( event.keyCode ) {
 		case UP: {
 			moveUp( event );
@@ -132,7 +136,7 @@ const blockPlaceholder: React.FunctionComponent<BlockPlaceholder> = ({
 				break;
 			}
 
-			if ( selectedSuggestion === Object.keys( results ).length - 1 ) {
+			if ( selectedSuggestion === results.length - 1 ) {
 				break;
 			}
 
@@ -146,9 +150,9 @@ const blockPlaceholder: React.FunctionComponent<BlockPlaceholder> = ({
 		}
 	};
 
-	const selectPlugin = data => {
-		setAttributes({ slug: data.slug });
-		setResults({});
+	const selectPlugin = ({ slug }: PluginsCardData ) => {
+		setAttributes({ slug: slug });
+		setResults([]);
 	};
 
 	return (
@@ -180,18 +184,18 @@ const blockPlaceholder: React.FunctionComponent<BlockPlaceholder> = ({
 						className="wp-block-themeisle-blocks-plugin-cards-search-results"
 						ref={ searchRef }
 					>
-						{ Object.keys( results ).map( i => {
-							const pluginData = results[i];
-							let icon;
-							if ( pluginData.icons.svg ) {
-								icon = pluginData.icons.svg;
-							} if ( pluginData.icons['2x']) {
-								icon = pluginData.icons['2x'];
-							} if ( pluginData.icons['1x']) {
-								icon = pluginData.icons['1x'];
-							} if ( pluginData.icons.default ) {
-								icon = pluginData.icons.default;
-							}
+						{ results.map( ( pluginData, i ) => {
+							const icon = pluginData.icons?.svg || pluginData.icons['2x'] ||  pluginData.icons['1x'] || pluginData.icons.default || '';
+
+							// if ( pluginData.icons.svg ) {
+							// 	icon = pluginData.icons.svg;
+							// } if ( pluginData.icons['2x']) {
+							// 	icon = pluginData.icons['2x'];
+							// } if ( pluginData.icons['1x']) {
+							// 	icon = pluginData.icons['1x'];
+							// } if ( pluginData.icons.default ) {
+							// 	icon = pluginData.icons.default;
+							// }
 							return (
 								<button
 									className="wp-block-themeisle-blocks-plugin-cards-list-item"
@@ -204,7 +208,7 @@ const blockPlaceholder: React.FunctionComponent<BlockPlaceholder> = ({
 									onKeyDown={ e => listKeyDown( e, pluginData ) }
 								>
 									<img src={ icon } />
-									<span dangerouslySetInnerHTML={ { __html: _.unescape( pluginData.name ) } }></span>
+									<span dangerouslySetInnerHTML={ { __html: unescape( pluginData.name ) } }></span>
 								</button>
 							);
 						}) }
