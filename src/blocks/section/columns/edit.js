@@ -274,6 +274,7 @@ const Edit = ({
 
 	const overlayStyle = {
 		...overlayBackground,
+		...borderRadiusStyle,
 		mixBlendMode: attributes.backgroundOverlayBlend,
 		filter: `blur( ${ attributes.backgroundOverlayFilterBlur / 10 }px ) brightness( ${ attributes.backgroundOverlayFilterBrightness / 10 } ) contrast( ${ attributes.backgroundOverlayFilterContrast / 10 } ) grayscale( ${ attributes.backgroundOverlayFilterGrayscale / 100 } ) hue-rotate( ${ attributes.backgroundOverlayFilterHue }deg ) saturate( ${ attributes.backgroundOverlayFilterSaturate / 10 } )`
 	};
