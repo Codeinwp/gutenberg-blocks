@@ -40,7 +40,7 @@
                 "react": {
                     "version": "detect"
                 }
-            },
+            }
         }
     ],
     "rules": {
