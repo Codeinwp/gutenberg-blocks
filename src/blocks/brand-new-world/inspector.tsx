@@ -1,5 +1,4 @@
 import { InspectorControls } from '@wordpress/block-editor';
-import { BlockEditProps } from '@wordpress/blocks';
 import { PanelBody, RangeControl, TextControl } from '@wordpress/components';
 import * as React from 'react';
 import { Dispatch, SetStateAction } from 'react';

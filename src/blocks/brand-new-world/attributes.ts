@@ -1,4 +1,4 @@
-import { AttributeSource, BlockAttribute } from '@wordpress/blocks';
+import { BlockAttribute } from '@wordpress/blocks';
 
 type Attributes = {
     id: BlockAttribute<string>,
