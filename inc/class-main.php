@@ -52,6 +52,13 @@ class Main {
 	public static $is_lottie_loaded = false;
 
 	/**
+	 * Flag to mark that Leaflet scripts has been loaded.
+	 *
+	 * @var bool $is_lottie_loaded Is Lottie loaded?
+	 */
+	public static $is_leaflet_loaded = false;
+
+	/**
 	 * Define assets version.
 	 *
 	 * @var string $assets_version Holds assets version.
@@ -199,6 +206,36 @@ class Main {
 		wp_enqueue_style(
 			'glidejs-theme',
 			plugin_dir_url( $this->get_dir() ) . 'assets/glide/glide.theme.min.css',
+			[],
+			self::$assets_version
+		);
+
+		wp_enqueue_script(
+			'themeisle-gutenberg-map-block',
+			plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet.js',
+			array( 'wp-dom-ready' ),
+			self::$assets_version,
+			true
+		);
+
+		wp_enqueue_style(
+			'leaflet-theme',
+			plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet.css',
+			[],
+			self::$assets_version
+		);
+
+		wp_enqueue_script(
+			'themeisle-gutenberg-map-block-gesture',
+			plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet-gesture-handling.min.js',
+			array( 'wp-dom-ready' ),
+			self::$assets_version,
+			true
+		);
+
+		wp_enqueue_style(
+			'leaflet-theme-gesture',
+			plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet-gesture-handling.min.css',
 			[],
 			self::$assets_version
 		);
@@ -412,6 +449,48 @@ class Main {
 
 			self::$is_lottie_loaded = true;
 		}
+
+		if ( ! self::$is_leaflet_loaded && has_block( 'themeisle-blocks/leaflet-map', $post ) ) {
+			wp_enqueue_script(
+				'themeisle-gutenberg-map-leaflet',
+				plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet.js',
+				array( 'wp-dom-ready' ),
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_style(
+				'leaflet-css',
+				plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet.css',
+				[],
+				self::$assets_version
+			);
+
+			wp_enqueue_script(
+				'themeisle-gutenberg-map-leaflet-gesture',
+				plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet-gesture-handling.min.js',
+				array( 'wp-dom-ready' ),
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_style(
+				'leaflet-theme-gesture',
+				plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet-gesture-handling.min.css',
+				[],
+				self::$assets_version
+			);
+
+			wp_enqueue_script(
+				'themeisle-gutenberg-leaflet-block',
+				plugin_dir_url( $this->get_dir() ) . 'build/leaflet-map.js',
+				array( 'wp-dom-ready', 'themeisle-gutenberg-map-leaflet', 'themeisle-gutenberg-map-leaflet-gesture', 'wp-i18n' ),
+				self::$assets_version,
+				true
+			);
+
+			self::$is_leaflet_loaded = true;
+		}
 	}
 
 	/**
@@ -510,6 +589,7 @@ class Main {
 		$classnames = array(
 			'\ThemeIsle\GutenbergBlocks\Render\About_Author_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Google_Map_Block',
+			'\ThemeIsle\GutenbergBlocks\Render\Leaflet_Map_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Plugin_Card_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Posts_Grid_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Sharing_Icons_Block',

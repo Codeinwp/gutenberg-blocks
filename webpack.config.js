@@ -6,12 +6,16 @@ const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' );
 
 module.exports = {
+	stats: 'minimal',
 	mode: NODE_ENV,
 	entry: {
 		blocks: [
 			'./src/index.js',
 			'./src/plugins/registerPlugin.js',
 			...glob.sync( './src/blocks/**/index.js' )
+		],
+		'leaflet-map': [
+			...glob.sync( './src/frontend/leaflet-map/index.js' )
 		],
 		maps: [
 			...glob.sync( './src/frontend/google-map/index.js' )
