@@ -1,3 +1,8 @@
+##### [Version 1.6.1](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.6.0...v1.6.1) (2021-03-02)
+
+- Add Leaflet Map Block
+- Various small fixes
+
 #### [Version 1.6.0](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.11...v1.6.0) (2021-01-06)
 
 - New Icon List Block.
