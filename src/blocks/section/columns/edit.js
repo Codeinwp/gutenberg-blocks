@@ -8,7 +8,6 @@ import hexToRgba from 'hex-rgba';
  * WordPress dependencies
  */
 const {
-	isEqual,
 	times
 } = lodash;
 
@@ -23,7 +22,6 @@ const { InnerBlocks } = wp.blockEditor;
 
 const {
 	Fragment,
-	useEffect,
 	useState
 } = wp.element;
 
@@ -31,15 +29,14 @@ const {
  * Internal dependencies
  */
 import defaultAttributes from './attributes.js';
-import defaults from '../../../plugins/options/global-defaults/defaults.js';
 import layouts from '../layouts.js';
 import Controls from './controls.js';
 import Inspector from './inspector.js';
 import BlockNavigatorControl from '../../../components/block-navigator-control/index.js';
 import Separators from '../components/separators/index.js';
 import Onboarding from '../components/onboarding/index.js';
+import { initBlock } from '../../../helpers/blocks-helpers.js';
 
-const IDs = [];
 
 const Edit = ({
 	attributes,
@@ -48,6 +45,7 @@ const Edit = ({
 	clientId,
 	name
 }) => {
+	initBlock( attributes, setAttributes, clientId, 'wp-block-themeisle-blocks-advanced-columns-', name, defaultAttributes );
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
 
 	const {
@@ -78,50 +76,51 @@ const Edit = ({
 
 	const isSmaller = useViewportMatch( 'small', '<=' );
 
-	useEffect( () => {
-		initBlock();
-	}, []);
 
-	const initBlock = () => {
-		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
+	// useEffect( () => {
+	// 	initBlock();
+	// }, []);
 
-		if ( attributes.id === undefined ) {
-			let attrs;
-			const instanceId = `wp-block-themeisle-blocks-advanced-columns-${ clientId.substr( 0, 8 ) }`;
+	// const initBlock = () => {
+	// 	const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
 
-			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
+	// 	if ( attributes.id === undefined ) {
+	// 		let attrs;
+	// 		const instanceId = `wp-block-themeisle-blocks-advanced-columns-${ clientId.substr( 0, 8 ) }`;
 
-			if ( undefined !== globalDefaults ) {
-				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
-					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+	// 		const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
 
-					Object.keys( attrs ).map( i => {
-						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
-							return delete attrs[i];
-						}
-					});
-				}
-			}
+	// 		if ( undefined !== globalDefaults ) {
+	// 			if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
+	// 				attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
 
-			setAttributes({
-				...attrs,
-				id: instanceId
-			});
+	// 				Object.keys( attrs ).map( i => {
+	// 					if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
+	// 						return delete attrs[i];
+	// 					}
+	// 				});
+	// 			}
+	// 		}
 
-			IDs.push( instanceId );
-			blockIDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-advanced-columns-${ clientId.substr( 0, 8 ) }`;
-			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-			blockIDs.push( instanceId );
-		} else {
-			IDs.push( attributes.id );
-			blockIDs.push( attributes.id );
-		}
+	// 		setAttributes({
+	// 			...attrs,
+	// 			id: instanceId
+	// 		});
 
-		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
-	};
+	// 		IDs.push( instanceId );
+	// 		blockIDs.push( instanceId );
+	// 	} else if ( IDs.includes( attributes.id ) ) {
+	// 		const instanceId = `wp-block-themeisle-blocks-advanced-columns-${ clientId.substr( 0, 8 ) }`;
+	// 		setAttributes({ id: instanceId });
+	// 		IDs.push( instanceId );
+	// 		blockIDs.push( instanceId );
+	// 	} else {
+	// 		IDs.push( attributes.id );
+	// 		blockIDs.push( attributes.id );
+	// 	}
+
+	// 	window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
+	// };
 
 	const [ dividerViewType, setDividerViewType ] = useState( 'top' );
 

@@ -23,8 +23,7 @@ import Placeholder from './placeholder.js';
 import Inspector from './inspector.js';
 import Slide from './components/Slide.js';
 import SliderControls from './components/slider-controls.js';
-
-const IDs = [];
+import { initBlock } from '../../helpers/blocks-helpers.js';
 
 const Edit = ({
 	attributes,
@@ -34,8 +33,14 @@ const Edit = ({
 	isSelected,
 	toggleSelection
 }) => {
+
+	initBlock( attributes, setAttributes, clientId, 'wp-block-themeisle-blocks-slider-' );
+
 	useEffect( () => {
-		initBlock();
+
+		if ( attributes.images.length ) {
+			initSlider();
+		}
 
 		return () => {
 			if ( attributes.images.length ) {
@@ -66,32 +71,9 @@ const Edit = ({
 
 	const [ selectedImage, setSelectedImage ] = useState( null );
 
-	const initBlock = async() => {
-		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
-
-		if ( attributes.id === undefined ) {
-			const instanceId = `wp-block-themeisle-blocks-slider-${ clientId.substr( 0, 8 ) }`;
-			await setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-			instanceIdRef.current = instanceId;
-			blockIDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-slider-${ clientId.substr( 0, 8 ) }`;
-			await setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-			instanceIdRef.current = instanceId;
-		} else {
-			IDs.push( attributes.id );
-			instanceIdRef.current = attributes.id;
-			blockIDs.push( attributes.id );
-		}
-
-		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
-
-		if ( attributes.images.length ) {
-			initSlider();
-		}
-	};
+	useEffect( () => {
+		instanceIdRef.current = attributes.id;
+	}, [ attributes.id ]);
 
 	const initSlider = () => {
 		sliderRef.current = new Glide( `#${ attributes.id || instanceIdRef.current }`, {

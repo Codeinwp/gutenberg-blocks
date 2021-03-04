@@ -27,8 +27,7 @@ import { StyleSwitcherBlockControl } from '../../components/style-switcher-contr
 import MarkerModal from './components/marker-modal.js';
 import Map from './components/map.js';
 import styles from './components/styles.js';
-
-const IDs = [];
+import { initBlock } from '../../helpers/blocks-helpers.js';
 
 const Edit = ({
 	attributes,
@@ -38,9 +37,11 @@ const Edit = ({
 	isSelected,
 	toggleSelection
 }) => {
-	useEffect( () => {
-		initBlock();
 
+	initBlock( attributes, setAttributes, clientId, 'wp-block-themeisle-blocks-google-map-' );
+
+	useEffect( () => {
+		initSettings();
 		window.isMapLoaded = window.isMapLoaded || false;
 		window[`removeMarker_${ clientId.substr( 0, 8 ) }`] = removeMarker;
 
@@ -86,19 +87,8 @@ const Edit = ({
 	const [ isAdvanced, setAdvanced ] = useState( false );
 	const [ selectedMarker, setSelectedMarker ] = useState({});
 
-	const initBlock = async() => {
-		if ( attributes.id === undefined ) {
-			const instanceId = `wp-block-themeisle-blocks-google-map-${ clientId.substr( 0, 8 ) }`;
-			await setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-google-map-${ clientId.substr( 0, 8 ) }`;
-			await setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else {
-			IDs.push( attributes.id );
-		}
 
+	const initSettings = async() => {
 		await wp.api.loadPromise.then( () => {
 			settingsRef.current = new wp.api.models.Settings();
 		});

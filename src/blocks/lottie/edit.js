@@ -8,7 +8,6 @@ const {
 
 const {
 	Fragment,
-	useEffect,
 	useRef
 } = wp.element;
 
@@ -18,8 +17,8 @@ const {
 import Placeholder from './placeholder.js';
 import Inspector from './inspector.js';
 import LottiePlayer from './components/lottie-player.js';
+import { initBlock } from '../../helpers/blocks-helpers.js';
 
-const IDs = [];
 
 const Edit = ({
 	attributes,
@@ -28,26 +27,10 @@ const Edit = ({
 	isSelected,
 	clientId
 }) => {
-	useEffect( () => {
-		initBlock();
-	}, []);
+
+	initBlock( attributes, setAttributes, clientId, 'wp-block-themeisle-blocks-icon-list-' );
 
 	const playerRef = useRef( null );
-
-	const initBlock = () => {
-		if ( attributes.id === undefined ) {
-			const instanceId = `wp-block-themeisle-blocks-lottie-${ clientId.substr( 0, 8 ) }`;
-			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-lottie-${ clientId.substr( 0, 8 ) }`;
-			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else {
-			IDs.push( attributes.id );
-		}
-	};
-
 	const onChangeFile = value => {
 		if ( '' === value || null === value ) {
 			return;
