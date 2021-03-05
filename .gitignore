@@ -4,3 +4,4 @@ vendor
 .DS_Store
 notes.md
 changes.md
+.vscode

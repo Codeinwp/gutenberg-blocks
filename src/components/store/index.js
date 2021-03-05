@@ -42,6 +42,10 @@ const createOtterStore = () => {
 			store.posts.usedSlugs.push( ...slugs );
 			storeChanged();
 		},
+		setOnlyOneSlug( slug ) {
+			store.posts.usedSlugs = [ slug ];
+			storeChanged();
+		},
 		removePostsUsedSlugs( slugs ) {
 			store.posts.usedSlugs = store.posts.usedSlugs.filter( s => ! slugs.includes( s ) );
 			storeChanged();

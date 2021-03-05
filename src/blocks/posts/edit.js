@@ -25,12 +25,6 @@ import Layout from './components/layout/index.js';
 import { getCustomPostTypeSlugs } from '../../helpers/helper-functions.js';
 import '../../components/store/index.js';
 
-/**
- * Store
- *
- */
-
-
 const Edit = ({
 	attributes,
 	setAttributes,
@@ -54,7 +48,7 @@ const Edit = ({
 			offset: attributes.offset
 		}, ( value ) => ! isUndefined( value ) );
 
-		const slugs = select( 'otter-store' ).getPostsUsedSlugs();
+		const slugs = attributes.postTypes;
 		const posts = ( 0 < slugs.length ) ? (
 			slugs.map( slug =>  select( 'core' ).getEntityRecords( 'postType', slug, latestPostsQuery ) ).flat()
 		) : select( 'core' ).getEntityRecords( 'postType', 'post', latestPostsQuery );
@@ -65,7 +59,7 @@ const Edit = ({
 			categoriesList: select( 'core' ).getEntityRecords( 'taxonomy', 'category', { per_page: 100 }),
 			authors: select( 'core' ).getAuthors()
 		};
-	}, [ attributes.categories, attributes.order, attributes.orderBy, attributes.postsToShow, attributes.offset ]);
+	}, [ attributes.categories, attributes.order, attributes.orderBy, attributes.postsToShow, attributes.offset, attributes.postTypes ]);
 
 	const changeStyle = value => {
 		setAttributes({ style: value });
@@ -76,7 +70,6 @@ const Edit = ({
 			setSlugs( await getCustomPostTypeSlugs() );
 		};
 		fetch();
-		dispatch( 'otter-store' ).setPostsUsedSlugs( attributes.postTypes );
 	}, []);
 
 	useEffect( () => {
@@ -110,7 +103,7 @@ const Edit = ({
 					{ __( 'No Posts' ) }
 				</Placeholder>
 
-				{ ( categoriesList && attributes.offset ) ? (
+				{ ( categoriesList && attributes.offset || slugs.length ) ? (
 					<Inspector
 						attributes={ attributes }
 						setAttributes={ setAttributes }

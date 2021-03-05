@@ -9,14 +9,12 @@ const {
 	RangeControl,
 	TextControl,
 	BaseControl,
-	CheckboxControl
+	SelectControl
 } = wp.components;
-
-const { useEffect } = wp.element;
 
 const { InspectorControls } = wp.blockEditor;
 
-const { dispatch, useSelect } = wp.data;
+const { useSelect } = wp.data;
 
 /**
  * Internal dependencies
@@ -32,28 +30,12 @@ const Inspector = ({
 }) => {
 
 	const {
-		slugs,
-		usedSlugs
+		slugs
 	} = useSelect( select => {
 		return {
-			slugs: select( 'otter-store' ).getPostsSlugs(),
-			usedSlugs: select( 'otter-store' ).getPostsUsedSlugs()
+			slugs: select( 'otter-store' ).getPostsSlugs()
 		};
 	}, [ attributes.postTypes ]);
-
-	useEffect( () => {
-		setAttributes({
-			postTypes: usedSlugs
-		});
-	}, [ usedSlugs ]);
-
-	const setOrRemoveSlug = ( slug ) => {
-		if ( ! usedSlugs.includes( slug ) ) {
-			dispatch( 'otter-store' ).setPostsUsedSlugs([ slug ]);
-		} else {
-			dispatch( 'otter-store' ).removePostsUsedSlugs([ slug ]);
-		}
-	};
 
 	const categorySuggestions = categoriesList.reduce(
 		( accumulator, category ) => ({
@@ -219,17 +201,14 @@ const Inspector = ({
 				<BaseControl>
 					{ __( 'Select the types of the post. If none is selected, the default WordPress post will be displayed.' ) }
 				</BaseControl>
-				{
-					slugs.map( slug => {
-						return (
-							<CheckboxControl
-								checked={ usedSlugs.includes( slug ) }
-								onChange={ () => setOrRemoveSlug( slug ) }
-								label={ __( slug.toUpperCase() ) }
-							/>
-						);
-					})
-				}
+				<SelectControl
+					label={ __( 'Post Custom Type' ) }
+					value= { attributes.postTypes[0] || null }
+					onChange={ ( value ) => value && setAttributes({ postTypes: [ value ] }) }
+					options= {
+						slugs.map( slug => ({ label: slug.toUpperCase(), value: slug }) )
+					}
+				/>
 			</PanelBody>
 
 			<PanelBody
