@@ -10,6 +10,7 @@ import { Disabled } from '@wordpress/components';
 // @ts-ignore
 import ServerSideRender from '@wordpress/server-side-render';
 import Controls from './controls';
+import Placeholder from './placeholder';
 
 const Edit: React.FunctionComponent<BlockEditProps<PluginCardAttrs>> = ({
 	attributes,
@@ -20,15 +21,14 @@ const Edit: React.FunctionComponent<BlockEditProps<PluginCardAttrs>> = ({
 
 	if ( ! attributes.slug ) {
 
-		// return (
-		// 	<Placeholder
-		// 		attributes={ attributes }
-		// 		setAttributes={ setAttributes }
-		// 		hasError={ hasError }
-		// 		setError={ setError }
-		// 		className={ className }
-		// 	/>
-		// );
+		return (
+			<Placeholder
+				setAttributes={ setAttributes }
+				hasError={ hasError }
+				setError={ setError }
+				className={ className }
+			/>
+		);
 	}
 
 	return (
