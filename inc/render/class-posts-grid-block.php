@@ -135,10 +135,10 @@ class Posts_Grid_Block extends Base_Block {
 			$categories = join( ', ', $cats );
 		}
 
-		$get_custom_post_types_posts = function ( $postType ) use ( $attributes, $categories ) {
-			return  wp_get_recent_posts(
+		$get_custom_post_types_posts = function ( $post_type ) use ( $attributes, $categories ) {
+			return wp_get_recent_posts(
 				array(
-					'post_type'        => $postType,
+					'post_type'        => $post_type,
 					'numberposts'      => $attributes['postsToShow'],
 					'post_status'      => 'publish',
 					'order'            => $attributes['order'],
@@ -151,18 +151,18 @@ class Posts_Grid_Block extends Base_Block {
 		};
 
 		$recent_posts = isset( $attributes['postTypes'] ) ? array_merge( ...array_map( $get_custom_post_types_posts, $attributes['postTypes'] ) ) : wp_get_recent_posts(
-				array(
-					'numberposts'      => $attributes['postsToShow'],
-					'post_status'      => 'publish',
-					'order'            => $attributes['order'],
-					'orderby'          => $attributes['orderBy'],
-					'offset'           => $attributes['offset'],
-					'category'         => $categories,
-					'suppress_filters' => false,
-				)
-			);
+			array(
+				'numberposts'      => $attributes['postsToShow'],
+				'post_status'      => 'publish',
+				'order'            => $attributes['order'],
+				'orderby'          => $attributes['orderBy'],
+				'offset'           => $attributes['offset'],
+				'category'         => $categories,
+				'suppress_filters' => false,
+			)
+		);
 
-		
+
 
 		$list_items_markup = '';
 
