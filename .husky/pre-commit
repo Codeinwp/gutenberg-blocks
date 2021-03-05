@@ -1,4 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+
+echo "Apply Eslint Fix"
 npx lint-staged
