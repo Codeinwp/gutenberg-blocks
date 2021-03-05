@@ -43,22 +43,10 @@ class Button_Group_CSS extends Base_CSS {
 				'selector'   => ' .wp-block-themeisle-blocks-button',
 				'properties' => array(
 					array(
-						'property' => 'margin-left',
-						'value'    => 'spacing',
-						'unit'     => 'px',
-						'default'  => 20,
-						'format'   => function( $value, $attrs ) {
-							return $value / 2;
-						},
-					),
-					array(
 						'property' => 'margin-right',
 						'value'    => 'spacing',
 						'unit'     => 'px',
 						'default'  => 20,
-						'format'   => function( $value, $attrs ) {
-							return $value / 2;
-						},
 					),
 				),
 			)
@@ -131,32 +119,6 @@ class Button_Group_CSS extends Base_CSS {
 						'property' => 'width',
 						'value'    => 'fontSize',
 						'unit'     => 'px',
-					),
-				),
-			)
-		);
-
-		$css->add_item(
-			array(
-				'selector'   => ' .wp-block-themeisle-blocks-button:first-child',
-				'properties' => array(
-					array(
-						'property' => 'margin-left',
-						'unit'     => 'px',
-						'default'  => '0',
-					),
-				),
-			)
-		);
-
-		$css->add_item(
-			array(
-				'selector'   => ' .wp-block-themeisle-blocks-button:last-child',
-				'properties' => array(
-					array(
-						'property' => 'margin-left',
-						'unit'     => 'px',
-						'default'  => '0',
 					),
 				),
 			)

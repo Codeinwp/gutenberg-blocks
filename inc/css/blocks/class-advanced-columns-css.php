@@ -559,6 +559,44 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'value'    => 'backgroundOverlayBlend',
 						'default'  => 'normal',
 					),
+					array(
+						'property'  => 'border-radius',
+						'value'     => 'borderRadius',
+						'unit'      => 'px',
+						'default'   => 0,
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['borderRadiusType'] ) && 'unlinked' === $attrs['borderRadiusType'] );
+						},
+					),
+					array(
+						'property'       => 'border-radius',
+						'pattern'        => 'top-left top-right bottom-right bottom-left',
+						'pattern_values' => array(
+							'top-left'     => array(
+								'value'   => 'borderRadiusTop',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'top-right'    => array(
+								'value'   => 'borderRadiusRight',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'bottom-right' => array(
+								'value'   => 'borderRadiusBottom',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+							'bottom-left'  => array(
+								'value'   => 'borderRadiusLeft',
+								'unit'    => 'px',
+								'default' => 0,
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['borderRadiusType'] ) && 'unlinked' === $attrs['borderRadiusType'];
+						},
+					),
 				),
 			)
 		);

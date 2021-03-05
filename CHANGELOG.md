@@ -1,3 +1,11 @@
+#### [Version 1.6.0](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.11...v1.6.0) (2021-01-06)
+
+- New Icon List Block.
+- Allow editing text in Progress Bar Block.
+- Reuse Gradient Control from Core.
+- Fix Font Awesome loading when the non-Icon button is being used.
+- Improve Server-Side CSS Method
+
 ##### [Version 1.5.11](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.10...v1.5.11) (2020-12-12)
 
 - Fix ThemeIsle icons not appearing on WebKit browsers

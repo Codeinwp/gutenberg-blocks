@@ -7,6 +7,7 @@ const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' );
 const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
 
 module.exports = {
+	stats: 'minimal',
 	mode: NODE_ENV,
 	stats: 'minimal',
 	entry: {
@@ -17,6 +18,9 @@ module.exports = {
 		],
 		'blocks-v2': [
 			...glob.sync( './src/blocks/**/index.@(ts|tsx)' )
+		],
+		'leaflet-map': [
+			...glob.sync( './src/frontend/leaflet-map/index.js' )
 		],
 		maps: [
 			...glob.sync( './src/frontend/google-map/index.js' )
