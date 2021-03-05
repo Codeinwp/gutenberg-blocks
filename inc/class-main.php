@@ -156,7 +156,7 @@ class Main {
 		);
 
 		$typescript_asset_path = plugin_dir_url( $this->get_dir() ) . 'build/all-blocks.asset.php';
-		$typescript_asset = file_exists(( $typescript_asset_path )) ? require( $typescript_asset_path )['blocks-v2'] : array( 'dependencies' => array( 'react', 'react-dom', 'wp-polyfill' ,'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player' ) );
+		$typescript_asset      = file_exists( ( $typescript_asset_path ) ) ? require $typescript_asset_path ['blocks-v2'] : array( 'dependencies' => array( 'react', 'react-dom', 'wp-polyfill', 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player' ) );
 
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks-typescript',

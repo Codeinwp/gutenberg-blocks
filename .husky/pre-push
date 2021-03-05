@@ -3,3 +3,4 @@
 
 echo "Check if there are unsolved problems."
 npm run lint
+exit 1
