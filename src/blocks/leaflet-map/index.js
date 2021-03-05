@@ -15,15 +15,15 @@ import attributes from './attributes.js';
 import edit from './edit.js';
 import transforms from './transforms.js';
 
-registerBlockType( 'themeisle-blocks/google-map', {
-	title: __( 'Google Maps' ),
-	description: __( 'Display Google Maps on your website with Google Map block.' ),
+registerBlockType( 'themeisle-blocks/leaflet-map', {
+	title: __( 'Maps' ),
+	description: __( 'Display Open Street Maps on your website with Maps block.' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [
 		'map',
-		'google',
-		'orbitfox'
+		'opeenstreetmap',
+		'location'
 	],
 	attributes,
 	supports: {

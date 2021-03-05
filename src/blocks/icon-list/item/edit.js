@@ -114,7 +114,7 @@ const Edit = ({
 	let itemStyle;
 
 	if ( hasParent ) {
-		if ( ! hasCustomIcon && ! attributes.library ) {
+		if ( ! hasCustomIcon || ! attributes.library ) {
 			iconClassName =  `${ parentAttributes.defaultIconPrefix } fa-${ parentAttributes.defaultIcon }`;
 
 			setAttributes({
