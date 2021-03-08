@@ -1,22 +1,18 @@
-/**
- * WordPress dependencies
- */
-
-const { __ } = wp.i18n;
-
-const { registerBlockType } = wp.blocks;
 
 /**
- * Internal dependencies
- */
+  * Internal dependencies
+  */
+import { registerBlockType } from '@wordpress/blocks';
+import { __ } from '@wordpress/i18n';
 import { testimonialsIcon as icon } from '../../../helpers/icons.js';
-import edit from './edit.js';
-import save from './save.js';
+import edit from './edit';
+import save from './save';
 
-registerBlockType( 'themeisle-blocks/testimonials-old', {
-	title: __( 'Testimonials Old' ),
+registerBlockType( 'themeisle-blocks/testimonials', {
+	title: __( 'Testimonials' ),
 	description: __( 'Display kudos from customers and clients and display them on your website.' ),
 	icon,
+	attributes: {},
 	category: 'themeisle-blocks',
 	keywords: [
 		'testimonials',
@@ -26,3 +22,4 @@ registerBlockType( 'themeisle-blocks/testimonials-old', {
 	edit,
 	save
 });
+
