@@ -106,7 +106,7 @@ const Marker = ({
 						<TextControl
 							label={ __( 'Location' ) }
 							type="text"
-							className={ classnames({'wp-block-themeisle-blocks-leaflet-map-input-error': 'LOCATION' === error.target })}
+							className={ classnames({ 'wp-block-themeisle-blocks-leaflet-map-input-error': 'LOCATION' === error.target })}
 							value={ location }
 							onChange={ e => {
 								setLocation( e );

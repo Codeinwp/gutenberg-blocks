@@ -11,13 +11,13 @@ const TEMPLATE =  [
 		fontSize: 62,
 		prefix: 'fab',
 		icon: 'angellist'
-	} ],
+	}],
 	[ 'themeisle-blocks/advanced-heading', {
 		content: __( 'Basic' ),
 		align: 'center',
 		tag: 'h4',
 		marginBottom: 20
-	} ],
+	}],
 	[ 'themeisle-blocks/advanced-heading', {
 		content: __( 'Lorem ipsum dolor sit amet elit do, consectetur adipiscing, sed eiusmod tempor incididunt ut labore et dolore magna aliqua.' ),
 		align: 'center',
@@ -25,11 +25,11 @@ const TEMPLATE =  [
 		tag: 'p',
 		fontSize: 14,
 		marginBottom: 20
-	} ],
+	}],
 	[ 'themeisle-blocks/button-group', {
 		align: 'center',
 		buttons: 1,
-		data: [ {
+		data: [{
 			text: __( 'Know More' ),
 			newTab: false,
 			color: '#ffffff',
@@ -52,8 +52,8 @@ const TEMPLATE =  [
 			iconType: 'none',
 			paddingTopBottom: 12,
 			paddingLeftRight: 24
-		} ]
-	} ]
+		}]
+	}]
 ];
 
 const Edit = ({ className }) => {

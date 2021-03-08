@@ -410,7 +410,7 @@ const Edit = ({
 	getDividerBottomHeight = getDividerBottomHeight();
 
 	const getColumnsTemplate = columns => {
-		return times( columns, i => [ 'themeisle-blocks/advanced-column', { columnWidth: layouts[columns][attributes.layout][i] } ]);
+		return times( columns, i => [ 'themeisle-blocks/advanced-column', { columnWidth: layouts[columns][attributes.layout][i] }]);
 	};
 
 	if ( ! attributes.columns ) {

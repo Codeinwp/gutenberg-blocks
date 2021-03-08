@@ -122,10 +122,10 @@ const Edit = ({
 	return (
 		<Fragment>
 			{ attributes.fontFamily && (
-				<GoogleFontLoader fonts={ [ {
+				<GoogleFontLoader fonts={ [{
 					font: attributes.fontFamily,
 					weights: attributes.fontVariant && [ `${ attributes.fontVariant + ( 'italic' === attributes.fontStyle ? ':i' : '' ) }` ]
-				} ] } />
+				}] } />
 			) }
 
 			<Controls
@@ -153,7 +153,7 @@ const Edit = ({
 					allowedBlocks={ [ 'themeisle-blocks/button' ] }
 					__experimentalMoverDirection="horizontal"
 					orientation="horizontal"
-					template={ [ [ 'themeisle-blocks/button' ] ] }
+					template={ [[ 'themeisle-blocks/button' ]] }
 					renderAppender={ InnerBlocks.DefaultAppender }
 				/>
 			</div>
