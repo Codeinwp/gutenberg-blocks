@@ -1,7 +1,7 @@
-import { BlockEditProps } from "@wordpress/blocks";
+import { BlockEditProps } from '@wordpress/blocks';
 
 
-export interface Inspector<T extends Record<string, any>> extends Pick<BlockEditProps<T>, "attributes" | "setAttributes"> {}
+export type Inspector<T extends Record<string, unknown>> = Pick<BlockEditProps<T>, 'attributes' | 'setAttributes'>
 
 /**
  * Gutenber CSS types
@@ -11,19 +11,19 @@ type GutenbersCSS = {
     customCSS?: string
 }
 
-export interface OtterEditProps<T extends Record<string, any>> extends BlockEditProps<T> {
+export interface OtterEditProps<T extends Record<string, unknown>> extends BlockEditProps<T> {
     readonly attributes: Readonly<T & GutenbersCSS>
-    readonly setAttributes: (attrs: Partial<T & GutenbersCSS>) => void;
+    readonly setAttributes: ( attrs: Partial<T & GutenbersCSS> ) => void;
 }
 
-export interface OtterInspector<T extends Record<string, any>> extends Pick<OtterEditProps<T>, "attributes" | "setAttributes" | "hasCustomCSS" | "customCSS"> {}
+export type OtterInspector<T extends Record<string, unknown>> = Pick<OtterEditProps<T>, 'attributes' | 'setAttributes' | 'hasCustomCSS' | 'customCSS'>
 
 /**
  * Extend window interface
  */
 
 
-export {}
+export {};
 declare global {
     interface Window {
         themeisleGutenberg?: {

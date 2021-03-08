@@ -9,7 +9,6 @@ const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extrac
 module.exports = {
 	stats: 'minimal',
 	mode: NODE_ENV,
-	stats: 'minimal',
 	entry: {
 		blocks: [
 			'./src/index.js',
@@ -38,11 +37,7 @@ module.exports = {
 			...glob.sync( './src/frontend/lottie/index.js' )
 		]
 	},
-	externals: {
-		'react': 'React',
-		'react-dom': 'ReactDOM',
-		'lodash': 'lodash'
-	},
+
 	output: {
 		path: path.resolve( __dirname, 'build' ),
 		filename: '[name].js',
