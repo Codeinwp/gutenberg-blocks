@@ -13,8 +13,8 @@ import { servicesIcon as icon } from '../../../helpers/icons.js';
 import edit from './edit.js';
 import save from './save.js';
 
-registerBlockType( 'themeisle-blocks/service', {
-	title: __( 'Service' ),
+registerBlockType( 'themeisle-blocks/service-old', {
+	title: __( 'Service Old' ),
 	description: __( 'Use this Service block to showcase services your website offers.' ),
 	icon,
 	category: 'themeisle-blocks',

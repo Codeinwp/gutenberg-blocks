@@ -1,21 +1,18 @@
-/**
- * WordPress dependencies
- */
-const { __ } = wp.i18n;
-
-const { registerBlockType } = wp.blocks;
 
 /**
- * Internal dependencies
- */
+  * Internal dependencies
+  */
+import { registerBlockType } from '@wordpress/blocks';
+import { __ } from '@wordpress/i18n';
 import { pricingIcon as icon } from '../../../helpers/icons.js';
-import edit from './edit.js';
-import save from './save.js';
+import edit from './edit';
+import save from './save';
 
-registerBlockType( 'themeisle-blocks/pricing-old', {
-	title: __( 'Pricing Old' ),
+registerBlockType( 'themeisle-blocks/pricing', {
+	title: __( 'Pricing' ),
 	description: __( 'Pricing tables are a critical part in showcasing your services, prices and overall offerings.' ),
 	icon,
+	attributes: {},
 	category: 'themeisle-blocks',
 	keywords: [
 		'pricing',
@@ -25,3 +22,4 @@ registerBlockType( 'themeisle-blocks/pricing-old', {
 	edit,
 	save
 });
+
