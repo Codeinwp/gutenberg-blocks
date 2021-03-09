@@ -196,13 +196,14 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Custom Post Types' ) }
+				title={ __( 'Post Types' ) }
 			>
 				<BaseControl>
 					{ __( 'Select the types of the post. If none is selected, the default WordPress post will be displayed.' ) }
 				</BaseControl>
+
 				<SelectControl
-					label={ __( 'Post Custom Type' ) }
+					label={ __( 'Post Type' ) }
 					value= { attributes.postTypes[0] || null }
 					onChange={ ( value ) => value && setAttributes({ postTypes: [ value ] }) }
 					options= {
