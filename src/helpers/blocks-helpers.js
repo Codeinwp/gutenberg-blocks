@@ -41,7 +41,7 @@ export const initBlock = ( attributes, setAttributes, clientId, idPrefix, name, 
 
 	useEffect( () => {
 		if ( id !== attributes.id ) {
-			console.log( `Set new id to ${id}. Old id was ${attributes.id} for the block with the 'clientId' equal to ${clientId}` );
+			console.log( `Set new id to ${id}. Old id was ${attributes.id} for the block with the 'clientId' equal to ${clientId}. Global scope is: ${window.themeisleGutenberg.blockIDs}` );
 			setAttributes({
 				id: id
 			});

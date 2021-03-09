@@ -35,9 +35,15 @@ export const useStateWithInitCondition = ( initialState, condition, generateStat
 export const useId = ( prefix, clientId, attrsId, initFallback ) => {
 
 	const generateUniqId = () => prefix + clientId.substr( 0, 8 );
+	const condition = x => x === undefined;
 
-	const [ id, setId ] = useStateWithInitCondition( attrsId, x => x === undefined, generateUniqId, initFallback );
+	const [ id, setId ] = useStateWithInitCondition( attrsId, condition, generateUniqId, initFallback );
 
+	/**
+	 * Check if the block's id is already used by looking in the global scope `window.themeisleGutenberg.blockIDs`.
+	 * If true, set a new id.
+	 * If false, add the id in the global scope to that we can prevent duplicate id from copying, pasting, duplicating a block.
+	 */
 	useEffect( () => {
 		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
 
@@ -48,6 +54,16 @@ export const useId = ( prefix, clientId, attrsId, initFallback ) => {
 			window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 		}
 	}, [ id ]);
+
+	/**
+	 * When a block is removed from view/page, delete its id from the global scope.
+	 */
+	useEffect( () => {
+		return () => {
+			window.themeisleGutenberg.blockIDs = window.themeisleGutenberg.blockIDs.filter( usedId => usedId !== id ) || [];
+			console.log( `The block with the id: ${id} has been deleted from view. The global scope is now:`, window.themeisleGutenberg.blockIDs );
+		};
+	}, []);
 
 	return id;
 };
