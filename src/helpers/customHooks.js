@@ -1,6 +1,7 @@
 const {
 	useState,
-	useEffect
+	useEffect,
+	useRef
 } = wp.element;
 
 /**
@@ -38,6 +39,7 @@ export const useId = ( prefix, clientId, attrsId, initFallback ) => {
 	const condition = x => x === undefined;
 
 	const [ id, setId ] = useStateWithInitCondition( attrsId, condition, generateUniqId, initFallback );
+	const idRef = useRef( attrsId );
 
 	/**
 	 * Check if the block's id is already used by looking in the global scope `window.themeisleGutenberg.blockIDs`.
@@ -53,6 +55,8 @@ export const useId = ( prefix, clientId, attrsId, initFallback ) => {
 			blockIDs.push( id );
 			window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 		}
+
+		idRef.current = id;
 	}, [ id ]);
 
 	/**
@@ -60,8 +64,8 @@ export const useId = ( prefix, clientId, attrsId, initFallback ) => {
 	 */
 	useEffect( () => {
 		return () => {
-			window.themeisleGutenberg.blockIDs = window.themeisleGutenberg.blockIDs.filter( usedId => usedId !== id ) || [];
-			console.log( `The block with the id: ${id} has been deleted from view. The global scope is now:`, window.themeisleGutenberg.blockIDs );
+			window.themeisleGutenberg.blockIDs = window.themeisleGutenberg.blockIDs.filter( usedId => usedId !== idRef.current ) || [];
+			console.info( `The block with the id: ${idRef.current} has been deleted from view. The global scope is now:`, window.themeisleGutenberg.blockIDs );
 		};
 	}, []);
 
