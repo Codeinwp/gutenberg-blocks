@@ -21,6 +21,7 @@ const { useSelect } = wp.data;
  */
 import LayoutBuilder from './components/layout-builder.js';
 import { StyleSwitcherInspectorControl } from '../../components/style-switcher-control/index.js';
+import { convertToTitleCase } from '../../helpers/helper-functions.js';
 
 const Inspector = ({
 	attributes,
@@ -207,7 +208,7 @@ const Inspector = ({
 					value= { attributes.postTypes[0] || null }
 					onChange={ ( value ) => value && setAttributes({ postTypes: [ value ] }) }
 					options= {
-						slugs.map( slug => ({ label: slug.toUpperCase(), value: slug }) )
+						slugs.map( slug => ({ label: convertToTitleCase( slug ), value: slug }) )
 					}
 				/>
 			</PanelBody>
