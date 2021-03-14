@@ -8,16 +8,22 @@ import { chevronDown, chevronUp } from '@wordpress/icons';
  */
 const { __ } = wp.i18n;
 
-const { InnerBlocks, RichText } = wp.blockEditor;
+const {
+	InnerBlocks,
+	RichText
+} = wp.blockEditor;
 
 const { Icon } = wp.components;
 
-const { Fragment, useState } = wp.element;
+const {
+	Fragment,
+	useState
+} = wp.element;
 
 /**
  * Internal dependencies
  */
-// import Inspector from './inspector.js';
+import Inspector from './inspector.js';
 
 const Edit = ({
 	attributes,
@@ -36,10 +42,10 @@ const Edit = ({
 
 	return (
 		<Fragment>
-			{/* <Inspector
+			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
-			/> */}
+			/>
 
 			<div className={ className } >
 				<div

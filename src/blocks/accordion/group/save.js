@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
  * WordPress dependencies.
  */
 const { InnerBlocks } = wp.blockEditor;
@@ -10,7 +15,12 @@ const Save = ({
 	return (
 		<div
 			id={ attributes.id }
-			className={ className }
+			className={ classnames(
+				className,
+				{
+					[`is-${ attributes.gap }-gap`]: attributes.gap
+				}
+			) }
 		>
 			<InnerBlocks.Content />
 		</div>

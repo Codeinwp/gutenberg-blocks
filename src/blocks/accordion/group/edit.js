@@ -3,6 +3,8 @@
 /**
  * External dependencies
  */
+import classnames from 'classnames';
+
 import {
 	css,
 	jsx
@@ -109,7 +111,12 @@ const Edit = ({
 
 			<div
 				id={ attributes.id }
-				className={ className }
+				className={ classnames(
+					className,
+					{
+						[`is-${ attributes.gap }-gap`]: attributes.gap
+					}
+				) }
 				css={ styles }
 			>
 				<InnerBlocks

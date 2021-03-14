@@ -2,6 +2,9 @@ const attributes = {
 	id: {
 		type: 'string'
 	},
+	gap: {
+		type: 'string'
+	},
 	titleColor: {
 		type: 'string'
 	},

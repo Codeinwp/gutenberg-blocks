@@ -9,9 +9,10 @@ const {
 	PanelColorSettings
 } = wp.blockEditor;
 
-// const {
-// 	PanelBody
-// } = wp.components;
+const {
+	PanelBody,
+	SelectControl
+} = wp.components;
 
 const Inspector = ({
 	attributes,
@@ -19,8 +20,26 @@ const Inspector = ({
 }) => {
 	return (
 		<InspectorControls>
+
+			<PanelBody
+				title={ __( 'Settings' ) }
+			>
+				<SelectControl
+					label={ __( 'Gap' ) }
+					value={ attributes.gap }
+					options={ [
+						{ label: __( 'No Gap' ), value: '' },
+						{ label: __( 'Narrow (5px)' ), value: 'narrow' },
+						{ label: __( 'Wide (10px)' ), value: 'wide' },
+						{ label: __( 'Wider (20px)' ), value: 'wider' }
+					] }
+					onChange={ e => setAttributes({ gap: e }) }
+				/>
+			</PanelBody>
+
 			<PanelColorSettings
 				title={ __( 'Color' ) }
+				initialOpen={ false }
 				colorSettings={ [
 					{
 						value: attributes.titleColor,

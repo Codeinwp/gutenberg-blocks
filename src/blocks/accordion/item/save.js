@@ -8,7 +8,10 @@ const Save = ({
 	className
 }) => {
 	return (
-		<details className={ className }>
+		<details
+			className={ className }
+			open={ attributes.initialOpen ? true : false }
+		>
 			<RichText.Content
 				tagName="summary"
 				className="wp-block-themeisle-blocks-accordion-item__title"
