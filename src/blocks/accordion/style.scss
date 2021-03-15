@@ -31,6 +31,11 @@
 				height: 8px;
 				transform: rotate(45deg) translate(-25%, 0%);
 			}
+
+			&::-webkit-details-marker,
+			&::marker {
+				display: none;
+			}
 		}
 
 		.wp-block-themeisle-blocks-accordion-item__content {
