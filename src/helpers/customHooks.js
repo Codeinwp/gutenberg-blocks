@@ -16,9 +16,7 @@ export const useStateWithInitCondition = ( initialState, condition, generateStat
 
 	useEffect( () => {
 		if ( condition( internalState ) ) {
-			if ( fallbackInCondition ) {
-				fallbackInCondition( internalState );
-			}
+			fallbackInCondition?.( internalState );
 			setInternalState( generateState() );
 		}
 	},  [ internalState ]);

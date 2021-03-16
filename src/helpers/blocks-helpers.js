@@ -19,12 +19,13 @@ const {
  */
 export const addGlobalDefaults = ( attributes, setAttributes, name, defaultAttributes ) => () => {
 
-	// Check if the global default are available.
+	// Check if the globals default are available and its values are different from the base values.
 	if ( undefined !== window.themeisleGutenberg.globalDefaults && ! isEqual( defaults[name], window.themeisleGutenberg.globalDefaults[name]) ) {
 		const defaultGlobalAttrs = { ...window.themeisleGutenberg.globalDefaults[name] };
 
 		const attrs = Object.keys( defaultGlobalAttrs )
 			.filter( attr => attributes[ attr ] === defaultAttributes[ attr ]?.default ) // Keep only the properties with the default value.
+			// Build an attribute object with the properties that are gone take the Global Defaults values.
 			.reduce( ( attrs, attr ) => {
 				attrs[ attr ] = defaultGlobalAttrs[ attr ];
 				return attrs;
