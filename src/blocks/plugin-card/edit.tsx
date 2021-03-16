@@ -1,14 +1,11 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-
-
 import { BlockEditProps } from '@wordpress/blocks';
 import * as React from 'react';
 import { PluginCardAttrs } from './attributes';
 import { Fragment, useState } from '@wordpress/element';
 import { Disabled } from '@wordpress/components';
 
-// @ts-ignore
-import ServerSideRender from '@wordpress/server-side-render';
+
+const ServerSideRender = window.wp.serverSideRender;
 import Controls from './controls';
 import Placeholder from './placeholder';
 
@@ -39,7 +36,7 @@ const Edit: React.FunctionComponent<BlockEditProps<PluginCardAttrs>> = ({
 				<ServerSideRender
 					block="themeisle-blocks/plugin-cards"
 					className={ className }
-					attributes={ { ...attributes } }
+					attributes={{ ...attributes }}
 				/>
 			</Disabled>
 		</Fragment>

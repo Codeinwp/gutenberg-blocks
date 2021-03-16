@@ -12,7 +12,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { Dashicon, Placeholder, Spinner, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n/build-types';
 import { DOWN, ENTER, TAB, UP } from '@wordpress/keycodes';
-import { PluginCardSearchResponse, PluginsCardData } from '../../types/plugin-card';
+import { PluginCardSearchResponse, PluginsCardData } from '../../@types/plugin-card';
 import { unescape } from 'lodash';
 
 type BlockPlaceholder = Pick<BlockEditProps<PluginCardAttrs>, 'setAttributes' | 'className'> & {

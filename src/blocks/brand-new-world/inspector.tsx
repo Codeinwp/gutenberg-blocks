@@ -2,7 +2,7 @@ import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, RangeControl, TextControl } from '@wordpress/components';
 import * as React from 'react';
 import { Dispatch, SetStateAction } from 'react';
-import { Inspector } from '../../types/utility';
+import { Inspector } from '../../@types/utility';
 
 import { BrandNewWorldAttrs } from './attributes';
 
