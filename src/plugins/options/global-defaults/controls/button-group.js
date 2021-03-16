@@ -87,10 +87,10 @@ const ButtonGroupBlock = ({
 					label={ __( 'Collapse On' ) }
 					value={ defaults.collapse }
 					options={ [
-						{ label: 'None', value: 'collapse-none' },
-						{ label: 'Desktop', value: 'collapse-desktop' },
-						{ label: 'Tablet', value: 'collapse-tablet' },
-						{ label: 'Mobile', value: 'collapse-mobile' }
+						{ label: __( 'None' ), value: 'collapse-none' },
+						{ label: __( 'Desktop' ), value: 'collapse-desktop' },
+						{ label: __( 'Tablet' ), value: 'collapse-tablet' },
+						{ label: __( 'Mobile' ), value: 'collapse-mobile' }
 					] }
 					onChange={ value => changeConfig( blockName, { collapse: value }) }
 				/>

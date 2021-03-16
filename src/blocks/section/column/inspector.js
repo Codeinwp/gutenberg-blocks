@@ -732,9 +732,9 @@ const Inspector = ({
 											label={ __( 'Background Attachment' ) }
 											value={ attributes.backgroundAttachment }
 											options={ [
-												{ label: 'Scroll', value: 'scroll' },
-												{ label: 'Fixed', value: 'fixed' },
-												{ label: 'Local', value: 'local' }
+												{ label: __( 'Scroll' ), value: 'scroll' },
+												{ label: __( 'Fixed' ), value: 'fixed' },
+												{ label: __( 'Local' ), value: 'local' }
 											] }
 											onChange={ changeBackgroundAttachment }
 										/>
@@ -743,16 +743,16 @@ const Inspector = ({
 											label={ __( 'Background Position' ) }
 											value={ attributes.backgroundPosition }
 											options={ [
-												{ label: 'Default', value: 'top left' },
-												{ label: 'Top Left', value: 'top left' },
-												{ label: 'Top Center', value: 'top center' },
-												{ label: 'Top Right', value: 'top right' },
-												{ label: 'Center Left', value: 'center left' },
-												{ label: 'Center Center', value: 'center center' },
-												{ label: 'Center Right', value: 'center right' },
-												{ label: 'Bottom Left', value: 'bottom left' },
-												{ label: 'Bottom Center', value: 'bottom center' },
-												{ label: 'Bottom Right', value: 'bottom right' }
+												{ label: __( 'Default' ), value: 'top left' },
+												{ label: __( 'Top Left' ), value: 'top left' },
+												{ label: __( 'Top Center' ), value: 'top center' },
+												{ label: __( 'Top Right' ), value: 'top right' },
+												{ label: __( 'Center Left' ), value: 'center left' },
+												{ label: __( 'Center Center' ), value: 'center center' },
+												{ label: __( 'Center Right' ), value: 'center right' },
+												{ label: __( 'Bottom Left' ), value: 'bottom left' },
+												{ label: __( 'Bottom Center' ), value: 'bottom center' },
+												{ label: __( 'Bottom Right' ), value: 'bottom right' }
 											] }
 											onChange={ changeBackgroundPosition }
 										/>
@@ -761,8 +761,8 @@ const Inspector = ({
 											label={ __( 'Background Repeat' ) }
 											value={ attributes.backgroundRepeat }
 											options={ [
-												{ label: 'Repeat', value: 'repeat' },
-												{ label: 'No-repeat', value: 'no-repeat' }
+												{ label: __( 'Repeat' ), value: 'repeat' },
+												{ label: __( 'No-repeat' ), value: 'no-repeat' }
 											] }
 											onChange={ changeBackgroundRepeat }
 										/>
@@ -771,9 +771,9 @@ const Inspector = ({
 											label={ __( 'Background Size' ) }
 											value={ attributes.backgroundSize }
 											options={ [
-												{ label: 'Auto', value: 'auto' },
-												{ label: 'Cover', value: 'cover' },
-												{ label: 'Contain', value: 'contain' }
+												{ label: __( 'Auto' ), value: 'auto' },
+												{ label: __( 'Cover' ), value: 'cover' },
+												{ label: __( 'Contain' ), value: 'contain' }
 											] }
 											onChange={ changeBackgroundSize }
 										/>
@@ -955,7 +955,7 @@ const Inspector = ({
 						label={ __( 'HTML Tag' ) }
 						value={ attributes.columnsHTMLTag }
 						options={ [
-							{ label: 'Default (div)', value: 'div' },
+							{ label: __( 'Default (div)' ), value: 'div' },
 							{ label: 'section', value: 'section' },
 							{ label: 'header', value: 'header' },
 							{ label: 'footer', value: 'footer' },
