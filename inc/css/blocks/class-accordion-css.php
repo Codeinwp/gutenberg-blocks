@@ -56,7 +56,7 @@ class Accordion_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-accordion-item .wp-block-themeisle-blocks-accordion-item__title::after',
+				'selector'   => ' .wp-block-themeisle-blocks-accordion-item .wp-block-themeisle-blocks-accordion-item__title > div::after',
 				'properties' => array(
 					array(
 						'property' => 'border-color',
