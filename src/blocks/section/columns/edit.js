@@ -22,7 +22,8 @@ const { InnerBlocks } = wp.blockEditor;
 
 const {
 	Fragment,
-	useState
+	useState,
+	useEffect
 } = wp.element;
 
 /**
@@ -45,8 +46,13 @@ const Edit = ({
 	clientId,
 	name
 }) => {
-	initBlock( attributes, setAttributes, clientId, 'wp-block-themeisle-blocks-advanced-columns-', name, defaultAttributes );
+
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
+	const [ , updateId ] = initBlock( attributes, setAttributes, clientId, 'wp-block-themeisle-blocks-advanced-columns-', name, defaultAttributes );
+
+	useEffect( () => {
+		updateId( attributes.id );
+	}, [ attributes.id ]);
 
 	const {
 		sectionBlock,

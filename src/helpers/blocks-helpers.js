@@ -2,6 +2,7 @@ import { useId } from './customHooks.js';
 import defaults from '../plugins/options/global-defaults/defaults.js';
 
 const {
+	useState,
 	useEffect
 } = wp.element;
 
@@ -46,14 +47,39 @@ export const addGlobalDefaults = ( attributes, setAttributes, name, defaultAttri
  */
 export const initBlock = ( attributes, setAttributes, clientId, idPrefix, name, defaultAttributes ) => {
 
-	const id = useId( idPrefix, clientId, attributes.id, addGlobalDefaults( attributes, setAttributes, name, defaultAttributes ) );
+	const [ watchId, setWatchId ] = useState([ ]);
+	const [ id, setId ] = useId( idPrefix, clientId, attributes.id, addGlobalDefaults( attributes, setAttributes, name, defaultAttributes ) );
+
+	const updateId = ( newId ) => {
+		if ( newId && ! watchId.includes( newId ) ) {
+			setWatchId([ ...watchId, newId ]);
+		}
+	};
 
 	useEffect( () => {
-		if ( id !== attributes.id ) {
-			console.info( `Set new id to ${id}. Old id was ${attributes.id} for the block with the 'clientId' equal to ${clientId}. Global scope is: `, window.themeisleGutenberg.blockIDs );
+		if ( ! id ) {
+			return;
+		}
+
+		// console.log( id, watchId, window.themeisleGutenberg.blockIDs );
+		if ( 0 === watchId.length ) {
+			updateId( id );
+		} else if ( watchId[ watchId.length - 1 ] !== id )  {
+
+			// console.info( `UPDATE: Update internal id with ${watchId[ watchId.length - 1 ]}. Old value was: ${id}`, watchId, window.themeisleGutenberg.blockIDs );
+
+			// For some fk unknow reasons, the value in the global scope is also upated before the id, and so it triggers again because the id got surprised to know that its value is already in the global scope
+			// I can not understand how in the global scope, the old id value is already replaced before the id hook.
+			window.themeisleGutenberg.blockIDs = window.themeisleGutenberg.blockIDs.filter( usedId => usedId !== watchId[ watchId.length - 1 ]) || [];
+			setId( watchId[ watchId.length - 1 ]);
+		} else if ( watchId[ watchId.length - 1 ] === id ) {
+
+			// console.info( `INIT: Set new id to ${id}. Old id was ${attributes.id} for the block with the 'clientId' equal to ${clientId}. Global scope is: `, window.themeisleGutenberg.blockIDs );
 			setAttributes({
 				id: id
 			});
 		}
-	}, [ id ]);
+	}, [ id, watchId ]);
+
+	return [ id, updateId ];
 };

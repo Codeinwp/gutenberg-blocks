@@ -48,10 +48,13 @@ export const useId = ( prefix, clientId, attrsId, initFallback ) => {
 		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
 
 		if ( blockIDs.includes( id ) ) {
+
+			// console.log( `${id} is already in the global scope`, blockIDs, idRef.current );
 			setId( generateUniqId() );
 		} else if ( id ) {
-			blockIDs.push( id );
-			window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
+
+			// console.log( `${id} is not in the global scope`, blockIDs );
+			window.themeisleGutenberg.blockIDs = [ ...blockIDs, id.slice( 0 ) ];
 		}
 
 		idRef.current = id;
@@ -67,5 +70,5 @@ export const useId = ( prefix, clientId, attrsId, initFallback ) => {
 		};
 	}, []);
 
-	return id;
+	return [ id, setId ];
 };
