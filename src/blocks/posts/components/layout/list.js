@@ -25,21 +25,22 @@ const List = ({
 	authors
 }) => {
 	const Tag = attributes.titleTag || 'h5';
-
+	console.log( posts );
 	return (
 		<div className={ classnames(
 			className,
 			'is-list',
 			{ 'has-shadow': attributes.imageBoxShadow }
 		) }>
-			{ posts.map( post => {
+			{ posts.filter( post => post ).map( post => {
+
 				let category, author;
 
-				if ( categoriesList ) {
+				if ( categoriesList && 0 < post?.categories?.length ) {
 					category = categoriesList.find( item => item.id === post.categories[0]);
 				}
 
-				if ( authors ) {
+				if ( authors && post.author ) {
 					author = authors.find( item => item.id === post.author );
 				}
 
