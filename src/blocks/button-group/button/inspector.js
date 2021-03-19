@@ -290,10 +290,10 @@ const Inspector = ({
 					label={ __( 'Icon Position' ) }
 					value={ attributes.iconType }
 					options={ [
-						{ label: 'No Icon', value: 'none' },
-						{ label: 'Left', value: 'left' },
-						{ label: 'Right', value: 'right' },
-						{ label: 'Icon Only', value: 'only' }
+						{ label: __( 'No Icon' ), value: 'none' },
+						{ label: __( 'Left' ), value: 'left' },
+						{ label: __( 'Right' ), value: 'right' },
+						{ label: __( 'Icon Only' ), value: 'only' }
 					] }
 					onChange={ e => setAttributes({ iconType: e }) }
 				/>

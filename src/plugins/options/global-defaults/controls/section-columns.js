@@ -400,12 +400,12 @@ const SectionColumns = ({
 					label={ __( 'Columns Gap' ) }
 					value={ defaults.columnsGap }
 					options={ [
-						{ label: 'Default (10px)', value: 'default' },
-						{ label: 'No Gap', value: 'nogap' },
-						{ label: 'Narrow (5px)', value: 'narrow' },
-						{ label: 'Extended (15px)', value: 'extended' },
-						{ label: 'Wide (20px)', value: 'wide' },
-						{ label: 'Wider (30px)', value: 'wider' }
+						{ label: __( 'Default (10px)' ), value: 'default' },
+						{ label: __( 'No Gap' ), value: 'nogap' },
+						{ label: __( 'Narrow (5px)' ), value: 'narrow' },
+						{ label: __( 'Extended (15px)' ), value: 'extended' },
+						{ label: __( 'Wide (20px)' ), value: 'wide' },
+						{ label: __( 'Wider (30px)' ), value: 'wider' }
 					] }
 					onChange={ value => changeConfig( blockName, { columnsGap: value }) }
 				/>
@@ -487,7 +487,7 @@ const SectionColumns = ({
 					label={ __( 'HTML Tag' ) }
 					value={ defaults.columnsHTMLTag }
 					options={ [
-						{ label: 'Default (div)', value: 'div' },
+						{ label: __( 'Default (div)' ), value: 'div' },
 						{ label: 'section', value: 'section' },
 						{ label: 'header', value: 'header' },
 						{ label: 'footer', value: 'footer' },
@@ -552,9 +552,9 @@ const SectionColumns = ({
 					label={ __( 'Minimum Height' ) }
 					value={ defaults.columnsHeight }
 					options={ [
-						{ label: 'Default', value: 'auto' },
-						{ label: 'Fit to Screen', value: '100vh' },
-						{ label: 'Custom', value: 'custom' }
+						{ label: __( 'Default' ), value: 'auto' },
+						{ label: __( 'Fit to Screen' ), value: '100vh' },
+						{ label: __( 'Custom' ), value: 'custom' }
 					] }
 					onChange={ value => changeConfig( blockName, { columnsHeight: value }) }
 				/>
