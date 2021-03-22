@@ -22,7 +22,7 @@
 		"hex-rgba": "^1.0.2",
 		"react-google-font-loader": "1.0.5",
 		"react-lazy-load": "^3.1.13",
-		"react-sortable-hoc": "^1.11.0",
+		"react-sortable-hoc": "^2.0.0",
 		"uuid": "^8.3.2"
 	},
 	"devDependencies": {
