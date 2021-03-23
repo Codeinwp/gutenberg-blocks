@@ -1,4 +1,5 @@
 import { BlockEditProps } from '@wordpress/blocks';
+import { DefaultsAttrs } from '../plugins/options/global-defaults/defaults';
 
 
 export type Inspector<T extends Record<string, unknown>> = Pick<BlockEditProps<T>, 'attributes' | 'setAttributes'>
@@ -28,6 +29,7 @@ declare global {
     interface Window {
         themeisleGutenberg?: {
             blockIDs?: string[]
+			globalDefaults?: DefaultsAttrs
         }
     }
 }
