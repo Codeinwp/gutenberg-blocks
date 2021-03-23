@@ -51,7 +51,7 @@ const List = ({
 								<Thumbnail
 									id={ post.featured_media }
 									link={ post.link }
-									alt={ post.title.rendered }
+									alt={ post.title?.rendered }
 									size={ attributes.imageSize }
 								/>
 							) }
@@ -72,7 +72,7 @@ const List = ({
 											return (
 												<Tag className="wp-block-themeisle-blocks-posts-grid-post-title">
 													<a href={ post.link }>
-														{ unescapeHTML( post.title.rendered ) }
+														{ unescapeHTML( post.title?.rendered ) }
 													</a>
 												</Tag>
 											);
@@ -99,7 +99,7 @@ const List = ({
 										if ( 0 < attributes.excerptLength && attributes.displayDescription ) {
 											return (
 												<p className="wp-block-themeisle-blocks-posts-grid-post-description">
-													{ unescapeHTML( post.excerpt.rendered ).substring( 0, attributes.excerptLength ) + '…' }
+													{ post.excerpt?.rendered && unescapeHTML( post.excerpt.rendered ).substring( 0, attributes.excerptLength ) + '…' }
 												</p>
 											);
 										}
