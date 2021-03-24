@@ -3,6 +3,10 @@ const attributes = {
 		type: 'string',
 		default: 'grid'
 	},
+	postTypes: {
+		type: 'array',
+		default: []
+	},
 	columns: {
 		type: 'number',
 		default: 3

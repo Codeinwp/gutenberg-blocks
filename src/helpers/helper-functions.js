@@ -1,3 +1,5 @@
+const { without } = lodash;
+
 // HTML to Plaintext
 export const unescapeHTML = value => {
 	const htmlNode = document.createElement( 'div' );
@@ -85,4 +87,23 @@ export const easeOutSine = ( x ) => {
 
 export const easeInOutSine = ( x ) => {
 	return -( Math.cos( Math.PI * x ) - 1 ) / 2;
+};
+
+export const getCustomPostTypeSlugs = async() => {
+	const dataTypes = await ( new wp.api.collections.Types() ).fetch();
+
+	if ( dataTypes ) {
+		const allExistingSlugs = Object.keys( dataTypes ).filter( type => dataTypes[type]?.slug ).map(  type => dataTypes[type].slug );
+
+		return without( allExistingSlugs, 'attachment', 'wp_block' );
+	}
+
+	return undefined;
+};
+
+export const convertToTitleCase = ( word ) => {
+	if ( 'string' === typeof word || word instanceof String ) {
+		return word[0].toUpperCase() + word.slice( 1 );
+	}
+	throw 'The parameter must be a string.';
 };

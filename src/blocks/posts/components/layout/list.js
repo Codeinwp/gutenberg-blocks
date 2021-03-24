@@ -25,32 +25,33 @@ const List = ({
 	authors
 }) => {
 	const Tag = attributes.titleTag || 'h5';
-
+	console.log( posts );
 	return (
 		<div className={ classnames(
 			className,
 			'is-list',
 			{ 'has-shadow': attributes.imageBoxShadow }
 		) }>
-			{ posts.map( post => {
+			{ posts.filter( post => post ).map( post => {
+
 				let category, author;
 
-				if ( categoriesList ) {
+				if ( categoriesList && 0 < post?.categories?.length ) {
 					category = categoriesList.find( item => item.id === post.categories[0]);
 				}
 
-				if ( authors ) {
+				if ( authors && post.author ) {
 					author = authors.find( item => item.id === post.author );
 				}
 
 				return (
-					<div className="wp-block-themeisle-blocks-posts-grid-post-blog wp-block-themeisle-blocks-posts-grid-post-plain">
+					<div key={post.link} className="wp-block-themeisle-blocks-posts-grid-post-blog wp-block-themeisle-blocks-posts-grid-post-plain">
 						<div className="wp-block-themeisle-blocks-posts-grid-post">
 							{ ( 0 !== post.featured_media && attributes.displayFeaturedImage ) && (
 								<Thumbnail
 									id={ post.featured_media }
 									link={ post.link }
-									alt={ post.title.rendered }
+									alt={ post.title?.rendered }
 									size={ attributes.imageSize }
 								/>
 							) }
@@ -71,7 +72,7 @@ const List = ({
 											return (
 												<Tag className="wp-block-themeisle-blocks-posts-grid-post-title">
 													<a href={ post.link }>
-														{ unescapeHTML( post.title.rendered ) }
+														{ unescapeHTML( post.title?.rendered ) }
 													</a>
 												</Tag>
 											);
@@ -98,7 +99,7 @@ const List = ({
 										if ( 0 < attributes.excerptLength && attributes.displayDescription ) {
 											return (
 												<p className="wp-block-themeisle-blocks-posts-grid-post-description">
-													{ unescapeHTML( post.excerpt.rendered ).substring( 0, attributes.excerptLength ) + '…' }
+													{ post.excerpt?.rendered && unescapeHTML( post.excerpt.rendered ).substring( 0, attributes.excerptLength ) + '…' }
 												</p>
 											);
 										}

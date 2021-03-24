@@ -7,16 +7,21 @@ const {
 	PanelBody,
 	QueryControls,
 	RangeControl,
-	TextControl
+	TextControl,
+	BaseControl,
+	SelectControl
 } = wp.components;
 
 const { InspectorControls } = wp.blockEditor;
+
+const { useSelect } = wp.data;
 
 /**
  * Internal dependencies
  */
 import LayoutBuilder from './components/layout-builder.js';
 import { StyleSwitcherInspectorControl } from '../../components/style-switcher-control/index.js';
+import { convertToTitleCase } from '../../helpers/helper-functions.js';
 
 const Inspector = ({
 	attributes,
@@ -24,6 +29,15 @@ const Inspector = ({
 	changeStyle,
 	categoriesList
 }) => {
+
+	const {
+		slugs
+	} = useSelect( select => {
+		return {
+			slugs: select( 'otter-store' ).getPostsSlugs()
+		};
+	}, [ attributes.postTypes ]);
+
 	const categorySuggestions = categoriesList.reduce(
 		( accumulator, category ) => ({
 			...accumulator,
@@ -36,7 +50,7 @@ const Inspector = ({
 		const cat = categoriesList.find( cat => cat.id === Number( category.id ) );
 		return {
 			id: category.id,
-			name: cat.name || cat.slug
+			name: cat?.name || cat?.slug || ''
 		};
 	}) : [];
 
@@ -179,6 +193,23 @@ const Inspector = ({
 						}
 					] }
 					onChange={ changeStyle }
+				/>
+			</PanelBody>
+
+			<PanelBody
+				title={ __( 'Post Types' ) }
+			>
+				<BaseControl>
+					{ __( 'Select the types of the post. If none is selected, the default WordPress post will be displayed.' ) }
+				</BaseControl>
+
+				<SelectControl
+					label={ __( 'Post Type' ) }
+					value= { attributes.postTypes[0] || null }
+					onChange={ ( value ) => value && setAttributes({ postTypes: [ value ] }) }
+					options= {
+						slugs.map( slug => ({ label: convertToTitleCase( slug ), value: slug }) )
+					}
 				/>
 			</PanelBody>
 
