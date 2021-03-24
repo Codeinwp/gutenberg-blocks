@@ -50,7 +50,7 @@ const Inspector = ({
 		const cat = categoriesList.find( cat => cat.id === Number( category.id ) );
 		return {
 			id: category.id,
-			name: cat.name || cat.slug
+			name: cat?.name || cat?.slug || ''
 		};
 	}) : [];
 
