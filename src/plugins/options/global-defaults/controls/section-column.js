@@ -428,7 +428,7 @@ const SectionColumn = ({
 					label={ __( 'HTML Tag' ) }
 					value={ defaults.columnsHTMLTag }
 					options={ [
-						{ label: 'Default (div)', value: 'div' },
+						{ label: __( 'Default (div)' ), value: 'div' },
 						{ label: 'section', value: 'section' },
 						{ label: 'header', value: 'header' },
 						{ label: 'footer', value: 'footer' },

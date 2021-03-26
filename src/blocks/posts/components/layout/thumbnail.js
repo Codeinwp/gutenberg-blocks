@@ -6,6 +6,8 @@ const {
 	Spinner
 } = wp.components;
 
+const { Fragment } = wp.element;
+
 const { useSelect } = wp.data;
 
 const Thumbnail = ({
@@ -33,6 +35,11 @@ const Thumbnail = ({
 			altText: image && image.alt_text ? image.alt_text : alt
 		};
 	}, [ size ]);
+
+
+	if ( null === featuredImage ) {
+		return <Fragment />;
+	}
 
 	return (
 		<div className="wp-block-themeisle-blocks-posts-grid-post-image">
