@@ -30,7 +30,8 @@ const { useSelect } = wp.data;
 
 const {
 	Fragment,
-	useState
+	useState,
+	useEffect
 } = wp.element;
 
 /**
@@ -62,13 +63,13 @@ const Inspector = ({
 
 	const changeColumns = value => {
 		if ( 6 >= value ) {
+
 			setAttributes({
 				columns: value,
 				layout: 'equal',
 				layoutTablet: 'equal',
 				layoutMobile: 'collapsedRows'
 			});
-			updateColumnsWidth( value, 'equal' );
 		}
 
 		if ( 6 < value ) {
@@ -78,7 +79,6 @@ const Inspector = ({
 				layoutTablet: 'equal',
 				layoutMobile: 'collapsedRows'
 			});
-			updateColumnsWidth( 6, 'equal' );
 		}
 
 		if ( 1 >= value ) {
@@ -88,9 +88,18 @@ const Inspector = ({
 				layoutTablet: 'equal',
 				layoutMobile: 'equal'
 			});
-			updateColumnsWidth( 1, 'equal' );
 		}
 	};
+
+	useEffect( () => {
+		if ( 6 >= attributes.columns ) {
+			updateColumnsWidth( attributes.columns, 'equal' );
+		} else if ( 6 < attributes.columns ) {
+			updateColumnsWidth( 6, 'equal' );
+		} else if ( 1 >= attributes.columns ) {
+			updateColumnsWidth( 1, 'equal' );
+		}
+	}, [ attributes.columns ]);
 
 
 	const changeLayout = value => {
