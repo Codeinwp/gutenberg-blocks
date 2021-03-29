@@ -402,7 +402,7 @@ class Main {
 			wp_enqueue_script(
 				'themeisle-gutenberg-progress-bar',
 				plugin_dir_url( $this->get_dir() ) . 'build/progress-bar.js',
-				array( 'wp-dom-ready' ),
+				array( 'wp-dom-ready', 'lodash' ),
 				self::$assets_version,
 				true
 			);
@@ -414,7 +414,7 @@ class Main {
 			wp_enqueue_script(
 				'themeisle-gutenberg-circle-counter',
 				plugin_dir_url( $this->get_dir() ) . 'build/circle-counter.js',
-				array( 'wp-dom-ready' ),
+				array( 'wp-dom-ready', 'lodash' ),
 				self::$assets_version,
 				true
 			);
