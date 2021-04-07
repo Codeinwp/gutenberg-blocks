@@ -402,54 +402,51 @@ const Edit = ({
 	return (
 		<Fragment>
 			<Inspector
-				attributes={attributes}
-				setAttributes={setAttributes}
-				dispatch={dispatch}
-				markersInteraction={{
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				dispatch={ dispatch }
+				markersInteraction={ {
 					openMarker: openMarker,
 					setOpenMarker: setOpenMarker
-				}}
+				} }
 			/>
 
 			<ResizableBox
-				size={{
+				size={ {
 					height: attributes.height
-				}}
-				enable={{
+				} }
+				enable={ {
 					top: false,
 					right: false,
 					bottom: true,
 					left: false
-				}}
-				minHeight={100}
-				maxHeight={1400}
-				onResizeStart={() => {
+				} }
+				minHeight={ 100 }
+				maxHeight={ 1400 }
+				onResizeStart={ () => {
 					toggleSelection( false );
-				}}
-				onResizeStop={( event, direction, elt, delta ) => {
+				} }
+				onResizeStop={ ( event, direction, elt, delta ) => {
 					setAttributes({
 						height: parseInt( attributes.height + delta.height, 10 )
 					});
 					toggleSelection( true );
-				}}
-				className={classnames(
+				} }
+				className={ classnames(
 					'wp-block-themeisle-blocks-leaflet-map-resizer',
 					{ 'is-focused': isSelected }
-				)}
+				) }
 			>
 				<div
-					className={className}
+					className={ className }
 				>
 					<div
-						id={attributes.id}
-						ref={mapRef}
-						style={{
+						id={ attributes.id }
+						ref={ mapRef }
+						style={ {
 							width: '100%',
 							height: attributes.height || 400
-
-						// marginBottom: 70,
-						// marginTop: 70
-						}}>
+						} }>
 					</div>
 				</div>
 
