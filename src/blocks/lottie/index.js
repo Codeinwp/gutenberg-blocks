@@ -22,7 +22,7 @@ registerBlockType( 'themeisle-blocks/lottie', {
 	title: __( 'Lottie Animation' ),
 	description: __( 'Add Lottie animations to your WordPress.' ),
 	icon,
-	category: 'media',
+	category: 'themeisle-blocks',
 	keywords: [
 		'media',
 		'lottie',

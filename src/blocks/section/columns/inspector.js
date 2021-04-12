@@ -65,7 +65,6 @@ const Inspector = ({
 
 	const changeColumns = value => {
 		if ( 6 >= value ) {
-
 			setAttributes({
 				columns: value,
 				layout: 'equal',
