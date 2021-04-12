@@ -61,9 +61,10 @@ const Inspector = ({
 
 	const [ tab, setTab ] = useState( 'layout' );
 
+	const [ hasColumnsChanged, setColumnsChanged ] = useState( false );
+
 	const changeColumns = value => {
 		if ( 6 >= value ) {
-
 			setAttributes({
 				columns: value,
 				layout: 'equal',
@@ -89,9 +90,15 @@ const Inspector = ({
 				layoutMobile: 'equal'
 			});
 		}
+
+		setColumnsChanged( true );
 	};
 
 	useEffect( () => {
+		if ( ! hasColumnsChanged ) {
+			return;
+		}
+
 		if ( 6 >= attributes.columns ) {
 			updateColumnsWidth( attributes.columns, 'equal' );
 		} else if ( 6 < attributes.columns ) {
@@ -99,8 +106,9 @@ const Inspector = ({
 		} else if ( 1 >= attributes.columns ) {
 			updateColumnsWidth( 1, 'equal' );
 		}
-	}, [ attributes.columns ]);
 
+		setColumnsChanged( false );
+	}, [ attributes.columns ]);
 
 	const changeLayout = value => {
 		if ( 'Desktop' === getView ) {
@@ -119,7 +127,6 @@ const Inspector = ({
 		setAttributes({ columnsGap: value });
 	};
 
-
 	let getPaddingType = () => {
 		let value;
 
@@ -137,7 +144,6 @@ const Inspector = ({
 	};
 
 	getPaddingType = getPaddingType();
-
 
 	const changePaddingType = value => {
 		if ( 'Desktop' === getView ) {

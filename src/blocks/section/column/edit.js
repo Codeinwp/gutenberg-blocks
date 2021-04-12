@@ -95,6 +95,10 @@ const Edit = ({
 		initBlock();
 	}, []);
 
+	useEffect( () => {
+		updateWidth();
+	}, [ attributes.columnWidth ]);
+
 	const initBlock = () => {
 		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
 
@@ -162,15 +166,17 @@ const Edit = ({
 		});
 	}
 
-	const columnContainer = document.getElementById( `block-${ clientId }` );
+	const updateWidth = () => {
+		const columnContainer = document.getElementById( `block-${ clientId }` );
 
-	if ( null !== columnContainer ) {
-		if ( isDesktop ) {
-			columnContainer.style.flexBasis = `${ attributes.columnWidth }%`;
-		} else {
-			columnContainer.style.flexBasis = '';
+		if ( null !== columnContainer ) {
+			if ( isDesktop ) {
+				columnContainer.style.flexBasis = `${ attributes.columnWidth }%`;
+			} else {
+				columnContainer.style.flexBasis = '';
+			}
 		}
-	}
+	};
 
 	const onResizeStart = () => {
 		const handle = document.querySelector( `#block-${ clientId } .wp-themeisle-block-advanced-column-resize-container-handle .components-resizable-box__handle` );
