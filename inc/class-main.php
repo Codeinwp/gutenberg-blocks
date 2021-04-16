@@ -695,6 +695,39 @@ class Main {
 			return $output;
 		}
 
+		if ( 'themeisle-blocks/circle-counter' === $block['blockName'] && function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			$id     = $block['attrs']['id'];
+			$output = '<div id="' . $id . '" class="wp-block-themeisle-blocks-circle-counter">';
+
+			if ( 'default' === ( $block['attrs']['titleStyle'] ?? 'default' ) ) {
+				$output .= '<div class="wp-block-themeisle-blocks-circle-counter-title__area">';
+				$output .= '<span class="wp-block-themeisle-blocks-circle-counter-title__value">';
+				$output .= esc_html( $block['attrs']['title'] ?? __( 'Skill', 'textdomain' ) );
+				$output .= '</span>';
+				$output .= '</div>';
+			}
+
+			$output .= '<div class="wp-block-themeisle-blocks-circle-counter__bar">';
+			$output .= '<div class="wp-block-themeisle-blocks-circle-counter-container">';
+			$output .= '<span class="wp-block-themeisle-blocks-circle-counter-text">' . intval( $block['attrs']['percentage'] ?? 50 ) . '%</span>';
+			$output .= '<div class="wp-block-themeisle-blocks-circle-counter-overlay"></div>';
+			$output .= '<div class="wp-block-themeisle-blocks-circle-counter-status"></div>';
+			$output .= '<div class="wp-block-themeisle-blocks-circle-counter-status"></div>';
+			$output .= '</div>';
+			$output .= '</div>';
+
+			if ( 'bottom' ===  ($block['attrs']['titleStyle'] ?? 'default' ) ) {
+				$output .= '<div class="wp-block-themeisle-blocks-circle-counter-title__area">';
+				$output .= '<span class="wp-block-themeisle-blocks-circle-counter-title__value">';
+				$output .= esc_html( $block['attrs']['title'] ?? __( 'Skill', 'textdomain' ) );
+				$output .= '</span>';
+				$output .= '</div>';
+			}
+
+			$output .= '</div>';
+			return $output;
+		}
+
 		if ( 'themeisle-blocks/lottie' === $block['blockName'] && function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
 			if ( ! isset( $block['attrs']['file'] ) ) {
 				return $block_content;
