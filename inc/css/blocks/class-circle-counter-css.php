@@ -23,6 +23,14 @@ class Circle_Counter_CSS extends Base_CSS {
 	 */
 	public $block_prefix = 'circle-counter';
 
+	/**
+	 * Generate degree from percentage.
+	 *
+	 * @param int $percentage Percentage.
+	 * @return int
+	 * @since   1.6.5
+	 * @access  public
+	 */
 	public function degree( $percentage ) {
 		$angle = ( intval( $percentage ) / 100 ) * 360;
 		return $angle;
@@ -98,11 +106,11 @@ class Circle_Counter_CSS extends Base_CSS {
 					array(
 						'property' => 'border-color',
 						'value'    => 'backgroundColor',
-						'format'  => function( $value, $attrs ) {
-							$percentage = $attrs['percentage'] ?? 50;
+						'format'   => function( $value, $attrs ) {
+							$percentage = isset( $attrs['percentage'] ) ? $attrs['percentage'] : 50;
 
 							if ( 50 > $percentage ) {
-								return $attrs['progressColor'] ?? '#3878ff';
+								return isset( $attrs['progressColor'] ) ? $attrs['progressColor'] : '#3878ff';
 							}
 
 							return $value;
@@ -120,7 +128,7 @@ class Circle_Counter_CSS extends Base_CSS {
 						'property'       => 'border-radius',
 						'pattern'        => 'radius 0 0 radius',
 						'pattern_values' => array(
-							'radius'   => array(
+							'radius' => array(
 								'value'   => 'height',
 								'unit'    => 'px',
 								'default' => 50,
@@ -130,21 +138,21 @@ class Circle_Counter_CSS extends Base_CSS {
 					array(
 						'property' => 'border-color',
 						'value'    => 'progressColor',
-						'format'  => function( $value, $attrs ) {
-							$percentage = $attrs['percentage'] ?? 50;
+						'format'   => function( $value, $attrs ) {
+							$percentage = isset( $attrs['percentage'] ) ? $attrs['percentage'] : 50;
 
 							if ( 50 > $percentage ) {
-								return $attrs['backgroundColor'] ?? '#4682b426';
+								returnisset( $attrs['backgroundColor'] ) ? $attrs['backgroundColor'] : '#4682b426';
 							}
 
 							return $value;
 						},
 					),
 					array(
-						'property'  => 'transform',
-						'value'     => 'percentage',
-						'default'   => 50,
-						'format'  => function( $value, $attrs ) {
+						'property' => 'transform',
+						'value'    => 'percentage',
+						'default'  => 50,
+						'format'   => function( $value, $attrs ) {
 							if ( 50 > $value ) {
 								return 'rotate( ' . ( $this->degree( $value ) + 180 ) . 'deg )';
 							}
@@ -161,10 +169,10 @@ class Circle_Counter_CSS extends Base_CSS {
 				'selector'   => 'html[amp] [id] .wp-block-themeisle-blocks-circle-counter__bar .wp-block-themeisle-blocks-circle-counter-status:last-of-type',
 				'properties' => array(
 					array(
-						'property'  => 'transform',
-						'value'     => 'percentage',
-						'default'   => 50,
-						'format'    => function( $value, $attrs ) {
+						'property' => 'transform',
+						'value'    => 'percentage',
+						'default'  => 50,
+						'format'   => function( $value, $attrs ) {
 							if ( 50 > $value ) {
 								return 'rotate( 360deg )';
 							}

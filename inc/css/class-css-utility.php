@@ -179,7 +179,7 @@ class CSS_Utility {
 
 				if ( '' !== $item_style ) {
 					$selector = strpos( $selector, '[id]' ) !== false ? str_replace( '[id]', '#' . $attrs['id'], $selector ) : '#' . $attrs['id'] . $selector;
-					$style .= $selector . ' {' . $item_style . '}';
+					$style   .= $selector . ' {' . $item_style . '}';
 				}
 			}
 
