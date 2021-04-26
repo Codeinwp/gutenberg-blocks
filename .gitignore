@@ -9,3 +9,5 @@ changes.md
 .vscode
 build
 .husky
+db
+wpcore
