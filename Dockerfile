@@ -1,13 +1,10 @@
 FROM hardeepasrani/pirate-brewery
 
-WORKDIR /var/www/html/wp-content/plugins/
-RUN git clone https://github.com/Codeinwp/otter-blocks.git
+RUN git clone --depth 1 https://github.com/Codeinwp/otter-blocks.git /var/www/html/wp-content/plugins/otter-blocks && \
+    composer install --prefer-dist --no-progress --working-dir=/var/www/html/wp-content/plugins/otter-blocks
 
-WORKDIR /otter-blocks
-RUN composer install
+# WORKDIR /var/www/html/wp-content/plugins/vendor/codeinwp/
+# RUN rm -rf gutenberg-blocks && mkdir gutenberg-blocks
 
-WORKDIR /vendor/codeinwp/
-RUN rm -rf gutenberg-blocks && mkdir gutenberg-blocks
-
-WORKDIR /gutenberg-blocks
-COPY . .
+# WORKDIR /var/www/html/wp-content/plugins/vendor/codeinwp/gutenberg-blocks
+# COPY . .
