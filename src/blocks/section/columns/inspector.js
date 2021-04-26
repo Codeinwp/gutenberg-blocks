@@ -30,7 +30,8 @@ const { useSelect } = wp.data;
 
 const {
 	Fragment,
-	useState
+	useState,
+	useEffect
 } = wp.element;
 
 /**
@@ -62,13 +63,13 @@ const Inspector = ({
 
 	const changeColumns = value => {
 		if ( 6 >= value ) {
+
 			setAttributes({
 				columns: value,
 				layout: 'equal',
 				layoutTablet: 'equal',
 				layoutMobile: 'collapsedRows'
 			});
-			updateColumnsWidth( value, 'equal' );
 		}
 
 		if ( 6 < value ) {
@@ -78,7 +79,6 @@ const Inspector = ({
 				layoutTablet: 'equal',
 				layoutMobile: 'collapsedRows'
 			});
-			updateColumnsWidth( 6, 'equal' );
 		}
 
 		if ( 1 >= value ) {
@@ -88,9 +88,18 @@ const Inspector = ({
 				layoutTablet: 'equal',
 				layoutMobile: 'equal'
 			});
-			updateColumnsWidth( 1, 'equal' );
 		}
 	};
+
+	useEffect( () => {
+		if ( 6 >= attributes.columns ) {
+			updateColumnsWidth( attributes.columns, 'equal' );
+		} else if ( 6 < attributes.columns ) {
+			updateColumnsWidth( 6, 'equal' );
+		} else if ( 1 >= attributes.columns ) {
+			updateColumnsWidth( 1, 'equal' );
+		}
+	}, [ attributes.columns ]);
 
 
 	const changeLayout = value => {
@@ -945,12 +954,12 @@ const Inspector = ({
 								label={ __( 'Columns Gap' ) }
 								value={ attributes.columnsGap }
 								options={ [
-									{ label: 'Default (10px)', value: 'default' },
-									{ label: 'No Gap', value: 'nogap' },
-									{ label: 'Narrow (5px)', value: 'narrow' },
-									{ label: 'Extended (15px)', value: 'extended' },
-									{ label: 'Wide (20px)', value: 'wide' },
-									{ label: 'Wider (30px)', value: 'wider' }
+									{ label: __( 'Default (10px)' ), value: 'default' },
+									{ label: __( 'No Gap' ), value: 'nogap' },
+									{ label: __( 'Narrow (5px)' ), value: 'narrow' },
+									{ label: __( 'Extended (15px)' ), value: 'extended' },
+									{ label: __( 'Wide (20px)' ), value: 'wide' },
+									{ label: __( 'Wider (30px)' ), value: 'wider' }
 								] }
 								onChange={ changeColumnsGap }
 							/>
@@ -1078,9 +1087,9 @@ const Inspector = ({
 								label={ __( 'Minimum Height' ) }
 								value={ attributes.columnsHeight }
 								options={ [
-									{ label: 'Default', value: 'auto' },
-									{ label: 'Fit to Screen', value: '100vh' },
-									{ label: 'Custom', value: 'custom' }
+									{ label: __( 'Default' ), value: 'auto' },
+									{ label: __( 'Fit to Screen' ), value: '100vh' },
+									{ label: __( 'Custom' ), value: 'custom' }
 								] }
 								onChange={ changeColumnsHeight }
 							/>
@@ -1165,9 +1174,9 @@ const Inspector = ({
 												label={ __( 'Background Attachment' ) }
 												value={ attributes.backgroundAttachment }
 												options={ [
-													{ label: 'Scroll', value: 'scroll' },
-													{ label: 'Fixed', value: 'fixed' },
-													{ label: 'Local', value: 'local' }
+													{ label: __( 'Scroll' ), value: 'scroll' },
+													{ label: __( 'Fixed' ), value: 'fixed' },
+													{ label: __( 'Local' ), value: 'local' }
 												] }
 												onChange={ changeBackgroundAttachment }
 											/>
@@ -1176,16 +1185,16 @@ const Inspector = ({
 												label={ __( 'Background Position' ) }
 												value={ attributes.backgroundPosition }
 												options={ [
-													{ label: 'Default', value: 'top left' },
-													{ label: 'Top Left', value: 'top left' },
-													{ label: 'Top Center', value: 'top center' },
-													{ label: 'Top Right', value: 'top right' },
-													{ label: 'Center Left', value: 'center left' },
-													{ label: 'Center Center', value: 'center center' },
-													{ label: 'Center Right', value: 'center right' },
-													{ label: 'Bottom Left', value: 'bottom left' },
-													{ label: 'Bottom Center', value: 'bottom center' },
-													{ label: 'Bottom Right', value: 'bottom right' }
+													{ label: __( 'Default' ), value: 'top left' },
+													{ label: __( 'Top Left' ), value: 'top left' },
+													{ label: __( 'Top Center' ), value: 'top center' },
+													{ label: __( 'Top Right' ), value: 'top right' },
+													{ label: __( 'Center Left' ), value: 'center left' },
+													{ label: __( 'Center Center' ), value: 'center center' },
+													{ label: __( 'Center Right' ), value: 'center right' },
+													{ label: __( 'Bottom Left' ), value: 'bottom left' },
+													{ label: __( 'Bottom Center' ), value: 'bottom center' },
+													{ label: __( 'Bottom Right' ), value: 'bottom right' }
 												] }
 												onChange={ changeBackgroundPosition }
 											/>
@@ -1194,8 +1203,8 @@ const Inspector = ({
 												label={ __( 'Background Repeat' ) }
 												value={ attributes.backgroundRepeat }
 												options={ [
-													{ label: 'Repeat', value: 'repeat' },
-													{ label: 'No-repeat', value: 'no-repeat' }
+													{ label: __( 'Repeat' ), value: 'repeat' },
+													{ label: __( 'No-repeat' ), value: 'no-repeat' }
 												] }
 												onChange={ changeBackgroundRepeat }
 											/>
@@ -1204,9 +1213,9 @@ const Inspector = ({
 												label={ __( 'Background Size' ) }
 												value={ attributes.backgroundSize }
 												options={ [
-													{ label: 'Auto', value: 'auto' },
-													{ label: 'Cover', value: 'cover' },
-													{ label: 'Contain', value: 'contain' }
+													{ label: __( 'Auto' ), value: 'auto' },
+													{ label: __( 'Cover' ), value: 'cover' },
+													{ label: __( 'Contain' ), value: 'contain' }
 												] }
 												onChange={ changeBackgroundSize }
 											/>
@@ -1308,9 +1317,9 @@ const Inspector = ({
 												label={ __( 'Background Attachment' ) }
 												value={ attributes.backgroundOverlayAttachment }
 												options={ [
-													{ label: 'Scroll', value: 'scroll' },
-													{ label: 'Fixed', value: 'fixed' },
-													{ label: 'Local', value: 'local' }
+													{ label: __( 'Scroll' ), value: 'scroll' },
+													{ label: __( 'Fixed' ), value: 'fixed' },
+													{ label: __( 'Local' ), value: 'local' }
 												] }
 												onChange={ changeBackgroundOverlayAttachment }
 											/>
@@ -1319,16 +1328,16 @@ const Inspector = ({
 												label={ __( 'Background Position' ) }
 												value={ attributes.backgroundOverlayPosition }
 												options={ [
-													{ label: 'Default', value: 'top left' },
-													{ label: 'Top Left', value: 'top left' },
-													{ label: 'Top Center', value: 'top center' },
-													{ label: 'Top Right', value: 'top right' },
-													{ label: 'Center Left', value: 'center left' },
-													{ label: 'Center Center', value: 'center center' },
-													{ label: 'Center Right', value: 'center right' },
-													{ label: 'Bottom Left', value: 'bottom left' },
-													{ label: 'Bottom Center', value: 'bottom center' },
-													{ label: 'Bottom Right', value: 'bottom right' }
+													{ label: __( 'Default' ), value: 'top left' },
+													{ label: __( 'Top Left' ), value: 'top left' },
+													{ label: __( 'Top Center' ), value: 'top center' },
+													{ label: __( 'Top Right' ), value: 'top right' },
+													{ label: __( 'Center Left' ), value: 'center left' },
+													{ label: __( 'Center Center' ), value: 'center center' },
+													{ label: __( 'Center Right' ), value: 'center right' },
+													{ label: __( 'Bottom Left' ), value: 'bottom left' },
+													{ label: __( 'Bottom Center' ), value: 'bottom center' },
+													{ label: __( 'Bottom Right' ), value: 'bottom right' }
 												] }
 												onChange={ changeBackgroundOverlayPosition }
 											/>
@@ -1337,8 +1346,8 @@ const Inspector = ({
 												label={ __( 'Background Repeat' ) }
 												value={ attributes.backgroundOverlayRepeat }
 												options={ [
-													{ label: 'Repeat', value: 'repeat' },
-													{ label: 'No-repeat', value: 'no-repeat' }
+													{ label: __( 'Repeat' ), value: 'repeat' },
+													{ label: __( 'No-repeat' ), value: 'no-repeat' }
 												] }
 												onChange={ changeBackgroundOverlayRepeat }
 											/>
@@ -1347,9 +1356,9 @@ const Inspector = ({
 												label={ __( 'Background Size' ) }
 												value={ attributes.backgroundOverlaySize }
 												options={ [
-													{ label: 'Auto', value: 'auto' },
-													{ label: 'Cover', value: 'cover' },
-													{ label: 'Contain', value: 'contain' }
+													{ label: __( 'Auto' ), value: 'auto' },
+													{ label: __( 'Cover' ), value: 'cover' },
+													{ label: __( 'Contain' ), value: 'contain' }
 												] }
 												onChange={ changeBackgroundOverlaySize }
 											/>
@@ -1437,22 +1446,22 @@ const Inspector = ({
 								label={ __( 'Blend Mode' ) }
 								value={ attributes.backgroundOverlayBlend }
 								options={ [
-									{ label: 'Normal', value: 'normal' },
-									{ label: 'Multiply', value: 'multiply' },
-									{ label: 'Screen', value: 'screen' },
-									{ label: 'Overlay', value: 'overlay' },
-									{ label: 'Darken', value: 'darken' },
-									{ label: 'Lighten', value: 'lighten' },
-									{ label: 'Color Dodge', value: 'color-dodge' },
-									{ label: 'Color Burn', value: 'color-burn' },
-									{ label: 'Hard Light', value: 'hard-light' },
-									{ label: 'Soft Light', value: 'soft-light' },
-									{ label: 'Difference', value: 'difference' },
-									{ label: 'Exclusion', value: 'exclusion' },
-									{ label: 'Hue', value: 'hue' },
-									{ label: 'Saturation', value: 'saturation' },
-									{ label: 'Color', value: 'color' },
-									{ label: 'Luminosity', value: 'luminosity' }
+									{ label: __( 'Normal' ), value: 'normal' },
+									{ label: __( 'Multiply' ), value: 'multiply' },
+									{ label: __( 'Screen' ), value: 'screen' },
+									{ label: __( 'Overlay' ), value: 'overlay' },
+									{ label: __( 'Darken' ), value: 'darken' },
+									{ label: __( 'Lighten' ), value: 'lighten' },
+									{ label: __( 'Color Dodge' ), value: 'color-dodge' },
+									{ label: __( 'Color Burn' ), value: 'color-burn' },
+									{ label: __( 'Hard Light' ), value: 'hard-light' },
+									{ label: __( 'Soft Light' ), value: 'soft-light' },
+									{ label: __( 'Difference' ), value: 'difference' },
+									{ label: __( 'Exclusion' ), value: 'exclusion' },
+									{ label: __( 'Hue' ), value: 'hue' },
+									{ label: __( 'Saturation' ), value: 'saturation' },
+									{ label: __( 'Color' ), value: 'color' },
+									{ label: __( 'Luminosity' ), value: 'luminosity' }
 								] }
 								onChange={ changebackgroundOverlayBlend }
 							/>
@@ -1634,12 +1643,12 @@ const Inspector = ({
 								label={ __( 'Type' ) }
 								value={ getDividerType }
 								options={ [
-									{ label: 'None', value: 'none' },
-									{ label: 'Triangle', value: 'bigTriangle' },
-									{ label: 'Right Curve', value: 'rightCurve' },
-									{ label: 'Curve', value: 'curve' },
-									{ label: 'Slant', value: 'slant' },
-									{ label: 'Cloud', value: 'cloud' }
+									{ label: __( 'None' ), value: 'none' },
+									{ label: __( 'Triangle' ), value: 'bigTriangle' },
+									{ label: __( 'Right Curve' ), value: 'rightCurve' },
+									{ label: __( 'Curve' ), value: 'curve' },
+									{ label: __( 'Slant' ), value: 'slant' },
+									{ label: __( 'Cloud' ), value: 'cloud' }
 								] }
 								onChange={ changeDividerType }
 							/>
@@ -1742,7 +1751,7 @@ const Inspector = ({
 								label={ __( 'HTML Tag' ) }
 								value={ attributes.columnsHTMLTag }
 								options={ [
-									{ label: 'Default (div)', value: 'div' },
+									{ label: __( 'Default (div)' ), value: 'div' },
 									{ label: 'section', value: 'section' },
 									{ label: 'header', value: 'header' },
 									{ label: 'footer', value: 'footer' },

@@ -7,8 +7,6 @@ import GoogleFontLoader from 'react-google-font-loader';
 /**
  * WordPress dependencies.
  */
-// const { __ } = wp.i18n;
-
 const { isEqual } = lodash;
 
 const { InnerBlocks } = wp.blockEditor;

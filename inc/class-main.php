@@ -101,7 +101,7 @@ class Main {
 	 */
 	public function init() {
 		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
-			define( 'THEMEISLE_BLOCKS_VERSION', '1.6.0' );
+			define( 'THEMEISLE_BLOCKS_VERSION', '1.6.2' );
 			define( 'THEMEISLE_BLOCKS_DEV', false );
 		}
 
@@ -112,7 +112,7 @@ class Main {
 		}
 
 		$allow_json = get_option( 'themeisle_allow_json_upload' );
-		
+
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
@@ -141,11 +141,12 @@ class Main {
 
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks-vendor',
-			plugin_dir_url( $this->get_dir() ) . 'build/chunk-vendor.js',
+			plugin_dir_url( $this->get_dir() ) . 'build/vendor.js',
 			array( 'react', 'react-dom' ),
 			self::$assets_version,
 			true
 		);
+
 
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
@@ -218,7 +219,21 @@ class Main {
 
 		wp_enqueue_style(
 			'themeisle-gutenberg-blocks-editor',
-			plugin_dir_url( $this->get_dir() ) . 'build/editor.css',
+			plugin_dir_url( $this->get_dir() ) . 'build/blocks-style.css',
+			array( 'wp-edit-blocks' ),
+			self::$assets_version
+		);
+
+		wp_enqueue_style(
+			'themeisle-gutenberg-blocks-editor-editor-vendor',
+			plugin_dir_url( $this->get_dir() ) . 'build/vendor-style.css',
+			array( 'wp-edit-blocks' ),
+			self::$assets_version
+		);
+
+		wp_enqueue_style(
+			'themeisle-gutenberg-blocks-editor-editor-v2',
+			plugin_dir_url( $this->get_dir() ) . 'build/blocks-v2.css',
 			array( 'wp-edit-blocks' ),
 			self::$assets_version
 		);
@@ -315,8 +330,15 @@ class Main {
 		);
 
 		wp_enqueue_style(
-			'themeisle-block_styles',
+			'themeisle-block_styles_v2',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks-v2-style.css',
+			[],
+			self::$assets_version
+		);
+
+		wp_enqueue_style(
+			'themeisle-block_styles_vendor',
+			plugin_dir_url( $this->get_dir() ) . 'build/vendor-style.css',
 			[],
 			self::$assets_version
 		);
@@ -436,7 +458,7 @@ class Main {
 			wp_enqueue_script(
 				'themeisle-gutenberg-progress-bar',
 				plugin_dir_url( $this->get_dir() ) . 'build/progress-bar.js',
-				array( 'wp-dom-ready' ),
+				array( 'wp-dom-ready', 'lodash' ),
 				self::$assets_version,
 				true
 			);
@@ -448,7 +470,7 @@ class Main {
 			wp_enqueue_script(
 				'themeisle-gutenberg-circle-counter',
 				plugin_dir_url( $this->get_dir() ) . 'build/circle-counter.js',
-				array( 'wp-dom-ready' ),
+				array( 'wp-dom-ready', 'lodash' ),
 				self::$assets_version,
 				true
 			);

@@ -6,3 +6,5 @@ vendor
 notes.md
 changes.md
 .eslintcache
+.vscode
+build

@@ -193,6 +193,10 @@ class CSS_Handler extends Base_CSS {
 	 * @access  public
 	 */
 	public static function save_css_file( $post_id, $css ) {
+		if ( empty( $css ) ) {
+			return self::delete_css_file( $post_id );
+		}
+
 		global $wp_filesystem;
 		require_once ABSPATH . '/wp-admin/includes/file.php';
 		WP_Filesystem();

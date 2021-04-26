@@ -95,7 +95,6 @@ class Button_Group_CSS extends Base_CSS {
 					array(
 						'property' => 'text-transform',
 						'value'    => 'textTransform',
-						'default'  => 'none',
 					),
 					array(
 						'property' => 'font-style',

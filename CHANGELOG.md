@@ -1,3 +1,15 @@
+##### [Version 1.6.2](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.6.1...v1.6.2) (2021-03-26)
+
+- Fix Button Groups alignment
+- Don't enqueue empty CSS
+- Adds new Accordion Block
+- CPT support to Posts Block
+
+##### [Version 1.6.1](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.6.0...v1.6.1) (2021-03-02)
+
+- Add Leaflet Map Block
+- Various small fixes
+
 #### [Version 1.6.0](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.11...v1.6.0) (2021-01-06)
 
 - New Icon List Block.

@@ -66,6 +66,7 @@ class Base_CSS {
 	 */
 	public function autoload_block_classes() {
 		self::$blocks_classes = array(
+			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Accordion_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Column_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Columns_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Heading_CSS',

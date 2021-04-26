@@ -12,6 +12,8 @@
 		cursor: pointer;
 		overflow: hidden;
 		border-radius: 4px;
+		min-width: 100px;
+		min-height: 100px;
 
 		&.is-active {
 			box-shadow: 0 0 0 2px #000;

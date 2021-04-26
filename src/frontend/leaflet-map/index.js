@@ -34,7 +34,7 @@ const createPopupContent = ( markerProps ) => {
 const createMarker = ( markerProps ) => {
 	const markerMap = L.marker([ markerProps.latitude, markerProps.longitude ]);
 
-	markerMap.bindTooltip( markerProps.title, { direction: 'auto' });
+	markerMap.bindTooltip( markerProps.title, { direction: 'auto'});
 	markerMap.bindPopup( createPopupContent( markerProps ) );
 
 	return markerMap;

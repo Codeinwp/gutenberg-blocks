@@ -42,7 +42,10 @@ module.exports = {
 		path: path.resolve( __dirname, 'build' ),
 		filename: '[name].js',
 		chunkFilename: 'chunk-[name].js',
-		jsonpFunction: 'tiOtterWebpackJsonp'
+		chunkLoading: 'jsonp',
+		wasmLoading: false,
+		enabledChunkLoadingTypes: ['jsonp'],
+		chunkLoadingGlobal: 'tiOtterWebpackJsonp'
 	},
 	module: {
 		rules: [

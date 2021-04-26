@@ -1,14 +1,16 @@
 .wp-block-themeisle-blocks-button-group {
+	display: flex;
+
 	&.align-left {
-		text-align: left;
+		justify-content: flex-start;
 	}
 
 	&.align-center {
-		text-align: center;
+		justify-content: center;
 	}
 
 	&.align-right {
-		text-align: right;
+		justify-content: flex-end;
 	}
 
 	&.collapse-desktop {
@@ -26,7 +28,7 @@
 			&.margin-left {
 				margin-left: 10px;
 			}
-		
+
 			&.margin-right {
 				margin-right: 10px;
 			}
@@ -40,7 +42,7 @@
 			&.margin-left {
 				margin-left: 10px;
 			}
-		
+
 			&.margin-right {
 				margin-right: 10px;
 			}

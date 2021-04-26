@@ -201,11 +201,11 @@ const blockPlaceholder: React.FunctionComponent<BlockPlaceholder> = ({
 									className="wp-block-themeisle-blocks-plugin-cards-list-item"
 									key={ i }
 									ref={ bindSuggestionNode( i ) }
-									onClick={ e => {
+									onClick={ (e) => {
 										e.preventDefault();
 										selectPlugin( pluginData );
 									} }
-									onKeyDown={ e => listKeyDown( e, pluginData ) }
+									onKeyDown={ e => listKeyDown( (e as React.KeyboardEvent<HTMLButtonElement>), pluginData ) }
 								>
 									<img src={ icon } />
 									<span dangerouslySetInnerHTML={ { __html: unescape( pluginData.name ) } }></span>
