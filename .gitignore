@@ -8,3 +8,4 @@ changes.md
 .eslintcache
 .vscode
 build
+.husky
