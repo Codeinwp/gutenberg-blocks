@@ -3,9 +3,10 @@ import * as React from 'react';
 import { PluginCardAttrs } from './attributes';
 import { Fragment, useState } from '@wordpress/element';
 import { Disabled } from '@wordpress/components';
+import ServerSideRender from '@wordpress/server-side-render'
 
 
-const ServerSideRender = window.wp.serverSideRender;
+// const ServerSideRender = window.wp.serverSideRender;
 import Controls from './controls';
 import Placeholder from './placeholder';
 
