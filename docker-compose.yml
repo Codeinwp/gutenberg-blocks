@@ -5,7 +5,6 @@ services:
     image: mysql:5.7
     volumes:
       - ../wordpress-db-gutenberg:/var/lib/mysql
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: wordpress
       MYSQL_DATABASE: wordpress
@@ -24,7 +23,6 @@ services:
     volumes:
        - ../wpcore-gutenberg:/var/www/html/
        - .:/var/www/html/wp-content/plugins/otter-blocks/vendor/codeinwp/gutenberg-blocks
-    restart: always
     environment:
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_USER: wordpress
