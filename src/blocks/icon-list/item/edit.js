@@ -18,8 +18,7 @@ const { useSelect } = wp.data;
 
 const {
 	Fragment,
-	useEffect,
-	useState
+	useEffect
 } = wp.element;
 
 /**
@@ -42,7 +41,8 @@ const Edit = ({
 	onRemove,
 	mergeBlocks
 }) => {
-	const [ hasCustomIcon, setHasCustomIcon ] = useState( attributes.icon !== undefined );
+
+	// const [ hasCustomIcon, setHasCustomIcon ] = useState( attributes.iconPrefix && attributes.icon );
 
 	const {
 		hasParent,
@@ -108,44 +108,29 @@ const Edit = ({
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
-	let iconClassName;
-	let contentStyle;
-	let iconStyle;
-	let itemStyle;
+	const  iconClassName = `${ attributes.iconPrefix || parentAttributes.defaultIconPrefix } fa-${ attributes.icon || parentAttributes.defaultIcon }`;
+	const contentStyle = {
+		color: attributes.contentColor || parentAttributes.defaultContentColor,
+		fontSize: parentAttributes.defaultSize + 'px'
+	};
+	const iconStyle = {
+		color: attributes.iconColor || parentAttributes.defaultIconColor,
+		fill: attributes.iconColor || parentAttributes.defaultIconColor,
+		fontSize: parentAttributes.defaultSize + 'px'
+	};
+	const itemStyle = {
+		marginRight: parentClass.includes( 'is-style-horizontal' ) ? parentAttributes.gap + 'px'  :  parentAttributes.gap + 'px'
+	};
 
-	if ( hasParent ) {
-		if ( ! hasCustomIcon || ! attributes.library ) {
-			iconClassName =  `${ parentAttributes.defaultIconPrefix } fa-${ parentAttributes.defaultIcon }`;
-
-			setAttributes({
-				library: parentAttributes.defaultLibrary,
-				icon: parentAttributes.defaultIcon,
-				iconPrefix: parentAttributes.defaultIconPrefix
-			});
-		} else {
-			iconClassName = `${ attributes.iconPrefix } fa-${ attributes.icon }`;
-		}
-
-		contentStyle = {
-			color: attributes.contentColor || parentAttributes.defaultContentColor,
-			fontSize: parentAttributes.defaultSize + 'px'
-		};
-
-		iconStyle = {
-			color: attributes.iconColor || parentAttributes.defaultIconColor,
-			fill: attributes.iconColor || parentAttributes.defaultIconColor,
-			fontSize: parentAttributes.defaultSize + 'px'
-		};
-
-		if ( parentClass.includes( 'is-style-horizontal' ) ) {
-			itemStyle = {
-				marginRight: parentAttributes.gap + 'px'
-			};
-		} else {
-			itemStyle = {
-				marginBottom: parentAttributes.gap + 'px'
-			};
-		}
+	/**
+	 * Add the missing componets from parent's attributes
+	 */
+	if ( hasParent && ( ! attributes.iconPrefix || ! attributes.icon || attributes.library ) ) {
+		setAttributes({
+			library: attributes.library || parentAttributes.defaultLibrary,
+			icon: attributes.icon || parentAttributes.defaultIcon,
+			iconPrefix: attributes.iconPrefix || parentAttributes.defaultIconPrefix
+		});
 	};
 
 	const changeContent = value => {
@@ -159,7 +144,6 @@ const Edit = ({
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
-				setHasCustomIcon={ setHasCustomIcon }
 			/>
 
 			<div
