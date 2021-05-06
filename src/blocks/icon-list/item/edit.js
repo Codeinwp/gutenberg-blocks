@@ -42,7 +42,7 @@ const Edit = ({
 	onRemove,
 	mergeBlocks
 }) => {
-	const [ hasCustomIcon, setHasCustomIcon ] = useState( false );
+	const [ hasCustomIcon, setHasCustomIcon ] = useState( attributes.icon !== undefined );
 
 	const {
 		hasParent,
