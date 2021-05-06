@@ -178,7 +178,8 @@ class CSS_Utility {
 				}
 
 				if ( '' !== $item_style ) {
-					$style .= '#' . $attrs['id'] . $selector . ' {' . $item_style . '}';
+					$selector = strpos( $selector, '[id]' ) !== false ? str_replace( '[id]', '#' . $attrs['id'], $selector ) : '#' . $attrs['id'] . $selector;
+					$style   .= $selector . ' {' . $item_style . '}';
 				}
 			}
 

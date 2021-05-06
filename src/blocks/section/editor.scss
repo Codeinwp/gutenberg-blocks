@@ -149,7 +149,7 @@
 			&:hover,
 			&:focus {
 				.wp-themeisle-block-advanced-column-resize-container {
-					> span > .components-resizable-box__handle {
+					> .wp-themeisle-block-advanced-column-resize-container-handle > .components-resizable-box__handle {
 						display: block;
 					}
 				}
@@ -158,7 +158,7 @@
 
 		&:focus-within {
 			.wp-themeisle-block-advanced-column-resize-container {
-				> span > .components-resizable-box__handle {
+				> .wp-themeisle-block-advanced-column-resize-container-handle > .components-resizable-box__handle {
 					display: block;
 				}
 			}

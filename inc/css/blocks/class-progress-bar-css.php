@@ -277,6 +277,36 @@ class Progress_Bar_CSS extends Base_CSS {
 			)
 		);
 
+		$css->add_item(
+			array(
+				'selector'   => 'html[amp] [id] .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar',
+				'properties' => array(
+					array(
+						'property' => 'width',
+						'value'    => 'percentage',
+						'unit'     => '%',
+						'default'  => 50,
+					),
+					array(
+						'property' => 'opacity',
+						'default'  => '1',
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'selector'   => 'html[amp] [id] .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar .wp-block-themeisle-blocks-progress-bar__area__tooltip',
+				'properties' => array(
+					array(
+						'property' => 'opacity',
+						'default'  => '1',
+					),
+				),
+			)
+		);
+
 		$style = $css->generate();
 
 		return $style;

@@ -101,7 +101,7 @@ class Main {
 	 */
 	public function init() {
 		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
-			define( 'THEMEISLE_BLOCKS_VERSION', '1.6.2' );
+			define( 'THEMEISLE_BLOCKS_VERSION', '1.6.3' );
 			define( 'THEMEISLE_BLOCKS_DEV', false );
 		}
 
@@ -692,6 +692,39 @@ class Main {
 				$output .= $html5->saveHTML( $image );
 			}
 			$output .= '</amp-carousel>';
+			return $output;
+		}
+
+		if ( 'themeisle-blocks/circle-counter' === $block['blockName'] && function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			$id     = $block['attrs']['id'];
+			$output = '<div id="' . $id . '" class="wp-block-themeisle-blocks-circle-counter">';
+
+			if ( 'default' === ( isset( $block['attrs']['titleStyle'] ) ? $block['attrs']['titleStyle'] : 'default' ) ) {
+				$output .= '<div class="wp-block-themeisle-blocks-circle-counter-title__area">';
+				$output .= '<span class="wp-block-themeisle-blocks-circle-counter-title__value">';
+				$output .= esc_html( isset( $block['attrs']['title'] ) ? $block['attrs']['title'] : __( 'Skill', 'textdomain' ) );
+				$output .= '</span>';
+				$output .= '</div>';
+			}
+
+			$output .= '<div class="wp-block-themeisle-blocks-circle-counter__bar">';
+			$output .= '<div class="wp-block-themeisle-blocks-circle-counter-container">';
+			$output .= '<span class="wp-block-themeisle-blocks-circle-counter-text">' . intval( isset( $block['attrs']['percentage'] ) ? $block['attrs']['percentage'] : 50 ) . '%</span>';
+			$output .= '<div class="wp-block-themeisle-blocks-circle-counter-overlay"></div>';
+			$output .= '<div class="wp-block-themeisle-blocks-circle-counter-status"></div>';
+			$output .= '<div class="wp-block-themeisle-blocks-circle-counter-status"></div>';
+			$output .= '</div>';
+			$output .= '</div>';
+
+			if ( 'bottom' === ( isset( $block['attrs']['titleStyle'] ) ? $block['attrs']['titleStyle'] : 'default' ) ) {
+				$output .= '<div class="wp-block-themeisle-blocks-circle-counter-title__area">';
+				$output .= '<span class="wp-block-themeisle-blocks-circle-counter-title__value">';
+				$output .= esc_html( isset( $block['attrs']['title'] ) ? $block['attrs']['title'] : __( 'Skill', 'textdomain' ) );
+				$output .= '</span>';
+				$output .= '</div>';
+			}
+
+			$output .= '</div>';
 			return $output;
 		}
 
