@@ -19,7 +19,7 @@ Styles that are put in `style.scss` will only be loaded on the front-end, while 
 
 If your block requires server-side rendering, you can extend `Base_Block` class in the block's folder. The file name should be `class-(block-name)-block.php`.
 
-```
+``` php
 <?php
 namespace ThemeIsle\GutenbergBlocks;
 
