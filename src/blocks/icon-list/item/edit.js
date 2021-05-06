@@ -123,7 +123,7 @@ const Edit = ({
 	};
 
 	/**
-	 * Add the missing componets from parent's attributes
+	 * Add the missing components from parent's attributes
 	 */
 	if ( hasParent && ( ! attributes.iconPrefix || ! attributes.icon || attributes.library ) ) {
 		setAttributes({
