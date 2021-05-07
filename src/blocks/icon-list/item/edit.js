@@ -42,8 +42,6 @@ const Edit = ({
 	mergeBlocks
 }) => {
 
-	// const [ hasCustomIcon, setHasCustomIcon ] = useState( attributes.iconPrefix && attributes.icon );
-
 	const {
 		hasParent,
 		parentClass,
@@ -108,6 +106,7 @@ const Edit = ({
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
+	const Icon = themeIsleIcons.icons[ attributes.icon ];
 	const  iconClassName = `${ attributes.iconPrefix || parentAttributes.defaultIconPrefix } fa-${ attributes.icon || parentAttributes.defaultIcon }`;
 	const contentStyle = {
 		color: attributes.contentColor || parentAttributes.defaultContentColor,
@@ -125,7 +124,7 @@ const Edit = ({
 	/**
 	 * Add the missing components from parent's attributes
 	 */
-	if ( hasParent && ( ! attributes.iconPrefix || ! attributes.icon || attributes.library ) ) {
+	if ( hasParent && ( ! attributes.iconPrefix || ! attributes.icon || ! attributes.library ) ) {
 		setAttributes({
 			library: attributes.library || parentAttributes.defaultLibrary,
 			icon: attributes.icon || parentAttributes.defaultIcon,
@@ -137,7 +136,6 @@ const Edit = ({
 		setAttributes({ content: value });
 	};
 
-	const Icon = themeIsleIcons.icons[ attributes.icon ];
 
 	return (
 		<Fragment>
