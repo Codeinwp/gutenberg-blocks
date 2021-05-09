@@ -18,6 +18,7 @@
 		"@wordpress/icons": "^2.10.1",
 		"array-move": "^3.0.1",
 		"classnames": "^2.3.1",
+		"currency-symbol-map": "^5.0.1",
 		"dom-scroll-into-view": "^2.0.1",
 		"hex-rgba": "^1.0.2",
 		"react-google-font-loader": "1.0.5",
