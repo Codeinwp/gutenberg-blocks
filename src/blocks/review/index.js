@@ -28,6 +28,17 @@ registerBlockType( 'themeisle-blocks/review', {
 	supports: {
 		html: false
 	},
+	styles: [
+		{
+			name: 'default',
+			label: __( 'Default' ),
+			isDefault: true
+		},
+		{
+			name: 'single-column',
+			label: __( 'Single Column' )
+		}
+	],
 	edit,
 	save: () => null
 });

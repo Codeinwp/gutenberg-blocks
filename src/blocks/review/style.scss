@@ -9,6 +9,7 @@
 		padding: 20px 30px;
 		border-left: 10px solid #1357BD;
 		grid-area: header;
+		overflow: hidden;
 
 		h2 {
 			font-size: 28px;
@@ -23,6 +24,7 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			flex-wrap: wrap;
 			font-size: 28px;
 
 			.wp-block-themeisle-blocks-review__header_ratings {
@@ -30,8 +32,8 @@
 				align-items: center;
 
 				svg {
-					width: 36px;
-					height: 36px;
+					max-width: 36px;
+					max-height: 36px;
 					fill: #8F8F8F;
 
 					&.low {
@@ -68,6 +70,7 @@
 		border-top: 1px #eaeaea solid;
 		border-bottom: 1px #eaeaea solid;
 		border-right: 1px #eaeaea solid;
+		overflow: hidden;
 
 		.wp-block-themeisle-blocks-review__left_details {
 			display: grid;
@@ -81,12 +84,24 @@
 		}
 
 		.wp-block-themeisle-blocks-review__left_features {
-			display: grid;
-			grid-template-columns: auto auto;
-			gap: 25px 50px;
+			display: flex;
+			flex-wrap: wrap;
 			padding: 30px 0;
 
 			.wp-block-themeisle-blocks-review__left_feature {
+				flex-basis: 50%;
+				padding: 15px 0;
+				min-width: 0;
+				min-height: 0;
+
+				&:nth-child( odd ) {
+					padding-right: 25px;
+				}
+
+				&:nth-child( even ) {
+					padding-left: 25px;
+				}
+
 				.wp-block-themeisle-blocks-review__left_feature_title {
 					font-weight: 600;
 				}
@@ -96,8 +111,8 @@
 					align-items: center;
 
 					svg {
-						width: 20px;
-						height: 20px;
+						max-width: 25px;
+						max-height: 25px;
 						fill: #8F8F8F;
 
 						&.low {
@@ -127,6 +142,7 @@
 		padding: 20px 30px;
 		border-top: 1px #eaeaea solid;
 		border-bottom: 1px #eaeaea solid;
+		overflow: hidden;
 
 		.wp-block-themeisle-blocks-review__right_pros,
 		.wp-block-themeisle-blocks-review__right_cons {
@@ -160,6 +176,8 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		flex-wrap: wrap;
+		overflow: hidden;
 
 		.wp-block-themeisle-blocks-review__footer_label {
 			font-weight: 600;
@@ -186,6 +204,93 @@
 
 			span {
 				cursor: text;
+			}
+		}
+	}
+
+	&.is-style-single-column {
+		grid-template-columns: 1fr;
+		grid-template-areas: 'header' 'left' 'right' 'footer';
+
+		.wp-block-themeisle-blocks-review__right {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 50px;
+		}
+	}
+}
+
+@media ( min-width: 600px ) and ( max-width: 960px ) {
+	.wp-block-themeisle-blocks-review {
+		grid-template-columns: 1fr;
+		grid-template-areas: 'header' 'left' 'right' 'footer';
+
+		.wp-block-themeisle-blocks-review__right {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 50px;
+		}
+	}
+}
+
+@media ( max-width: 600px ) {
+	.wp-block-themeisle-blocks-review {
+		grid-template-columns: 1fr;
+		grid-template-areas: 'header' 'left' 'right' 'footer';
+
+		.wp-block-themeisle-blocks-review__header {
+			.wp-block-themeisle-blocks-review__header_meta {
+				align-items: flex-start;
+				flex-direction: column;
+
+				.wp-block-themeisle-blocks-review__header_ratings {
+					margin-left: -5px;
+
+					svg {
+						max-width: 36px;
+						max-height: 36px;
+					}
+
+					span {
+						word-break: break-word;
+					}
+				}
+			}
+		}
+
+		.wp-block-themeisle-blocks-review__left {
+			.wp-block-themeisle-blocks-review__left_details {
+				grid-template-columns: 1fr;
+			}
+
+			.wp-block-themeisle-blocks-review__left_features {
+				.wp-block-themeisle-blocks-review__left_feature {
+					flex-basis: 100%;
+
+					&:nth-child( odd ) {
+						padding-right: 0;
+					}
+	
+					&:nth-child( even ) {
+						padding-left: 0;
+					}
+
+					.wp-block-themeisle-blocks-review__left_feature_ratings {
+						svg {
+							max-width: 30px;
+							max-height: 30px;
+						}
+					}
+				}
+			}
+		}
+
+		.wp-block-themeisle-blocks-review__footer {
+			.wp-block-themeisle-blocks-review__footer_buttons {
+				span {
+					margin-left: 0;
+					margin-right: 20px;
+				}
 			}
 		}
 	}

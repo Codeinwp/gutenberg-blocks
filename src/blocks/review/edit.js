@@ -165,10 +165,10 @@ const Edit = ({
 
 						<span className="wp-block-themeisle-blocks-review__header_price">
 							{ attributes.discounted && (
-								<del>{ ( getSymbolFromCurrency( attributes.currency ) ?? '$' ) + '' + attributes.discounted }</del>
+								<del>{ ( getSymbolFromCurrency( attributes.currency ) ?? '$' ) + '' + attributes.price }</del>
 							) }
 
-							{ ( getSymbolFromCurrency( attributes.currency ) ?? '$' ) + '' + attributes.price }
+							{ ( getSymbolFromCurrency( attributes.currency ) ?? '$' ) + '' + ( attributes.discounted ? attributes.discounted : attributes.price ) }
 						</span>
 					</div>
 				</div>
