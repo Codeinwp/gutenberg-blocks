@@ -146,29 +146,51 @@ const Edit = ({
 			<div
 			  id={ attributes.id }
 			  className={ className }
+			  style={ {
+				  backgroundColor: attributes.backgroundColor
+			  } }
 			>
-				<div className="wp-block-themeisle-blocks-review__header">
+				<div
+					className="wp-block-themeisle-blocks-review__header"
+					style={ {
+						borderColor: attributes.primaryColor
+					} }
+				>
 					<RichText
 						placeholder={ __( 'Name of your product…' ) }
 						allowedFormats={ [] }
 						value={ attributes.title }
 						onChange={ title => setAttributes({ title }) }
 						tagName="h3"
+						style={ {
+							color: attributes.textColor
+						} }
 					/>
 
 					<div className="wp-block-themeisle-blocks-review__header_meta">
 						<div className="wp-block-themeisle-blocks-review__header_ratings">
 							{ stars }
 
-							<span>{ sprintf( __( '%d out of 10' ), overallRatings || 0 ) } </span>
+							<span
+								style={ {
+									color: attributes.textColor
+								} }
+							>
+								{ sprintf( __( '%d out of 10' ), overallRatings || 0 ) }
+							</span>
 						</div>
 
-						<span className="wp-block-themeisle-blocks-review__header_price">
-							{ attributes.discounted && (
-								<del>{ ( getSymbolFromCurrency( attributes.currency ) ?? '$' ) + '' + attributes.price }</del>
+						<span
+							className="wp-block-themeisle-blocks-review__header_price"
+							style={ {
+								color: attributes.textColor
+							} }
+						>
+							{ ( attributes.price && attributes.discounted ) && (
+								<del>{ ( getSymbolFromCurrency( attributes.currency ) ?? '$' ) + '' + attributes.price || 0 }</del>
 							) }
 
-							{ ( getSymbolFromCurrency( attributes.currency ) ?? '$' ) + '' + ( attributes.discounted ? attributes.discounted : attributes.price ) }
+							{ ( attributes.price || attributes.discounted ) && ( getSymbolFromCurrency( attributes.currency ) ?? '$' ) + '' + ( attributes.discounted ? attributes.discounted : attributes.price ) }
 						</span>
 					</div>
 				</div>
@@ -195,6 +217,9 @@ const Edit = ({
 								value={ attributes.description }
 								onChange={ description => setAttributes({ description }) }
 								tagName="p"
+								style={ {
+									color: attributes.textColor
+								} }
 							/>
 						) }
 					</div>
@@ -225,12 +250,21 @@ const Edit = ({
 										className="wp-block-themeisle-blocks-review__left_feature_title"
 										onChange={ title => changeFeature( index, { title } ) }
 										tagName="span"
+										style={ {
+											color: attributes.textColor
+										} }
 									/>
 
 									<div className="wp-block-themeisle-blocks-review__left_feature_ratings">
 										{ ratings }
 
-										<span>{ feature.rating }/10</span>
+										<span
+											style={ {
+												color: attributes.textColor
+											} }
+										>
+											{ feature.rating }/10
+										</span>
 									</div>
 								</div>
 							)
@@ -241,7 +275,13 @@ const Edit = ({
 				<div className="wp-block-themeisle-blocks-review__right">
 					{ attributes.pros.length > 0 && (
 						<div className="wp-block-themeisle-blocks-review__right_pros">
-							<h4>{ __( 'Pros' ) }</h4>
+							<h4
+								style={ {
+									color: attributes.textColor
+								} }
+							>
+								{ __( 'Pros' ) }
+							</h4>
 
 							{ attributes.pros.map( ( pro, index ) => (
 								<div className="wp-block-themeisle-blocks-review__right_pros_item">
@@ -252,6 +292,9 @@ const Edit = ({
 										value={ pro }
 										onChange={ value => changePro( index, value ) }
 										tagName="p"
+										style={ {
+											color: attributes.textColor
+										} }
 									/>
 								</div>
 							) )}
@@ -260,7 +303,13 @@ const Edit = ({
 
 					{ attributes.cons.length > 0 && (
 						<div className="wp-block-themeisle-blocks-review__right_cons">
-							<h4>{ __( 'Cons' ) }</h4>
+							<h4
+								style={ {
+									color: attributes.textColor
+								} }
+							>
+								{ __( 'Cons' ) }
+							</h4>
 
 							{ attributes.cons.map( ( con, index ) => (
 								<div className="wp-block-themeisle-blocks-review__right_cons_item">
@@ -271,6 +320,9 @@ const Edit = ({
 										value={ con }
 										onChange={ value => changeCon( index, value ) }
 										tagName="p"
+										style={ {
+											color: attributes.textColor
+										} }
 									/>
 								</div>
 							) )}
@@ -280,7 +332,14 @@ const Edit = ({
 
 				{ attributes.links.length > 0 && (
 					<div className="wp-block-themeisle-blocks-review__footer">
-						<span className="wp-block-themeisle-blocks-review__footer_label">{ __( 'Buy this product' ) }</span>
+						<span
+							className="wp-block-themeisle-blocks-review__footer_label"
+							style={ {
+								color: attributes.textColor
+							} }
+						>
+							{ __( 'Buy this product' ) }
+						</span>
 
 						<div className="wp-block-themeisle-blocks-review__footer_buttons">
 							{ attributes.links.map( ( link, index ) => (
@@ -289,6 +348,10 @@ const Edit = ({
 									value={ link.label }
 									onChange={ label => changeLinks( index, { label } ) }
 									tagName="span"
+									style={ {
+										color: attributes.buttonTextColor,
+										backgroundColor: attributes.primaryColor
+									} }
 								/>
 							) ) }
 						</div>

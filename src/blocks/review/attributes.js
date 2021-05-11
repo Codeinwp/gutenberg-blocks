@@ -16,7 +16,6 @@ const attributes = {
 	},
 	price: {
 		type: 'number',
-		default: 99
 	},
 	discounted: {
 		type: 'number'
@@ -76,6 +75,18 @@ const attributes = {
 				href: ''
 			}
 		]
+	},
+	primaryColor: {
+		type: 'string'
+	},
+	backgroundColor: {
+		type: 'string'
+	},
+	textColor: {
+		type: 'string'
+	},
+	buttonTextColor: {
+		type: 'string'
 	}
 };
 

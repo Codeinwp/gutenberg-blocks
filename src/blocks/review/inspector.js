@@ -6,7 +6,9 @@ const { pick } = lodash;
 const { __ } = wp.i18n;
 
 const {
+	ContrastChecker,
 	InspectorControls,
+	PanelColorSettings,
 	MediaPlaceholder
 } = wp.blockEditor;
 
@@ -347,6 +349,41 @@ const Inspector = ({
 					{ __( 'Add Links' ) }
 				</Button>
 			</PanelBody>
+
+			<PanelColorSettings
+				title={ __( 'Color' ) }
+				initialOpen={ false }
+				colorSettings={ [
+					{
+						value: attributes.primaryColor,
+						onChange: value => setAttributes({ primaryColor: value }),
+						label: __( 'Primary' )
+					},
+					{
+						value: attributes.backgroundColor,
+						onChange: value => setAttributes({ backgroundColor: value }),
+						label: __( 'Background' )
+					},
+					{
+						value: attributes.textColor,
+						onChange: value => setAttributes({ textColor: value }),
+						label: __( 'Text' )
+					},
+					{
+						value: attributes.buttonTextColor,
+						onChange: value => setAttributes({ buttonTextColor: value }),
+						label: __( 'Button Text' )
+					}
+				] }
+			>
+
+				<ContrastChecker
+					{ ...{
+						textColor: attributes.primaryColor,
+						backgroundColor: attributes.backgroundColor
+					} }
+				/>
+			</PanelColorSettings>
 		</InspectorControls>
 	);
 };
