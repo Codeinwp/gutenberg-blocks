@@ -1,6 +1,6 @@
 <?php
 /**
- * Css handling logic for icons.
+ * Css handling logic for blocks.
  *
  * @package ThemeIsle\GutenbergBlocks\CSS\Blocks
  */
