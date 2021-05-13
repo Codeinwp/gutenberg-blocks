@@ -18,7 +18,7 @@ const {
 	ExternalLink,
 	PanelBody,
 	RangeControl,
-	TextControl,
+	TextControl
 } = wp.components;
 
 const { useState } = wp.element;
@@ -59,8 +59,8 @@ const PanelItem = ({
 };
 
 const Inspector = ({
-	 attributes,
-	 setAttributes,
+	attributes,
+	setAttributes
 }) => {
 	const addFeature = () => {
 		const features = [ ...attributes.features ];
@@ -68,7 +68,7 @@ const Inspector = ({
 			title: __( 'Feature' ),
 			rating: 9
 		});
-		setAttributes( { features } );
+		setAttributes({ features });
 	};
 
 	const changeFeature = ( index, value ) => {
@@ -77,49 +77,49 @@ const Inspector = ({
 			...features[ index ],
 			...value
 		};
-		setAttributes( { features } );
+		setAttributes({ features });
 	};
 
 	const removeFeature = ( index ) => {
 		let features = [ ...attributes.features ];
 		features = features.filter( ( el, i ) => i !== index );
-		setAttributes( { features } );
+		setAttributes({ features });
 	};
 
 	const addPro = () => {
 		const pros = [ ...attributes.pros ];
 		pros.push( '' );
-		setAttributes( { pros } );
+		setAttributes({ pros });
 	};
 
 	const changePro = ( index, value ) => {
 		const pros = [ ...attributes.pros ];
 		pros[ index ] = value;
-		setAttributes( { pros } );
+		setAttributes({ pros });
 	};
 
 	const removePro = ( index ) => {
 		let pros = [ ...attributes.pros ];
 		pros = pros.filter( ( el, i ) => i !== index );
-		setAttributes( { pros } );
+		setAttributes({ pros });
 	};
 
 	const addCon = () => {
 		const cons = [ ...attributes.cons ];
 		cons.push( '' );
-		setAttributes( { cons } );
+		setAttributes({ cons });
 	};
 
 	const changeCon = ( index, value ) => {
 		const cons = [ ...attributes.cons ];
 		cons[ index ] = value;
-		setAttributes( { cons } );
+		setAttributes({ cons });
 	};
 
 	const removeCon = ( index ) => {
 		let cons = [ ...attributes.cons ];
 		cons = cons.filter( ( el, i ) => i !== index );
-		setAttributes( { cons } );
+		setAttributes({ cons });
 	};
 
 	const addLinks = () => {
@@ -128,7 +128,7 @@ const Inspector = ({
 			label: __( 'Buy Now' ),
 			href: ''
 		});
-		setAttributes( { links } );
+		setAttributes({ links });
 	};
 
 	const changeLinks = ( index, value ) => {
@@ -137,13 +137,13 @@ const Inspector = ({
 			...links[ index ],
 			...value
 		};
-		setAttributes( { links } );
+		setAttributes({ links });
 	};
 
 	const removeLinks = ( index ) => {
 		let links = [ ...attributes.links ];
 		links = links.filter( ( el, i ) => i !== index );
-		setAttributes( { links } );
+		setAttributes({ links });
 	};
 
 	return (
@@ -197,7 +197,7 @@ const Inspector = ({
 						accept="image/*"
 						allowedTypes={ [ 'image' ] }
 						value={ attributes.image }
-						onSelect={ value => setAttributes({ image: pick( value, [ 'id', 'alt', 'url' ] ) }) }
+						onSelect={ value => setAttributes({ image: pick( value, [ 'id', 'alt', 'url' ]) }) }
 					/>
 				) : (
 					<BaseControl
@@ -222,7 +222,7 @@ const Inspector = ({
 				title={ __( 'Product Features' ) }
 				initialOpen={ false }
 			>
-				{ attributes.features.length > 0 && attributes.features.map( ( feature, index ) => (
+				{ 0 < attributes.features.length && attributes.features.map( ( feature, index ) => (
 					<PanelItem
 						title={ feature.title || __( 'Feature' ) }
 						remove={ () => removeFeature( index ) }
@@ -232,13 +232,13 @@ const Inspector = ({
 							type="text"
 							placeholder={ __( 'Feature title' ) }
 							value={ feature.title }
-							onChange={ title => changeFeature( index, { title } ) }
+							onChange={ title => changeFeature( index, { title }) }
 						/>
 
 						<RangeControl
 							label={ __( 'Rating' ) }
 							value={ feature.rating }
-							onChange={ value => changeFeature( index, { rating: Number( value ) } ) }
+							onChange={ value => changeFeature( index, { rating: Number( value ) }) }
 							min={ 1 }
 							max={ 10 }
 						/>
@@ -259,7 +259,7 @@ const Inspector = ({
 				title={ __( 'Pros' ) }
 				initialOpen={ false }
 			>
-				{ attributes.pros.length > 0 && attributes.pros.map( ( pro, index ) => (
+				{ 0 < attributes.pros.length && attributes.pros.map( ( pro, index ) => (
 					<PanelItem
 						title={ pro || __( 'Pro' ) }
 						remove={ () => removePro( index ) }
@@ -288,7 +288,7 @@ const Inspector = ({
 				title={ __( 'Cons' ) }
 				initialOpen={ false }
 			>
-				{ attributes.cons.length > 0 && attributes.cons.map( ( con, index ) => (
+				{ 0 < attributes.cons.length && attributes.cons.map( ( con, index ) => (
 					<PanelItem
 						title={ con || __( 'Con' ) }
 						remove={ () => removeCon( index ) }
@@ -317,7 +317,7 @@ const Inspector = ({
 				title={ __( 'Links' ) }
 				initialOpen={ false }
 			>
-				{ attributes.links.length > 0 && attributes.links.map( ( link, index ) => (
+				{ 0 < attributes.links.length && attributes.links.map( ( link, index ) => (
 					<PanelItem
 						title={ link.label || __( 'Link' ) }
 						remove={ () => removeLinks( index ) }
@@ -327,7 +327,7 @@ const Inspector = ({
 							type="text"
 							placeholder={ __( 'Button label' ) }
 							value={ link.label }
-							onChange={ label => changeLinks( index, { label } ) }
+							onChange={ label => changeLinks( index, { label }) }
 						/>
 
 						<TextControl
@@ -335,7 +335,7 @@ const Inspector = ({
 							type="url"
 							placeholder={ __( 'https://…' ) }
 							value={ link.href }
-							onChange={ href => changeLinks( index, { href } ) }
+							onChange={ href => changeLinks( index, { href }) }
 						/>
 					</PanelItem>
 				) ) }

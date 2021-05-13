@@ -15,7 +15,7 @@ const attributes = {
 		default: 'USD'
 	},
 	price: {
-		type: 'number',
+		type: 'number'
 	},
 	discounted: {
 		type: 'number'

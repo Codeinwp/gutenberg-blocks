@@ -3,7 +3,7 @@
  */
 import classnames from 'classnames';
 
-import getSymbolFromCurrency from 'currency-symbol-map'
+import getSymbolFromCurrency from 'currency-symbol-map';
 
 /**
  * WordPress dependencies.
@@ -54,26 +54,26 @@ const Edit = ({
 		if ( attributes.id === undefined ) {
 			let attrs;
 			const instanceId = `wp-block-themeisle-blocks-review-${ clientId.substr( 0, 8 ) }`;
- 
+
 			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
- 
+
 			if ( undefined !== globalDefaults ) {
-			  if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
-				 attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
- 
-				 Object.keys( attrs ).map( i => {
-					if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
-						return delete attrs[i];
-					}
-				 });
-			  }
+				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
+					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
+
+					Object.keys( attrs ).map( i => {
+						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
+							return delete attrs[i];
+						}
+					});
+				}
 			}
- 
+
 			setAttributes({
-			  ...attrs,
-			  id: instanceId
+				...attrs,
+				id: instanceId
 			});
- 
+
 			IDs.push( instanceId );
 			blockIDs.push( instanceId );
 		} else if ( IDs.includes( attributes.id ) ) {
@@ -84,7 +84,7 @@ const Edit = ({
 			IDs.push( attributes.id );
 			blockIDs.push( attributes.id );
 		}
- 
+
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
@@ -92,14 +92,14 @@ const Edit = ({
 
 	const stars = [];
 
-	for ( let i = 0; i < 10; i++) {
+	for ( let i = 0; 10 > i; i++ ) {
 		stars.push(
 			<StarFilled
 				className={ classnames(
 					{
-						'low': overallRatings <= 3 && i < overallRatings,
-						'medium': overallRatings > 3 && overallRatings < 8 && i < overallRatings,
-						'high': overallRatings > 7 && overallRatings <= 10 && i < overallRatings
+						'low': 3 >= overallRatings && i < overallRatings,
+						'medium': 3 < overallRatings && 8 > overallRatings && i < overallRatings,
+						'high': 7 < overallRatings && 10 >= overallRatings && i < overallRatings
 					}
 				) }
 			/>
@@ -112,19 +112,19 @@ const Edit = ({
 			...features[ index ],
 			...value
 		};
-		setAttributes( { features } );
+		setAttributes({ features });
 	};
 
 	const changePro = ( index, value ) => {
 		const pros = [ ...attributes.pros ];
 		pros[ index ] = value;
-		setAttributes( { pros } );
+		setAttributes({ pros });
 	};
 
 	const changeCon = ( index, value ) => {
 		const cons = [ ...attributes.cons ];
 		cons[ index ] = value;
-		setAttributes( { cons } );
+		setAttributes({ cons });
 	};
 
 	const changeLinks = ( index, value ) => {
@@ -133,7 +133,7 @@ const Edit = ({
 			...links[ index ],
 			...value
 		};
-		setAttributes( { links } );
+		setAttributes({ links });
 	};
 
 	return (
@@ -144,11 +144,11 @@ const Edit = ({
 			/>
 
 			<div
-			  id={ attributes.id }
-			  className={ className }
-			  style={ {
-				  backgroundColor: attributes.backgroundColor
-			  } }
+				id={ attributes.id }
+				className={ className }
+				style={ {
+					backgroundColor: attributes.backgroundColor
+				} }
 			>
 				<div
 					className="wp-block-themeisle-blocks-review__header"
@@ -225,17 +225,17 @@ const Edit = ({
 					</div>
 
 					<div className="wp-block-themeisle-blocks-review__left_features">
-						{ attributes.features.length > 0 && attributes.features.map( ( feature, index ) => {
+						{ 0 < attributes.features.length && attributes.features.map( ( feature, index ) => {
 							const ratings = [];
 
-							for ( let i = 0; i < 10; i++) {
+							for ( let i = 0; 10 > i; i++ ) {
 								ratings.push(
 									<StarFilled
 										className={ classnames(
 											{
-												'low': feature.rating <= 3 && i < feature.rating,
-												'medium': feature.rating > 3 && feature.rating < 8 && i < feature.rating,
-												'high': feature.rating > 7 && feature.rating <= 10 && i < feature.rating
+												'low': 3 >= feature.rating && i < feature.rating,
+												'medium': 3 < feature.rating && 8 > feature.rating && i < feature.rating,
+												'high': 7 < feature.rating && 10 >= feature.rating && i < feature.rating
 											}
 										) }
 									/>
@@ -248,7 +248,7 @@ const Edit = ({
 										placeholder={ __( 'Feature title' ) }
 										value={ feature.title }
 										className="wp-block-themeisle-blocks-review__left_feature_title"
-										onChange={ title => changeFeature( index, { title } ) }
+										onChange={ title => changeFeature( index, { title }) }
 										tagName="span"
 										style={ {
 											color: attributes.textColor
@@ -267,13 +267,13 @@ const Edit = ({
 										</span>
 									</div>
 								</div>
-							)
-						} ) }
+							);
+						}) }
 					</div>
 				</div>
 
 				<div className="wp-block-themeisle-blocks-review__right">
-					{ attributes.pros.length > 0 && (
+					{ 0 < attributes.pros.length && (
 						<div className="wp-block-themeisle-blocks-review__right_pros">
 							<h4
 								style={ {
@@ -301,7 +301,7 @@ const Edit = ({
 						</div>
 					) }
 
-					{ attributes.cons.length > 0 && (
+					{ 0 < attributes.cons.length && (
 						<div className="wp-block-themeisle-blocks-review__right_cons">
 							<h4
 								style={ {
@@ -313,7 +313,7 @@ const Edit = ({
 
 							{ attributes.cons.map( ( con, index ) => (
 								<div className="wp-block-themeisle-blocks-review__right_cons_item">
-									{ close } 
+									{ close }
 
 									<RichText
 										placeholder={ __( 'What can be improved?' ) }
@@ -330,7 +330,7 @@ const Edit = ({
 					) }
 				</div>
 
-				{ attributes.links.length > 0 && (
+				{ 0 < attributes.links.length && (
 					<div className="wp-block-themeisle-blocks-review__footer">
 						<span
 							className="wp-block-themeisle-blocks-review__footer_label"
@@ -346,7 +346,7 @@ const Edit = ({
 								<RichText
 									placeholder={ __( 'Button label' ) }
 									value={ link.label }
-									onChange={ label => changeLinks( index, { label } ) }
+									onChange={ label => changeLinks( index, { label }) }
 									tagName="span"
 									style={ {
 										color: attributes.buttonTextColor,
@@ -361,6 +361,5 @@ const Edit = ({
 		</Fragment>
 	);
 };
- 
- export default Edit;
- 
+
+export default Edit;
