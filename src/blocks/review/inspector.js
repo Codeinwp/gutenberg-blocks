@@ -179,14 +179,14 @@ const Inspector = ({
 					label={ __( 'Price' ) }
 					type="number"
 					value={ attributes.price }
-					onChange={ price => setAttributes({ price }) }
+					onChange={ value => setAttributes({ price: Number( value ) }) }
 				/>
 
 				<TextControl
 					label={ __( 'Discounted Price' ) }
 					type="number"
 					value={ attributes.discounted }
-					onChange={ discounted => setAttributes({ discounted }) }
+					onChange={ value => setAttributes({ discounted: Number( value ) }) }
 				/>
 
 				{ ! attributes.image ? (
@@ -238,7 +238,7 @@ const Inspector = ({
 						<RangeControl
 							label={ __( 'Rating' ) }
 							value={ feature.rating }
-							onChange={ rating => changeFeature( index, { rating } ) }
+							onChange={ value => changeFeature( index, { rating: Number( value ) } ) }
 							min={ 1 }
 							max={ 10 }
 						/>

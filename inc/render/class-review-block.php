@@ -46,16 +46,16 @@ class Review_Block extends Base_Block {
 				'default' => 'USD',
 			),
 			'price'       => array(
-				'type'    => 'number',
+				'type' => 'number',
 			),
 			'discounted'  => array(
-				'type'    => 'number',
+				'type' => 'number',
 			),
 			'image'       => array(
-				'type'    => 'object',
+				'type' => 'object',
 			),
 			'description' => array(
-				'type'    => 'string',
+				'type' => 'string',
 			),
 			'features'    => array(
 				'type'    => 'array',
@@ -99,13 +99,13 @@ class Review_Block extends Base_Block {
 				'default' => array(
 					array(
 						'label' => __( 'Buy on Amazon', 'textdomain' ),
-						'href' => ''
+						'href'  => '',
 					),
 					array(
 						'label' => __( 'Buy on eBay', 'textdomain' ),
-						'href' => ''
-					)
-				)
+						'href'  => '',
+					),
+				),
 			),
 		);
 	}
@@ -121,6 +121,16 @@ class Review_Block extends Base_Block {
 	 * @return mixed|string
 	 */
 	protected function render( $attributes ) {
+
+		if ( isset( $attributes['title'] ) && ! empty( $attributes['title'] ) && isset( $attributes['features'] ) && count( $attributes['features'] ) > 0 ) {
+			add_action(
+				'wp_footer',
+				function() use ( $attributes ) {
+					echo '<script type="application/ld+json">' . wp_json_encode( $this->get_json_ld( $attributes ) ) . '</script>';
+				} 
+			);
+		}
+
 		$id        = isset( $attributes['id'] ) ? $attributes['id'] : 'wp-block-themeisle-blocks-review-' . wp_rand( 10, 100 );
 		$class     = isset( $attributes['className'] ) ? $attributes['className'] : '';
 		$class     = 'wp-block-themeisle-blocks-review ' . esc_attr( $class );
@@ -135,8 +145,9 @@ class Review_Block extends Base_Block {
 
 		$html .= '		<div class="wp-block-themeisle-blocks-review__header_meta">';
 		$html .= '			<div class="wp-block-themeisle-blocks-review__header_ratings">';
-		$html .= 				$this->get_overall_stars( $this->get_overall_ratings( $attributes['features'] ) );
-		$html .= '				<span>' . sprintf( __( '%s out of 10' ), $this->get_overall_ratings( $attributes['features'] ) ) . '</span>';
+		$html .= $this->get_overall_stars( $this->get_overall_ratings( $attributes['features'] ) );
+		// translators: Overall rating from 0 to 10.
+		$html .= '				<span>' . sprintf( __( '%s out of 10', 'textdomain' ), $this->get_overall_ratings( $attributes['features'] ) ) . '</span>';
 		$html .= '			</div>';
 
 		if ( isset( $attributes['price'] ) || isset( $attributes['discounted'] ) ) {
@@ -146,7 +157,7 @@ class Review_Block extends Base_Block {
 				$html .= '			<del>' . $this->get_currency( isset( $attributes['currency'] ) ? $attributes['currency'] : 'USD' ) . $attributes['price'] . '</del>';
 			}
 
-			$html .= 			$this->get_currency( isset( $attributes['currency'] ) ? $attributes['currency'] : 'USD' ) . ( isset( $attributes['discounted'] ) ? $attributes['discounted'] : $attributes['price'] );
+			$html .= $this->get_currency( isset( $attributes['currency'] ) ? $attributes['currency'] : 'USD' ) . ( isset( $attributes['discounted'] ) ? $attributes['discounted'] : $attributes['price'] );
 			$html .= '			</span>';
 		}
 
@@ -162,7 +173,7 @@ class Review_Block extends Base_Block {
 
 			if ( isset( $attributes['description'] ) && ! empty( $attributes['description'] ) ) {
 				$html .= '	<p>' . $attributes['description'] . '</p>';
-			}	
+			}   
 			$html .= '	</div>';
 		}
 
@@ -175,7 +186,7 @@ class Review_Block extends Base_Block {
 				}
 
 				$html .= '		<div class="wp-block-themeisle-blocks-review__left_feature_ratings">';
-				$html .= 			$this->get_overall_stars( $feature['rating'] );
+				$html .= $this->get_overall_stars( $feature['rating'] );
 				$html .= '			<span>' . $feature['rating'] . '/10</span>';
 				$html .= '		</div>';
 				$html .= '	</div>';
@@ -241,10 +252,14 @@ class Review_Block extends Base_Block {
 			return 0;
 		}
 
-		$rating = array_reduce( $features, function( $carry, $feature ) {
-			$carry += $feature['rating'];
-			return $carry;
-		}, 0 );
+		$rating = array_reduce(
+			$features,
+			function( $carry, $feature ) {
+				$carry += $feature['rating'];
+				return $carry;
+			},
+			0 
+		);
 
 		$rating = round( $rating / count( $features ) );
 
@@ -266,9 +281,9 @@ class Review_Block extends Base_Block {
 
 			if ( $ratings <= 3 && $i < $ratings ) {
 				$class = 'low';
-			} else if ( $ratings > 3 && $ratings < 8 && $i < $ratings ) {
+			} elseif ( $ratings > 3 && $ratings < 8 && $i < $ratings ) {
 				$class = 'medium';
-			} else if ( $ratings > 7 && $ratings <= 10 && $i < $ratings ) {
+			} elseif ( $ratings > 7 && $ratings <= 10 && $i < $ratings ) {
 				$class = 'high';
 			}
 
@@ -286,7 +301,74 @@ class Review_Block extends Base_Block {
 	 * @return string
 	 */
 	protected function get_currency( $currency = 'USD' ) {
-        $symbol = Intl::getCurrencyBundle()->getCurrencySymbol( $currency, 'en' );
+		$symbol = Intl::getCurrencyBundle()->getCurrencySymbol( $currency, 'en' );
 		return $symbol;
+	}
+
+	/**
+	 * Generate JSON-LD schema
+	 *
+	 * @param array $attributes Block attributes.
+	 *
+	 * @return array
+	 */
+	public function get_json_ld( $attributes ) {
+		$json = array(
+			'@context' => 'https://schema.org/',
+			'@type'    => 'Product',
+			'name'     => $attributes['title'],
+		);
+
+		if ( isset( $attributes['image'] ) ) {
+			$json['image'] = $attributes['image']['url'];
+		}
+
+		if ( isset( $attributes['description'] ) && ! empty( $attributes['description'] ) ) {
+			$json['description'] = $attributes['description'];
+		}
+
+		$json['review'] = array(
+			'@type'        => 'Review',
+			'reviewRating' => array(
+				'@type'       => 'Rating',
+				'ratingValue' => $this->get_overall_ratings( $attributes['features'] ),
+				'bestRating'  => 10,
+			),
+			'author'       => array(
+				'@type' => 'Person',
+				'name'  => get_the_author(),
+			),
+		);
+
+		if ( isset( $attributes['links'] ) && count( $attributes['links'] ) > 0 ) {
+			$offers = array();
+
+			foreach ( $attributes['links'] as $link ) {
+				if ( ! isset( $link['href'] ) || empty( $link['href'] ) ) {
+					continue;
+				}
+				
+				if ( ! isset( $attributes['price'] ) && ! isset( $attributes['discounted'] ) ) {
+					continue;
+				}
+				
+				$offer = array(
+					'@type'         => 'Offer',
+					'url'           => $link['href'],
+					'priceCurrency' => isset( $attributes['currency'] ) ? $attributes['currency'] : 'USD',
+					'price'         => isset( $attributes['discounted'] ) ? $attributes['discounted'] : $attributes['price'],
+				);
+
+				array_push( $offers, $offer );
+			}
+
+			if ( count( $offers ) > 1 ) {
+				$json['offers'] = $offers;
+			} elseif ( count( $offers ) === 1 ) {
+				$json['offers'] = $offers[0];
+			}
+		}
+
+		return $json;
 	}
 }

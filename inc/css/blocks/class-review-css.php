@@ -70,7 +70,7 @@ class Review_CSS extends Base_CSS {
 			)
 		);
 
-		foreach( $selectors as $selector ) {
+		foreach ( $selectors as $selector ) {
 			$css->add_item(
 				array(
 					'selector'   => $selector,
