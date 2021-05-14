@@ -26,8 +26,7 @@ const IconPickerControl = lazy( () => import( '../../../components/icon-picker-c
 
 const Inspector = ({
 	attributes,
-	setAttributes,
-	setHasCustomIcon
+	setAttributes
 }) => {
 	const changeIcon = value => {
 		if ( 'object' === typeof value ) {
@@ -38,8 +37,6 @@ const Inspector = ({
 		} else {
 			setAttributes({ icon: value });
 		}
-
-		setHasCustomIcon( true );
 	};
 
 	const changeLibrary = value => {
@@ -48,8 +45,6 @@ const Inspector = ({
 			icon: undefined,
 			iconPrefix: 'fab'
 		});
-
-		setHasCustomIcon( true );
 	};
 
 	const onDefaultContentColorChange = value => {
