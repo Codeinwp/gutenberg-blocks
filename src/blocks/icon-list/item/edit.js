@@ -124,7 +124,7 @@ const Edit = ({
 	/**
 	 * Add the missing components from parent's attributes
 	 */
-	if ( hasParent && ( ! attributes.iconPrefix || ! attributes.icon || ! attributes.library ) ) {
+	if ( hasParent && ( ! attributes.iconPrefix || ! attributes.library ) ) {
 		setAttributes({
 			library: attributes.library || parentAttributes.defaultLibrary,
 			icon: attributes.icon || parentAttributes.defaultIcon,
@@ -148,7 +148,7 @@ const Edit = ({
 				className={ className }
 				style={ itemStyle }
 			>
-				{ 'themeisle-icons' === attributes.library && attributes.icon ? (
+				{ 'themeisle-icons' === attributes.library && attributes.icon && Icon !== undefined ? (
 					<Icon
 						className={ classnames(
 							{ 'wp-block-themeisle-blocks-icon-list-item-icon': ! attributes.iconColor },

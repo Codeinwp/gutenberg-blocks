@@ -92,12 +92,14 @@ const IconPickerControl = ({
 
 	const ThemeIsleIcon = ({ itemIcon = icon }) => {
 		const Icon = themeIsleIcons.icons[ itemIcon ];
-		return (
+		return  Icon ? (
 			<Fragment>
 				<Icon/>
 				{ itemIcon }
 			</Fragment>
 
+		) : (
+			<Fragment></Fragment>
 		);
 	};
 
