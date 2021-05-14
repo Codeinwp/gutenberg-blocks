@@ -438,7 +438,7 @@ class Advanced_Columns_CSS extends Base_CSS {
 						'value'     => 'backgroundOverlayGradient',
 						'default'   => 'linear-gradient(90deg,rgba(54,209,220,1) 0%,rgba(91,134,229,1) 100%)',
 						'condition' => function( $attrs ) {
-							return isset( $attrs['backgroundOverlayType'] ) && 'gradient' === $attrs['backgroundOverlayType'] && isset( $attrs['backgroundGradient'] );
+							return isset( $attrs['backgroundOverlayType'] ) && 'gradient' === $attrs['backgroundOverlayType'] && isset( $attrs['backgroundOverlayGradient'] );
 						},
 					),
 					array(
