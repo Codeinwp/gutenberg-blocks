@@ -35,6 +35,7 @@
 				svg {
 					max-width: 36px;
 					max-height: 36px;
+					width: 100%;
 					fill: #8F8F8F;
 
 					&.low {
@@ -53,6 +54,7 @@
 				span {
 					padding-left: 10px;
 					font-size: 13px;
+					min-width: 50px;
 				}
 			}
 
