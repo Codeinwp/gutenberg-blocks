@@ -177,3 +177,23 @@ export const checkIcon = (
 		<Path d="M9 18.6L3.5 13l1-1L9 16.4l9.5-9.9 1 1z" />
 	</SVG>
 );
+
+export const StarFilled = ({ className }) => {
+	return (
+		<SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={ className }>
+			<Path d="M11.776 4.454a.25.25 0 01.448 0l2.069 4.192a.25.25 0 00.188.137l4.626.672a.25.25 0 01.139.426l-3.348 3.263a.25.25 0 00-.072.222l.79 4.607a.25.25 0 01-.362.263l-4.138-2.175a.25.25 0 00-.232 0l-4.138 2.175a.25.25 0 01-.363-.263l.79-4.607a.25.25 0 00-.071-.222L4.754 9.881a.25.25 0 01.139-.426l4.626-.672a.25.25 0 00.188-.137l2.069-4.192z" />
+		</SVG>
+	);
+};
+
+export const check = (
+	<SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+		<Path d="M18.3 5.6L9.9 16.9l-4.6-3.4-.9 2.4 5.8 4.3 9.3-12.6z" />
+	</SVG>
+);
+
+export const close = (
+	<SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+		<Path d="M13 11.8l6.1-6.3-1-1-6.1 6.2-6.1-6.2-1 1 6.1 6.3-6.5 6.7 1 1 6.5-6.6 6.5 6.6 1-1z" />
+	</SVG>
+);

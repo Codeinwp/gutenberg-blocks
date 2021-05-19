@@ -592,6 +592,7 @@ class Main {
 			'\ThemeIsle\GutenbergBlocks\Render\Leaflet_Map_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Plugin_Card_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Posts_Grid_Block',
+			'\ThemeIsle\GutenbergBlocks\Render\Review_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Sharing_Icons_Block',
 		);
 

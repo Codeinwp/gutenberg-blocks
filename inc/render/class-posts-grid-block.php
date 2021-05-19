@@ -162,8 +162,6 @@ class Posts_Grid_Block extends Base_Block {
 			)
 		);
 
-
-
 		$list_items_markup = '';
 
 		foreach ( $recent_posts as $post ) {
