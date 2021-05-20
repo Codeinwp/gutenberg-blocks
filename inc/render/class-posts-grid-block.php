@@ -162,8 +162,6 @@ class Posts_Grid_Block extends Base_Block {
 			)
 		);
 
-
-
 		$list_items_markup = '';
 
 		foreach ( $recent_posts as $post ) {
@@ -292,8 +290,8 @@ class Posts_Grid_Block extends Base_Block {
 	protected function get_excerpt_by_id( $post_id, $excerpt_length = 200 ) {
 		$excerpt = get_the_excerpt( $post_id );
 
-		if ( strlen( $excerpt ) > $excerpt_length ) {
-			$excerpt = substr( $excerpt, 0, $excerpt_length ) . '…';
+		if ( mb_strlen( $excerpt ) > $excerpt_length ) {
+			$excerpt = mb_substr( $excerpt, 0, $excerpt_length ) . '…';
 		}
 
 		return $excerpt;

@@ -6,7 +6,7 @@
  *
  * $css->add_item( array(
  *  'global'     => 'global', // Put your media query selector here. It's global by default.
- *  'selector'   => ' .wp-block', // ID of the Block will be prefixed to your selector. If you want to target the root, drop this property.
+ *  'selector'   => ' .wp-block', // ID of the Block will be prefixed to your selector. If you want to target the root, drop this property. You can also use the keyword [id] if you want to add some prefix to your ID, see AMP CSS in Circular Counter Block.
  *  'properties' => array(
  *      array(
  *          'property'    => 'margin',
@@ -178,7 +178,8 @@ class CSS_Utility {
 				}
 
 				if ( '' !== $item_style ) {
-					$style .= '#' . $attrs['id'] . $selector . ' {' . $item_style . '}';
+					$selector = strpos( $selector, '[id]' ) !== false ? str_replace( '[id]', '#' . $attrs['id'], $selector ) : '#' . $attrs['id'] . $selector;
+					$style   .= $selector . ' {' . $item_style . '}';
 				}
 			}
 

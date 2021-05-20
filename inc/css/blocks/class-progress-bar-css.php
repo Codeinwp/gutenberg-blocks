@@ -1,6 +1,6 @@
 <?php
 /**
- * Css handling logic for icons.
+ * Css handling logic for blocks.
  *
  * @package ThemeIsle\GutenbergBlocks\CSS\Blocks
  */
@@ -272,6 +272,36 @@ class Progress_Bar_CSS extends Base_CSS {
 						'condition' => function( $attrs ) {
 							return isset( $attrs['percentagePosition'] ) && 'append' === $attrs['percentagePosition'];
 						},
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'selector'   => 'html[amp] [id] .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar',
+				'properties' => array(
+					array(
+						'property' => 'width',
+						'value'    => 'percentage',
+						'unit'     => '%',
+						'default'  => 50,
+					),
+					array(
+						'property' => 'opacity',
+						'default'  => '1',
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'selector'   => 'html[amp] [id] .wp-block-themeisle-blocks-progress-bar__area .wp-block-themeisle-blocks-progress-bar__area__bar .wp-block-themeisle-blocks-progress-bar__area__tooltip',
+				'properties' => array(
+					array(
+						'property' => 'opacity',
+						'default'  => '1',
 					),
 				),
 			)

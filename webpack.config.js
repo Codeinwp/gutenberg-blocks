@@ -68,7 +68,12 @@ module.exports = {
 						]
 					}
 				},
-				'eslint-loader' ]
+				{
+					loader: 'eslint-loader',
+					options: {
+						fix: true,
+					},
+				} ]
 			},
 			{
 				test: /\.(css|scss)$/,

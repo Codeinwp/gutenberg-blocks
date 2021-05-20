@@ -13,6 +13,7 @@
 			display: flex;
 
 			button {
+				width: 25px;
 				height: 28px;
 				border: 1px solid #555d66;
 
@@ -35,6 +36,10 @@
 						text-decoration: none;
 						text-shadow: 0 -1px 1px #005d82,1px 0 1px #005d82,0 1px 1px #005d82,-1px 0 1px #005d82;
 					}
+				}
+
+				.dashicon {
+					margin: 2px;
 				}
 			}
 		}
