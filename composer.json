@@ -17,8 +17,7 @@
   },
   "require": {
     "tubalmartin/cssmin": "^4.1",
-    "masterminds/html5": "^2.7",
-    "symfony/intl": "^3.4"
+    "masterminds/html5": "^2.7"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.3",
