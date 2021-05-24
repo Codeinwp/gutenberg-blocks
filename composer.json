@@ -2,7 +2,7 @@
   "name": "codeinwp/gutenberg-blocks",
   "description": "A set of awesome Gutenberg Blocks!",
   "type": "library",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "license": "GPL-2.0-or-later",
   "homepage": "https://github.com/Codeinwp/gutenberg-blocks",
   "authors": [
@@ -17,7 +17,8 @@
   },
   "require": {
     "tubalmartin/cssmin": "^4.1",
-    "masterminds/html5": "^2.7"
+    "masterminds/html5": "^2.7",
+    "symfony/intl": "^3.4"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.3",
