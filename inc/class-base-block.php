@@ -81,7 +81,7 @@ abstract class Base_Block {
 	 * @return array
 	 */
 	public function get_attributes() {
-		return apply_filters( 'otter_block_attributes_for_' . $this->block_slug, $this->attributes );
+		return apply_filters( 'themeisle_gutenberg_attributes_for_' . $this->block_slug, $this->attributes );
 	}
 
 	/**
@@ -106,6 +106,6 @@ abstract class Base_Block {
 	 */
 	public function render_callback( $attributes ) {
 		// give a chance to our themes to overwrite the template of blocks.
-		return apply_filters( 'otter_block_template_' . $this->block_slug, $this->render( $attributes ) );
+		return apply_filters( 'themeisle_gutenberg_template_' . $this->block_slug, $this->render( $attributes ) );
 	}
 }
