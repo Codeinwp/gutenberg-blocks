@@ -46,7 +46,7 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 		if ( children && 0 < children.length ) {
 			switchActiveState( children[0].clientId );
 		}
-	});
+	}, []);
 
 	useEffect( () => {
 		const newHeaders = children?.map( block => {
