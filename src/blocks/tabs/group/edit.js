@@ -6,7 +6,9 @@ import classnames from 'classnames';
  * WordPress dependencies.
  */
 const { InnerBlocks } = wp.blockEditor;
-const { useSelect } = wp.data;
+const { useSelect, useDispatch } = wp.data;
+const { getBlockType, createBlock } = wp.blocks;
+const { __ } = wp.i18n;
 
 const {
 	Fragment,
@@ -23,18 +25,28 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 	const [ activeTab, setActiveTab ] = useState( '' );
 
 	const {
-		children
+		children,
+		canInsert
 	} = useSelect( select => {
 		const {
-			getBlock
+			getBlock,
+			canInsertBlockType
 		} = select( 'core/block-editor' );
 
-		const children = getBlock( clientId ).innerBlocks;
-
 		return {
-			children
+			children: getBlock( clientId ).innerBlocks,
+			canInsert: canInsertBlockType( 'themeisle-blocks/tabs-item', clientId )
 		};
 	}, []);
+
+	const { updateBlockAttributes, insertBlock } = useDispatch( 'core/block-editor' );
+
+
+	useEffect( () => {
+		if ( children && 0 < children.length ) {
+			switchActiveState( children[0].clientId );
+		}
+	});
 
 	useEffect( () => {
 		const newHeaders = children?.map( block => {
@@ -73,6 +85,21 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 		</div> );
 	};
 
+	const renderAddTab = () => {
+		const addTab = () => {
+			if ( canInsert ) {
+				const itemBlock = createBlock( 'themeisle-blocks/tabs-item' );
+				console.log( itemBlock );
+				insertBlock( itemBlock, ( children?.length - 1 ) || 0, clientId );
+			}
+		};
+		return (
+			<div className={classnames( 'wp-block-themeisle-blocks-tabs-header' )}>
+				<div onClick={addTab}> {__( 'Add Tab' )} </div>
+			</div>
+		);
+	};
+
 	return (
 		<Fragment>
 			{/* <Inspector /> */}
@@ -85,12 +112,13 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 							}, block.clientId === activeTab );
 						})
 					}
+					{renderAddTab()}
 				</div>
 				<div ref={ contentRef } className="wp-block-themeisle-blocks-tabs-content">
 					<InnerBlocks
 						allowedBlocks={ [ 'themeisle-blocks/tabs-item' ] }
 						template={ [ [ 'themeisle-blocks/tabs-item' ] ] }
-						renderAppender={ InnerBlocks.ButtonBlockAppender }
+						renderAppender={ '' }
 					/>
 				</div>
 			</div>
