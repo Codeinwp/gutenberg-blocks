@@ -39,11 +39,11 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 		};
 	}, []);
 
-	const { updateBlockAttributes, insertBlock } = useDispatch( 'core/block-editor' );
+	const { updateBlockAttributes, insertBlock, removeBlock } = useDispatch( 'core/block-editor' );
 
 
 	useEffect( () => {
-		if ( children && 0 < children.length  && '' === activeTab ) {
+		if ( children && 0 < children.length && ! ( children.map( ({clientId}) => clientId ) ).includes( activeTab ) ) {
 			switchActiveState( children[0].clientId );
 		}
 	}, [ activeTab, children ]);
@@ -56,6 +56,7 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 			headers: newHeaders
 		});
 	}, children );
+
 
 	// console.log( children );
 	// console.log( children?.map( ({attributes}) => attributes ) );
@@ -102,7 +103,12 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 
 	return (
 		<Fragment>
-			{/* <Inspector /> */}
+			<Inspector
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				tabs={ children }
+				deleteTab={ removeBlock }
+			/>
 			<div className="wp-block-themeisle-blocks-tabs">
 				<div className="wp-block-themeisle-blocks-tabs-headers">
 					{
