@@ -43,10 +43,10 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 
 
 	useEffect( () => {
-		if ( children && 0 < children.length ) {
+		if ( children && 0 < children.length  && '' === activeTab ) {
 			switchActiveState( children[0].clientId );
 		}
-	}, []);
+	}, [ activeTab, children ]);
 
 	useEffect( () => {
 		const newHeaders = children?.map( block => {
