@@ -1,4 +1,9 @@
 /* eslint-disable no-unused-vars */
+
+import arrayMove from 'array-move';
+import { SortableContainer } from 'react-sortable-hoc';
+import { SortableTab } from './components/sortableTabs';
+
 /**
  * WordPress dependencies
  */
@@ -13,27 +18,31 @@ const { PanelBody, Button, RangeControl, SelectControl, TextControl } = wp.compo
 
 const { clamp } = lodash;
 
+
 const Inspector = ({
 	attributes,
 	setAttributes,
-	tabs,
 	deleteTab
 }) => {
 
-	const renderTabs = ( tabs ) => {
-		return tabs.map( tab => {
-			return (
-				<div className="wp-block-themeisle-blocks-tabs-inspector-tab-option">
-					<div className="wp-block-themeisle-blocks-tabs-inspector-tab-option__name">
-						<p>{ tab.attributes.title }</p>
-					</div>
-					<div className="wp-block-themeisle-blocks-tabs-inspector-tab-option__actions">
-						<Button isLink isTertiary onClick={() => deleteTab( tab.clientId )}>
-							Delete
-						</Button>
-					</div>
-				</div>
-			);
+	const TabsList = SortableContainer( ({ items }) => {
+		return (
+			<div>
+				{
+					items.map( ( tab, index ) => {
+						return (
+							<SortableTab key={tab.id} tab={tab} index={index} deleteTab={deleteTab}/>
+						);
+					})
+				}
+			</div>
+		);
+	});
+
+	const onSortEnd = ({ oldIndex, newIndex }) => {
+		console.log( oldIndex, newIndex );
+		setAttributes({
+			headers: arrayMove( attributes.headers, oldIndex, newIndex )
 		});
 	};
 
@@ -41,7 +50,9 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody title={__( 'Tabs' )} initialOpen={true}>
-				{renderTabs( tabs )}
+				{
+					0 < attributes.headers.length && ( <TabsList items={ attributes.headers } onSortEnd={onSortEnd} axis={'y'} /> )
+				}
 			</PanelBody>
 		</InspectorControls>
 	);

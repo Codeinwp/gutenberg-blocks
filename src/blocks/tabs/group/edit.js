@@ -49,14 +49,16 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 	}, [ activeTab, children ]);
 
 	useEffect( () => {
+		console.log( children );
 		const newHeaders = children?.map( block => {
-			return { id: block.attributes.id, title: block.attributes.block };
+			return { id: block.attributes.id, title: block.attributes.title, clientId: block.clientId };
 		});
 		setAttributes({
 			headers: newHeaders
 		});
-	}, children );
+	}, [ children ]);
 
+	console.log( attributes );
 
 	// console.log( children );
 	// console.log( children?.map( ({attributes}) => attributes ) );
@@ -106,7 +108,7 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
-				tabs={ children }
+				tabs={ attributes.headers }
 				deleteTab={ removeBlock }
 			/>
 			<div className="wp-block-themeisle-blocks-tabs">
