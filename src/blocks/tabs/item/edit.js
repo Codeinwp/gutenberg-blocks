@@ -106,7 +106,7 @@ const Tabs = ({ isSelected, attributes, setAttributes, clientId }) => {
 
 	return (
 		<Fragment>
-			{/* <Inspector /> */}
+			<Inspector attributes={attributes} setAttributes={setAttributes}/>
 			<div className="wp-block-themeisle-blocks-tabs-item">
 				<div className="wp-block-themeisle-blocks-tabs-item-header" onClick={() => switchActiveState( parentClientId )}>
 					<RichText
