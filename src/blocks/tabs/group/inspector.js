@@ -53,7 +53,7 @@ const Inspector = ({
 		<InspectorControls>
 			<PanelBody title={__( 'Tabs' )} initialOpen={true}>
 				{
-					0 < attributes.headers.length && ( <TabsList items={ attributes.headers } onSortEnd={onSortEnd} axis={'y'} /> )
+					0 < attributes.headers?.length && ( <TabsList items={ attributes.headers } onSortEnd={onSortEnd} axis={'y'} /> )
 				}
 				<Button isSecondary onClick={ addTab } > { __( 'Add Tab' ) } </Button>
 			</PanelBody>
