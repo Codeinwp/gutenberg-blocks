@@ -23,7 +23,8 @@ const Inspector = ({
 	attributes,
 	setAttributes,
 	deleteTab,
-	selectTab
+	selectTab,
+	addTab
 }) => {
 
 	const TabsList = SortableContainer( ({ items }) => {
@@ -54,6 +55,7 @@ const Inspector = ({
 				{
 					0 < attributes.headers.length && ( <TabsList items={ attributes.headers } onSortEnd={onSortEnd} axis={'y'} /> )
 				}
+				<Button isSecondary onClick={ addTab } > { __( 'Add Tab' ) } </Button>
 			</PanelBody>
 		</InspectorControls>
 	);

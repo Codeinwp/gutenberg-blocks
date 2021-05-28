@@ -2302,7 +2302,8 @@ html[amp] .wp-block-themeisle-blocks-circle-counter :nth-child(2) {
     .wp-block-themeisle-blocks-tabs .wp-block-themeisle-blocks-tabs-headers {
       display: none; } }
   .wp-block-themeisle-blocks-tabs .wp-block-themeisle-blocks-tabs-headers .wp-block-themeisle-blocks-tabs-header {
-    padding: 5px 10px; }
+    padding: 5px 10px;
+    white-space: nowrap; }
     .wp-block-themeisle-blocks-tabs .wp-block-themeisle-blocks-tabs-headers .wp-block-themeisle-blocks-tabs-header.active {
       border: 3px solid black;
       border-bottom-style: none;

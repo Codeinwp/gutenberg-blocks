@@ -88,14 +88,15 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 		</div> );
 	};
 
+	const addTab = () => {
+		if ( canInsert ) {
+			const itemBlock = createBlock( 'themeisle-blocks/tabs-item' );
+			console.log( itemBlock, 'hey',   attributes.headers?.length - 1 );
+			insertBlock( itemBlock, ( attributes.headers?.length ) || 0, clientId, false );
+		}
+	};
+
 	const renderAddTab = () => {
-		const addTab = () => {
-			if ( canInsert ) {
-				const itemBlock = createBlock( 'themeisle-blocks/tabs-item' );
-				console.log( itemBlock );
-				insertBlock( itemBlock, ( children?.length - 1 ) || 0, clientId );
-			}
-		};
 		return (
 			<div className={classnames( 'wp-block-themeisle-blocks-tabs-header' )}>
 				<div onClick={addTab}> {__( 'Add Tab' )} </div>
@@ -111,6 +112,7 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 				tabs={ attributes.headers }
 				deleteTab={ removeBlock }
 				selectTab={ selectBlock }
+				addTab={ addTab }
 			/>
 			<div className="wp-block-themeisle-blocks-tabs">
 				<div className="wp-block-themeisle-blocks-tabs-headers">
