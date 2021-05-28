@@ -1,5 +1,6 @@
 import { SortableElement } from 'react-sortable-hoc';
 const { Button } = wp.components;
+const { __ } = wp.i18n;
 
 export const SortableTab = SortableElement( ({ tab, deleteTab, selectTab }) => {
 	return (
@@ -9,10 +10,10 @@ export const SortableTab = SortableElement( ({ tab, deleteTab, selectTab }) => {
 			</div>
 			<div className="wp-block-themeisle-blocks-tabs-inspector-tab-option__actions">
 				<Button isLink isTertiary onClick={ () => selectTab( tab.clientId ) }>
-					Edit
+					{ __( Edit ) }
 				</Button>
 				<Button isLink isTertiary isDestructive onClick={() => deleteTab( tab.clientId )}>
-					Delete
+					{ __( Delete ) }
 				</Button>
 			</div>
 		</div>

@@ -115,10 +115,10 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 			<div className="wp-block-themeisle-blocks-tabs">
 				<div className="wp-block-themeisle-blocks-tabs-headers">
 					{
-						children?.map( block => {
-							return renderTabHeader( block.attributes?.title || 'Insert Title H', () => {
-								switchActiveState( block.clientId );
-							}, block.clientId === activeTab );
+						attributes.headers?.map( tabHeader => {
+							return renderTabHeader( tabHeader.title || 'Insert Title H', () => {
+								switchActiveState( tabHeader.clientId );
+							}, tabHeader.clientId === activeTab );
 						})
 					}
 					{renderAddTab()}
