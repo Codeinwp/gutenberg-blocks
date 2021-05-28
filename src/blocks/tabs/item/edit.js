@@ -5,7 +5,7 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies.
  */
-const { useSelect } = wp.data;
+const { useSelect, useDispatch } = wp.data;
 const { isEqual } = lodash;
 const { InnerBlocks, RichText } = wp.blockEditor;
 const { __ } = wp.i18n;
@@ -45,6 +45,8 @@ const Tabs = ({ isSelected, attributes, setAttributes, clientId }) => {
 			parentAttributes: parentBlock ? parentBlock.attributes : {}
 		};
 	}, []);
+
+	const { selectBlock } = useDispatch( 'core/block-editor' );
 
 	useEffect( () => {
 		initBlock();
@@ -104,9 +106,13 @@ const Tabs = ({ isSelected, attributes, setAttributes, clientId }) => {
 		}
 	};
 
+	const selectParent = () => {
+		selectBlock( parentClientId );
+	};
+
 	return (
 		<Fragment>
-			<Inspector attributes={attributes} setAttributes={setAttributes}/>
+			<Inspector attributes={attributes} setAttributes={setAttributes} selectParent={ selectParent } />
 			<div className="wp-block-themeisle-blocks-tabs-item">
 				<div className="wp-block-themeisle-blocks-tabs-item-header" onClick={() => switchActiveState( parentClientId )}>
 					<RichText

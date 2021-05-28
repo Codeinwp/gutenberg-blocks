@@ -14,7 +14,8 @@ const { PanelBody, Button, RangeControl, SelectControl, TextControl } = wp.compo
 
 const Inspector = ({
 	attributes,
-	setAttributes
+	setAttributes,
+	selectParent
 }) => {
 
 	const onTitleChange = ( value ) => {
@@ -26,6 +27,9 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody title={__( 'Settings' )} initialOpen={true}>
+				<Button isSecondary onClick={ () => selectParent() }>
+					{ __( 'Back to the Tabs' ) }
+				</Button>
 				<TextControl
 					type="text"
 					label={ __( 'Title' ) }

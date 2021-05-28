@@ -10,10 +10,10 @@ export const SortableTab = SortableElement( ({ tab, deleteTab, selectTab }) => {
 			</div>
 			<div className="wp-block-themeisle-blocks-tabs-inspector-tab-option__actions">
 				<Button isLink isTertiary onClick={ () => selectTab( tab.clientId ) }>
-					{ __( Edit ) }
+					{ __( 'Edit' ) }
 				</Button>
 				<Button isLink isTertiary isDestructive onClick={() => deleteTab( tab.clientId )}>
-					{ __( Delete ) }
+					{ __( 'Delete' ) }
 				</Button>
 			</div>
 		</div>
