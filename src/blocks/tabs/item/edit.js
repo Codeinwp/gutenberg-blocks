@@ -124,7 +124,7 @@ const Tabs = ({ isSelected, attributes, setAttributes, clientId }) => {
 					/>
 				</div>
 				<div ref={ contentRef } className={classnames( 'wp-block-themeisle-blocks-tabs-item-content' )}>
-					<InnerBlocks renderAppender={ InnerBlocks.ButtonBlockAppender } />
+					<InnerBlocks template={ [ [ 'core/paragraph', { placeholder: __( 'Insert some text' ) } ] ] } renderAppender={ InnerBlocks.ButtonBlockAppender } />
 				</div>
 			</div>
 		</Fragment>
