@@ -96,5 +96,13 @@
 			content: '|';
 			margin: 0px 5px;
 		}
+
+		button {
+			margin-right: 8px;
+
+			&:last-child {
+				margin-right: 0px;
+			}
+		}
 	}
 }

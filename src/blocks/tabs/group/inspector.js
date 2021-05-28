@@ -22,7 +22,8 @@ const { clamp } = lodash;
 const Inspector = ({
 	attributes,
 	setAttributes,
-	deleteTab
+	deleteTab,
+	selectTab
 }) => {
 
 	const TabsList = SortableContainer( ({ items }) => {
@@ -31,7 +32,7 @@ const Inspector = ({
 				{
 					items.map( ( tab, index ) => {
 						return (
-							<SortableTab key={tab.id} tab={tab} index={index} deleteTab={deleteTab}/>
+							<SortableTab key={tab.id} tab={tab} index={index} deleteTab={deleteTab} selectTab={selectTab}/>
 						);
 					})
 				}

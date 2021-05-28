@@ -2360,6 +2360,10 @@ html[amp] .wp-block-themeisle-blocks-circle-counter :nth-child(2) {
     .wp-block-themeisle-blocks-tabs-inspector-tab-option .wp-block-themeisle-blocks-tabs-inspector-tab-option__actions::before {
       content: '|';
       margin: 0px 5px; }
+    .wp-block-themeisle-blocks-tabs-inspector-tab-option .wp-block-themeisle-blocks-tabs-inspector-tab-option__actions button {
+      margin-right: 8px; }
+      .wp-block-themeisle-blocks-tabs-inspector-tab-option .wp-block-themeisle-blocks-tabs-inspector-tab-option__actions button:last-child {
+        margin-right: 0px; }
 
 .wp-block-themeisle-blocks-tabs-item .wp-block-themeisle-blocks-tabs-item-header {
   width: 100%;

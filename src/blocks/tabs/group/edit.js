@@ -39,7 +39,7 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 		};
 	}, []);
 
-	const { updateBlockAttributes, insertBlock, removeBlock } = useDispatch( 'core/block-editor' );
+	const { updateBlockAttributes, insertBlock, removeBlock, selectBlock } = useDispatch( 'core/block-editor' );
 
 
 	useEffect( () => {
@@ -110,6 +110,7 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 				setAttributes={ setAttributes }
 				tabs={ attributes.headers }
 				deleteTab={ removeBlock }
+				selectTab={ selectBlock }
 			/>
 			<div className="wp-block-themeisle-blocks-tabs">
 				<div className="wp-block-themeisle-blocks-tabs-headers">
