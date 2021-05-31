@@ -31,6 +31,9 @@ module.exports = {
 		],
 		lottie: [
 			...glob.sync( './src/frontend/lottie/index.js' )
+		],
+		tabs: [
+			...glob.sync( './src/frontend/tabs/index.js' )
 		]
 	},
 	externals: {

@@ -59,6 +59,13 @@ class Main {
 	public static $is_leaflet_loaded = false;
 
 	/**
+	 * Flag to mark that Tabs script has been loaded.
+	 *
+	 * @var bool $is_tabs_loaded Is Tabs loaded?
+	 */
+	public static $is_tabs_loaded = false;
+
+	/**
 	 * Define assets version.
 	 *
 	 * @var string $assets_version Holds assets version.
@@ -490,6 +497,18 @@ class Main {
 			);
 
 			self::$is_leaflet_loaded = true;
+		}
+
+		if ( ! self::$is_tabs_loaded && has_block( 'themeisle-blocks/tabs', $post ) ) {
+			wp_enqueue_script(
+				'themeisle-gutenberg-tabs',
+				plugin_dir_url( $this->get_dir() ) . 'build/tabs.js',
+				array( 'wp-dom-ready' ),
+				self::$assets_version,
+				true
+			);
+
+			self::$is_circle_counter_loaded = true;
 		}
 	}
 

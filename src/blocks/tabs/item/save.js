@@ -9,7 +9,7 @@ const Save = ({ attributes }) => {
 					value={ attributes.title }
 				/>
 			</div>
-			<div  className="wp-block-themeisle-blocks-tabs-item-content">
+			<div className="wp-block-themeisle-blocks-tabs-item-content">
 				<InnerBlocks.Content />
 			</div>
 		</div>
