@@ -7,7 +7,7 @@ import classnames from 'classnames';
  */
 const { InnerBlocks } = wp.blockEditor;
 const { useSelect, useDispatch } = wp.data;
-const { getBlockType, createBlock } = wp.blocks;
+const { createBlock } = wp.blocks;
 const { __ } = wp.i18n;
 
 const {
@@ -19,7 +19,7 @@ const {
 
 import Inspector from './inspector.js';
 
-const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
+const Tabs = ({ clientId, attributes, setAttributes }) => {
 
 	const contentRef = useRef( null );
 	const [ activeTab, setActiveTab ] = useState( '' );
@@ -58,11 +58,6 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 		});
 	}, [ children ]);
 
-	console.log( attributes );
-
-	// console.log( children );
-	// console.log( children?.map( ({attributes}) => attributes ) );
-	// console.log( 'Ref', contentRef.current );
 
 	const switchActiveState = ( clientId ) => {
 		if ( contentRef.current ) {
@@ -72,7 +67,6 @@ const Tabs = ({ isSelected, clientId, attributes, setAttributes }) => {
 			});
 
 			const ownBlockContent = contentRef.current.querySelector( `#block-${clientId} .wp-block-themeisle-blocks-tabs-item-content` );
-			console.log( 'Own block', ownBlockContent, contentRef );
 			if ( ownBlockContent ) {
 				ownBlockContent.classList.add( 'active' );
 			}

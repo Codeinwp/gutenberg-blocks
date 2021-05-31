@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 import classnames from 'classnames';
 
 /**
@@ -22,14 +20,12 @@ import defaults from '../../../plugins/options/global-defaults/defaults.js';
 
 const IDs = [];
 
-const Tabs = ({ isSelected, attributes, setAttributes, clientId }) => {
+const Tabs = ({ attributes, setAttributes, clientId }) => {
 
 	const contentRef = useRef( null );
 
 	const {
-		hasParent,
-		parentClientId,
-		parentAttributes
+		parentClientId
 	} = useSelect( select => {
 		const {
 			getBlock,
@@ -40,9 +36,7 @@ const Tabs = ({ isSelected, attributes, setAttributes, clientId }) => {
 		const parentBlock = getBlock( parentClientId );
 
 		return {
-			hasParent: parentBlock ? true : false,
-			parentClientId: parentBlock.clientId,
-			parentAttributes: parentBlock ? parentBlock.attributes : {}
+			parentClientId: parentBlock.clientId
 		};
 	}, []);
 
