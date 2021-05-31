@@ -228,7 +228,7 @@ class Review_Block extends Base_Block {
 			$html .= '		<div class="wp-block-themeisle-blocks-review__footer_buttons">';
 
 			foreach ( $attributes['links'] as $link ) {
-				$html .= '	<a href="' . $link['href'] . '" target="_blank">' . $link['label'] . '</a>';
+				$html .= '	<a href="' . esc_url( $link['href'] ) . '" target="_blank">' . esc_html( $link['label'] ) . '</a>';
 			}
 			$html .= '		</div>';
 			$html .= '	</div>';
@@ -523,7 +523,7 @@ class Review_Block extends Base_Block {
 				
 				$offer = array(
 					'@type'         => 'Offer',
-					'url'           => $link['href'],
+					'url'           => esc_url( $link['href'] ),
 					'priceCurrency' => isset( $attributes['currency'] ) ? $attributes['currency'] : 'USD',
 					'price'         => isset( $attributes['discounted'] ) ? $attributes['discounted'] : $attributes['price'],
 				);
