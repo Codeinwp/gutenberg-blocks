@@ -1,3 +1,7 @@
+##### [Version 1.6.7](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.6.6...v1.6.7) (2021-05-24)
+
+- Fix Product Review Block conflict with WooCommerce
+
 ##### [Version 1.6.6](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.6.5...v1.6.6) (2021-05-24)
 
 - Fix Product Review Block conflict with WooCommerce
