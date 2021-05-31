@@ -41,17 +41,10 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 
 	const { updateBlockAttributes, insertBlock, removeBlock, selectBlock } = useDispatch( 'core/block-editor' );
 
-
-	useEffect( () => {
-		if ( children && 0 < children.length && ! ( children.map( ({clientId}) => clientId ) ).includes( activeTab ) ) {
-			switchActiveState( children[0].clientId );
-		}
-	}, [ activeTab, children ]);
-
 	useEffect( () => {
 		console.log( children );
 		const newHeaders = children?.map( block => {
-			return { id: block.attributes.id, title: block.attributes.title, clientId: block.clientId };
+			return { id: block.attributes.id, title: block.attributes.title };
 		});
 		setAttributes({
 			headers: newHeaders
@@ -59,33 +52,35 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 	}, [ children ]);
 
 
-	const switchActiveState = ( clientId ) => {
+	const switchActiveState = ( blockId ) => {
+		console.log( 'Id', blockId );
 		if ( contentRef.current ) {
 			children.forEach( block => {
-				const blockContent = contentRef.current.querySelector( `#block-${block.clientId} .wp-block-themeisle-blocks-tabs-item-content` );
+				const blockContent = contentRef.current.querySelector( `#${block.attributes.id} .wp-block-themeisle-blocks-tabs-item-content` );
 				blockContent?.classList.remove( 'active' );
 			});
 
-			const ownBlockContent = contentRef.current.querySelector( `#block-${clientId} .wp-block-themeisle-blocks-tabs-item-content` );
+			const ownBlockContent = contentRef.current.querySelector( `#${blockId} .wp-block-themeisle-blocks-tabs-item-content` );
 			if ( ownBlockContent ) {
 				ownBlockContent.classList.add( 'active' );
 			}
-			setActiveTab( clientId );
+			setActiveTab( blockId );
 		} else {
 			console.log( contentRef.current );
 		}
 	};
 
 	const renderTabHeader = ( title, onClick, active ) => {
-		return ( <div className={classnames( 'wp-block-themeisle-blocks-tabs-header', {'active': active})}>
-			<div onClick={onClick}>{title}</div>
-		</div> );
+		return (
+			<div className={classnames( 'wp-block-themeisle-blocks-tabs-header', {'active': active})}>
+				<div onClick={onClick}>{title}</div>
+			</div>
+		);
 	};
 
 	const addTab = () => {
 		if ( canInsert ) {
 			const itemBlock = createBlock( 'themeisle-blocks/tabs-item' );
-			console.log( itemBlock, 'hey',   attributes.headers?.length - 1 );
 			insertBlock( itemBlock, ( attributes.headers?.length ) || 0, clientId, false );
 		}
 	};
@@ -113,8 +108,8 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 					{
 						attributes.headers?.map( tabHeader => {
 							return renderTabHeader( tabHeader.title || 'Insert Title H', () => {
-								switchActiveState( tabHeader.clientId );
-							}, tabHeader.clientId === activeTab );
+								switchActiveState( tabHeader.id );
+							}, tabHeader.id === activeTab );
 						})
 					}
 					{renderAddTab()}

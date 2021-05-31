@@ -86,6 +86,13 @@ const Tabs = ({ attributes, setAttributes, clientId }) => {
 		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
 	};
 
+	useEffect( () => {
+		const tabs = Array.from( document.querySelectorAll( `#block-${parentClientId} .wp-block-themeisle-blocks-tabs-content .wp-block-themeisle-blocks-tabs-item-content` ) );
+		if ( contentRef.current && tabs && 0 === tabs.filter( tab =>  tab.classList.contains( 'active' ) ).length ) {
+			contentRef.current.classList.add( 'active' );
+		}
+	}, [ attributes.id ]);
+
 	const switchActiveState = ( parentClientId ) => {
 		const tabs = document.querySelectorAll( `#block-${parentClientId} .wp-block-themeisle-blocks-tabs-content .wp-block-themeisle-blocks-tabs-item-content` );
 		console.log( tabs );
@@ -107,7 +114,7 @@ const Tabs = ({ attributes, setAttributes, clientId }) => {
 	return (
 		<Fragment>
 			<Inspector attributes={attributes} setAttributes={setAttributes} selectParent={ selectParent } />
-			<div className="wp-block-themeisle-blocks-tabs-item">
+			<div id={ attributes.id } className="wp-block-themeisle-blocks-tabs-item">
 				<div className="wp-block-themeisle-blocks-tabs-item-header" onClick={() => switchActiveState( parentClientId )}>
 					<RichText
 						placeholder={ __( 'Add title…' ) }
