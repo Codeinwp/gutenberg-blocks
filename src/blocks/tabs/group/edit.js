@@ -42,7 +42,6 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 	const { updateBlockAttributes, insertBlock, removeBlock, selectBlock } = useDispatch( 'core/block-editor' );
 
 	useEffect( () => {
-		console.log( children );
 		const newHeaders = children?.map( block => {
 			return { id: block.attributes.id, title: block.attributes.title };
 		});
@@ -53,7 +52,6 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 
 
 	const switchActiveState = ( blockId ) => {
-		console.log( 'Id', blockId );
 		if ( contentRef.current ) {
 			children.forEach( block => {
 				const blockContent = contentRef.current.querySelector( `#${block.attributes.id} .wp-block-themeisle-blocks-tabs-item-content` );
@@ -65,8 +63,6 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 				ownBlockContent.classList.add( 'active' );
 			}
 			setActiveTab( blockId );
-		} else {
-			console.log( contentRef.current );
 		}
 	};
 

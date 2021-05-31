@@ -1,0 +1,28 @@
+.wp-block-themeisle-blocks-tabs-item {
+	.wp-block-themeisle-blocks-tabs-item-header {
+		width: 100%;
+		border: 3px solid black;
+		padding: 5px 10px;
+
+		@media (min-width: 800px) {
+			display: none;
+		}
+	}
+
+	.wp-block-themeisle-blocks-tabs-item-content {
+		border-top: 0px;
+		width: 100%;
+		border: 3px solid black;
+		padding: 10px;
+		display: none;
+		border-top: 0px;
+
+		&.active {
+			display: block;
+		}
+
+		&:first-child {
+			display: block;
+		}
+	}
+}

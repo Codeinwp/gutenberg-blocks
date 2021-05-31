@@ -95,7 +95,6 @@ const Tabs = ({ attributes, setAttributes, clientId }) => {
 
 	const switchActiveState = ( parentClientId ) => {
 		const tabs = document.querySelectorAll( `#block-${parentClientId} .wp-block-themeisle-blocks-tabs-content .wp-block-themeisle-blocks-tabs-item-content` );
-		console.log( tabs );
 		if ( tabs ) {
 			tabs.forEach( tab => {
 				tab.classList.remove( 'active' );

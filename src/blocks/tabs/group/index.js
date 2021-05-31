@@ -13,7 +13,9 @@ const { registerBlockType } = wp.blocks;
 /**
   * Internal dependencies
   */
+import './style.scss';
 import './editor.scss';
+
 import edit from './edit.js';
 import save from './save.js';
 import attributes from './attributes.js';
