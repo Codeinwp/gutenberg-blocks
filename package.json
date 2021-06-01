@@ -42,7 +42,7 @@
 		"babel-loader": "^8.2.2",
 		"chokidar": "^3.5.1",
 		"clean-webpack-plugin": "^3.0.0",
-		"conventional-changelog-simple-preset": "^1.0.15",
+		"conventional-changelog-simple-preset": "^1.0.16",
 		"cross-env": "7.0.3",
 		"css-loader": "^5.2.4",
 		"eslint": "^7.26.0",
