@@ -59,6 +59,7 @@ export const addBlockId = ( args ) => {
 
 	const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
 	const instanceId = `${ idPrefix }${ clientId.substr( 0, 8 ) }`;
+	const idIsAlreadyUsed = attributes.id && localIDs[name].includes( attributes.id );
 
 	if ( attributes.id === undefined ) {
 
@@ -69,7 +70,7 @@ export const addBlockId = ( args ) => {
 		setAttributes({ id: instanceId });
 		localIDs[name].push( instanceId );
 		blockIDs.push( instanceId );
-	} else if ( localIDs[name].includes( attributes.id ) ) {
+	} else if ( idIsAlreadyUsed ) {
 
 		// The block must be a copy and its is already used
 		// Generate a new one and save it to `localIDs` to keep track of it in local mode.
@@ -86,7 +87,7 @@ export const addBlockId = ( args ) => {
 	console.log( 'Local', localIDs );
 
 	const deleteBlockIdFromRegister = () => {
-		if ( attributes.id !== undefined ) {
+		if ( attributes.id !== undefined && ! idIsAlreadyUsed ) {
 			localIDs[name] = localIDs[name].filter( id => id !== attributes.id );
 			console.log( `Clean UP ${attributes.id}`, localIDs[name]);
 		} else {
