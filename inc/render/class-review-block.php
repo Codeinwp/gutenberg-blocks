@@ -538,6 +538,6 @@ class Review_Block extends Base_Block {
 			}
 		}
 
-		return $json;
+		return apply_filters( 'themeisle_gutenberg_review_block_schema', $json, $attributes );
 	}
 }
