@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * External dependencies
  */
@@ -31,8 +32,9 @@ import defaultAttributes from './attributes.js';
 import Inspector from './inspector.js';
 import CircularProgressBar from './components/CircleCounter.js';
 import defaults from '../../plugins/options/global-defaults/defaults.js';
+import { addBlockId } from '../../helpers/block-utility.js';
 
-const IDs = [];
+let IDs = [];
 
 const CircularProgressBarBlock = ({
 	attributes,
@@ -40,11 +42,22 @@ const CircularProgressBarBlock = ({
 	isSelected,
 	clientId,
 	toggleSelection,
-	className
+	className,
+	name
 }) => {
 	useEffect( () => {
-		initBlock();
+		const unsubscribe = addBlockId({
+			idPrefix: 'wp-block-themeisle-blocks-circle-counter-',
+			attributes: attributes,
+			setAttributes: setAttributes,
+			clientId: clientId,
+			name: name,
+			defaultAttributes: defaultAttributes
+		});
+		return () => unsubscribe();
 	}, []);
+
+	console.log( 'IDs', IDs, attributes.id );
 
 	const progressRef = useRef( null );
 	const valueRef = useRef( null );

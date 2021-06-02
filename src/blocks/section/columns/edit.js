@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * External dependencies
  */
@@ -38,6 +39,7 @@ import Inspector from './inspector.js';
 import BlockNavigatorControl from '../../../components/block-navigator-control/index.js';
 import Separators from '../components/separators/index.js';
 import Onboarding from '../components/onboarding/index.js';
+import { addBlockId } from '../../../helpers/block-utility.js';
 
 const IDs = [];
 
@@ -79,7 +81,17 @@ const Edit = ({
 	const isSmaller = useViewportMatch( 'small', '<=' );
 
 	useEffect( () => {
-		initBlock();
+
+		// initBlock();
+		const unsubscribe = addBlockId({
+			attributes,
+			setAttributes,
+			clientId,
+			name,
+			idPrefix: 'wp-block-themeisle-blocks-advanced-columns-',
+			defaultAttributes
+		});
+		return () => unsubscribe();
 	}, []);
 
 	const initBlock = () => {

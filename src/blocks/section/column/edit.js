@@ -32,6 +32,7 @@ import defaultAttributes from './attributes.js';
 import defaults from '../../../plugins/options/global-defaults/defaults.js';
 import layouts from '../layouts.js';
 import Inspector from './inspector.js';
+import { addBlockId } from '../../../helpers/block-utility.js';
 
 const IDs = [];
 
@@ -93,6 +94,15 @@ const Edit = ({
 
 	useEffect( () => {
 		initBlock();
+		const unsubscribe = addBlockId({
+			attributes,
+			setAttributes,
+			clientId,
+			name,
+			defaultAttributes,
+			idPrefix: 'wp-block-themeisle-blocks-advanced-column-'
+		});
+		return () => unsubscribe();
 	}, []);
 
 	useEffect( () => {
