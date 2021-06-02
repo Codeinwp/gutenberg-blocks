@@ -184,6 +184,7 @@ class Main {
 				'optionsPath'   => admin_url( 'options-general.php?page=otter' ),
 				'mapsAPI'       => $api,
 				'themeDefaults' => $this->get_global_defaults(),
+				'imageSizes'    => get_intermediate_image_sizes(),
 				'isWPVIP'       => function_exists( 'is_wpcom_vip' ),
 				'canTrack'      => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
 			)
