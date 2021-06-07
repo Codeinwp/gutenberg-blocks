@@ -66,6 +66,12 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 		}
 	};
 
+	useEffect( () => {
+		if ( '' === activeTab && 0 < attributes.headers?.length && 0 < children?.length ) {
+			switchActiveState( attributes.headers[0].id );
+		}
+	}, [ activeTab, attributes.headers, children ]);
+
 	const renderTabHeader = ( title, onClick, active ) => {
 		return (
 			<div className={classnames( 'wp-block-themeisle-blocks-tabs-header', {'active': active})}>
