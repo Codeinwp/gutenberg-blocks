@@ -67,17 +67,29 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 	};
 
 	useEffect( () => {
-		if ( '' === activeTab && 0 < attributes.headers?.length && 0 < children?.length ) {
+		if ( ( '' === activeTab || 0 === children?.filter( block => block.attributes.id === activeTab ).length  )  && 0 < attributes.headers?.length && 0 < children?.length ) {
 			switchActiveState( attributes.headers[0].id );
 		}
 	}, [ activeTab, attributes.headers, children ]);
 
-	const renderTabHeader = ( title, onClick, active ) => {
-		return (
-			<div className={classnames( 'wp-block-themeisle-blocks-tabs-header', {'active': active})}>
-				<div onClick={onClick}>{title}</div>
-			</div>
-		);
+	const selectTab = ( blockId ) => {
+		if ( 0 < children?.length ) {
+			const block = children.filter( block => block.attributes.id === blockId )[0];
+			selectBlock( block.clientId );
+		}
+	};
+
+	const deleteTab = ( blockId ) => {
+		if ( 0 < children?.length ) {
+			const block = children.filter( block => block.attributes.id === blockId )[0];
+			removeBlock( block.clientId );
+			if ( activeTab === blockId ) {
+				console.log( 'Delete', activeTab );
+				setActiveTab( '' );
+			} else {
+				console.log( activeTab, blockId );
+			}
+		}
 	};
 
 	const addTab = () => {
@@ -85,6 +97,14 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 			const itemBlock = createBlock( 'themeisle-blocks/tabs-item' );
 			insertBlock( itemBlock, ( attributes.headers?.length ) || 0, clientId, false );
 		}
+	};
+
+	const renderTabHeader = ( title, onClick, active ) => {
+		return (
+			<div className={classnames( 'wp-block-themeisle-blocks-tabs-header', {'active': active})}>
+				<div onClick={onClick}>{title}</div>
+			</div>
+		);
 	};
 
 	const renderAddTab = () => {
@@ -101,8 +121,8 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 				attributes={ attributes }
 				setAttributes={ setAttributes }
 				tabs={ attributes.headers }
-				deleteTab={ removeBlock }
-				selectTab={ selectBlock }
+				deleteTab={ deleteTab }
+				selectTab={ selectTab }
 				addTab={ addTab }
 			/>
 			<div className="wp-block-themeisle-blocks-tabs">
