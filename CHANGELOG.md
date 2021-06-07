@@ -1,3 +1,26 @@
+##### [Version 1.6.7](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.6.6...v1.6.7) (2021-05-24)
+
+- Fix Product Review Block conflict with WooCommerce
+
+##### [Version 1.6.6](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.6.5...v1.6.6) (2021-05-24)
+
+- Fix Product Review Block conflict with WooCommerce
+
+##### [Version 1.6.5](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.6.4...v1.6.5) (2021-05-20)
+
+- Add Product Review Block
+- Make blocks AMP-ready
+- Fix the post excerpt becoming corrupted when containing multi-byte character
+- Fix Section's Overlay Gradient not working
+- Fix Icon List reset on refresh
+
+##### [Version 1.6.4](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.6.3...v1.6.4) (2021-04-12)
+
+- Fix button not centering
+- Fix custom CSS not working on Leaflet Map Block
+- Fix Columns width resetting
+- Fix Resizer in Columns
+
 ##### [Version 1.6.3](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.6.2...v1.6.3) (2021-03-29)
 
 - Fix Columns range crashing in Section Block.

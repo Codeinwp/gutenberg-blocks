@@ -20,7 +20,6 @@ const Inspector = ({
 }) => {
 	return (
 		<InspectorControls>
-
 			<PanelBody
 				title={ __( 'Settings' ) }
 			>

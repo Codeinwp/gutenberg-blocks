@@ -108,7 +108,7 @@ class Main {
 	 */
 	public function init() {
 		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
-			define( 'THEMEISLE_BLOCKS_VERSION', '1.6.3' );
+			define( 'THEMEISLE_BLOCKS_VERSION', '1.6.7' );
 			define( 'THEMEISLE_BLOCKS_DEV', false );
 		}
 
@@ -191,6 +191,7 @@ class Main {
 				'optionsPath'   => admin_url( 'options-general.php?page=otter' ),
 				'mapsAPI'       => $api,
 				'themeDefaults' => $this->get_global_defaults(),
+				'imageSizes'    => function_exists( 'is_wpcom_vip' ) ? array( 'thumbnail', 'medium', 'medium_large', 'large' ) : get_intermediate_image_sizes(), //phpcs:ignore WordPressVIPMinimum.VIP.RestrictedFunctions.get_intermediate_image_sizes_get_intermediate_image_sizes
 				'isWPVIP'       => function_exists( 'is_wpcom_vip' ),
 				'canTrack'      => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
 			)
@@ -611,6 +612,7 @@ class Main {
 			'\ThemeIsle\GutenbergBlocks\Render\Leaflet_Map_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Plugin_Card_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Posts_Grid_Block',
+			'\ThemeIsle\GutenbergBlocks\Render\Review_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Sharing_Icons_Block',
 		);
 

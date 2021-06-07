@@ -94,9 +94,20 @@ class Options_Settings {
 			return;
 		}
 
+		$attributes = array();
+
+		$defaults = get_option( 'themeisle_blocks_settings_global_defaults' );
+		if ( ! empty( $defaults ) ) {
+			$defaults = json_decode( $defaults, true );
+
+			if ( isset( $defaults['themeisle-blocks/advanced-columns'] ) ) {
+				$attributes = $defaults['themeisle-blocks/advanced-columns'];
+			}
+		}
+
 		$post_type_object           = get_post_type_object( 'page' );
 		$post_type_object->template = array(
-			array( 'themeisle-blocks/advanced-columns' ),
+			array( 'themeisle-blocks/advanced-columns', $attributes ),
 		);
 	}
 
