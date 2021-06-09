@@ -2,6 +2,7 @@ import globalDefaultsBlocksAttrs from '../plugins/options/global-defaults/defaul
 const {
 	isEqual
 } = lodash;
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Utiliy function for creating a function that add the gobal defaults values to the block's attribute value.
@@ -29,6 +30,37 @@ export const addGlobalDefaults = ( attributes, setAttributes, name, defaultAttri
 };
 
 /**
+ * An object that keep tracking of the block instances. Is used for preventing id duplication on action like: create, duplicate, copy on editor page.
+ * @type {Object.<string, Array.<string>>}
+ */
+const localIDs = {};
+
+/**
+ * Generate an Id based on the client id of the block. If the new id is also already used, create a new one using the `uuid`.
+ * This might problem of duplicated new ids can be observed in the `Template Library` of the `Section` block when using Neve
+ * Reference: https://github.com/Codeinwp/neve/blob/master/gutenberg/blocks/blog/template.json
+ * The created block will share the same client Id at the beggining, after refresh a new will be generated and thus the problem will fix itself
+ * by creating new id based on the new uniq `clientId`
+ * @param {string} idPrefix The prefix used for generating the block id
+ * @param {string} clientId The block's client id provided by WordPress
+ * @param {Array.<string>} idsList The ids list for the current type of block
+ * @returns An uniq id instance
+ */
+const generateUniqIdInstance = ( idPrefix, clientId, idsList ) => {
+	const instanceId = `${ idPrefix }${ clientId.substr( 0, 8 ) }`;
+	if ( idsList.includes( instanceId ) ) {
+
+		console.log( 'Edge case detected', instanceId, idsList );
+		let newInstanceId = `${ idPrefix }${ uuidv4().substr( 0, 8 ) }`;
+		while ( idsList.includes( newInstanceId ) ) {
+			newInstanceId = `${ idPrefix }${ uuidv4().substr( 0, 8 ) }`;
+		}
+		return newInstanceId;
+	}
+	return instanceId;
+};
+
+/**
  * THe args definition for the block id generator
  * @typedef {Object} AddBlockIdProps
  * @property {Object} attributes The block's attributes provided by WordPress
@@ -39,12 +71,6 @@ export const addGlobalDefaults = ( attributes, setAttributes, name, defaultAttri
  * @property {string} idPrefix The prefix used for generating the block id
  */
 
-
-/**
- * An object that keep tracking of the block instances. Is used for preventing id duplication on action like: create, duplicate, copy on editor page.
- * @type {Object.<string, Array.<string>>}
- */
-const localIDs = {};
 
 /**
  * Generate an Id for block so that it will create a conlfict with the others.
@@ -58,10 +84,11 @@ export const addBlockId = ( args ) => {
 	localIDs[name] ??= [];
 
 	const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
-	const instanceId = `${ idPrefix }${ clientId.substr( 0, 8 ) }`;
+	const instanceId = generateUniqIdInstance( idPrefix, clientId, localIDs[name]);
 	const idIsAlreadyUsed = attributes.id && localIDs[name].includes( attributes.id );
 
 	if ( attributes.id === undefined ) {
+		console.log( 'Undefined id', name );
 
 		// If the id is undefined, then the block is newly created, and so we need to apply the Global Defaults
 		addGlobalDefaults( attributes, setAttributes, name, defaultAttributes );
@@ -71,6 +98,7 @@ export const addBlockId = ( args ) => {
 		localIDs[name].push( instanceId );
 		blockIDs.push( instanceId );
 	} else if ( idIsAlreadyUsed ) {
+		console.log( 'Already used', instanceId, attributes.id );
 
 		// The block must be a copy and its is already used
 		// Generate a new one and save it to `localIDs` to keep track of it in local mode.
@@ -89,10 +117,10 @@ export const addBlockId = ( args ) => {
 	const deleteBlockIdFromRegister = () => {
 		if ( attributes.id !== undefined && ! idIsAlreadyUsed ) {
 			localIDs[name] = localIDs[name].filter( id => id !== attributes.id );
-			console.log( `Clean UP ${attributes.id}`, localIDs[name]);
+			console.log( `Clean attr UP ${attributes.id}`, localIDs[name]);
 		} else {
 			localIDs[name] = localIDs[name].filter( id => id !== instanceId );
-			console.log( `Clean UP ${instanceId}`,  localIDs[name]);
+			console.log( `Clean instance UP ${instanceId}`,  localIDs[name]);
 		}
 	};
 
