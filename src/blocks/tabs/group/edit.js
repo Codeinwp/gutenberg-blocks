@@ -18,6 +18,7 @@ const {
 } = wp.element;
 
 import Inspector from './inspector.js';
+import Toolbar from './toolbar.js';
 
 const Tabs = ({ clientId, attributes, setAttributes }) => {
 
@@ -117,6 +118,7 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 
 	return (
 		<Fragment>
+			<Toolbar attributes={ attributes } setAttributes={ setAttributes } selectedTab={ activeTab } />
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
@@ -140,6 +142,7 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 					<InnerBlocks
 						allowedBlocks={ [ 'themeisle-blocks/tabs-item' ] }
 						template={ [ [ 'themeisle-blocks/tabs-item' ] ] }
+						orientation="vertical"
 						renderAppender={ '' }
 					/>
 				</div>
