@@ -12,17 +12,15 @@ const ToolbarComp = ({attributes, setAttributes, selectedTab}) => {
 	 */
 	const index = attributes.headers?.findIndex( ({id}) => id === selectedTab );
 
-	if ( -1 === index ) {
-		console.warn( 'Selected tab is not in the attr', selectedTab, attributes.headers );
-	} else if ( index === undefined ) {
-		console.error( 'Index is undefined', attributes );
-	}
-
 	/**
 	 *
 	 * @param {('left'|'right')} direction
 	 */
 	const moveTabTo = ( direction ) => {
+		if ( index === undefined ) {
+			console.warn( 'Tab Index is undefined' );
+			return;
+		}
 		switch ( direction ) {
 		case 'left':
 			setAttributes({

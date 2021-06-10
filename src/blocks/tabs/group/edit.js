@@ -55,21 +55,19 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 	const switchActiveState = ( blockId ) => {
 		if ( contentRef.current ) {
 			children.forEach( block => {
-				const blockContent = contentRef.current.querySelector( `#${block.attributes.id} .wp-block-themeisle-blocks-tabs-item-content` );
-				blockContent?.classList.remove( 'active' );
+				const blockContent = contentRef.current.querySelector( `#block-${block.clientId} .wp-block-themeisle-blocks-tabs-item-content` );
+				console.log( blockContent, block.attributes.id );
+				blockContent?.classList.toggle( 'active', block.attributes.id === blockId );
 			});
-
-			const ownBlockContent = contentRef.current.querySelector( `#${blockId} .wp-block-themeisle-blocks-tabs-item-content` );
-			if ( ownBlockContent ) {
-				ownBlockContent.classList.add( 'active' );
-			}
 			setActiveTab( blockId );
 		}
 	};
 
 	useEffect( () => {
-		if ( ( '' === activeTab || 0 === children?.filter( block => block.attributes.id === activeTab ).length  )  && 0 < attributes.headers?.length && 0 < children?.length ) {
-			switchActiveState( attributes.headers[0].id );
+		if ( 0 < children?.length ) {
+			if ( ( '' === activeTab || 0 === children?.filter( block => block.attributes.id === activeTab ).length  )  && 0 < attributes.headers?.length ) {
+				switchActiveState( children[0].attributes.id );
+			}
 		}
 	}, [ activeTab, attributes.headers, children ]);
 
