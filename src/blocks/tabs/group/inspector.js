@@ -14,10 +14,7 @@ const {
 	InspectorControls
 } = wp.blockEditor;
 
-const { PanelBody, Button, RangeControl, SelectControl, TextControl } = wp.components;
-
-const { clamp } = lodash;
-
+const { PanelBody, Button } = wp.components;
 
 const Inspector = ({
 	attributes,
@@ -42,7 +39,6 @@ const Inspector = ({
 	});
 
 	const onSortEnd = ({ oldIndex, newIndex }) => {
-		console.log( oldIndex, newIndex );
 		setAttributes({
 			headers: arrayMove( attributes.headers, oldIndex, newIndex )
 		});
@@ -51,11 +47,17 @@ const Inspector = ({
 
 	return (
 		<InspectorControls>
-			<PanelBody title={__( 'Tabs' )} initialOpen={true}>
+			<PanelBody title={__( 'Tabs Management' )} initialOpen={true}>
 				{
-					0 < attributes.headers?.length && ( <TabsList items={ attributes.headers } onSortEnd={onSortEnd} axis={'y'} /> )
+					0 < attributes.headers?.length && ( <TabsList pressDelay={200} items={ attributes.headers } onSortEnd={onSortEnd} axis={'y'} /> )
 				}
-				<Button isSecondary onClick={ addTab } > { __( 'Add Tab' ) } </Button>
+				<Button
+					isSecondary
+					isLarge
+					className="wp-block-themeisle-blocks-tabs-inspector-add-tab" onClick={ addTab }
+				>
+					{ __( 'Add Tab' ) }
+				</Button>
 			</PanelBody>
 		</InspectorControls>
 	);

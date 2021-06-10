@@ -65,45 +65,49 @@
 
 .wp-block-themeisle-blocks-tabs-inspector-tab-option {
 	display: flex;
-	flex-direction: row;
-	width: 100%;
-	padding: 5px 10px;
-	border: 1px solid #bbb;
-	border-radius: 5px;
-	margin-bottom: 8px;
+	border: 1px solid #d5dadf;
 	cursor: move;
+	margin: 10px 0;
+
+	&:hover {
+		border-color: #a4afb7;
+	}
 
 	.wp-block-themeisle-blocks-tabs-inspector-tab-option__name {
 		overflow: hidden;
+		flex-basis: 80%;
+		padding: 9px 15px;
+		overflow: hidden;
 		text-overflow: ellipsis;
-		width: 80%;
-		display: flex;
-		flex-direction: row;
+		white-space: nowrap;
 
-		p {
-			margin: 0px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
+		&:hover {
+			background: #fafafb;
 		}
-
 	}
 
 	.wp-block-themeisle-blocks-tabs-inspector-tab-option__actions {
 		display: flex;
-		flex-direction: row;
+		flex-basis: 20%;
+		justify-content: center;
+		padding: 10px 5px;
+		border-left: 1px solid #d5dadf;
+		cursor: pointer;
 
-		&::before {
-			content: '|';
-			margin: 0px 5px;
+		&:hover {
+			background: #fafafb;
+			border-radius: 0;
+			box-shadow: none;
 		}
 
-		button {
-			margin-right: 8px;
-
-			&:last-child {
-				margin-right: 0px;
-			}
+		.dashicon {
+			margin: 2px;
 		}
 	}
+}
+
+.wp-block-themeisle-blocks-tabs-inspector-add-tab {
+	display: flex;
+	justify-content: center;
+	width: 100%;
 }
