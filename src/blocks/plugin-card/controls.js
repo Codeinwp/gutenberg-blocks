@@ -17,7 +17,7 @@ const Controls = ({ setAttributes }) => {
 	return (
 		<BlockControls>
 			<Toolbar>
-				<Tooltip text={ __( 'Edit' ) }>
+				<Tooltip text={ __( 'Edit', 'otter-blocks' ) }>
 					<Button
 						className="components-icon-button components-toolbar__control wp-block-themeisle-blocks-plugin-cards-edit-plugin-card"
 						onClick={ () => setAttributes({ slug: undefined }) }

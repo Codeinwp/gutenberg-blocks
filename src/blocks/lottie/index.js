@@ -19,8 +19,8 @@ import save from './save.js';
 import attributes from './attributes.js';
 
 registerBlockType( 'themeisle-blocks/lottie', {
-	title: __( 'Lottie Animation' ),
-	description: __( 'Add Lottie animations to your WordPress.' ),
+	title: __( 'Lottie Animation', 'otter-blocks' ),
+	description: __( 'Add Lottie animations to your WordPress.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [

@@ -59,19 +59,19 @@ class Review_Block extends Base_Block {
 				'type'    => 'array',
 				'default' => array(
 					array(
-						'title'  => __( 'Stability', 'textdomain' ),
+						'title'  => __( 'Stability', 'otter-blocks' ),
 						'rating' => 9,
 					),
 					array(
-						'title'  => __( 'Ease of Use', 'textdomain' ),
+						'title'  => __( 'Ease of Use', 'otter-blocks' ),
 						'rating' => 4,
 					),
 					array(
-						'title'  => __( 'Look & Feel', 'textdomain' ),
+						'title'  => __( 'Look & Feel', 'otter-blocks' ),
 						'rating' => 9,
 					),
 					array(
-						'title'  => __( 'Price', 'textdomain' ),
+						'title'  => __( 'Price', 'otter-blocks' ),
 						'rating' => 7,
 					),
 				),
@@ -79,28 +79,28 @@ class Review_Block extends Base_Block {
 			'pros'        => array(
 				'type'    => 'array',
 				'default' => array(
-					__( 'Easy to use', 'textdomain' ),
-					__( 'Good price', 'textdomain' ),
-					__( 'Sturdy build and ergonomics', 'textdomain' ),
+					__( 'Easy to use', 'otter-blocks' ),
+					__( 'Good price', 'otter-blocks' ),
+					__( 'Sturdy build and ergonomics', 'otter-blocks' ),
 				),
 			),
 			'cons'        => array(
 				'type'    => 'array',
 				'default' => array(
-					__( 'Incompatible with old versions', 'textdomain' ),
-					__( 'Hard to assemble', 'textdomain' ),
-					__( 'Bad color combination', 'textdomain' ),
+					__( 'Incompatible with old versions', 'otter-blocks' ),
+					__( 'Hard to assemble', 'otter-blocks' ),
+					__( 'Bad color combination', 'otter-blocks' ),
 				),
 			),
 			'links'       => array(
 				'type'    => 'array',
 				'default' => array(
 					array(
-						'label' => __( 'Buy on Amazon', 'textdomain' ),
+						'label' => __( 'Buy on Amazon', 'otter-blocks' ),
 						'href'  => '',
 					),
 					array(
-						'label' => __( 'Buy on eBay', 'textdomain' ),
+						'label' => __( 'Buy on eBay', 'otter-blocks' ),
 						'href'  => '',
 					),
 				),
@@ -125,7 +125,7 @@ class Review_Block extends Base_Block {
 				'wp_footer',
 				function() use ( $attributes ) {
 					echo '<script type="application/ld+json">' . wp_json_encode( $this->get_json_ld( $attributes ) ) . '</script>';
-				} 
+				}
 			);
 		}
 
@@ -145,7 +145,7 @@ class Review_Block extends Base_Block {
 		$html .= '			<div class="wp-block-themeisle-blocks-review__header_ratings">';
 		$html .= $this->get_overall_stars( $this->get_overall_ratings( $attributes['features'] ) );
 		// translators: Overall rating from 0 to 10.
-		$html .= '				<span>' . sprintf( __( '%s out of 10', 'textdomain' ), $this->get_overall_ratings( $attributes['features'] ) ) . '</span>';
+		$html .= '				<span>' . sprintf( __( '%s out of 10', 'otter-blocks' ), $this->get_overall_ratings( $attributes['features'] ) ) . '</span>';
 		$html .= '			</div>';
 
 		if ( isset( $attributes['price'] ) || isset( $attributes['discounted'] ) ) {
@@ -171,7 +171,7 @@ class Review_Block extends Base_Block {
 
 			if ( isset( $attributes['description'] ) && ! empty( $attributes['description'] ) ) {
 				$html .= '	<p>' . $attributes['description'] . '</p>';
-			}   
+			}
 			$html .= '	</div>';
 		}
 
@@ -196,7 +196,7 @@ class Review_Block extends Base_Block {
 		$html .= '	<div class="wp-block-themeisle-blocks-review__right">';
 		if ( isset( $attributes['pros'] ) && count( $attributes['pros'] ) > 0 ) {
 			$html .= '	<div class="wp-block-themeisle-blocks-review__right_pros">';
-			$html .= '		<h4>' . __( 'Pros', 'textdomain' ) . '</h4>';
+			$html .= '		<h4>' . __( 'Pros', 'otter-blocks' ) . '</h4>';
 
 			foreach ( $attributes['pros'] as $pro ) {
 				$html .= '	<div class="wp-block-themeisle-blocks-review__right_pros_item">';
@@ -209,7 +209,7 @@ class Review_Block extends Base_Block {
 
 		if ( isset( $attributes['cons'] ) && count( $attributes['cons'] ) > 0 ) {
 			$html .= '	<div class="wp-block-themeisle-blocks-review__right_cons">';
-			$html .= '		<h4>' . __( 'Cons', 'textdomain' ) . '</h4>';
+			$html .= '		<h4>' . __( 'Cons', 'otter-blocks' ) . '</h4>';
 
 			foreach ( $attributes['cons'] as $con ) {
 				$html .= '	<div class="wp-block-themeisle-blocks-review__right_cons_item">';
@@ -223,7 +223,7 @@ class Review_Block extends Base_Block {
 
 		if ( isset( $attributes['links'] ) && count( $attributes['links'] ) > 0 ) {
 			$html .= '	<div class="wp-block-themeisle-blocks-review__footer">';
-			$html .= '		<span class="wp-block-themeisle-blocks-review__footer_label">' . __( 'Buy this product', 'textdomain' ) . '</span>';
+			$html .= '		<span class="wp-block-themeisle-blocks-review__footer_label">' . __( 'Buy this product', 'otter-blocks' ) . '</span>';
 
 			$html .= '		<div class="wp-block-themeisle-blocks-review__footer_buttons">';
 
@@ -256,7 +256,7 @@ class Review_Block extends Base_Block {
 				$carry += $feature['rating'];
 				return $carry;
 			},
-			0 
+			0
 		);
 
 		$rating = round( $rating / count( $features ) );
@@ -516,11 +516,11 @@ class Review_Block extends Base_Block {
 				if ( ! isset( $link['href'] ) || empty( $link['href'] ) ) {
 					continue;
 				}
-				
+
 				if ( ! isset( $attributes['price'] ) && ! isset( $attributes['discounted'] ) ) {
 					continue;
 				}
-				
+
 				$offer = array(
 					'@type'         => 'Offer',
 					'url'           => $link['href'],

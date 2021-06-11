@@ -85,12 +85,12 @@ const Marker = ({
 					className="wp-block-themeisle-blocks-leaflet-map-marker-title"
 					onClick={ () => openMarker() }
 				>
-					{ marker.title || __( 'Custom Marker' ) }
+					{ marker.title || __( 'Custom Marker', 'otter-blocks' ) }
 				</Button>
 
 				<Button
 					icon="no-alt"
-					label={ __( 'Remove Marker' ) }
+					label={ __( 'Remove Marker', 'otter-blocks' ) }
 					showTooltip={ true }
 					className="wp-block-themeisle-blocks-leaflet-map-marker-remove"
 					onClick={ () => dispatch({
@@ -104,19 +104,19 @@ const Marker = ({
 				( isOpen ) && (
 					<div className="wp-block-themeisle-blocks-leaflet-map-marker-control-area">
 						<TextControl
-							label={ __( 'Location' ) }
+							label={ __( 'Location', 'otter-blocks' ) }
 							type="text"
 							className={ classnames({'wp-block-themeisle-blocks-leaflet-map-input-error': 'LOCATION' === error.target })}
 							value={ location }
 							onChange={ e => {
 								setLocation( e );
 							} }
-							help={ __( 'Press Enter to search the location' ) }
+							help={ __( 'Press Enter to search the location', 'otter-blocks' ) }
 							onKeyDown={ ( event ) => searchOnPress( event, 'Enter' ) }
 						/>
 
 						<TextControl
-							label={ __( 'Latitude' ) }
+							label={ __( 'Latitude', 'otter-blocks' ) }
 							type="text"
 							value={ lat }
 							onChange={ e => {
@@ -132,7 +132,7 @@ const Marker = ({
 						/>
 
 						<TextControl
-							label={ __( 'Longitude' ) }
+							label={ __( 'Longitude', 'otter-blocks' ) }
 							type="text"
 							value={ lng }
 							onChange={ e => {
@@ -148,7 +148,7 @@ const Marker = ({
 						/>
 
 						<TextControl
-							label={ __( 'Title' ) }
+							label={ __( 'Title', 'otter-blocks' ) }
 							type="text"
 							value={ title }
 							onChange={ e => {
@@ -164,7 +164,7 @@ const Marker = ({
 						/>
 
 						<MarkerEditor
-							label={ __( 'Description' ) }
+							label={ __( 'Description', 'otter-blocks' ) }
 							type="text"
 							value={ marker.description }
 							onChange={ e => {

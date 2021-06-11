@@ -173,7 +173,7 @@ const Edit = ({
 				<RichText
 					identifier="content"
 					tagName="p"
-					placeholder={ __( 'Write your content…' ) }
+					placeholder={ __( 'Write your content…', 'otter-blocks' ) }
 					className={ classnames(
 						{ 'wp-block-themeisle-blocks-icon-list-item-content': ! attributes.contentColor },
 						{ 'wp-block-themeisle-blocks-icon-list-item-content-custom': attributes.contentColor }

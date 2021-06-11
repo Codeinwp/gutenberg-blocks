@@ -56,7 +56,7 @@ const MarkerWrapper = ({
 					});
 				}}
 			>
-				{ __( 'Add Marker' ) }
+				{ __( 'Add Marker', 'otter-blocks' ) }
 			</Button>
 		</Fragment>
 	);

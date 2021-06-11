@@ -157,7 +157,7 @@ const Edit = ({
 					} }
 				>
 					<RichText
-						placeholder={ __( 'Name of your product…' ) }
+						placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
 						allowedFormats={ [] }
 						value={ attributes.title }
 						onChange={ title => setAttributes({ title }) }
@@ -176,7 +176,8 @@ const Edit = ({
 									color: attributes.textColor
 								} }
 							>
-								{ sprintf( __( '%d out of 10' ), overallRatings || 0 ) }
+
+								{ /** translators: %s Rating score. **/ sprintf( __( '%d out of 10', 'otter-blocks' ), overallRatings || 0 ) }
 							</span>
 						</div>
 
@@ -213,7 +214,7 @@ const Edit = ({
 
 						{ ( isSelected || attributes.description ) && (
 							<RichText
-								placeholder={ __( 'Product description or a small review…' ) }
+								placeholder={ __( 'Product description or a small review…', 'otter-blocks' ) }
 								value={ attributes.description }
 								onChange={ description => setAttributes({ description }) }
 								tagName="p"
@@ -245,7 +246,7 @@ const Edit = ({
 							return (
 								<div className="wp-block-themeisle-blocks-review__left_feature">
 									<RichText
-										placeholder={ __( 'Feature title' ) }
+										placeholder={ __( 'Feature title', 'otter-blocks' ) }
 										value={ feature.title }
 										className="wp-block-themeisle-blocks-review__left_feature_title"
 										onChange={ title => changeFeature( index, { title }) }
@@ -280,7 +281,7 @@ const Edit = ({
 									color: attributes.textColor
 								} }
 							>
-								{ __( 'Pros' ) }
+								{ __( 'Pros', 'otter-blocks' ) }
 							</h4>
 
 							{ attributes.pros.map( ( pro, index ) => (
@@ -288,7 +289,7 @@ const Edit = ({
 									{ check }
 
 									<RichText
-										placeholder={ __( 'Why do you like the product?' ) }
+										placeholder={ __( 'Why do you like the product?', 'otter-blocks' ) }
 										value={ pro }
 										onChange={ value => changePro( index, value ) }
 										tagName="p"
@@ -308,7 +309,7 @@ const Edit = ({
 									color: attributes.textColor
 								} }
 							>
-								{ __( 'Cons' ) }
+								{ __( 'Cons', 'otter-blocks' ) }
 							</h4>
 
 							{ attributes.cons.map( ( con, index ) => (
@@ -316,7 +317,7 @@ const Edit = ({
 									{ close }
 
 									<RichText
-										placeholder={ __( 'What can be improved?' ) }
+										placeholder={ __( 'What can be improved?', 'otter-blocks' ) }
 										value={ con }
 										onChange={ value => changeCon( index, value ) }
 										tagName="p"
@@ -338,13 +339,13 @@ const Edit = ({
 								color: attributes.textColor
 							} }
 						>
-							{ __( 'Buy this product' ) }
+							{ __( 'Buy this product', 'otter-blocks' ) }
 						</span>
 
 						<div className="wp-block-themeisle-blocks-review__footer_buttons">
 							{ attributes.links.map( ( link, index ) => (
 								<RichText
-									placeholder={ __( 'Button label' ) }
+									placeholder={ __( 'Button label', 'otter-blocks' ) }
 									value={ link.label }
 									onChange={ label => changeLinks( index, { label }) }
 									tagName="span"

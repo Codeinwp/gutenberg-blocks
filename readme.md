@@ -12,7 +12,7 @@ You can include this library like this::
 
 ```
 if ( class_exists( '\ThemeIsle\GutenbergBlocks\Main' ) ) {
-	\ThemeIsle\GutenbergBlocks\Main::instance( __( 'Orbit Fox', 'textdomain' ) );
+	\ThemeIsle\GutenbergBlocks\Main::instance( __( 'Orbit Fox', 'otter-blocks' ) );
 }
 ```
 

@@ -278,7 +278,7 @@ const Edit = ({
 					className
 				) }
 				value={ attributes.content }
-				placeholder={ __( 'Write heading…' ) }
+				placeholder={ __( 'Write heading…', 'otter-blocks' ) }
 				tagName={ attributes.tag }
 				formattingControls={ [ 'bold', 'italic', 'link', 'strikethrough', 'highlight' ] }
 				allowedFormats={ [ 'core/bold', 'core/italic', 'core/link', 'core/strikethrough', 'themeisle-blocks/highlight' ] }

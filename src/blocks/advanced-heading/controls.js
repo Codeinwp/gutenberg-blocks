@@ -78,51 +78,51 @@ const Controls = ({
 		<BlockControls>
 			<DropdownMenu
 				icon={ getTagIcon( attributes.tag ) }
-				label={ __( 'Select tag' ) }
+				label={ __( 'Select tag', 'otter-blocks' ) }
 				className="components-toolbar"
 				controls={ [
 					{
-						title: __( 'Heading 1' ),
+						title: __( 'Heading', 'otter-blocks' ) + ' 1',
 						icon: getTagIcon( 'h1' ),
 						onClick: () => changeTag( 'h1' )
 					},
 					{
-						title: __( 'Heading 2' ),
+						title: __( 'Heading', 'otter-blocks' ) + ' 2',
 						icon: getTagIcon( 'h2' ),
 						onClick: () => changeTag( 'h2' )
 					},
 					{
-						title: __( 'Heading 3' ),
+						title: __( 'Heading', 'otter-blocks' ) + ' 3',
 						icon: getTagIcon( 'h3' ),
 						onClick: () => changeTag( 'h3' )
 					},
 					{
-						title: __( 'Heading 4' ),
+						title: __( 'Heading', 'otter-blocks' ) + ' 4',
 						icon: getTagIcon( 'h4' ),
 						onClick: () => changeTag( 'h4' )
 					},
 					{
-						title: __( 'Heading 5' ),
+						title: __( 'Heading', 'otter-blocks' ) + ' 5',
 						icon: getTagIcon( 'h5' ),
 						onClick: () => changeTag( 'h5' )
 					},
 					{
-						title: __( 'Heading 6' ),
+						title: __( 'Heading', 'otter-blocks' ) + ' 6',
 						icon: getTagIcon( 'h6' ),
 						onClick: () => changeTag( 'h6' )
 					},
 					{
-						title: __( 'Division' ),
+						title: __( 'Division', 'otter-blocks' ),
 						icon: getTagIcon( 'div' ),
 						onClick: () => changeTag( 'div' )
 					},
 					{
-						title: __( 'Paragraph' ),
+						title: __( 'Paragraph', 'otter-blocks' ),
 						icon: getTagIcon( 'p' ),
 						onClick: () => changeTag( 'p' )
 					},
 					{
-						title: __( 'Span Tag' ),
+						title: __( 'Span Tag', 'otter-blocks' ),
 						icon: getTagIcon( 'span' ),
 						onClick: () => changeTag( 'span' )
 					}
@@ -140,7 +140,7 @@ const Controls = ({
 							onClick={ onToggle }
 							aria-haspopup="true"
 							aria-expanded={ isOpen }
-							label={ __( 'Typography Settings' ) }
+							label={ __( 'Typography Settings', 'otter-blocks' ) }
 							showTooltip={ true }
 						>
 							<span className="components-dropdown-menu__indicator" />
@@ -149,7 +149,7 @@ const Controls = ({
 					renderContent={ () => (
 						<Fragment>
 							<GoogleFontsControl
-								label={ __( 'Font Family' ) }
+								label={ __( 'Font Family', 'otter-blocks' ) }
 								value={ attributes.fontFamily }
 								onChangeFontFamily={ changeFontFamily }
 								isSelect={ true }
@@ -162,7 +162,7 @@ const Controls = ({
 							/>
 
 							<RangeControl
-								label={ __( 'Line Height' ) }
+								label={ __( 'Line Height', 'otter-blocks' ) }
 								value={ attributes.lineHeight }
 								onChange={ changeLineHeight }
 								min={ 0 }
@@ -170,7 +170,7 @@ const Controls = ({
 							/>
 
 							<RangeControl
-								label={ __( 'Letter Spacing' ) }
+								label={ __( 'Letter Spacing', 'otter-blocks' ) }
 								value={ attributes.letterSpacing }
 								onChange={ changeLetterSpacing }
 								min={ -50 }

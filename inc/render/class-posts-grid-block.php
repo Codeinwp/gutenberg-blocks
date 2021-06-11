@@ -213,7 +213,7 @@ class Posts_Grid_Block extends Base_Block {
 						if ( isset( $attributes['displayDate'] ) && $attributes['displayDate'] ) {
 							$list_items_markup .= sprintf(
 								'%1$s <time datetime="%2$s">%3$s</time> ',
-								__( 'on', 'textdomain' ),
+								__( 'on', 'otter-blocks' ),
 								esc_attr( get_the_date( 'c', $id ) ),
 								esc_html( get_the_date( 'j F, Y', $id ) )
 							);
@@ -222,7 +222,7 @@ class Posts_Grid_Block extends Base_Block {
 						if ( isset( $attributes['displayAuthor'] ) && $attributes['displayAuthor'] ) {
 							$list_items_markup .= sprintf(
 								'%1$s %2$s',
-								__( 'by', 'textdomain' ),
+								__( 'by', 'otter-blocks' ),
 								get_the_author_meta( 'display_name', get_post_field( 'post_author', $id ) )
 							);
 						}
