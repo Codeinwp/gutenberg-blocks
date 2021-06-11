@@ -1,6 +1,14 @@
+/** @jsx jsx */
 /* eslint-disable no-unused-vars */
-
+/**
+ * External dependencies
+ */
+import { plus, plusCircle } from '@wordpress/icons';
 import classnames from 'classnames';
+import {
+	css,
+	jsx
+} from '@emotion/react';
 
 /**
  * WordPress dependencies.
@@ -9,7 +17,7 @@ const { InnerBlocks } = wp.blockEditor;
 const { useSelect, useDispatch } = wp.data;
 const { createBlock } = wp.blocks;
 const { __ } = wp.i18n;
-
+const { Icon } = wp.components;
 const {
 	Fragment,
 	useEffect,
@@ -56,7 +64,6 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 		if ( contentRef.current ) {
 			children.forEach( block => {
 				const blockContent = contentRef.current.querySelector( `#block-${block.clientId} .wp-block-themeisle-blocks-tabs-item-content` );
-				console.log( blockContent, block.attributes.id );
 				blockContent?.classList.toggle( 'active', block.attributes.id === blockId );
 			});
 			setActiveTab( blockId );
@@ -98,6 +105,22 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 		}
 	};
 
+	const tabStyle = css`
+		.wp-block-themeisle-blocks-tabs-header.active {
+			background-color: ${ attributes.tabColor || 'red' };
+		}
+		.wp-block-themeisle-blocks-tabs-header.active, .wp-block-themeisle-blocks-tabs-header.active::before, .wp-block-themeisle-blocks-tabs-header.active::after {
+			border-width: ${ attributes.borderWidth !== undefined ? attributes.borderWidth : 3 }px;
+		}
+	`;
+
+	const contentStyle = css`
+		.wp-block-themeisle-blocks-tabs-item-heade, .wp-block-themeisle-blocks-tabs-item-content {
+			background-color: ${ attributes.tabColor || 'red' };
+			border-width: ${ attributes.borderWidth !== undefined ? attributes.borderWidth : 3 }px;
+		}
+	`;
+
 	const renderTabHeader = ( title, onClick, active ) => {
 		return (
 			<div className={classnames( 'wp-block-themeisle-blocks-tabs-header', {'active': active})}>
@@ -109,7 +132,7 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 	const renderAddTab = () => {
 		return (
 			<div className={classnames( 'wp-block-themeisle-blocks-tabs-header' )}>
-				<div onClick={addTab}> {__( 'Add Tab' )} </div>
+				<div style={{ width: 30, height: 24 }} onClick={addTab}> <Icon icon={ plusCircle } size={ 24 }/> </div>
 			</div>
 		);
 	};
@@ -125,8 +148,8 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 				selectTab={ selectTab }
 				addTab={ addTab }
 			/>
-			<div className="wp-block-themeisle-blocks-tabs">
-				<div className="wp-block-themeisle-blocks-tabs-headers">
+			<div className="wp-block-themeisle-blocks-tabs" style={{ borderColor: attributes.borderColor }}>
+				<div css={tabStyle} className="wp-block-themeisle-blocks-tabs-headers">
 					{
 						attributes.headers?.map( tabHeader => {
 							return renderTabHeader( tabHeader.title || 'Insert Title H', () => {
@@ -136,7 +159,7 @@ const Tabs = ({ clientId, attributes, setAttributes }) => {
 					}
 					{renderAddTab()}
 				</div>
-				<div ref={ contentRef } className="wp-block-themeisle-blocks-tabs-content">
+				<div ref={ contentRef } className="wp-block-themeisle-blocks-tabs-content" css={contentStyle}>
 					<InnerBlocks
 						allowedBlocks={ [ 'themeisle-blocks/tabs-item' ] }
 						template={ [ [ 'themeisle-blocks/tabs-item' ] ] }

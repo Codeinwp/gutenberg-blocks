@@ -1,9 +1,11 @@
 .wp-block-themeisle-blocks-tabs {
+	border-color: aqua;
 
 	.wp-block-themeisle-blocks-tabs-headers {
 		display: flex;
 		flex-direction: row;
 		overflow: hidden;
+		border-color: inherit;
 
 		@media (max-width: 800px) {
 			display: none;
@@ -14,9 +16,11 @@
 			white-space: nowrap;
 
 			&.active {
-				border: 3px solid black;
-				border-bottom-style: none;
 				position: relative;
+				border-color: inherit;
+				border-style: solid;
+
+				border-bottom-style: none;
 
 				&::before {
 					right: 100%;
@@ -29,7 +33,7 @@
 					content: "";
 					position: absolute;
 					box-sizing: border-box;
-					border-width: 3px;
+					border-color: inherit;
 				}
 
 				&::after {
@@ -43,7 +47,7 @@
 					content: "";
 					position: absolute;
 					box-sizing: border-box;
-					border-width: 3px;
+					border-color: inherit;
 				}
 			}
 
@@ -52,9 +56,16 @@
 	}
 
 	.wp-block-themeisle-blocks-tabs-content {
+		border-color: inherit;
+		background-color: inherit;
 		.block-editor-inner-blocks {
+			border-color: inherit;
+			background-color: inherit;
 			.block-editor-block-list__layout {
+				border-color: inherit;
+				background-color: inherit;
 				div {
+					border-color: inherit;
 					margin-top: 0px;
 					margin-bottom: 0px;
 				}

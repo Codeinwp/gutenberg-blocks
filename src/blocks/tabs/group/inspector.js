@@ -14,7 +14,7 @@ const {
 	InspectorControls
 } = wp.blockEditor;
 
-const { PanelBody, Button } = wp.components;
+const { PanelBody, Button, RangeControl } = wp.components;
 
 const Inspector = ({
 	attributes,
@@ -44,6 +44,23 @@ const Inspector = ({
 		});
 	};
 
+	const onTabColorChange = ( value ) => {
+		setAttributes({
+			tabColor: value
+		});
+	};
+
+	const onBorderColorChange = ( value ) => {
+		setAttributes({
+			borderColor: value
+		});
+	};
+
+	const onBorderWidthChange = ( value ) => {
+		setAttributes({
+			borderWidth: value
+		});
+	};
 
 	return (
 		<InspectorControls>
@@ -58,6 +75,25 @@ const Inspector = ({
 				>
 					{ __( 'Add Tab' ) }
 				</Button>
+			</PanelBody>
+			<PanelBody title={__( 'Settings' )} initialOpen={true}>
+				<ColorGradientControl
+					label={ __( 'Selected Tab Color' ) }
+					colorValue={ attributes.tabColor }
+					onColorChange={ onTabColorChange }
+				/>
+				<RangeControl
+					label={ __( 'Border Width' ) }
+					value={ attributes.borderWidth }
+					onChange={ onBorderWidthChange }
+					min={ 0 }
+					max={ 5 }
+				/>
+				<ColorGradientControl
+					label={ __( 'Border Color' ) }
+					colorValue={ attributes.borderColor }
+					onColorChange={ onBorderColorChange }
+				/>
 			</PanelBody>
 		</InspectorControls>
 	);

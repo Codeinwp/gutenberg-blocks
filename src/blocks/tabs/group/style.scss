@@ -1,4 +1,5 @@
 .wp-block-themeisle-blocks-tabs {
+	border-color: red;
 
 	.wp-block-themeisle-blocks-tabs-headers {
 		display: flex;
@@ -12,11 +13,13 @@
 		.wp-block-themeisle-blocks-tabs-header {
 			padding: 5px 10px;
 			white-space: nowrap;
+			border-color: inherit;
 
 			&.active {
-				border: 3px solid black;
+				border: 3px solid;
 				border-bottom-style: none;
 				position: relative;
+				border-color: inherit;
 
 				&::before {
 					right: 100%;
@@ -30,6 +33,7 @@
 					position: absolute;
 					box-sizing: border-box;
 					border-width: 3px;
+					border-color: inherit;
 				}
 
 				&::after {
@@ -44,6 +48,7 @@
 					position: absolute;
 					box-sizing: border-box;
 					border-width: 3px;
+					border-color: inherit;
 				}
 			}
 
@@ -52,9 +57,17 @@
 	}
 
 	.wp-block-themeisle-blocks-tabs-content {
+		border-color: inherit;
+		background-color: inherit;
 		.block-editor-inner-blocks {
+			border-color: inherit;
+			background-color: inherit;
 			.block-editor-block-list__layout {
+				border-color: inherit;
+				background-color: inherit;
 				div {
+					border-color: inherit;
+					background-color: inherit;
 					margin-top: 0px;
 					margin-bottom: 0px;
 				}
