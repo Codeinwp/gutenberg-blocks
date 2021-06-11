@@ -13,7 +13,7 @@ const ToolbarComp = ({attributes, setAttributes, selectedTab}) => {
 	const index = attributes.headers?.findIndex( ({id}) => id === selectedTab );
 
 	/**
-	 *
+	 * Move the tab to a given direction
 	 * @param {('left'|'right')} direction
 	 */
 	const moveTabTo = ( direction ) => {

@@ -62,6 +62,12 @@ const Inspector = ({
 		});
 	};
 
+	const onActiveTitleColorChange = ( value ) => {
+		setAttributes({
+			activeTitleColor: value
+		});
+	};
+
 	return (
 		<InspectorControls>
 			<PanelBody title={__( 'Tabs Management' )} initialOpen={true}>
@@ -81,6 +87,11 @@ const Inspector = ({
 					label={ __( 'Selected Tab Color' ) }
 					colorValue={ attributes.tabColor }
 					onColorChange={ onTabColorChange }
+				/>
+				<ColorGradientControl
+					label={ __( 'Selected Title Tab Color' ) }
+					colorValue={ attributes.activeTitleColor }
+					onColorChange={ onActiveTitleColorChange }
 				/>
 				<RangeControl
 					label={ __( 'Border Width' ) }

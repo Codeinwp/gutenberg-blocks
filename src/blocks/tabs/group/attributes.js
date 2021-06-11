@@ -1,4 +1,7 @@
 const attributes = {
+	id: {
+		type: 'string'
+	},
 	headers: {
 		type: 'array'
 	},
@@ -9,6 +12,9 @@ const attributes = {
 		type: 'string'
 	},
 	borderWidth: {
+		type: 'string'
+	},
+	activeTitleColor: {
 		type: 'string'
 	}
 };

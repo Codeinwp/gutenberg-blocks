@@ -15,8 +15,7 @@ const Save = ({ attributes }) => {
 				}
 			</div>
 			<div className="wp-block-themeisle-blocks-tabs-content">
-				<InnerBlocks.Content
-				/>
+				<InnerBlocks.Content />
 			</div>
 		</div>
 	);

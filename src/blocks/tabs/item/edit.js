@@ -20,7 +20,7 @@ import defaults from '../../../plugins/options/global-defaults/defaults.js';
 
 const IDs = [];
 
-const Tabs = ({ attributes, setAttributes, clientId }) => {
+const Tabs = ({ attributes, setAttributes, clientId, name }) => {
 
 	const contentRef = useRef( null );
 
@@ -51,7 +51,7 @@ const Tabs = ({ attributes, setAttributes, clientId }) => {
 
 		if ( attributes.id === undefined ) {
 			let attrs;
-			const instanceId = `wp-block-themeisle-blocks-tabs-${ clientId.substr( 0, 8 ) }`;
+			const instanceId = `wp-block-themeisle-blocks-tab-item-${ clientId.substr( 0, 8 ) }`;
 
 			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
 
@@ -75,7 +75,7 @@ const Tabs = ({ attributes, setAttributes, clientId }) => {
 			IDs.push( instanceId );
 			blockIDs.push( instanceId );
 		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-tabs-${ clientId.substr( 0, 8 ) }`;
+			const instanceId = `wp-block-themeisle-blocks-tab-item-${ clientId.substr( 0, 8 ) }`;
 			setAttributes({ id: instanceId });
 			IDs.push( instanceId );
 		} else {
