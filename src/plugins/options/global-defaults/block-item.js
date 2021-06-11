@@ -63,7 +63,7 @@ const BlockItem = ({
 							isDestructive
 							onClick={ () => resetConfig( blockName ) }
 						>
-							{ __( 'Reset' ) }
+							{ __( 'Reset', 'otter-blocks' ) }
 						</Button>
 
 						<div className="wp-block-themeisle-blocks-options-global-defaults-actions-primary">
@@ -72,7 +72,7 @@ const BlockItem = ({
 								isLarge
 								onClick={ () => setOpen( false ) }
 							>
-								{ __( 'Close' ) }
+								{ __( 'Close', 'otter-blocks' ) }
 							</Button>
 
 							<Button
@@ -85,7 +85,7 @@ const BlockItem = ({
 									setLoading( false );
 								} }
 							>
-								{ __( 'Save' ) }
+								{ __( 'Save', 'otter-blocks' ) }
 							</Button>
 						</div>
 					</div>

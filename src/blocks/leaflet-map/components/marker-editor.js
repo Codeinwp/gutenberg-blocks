@@ -45,7 +45,7 @@ const MarkerEditor = ({
 	return (
 		<BaseControl
 			id={ id }
-			label={ __( 'Description' ) }
+			label={ __( 'Description', 'otter-blocks' ) }
 		>
 			<textarea
 				id={ id }

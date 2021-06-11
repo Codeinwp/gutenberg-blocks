@@ -72,7 +72,7 @@ const ControlPanelControl = ({
 									{ isActive && (
 										<Button
 											icon={ <Icon icon={ backup } /> }
-											label={ __( 'Reset to default' ) }
+											label={ __( 'Reset to default', 'otter-blocks' ) }
 											shotTooltip={ true }
 											isTertiary
 											onClick={ () => setAttributes({ ...resetValues }) }

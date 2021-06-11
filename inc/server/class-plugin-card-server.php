@@ -57,7 +57,7 @@ class Plugin_Card_Server {
 						'search' => array(
 							'type'        => 'string',
 							'required'    => true,
-							'description' => __( 'Search query.', 'textdomain' ),
+							'description' => __( 'Search query.', 'otter-blocks' ),
 						),
 					),
 					'permission_callback' => function () {
@@ -78,7 +78,7 @@ class Plugin_Card_Server {
 						'slug' => array(
 							'type'        => 'string',
 							'required'    => true,
-							'description' => __( 'Slug of the plugin.', 'textdomain' ),
+							'description' => __( 'Slug of the plugin.', 'otter-blocks' ),
 						),
 					),
 					'permission_callback' => function () {
@@ -105,7 +105,7 @@ class Plugin_Card_Server {
 
 		$return = array(
 			'success' => false,
-			'data'    => esc_html__( 'Something went wrong', 'textdomain' ),
+			'data'    => esc_html__( 'Something went wrong', 'otter-blocks' ),
 		);
 
 		$search = $request->get_param( 'search' );
@@ -166,7 +166,7 @@ class Plugin_Card_Server {
 
 		$return = array(
 			'success' => false,
-			'data'    => esc_html__( 'Something went wrong', 'textdomain' ),
+			'data'    => esc_html__( 'Something went wrong', 'otter-blocks' ),
 		);
 
 		$slug = $request->get_param( 'slug' );
@@ -240,7 +240,7 @@ class Plugin_Card_Server {
 	 */
 	public function __clone() {
 		// Cloning instances of the class is forbidden.
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'textdomain' ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'otter-blocks' ), '1.0.0' );
 	}
 
 	/**
@@ -252,6 +252,6 @@ class Plugin_Card_Server {
 	 */
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden.
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'textdomain' ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'otter-blocks' ), '1.0.0' );
 	}
 }

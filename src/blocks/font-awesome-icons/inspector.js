@@ -59,11 +59,11 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Icon' ) }
+				title={ __( 'Icon', 'otter-blocks' ) }
 			>
 				<Suspense fallback={<Placeholder><Spinner/></Placeholder>}>
 					<IconPickerControl
-						label={ __( 'Icon Picker' ) }
+						label={ __( 'Icon Picker', 'otter-blocks' ) }
 						library={ attributes.library }
 						prefix={ attributes.prefix }
 						icon={ attributes.icon }
@@ -74,11 +74,11 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Icon Sizes' ) }
+				title={ __( 'Icon Sizes', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<RangeControl
-					label={ __( 'Icon Size' ) }
+					label={ __( 'Icon Size', 'otter-blocks' ) }
 					value={ attributes.fontSize || '' }
 					initialPosition={ 16 }
 					onChange={ e => setAttributes({ fontSize: e }) }
@@ -87,7 +87,7 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Padding' ) }
+					label={ __( 'Padding', 'otter-blocks' ) }
 					value={ attributes.padding || '' }
 					initialPosition={ 5 }
 					onChange={ e => setAttributes({ padding: e }) }
@@ -96,7 +96,7 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Margin' ) }
+					label={ __( 'Margin', 'otter-blocks' ) }
 					value={ attributes.margin || '' }
 					initialPosition={ 5 }
 					onChange={ e => setAttributes({ margin: e }) }
@@ -106,7 +106,7 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Color' ) }
+				title={ __( 'Color', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<ButtonGroup>
@@ -116,7 +116,7 @@ const Inspector = ({
 						isPrimary={ ! hover }
 						onClick={ () => setHover( false ) }
 					>
-						{ __( 'Normal' ) }
+						{ __( 'Normal', 'otter-blocks' ) }
 					</Button>
 
 					<Button
@@ -125,7 +125,7 @@ const Inspector = ({
 						isPrimary={ hover }
 						onClick={ () => setHover( true ) }
 					>
-						{ __( 'Hover' ) }
+						{ __( 'Hover', 'otter-blocks' ) }
 					</Button>
 				</ButtonGroup>
 
@@ -217,11 +217,11 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Border Settings' ) }
+				title={ __( 'Border Settings', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<RangeControl
-					label={ __( 'Border Size' ) }
+					label={ __( 'Border Size', 'otter-blocks' ) }
 					value={ attributes.borderSize }
 					onChange={ e => setAttributes({ borderSize: e }) }
 					min={ 0 }
@@ -229,7 +229,7 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Border Radius' ) }
+					label={ __( 'Border Radius', 'otter-blocks' ) }
 					value={ attributes.borderRadius }
 					onChange={ e => setAttributes({ borderRadius: e }) }
 					min={ 0 }

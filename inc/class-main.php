@@ -90,7 +90,7 @@ class Main {
 	 */
 	public function __construct( $name ) {
 		$this->name        = $name;
-		$this->description = __( 'A set of awesome Gutenberg Blocks!', 'textdomain' );
+		$this->description = __( 'A set of awesome Gutenberg Blocks!', 'otter-blocks' );
 	}
 
 	/**
@@ -171,7 +171,7 @@ class Main {
 			true
 		);
 
-		wp_set_script_translations( 'themeisle-gutenberg-blocks', 'textdomain' );
+		wp_set_script_translations( 'themeisle-gutenberg-blocks', 'otter-blocks' );
 
 		wp_localize_script(
 			'themeisle-gutenberg-blocks',
@@ -703,7 +703,7 @@ class Main {
 			if ( 'default' === ( isset( $block['attrs']['titleStyle'] ) ? $block['attrs']['titleStyle'] : 'default' ) ) {
 				$output .= '<div class="wp-block-themeisle-blocks-circle-counter-title__area">';
 				$output .= '<span class="wp-block-themeisle-blocks-circle-counter-title__value">';
-				$output .= esc_html( isset( $block['attrs']['title'] ) ? $block['attrs']['title'] : __( 'Skill', 'textdomain' ) );
+				$output .= esc_html( isset( $block['attrs']['title'] ) ? $block['attrs']['title'] : __( 'Skill', 'otter-blocks' ) );
 				$output .= '</span>';
 				$output .= '</div>';
 			}
@@ -720,7 +720,7 @@ class Main {
 			if ( 'bottom' === ( isset( $block['attrs']['titleStyle'] ) ? $block['attrs']['titleStyle'] : 'default' ) ) {
 				$output .= '<div class="wp-block-themeisle-blocks-circle-counter-title__area">';
 				$output .= '<span class="wp-block-themeisle-blocks-circle-counter-title__value">';
-				$output .= esc_html( isset( $block['attrs']['title'] ) ? $block['attrs']['title'] : __( 'Skill', 'textdomain' ) );
+				$output .= esc_html( isset( $block['attrs']['title'] ) ? $block['attrs']['title'] : __( 'Skill', 'otter-blocks' ) );
 				$output .= '</span>';
 				$output .= '</div>';
 			}
@@ -832,7 +832,7 @@ class Main {
 	 */
 	public function __clone() {
 		// Cloning instances of the class is forbidden.
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'textdomain' ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, 'Cheatin&#8217; huh?', '1.0.0' );
 	}
 
 	/**
@@ -844,6 +844,6 @@ class Main {
 	 */
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden.
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'textdomain' ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, 'Cheatin&#8217; huh?', '1.0.0' );
 	}
 }

@@ -24,7 +24,7 @@ const name = 'themeisle-blocks/highlight';
 
 registerFormatType( name, {
 	name,
-	title: __( 'Highlight' ),
+	title: __( 'Highlight', 'otter-blocks' ),
 	tagName: 'span',
 	className: 'highlight',
 
@@ -41,7 +41,7 @@ registerFormatType( name, {
 
 				<RichTextToolbarButton
 					icon={ brush }
-					title={ __( 'Highlight' ) }
+					title={ __( 'Highlight', 'otter-blocks' ) }
 					onClick={ onToggle }
 					isActive={ isActive }
 					shortcutType="access"

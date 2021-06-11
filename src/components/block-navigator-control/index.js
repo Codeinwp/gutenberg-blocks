@@ -58,7 +58,7 @@ const BlockNavigatorControl = ({ clientId }) => {
 				<Toolbar>
 					<Button
 						className="components-toolbar__control"
-						label={ __( 'Open block navigator' ) }
+						label={ __( 'Open block navigator', 'otter-blocks' ) }
 						showTooltip={ true }
 						onClick={ () => setOpen( true ) }
 						icon={ navigatorIcon }
@@ -68,8 +68,8 @@ const BlockNavigatorControl = ({ clientId }) => {
 
 			{ isOpen && (
 				<Modal
-					title={ __( 'Block Navigator' ) }
-					closeLabel={ __( 'Close' ) }
+					title={ __( 'Block Navigator', 'otter-blocks' ) }
+					closeLabel={ __( 'Close', 'otter-blocks' ) }
 					onRequestClose={ () => setOpen( false ) }
 				>
 					<BlockNavigation

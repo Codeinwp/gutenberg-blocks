@@ -166,8 +166,8 @@ const BlockPlaceholder = ({
 	return (
 		<Placeholder
 			icon="admin-plugins"
-			label={ __( 'Plugin Card' ) }
-			instructions={ __( 'Search for the plugin you want to display.' ) }
+			label={ __( 'Plugin Card', 'otter-blocks' ) }
+			instructions={ __( 'Search for the plugin you want to display.', 'otter-blocks' ) }
 			className={ className }
 		>
 			<div className="wp-block-themeisle-blocks-plugin-cards-search-field">
@@ -179,7 +179,7 @@ const BlockPlaceholder = ({
 
 				<TextControl
 					type="text"
-					placeholder={ __( 'Search for plugin…' ) }
+					placeholder={ __( 'Search for plugin…', 'otter-blocks' ) }
 					value={ query }
 					onChange={ setQuery }
 					onKeyDown={ searchKeyDown }
@@ -226,7 +226,7 @@ const BlockPlaceholder = ({
 
 			{ hasError && (
 				<div className="wp-block-themeisle-blocks-plugin-cards-error">
-					<span>{ __( 'There seems to be an error. Make sure your internet is working properly.' ) }</span>
+					<span>{ __( 'There seems to be an error. Make sure your internet is working properly.', 'otter-blocks' ) }</span>
 				</div>
 			) }
 		</Placeholder>

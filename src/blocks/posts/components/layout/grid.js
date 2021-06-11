@@ -81,11 +81,19 @@ const Grid = ({
 											return (
 												<p className="wp-block-themeisle-blocks-posts-grid-post-meta">
 													{ ( attributes.displayDate ) && (
-														sprintf( __( 'on %s' ), formatDate( post.date ) )
+
+														/**
+														 * translators: %s Date posted
+														 */
+														sprintf( __( 'on %s', 'otter-blocks' ), formatDate( post.date ) )
 													) }
 
 													{ ( attributes.displayAuthor && undefined !== author && authors ) && (
-														sprintf( __( ' by %s' ), author.name )
+
+														/**
+														 * translators: %s Author
+														 */
+														sprintf( __( ' by %s', 'otter-blocks' ), author.name )
 													) }
 												</p>
 											);

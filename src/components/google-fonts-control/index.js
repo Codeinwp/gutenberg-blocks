@@ -91,7 +91,7 @@ const GoogleFontsControl = ({
 							id={ id }
 							options={ [
 								{
-									label: __( 'Default' ),
+									label: __( 'Default', 'otter-blocks' ),
 									value: ''
 								},
 								...fonts.map( i => {
@@ -107,11 +107,11 @@ const GoogleFontsControl = ({
 								if ( '' === e ) {
 									variants = [
 										{
-											'label': __( 'Regular' ),
+											'label': __( 'Regular', 'otter-blocks' ),
 											'value': 'regular'
 										},
 										{
-											'label': __( 'Italic' ),
+											'label': __( 'Italic', 'otter-blocks' ),
 											'value': 'italic'
 										}
 									];
@@ -148,11 +148,11 @@ const GoogleFontsControl = ({
 									onClick={ onToggle }
 									aria-expanded={ isOpen }
 								>
-									{ value ? value : __( 'Select Font Family' ) }
+									{ value ? value : __( 'Select Font Family', 'otter-blocks' ) }
 								</Button>
 							) }
 							renderContent={ ({ onToggle }) => (
-								<MenuGroup label={ __( 'Google Fonts' ) }>
+								<MenuGroup label={ __( 'Google Fonts', 'otter-blocks' ) }>
 									<TextControl
 										value={ search }
 										onChange={ e => setSearch( e ) }
@@ -167,7 +167,7 @@ const GoogleFontsControl = ({
 												setSearch( '' );
 											}}
 										>
-											{ __( 'Default' ) }
+											{ __( 'Default', 'otter-blocks' ) }
 										</MenuItem>
 
 										{ ( fonts ).map( i => {
@@ -205,13 +205,13 @@ const GoogleFontsControl = ({
 						/>
 					)
 				) : (
-					__( 'Loading…' )
+					__( 'Loading…', 'otter-blocks' )
 				) }
 			</BaseControl>
 
 			{ variants && (
 				<SelectControl
-					label={ __( 'Font Width' ) }
+					label={ __( 'Font Width', 'otter-blocks' ) }
 					value={ valueVariant || 'regular' }
 					options={ variants }
 					onChange={ onChangeFontVariant }
@@ -219,15 +219,15 @@ const GoogleFontsControl = ({
 			) }
 
 			<SelectControl
-				label={ __( 'Font Style' ) }
+				label={ __( 'Font Style', 'otter-blocks' ) }
 				value={ valueStyle }
 				options={ [
 					{
-						label: __( 'Regular' ),
+						label: __( 'Regular', 'otter-blocks' ),
 						value: 'normal'
 					},
 					{
-						label: __( 'Italic' ),
+						label: __( 'Italic', 'otter-blocks' ),
 						value: 'italic'
 					}
 				] }
@@ -235,23 +235,23 @@ const GoogleFontsControl = ({
 			/>
 
 			<SelectControl
-				label={ __( 'Font Transform' ) }
+				label={ __( 'Font Transform', 'otter-blocks' ) }
 				value={ valueTransform }
 				options={ [
 					{
-						label: __( 'Default' ),
+						label: __( 'Default', 'otter-blocks' ),
 						value: 'none'
 					},
 					{
-						label: __( 'Uppercase' ),
+						label: __( 'Uppercase', 'otter-blocks' ),
 						value: 'uppercase'
 					},
 					{
-						label: __( 'Lowercase' ),
+						label: __( 'Lowercase', 'otter-blocks' ),
 						value: 'lowercase'
 					},
 					{
-						label: __( 'Capitalize' ),
+						label: __( 'Capitalize', 'otter-blocks' ),
 						value: 'capitalize'
 					}
 				] }

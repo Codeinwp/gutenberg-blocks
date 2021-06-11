@@ -14,8 +14,8 @@ import { authorIcon as icon } from '../../helpers/icons.js';
 import edit from './edit.js';
 
 registerBlockType( 'themeisle-blocks/about-author', {
-	title: __( 'About Author' ),
-	description: __( 'About Author block is the easiest way to add a author bio below your posts.' ),
+	title: __( 'About Author', 'otter-blocks' ),
+	description: __( 'About Author block is the easiest way to add a author bio below your posts.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [

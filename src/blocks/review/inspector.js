@@ -42,7 +42,7 @@ const PanelItem = ({
 
 				<Button
 					icon="no-alt"
-					label={ __( 'Remove' ) }
+					label={ __( 'Remove', 'otter-blocks' ) }
 					showTooltip={ true }
 					className="wp-block-themeisle-blocks-review__inspector_panel_item__arrow"
 					onClick={ remove }
@@ -65,7 +65,7 @@ const Inspector = ({
 	const addFeature = () => {
 		const features = [ ...attributes.features ];
 		features.push({
-			title: __( 'Feature' ),
+			title: __( 'Feature', 'otter-blocks' ),
 			rating: 9
 		});
 		setAttributes({ features });
@@ -125,7 +125,7 @@ const Inspector = ({
 	const addLinks = () => {
 		const links = [ ...attributes.links ];
 		links.push({
-			label: __( 'Buy Now' ),
+			label: __( 'Buy Now', 'otter-blocks' ),
 			href: ''
 		});
 		setAttributes({ links });
@@ -149,41 +149,41 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Product Details' ) }
+				title={ __( 'Product Details', 'otter-blocks' ) }
 			>
 				<TextControl
-					label={ __( 'Product Name' ) }
+					label={ __( 'Product Name', 'otter-blocks' ) }
 					type="text"
-					placeholder={ __( 'Name of your product…' ) }
+					placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
 					value={ attributes.title }
 					onChange={ title => setAttributes({ title }) }
 				/>
 
 				<BaseControl>
 					<TextControl
-						label={ __( 'Currency' ) }
+						label={ __( 'Currency', 'otter-blocks' ) }
 						type="text"
-						placeholder={ __( 'Currency code, like USD or EUR.' ) }
+						placeholder={ __( 'Currency code, like USD or EUR.', 'otter-blocks' ) }
 						value={ attributes.currency }
 						onChange={ currency => setAttributes({ currency }) }
 					/>
 
-					{ __( 'Currency code in three digit ISO 4217 code.' ) + ' ' }
+					{ __( 'Currency code in three digit ISO 4217 code.', 'otter-blocks' ) + ' ' }
 
 					<ExternalLink href="https://en.wikipedia.org/wiki/ISO_4217#Active_codes">
-						{ __( 'List of ISO 4217 codes.' ) }
+						{ __( 'List of ISO 4217 codes.', 'otter-blocks' ) }
 					</ExternalLink>
 				</BaseControl>
 
 				<TextControl
-					label={ __( 'Price' ) }
+					label={ __( 'Price', 'otter-blocks' ) }
 					type="number"
 					value={ attributes.price }
 					onChange={ value => setAttributes({ price: Number( value ) }) }
 				/>
 
 				<TextControl
-					label={ __( 'Discounted Price' ) }
+					label={ __( 'Discounted Price', 'otter-blocks' ) }
 					type="number"
 					value={ attributes.discounted }
 					onChange={ value => setAttributes({ discounted: Number( value ) }) }
@@ -192,7 +192,7 @@ const Inspector = ({
 				{ ! attributes.image ? (
 					<MediaPlaceholder
 						labels={ {
-							title: __( 'Product Image' )
+							title: __( 'Product Image', 'otter-blocks' )
 						} }
 						accept="image/*"
 						allowedTypes={ [ 'image' ] }
@@ -212,31 +212,31 @@ const Inspector = ({
 							isSecondary
 							onClick={ () => setAttributes({ image: undefined }) }
 						>
-							{ __( 'Remove image' ) }
+							{ __( 'Remove image', 'otter-blocks' ) }
 						</Button>
 					</BaseControl>
 				) }
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Product Features' ) }
+				title={ __( 'Product Features', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				{ 0 < attributes.features.length && attributes.features.map( ( feature, index ) => (
 					<PanelItem
-						title={ feature.title || __( 'Feature' ) }
+						title={ feature.title || __( 'Feature', 'otter-blocks' ) }
 						remove={ () => removeFeature( index ) }
 					>
 						<TextControl
-							label={ __( 'Title' ) }
+							label={ __( 'Title', 'otter-blocks' ) }
 							type="text"
-							placeholder={ __( 'Feature title' ) }
+							placeholder={ __( 'Feature title', 'otter-blocks' ) }
 							value={ feature.title }
 							onChange={ title => changeFeature( index, { title }) }
 						/>
 
 						<RangeControl
-							label={ __( 'Rating' ) }
+							label={ __( 'Rating', 'otter-blocks' ) }
 							value={ feature.rating }
 							onChange={ value => changeFeature( index, { rating: Number( value ) }) }
 							min={ 1 }
@@ -251,23 +251,23 @@ const Inspector = ({
 					className="wp-block-themeisle-blocks-review__inspector_add"
 					onClick={ addFeature }
 				>
-					{ __( 'Add Feature' ) }
+					{ __( 'Add Feature', 'otter-blocks' ) }
 				</Button>
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Pros' ) }
+				title={ __( 'Pros', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				{ 0 < attributes.pros.length && attributes.pros.map( ( pro, index ) => (
 					<PanelItem
-						title={ pro || __( 'Pro' ) }
+						title={ pro || __( 'Pro', 'otter-blocks' ) }
 						remove={ () => removePro( index ) }
 					>
 						<TextControl
-							label={ __( 'Title' ) }
+							label={ __( 'Title', 'otter-blocks' ) }
 							type="text"
-							placeholder={ __( 'Why do you like the product?' ) }
+							placeholder={ __( 'Why do you like the product?', 'otter-blocks' ) }
 							value={ pro }
 							onChange={ value => changePro( index, value ) }
 						/>
@@ -280,23 +280,23 @@ const Inspector = ({
 					className="wp-block-themeisle-blocks-review__inspector_add"
 					onClick={ addPro }
 				>
-					{ __( 'Add Item' ) }
+					{ __( 'Add Item', 'otter-blocks' ) }
 				</Button>
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Cons' ) }
+				title={ __( 'Cons', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				{ 0 < attributes.cons.length && attributes.cons.map( ( con, index ) => (
 					<PanelItem
-						title={ con || __( 'Con' ) }
+						title={ con || __( 'Con', 'otter-blocks' ) }
 						remove={ () => removeCon( index ) }
 					>
 						<TextControl
-							label={ __( 'Title' ) }
+							label={ __( 'Title', 'otter-blocks' ) }
 							type="text"
-							placeholder={ __( 'What can be improved?' ) }
+							placeholder={ __( 'What can be improved?', 'otter-blocks' ) }
 							value={ con }
 							onChange={ value => changeCon( index, value ) }
 						/>
@@ -309,31 +309,31 @@ const Inspector = ({
 					className="wp-block-themeisle-blocks-review__inspector_add"
 					onClick={ addCon }
 				>
-					{ __( 'Add Item' ) }
+					{ __( 'Add Item', 'otter-blocks' ) }
 				</Button>
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Links' ) }
+				title={ __( 'Links', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				{ 0 < attributes.links.length && attributes.links.map( ( link, index ) => (
 					<PanelItem
-						title={ link.label || __( 'Link' ) }
+						title={ link.label || __( 'Link', 'otter-blocks' ) }
 						remove={ () => removeLinks( index ) }
 					>
 						<TextControl
-							label={ __( 'Label' ) }
+							label={ __( 'Label', 'otter-blocks' ) }
 							type="text"
-							placeholder={ __( 'Button label' ) }
+							placeholder={ __( 'Button label', 'otter-blocks' ) }
 							value={ link.label }
 							onChange={ label => changeLinks( index, { label }) }
 						/>
 
 						<TextControl
-							label={ __( 'Link' ) }
+							label={ __( 'Link', 'otter-blocks' ) }
 							type="url"
-							placeholder={ __( 'https://…' ) }
+							placeholder={ __( 'https://…', 'otter-blocks' ) }
 							value={ link.href }
 							onChange={ href => changeLinks( index, { href }) }
 						/>
@@ -346,33 +346,33 @@ const Inspector = ({
 					className="wp-block-themeisle-blocks-review__inspector_add"
 					onClick={ addLinks }
 				>
-					{ __( 'Add Links' ) }
+					{ __( 'Add Links', 'otter-blocks' ) }
 				</Button>
 			</PanelBody>
 
 			<PanelColorSettings
-				title={ __( 'Color' ) }
+				title={ __( 'Color', 'otter-blocks' ) }
 				initialOpen={ false }
 				colorSettings={ [
 					{
 						value: attributes.primaryColor,
 						onChange: value => setAttributes({ primaryColor: value }),
-						label: __( 'Primary' )
+						label: __( 'Primary', 'otter-blocks' )
 					},
 					{
 						value: attributes.backgroundColor,
 						onChange: value => setAttributes({ backgroundColor: value }),
-						label: __( 'Background' )
+						label: __( 'Background', 'otter-blocks' )
 					},
 					{
 						value: attributes.textColor,
 						onChange: value => setAttributes({ textColor: value }),
-						label: __( 'Text' )
+						label: __( 'Text', 'otter-blocks' )
 					},
 					{
 						value: attributes.buttonTextColor,
 						onChange: value => setAttributes({ buttonTextColor: value }),
-						label: __( 'Button Text' )
+						label: __( 'Button Text', 'otter-blocks' )
 					}
 				] }
 			>

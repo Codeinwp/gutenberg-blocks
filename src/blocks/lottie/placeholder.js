@@ -59,8 +59,8 @@ const BlockPlaceholder = ({
 		return (
 			<MediaPlaceholder
 				labels={ {
-					title: __( 'Lottie' ),
-					instructions: __( 'Add Lottie animations and files to your website.' )
+					title: 'Lottie',
+					instructions: __( 'Add Lottie animations and files to your website.', 'otter-blocks' )
 				} }
 				icon={ <BlockIcon icon={ video } />}
 				accept={ [ 'application/json' ] }
@@ -75,8 +75,8 @@ const BlockPlaceholder = ({
 	return (
 		<Fragment>
 			<Placeholder
-				label={ __( 'Lottie' ) }
-				instructions={ __( 'Add Lottie animations and files to your website.' ) }
+				label={ __( 'Lottie', 'otter-blocks' ) }
+				instructions={ __( 'Add Lottie animations and files to your website.', 'otter-blocks' ) }
 				icon={ <BlockIcon icon={ video } />}
 				className={ className }
 			>
@@ -85,8 +85,8 @@ const BlockPlaceholder = ({
 						type="url"
 						value={ url }
 						className="components-placeholder__input"
-						aria-label={ __( 'Lottie' ) }
-						placeholder={ __( 'Enter URL to embed here…' ) }
+						aria-label={ 'Lottie' }
+						placeholder={ __( 'Enter URL to embed here…', 'otter-blocks' ) }
 						onChange={ e => setURL( e.target.value ) }
 					/>
 
@@ -95,7 +95,7 @@ const BlockPlaceholder = ({
 						disabled={ ! url }
 						type="submit"
 					>
-						{ __( 'Embed' ) }
+						{ __( 'Embed', 'otter-blocks' ) }
 					</Button>
 
 					{ ! Boolean( window.themeisleGutenberg.isWPVIP ) && (
@@ -103,7 +103,7 @@ const BlockPlaceholder = ({
 							isSecondary
 							onClick={ () => setOpen( true ) }
 						>
-							{ __( 'Upload' ) }
+							{ __( 'Upload', 'otter-blocks' ) }
 						</Button>
 					) }
 				</form>
@@ -111,16 +111,16 @@ const BlockPlaceholder = ({
 
 			{ isOpen && (
 				<Modal
-					title={ __( 'Allow JSON Uploads' ) }
-					closeLabel={ __( 'Close' ) }
+					title={ __( 'Allow JSON Uploads', 'otter-blocks' ) }
+					closeLabel={ __( 'Close', 'otter-blocks' ) }
 					onRequestClose={ () => setOpen( false ) }
 					overlayClassName="wp-block-themeisle-blocks-lottie-modal"
 				>
-					{ __( 'This file type is not permitted for security reasons. Would you still like to enable JSON uploads?' ) }
+					{ __( 'This file type is not permitted for security reasons. Would you still like to enable JSON uploads?', 'otter-blocks' ) }
 					<br/><br/>
-					<ExternalLink href={ window.themeisleGutenberg.optionsPath }>{ __( 'You can enable JSON uploads from Otter.' ) }</ExternalLink>
+					<ExternalLink href={ window.themeisleGutenberg.optionsPath }>{ __( 'You can enable JSON uploads from Otter.', 'otter-blocks' ) }</ExternalLink>
 					<br/><br/>
-					{ __( 'You will have to refresh the page after changing JSON upload settings.' ) }
+					{ __( 'You will have to refresh the page after changing JSON upload settings.', 'otter-blocks' ) }
 				</Modal>
 			) }
 		</Fragment>

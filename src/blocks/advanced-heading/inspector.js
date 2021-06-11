@@ -423,7 +423,7 @@ const Inspector = ({
 					>
 						<span>
 							<Dashicon icon="admin-customizer"/>
-							{ __( 'Style' ) }
+							{ __( 'Style', 'otter-blocks' ) }
 						</span>
 					</Button>
 
@@ -436,7 +436,7 @@ const Inspector = ({
 					>
 						<span>
 							<Dashicon icon="admin-generic"/>
-							{ __( 'Advanced' ) }
+							{ __( 'Advanced', 'otter-blocks' ) }
 						</span>
 					</Button>
 				</PanelBody>
@@ -445,10 +445,10 @@ const Inspector = ({
 
 					<Fragment>
 						<PanelBody
-							title={ __( 'General Settings' ) }
+							title={ __( 'General Settings', 'otter-blocks' ) }
 						>
 							<ColorBaseControl
-								label={ __( 'Heading Color' ) }
+								label={ __( 'Heading Color', 'otter-blocks' ) }
 								colorValue={ attributes.headingColor }
 							>
 								<ColorPalette
@@ -481,11 +481,11 @@ const Inspector = ({
 						</PanelBody>
 
 						<PanelBody
-							title={ __( 'Typography Settings' ) }
+							title={ __( 'Typography Settings', 'otter-blocks' ) }
 							initialOpen={ false }
 						>
 							<GoogleFontsControl
-								label={ __( 'Font Family' ) }
+								label={ __( 'Font Family', 'otter-blocks' ) }
 								value={ attributes.fontFamily }
 								onChangeFontFamily={ changeFontFamily }
 								valueVariant={ attributes.fontVariant }
@@ -497,7 +497,7 @@ const Inspector = ({
 							/>
 
 							<RangeControl
-								label={ __( 'Line Height' ) }
+								label={ __( 'Line Height', 'otter-blocks' ) }
 								value={ attributes.lineHeight }
 								onChange={ changeLineHeight }
 								min={ 0 }
@@ -505,7 +505,7 @@ const Inspector = ({
 							/>
 
 							<RangeControl
-								label={ __( 'Letter Spacing' ) }
+								label={ __( 'Letter Spacing', 'otter-blocks' ) }
 								value={ attributes.letterSpacing }
 								onChange={ changeLetterSpacing }
 								min={ -50 }
@@ -522,11 +522,11 @@ const Inspector = ({
 								<Fragment>
 
 									<ColorBaseControl
-										label={ __( 'Color' ) }
+										label={ __( 'Color', 'otter-blocks' ) }
 										colorValue={ attributes.textShadowColor }
 									>
 										<ColorPalette
-											label={ __( 'Color' ) }
+											label={ __( 'Color', 'otter-blocks' ) }
 											value={ attributes.textShadowColor }
 											onChange={ changeTextShadowColor }
 										/>
@@ -536,7 +536,7 @@ const Inspector = ({
 										label={ 'Shadow Properties' }
 									>
 										<RangeControl
-											label={ __( 'Opacity' ) }
+											label={ __( 'Opacity', 'otter-blocks' ) }
 											value={ attributes.textShadowColorOpacity }
 											onChange={ changeTextShadowColorOpacity }
 											min={ 0 }
@@ -544,7 +544,7 @@ const Inspector = ({
 										/>
 
 										<RangeControl
-											label={ __( 'Blur' ) }
+											label={ __( 'Blur', 'otter-blocks' ) }
 											value={ attributes.textShadowBlur }
 											onChange={ changeTextShadowBlur }
 											min={ 0 }
@@ -552,7 +552,7 @@ const Inspector = ({
 										/>
 
 										<RangeControl
-											label={ __( 'Horizontal' ) }
+											label={ __( 'Horizontal', 'otter-blocks' ) }
 											value={ attributes.textShadowHorizontal }
 											onChange={ changeTextShadowHorizontal }
 											min={ -100 }
@@ -560,7 +560,7 @@ const Inspector = ({
 										/>
 
 										<RangeControl
-											label={ __( 'Vertical' ) }
+											label={ __( 'Vertical', 'otter-blocks' ) }
 											value={ attributes.textShadowVertical }
 											onChange={ changeTextShadowVertical }
 											min={ -100 }
@@ -577,10 +577,10 @@ const Inspector = ({
 
 					<Fragment>
 						<PanelBody
-							title={ __( 'Highlight Color' ) }
+							title={ __( 'Highlight Color', 'otter-blocks' ) }
 						>
 							<ColorBaseControl
-								label={ __( 'Highlight Color' ) }
+								label={ __( 'Highlight Color', 'otter-blocks' ) }
 								colorValue={ attributes.highlightColor }
 							>
 								<ColorPalette
@@ -591,7 +591,7 @@ const Inspector = ({
 							</ColorBaseControl>
 
 							<ColorBaseControl
-								label={ __( 'Highlight Background' ) }
+								label={ __( 'Highlight Background', 'otter-blocks' ) }
 								colorValue={ attributes.highlightBackground }
 							>
 								<ColorPalette
@@ -603,7 +603,7 @@ const Inspector = ({
 						</PanelBody>
 
 						<PanelBody
-							title={ __( 'Spacing' ) }
+							title={ __( 'Spacing', 'otter-blocks' ) }
 							initialOpen={ false }
 						>
 							<ResponsiveControl
@@ -617,22 +617,22 @@ const Inspector = ({
 									onChange={ changePadding }
 									options={ [
 										{
-											label: __( 'Top' ),
+											label: __( 'Top', 'otter-blocks' ),
 											type: 'top',
 											value: getPadding( 'top' )
 										},
 										{
-											label: __( 'Right' ),
+											label: __( 'Right', 'otter-blocks' ),
 											type: 'right',
 											value: getPadding( 'right' )
 										},
 										{
-											label: __( 'Bottom' ),
+											label: __( 'Bottom', 'otter-blocks' ),
 											type: 'bottom',
 											value: getPadding( 'bottom' )
 										},
 										{
-											label: __( 'Left' ),
+											label: __( 'Left', 'otter-blocks' ),
 											type: 'left',
 											value: getPadding( 'left' )
 										}
@@ -651,21 +651,21 @@ const Inspector = ({
 									onChange={ changeMargin }
 									options={ [
 										{
-											label: __( 'Top' ),
+											label: __( 'Top', 'otter-blocks' ),
 											type: 'top',
 											value: getMargin( 'top' )
 										},
 										{
-											label: __( 'Right' ),
+											label: __( 'Right', 'otter-blocks' ),
 											disabled: true
 										},
 										{
-											label: __( 'Bottom' ),
+											label: __( 'Bottom', 'otter-blocks' ),
 											type: 'bottom',
 											value: getMargin( 'bottom' )
 										},
 										{
-											label: __( 'Left' ),
+											label: __( 'Left', 'otter-blocks' ),
 											disabled: true
 										}
 									] }

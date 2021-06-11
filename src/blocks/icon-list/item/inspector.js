@@ -58,11 +58,11 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Settings' ) }
+				title={ __( 'Settings', 'otter-blocks' ) }
 			>
 				<Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
 					<IconPickerControl
-						label={ __( 'Icon Picker' ) }
+						label={ __( 'Icon Picker', 'otter-blocks' ) }
 						library={ attributes.library }
 						prefix={ attributes.iconPrefix }
 						icon={ attributes.icon }
@@ -72,13 +72,13 @@ const Inspector = ({
 				</Suspense>
 
 				<ColorGradientControl
-					label={ __( 'Content Color' ) }
+					label={ __( 'Content Color', 'otter-blocks' ) }
 					colorValue={ attributes.contentColor }
 					onColorChange={ onDefaultContentColorChange }
 				/>
 
 				<ColorGradientControl
-					label={ __( 'Icon Color' ) }
+					label={ __( 'Icon Color', 'otter-blocks' ) }
 					colorValue={ attributes.iconColor }
 					onColorChange={ onDefaultIconColorChange }
 				/>

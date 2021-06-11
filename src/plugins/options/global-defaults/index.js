@@ -67,7 +67,7 @@ const GlobalDefaults = ({
 			title={ 'Global Defaults' }
 			className="wp-block-themeisle-blocks-options-global-defaults"
 		>
-			{ __( 'With Global Defaults, you can set site-wide block defaults for Otter.' ) }
+			{ __( 'With Global Defaults, you can set site-wide block defaults for Otter.', 'otter-blocks' ) }
 
 			<div className="wp-block-themeisle-blocks-options-global-defaults-list">
 				{ blocks.map( i => {
