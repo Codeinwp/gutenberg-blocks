@@ -21,7 +21,8 @@ const Inspector = ({
 	setAttributes,
 	deleteTab,
 	selectTab,
-	addTab
+	addTab,
+	moveTab
 }) => {
 
 	const TabsList = SortableContainer( ({ items }) => {
@@ -39,9 +40,7 @@ const Inspector = ({
 	});
 
 	const onSortEnd = ({ oldIndex, newIndex }) => {
-		setAttributes({
-			headers: arrayMove( attributes.headers, oldIndex, newIndex )
-		});
+		moveTab( attributes.headers[oldIndex].id, newIndex );
 	};
 
 	const onTabColorChange = ( value ) => {

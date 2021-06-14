@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { chevronLeft, chevronRight } from '@wordpress/icons';
 import arrayMove from 'array-move';
 
@@ -5,7 +6,7 @@ const { __ } = wp.i18n;
 const { ToolbarGroup, ToolbarButton } = wp.components;
 const { BlockControls } = wp.blockEditor;
 
-const ToolbarComp = ({attributes, setAttributes, selectedTab}) => {
+const ToolbarComp = ({attributes, setAttributes, selectedTab, moveTab}) => {
 
 	/**
 	 * @type {(number|undefined)} The position of the selected tab
@@ -23,14 +24,18 @@ const ToolbarComp = ({attributes, setAttributes, selectedTab}) => {
 		}
 		switch ( direction ) {
 		case 'left':
-			setAttributes({
-				headers: arrayMove( attributes.headers, index, index - 1 )
-			});
+
+			// setAttributes({
+			// 	headers: arrayMove( attributes.headers, index, index - 1 )
+			// });
+			moveTab( selectedTab, index - 1 );
 			break;
 		case 'right':
-			setAttributes({
-				headers: arrayMove( attributes.headers, index, index + 1 )
-			});
+
+			// setAttributes({
+			// 	headers: arrayMove( attributes.headers, index, index + 1 )
+			// });
+			moveTab( selectedTab, index + 1 );
 			break;
 		}
 	};

@@ -1,4 +1,17 @@
 .wp-block-themeisle-blocks-tabs-item {
+
+	&:not(:last-child) {
+		.wp-block-themeisle-blocks-tabs-item-header {
+			border-bottom-style: none;
+		}
+
+		@media (max-width: 800px) {
+			.wp-block-themeisle-blocks-tabs-item-content {
+				border-bottom-style: none;
+			}
+		}
+	}
+
 	.wp-block-themeisle-blocks-tabs-item-header {
 		width: 100%;
 		border: 3px solid black;
@@ -6,6 +19,10 @@
 
 		@media (min-width: 800px) {
 			display: none;
+		}
+
+		&.active {
+			border-bottom-style: none;
 		}
 	}
 

@@ -19,6 +19,7 @@ const setTabStatus = ( tab, isActive = false ) => {
 	}
 };
 
+
 /**
  * Active the first tab
  * @param {NodeListOf<Element>} headers List of headers
@@ -32,7 +33,8 @@ const activateFirstTab = ( headers, tabs ) => {
 
 	if ( 0 < tabs.length ) {
 		const firstTab = tabs[0];
-		firstTab.querySelector( '.wp-block-themeisle-blocks-tabs-item-content' )?.classList.add( 'active' );
+		setTabStatus( firstTab.querySelector( '.wp-block-themeisle-blocks-tabs-item-header', true ) );
+		setTabStatus( firstTab.querySelector( '.wp-block-themeisle-blocks-tabs-item-content', true ) );
 	}
 };
 
@@ -49,7 +51,7 @@ domReady( () => {
 			headers.forEach( header => {
 				const target = tabsBlock.querySelector( `#${header.dataset.tabId} .wp-block-themeisle-blocks-tabs-item-content` );
 				setTabStatus( target );
-				header.classList.remove( 'active' );
+				setTabStatus( header );
 			});
 		};
 
@@ -60,7 +62,7 @@ domReady( () => {
 				// Active the tab
 				const target = tabsBlock.querySelector( `#${header.dataset.tabId} .wp-block-themeisle-blocks-tabs-item-content` );
 				setTabStatus( target, true );
-				header.classList.add( 'active' );
+				setTabStatus( header, true );
 			});
 		});
 
@@ -78,11 +80,11 @@ domReady( () => {
 				tabs.forEach( other => {
 					const otherHeader = other.querySelector( '.wp-block-themeisle-blocks-tabs-item-header' );
 					const otherContent = other.querySelector( '.wp-block-themeisle-blocks-tabs-item-content' );
-					setTabStatus( otherContent, false );
-					otherHeader?.classList.remove( 'active' );
+					setTabStatus( otherContent );
+					setTabStatus( otherHeader );
 				});
 				setTabStatus( content, true );
-				header.classList.add( 'active' );
+				setTabStatus( header, true );
 			});
 		});
 

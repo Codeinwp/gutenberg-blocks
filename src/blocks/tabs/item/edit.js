@@ -87,15 +87,17 @@ const Tabs = ({ attributes, setAttributes, clientId, name }) => {
 	};
 
 	const switchActiveState = ( parentClientId ) => {
-		const tabs = document.querySelectorAll( `#block-${parentClientId} .wp-block-themeisle-blocks-tabs-content .wp-block-themeisle-blocks-tabs-item-content` );
+		const tabs = document.querySelectorAll( `#block-${parentClientId} .wp-block-themeisle-blocks-tabs-content .wp-block-themeisle-blocks-tabs-item` );
 		if ( tabs ) {
 			tabs.forEach( tab => {
-				tab.classList.remove( 'active' );
+				tab.querySelector( '.wp-block-themeisle-blocks-tabs-item-header' )?.classList.remove( 'active' );
+				tab.querySelector( '.wp-block-themeisle-blocks-tabs-item-content' )?.classList.remove( 'active' );
 			});
 		}
 
 		if ( contentRef.current ) {
-			contentRef.current.classList.add( 'active' );
+			contentRef.current.querySelector( '.wp-block-themeisle-blocks-tabs-item-header' )?.classList.add( 'active' );
+			contentRef.current.querySelector( '.wp-block-themeisle-blocks-tabs-item-content' )?.classList.add( 'active' );
 		}
 	};
 
@@ -106,7 +108,7 @@ const Tabs = ({ attributes, setAttributes, clientId, name }) => {
 	return (
 		<Fragment>
 			<Inspector attributes={attributes} setAttributes={setAttributes} selectParent={ selectParent } />
-			<div id={ attributes.id } className="wp-block-themeisle-blocks-tabs-item">
+			<div ref={ contentRef } id={ attributes.id } className="wp-block-themeisle-blocks-tabs-item">
 				<div className="wp-block-themeisle-blocks-tabs-item-header" onClick={() => switchActiveState( parentClientId )}>
 					<RichText
 						placeholder={ __( 'Add title…' ) }
@@ -116,7 +118,7 @@ const Tabs = ({ attributes, setAttributes, clientId, name }) => {
 						withoutInteractiveFormatting
 					/>
 				</div>
-				<div ref={ contentRef } className={classnames( 'wp-block-themeisle-blocks-tabs-item-content' )}>
+				<div  className={classnames( 'wp-block-themeisle-blocks-tabs-item-content' )}>
 					<InnerBlocks template={ [ [ 'core/paragraph', { placeholder: __( 'Insert some text' ) } ] ] } renderAppender={ InnerBlocks.ButtonBlockAppender } />
 				</div>
 			</div>

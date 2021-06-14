@@ -26,7 +26,7 @@ const {
 const { isEqual } = lodash;
 
 import Inspector from './inspector.js';
-import Toolbar from './toolbar.js';
+import Toolbar from './controls.js';
 import defaultAttributes from './attributes.js';
 import defaults from '../../../plugins/options/global-defaults/defaults.js';
 const IDs = [];
@@ -95,7 +95,7 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 		};
 	}, []);
 
-	const { insertBlock, removeBlock, selectBlock } = useDispatch( 'core/block-editor' );
+	const { insertBlock, removeBlock, selectBlock, moveBlockToPosition } = useDispatch( 'core/block-editor' );
 
 	/**
 	 * Create headers based on the blocks from InnberBlocks
@@ -113,7 +113,9 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 	const toggleActiveTab = ( blockId ) => {
 		if ( contentRef.current ) {
 			children.forEach( block => {
+				const blockHeader = contentRef.current.querySelector( `#block-${block.clientId} .wp-block-themeisle-blocks-tabs-item-header` );
 				const blockContent = contentRef.current.querySelector( `#block-${block.clientId} .wp-block-themeisle-blocks-tabs-item-content` );
+				blockHeader?.classList.toggle( 'active', block.attributes.id === blockId );
 				blockContent?.classList.toggle( 'active', block.attributes.id === blockId );
 			});
 			setActiveTab( blockId );
@@ -135,6 +137,13 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 		if ( 0 < children?.length ) {
 			const block = children.filter( block => block.attributes.id === blockId )[0];
 			selectBlock( block.clientId );
+		}
+	};
+
+	const moveTab = ( blockId, position ) => {
+		const blockClienId = children.filter( block => block.attributes.id === blockId )[0]?.clientId;
+		if ( blockClienId ) {
+			moveBlockToPosition( blockClienId, clientId, clientId, position );
 		}
 	};
 
@@ -171,8 +180,16 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 
 	const contentStyle = css`
 		.wp-block-themeisle-blocks-tabs-item-header, .wp-block-themeisle-blocks-tabs-item-content {
+			border-width: ${ attributes.borderWidth !== undefined ? attributes.borderWidth : 3 }px;
+		}
+
+		.wp-block-themeisle-blocks-tabs-item-header.active, .wp-block-themeisle-blocks-tabs-item-content.active {
 			background-color: ${ attributes.tabColor };
 			border-width: ${ attributes.borderWidth !== undefined ? attributes.borderWidth : 3 }px;
+		}
+
+		.wp-block-themeisle-blocks-tabs-item-header.active div {
+			color: ${ attributes.activeTitleColor };
 		}
 	`;
 
@@ -194,13 +211,14 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 
 	return (
 		<Fragment>
-			<Toolbar attributes={ attributes } setAttributes={ setAttributes } selectedTab={ activeTab } />
+			<Toolbar attributes={ attributes } setAttributes={ setAttributes } selectedTab={ activeTab } moveTab={ moveTab }/>
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
 				tabs={ attributes.headers }
 				deleteTab={ deleteTab }
 				selectTab={ selectTab }
+				moveTab={ moveTab }
 				addTab={ addTab }
 			/>
 			<div id={ attributes.id } className="wp-block-themeisle-blocks-tabs" style={{ borderColor: attributes.borderColor }}>
