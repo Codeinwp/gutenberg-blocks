@@ -37,14 +37,31 @@ class Tabs_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
+				'selector'   => ' .wp-block-themeisle-blocks-tabs-header.active div',
+				'properties' => array(
+					array(
+						'property'  => 'color',
+						'value'     => 'activeTitleColor',
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
 				'selector'   => ' .wp-block-themeisle-blocks-tabs-header.active',
 				'properties' => array(
 					array(
 						'property'  => 'background-color',
 						'value'     => 'tabColor',
-						'condition' => function( $attrs ) {
-							return isset( $attrs['tabColor'] );
-						},
+					),
+					array(
+						'property'  => 'border-width',
+						'value'     => 'borderWidth',
+					),
+					array(
+						'property'  => 'border-color',
+						'value'     => 'borderColor',
 					),
 				),
 			)
@@ -52,14 +69,15 @@ class Tabs_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-tabs-header.active, .wp-block-themeisle-blocks-tabs-header.active::before, .wp-block-themeisle-blocks-tabs-header.active::after',
+				'selector'   => ' .wp-block-themeisle-blocks-tabs-header.active::before',
 				'properties' => array(
 					array(
 						'property'  => 'border-width',
 						'value'     => 'borderWidth',
-						'condition' => function( $attrs ) {
-							return isset( $attrs['borderWidth'] );
-						},
+					),
+					array(
+						'property'  => 'border-color',
+						'value'     => 'borderColor',
 					),
 				),
 			)
@@ -67,21 +85,55 @@ class Tabs_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-tabs-item-header, .wp-block-themeisle-blocks-tabs-item-content',
+				'selector'   => ' .wp-block-themeisle-blocks-tabs-header.active::after',
+				'properties' => array(
+					array(
+						'property'  => 'border-width',
+						'value'     => 'borderWidth',
+					),
+					array(
+						'property'  => 'border-color',
+						'value'     => 'borderColor',
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-tabs-item-header',
 				'properties' => array(
 					array(
 						'property'  => 'background-color',
 						'value'     => 'tabColor',
-						'condition' => function( $attrs ) {
-							return isset( $attrs['tabColor'] );
-						},
 					),
 					array(
 						'property'  => 'border-width',
 						'value'     => 'borderWidth',
-						'condition' => function( $attrs ) {
-							return isset( $attrs['borderWidth'] );
-						},
+					),
+					array(
+						'property'  => 'border-color',
+						'value'     => 'borderColor',
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-tabs-item-content',
+				'properties' => array(
+					array(
+						'property'  => 'background-color',
+						'value'     => 'tabColor',
+					),
+					array(
+						'property'  => 'border-width',
+						'value'     => 'borderWidth',
+					),
+					array(
+						'property'  => 'border-color',
+						'value'     => 'borderColor',
 					),
 				),
 			)
