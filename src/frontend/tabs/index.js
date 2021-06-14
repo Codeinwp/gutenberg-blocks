@@ -33,8 +33,8 @@ const activateFirstTab = ( headers, tabs ) => {
 
 	if ( 0 < tabs.length ) {
 		const firstTab = tabs[0];
-		setTabStatus( firstTab.querySelector( '.wp-block-themeisle-blocks-tabs-item-header', true ) );
-		setTabStatus( firstTab.querySelector( '.wp-block-themeisle-blocks-tabs-item-content', true ) );
+		setTabStatus( firstTab.querySelector( '.wp-block-themeisle-blocks-tabs-item-header' ), true );
+		setTabStatus( firstTab.querySelector( '.wp-block-themeisle-blocks-tabs-item-content' ), true );
 	}
 };
 
