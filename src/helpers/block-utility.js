@@ -61,6 +61,15 @@ const generateUniqIdInstance = ( idPrefix, clientId, idsList ) => {
 };
 
 /**
+ * Generate the id prefix based on the name of the block
+ * @param {string} name Name of the block
+ * @returns {string}
+ */
+const generatePrefix = ( name ) => {
+	return `wp-block-${ name.replace( '/', '-' ) }-`;
+};
+
+/**
  * THe args definition for the block id generator
  * @typedef {Object} AddBlockIdProps
  * @property {Object} attributes The block's attributes provided by WordPress
@@ -68,7 +77,7 @@ const generateUniqIdInstance = ( idPrefix, clientId, idsList ) => {
  * @property {string} name The block's name provided by WordPress
  * @property {string} clientId The block's client id provided by WordPress
  * @property {Object} defaultAttributes The default attributes of the block.
- * @property {string} idPrefix The prefix used for generating the block id
+ * @property {(string|undefined)} idPrefix (Optional) The prefix used for generating the block id
  */
 
 
@@ -80,11 +89,15 @@ const generateUniqIdInstance = ( idPrefix, clientId, idsList ) => {
 export const addBlockId = ( args ) => {
 	const { attributes, setAttributes, clientId, idPrefix, name, defaultAttributes } = args;
 
-	// Initiliazi with an empty array the id list for the given block
+	// Initialize with an empty array the id list for the given block
 	localIDs[name] ??= [];
 
+	// Auto-generate idPrefix if not provided
+	const prefix = idPrefix || generatePrefix( name );
+	console.log( generatePrefix( name ) );
+
 	const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
-	const instanceId = generateUniqIdInstance( idPrefix, clientId, localIDs[name]);
+	const instanceId = generateUniqIdInstance( prefix, clientId, localIDs[name]);
 	const idIsAlreadyUsed = attributes.id && localIDs[name].includes( attributes.id );
 
 	if ( attributes.id === undefined ) {
