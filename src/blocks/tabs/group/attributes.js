@@ -12,7 +12,7 @@ const attributes = {
 		type: 'string'
 	},
 	borderWidth: {
-		type: 'string'
+		type: 'number'
 	},
 	activeTitleColor: {
 		type: 'string'

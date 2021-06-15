@@ -193,7 +193,14 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 		}
 	`;
 
-	const renderTabHeader = ( title, onClick, active ) => {
+	const addTabStyle = css`
+		display: flex;
+		width: 30px;
+		height: 30px;
+		align-items: center;
+	`;
+
+	const TabHeader = ({ title, onClick, active }) => {
 		return (
 			<div className={classnames( 'wp-block-themeisle-blocks-tabs-header', {'active': active})}>
 				<div onClick={onClick}>{title}</div>
@@ -201,10 +208,10 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 		);
 	};
 
-	const renderAddTab = () => {
+	const AddTab = () => {
 		return (
 			<div className={classnames( 'wp-block-themeisle-blocks-tabs-header' )}>
-				<div style={{ width: 30, height: 24 }} onClick={addTab}> <Icon icon={ plus } size={ 12 }/> </div>
+				<div css={addTabStyle} onClick={addTab}> <Icon icon={ plus } /> </div>
 			</div>
 		);
 	};
@@ -225,12 +232,16 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 				<div css={tabStyle} className="wp-block-themeisle-blocks-tabs-headers">
 					{
 						attributes.headers?.map( tabHeader => {
-							return renderTabHeader( tabHeader.title || __( 'Insert Title' ), () => {
-								toggleActiveTab( tabHeader.id );
-							}, tabHeader.id === activeTab );
+							return (
+								<TabHeader
+									title={ tabHeader.title || __( 'Insert Title' ) }
+									active={tabHeader.id === activeTab}
+									onClick={() => toggleActiveTab( tabHeader.id )}
+								/>
+							);
 						})
 					}
-					{renderAddTab()}
+					<AddTab />
 				</div>
 				<div ref={ contentRef } className="wp-block-themeisle-blocks-tabs-content" css={contentStyle}>
 					<InnerBlocks
