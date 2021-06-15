@@ -43,8 +43,8 @@ const ToolbarComp = ({attributes, setAttributes, selectedTab, moveTab}) => {
 	return (
 		<BlockControls>
 			<ToolbarGroup label={ __( 'Movement' ) }>
-				<ToolbarButton icon={ chevronLeft } disabled={ 0 === index } label={ __( 'Move left' )} onClick={ () => moveTabTo( 'left' ) } />
-				<ToolbarButton icon={ chevronRight } disabled={ attributes.headers?.length - 1 == index} label={ __( 'Move right' )} onClick={ () => moveTabTo( 'right' ) } />
+				<ToolbarButton className={'wp-block-themeisle-blocks-tabs-toolbar-mover'} icon={ chevronLeft } iconSize={ 24 } disabled={ 0 === index } label={ __( 'Move tab left' )} onClick={ () => moveTabTo( 'left' ) } />
+				<ToolbarButton className={'wp-block-themeisle-blocks-tabs-toolbar-mover'} icon={ chevronRight } iconSize={ 24 } disabled={ attributes.headers?.length - 1 == index} label={ __( 'Move tab right' )} onClick={ () => moveTabTo( 'right' ) } />
 			</ToolbarGroup>
 		</BlockControls>
 	);

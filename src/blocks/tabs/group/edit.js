@@ -2,7 +2,7 @@
 /**
  * External dependencies
  */
-import { plusCircle } from '@wordpress/icons';
+import { plus } from '@wordpress/icons';
 import classnames from 'classnames';
 import {
 	css,
@@ -204,7 +204,7 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 	const renderAddTab = () => {
 		return (
 			<div className={classnames( 'wp-block-themeisle-blocks-tabs-header' )}>
-				<div style={{ width: 30, height: 24 }} onClick={addTab}> <Icon icon={ plusCircle } size={ 12 }/> </div>
+				<div style={{ width: 30, height: 24 }} onClick={addTab}> <Icon icon={ plus } size={ 12 }/> </div>
 			</div>
 		);
 	};
