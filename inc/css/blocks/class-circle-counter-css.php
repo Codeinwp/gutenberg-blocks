@@ -142,7 +142,7 @@ class Circle_Counter_CSS extends Base_CSS {
 							$percentage = isset( $attrs['percentage'] ) ? $attrs['percentage'] : 50;
 
 							if ( 50 > $percentage ) {
-								returnisset( $attrs['backgroundColor'] ) ? $attrs['backgroundColor'] : '#4682b426';
+								return isset( $attrs['backgroundColor'] ) ? $attrs['backgroundColor'] : '#4682b426';
 							}
 
 							return $value;

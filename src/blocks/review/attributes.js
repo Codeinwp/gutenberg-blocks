@@ -68,11 +68,13 @@ const attributes = {
 		default: [
 			{
 				label: __( 'Buy on Amazon' ),
-				href: ''
+				href: '',
+				isSponsored: false
 			},
 			{
 				label: __( 'Buy on eBay' ),
-				href: ''
+				href: '',
+				isSponsored: false
 			}
 		]
 	},
