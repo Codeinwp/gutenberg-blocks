@@ -24,7 +24,6 @@ export const addGlobalDefaults = ( attributes, setAttributes, name, defaultAttri
 				attrs[ attr ] = defaultGlobalAttrs[ attr ];
 				return attrs;
 			}, {});
-		console.log( 'GB', attrs );
 		setAttributes({ ...attrs });
 	}
 };
@@ -49,8 +48,6 @@ const localIDs = {};
 const generateUniqIdInstance = ( idPrefix, clientId, idsList ) => {
 	const instanceId = `${ idPrefix }${ clientId.substr( 0, 8 ) }`;
 	if ( idsList.includes( instanceId ) ) {
-
-		console.log( 'Edge case detected', instanceId, idsList );
 		let newInstanceId = `${ idPrefix }${ uuidv4().substr( 0, 8 ) }`;
 		while ( idsList.includes( newInstanceId ) ) {
 			newInstanceId = `${ idPrefix }${ uuidv4().substr( 0, 8 ) }`;
@@ -94,14 +91,12 @@ export const addBlockId = ( args ) => {
 
 	// Auto-generate idPrefix if not provided
 	const prefix = idPrefix || generatePrefix( name );
-	console.log( generatePrefix( name ) );
 
 	const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
 	const instanceId = generateUniqIdInstance( prefix, clientId, localIDs[name]);
 	const idIsAlreadyUsed = attributes.id && localIDs[name].includes( attributes.id );
 
 	if ( attributes.id === undefined ) {
-		console.log( 'Undefined id', name );
 
 		// If the id is undefined, then the block is newly created, and so we need to apply the Global Defaults
 		addGlobalDefaults( attributes, setAttributes, name, defaultAttributes );
@@ -111,7 +106,6 @@ export const addBlockId = ( args ) => {
 		localIDs[name].push( instanceId );
 		blockIDs.push( instanceId );
 	} else if ( idIsAlreadyUsed ) {
-		console.log( 'Already used', instanceId, attributes.id );
 
 		// The block must be a copy and its is already used
 		// Generate a new one and save it to `localIDs` to keep track of it in local mode.
@@ -125,15 +119,12 @@ export const addBlockId = ( args ) => {
 	}
 
 	window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
-	console.log( 'Local', localIDs );
 
 	const deleteBlockIdFromRegister = () => {
 		if ( attributes.id !== undefined && ! idIsAlreadyUsed ) {
 			localIDs[name] = localIDs[name].filter( id => id !== attributes.id );
-			console.log( `Clean attr UP ${attributes.id}`, localIDs[name]);
 		} else {
 			localIDs[name] = localIDs[name].filter( id => id !== instanceId );
-			console.log( `Clean instance UP ${instanceId}`,  localIDs[name]);
 		}
 	};
 
