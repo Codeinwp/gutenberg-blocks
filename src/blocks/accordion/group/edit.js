@@ -26,26 +26,18 @@ const {
 import defaultAttributes from './attributes.js';
 
 import Inspector from './inspector.js';
-import { addBlockId } from '../../../helpers/block-utility.js';
+import { blockInit } from '../../../helpers/block-utility.js';
 
 const Edit = ({
 	attributes,
 	setAttributes,
 	className,
-	name,
 	clientId,
 	isSelected
 }) => {
 
 	useEffect( () => {
-		const unsubscribe = addBlockId({
-			attributes,
-			setAttributes,
-			clientId,
-			name,
-			idPrefix: 'wp-block-themeisle-blocks-accordion-',
-			defaultAttributes
-		});
+		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
 	}, []);
 

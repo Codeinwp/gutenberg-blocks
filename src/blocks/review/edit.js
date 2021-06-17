@@ -30,25 +30,17 @@ import {
 	close,
 	StarFilled
 } from '../../helpers/icons.js';
-import { addBlockId } from '../../helpers/block-utility.js';
+import { blockInit } from '../../helpers/block-utility.js';
 
 const Edit = ({
 	attributes,
 	setAttributes,
 	clientId,
-	name,
 	className,
 	isSelected
 }) => {
 	useEffect( () => {
-		const unsubscribe = addBlockId({
-			attributes,
-			setAttributes,
-			clientId,
-			name,
-			idPrefix: 'wp-block-themeisle-blocks-review-',
-			defaultAttributes
-		});
+		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
 	}, []);
 

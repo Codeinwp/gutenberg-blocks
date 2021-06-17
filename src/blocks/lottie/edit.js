@@ -18,7 +18,7 @@ const {
 import Placeholder from './placeholder.js';
 import Inspector from './inspector.js';
 import LottiePlayer from './components/lottie-player.js';
-import { addBlockId } from '../../helpers/block-utility.js';
+import { blockInit } from '../../helpers/block-utility.js';
 import defaultAttributes from './attributes.js';
 
 const Edit = ({
@@ -26,21 +26,13 @@ const Edit = ({
 	setAttributes,
 	className,
 	isSelected,
-	clientId,
-	name
+	clientId
 }) => {
 
 	const playerRef = useRef( null );
 
 	useEffect( () => {
-		const unsubscribe = addBlockId({
-			attributes,
-			setAttributes,
-			clientId,
-			name,
-			idPrefix: 'wp-block-themeisle-blocks-lottie-',
-			defaultAttributes
-		});
+		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
 	}, []);
 

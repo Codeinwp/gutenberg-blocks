@@ -28,7 +28,7 @@ const {
  */
 import Inspector from './inspector';
 import defaultAttributes from './attributes';
-import { addBlockId } from '../../helpers/block-utility';
+import { blockInit } from '../../helpers/block-utility';
 
 /**
  * Definition of the action type for the marker reducer
@@ -47,19 +47,11 @@ const Edit = ({
 	setAttributes,
 	className,
 	isSelected,
-	toggleSelection,
-	name
+	toggleSelection
 }) => {
 
 	useEffect( () => {
-		const unsubscribe = addBlockId({
-			attributes,
-			setAttributes,
-			clientId,
-			name,
-			idPrefix: 'wp-block-themeisle-blocks-map-',
-			defaultAttributes
-		});
+		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
 	}, []);
 

@@ -4,7 +4,7 @@ import globalDefaultsBlocksAttrs from '../plugins/options/global-defaults/defaul
 const {
 	isEqual
 } = lodash;
-const { select } = wp.data;
+const { select, dispatch } = wp.data;
 
 /**
  * Utiliy function for creating a function that add the gobal defaults values to the block's attribute value.
@@ -89,6 +89,10 @@ const generatePrefix = ( name ) => {
 export const addBlockId = ( args ) => {
 	const { attributes, setAttributes, clientId, idPrefix, name, defaultAttributes } = args;
 
+	if ( attributes === undefined || setAttributes === undefined ) {
+		return;
+	}
+
 	// Initialize with an empty array the id list for the given block
 	localIDs[name] ??= [];
 
@@ -136,6 +140,16 @@ export const addBlockId = ( args ) => {
 
 
 const getBlock = select( 'core/block-editor' ).getBlock;
+const updateBlockAttributes = dispatch( 'core/block-editor' ).updateBlockAttributes;
+
+/**
+ * Create the function that behaves like `setAttributes` using the client id
+ * @param {*} clientId The block's client id provided by WordPress
+ * @returns {Function} Function that mimics `setAttributes`
+ */
+const updateAttrs = ( clientId ) => ( attr ) => {
+	updateBlockAttributes( clientId, attr );
+};
 
 /**
  * THe args definition for the block id generator
@@ -153,7 +167,7 @@ const getBlock = select( 'core/block-editor' ).getBlock;
  */
 const extractBlockData = ( clientId ) => {
 	const block = getBlock( clientId );
-	return { attributes: block.attributes, setAttributes: block.setAttributes, name: block.name };
+	return { attributes: block?.attributes, name: block?.name };
 };
 
 /**
@@ -176,6 +190,7 @@ export const blockInit = ( clientId, defaultAttributes ) => {
 	return addBlockId({
 		clientId,
 		defaultAttributes,
+		setAttributes: updateAttrs( clientId ),
 		...extractBlockData( clientId )
 	});
 };

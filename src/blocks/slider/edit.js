@@ -24,7 +24,7 @@ import Inspector from './inspector.js';
 import Slide from './components/Slide.js';
 import SliderControls from './components/slider-controls.js';
 import defaultAttributes from './attributes.js';
-import { addBlockId } from '../../helpers/block-utility.js';
+import { blockInit } from '../../helpers/block-utility.js';
 
 const Edit = ({
 	attributes,
@@ -32,19 +32,11 @@ const Edit = ({
 	className,
 	clientId,
 	isSelected,
-	toggleSelection,
-	name
+	toggleSelection
 }) => {
 
 	useEffect( () => {
-		const unsubscribe = addBlockId({
-			attributes,
-			setAttributes,
-			clientId,
-			name,
-			idPrefix: 'wp-block-themeisle-blocks-slider-',
-			defaultAttributes
-		});
+		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => {
 			unsubscribe();
 			if ( attributes.images.length ) {

@@ -36,14 +36,13 @@ import Inspector from './inspector.js';
 import BlockNavigatorControl from '../../../components/block-navigator-control/index.js';
 import Separators from '../components/separators/index.js';
 import Onboarding from '../components/onboarding/index.js';
-import { addBlockId } from '../../../helpers/block-utility.js';
+import { blockInit } from '../../../helpers/block-utility.js';
 
 const Edit = ({
 	attributes,
 	setAttributes,
 	className,
-	clientId,
-	name
+	clientId
 }) => {
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
 
@@ -76,14 +75,7 @@ const Edit = ({
 	const isSmaller = useViewportMatch( 'small', '<=' );
 
 	useEffect( () => {
-		const unsubscribe = addBlockId({
-			attributes,
-			setAttributes,
-			clientId,
-			name,
-			idPrefix: 'wp-block-themeisle-blocks-advanced-columns-',
-			defaultAttributes
-		});
+		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
 	}, []);
 

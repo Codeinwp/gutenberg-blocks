@@ -28,7 +28,7 @@ import MarkerModal from './components/marker-modal.js';
 import Map from './components/map.js';
 import styles from './components/styles.js';
 import defaultAttributes from './attributes.js';
-import { addBlockId } from '../../helpers/block-utility.js';
+import { blockInit } from '../../helpers/block-utility.js';
 
 const Edit = ({
 	attributes,
@@ -36,19 +36,11 @@ const Edit = ({
 	className,
 	clientId,
 	isSelected,
-	toggleSelection,
-	name
+	toggleSelection
 }) => {
 
 	useEffect( () => {
-		const unsubscribe = addBlockId({
-			attributes,
-			setAttributes,
-			clientId,
-			name,
-			idPrefix: 'wp-block-themeisle-blocks-google-map-',
-			defaultAttributes
-		});
+		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
 	}, []);
 

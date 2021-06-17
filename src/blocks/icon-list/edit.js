@@ -12,7 +12,7 @@ const {
 /**
  * Internal dependencies
  */
-import { addBlockId } from '../../helpers/block-utility.js';
+import { blockInit } from '../../helpers/block-utility.js';
 import defaultAttributes from './attributes.js';
 import Inspector from './inspector.js';
 
@@ -20,19 +20,11 @@ const Edit = ({
 	attributes,
 	setAttributes,
 	clientId,
-	name,
 	className
 }) => {
 
 	useEffect( () => {
-		const unsubscribe = addBlockId({
-			attributes,
-			setAttributes,
-			clientId,
-			name,
-			idPrefix: 'wp-block-themeisle-blocks-icon-list-',
-			defaultAttributes
-		});
+		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
 	}, []);
 

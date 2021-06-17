@@ -19,7 +19,6 @@ import attributes from './attributes.js';
 import edit from './edit.js';
 import save from './save.js';
 import transforms from './transforms.js';
-import { OtterBlock } from '../../helpers/enhancement';
 
 registerBlockType( 'themeisle-blocks/circle-counter', {
 	title: __( 'Circle Counter' ),
@@ -33,6 +32,6 @@ registerBlockType( 'themeisle-blocks/circle-counter', {
 	],
 	attributes,
 	transforms,
-	edit: OtterBlock( edit, attributes ),
+	edit,
 	save
 });

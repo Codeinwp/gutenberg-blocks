@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /**
  * External dependencies
  */
@@ -10,7 +9,6 @@ import classnames from 'classnames';
 const { __ } = wp.i18n;
 
 const {
-	isEqual,
 	range
 } = lodash;
 
@@ -30,14 +28,22 @@ const { RichText } = wp.blockEditor;
  */
 import Inspector from './inspector.js';
 import CircularProgressBar from './components/CircleCounter.js';
+import { blockInit } from '../../helpers/block-utility.js';
+import defaultAttributes from './attributes.js';
 
 const CircularProgressBarBlock = ({
+	clientId,
 	attributes,
 	setAttributes,
 	isSelected,
 	toggleSelection,
 	className
 }) => {
+
+	useEffect( () => {
+		const unsubscribe = blockInit( clientId, defaultAttributes );
+		return () => unsubscribe();
+	}, []);
 
 	const progressRef = useRef( null );
 	const valueRef = useRef( null );

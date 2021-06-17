@@ -13,26 +13,18 @@ import defaultAttributes from './attributes.js';
 import Controls from './controls.js';
 import Inspector from './inspector.js';
 import themeIsleIcons from './../../helpers/themeisle-icons';
-import { addBlockId } from '../../helpers/block-utility.js';
+import { blockInit } from '../../helpers/block-utility.js';
 
 const Edit = ({
 	attributes,
 	setAttributes,
 	className,
 	isSelected,
-	clientId,
-	name
+	clientId
 }) => {
 
 	useEffect( () => {
-		const unsubscribe = addBlockId({
-			attributes,
-			setAttributes,
-			clientId,
-			name,
-			idPrefix: 'wp-block-themeisle-blocks-font-awesome-icons-',
-			defaultAttributes
-		});
+		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
 	}, []);
 

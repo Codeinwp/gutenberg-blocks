@@ -4,7 +4,6 @@
 import classnames from 'classnames';
 import hexToRgba from 'hex-rgba';
 import GoogleFontLoader from 'react-google-font-loader';
-import { addBlockId } from '../../helpers/block-utility.js';
 
 /**
  * WordPress dependencies.
@@ -27,6 +26,7 @@ const {
 /**
  * Internal dependencies
  */
+import { blockInit } from '../../helpers/block-utility.js';
 import defaultAttributes from './attributes.js';
 import Controls from './controls.js';
 import Inspector from './inspector.js';
@@ -37,7 +37,6 @@ const Edit = ({
 	className,
 	clientId,
 	mergeBlocks,
-	name,
 	insertBlocksAfter,
 	onReplace
 }) => {
@@ -66,14 +65,7 @@ const Edit = ({
 	const isSmaller = useViewportMatch( 'small', '<=' );
 
 	useEffect( () => {
-		const unsubscribe = addBlockId({
-			attributes,
-			setAttributes,
-			clientId,
-			name,
-			idPrefix: 'wp-block-themeisle-blocks-advanced-heading-',
-			defaultAttributes
-		});
+		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
 	}, []);
 

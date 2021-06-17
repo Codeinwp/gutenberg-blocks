@@ -24,13 +24,12 @@ const {
 import defaultAttributes from './attributes.js';
 import Controls from './controls.js';
 import Inspector from './inspector.js';
-import { addBlockId } from '../../../helpers/block-utility.js';
+import { blockInit } from '../../../helpers/block-utility.js';
 
 const Edit = ({
 	attributes,
 	setAttributes,
 	className,
-	name,
 	clientId
 }) => {
 	const {
@@ -58,14 +57,7 @@ const Edit = ({
 	const isSmaller = useViewportMatch( 'small', '<=' );
 
 	useEffect( () => {
-		const unsubscribe = addBlockId({
-			attributes,
-			setAttributes,
-			clientId,
-			name,
-			idPrefix: 'wp-block-themeisle-blocks-button-group-',
-			defaultAttributes
-		});
+		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
 	}, []);
 
