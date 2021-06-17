@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-
-import arrayMove from 'array-move';
 import { SortableContainer } from 'react-sortable-hoc';
 import { SortableTab } from './components/sortableTabs';
 
@@ -70,6 +67,7 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody title={__( 'Tabs Management' )} initialOpen={true}>
+				<p>{ __( 'Press and hold to use drag and drop to sort the tabs' ) }</p>
 				{
 					0 < attributes.headers?.length && ( <TabsList pressDelay={200} items={ attributes.headers } onSortEnd={onSortEnd} axis={'y'} /> )
 				}

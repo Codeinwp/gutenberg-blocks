@@ -1,16 +1,13 @@
-/* eslint-disable no-unused-vars */
-
 /**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
 
 const {
-	__experimentalColorGradientControl: ColorGradientControl,
 	InspectorControls
 } = wp.blockEditor;
 
-const { PanelBody, Button, RangeControl, SelectControl, TextControl } = wp.components;
+const { PanelBody, Button, TextControl } = wp.components;
 
 const Inspector = ({
 	attributes,

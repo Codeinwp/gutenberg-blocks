@@ -95,6 +95,7 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 		};
 	}, []);
 
+	// Reference: https://developer.wordpress.org/block-editor/reference-guides/data/data-core-block-editor/
 	const { insertBlock, removeBlock, selectBlock, moveBlockToPosition } = useDispatch( 'core/block-editor' );
 
 	/**
@@ -133,6 +134,9 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 		}
 	}, [ activeTab, attributes.headers, children ]);
 
+	/**
+	 * ------------ Tab Actions ------------
+	 */
 	const selectTab = ( blockId ) => {
 		if ( 0 < children?.length ) {
 			const block = children.filter( block => block.attributes.id === blockId )[0];
@@ -150,7 +154,7 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 	const deleteTab = ( blockId ) => {
 		if ( 0 < children?.length ) {
 			const block = children.filter( block => block.attributes.id === blockId )[0];
-			removeBlock( block.clientId );
+			removeBlock( block.clientId, false );
 			if ( activeTab === blockId ) {
 				setActiveTab( '' );
 			}
@@ -164,6 +168,9 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 		}
 	};
 
+	/**
+	 * ------------ Tab Dynamic CSS ------------
+	 */
 	const tabStyle = css`
 		.wp-block-themeisle-blocks-tabs-header.active {
 			background-color: ${ attributes.tabColor };
@@ -193,13 +200,16 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 		}
 	`;
 
-	const addTabStyle = css`
+	const tabHeaderStyle = css`
 		display: flex;
 		width: 30px;
 		height: 30px;
 		align-items: center;
 	`;
 
+	/**
+	 * ------------ Tab Components ------------
+	 */
 	const TabHeader = ({ title, onClick, active }) => {
 		return (
 			<div className={classnames( 'wp-block-themeisle-blocks-tabs-header', {'active': active})}>
@@ -208,10 +218,22 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 		);
 	};
 
+	const TabHeaders = ({ headers }) => {
+		return headers?.map( tabHeader => {
+			return (
+				<TabHeader
+					title={ tabHeader.title || __( 'Insert Title' ) }
+					active={tabHeader.id === activeTab}
+					onClick={() => toggleActiveTab( tabHeader.id )}
+				/>
+			);
+		});
+	};
+
 	const AddTab = () => {
 		return (
 			<div className={classnames( 'wp-block-themeisle-blocks-tabs-header' )}>
-				<div css={addTabStyle} onClick={addTab}> <Icon icon={ plus } /> </div>
+				<div css={tabHeaderStyle} onClick={addTab}> <Icon icon={ plus } /> </div>
 			</div>
 		);
 	};
@@ -230,17 +252,7 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 			/>
 			<div id={ attributes.id } className="wp-block-themeisle-blocks-tabs" style={{ borderColor: attributes.borderColor }}>
 				<div css={tabStyle} className="wp-block-themeisle-blocks-tabs-headers">
-					{
-						attributes.headers?.map( tabHeader => {
-							return (
-								<TabHeader
-									title={ tabHeader.title || __( 'Insert Title' ) }
-									active={tabHeader.id === activeTab}
-									onClick={() => toggleActiveTab( tabHeader.id )}
-								/>
-							);
-						})
-					}
+					<TabHeaders headers={attributes.headers} />
 					<AddTab />
 				</div>
 				<div ref={ contentRef } className="wp-block-themeisle-blocks-tabs-content" css={contentStyle}>
