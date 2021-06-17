@@ -1,8 +1,10 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import globalDefaultsBlocksAttrs from '../plugins/options/global-defaults/defaults.js';
 const {
 	isEqual
 } = lodash;
-import { v4 as uuidv4 } from 'uuid';
+const { select } = wp.data;
 
 /**
  * Utiliy function for creating a function that add the gobal defaults values to the block's attribute value.
@@ -81,7 +83,8 @@ const generatePrefix = ( name ) => {
 /**
  * Generate an Id for block so that it will create a conlfict with the others.
  * Prevent the duplicate Id for actions like: duplicate, copy
- * @param {AddBlockIdProps} args
+ * @param {AddBlockIdProps} args Block informatin about clientId, attributes, etc
+ * @return {Function} A function that clean up the id from the internal list tracking
  */
 export const addBlockId = ( args ) => {
 	const { attributes, setAttributes, clientId, idPrefix, name, defaultAttributes } = args;
@@ -129,4 +132,50 @@ export const addBlockId = ( args ) => {
 	};
 
 	return deleteBlockIdFromRegister;
+};
+
+
+const getBlock = select( 'core/block-editor' ).getBlock;
+
+/**
+ * THe args definition for the block id generator
+ * @typedef {Object} BlockData
+ * @property {Object} attributes The block's attributes provided by WordPress
+ * @property {function} setAttributes The block's attributes update function provided by WordPress
+ * @property {string} name The block's name provided by WordPress
+ */
+
+
+/**
+ * Extract the attributes, setAttributes, and the name of the block using the data api
+ * @param {string} clientId The block's client id provided by WordPress
+ * @returns {BlockData}
+ */
+const extractBlockData = ( clientId ) => {
+	const block = getBlock( clientId );
+	return { attributes: block.attributes, setAttributes: block.setAttributes, name: block.name };
+};
+
+/**
+ * Generate the id attribute for the given block.
+ * This function is a simple wrapper around `addBlockId`
+ * @param {string} clientId The block's client id provided by WordPress
+ * @param {Object} defaultAttributes The default attributes of the block.
+ * @return {Function} A function that clean up the id from the internal list tracking
+ *
+ * @example
+ * import defaultAttributes from './attributes'
+ * const Block = ({ cliendId }) => {
+ * 		useEffect(() => {
+ * 			const unsubscribe = blockInit(clientId, defaultAttributes);
+ * 			return () => unsubscribe();
+ * 		}, [])
+ * }
+ */
+export const blockInit = ( clientId, defaultAttributes ) => {
+	return addBlockId({
+		clientId,
+		defaultAttributes,
+		...extractBlockData( clientId )
+	});
 };

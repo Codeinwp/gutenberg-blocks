@@ -10,6 +10,13 @@ const {
  * @param {Object} defaultAttributes The default attributes of the block.
  * @param {(string|undefined)} idPrefix (Optional) The prefix used for generating the block id
  * @returns {React.FunctionComponent} An enhanced component
+ *
+ * @example
+ * import attributes from './attributes.js';
+ * import edit from './edit.js';
+ * registerBlockType( 'themeisle-blocks/circle-counter', {
+ * 		edit: OtterBlock( edit, attributes ),
+ * })
  */
 export const OtterBlock = ( Block, defaultAttributes, idPrefix = undefined ) => ( props ) => {
 	const { attributes, setAttributes, clientId, name } = props;
