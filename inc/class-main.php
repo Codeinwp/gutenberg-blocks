@@ -125,7 +125,7 @@ class Main {
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
 		add_action( 'init', array( $this, 'load_server_side_blocks' ), 11 );
 
-		if ( version_compare( floatval( get_bloginfo( 'version' ) ), '5.8', '>=' ) ){
+		if ( version_compare( floatval( get_bloginfo( 'version' ) ), '5.8', '>=' ) ) {
 			add_filter( 'block_categories_all', array( $this, 'block_categories' ) );
 		} else {
 			add_filter( 'block_categories', array( $this, 'block_categories' ) );
