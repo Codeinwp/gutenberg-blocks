@@ -55,7 +55,12 @@ module.exports = {
 					loader: 'babel-loader',
 					options: {
 						presets: [
-							'@babel/preset-env',
+							[
+								'@babel/preset-env', {
+									useBuiltIns: 'entry',
+									corejs: '3.14'
+								}
+							],
 							'@emotion/babel-preset-css-prop'
 						],
 						plugins: [
@@ -74,8 +79,8 @@ module.exports = {
 				{
 					loader: 'eslint-loader',
 					options: {
-						fix: true,
-					},
+						fix: true
+					}
 				} ]
 			},
 			{

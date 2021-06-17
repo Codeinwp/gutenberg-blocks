@@ -124,7 +124,13 @@ class Main {
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
 		add_action( 'init', array( $this, 'load_server_side_blocks' ), 11 );
-		add_action( 'block_categories', array( $this, 'block_categories' ) );
+
+		if ( version_compare( floatval( get_bloginfo( 'version' ) ), '5.8', '>=' ) ){
+			add_filter( 'block_categories_all', array( $this, 'block_categories' ) );
+		} else {
+			add_filter( 'block_categories', array( $this, 'block_categories' ) );
+		}
+
 		add_filter( 'render_block', array( $this, 'render_amp' ), 10, 3 );
 
 		if ( isset( $allow_json ) && true === (bool) $allow_json && ! function_exists( 'is_wpcom_vip' ) ) {

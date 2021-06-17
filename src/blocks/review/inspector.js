@@ -18,7 +18,8 @@ const {
 	ExternalLink,
 	PanelBody,
 	RangeControl,
-	TextControl
+	TextControl,
+	ToggleControl
 } = wp.components;
 
 const { useState } = wp.element;
@@ -336,6 +337,12 @@ const Inspector = ({
 							placeholder={ __( 'https://…' ) }
 							value={ link.href }
 							onChange={ href => changeLinks( index, { href }) }
+						/>
+
+						<ToggleControl
+							label={ 'Is this Sponsored?' }
+							checked={ link.isSponsored }
+							onChange={ () => changeLinks( index, { isSponsored: ! link.isSponsored }) }
 						/>
 					</PanelItem>
 				) ) }
