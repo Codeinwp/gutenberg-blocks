@@ -5,12 +5,12 @@ const {
 } = wp.element;
 
 /**
- * Ehance the block by adding the id generating functions
+ * Enhance the block by adding the id generating functions
  * @param {*} Block An Otter Block
  * @param {Object} defaultAttributes The default attributes of the block.
  * @param {(string|undefined)} idPrefix (Optional) The prefix used for generating the block id
  * @returns {React.FunctionComponent} An enhanced component
- *
+ * @alternative blockInit
  * @example
  * import attributes from './attributes.js';
  * import edit from './edit.js';

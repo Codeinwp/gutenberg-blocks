@@ -7,6 +7,11 @@ const {
 const { select, dispatch } = wp.data;
 
 /**
+ * Initiate the global id tracker with an empty list if it is the case.
+ */
+window.themeisleGutenberg.blockIDs ??= [];
+
+/**
  * Utiliy function for creating a function that add the gobal defaults values to the block's attribute value.
  * @param {Object} attributes The block's attributes provided by WordPress
  * @param {function} setAttributes The block's attributes update function provided by WordPress
@@ -32,7 +37,7 @@ export const addGlobalDefaults = ( attributes, setAttributes, name, defaultAttri
 
 /**
  * An object that keep tracking of the block instances. Is used for preventing id duplication on action like: create, duplicate, copy on editor page.
- * @type {Object.<string, Array.<string>>}
+ * @type {Object.<string, Set.<string>>}
  */
 const localIDs = {};
 
@@ -44,14 +49,14 @@ const localIDs = {};
  * by creating new id based on the new uniq `clientId`
  * @param {string} idPrefix The prefix used for generating the block id
  * @param {string} clientId The block's client id provided by WordPress
- * @param {Array.<string>} idsList The ids list for the current type of block
+ * @param {Set.<string>} idsList The ids list for the current type of block
  * @returns An uniq id instance
  */
 const generateUniqIdInstance = ( idPrefix, clientId, idsList ) => {
 	const instanceId = `${ idPrefix }${ clientId.substr( 0, 8 ) }`;
-	if ( idsList.includes( instanceId ) ) {
+	if ( idsList.has( instanceId ) ) {
 		let newInstanceId = `${ idPrefix }${ uuidv4().substr( 0, 8 ) }`;
-		while ( idsList.includes( newInstanceId ) ) {
+		while ( idsList.has( newInstanceId ) ) {
 			newInstanceId = `${ idPrefix }${ uuidv4().substr( 0, 8 ) }`;
 		}
 		return newInstanceId;
@@ -85,23 +90,30 @@ const generatePrefix = ( name ) => {
  * Prevent the duplicate Id for actions like: duplicate, copy
  * @param {AddBlockIdProps} args Block informatin about clientId, attributes, etc
  * @return {Function} A function that clean up the id from the internal list tracking
+ * @external addBlockId
  */
 export const addBlockId = ( args ) => {
+
 	const { attributes, setAttributes, clientId, idPrefix, name, defaultAttributes } = args;
+
+	/**
+	 * Create an alias for the global id tracker
+	 * @type {Array.<string>}
+	 */
+	const blockIDs = window.themeisleGutenberg.blockIDs;
 
 	if ( attributes === undefined || setAttributes === undefined ) {
 		return;
 	}
 
 	// Initialize with an empty array the id list for the given block
-	localIDs[name] ??= [];
+	localIDs[name] ??= new Set();
 
 	// Auto-generate idPrefix if not provided
 	const prefix = idPrefix || generatePrefix( name );
 
-	const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
 	const instanceId = generateUniqIdInstance( prefix, clientId, localIDs[name]);
-	const idIsAlreadyUsed = attributes.id && localIDs[name].includes( attributes.id );
+	const idIsAlreadyUsed = attributes.id && localIDs[name].has( attributes.id );
 
 	if ( attributes.id === undefined ) {
 
@@ -110,28 +122,26 @@ export const addBlockId = ( args ) => {
 
 		// Save the id in all methods
 		setAttributes({ id: instanceId });
-		localIDs[name].push( instanceId );
+		localIDs[name].add( instanceId );
 		blockIDs.push( instanceId );
 	} else if ( idIsAlreadyUsed ) {
 
 		// The block must be a copy and its is already used
 		// Generate a new one and save it to `localIDs` to keep track of it in local mode.
 		setAttributes({ id: instanceId });
-		localIDs[name].push( instanceId );
+		localIDs[name].add( instanceId );
 	} else {
 
 		// No conflicts, save the current id only to keep track of it both in local and global mode.
-		localIDs[name].push( attributes.id );
+		localIDs[name].add( attributes.id );
 		blockIDs.push( attributes.id );
 	}
 
-	window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
-
 	const deleteBlockIdFromRegister = () => {
 		if ( attributes.id !== undefined && ! idIsAlreadyUsed ) {
-			localIDs[name] = localIDs[name].filter( id => id !== attributes.id );
+			localIDs[name].delete( attributes.id );
 		} else {
-			localIDs[name] = localIDs[name].filter( id => id !== instanceId );
+			localIDs[name].delete( instanceId );
 		}
 	};
 
@@ -172,11 +182,10 @@ const extractBlockData = ( clientId ) => {
 
 /**
  * Generate the id attribute for the given block.
- * This function is a simple wrapper around `addBlockId`
+ * This function is a simple wrapper around {@link addBlockId}
  * @param {string} clientId The block's client id provided by WordPress
  * @param {Object} defaultAttributes The default attributes of the block.
  * @return {Function} A function that clean up the id from the internal list tracking
- *
  * @example
  * import defaultAttributes from './attributes'
  * const Block = ({ cliendId }) => {
