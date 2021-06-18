@@ -227,7 +227,9 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 					onClick={() => toggleActiveTab( tabHeader.id )}
 				/>
 			);
-		});
+		}) || (
+			<Fragment></Fragment>
+		);
 	};
 
 	const AddTab = () => {

@@ -38,6 +38,23 @@ const activateFirstTab = ( headers, tabs ) => {
 	}
 };
 
+/**
+ *
+ * @param {HTMLDivElement} tabsBlock
+ */
+const getInnerBlockTabs = ( tabsBlock ) => {
+	const innerBlocks = tabsBlock.querySelectorAll( '.wp-block-themeisle-blocks-tabs' );
+	let innerHeaders = [];
+	let innerTabs = [];
+
+	innerBlocks.forEach( block => {
+		innerHeaders = [ ...innerHeaders, ...Array.from( block.querySelectorAll( '.wp-block-themeisle-blocks-tabs-header' ) ) ];
+		innerTabs = [ ...innerTabs, ...Array.from( block.querySelectorAll( '.wp-block-themeisle-blocks-tabs-item' ) ) ];
+	});
+
+	return { innerHeaders, innerTabs };
+};
+
 domReady( () => {
 	const tabsBlocks = document.querySelectorAll( '.wp-block-themeisle-blocks-tabs' );
 
@@ -46,7 +63,10 @@ domReady( () => {
 	 * Set activation function for the headers of the parent component
 	 */
 	tabsBlocks.forEach( tabsBlock => {
-		const headers = tabsBlock.querySelectorAll( '.wp-block-themeisle-blocks-tabs-header' );
+
+		const { innerHeaders, innerTabs } = getInnerBlockTabs( tabsBlock );
+
+		const headers = Array.from( tabsBlock.querySelectorAll( '.wp-block-themeisle-blocks-tabs-header' ) ).filter( header => ! innerHeaders.includes( header ) );
 		const setHeadersInactive = () => {
 			headers.forEach( header => {
 				const target = tabsBlock.querySelector( `#${header.dataset.tabId} .wp-block-themeisle-blocks-tabs-item-content` );
@@ -66,7 +86,7 @@ domReady( () => {
 			});
 		});
 
-		const tabs = tabsBlock.querySelectorAll( '.wp-block-themeisle-blocks-tabs-item' );
+		const tabs = Array.from( tabsBlock.querySelectorAll( '.wp-block-themeisle-blocks-tabs-item' ) ).filter( tab => ! innerTabs.includes( tab ) );
 
 		/**
 		 * Used for mobile
