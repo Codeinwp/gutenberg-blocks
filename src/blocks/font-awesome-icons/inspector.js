@@ -1,29 +1,29 @@
 /**
  * WordPress dependencies...
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	Button,
 	ButtonGroup,
 	PanelBody,
 	Placeholder,
 	RangeControl,
 	Spinner
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	ColorPalette,
 	ContrastChecker,
 	InspectorControls
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	Fragment,
 	lazy,
 	Suspense,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -59,11 +59,11 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Icon' ) }
+				title={ __( 'Icon', 'otter-blocks' ) }
 			>
 				<Suspense fallback={<Placeholder><Spinner/></Placeholder>}>
 					<IconPickerControl
-						label={ __( 'Icon Picker' ) }
+						label={ __( 'Icon Picker', 'otter-blocks' ) }
 						library={ attributes.library }
 						prefix={ attributes.prefix }
 						icon={ attributes.icon }
@@ -74,11 +74,11 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Icon Sizes' ) }
+				title={ __( 'Icon Sizes', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<RangeControl
-					label={ __( 'Icon Size' ) }
+					label={ __( 'Icon Size', 'otter-blocks' ) }
 					value={ attributes.fontSize || '' }
 					initialPosition={ 16 }
 					onChange={ e => setAttributes({ fontSize: e }) }
@@ -87,7 +87,7 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Padding' ) }
+					label={ __( 'Padding', 'otter-blocks' ) }
 					value={ attributes.padding || '' }
 					initialPosition={ 5 }
 					onChange={ e => setAttributes({ padding: e }) }
@@ -96,7 +96,7 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Margin' ) }
+					label={ __( 'Margin', 'otter-blocks' ) }
 					value={ attributes.margin || '' }
 					initialPosition={ 5 }
 					onChange={ e => setAttributes({ margin: e }) }
@@ -106,7 +106,7 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Color' ) }
+				title={ __( 'Color', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<ButtonGroup>
@@ -116,7 +116,7 @@ const Inspector = ({
 						isPrimary={ ! hover }
 						onClick={ () => setHover( false ) }
 					>
-						{ __( 'Normal' ) }
+						{ __( 'Normal', 'otter-blocks' ) }
 					</Button>
 
 					<Button
@@ -125,40 +125,40 @@ const Inspector = ({
 						isPrimary={ hover }
 						onClick={ () => setHover( true ) }
 					>
-						{ __( 'Hover' ) }
+						{ __( 'Hover', 'otter-blocks' ) }
 					</Button>
 				</ButtonGroup>
 
 				{ hover ? (
 					<Fragment>
 						<ColorBaseControl
-							label={ 'Hover Background' }
+							label={ __( 'Hover Background', 'otter-blocks' ) }
 							colorValue={ attributes.backgroundColorHover }
 						>
 							<ColorPalette
-								label={ 'Hover Background' }
+								label={ __( 'Hover Background', 'otter-blocks' ) }
 								value={ attributes.backgroundColorHover }
 								onChange={ e => setAttributes({ backgroundColorHover: e }) }
 							/>
 						</ColorBaseControl>
 
 						<ColorBaseControl
-							label={ 'Hover Icon' }
+							label={ __( 'Hover Icon', 'otter-blocks' ) }
 							colorValue={ attributes.textColorHover }
 						>
 							<ColorPalette
-								label={ 'Hover Icon' }
+								label={ __( 'Hover Icon', 'otter-blocks' ) }
 								value={ attributes.textColorHover }
 								onChange={ e => setAttributes({ textColorHover: e }) }
 							/>
 						</ColorBaseControl>
 
 						<ColorBaseControl
-							label={ 'Hover Border' }
+							label={ __( 'Hover Border', 'otter-blocks' ) }
 							colorValue={ attributes.borderColorHover }
 						>
 							<ColorPalette
-								label={ 'Hover Border' }
+								label={ __( 'Hover Border', 'otter-blocks' ) }
 								value={ attributes.borderColorHover }
 								onChange={ e => setAttributes({ borderColorHover: e }) }
 							/>
@@ -174,33 +174,33 @@ const Inspector = ({
 				) : (
 					<Fragment>
 						<ColorBaseControl
-							label={ 'Background' }
+							label={ __( 'Background', 'otter-blocks' ) }
 							colorValue={ attributes.backgroundColor }
 						>
 							<ColorPalette
-								label={ 'Background' }
+								label={ __( 'Background', 'otter-blocks' ) }
 								value={ attributes.backgroundColor }
 								onChange={ e => setAttributes({ backgroundColor: e }) }
 							/>
 						</ColorBaseControl>
 
 						<ColorBaseControl
-							label={ 'Icon' }
+							label={ __( 'Icon', 'otter-blocks' ) }
 							colorValue={ attributes.textColor }
 						>
 							<ColorPalette
-								label={ 'Icon' }
+								label={ __( 'Icon', 'otter-blocks' ) }
 								value={ attributes.textColor }
 								onChange={ e => setAttributes({ textColor: e }) }
 							/>
 						</ColorBaseControl>
 
 						<ColorBaseControl
-							label={ 'Border' }
+							label={ __( 'Border', 'otter-blocks' ) }
 							colorValue={ attributes.borderColor }
 						>
 							<ColorPalette
-								label={ 'Border' }
+								label={ __( 'Border', 'otter-blocks' ) }
 								value={ attributes.borderColor }
 								onChange={ e => setAttributes({ borderColor: e }) }
 							/>
@@ -217,11 +217,11 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Border Settings' ) }
+				title={ __( 'Border Settings', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<RangeControl
-					label={ __( 'Border Size' ) }
+					label={ __( 'Border Size', 'otter-blocks' ) }
 					value={ attributes.borderSize }
 					onChange={ e => setAttributes({ borderSize: e }) }
 					min={ 0 }
@@ -229,7 +229,7 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Border Radius' ) }
+					label={ __( 'Border Radius', 'otter-blocks' ) }
 					value={ attributes.borderRadius }
 					onChange={ e => setAttributes({ borderRadius: e }) }
 					min={ 0 }

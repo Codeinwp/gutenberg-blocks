@@ -6,23 +6,23 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	isEqual,
 	range
-} = lodash;
+} from 'lodash';
 
-const { ResizableBox } = wp.components;
+import { ResizableBox } from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useState,
 	useRef
-} = wp.element;
+} from '@wordpress/element';
 
-const { RichText } = wp.blockEditor;
+import { RichText } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -175,7 +175,7 @@ const CircularProgressBarBlock = ({
 							tagName="span"
 							allowedFormats={ [] }
 							className="wp-block-themeisle-blocks-circle-counter-title__value"
-							placeholder={ isSelected ? __( 'Write caption…' ) : null }
+							placeholder={ isSelected ? __( 'Write caption…', 'otter-blocks' ) : null }
 							value={ attributes.title }
 							onChange={ onTitleChange }
 							multiline={ false }
@@ -222,7 +222,7 @@ const CircularProgressBarBlock = ({
 							tagName="span"
 							allowedFormats={ [] }
 							className="wp-block-themeisle-blocks-circle-counter-title__value"
-							placeholder={ isSelected ? __( 'Write caption…' ) : null }
+							placeholder={ isSelected ? __( 'Write caption…', 'otter-blocks' ) : null }
 							value={ attributes.title }
 							onChange={ onTitleChange }
 							multiline={ false }

@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { Icon } = wp.components;
+import { Icon } from '@wordpress/components';
 
-const { registerPlugin } = wp.plugins;
+import { registerPlugin } from '@wordpress/plugins';
 
 /**
  * Internal dependencies

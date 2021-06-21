@@ -6,10 +6,10 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const {
+import {
 	Path,
 	SVG
-} = wp.components;
+} from '@wordpress/components';
 
 export const otterIcon = ({ className }) => {
 	return (

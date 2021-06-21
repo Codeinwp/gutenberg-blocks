@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	Button,
 	Dashicon,
 	Icon,
@@ -12,9 +12,9 @@ const {
 	Rect,
 	SVG,
 	Tooltip
-} = wp.components;
+} from '@wordpress/components';
 
-const { useState } = wp.element;
+import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -32,14 +32,14 @@ const Onboarding = ({
 
 	return (
 		<Placeholder
-			label={ __( 'Select Layout' ) }
-			instructions={ __( 'Select a layout to start with, or make one yourself.' ) }
+			label={ __( 'Select Layout', 'otter-blocks' ) }
+			instructions={ __( 'Select a layout to start with, or make one yourself.', 'otter-blocks' ) }
 			icon={ <Icon icon={ columnsIcon } /> }
 			isColumnLayout={ true }
 			className="wp-block-themeisle-onboarding-component"
 		>
 			<div className="wp-block-themeisle-layout-picker">
-				<Tooltip text={ __( 'Equal' ) } >
+				<Tooltip text={ __( 'Equal', 'otter-blocks' ) } >
 					<Button
 						isLarge
 						className="wp-block-themeisle-blocks-advanced-column-layout"
@@ -52,7 +52,7 @@ const Onboarding = ({
 					</Button>
 				</Tooltip>
 
-				<Tooltip text={ __( '1:2' ) } >
+				<Tooltip text={ __( '1:2', 'otter-blocks' ) } >
 					<Button
 						isLarge
 						className="wp-block-themeisle-blocks-advanced-column-layout"
@@ -65,7 +65,7 @@ const Onboarding = ({
 					</Button>
 				</Tooltip>
 
-				<Tooltip text={ __( '2:1' ) } >
+				<Tooltip text={ __( '2:1', 'otter-blocks' ) } >
 					<Button
 						isLarge
 						className="wp-block-themeisle-blocks-advanced-column-layout"
@@ -78,7 +78,7 @@ const Onboarding = ({
 					</Button>
 				</Tooltip>
 
-				<Tooltip text={ __( 'Equal' ) } >
+				<Tooltip text={ __( 'Equal', 'otter-blocks' ) } >
 					<Button
 						isLarge
 						className="wp-block-themeisle-blocks-advanced-column-layout"
@@ -92,7 +92,7 @@ const Onboarding = ({
 					</Button>
 				</Tooltip>
 
-				<Tooltip text={ __( '1:1:2' ) } >
+				<Tooltip text={ __( '1:1:2', 'otter-blocks' ) } >
 					<Button
 						isLarge
 						className="wp-block-themeisle-blocks-advanced-column-layout"
@@ -106,7 +106,7 @@ const Onboarding = ({
 					</Button>
 				</Tooltip>
 
-				<Tooltip text={ __( '2:1:1' ) } >
+				<Tooltip text={ __( '2:1:1', 'otter-blocks' ) } >
 					<Button
 						isLarge
 						className="wp-block-themeisle-blocks-advanced-column-layout"
@@ -120,7 +120,7 @@ const Onboarding = ({
 					</Button>
 				</Tooltip>
 
-				<Tooltip text={ __( 'Equal' ) } >
+				<Tooltip text={ __( 'Equal', 'otter-blocks' ) } >
 					<Button
 						isLarge
 						className="wp-block-themeisle-blocks-advanced-column-layout"
@@ -136,7 +136,7 @@ const Onboarding = ({
 				</Tooltip>
 			</div>
 
-			<Tooltip text={ __( 'Open Template Library' ) } >
+			<Tooltip text={ __( 'Open Template Library', 'otter-blocks' ) } >
 				<Button
 					isPrimary
 					isLarge
@@ -144,7 +144,7 @@ const Onboarding = ({
 					onClick={ () => setIsLibraryOpen( true ) }
 				>
 					<Dashicon icon="category"/>
-					{ __( 'Template Library' ) }
+					{ __( 'Template Library', 'otter-blocks' ) }
 				</Button>
 
 				{ isLibraryOpen && (
@@ -160,7 +160,7 @@ const Onboarding = ({
 					isLink
 					onClick={ () => setupColumns( 1, 'equal' ) }
 				>
-					{ __( 'Skip' ) }
+					{ __( 'Skip', 'otter-blocks' ) }
 				</Button>
 			</div>
 		</Placeholder>

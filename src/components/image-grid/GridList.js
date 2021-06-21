@@ -8,7 +8,7 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { useState } = wp.element;
+import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies

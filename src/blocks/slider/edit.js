@@ -6,18 +6,18 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { max } = lodash;
+import { max } from 'lodash';
 
-const { ResizableBox } = wp.components;
+import { ResizableBox } from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useRef,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 import Placeholder from './placeholder.js';
 import Inspector from './inspector.js';
@@ -148,8 +148,8 @@ const Edit = ({
 		return (
 			<Placeholder
 				labels={ {
-					title: __( 'Slider' ),
-					instructions: __( 'Drag images, upload new ones or select files from your library.' )
+					title: __( 'Slider', 'otter-blocks' ),
+					instructions: __( 'Drag images, upload new ones or select files from your library.', 'otter-blocks' )
 				} }
 				icon="images-alt2"
 				onSelectImages={ onSelectImages }

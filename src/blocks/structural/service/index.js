@@ -2,9 +2,9 @@
  * WordPress dependencies
  */
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -14,8 +14,8 @@ import edit from './edit.js';
 import save from './save.js';
 
 registerBlockType( 'themeisle-blocks/service', {
-	title: __( 'Service' ),
-	description: __( 'Use this Service block to showcase services your website offers.' ),
+	title: __( 'Service', 'otter-blocks' ),
+	description: __( 'Use this Service block to showcase services your website offers.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [

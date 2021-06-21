@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	BaseControl,
 	Button,
 	ExternalLink,
@@ -12,11 +12,11 @@ const {
 	SelectControl,
 	TextControl,
 	ToggleControl
-} = wp.components;
+} from '@wordpress/components';
 
-const { InspectorControls } = wp.blockEditor;
+import { InspectorControls } from '@wordpress/block-editor';
 
-const { useRef } = wp.element;
+import { useRef } from '@wordpress/element';
 
 import { StyleSwitcherInspectorControl } from '../../components/style-switcher-control/index.js';
 import MarkerWrapper from './components/marker-wrapper.js';
@@ -122,39 +122,39 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Styles' ) }
+				title={ __( 'Styles', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<StyleSwitcherInspectorControl
 					value={ attributes.style }
 					options={ [
 						{
-							label: __( 'Standard' ),
+							label: __( 'Standard', 'otter-blocks' ),
 							value: 'standard',
 							image: window.themeisleGutenberg.assetsPath + '/icons/map-standard.png'
 						},
 						{
-							label: __( 'Silver' ),
+							label: __( 'Silver', 'otter-blocks' ),
 							value: 'silver',
 							image: window.themeisleGutenberg.assetsPath + '/icons/map-silver.png'
 						},
 						{
-							label: __( 'Retro' ),
+							label: __( 'Retro', 'otter-blocks' ),
 							value: 'retro',
 							image: window.themeisleGutenberg.assetsPath + '/icons/map-retro.png'
 						},
 						{
-							label: __( 'Dark' ),
+							label: __( 'Dark', 'otter-blocks' ),
 							value: 'dark',
 							image: window.themeisleGutenberg.assetsPath + '/icons/map-dark.png'
 						},
 						{
-							label: __( 'Night' ),
+							label: __( 'Night', 'otter-blocks' ),
 							value: 'night',
 							image: window.themeisleGutenberg.assetsPath + '/icons/map-night.png'
 						},
 						{
-							label: __( 'Aubergine' ),
+							label: __( 'Aubergine', 'otter-blocks' ),
 							value: 'aubergine',
 							image: window.themeisleGutenberg.assetsPath + '/icons/map-aubergine.png'
 						}
@@ -164,7 +164,7 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Location' ) }
+				title={ __( 'Location', 'otter-blocks' ) }
 			>
 				<BaseControl
 					label={ __( 'Location' ) }
@@ -173,7 +173,7 @@ const Inspector = ({
 					<input
 						type="text"
 						id="wp-block-themeisle-blocks-google-map-search"
-						placeholder={ __( 'Enter a location…' ) }
+						placeholder={ __( 'Enter a location…', 'otter-blocks' ) }
 						value={ attributes.location }
 						className="wp-block-themeisle-blocks-google-map-search"
 						ref={ searchRef }
@@ -184,49 +184,49 @@ const Inspector = ({
 
 					{ ! isPlaceAPIAvailable && (
 						<p>
-							{ __( 'To enable locations earch, please ensure Places API is activated in the Google Developers Console.' ) + ' ' }
+							{ __( 'To enable locations earch, please ensure Places API is activated in the Google Developers Console.', 'otter-blocks' ) + ' ' }
 							<ExternalLink href="https://developers.google.com/places/web-service/intro">
-								{ __( 'More info.' ) }
+								{ __( 'More info.', 'otter-blocks' ) }
 							</ExternalLink>
 						</p>
 					) }
 				</BaseControl>
 
 				<TextControl
-					label={ __( 'Latitude' ) }
+					label={ __( 'Latitude', 'otter-blocks' ) }
 					type="text"
-					placeholder={ __( 'Enter latitude…' ) }
+					placeholder={ __( 'Enter latitude…', 'otter-blocks' ) }
 					value={ attributes.latitude }
 					onChange={ changeLatitude }
 				/>
 
 				<TextControl
-					label={ __( 'Longitude' ) }
+					label={ __( 'Longitude', 'otter-blocks' ) }
 					type="text"
-					placeholder={ __( 'Enter longitude' ) }
+					placeholder={ __( 'Enter longitude', 'otter-blocks' ) }
 					value={ attributes.longitude }
 					onChange={ changeLongitude }
 				/>
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Positioning & Zooming' ) }
+				title={ __( 'Positioning & Zooming', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<SelectControl
-					label={ __( 'Map Type' ) }
+					label={ __( 'Map Type', 'otter-blocks' ) }
 					value={ attributes.type }
 					options={ [
-						{ label: __( 'Road Map' ), value: 'roadmap' },
-						{ label: __( 'Satellite View' ), value: 'satellite' },
-						{ label: __( 'Hybrid' ), value: 'hybrid' },
-						{ label: __( 'Terrain' ), value: 'terrain' }
+						{ label: __( 'Road Map', 'otter-blocks' ), value: 'roadmap' },
+						{ label: __( 'Satellite View', 'otter-blocks' ), value: 'satellite' },
+						{ label: __( 'Hybrid', 'otter-blocks' ), value: 'hybrid' },
+						{ label: __( 'Terrain', 'otter-blocks' ), value: 'terrain' }
 					] }
 					onChange={ changeMapType }
 				/>
 
 				<RangeControl
-					label={ __( 'Map Zoom Level' ) }
+					label={ __( 'Map Zoom Level', 'otter-blocks' ) }
 					value={ attributes.zoom }
 					onChange={ changeZoom }
 					min={ 0 }
@@ -234,7 +234,7 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Map Height' ) }
+					label={ __( 'Map Height', 'otter-blocks' ) }
 					value={ attributes.height }
 					onChange={ changeHeight }
 					min={ 100 }
@@ -243,46 +243,46 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Controls' ) }
+				title={ __( 'Controls', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<BaseControl>
-					{ __( 'The following changes will not affect block preview during the editing process. You can click outside the block to see the changes take effect.' ) }
+					{ __( 'The following changes will not affect block preview during the editing process. You can click outside the block to see the changes take effect.', 'otter-blocks' ) }
 				</BaseControl>
 
 				<ToggleControl
-					label={ 'Draggable Map' }
+					label={ 'Draggable Map', 'otter-blocks' }
 					checked={ attributes.draggable }
 					onChange={ toggleDraggable }
 				/>
 
 				<ToggleControl
-					label={ 'Map Type Control' }
+					label={ 'Map Type Control', 'otter-blocks' }
 					checked={ attributes.mapTypeControl }
 					onChange={ toggleMapTypeControl }
 				/>
 
 				<ToggleControl
-					label={ 'Zoom Control' }
+					label={ 'Zoom Control', 'otter-blocks' }
 					checked={ attributes.zoomControl }
 					onChange={ toggleZoomControl }
 				/>
 
 				<ToggleControl
-					label={ 'Full Screen Control' }
+					label={ 'Full Screen Control', 'otter-blocks' }
 					checked={ attributes.fullscreenControl }
 					onChange={ toggleFullScreenControl }
 				/>
 
 				<ToggleControl
-					label={ 'Streen View Control' }
+					label={ 'Streen View Control', 'otter-blocks' }
 					checked={ attributes.streetViewControl }
 					onChange={ toggleStreetViewControl }
 				/>
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Markers' ) }
+				title={ __( 'Markers', 'otter-blocks' ) }
 				initialOpen={ false }
 				opened={ false !== isMarkerOpen ? true : undefined }
 				onToggle={ () => {
@@ -302,17 +302,17 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Global Settings' ) }
+				title={ __( 'Global Settings', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<TextControl
-					label={ __( 'Google Maps API Key' ) }
+					label={ __( 'Google Maps API Key', 'otter-blocks' ) }
 					type="text"
-					placeholder={ __( 'Google Maps API Key' ) }
+					placeholder={ __( 'Google Maps API Key', 'otter-blocks' ) }
 					value={ api }
 					className="components-placeholder__input"
 					onChange={ changeAPI }
-					help={ __( 'Changing the API key effects all Google Map Embed blocks. You will have to refresh the page after changing your API keys.' ) }
+					help={ __( 'Changing the API key effects all Google Map Embed blocks. You will have to refresh the page after changing your API keys.', 'otter-blocks' ) }
 				/>
 
 				<Button
@@ -322,7 +322,7 @@ const Inspector = ({
 					onClick={ saveAPIKey }
 					isBusy={ isSaving }
 				>
-					{ __( 'Save API Key' ) }
+					{ __( 'Save API Key', 'otter-blocks' ) }
 				</Button>
 			</PanelBody>
 		</InspectorControls>

@@ -7,25 +7,25 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies
  */
-const {
+import {
 	isEqual,
 	times
-} = lodash;
+} from 'lodash';
 
-const { useViewportMatch } = wp.compose;
+import { useViewportMatch } from '@wordpress/compose';
 
-const {
+import {
 	useDispatch,
 	useSelect
-} = wp.data;
+} from '@wordpress/data';
 
-const { InnerBlocks } = wp.blockEditor;
+import { InnerBlocks } from '@wordpress/block-editor';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies

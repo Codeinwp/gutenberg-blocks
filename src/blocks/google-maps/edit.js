@@ -7,16 +7,16 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { ResizableBox } = wp.components;
+import { ResizableBox } from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useRef,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -266,7 +266,7 @@ const Edit = ({
 	};
 
 	const addInfoWindow = ( marker, id, title, description ) => {
-		const contentString = `<div class="wp-block-themeisle-blocks-map-overview"><h6 class="wp-block-themeisle-blocks-map-overview-title">${ title }</h6><div class="wp-block-themeisle-blocks-map-overview-content">${ description ? `<p>${ description }</p>` : '' }<a class="wp-block-themeisle-blocks-map-overview-delete" onclick="removeMarker_${ clientId.substr( 0, 8 ) }( '${ id }' )">${ __( 'Delete Marker' ) }</a></div></div>`;
+		const contentString = `<div class="wp-block-themeisle-blocks-map-overview"><h6 class="wp-block-themeisle-blocks-map-overview-title">${ title }</h6><div class="wp-block-themeisle-blocks-map-overview-content">${ description ? `<p>${ description }</p>` : '' }<a class="wp-block-themeisle-blocks-map-overview-delete" onclick="removeMarker_${ clientId.substr( 0, 8 ) }( '${ id }' )">${ __( 'Delete Marker', 'otter-blocks' ) }</a></div></div>`;
 
 		const infowindow = new google.maps.InfoWindow({
 			content: contentString
@@ -328,7 +328,7 @@ const Edit = ({
 				google.maps.event.clearListeners( mapRef.current, 'click' );
 
 				const id = uuidv4();
-				const title = __( 'Custom Marker' );
+				const title = __( 'Custom Marker', 'otter-blocks' );
 				const latitude = e.latLng.lat();
 				const longitude = e.latLng.lng();
 
@@ -351,7 +351,7 @@ const Edit = ({
 
 	const addMarkerManual = () => {
 		const id = uuidv4();
-		const title = __( 'Custom Marker' );
+		const title = __( 'Custom Marker', 'otter-blocks' );
 		const location = mapRef.current.getCenter();
 		const latitude = location.lat();
 		const longitude = location.lng();
@@ -450,36 +450,36 @@ const Edit = ({
 	return (
 		<Fragment>
 			<StyleSwitcherBlockControl
-				label={ __( 'Block Styles' ) }
+				label={ __( 'Block Styles', 'otter-blocks' ) }
 				value={ attributes.style }
 				options={ [
 					{
-						label: __( 'Standard' ),
+						label: __( 'Standard', 'otter-blocks' ),
 						value: 'standard',
 						image: window.themeisleGutenberg.assetsPath + '/icons/map-standard.png'
 					},
 					{
-						label: __( 'Silver' ),
+						label: __( 'Silver', 'otter-blocks' ),
 						value: 'silver',
 						image: window.themeisleGutenberg.assetsPath + '/icons/map-silver.png'
 					},
 					{
-						label: __( 'Retro' ),
+						label: __( 'Retro', 'otter-blocks' ),
 						value: 'retro',
 						image: window.themeisleGutenberg.assetsPath + '/icons/map-retro.png'
 					},
 					{
-						label: __( 'Dark' ),
+						label: __( 'Dark', 'otter-blocks' ),
 						value: 'dark',
 						image: window.themeisleGutenberg.assetsPath + '/icons/map-dark.png'
 					},
 					{
-						label: __( 'Night' ),
+						label: __( 'Night', 'otter-blocks' ),
 						value: 'night',
 						image: window.themeisleGutenberg.assetsPath + '/icons/map-night.png'
 					},
 					{
-						label: __( 'Aubergine' ),
+						label: __( 'Aubergine', 'otter-blocks' ),
 						value: 'aubergine',
 						image: window.themeisleGutenberg.assetsPath + '/icons/map-aubergine.png'
 					}

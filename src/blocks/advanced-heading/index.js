@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -19,14 +19,14 @@ import edit from './edit.js';
 import save from './save.js';
 
 registerBlockType( 'themeisle-blocks/advanced-heading', {
-	title: __( 'Advanced Heading' ),
-	description: __( 'Advanced Heading gives a spin to editor\'s Heading block with much needed customization options.' ),
+	title: __( 'Advanced Heading', 'otter-blocks' ),
+	description: __( 'Advanced Heading gives a spin to editor\'s Heading block with much needed customization options.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [
-		__( 'heading' ),
-		__( 'title' ),
-		__( 'advanced heading' )
+		'heading',
+		'title',
+		'advanced Heading'
 	],
 	attributes,
 	deprecated,

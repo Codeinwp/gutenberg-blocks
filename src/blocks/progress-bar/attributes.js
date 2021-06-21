@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
 const attributes = {
 	id: {
@@ -9,7 +9,7 @@ const attributes = {
 	},
 	title: {
 		type: 'string',
-		default: __( 'Skill' )
+		default: __( 'Skill', 'otter-blocks' )
 	},
 	percentage: {
 		type: 'number',

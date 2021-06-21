@@ -1,14 +1,14 @@
 /**
  * WordPress dependencies.
  */
-const { isEqual } = lodash;
+import { isEqual } from 'lodash';
 
-const { InnerBlocks } = wp.blockEditor;
+import { InnerBlocks } from '@wordpress/block-editor';
 
-const {
+import {
 	Fragment,
 	useEffect
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies

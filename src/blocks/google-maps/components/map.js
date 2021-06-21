@@ -6,14 +6,14 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { Button } = wp.components;
+import { Button } from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useEffect
-} = wp.element;
+} from '@wordpress/element';
 
 const Map = ({
 	attributes,
@@ -47,7 +47,7 @@ const Map = ({
 			{ isMapLoaded && (
 				<Button
 					className="wp-block-themeisle-blocks-google-map-marker-button"
-					title={ __( 'Add Button' ) }
+					title={ __( 'Add Button', 'otter-blocks' ) }
 					onClick={ selectMarker }
 				>
 					<span className="dashicons dashicons-sticky"></span>

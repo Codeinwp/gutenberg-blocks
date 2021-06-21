@@ -1,16 +1,18 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { BaseControl } = wp.components;
+import { BaseControl } from '@wordpress/components';
 
-const { useInstanceId } = wp.compose;
+import { useInstanceId } from '@wordpress/compose';
 
-const {
+import {
 	useEffect,
 	useRef
-} = wp.element;
+} from '@wordpress/element';
+
+import { oldEditor } from '@wordpress/old-editor';
 
 const MarkerEditor = ({
 	value,
@@ -25,7 +27,7 @@ const MarkerEditor = ({
 			'toolbar1': 'formatselect,bold,italic,bullist,numlist,alignleft,aligncenter,alignright,link,unlink,spellchecker,wp_add_media'
 		};
 
-		wp.oldEditor.initialize( editorRef.current.id, {
+		oldEditor.initialize( editorRef.current.id, {
 			tinymce: { ...settings }
 		});
 
@@ -33,7 +35,7 @@ const MarkerEditor = ({
 
 		editor.on( 'change', () => onChange( editor.getContent() ) );
 
-		return () => wp.oldEditor.remove( editorRef.current.id );
+		return () => oldEditor.remove( editorRef.current.id );
 	}, []);
 
 	const id = `inspector-textarea-control-${ instanceId }`;
@@ -45,7 +47,7 @@ const MarkerEditor = ({
 	return (
 		<BaseControl
 			id={ id }
-			label={ __( 'Description' ) }
+			label={ __( 'Description', 'otter-blocks' ) }
 		>
 			<textarea
 				id={ id }

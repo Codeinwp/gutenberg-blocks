@@ -1,10 +1,9 @@
 /**
  * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n';
 
-const { __ } = wp.i18n;
-
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -16,8 +15,8 @@ import attributes from './attributes.js';
 import edit from './edit.js';
 
 registerBlockType( 'themeisle-blocks/plugin-cards', {
-	title: __( 'Plugin Card' ),
-	description: __( 'Plugin Card block lets you display plugins data in your blog posts.' ),
+	title: __( 'Plugin Card', 'otter-blocks' ),
+	description: __( 'Plugin Card block lets you display plugins data in your blog posts.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [

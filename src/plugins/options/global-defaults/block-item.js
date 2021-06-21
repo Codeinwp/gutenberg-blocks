@@ -1,20 +1,20 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { getBlockType } = wp.blocks;
+import { getBlockType } from '@wordpress/blocks';
 
-const {
+import {
 	Button,
 	Icon,
 	Modal
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 const BlockItem = ({
 	blockName,
@@ -63,7 +63,7 @@ const BlockItem = ({
 							isDestructive
 							onClick={ () => resetConfig( blockName ) }
 						>
-							{ __( 'Reset' ) }
+							{ __( 'Reset', 'otter-blocks' ) }
 						</Button>
 
 						<div className="wp-block-themeisle-blocks-options-global-defaults-actions-primary">
@@ -72,7 +72,7 @@ const BlockItem = ({
 								isLarge
 								onClick={ () => setOpen( false ) }
 							>
-								{ __( 'Close' ) }
+								{ __( 'Close', 'otter-blocks' ) }
 							</Button>
 
 							<Button
@@ -85,7 +85,7 @@ const BlockItem = ({
 									setLoading( false );
 								} }
 							>
-								{ __( 'Save' ) }
+								{ __( 'Save', 'otter-blocks' ) }
 							</Button>
 						</div>
 					</div>

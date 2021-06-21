@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -16,8 +16,8 @@ import edit from './edit.js';
 import transforms from './transforms.js';
 
 registerBlockType( 'themeisle-blocks/google-map', {
-	title: __( 'Google Maps' ),
-	description: __( 'Display Google Maps on your website with Google Map block.' ),
+	title: __( 'Google Maps', 'otter-blocks' ),
+	description: __( 'Display Google Maps on your website with Google Map block.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [

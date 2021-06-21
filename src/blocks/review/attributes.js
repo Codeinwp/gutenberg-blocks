@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
 const attributes = {
 	id: {
@@ -30,19 +30,19 @@ const attributes = {
 		type: 'array',
 		default: [
 			{
-				title: __( 'Stability' ),
+				title: __( 'Stability', 'otter-blocks' ),
 				rating: 9
 			},
 			{
-				title: __( 'Ease of Use' ),
+				title: __( 'Ease of Use', 'otter-blocks' ),
 				rating: 4
 			},
 			{
-				title: __( 'Look & Feel' ),
+				title: __( 'Look & Feel', 'otter-blocks' ),
 				rating: 9
 			},
 			{
-				title: __( 'Price' ),
+				title: __( 'Price', 'otter-blocks' ),
 				rating: 7
 			}
 		]
@@ -50,29 +50,29 @@ const attributes = {
 	pros: {
 		type: 'array',
 		default: [
-			__( 'Easy to use' ),
-			__( 'Good price' ),
-			__( 'Sturdy build and ergonomics' )
+			__( 'Easy to use', 'otter-blocks' ),
+			__( 'Good price', 'otter-blocks' ),
+			__( 'Sturdy build and ergonomics', 'otter-blocks' )
 		]
 	},
 	cons: {
 		type: 'array',
 		default: [
-			__( 'Incompatible with old versions' ),
-			__( 'Hard to assemble' ),
-			__( 'Bad color combination' )
+			__( 'Incompatible with old versions', 'otter-blocks' ),
+			__( 'Hard to assemble', 'otter-blocks' ),
+			__( 'Bad color combination', 'otter-blocks' )
 		]
 	},
 	links: {
 		type: 'array',
 		default: [
 			{
-				label: __( 'Buy on Amazon' ),
+				label: __( 'Buy on Amazon', 'otter-blocks' ),
 				href: '',
 				isSponsored: false
 			},
 			{
-				label: __( 'Buy on eBay' ),
+				label: __( 'Buy on eBay', 'otter-blocks' ),
 				href: '',
 				isSponsored: false
 			}

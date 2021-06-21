@@ -1,12 +1,12 @@
 /**
  * WordPress dependencies
  */
-const { createBlock } = wp.blocks;
-
-const {
+import {
 	clamp,
 	omit
-} = lodash;
+} from 'lodash';
+
+import { createBlock } from '@wordpress/blocks';
 
 const transform = {
 	to: [

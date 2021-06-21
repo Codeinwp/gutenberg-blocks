@@ -1,8 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
-const domReady = wp.domReady;
+import { __ } from '@wordpress/i18n';
+
+import domReady from '@wordpress/dom-ready';
 
 const createPopupContent = ( markerProps ) => {
 
@@ -44,7 +45,7 @@ const createLeafletMap = ( containerId, attributes ) => {
 	const container = document.querySelector( `#${containerId}` );
 
 	if ( ! container ) {
-		console.warn( `The placeholer for the leaflet map block with id: ${containerId} does not exist!` );
+		console.warn( __( `The placeholer for the leaflet map block with id: ${containerId} does not exist!`, 'otter-blocks' ) );
 		return;
 	}
 
@@ -59,9 +60,9 @@ const createLeafletMap = ( containerId, attributes ) => {
 		gestureHandling: true,
 		gestureHandlingOptions: {
 			text: {
-				touch: __ ( 'Use two fingers to move the map' ),
-				scroll: __ ( 'Use ctrl + scroll to zoom the map' ),
-				scrollMac: __ ( 'Use \u2318 + scroll to zoom the map' )
+				touch: __( 'Use two fingers to move the map', 'otter-blocks' ),
+				scroll: __( 'Use ctrl + scroll to zoom the map', 'otter-blocks' ),
+				scrollMac: __( 'Use \u2318 + scroll to zoom the map', 'otter-blocks' )
 			}
 		}
 	});

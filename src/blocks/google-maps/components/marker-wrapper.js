@@ -1,15 +1,15 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { Button } = wp.components;
+import { Button } from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -64,7 +64,7 @@ const MarkerWrapper = ({
 				className="wp-block-themeisle-blocks-google-map-marker-add"
 				onClick={ addMarker }
 			>
-				{ __( 'Add Marker' ) }
+				{ __( 'Add Marker', 'otter-blocks' ) }
 			</Button>
 		</Fragment>
 	);

@@ -1,10 +1,10 @@
 /**
  * WordPress dependencies
  */
-const {
+import {
 	Path,
 	SVG
-} = wp.components;
+} from '@wordpress/components';
 
 const SocialIcons = ({ icon }) => {
 	if ( 'facebook' === icon ) {

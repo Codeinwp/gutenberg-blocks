@@ -1,19 +1,19 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { InspectorControls } = wp.blockEditor;
+import { InspectorControls } from '@wordpress/block-editor';
 
-const {
+import {
 	PanelBody,
 	RangeControl,
 	SelectControl,
 	TextControl,
 	ToggleControl
-} = wp.components;
+} from '@wordpress/components';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 const Inspector = ({
 	attributes,
@@ -56,18 +56,18 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Settings' ) }
+				title={ __( 'Settings', 'otter-blocks' ) }
 				initialOpen={ true }
 			>
 				<SelectControl
-					label={ __( 'Trigger' ) }
-					help={ __( 'Animation trigger. This will only work on the front-end.' ) }
+					label={ __( 'Trigger', 'otter-blocks' ) }
+					help={ __( 'Animation trigger. This will only work on the front-end.', 'otter-blocks' ) }
 					value={ attributes.trigger }
 					options={ [
-						{ label: __( 'None' ), value: 'none' },
-						{ label: __( 'Scroll' ), value: 'scroll' },
-						{ label: __( 'Hover' ), value: 'hover' },
-						{ label: __( 'Click' ), value: 'click' }
+						{ label: __( 'None', 'otter-blocks' ), value: 'none' },
+						{ label: __( 'Scroll', 'otter-blocks' ), value: 'scroll' },
+						{ label: __( 'Hover', 'otter-blocks' ), value: 'hover' },
+						{ label: __( 'Click', 'otter-blocks' ), value: 'click' }
 					] }
 					onChange={ onChangeTrigger }
 				/>
@@ -75,16 +75,16 @@ const Inspector = ({
 				{ 'scroll' !== attributes.trigger && (
 					<Fragment>
 						<ToggleControl
-							label={ __( 'Loop' ) }
-							help={ __( 'Whether to loop animation.' ) }
+							label={ __( 'Loop', 'otter-blocks' ) }
+							help={ __( 'Whether to loop animation.', 'otter-blocks' ) }
 							checked={ attributes.loop }
 							onChange={ toggleLoop }
 						/>
 
 						{ attributes.loop && (
 							<TextControl
-								label={ __( 'Numbers of loops' ) }
-								help={ __( 'Number of times to loop animation.' ) }
+								label={ __( 'Numbers of loops', 'otter-blocks' ) }
+								help={ __( 'Number of times to loop animation.', 'otter-blocks' ) }
 								type="number"
 								value={ attributes.count }
 								onChange={ onChangeLoopCount }
@@ -92,8 +92,8 @@ const Inspector = ({
 						) }
 
 						<RangeControl
-							label={ __( 'Speed' ) }
-							help={ __( 'Animation speed.' ) }
+							label={ __( 'Speed', 'otter-blocks' ) }
+							help={ __( 'Animation speed.', 'otter-blocks' ) }
 							value={ attributes.speed }
 							onChange={ onChangeSpeed }
 							step={ 0.1 }
@@ -102,8 +102,8 @@ const Inspector = ({
 						/>
 
 						<ToggleControl
-							label={ __( 'Reverse' ) }
-							help={ __( 'Direction of animation.' ) }
+							label={ __( 'Reverse', 'otter-blocks' ) }
+							help={ __( 'Direction of animation.', 'otter-blocks' ) }
 							checked={ attributes.direction }
 							onChange={ toggleDirection }
 						/>
@@ -111,8 +111,8 @@ const Inspector = ({
 				) }
 
 				<RangeControl
-					label={ __( 'Width' ) }
-					help={ __( 'Container width in pixels.' ) }
+					label={ __( 'Width', 'otter-blocks' ) }
+					help={ __( 'Container width in pixels.', 'otter-blocks' ) }
 					value={ attributes.width }
 					onChange={ onChangeWidth }
 					min={ 100 }

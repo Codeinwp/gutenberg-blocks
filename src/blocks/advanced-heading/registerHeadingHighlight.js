@@ -6,25 +6,25 @@ import { brush } from '@wordpress/icons';
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	registerFormatType,
 	toggleFormat
-} = wp.richText;
+} from '@wordpress/rich-text';
 
-const {
+import {
 	RichTextShortcut,
 	RichTextToolbarButton
-} = wp.blockEditor;
+} from '@wordpress/block-editor';;
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 const name = 'themeisle-blocks/highlight';
 
 registerFormatType( name, {
 	name,
-	title: __( 'Highlight' ),
+	title: __( 'Highlight', 'otter-blocks' ),
 	tagName: 'span',
 	className: 'highlight',
 
@@ -41,7 +41,7 @@ registerFormatType( name, {
 
 				<RichTextToolbarButton
 					icon={ brush }
-					title={ __( 'Highlight' ) }
+					title={ __( 'Highlight', 'otter-blocks' ) }
 					onClick={ onToggle }
 					isActive={ isActive }
 					shortcutType="access"

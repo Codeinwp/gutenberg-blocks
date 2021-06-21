@@ -13,18 +13,18 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { isEqual } = lodash;
+import { isEqual } from 'lodash';
 
-const { RichText } = wp.blockEditor;
+import { RichText } from '@wordpress/block-editor';
 
-const { useSelect } = wp.data;
+import { useSelect } from '@wordpress/data';
 
-const {
+import {
 	Fragment,
 	useEffect
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -219,7 +219,7 @@ const Edit = ({
 
 						{ 'only' !== attributes.iconType && (
 							<RichText
-								placeholder={ __( 'Add text…' ) }
+								placeholder={ __( 'Add text…', 'otter-blocks' ) }
 								value={ attributes.text }
 								onChange={ value => setAttributes({ text: value }) }
 								tagName="div"
@@ -240,7 +240,7 @@ const Edit = ({
 					</div>
 				) : (
 					<RichText
-						placeholder={ __( 'Add text…' ) }
+						placeholder={ __( 'Add text…', 'otter-blocks' ) }
 						value={ attributes.text }
 						onChange={ value => setAttributes({ text: value }) }
 						tagName="div"

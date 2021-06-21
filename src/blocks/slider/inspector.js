@@ -1,19 +1,19 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { max } = lodash;
+import { max } from 'lodash';
 
-const { InspectorControls } = wp.blockEditor;
+import { InspectorControls } from '@wordpress/block-editor';
 
-const {
+import {
 	PanelBody,
 	RangeControl,
 	ToggleControl
-} = wp.components;
+} from '@wordpress/components';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -60,7 +60,7 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Images' ) }
+				title={ __( 'Images', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<ImageGrid
@@ -70,13 +70,13 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Settings' ) }
+				title={ __( 'Settings', 'otter-blocks' ) }
 			>
 				{ attributes.images.length && (
 					<Fragment>
 						<RangeControl
-							label={ __( 'Slides Per Page' ) }
-							help={ __( 'A number of visible slides.' ) }
+							label={ __( 'Slides Per Page', 'otter-blocks' ) }
+							help={ __( 'A number of visible slides.', 'otter-blocks' ) }
 							value={ attributes.perView }
 							onChange={ changePerView }
 							min={ 1 }
@@ -86,8 +86,8 @@ const Inspector = ({
 						{ 1 < attributes.perView && (
 							<Fragment>
 								<RangeControl
-									label={ __( 'Gap' ) }
-									help={ __( 'A size of the space between slides.' ) }
+									label={ __( 'Gap', 'otter-blocks' ) }
+									help={ __( 'A size of the space between slides.', 'otter-blocks' ) }
 									value={ attributes.gap }
 									onChange={ changeGap }
 									min={ 0 }
@@ -95,8 +95,8 @@ const Inspector = ({
 								/>
 
 								<RangeControl
-									label={ __( 'Peek' ) }
-									help={ __( 'The value of the future slides which have to be visible in the current slide.' ) }
+									label={ __( 'Peek', 'otter-blocks' ) }
+									help={ __( 'The value of the future slides which have to be visible in the current slide.', 'otter-blocks' ) }
 									value={ attributes.peek }
 									onChange={ changePeek }
 									min={ 0 }
@@ -106,8 +106,8 @@ const Inspector = ({
 						) }
 
 						<RangeControl
-							label={ __( 'Height' ) }
-							help={ __( 'Slider height in pixels.' ) }
+							label={ __( 'Height', 'otter-blocks' ) }
+							help={ __( 'Slider height in pixels.', 'otter-blocks' ) }
 							value={ attributes.height }
 							onChange={ changeHeight }
 							min={ 100 }
@@ -115,16 +115,16 @@ const Inspector = ({
 						/>
 
 						<ToggleControl
-							label={ __( 'Autoplay' ) }
-							help={ __( 'Autoplay slider in the front.' ) }
+							label={ __( 'Autoplay', 'otter-blocks' ) }
+							help={ __( 'Autoplay slider in the front.', 'otter-blocks' ) }
 							checked={ attributes.autoplay }
 							onChange={ toggleAutoplay }
 						/>
 
 						{ attributes.autoplay && (
 							<RangeControl
-								label={ __( 'Delay' ) }
-								help={ __( 'Delay in slide change (in seconds).' ) }
+								label={ __( 'Delay', 'otter-blocks' ) }
+								help={ __( 'Delay in slide change (in seconds).', 'otter-blocks' ) }
 								value={ attributes.delay }
 								onChange={ changeDelay }
 								min={ 1 }
@@ -133,15 +133,15 @@ const Inspector = ({
 						) }
 
 						<ToggleControl
-							label={ __( 'Hide Arrows' ) }
-							help={ __( 'Hide navigation arrows.' ) }
+							label={ __( 'Hide Arrows', 'otter-blocks' ) }
+							help={ __( 'Hide navigation arrows.', 'otter-blocks' ) }
 							checked={ attributes.hideArrows }
 							onChange={ toggleArrows }
 						/>
 
 						<ToggleControl
-							label={ __( 'Hide Bullets' ) }
-							help={ __( 'Hide navigation bullets.' ) }
+							label={ __( 'Hide Bullets', 'otter-blocks' ) }
+							help={ __( 'Hide navigation bullets.', 'otter-blocks' ) }
 							checked={ attributes.hideBullets }
 							onChange={ toggleBullets }
 						/>

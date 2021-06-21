@@ -1,15 +1,15 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	Button,
 	ButtonGroup,
 	Icon
-} = wp.components;
+} from '@wordpress/components';
 
-const { useInstanceId } = wp.compose;
+import { useInstanceId } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -35,7 +35,7 @@ const BackgroundControl = ({
 					<ButtonGroup className="linking-controls">
 						<Button
 							icon={ 'admin-customizer' }
-							label={ __( 'Color' ) }
+							label={ __( 'Color', 'otter-blocks' ) }
 							showTootlip={ true }
 							isPrimary={ 'color' === backgroundType }
 							onClick={ () => changeBackgroundType( 'color' ) }
@@ -43,7 +43,7 @@ const BackgroundControl = ({
 
 						<Button
 							icon={ 'format-image' }
-							label={ __( 'Image' ) }
+							label={ __( 'Image', 'otter-blocks' ) }
 							showTootlip={ true }
 							isPrimary={ 'image' === backgroundType }
 							onClick={ () => changeBackgroundType( 'image' ) }
@@ -51,7 +51,7 @@ const BackgroundControl = ({
 
 						<Button
 							icon={ () => <Icon icon={ barcodeIcon } /> }
-							label={ __( 'Gradient' ) }
+							label={ __( 'Gradient', 'otter-blocks' ) }
 							showTootlip={ true }
 							isPrimary={ 'gradient' === backgroundType }
 							onClick={ () => changeBackgroundType( 'gradient' ) }

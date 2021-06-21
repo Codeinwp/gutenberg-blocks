@@ -11,9 +11,9 @@ import {
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { Button } = wp.components;
+import { Button } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -53,7 +53,7 @@ const SortableList = SortableContainer( ({
 			}) }
 
 			<Button
-				label={ __( 'Add Images' ) }
+				label={ __( 'Add Images', 'otter-blocks' ) }
 				icon={ <Icon icon={ plus } /> }
 				isPrimary
 				onClick={ open }

@@ -1,4 +1,3 @@
-
 const CircularProgressBar = ({
 	attributes,
 	progressRef,

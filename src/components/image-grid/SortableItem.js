@@ -8,7 +8,7 @@ import { SortableElement } from 'react-sortable-hoc';
 /**
  * WordPress dependencies
  */
-const { Button } = wp.components;
+import { Button } from '@wordpress/components';
 
 const SortableItem = SortableElement( ({
 	value,

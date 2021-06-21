@@ -1,11 +1,11 @@
 /**
  * WordPress dependencies
  */
-const { Disabled } = wp.components;
+import { Disabled } from '@wordpress/components';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
-const ServerSideRender = wp.serverSideRender;
+import ServerSideRender from '@wordpress/server-side-render';
 
 /**
  * Internal dependencies

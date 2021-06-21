@@ -1,24 +1,24 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
-	__experimentalColorGradientControl: ColorGradientControl,
+import {
+	__experimentalColorGradientControl as ColorGradientControl,
 	InspectorControls
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	PanelBody,
 	RangeControl,
 	Placeholder,
 	Spinner
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	lazy,
 	Suspense
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -67,11 +67,11 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Settings' ) }
+				title={ __( 'Settings', 'otter-blocks' ) }
 			>
 				<Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
 					<IconPickerControl
-						label={ __( 'Icon Picker' ) }
+						label={ __( 'Icon Picker', 'otter-blocks' ) }
 						library={ attributes.defaultLibrary }
 						prefix={ attributes.defaultPrefix }
 						icon={ attributes.defaultIcon }
@@ -81,8 +81,8 @@ const Inspector = ({
 				</Suspense>
 
 				<RangeControl
-					label={ __( 'Font Size' ) }
-					help={ __( 'The size of the font size of the content and icon.' ) }
+					label={ __( 'Font Size', 'otter-blocks' ) }
+					help={ __( 'The size of the font size of the content and icon.', 'otter-blocks' ) }
 					value={ attributes.defaultSize }
 					onChange={ onDefaultSizeChange }
 					min={ 0 }
@@ -90,8 +90,8 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Gap' ) }
-					help={ __( 'The distance between the items.' ) }
+					label={ __( 'Gap', 'otter-blocks' ) }
+					help={ __( 'The distance between the items.', 'otter-blocks' ) }
 					value={ attributes.gap }
 					onChange={ onGapChange }
 					min={ 0 }
@@ -99,13 +99,13 @@ const Inspector = ({
 				/>
 
 				<ColorGradientControl
-					label={ __( 'Content Color' ) }
+					label={ __( 'Content Color', 'otter-blocks' ) }
 					colorValue={ attributes.defaultContentColor }
 					onColorChange={ onDefaultContentColorChange }
 				/>
 
 				<ColorGradientControl
-					label={ __( 'Icon Color' ) }
+					label={ __( 'Icon Color', 'otter-blocks' ) }
 					colorValue={ attributes.defaultIconColor }
 					onColorChange={ onDefaultIconColorChange }
 				/>

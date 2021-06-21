@@ -6,19 +6,19 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	Button,
 	Path,
 	Rect,
 	SVG,
 	Tooltip
-} = wp.components;
+} from '@wordpress/components';
 
-const { useSelect } = wp.data;
+import { useSelect } from '@wordpress/data';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -57,7 +57,7 @@ const LayoutControl = ({
 			className="wp-block-themeisle-blocks-advanced-columns-layout-control"
 		>
 			{ 1 === columns && (
-				<Tooltip text={ __( 'Single Row' ) } >
+				<Tooltip text={ __( 'Single Row', 'otter-blocks' ) } >
 					<Button
 						className={ classnames(
 							'wp-block-themeisle-blocks-advanced-column-layout',
@@ -72,7 +72,7 @@ const LayoutControl = ({
 				</Tooltip>
 			) || 2 === columns && (
 				<Fragment>
-					<Tooltip text={ __( 'Equal' ) } >
+					<Tooltip text={ __( 'Equal', 'otter-blocks' ) } >
 						<Button
 							className={ classnames(
 								'wp-block-themeisle-blocks-advanced-column-layout',
@@ -87,7 +87,7 @@ const LayoutControl = ({
 						</Button>
 					</Tooltip>
 
-					<Tooltip text={ __( '1:2' ) } >
+					<Tooltip text={ __( '1:2', 'otter-blocks' ) } >
 						<Button
 							className={ classnames(
 								'wp-block-themeisle-blocks-advanced-column-layout',
@@ -102,7 +102,7 @@ const LayoutControl = ({
 						</Button>
 					</Tooltip>
 
-					<Tooltip text={ __( '2:1' ) } >
+					<Tooltip text={ __( '2:1', 'otter-blocks' ) } >
 						<Button
 							className={ classnames(
 								'wp-block-themeisle-blocks-advanced-column-layout',
@@ -118,7 +118,7 @@ const LayoutControl = ({
 					</Tooltip>
 
 					{ ( 'Mobile' == getView || 'Tablet' == getView ) && (
-						<Tooltip text={ __( 'Collapsed Rows' ) } >
+						<Tooltip text={ __( 'Collapsed Rows', 'otter-blocks' ) } >
 							<Button
 								className={ classnames(
 									'wp-block-themeisle-blocks-advanced-column-layout',
@@ -136,7 +136,7 @@ const LayoutControl = ({
 				</Fragment>
 			) || 3 === columns && (
 				<Fragment>
-					<Tooltip text={ __( 'Equal' ) } >
+					<Tooltip text={ __( 'Equal', 'otter-blocks' ) } >
 						<Button
 							className={ classnames(
 								'wp-block-themeisle-blocks-advanced-column-layout',
@@ -152,7 +152,7 @@ const LayoutControl = ({
 						</Button>
 					</Tooltip>
 
-					<Tooltip text={ __( '1:1:2' ) } >
+					<Tooltip text={ __( '1:1:2', 'otter-blocks' ) } >
 						<Button
 							className={ classnames(
 								'wp-block-themeisle-blocks-advanced-column-layout',
@@ -168,7 +168,7 @@ const LayoutControl = ({
 						</Button>
 					</Tooltip>
 
-					<Tooltip text={ __( '2:1:1' ) } >
+					<Tooltip text={ __( '2:1:1', 'otter-blocks' ) } >
 						<Button
 							className={ classnames(
 								'wp-block-themeisle-blocks-advanced-column-layout',
@@ -184,7 +184,7 @@ const LayoutControl = ({
 						</Button>
 					</Tooltip>
 
-					<Tooltip text={ __( '1:2:1' ) } >
+					<Tooltip text={ __( '1:2:1', 'otter-blocks' ) } >
 						<Button
 							className={ classnames(
 								'wp-block-themeisle-blocks-advanced-column-layout',
@@ -200,7 +200,7 @@ const LayoutControl = ({
 						</Button>
 					</Tooltip>
 
-					<Tooltip text={ __( '1:3:1' ) } >
+					<Tooltip text={ __( '1:3:1', 'otter-blocks' ) } >
 						<Button
 							className={ classnames(
 								'wp-block-themeisle-blocks-advanced-column-layout',
@@ -217,7 +217,7 @@ const LayoutControl = ({
 					</Tooltip>
 
 					{ ( 'Mobile' == getView || 'Tablet' == getView ) && (
-						<Tooltip text={ __( 'Collapsed Rows' ) } >
+						<Tooltip text={ __( 'Collapsed Rows', 'otter-blocks' ) } >
 							<Button
 								className={ classnames(
 									'wp-block-themeisle-blocks-advanced-column-layout',
@@ -235,7 +235,7 @@ const LayoutControl = ({
 				</Fragment>
 			) || 4 === columns && (
 				<Fragment>
-					<Tooltip text={ __( 'Equal' ) } >
+					<Tooltip text={ __( 'Equal', 'otter-blocks' ) } >
 						<Button
 							className={ classnames(
 								'wp-block-themeisle-blocks-advanced-column-layout',
@@ -254,7 +254,7 @@ const LayoutControl = ({
 
 					{ ( 'Mobile' == getView || 'Tablet' == getView ) && (
 						<Fragment>
-							<Tooltip text={ __( 'Two Column Grid' ) } >
+							<Tooltip text={ __( 'Two Column Grid', 'otter-blocks' ) } >
 								<Button
 									className={ classnames(
 										'wp-block-themeisle-blocks-advanced-column-layout',
@@ -270,7 +270,7 @@ const LayoutControl = ({
 								</Button>
 							</Tooltip>
 
-							<Tooltip text={ __( 'Collapsed Rows' ) } >
+							<Tooltip text={ __( 'Collapsed Rows', 'otter-blocks' ) } >
 								<Button
 									className={ classnames(
 										'wp-block-themeisle-blocks-advanced-column-layout',
@@ -289,7 +289,7 @@ const LayoutControl = ({
 				</Fragment>
 			) || 5 === columns && (
 				<Fragment>
-					<Tooltip text={ __( 'Equal' ) } >
+					<Tooltip text={ __( 'Equal', 'otter-blocks' ) } >
 						<Button
 							className={ classnames(
 								'wp-block-themeisle-blocks-advanced-column-layout',
@@ -308,7 +308,7 @@ const LayoutControl = ({
 					</Tooltip>
 
 					{ ( 'Mobile' == getView || 'Tablet' == getView ) && (
-						<Tooltip text={ __( 'Collapsed Rows' ) } >
+						<Tooltip text={ __( 'Collapsed Rows', 'otter-blocks' ) } >
 							<Button
 								className={ classnames(
 									'wp-block-themeisle-blocks-advanced-column-layout',
@@ -326,7 +326,7 @@ const LayoutControl = ({
 				</Fragment>
 			) || 6 === columns && (
 				<Fragment>
-					<Tooltip text={ __( 'Equal' ) } >
+					<Tooltip text={ __( 'Equal', 'otter-blocks' ) } >
 						<Button
 							className={ classnames(
 								'wp-block-themeisle-blocks-advanced-column-layout',
@@ -347,7 +347,7 @@ const LayoutControl = ({
 
 					{ ( 'Mobile' == getView || 'Tablet' == getView ) && (
 						<Fragment>
-							<Tooltip text={ __( 'Two Column Grid' ) } >
+							<Tooltip text={ __( 'Two Column Grid', 'otter-blocks' ) } >
 								<Button
 									className={ classnames(
 										'wp-block-themeisle-blocks-advanced-column-layout',
@@ -364,7 +364,7 @@ const LayoutControl = ({
 								</Button>
 							</Tooltip>
 
-							<Tooltip text={ __( 'Three Column Grid' ) } >
+							<Tooltip text={ __( 'Three Column Grid', 'otter-blocks' ) } >
 								<Button
 									className={ classnames(
 										'wp-block-themeisle-blocks-advanced-column-layout',
@@ -381,7 +381,7 @@ const LayoutControl = ({
 								</Button>
 							</Tooltip>
 
-							<Tooltip text={ __( 'Collapsed Rows' ) } >
+							<Tooltip text={ __( 'Collapsed Rows', 'otter-blocks' ) } >
 								<Button
 									className={ classnames(
 										'wp-block-themeisle-blocks-advanced-column-layout',

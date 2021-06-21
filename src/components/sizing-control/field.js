@@ -1,10 +1,10 @@
 /**
  * WordPress dependencies
  */
-const {
+import {
 	Fragment,
 	useRef
-} = wp.element;
+} from '@wordpress/element';
 
 const Field = ({
 	id,

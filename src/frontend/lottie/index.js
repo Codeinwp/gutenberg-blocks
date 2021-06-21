@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-const domReady = wp.domReady;
+import domReady from '@wordpress/dom-ready';
 
 domReady( () => {
 	const animations = document.querySelectorAll( '.wp-block-themeisle-blocks-lottie' );

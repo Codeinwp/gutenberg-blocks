@@ -6,15 +6,15 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { BlockControls } = wp.blockEditor;
+import { BlockControls } from '@wordpress/block-editor';
 
-const {
+import {
 	Toolbar,
 	Button,
 	Tooltip
-} = wp.components;
+} from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -34,7 +34,7 @@ const Controls = ({ attributes, setAttributes }) => {
 					let prop = attributes[item];
 
 					return (
-						<Tooltip text={ __( `Display ${ socialList[item].label }` )	}>
+						<Tooltip text={ __( `Display ${ socialList[item].label }`, 'otter-blocks' )	}>
 							<Button
 								className={ classnames(
 									'components-button',

@@ -12,24 +12,24 @@ import {
 /**
  * WordPress dependencies
  */
-const {
+import {
 	startCase,
 	toLower
-} = lodash;
+} from 'lodash';
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	Button,
 	TextControl,
 	SelectControl,
 	ToggleControl
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 const DragHandle = SortableHandle( () => {
 	return (
@@ -52,11 +52,11 @@ export const SortableItem = ({
 
 	const label = startCase( toLower( value ) );
 	let icon = 'hidden';
-	let message = __( `Display ${ label }` );
+	let message = __( `Display ${ label }`, 'otter-blocks' );
 
 	if ( getFields( value ) ) {
 		icon = 'visibility';
-		message = __( `Hide ${ label }` );
+		message = __( `Hide ${ label }`, 'otter-blocks' );
 	}
 
 	let edit;
@@ -105,7 +105,7 @@ export const SortableItem = ({
 				{ edit && (
 					<Button
 						icon={ isOpen ? 'arrow-up-alt2' : 'arrow-down-alt2' }
-						label={ isOpen ? __( 'Close Settings' ) : __( 'Open Settings' ) }
+						label={ isOpen ? __( 'Close Settings', 'otter-blocks' ) : __( 'Open Settings', 'otter-blocks' ) }
 						showTooltip={ true }
 						className="wp-block-themeisle-blocks-posts-grid-builder-button"
 						onClick={ () => setOpen( ! isOpen ) }
@@ -134,7 +134,7 @@ export const SortableItem = ({
 					{ ( 'image' === value ) && (
 						<Fragment>
 							<SelectControl
-								label={ __( 'Image Size' ) }
+								label={ __( 'Image Size', 'otter-blocks' ) }
 								value={ imageSize.value }
 								options={ window.themeisleGutenberg.imageSizes.map( value => ({
 									label: startCase( toLower( value ) ),
@@ -144,8 +144,8 @@ export const SortableItem = ({
 							/>
 
 							<ToggleControl
-								label={ 'Display Box Shadow?' }
-								checked={ getFields( 'imageBoxShadow' ) }
+								label={ 'Display Box Shadow?', 'otter-blocks' }
+								checked={ getFields( 'imageBoxShadow', 'otter-blocks' ) }
 								onChange={ () => toggleFields( 'imageBoxShadow' ) }
 							/>
 						</Fragment>
@@ -153,15 +153,15 @@ export const SortableItem = ({
 
 					{ ( 'title' === value ) && (
 						<SelectControl
-							label={ __( 'Title Tag' ) }
+							label={ __( 'Title Tag', 'otter-blocks' ) }
 							value={ titleTag.value || 'h5' }
 							options={ [
-								{ label: __( 'H1' ), value: 'h1' },
-								{ label: __( 'H2' ), value: 'h2' },
-								{ label: __( 'H3' ), value: 'h3' },
-								{ label: __( 'H4' ), value: 'h4' },
-								{ label: __( 'H5' ), value: 'h5' },
-								{ label: __( 'H6' ), value: 'h6' }
+								{ label: __( 'H1', 'otter-blocks' ), value: 'h1' },
+								{ label: __( 'H2', 'otter-blocks' ), value: 'h2' },
+								{ label: __( 'H3', 'otter-blocks' ), value: 'h3' },
+								{ label: __( 'H4', 'otter-blocks' ), value: 'h4' },
+								{ label: __( 'H5', 'otter-blocks' ), value: 'h5' },
+								{ label: __( 'H6', 'otter-blocks' ), value: 'h6' }
 							] }
 							onChange={ titleTag.onChange }
 						/>
@@ -169,7 +169,7 @@ export const SortableItem = ({
 
 					{ ( 'description' === value ) && (
 						<TextControl
-							label={ __( 'Excerpt Limit' ) }
+							label={ __( 'Excerpt Limit', 'otter-blocks' ) }
 							type="number"
 							value={ excerptLimit.value }
 							onChange={ excerptLimit.onChange }
@@ -179,13 +179,13 @@ export const SortableItem = ({
 					{ ( 'meta' === value ) && (
 						<Fragment>
 							<ToggleControl
-								label={ 'Display Date?' }
+								label={ 'Display Date?', 'otter-blocks' }
 								checked={ getFields( 'date' ) }
 								onChange={ () => toggleFields( 'date' ) }
 							/>
 
 							<ToggleControl
-								label={ 'Display Author?' }
+								label={ 'Display Author?', 'otter-blocks' }
 								checked={ getFields( 'author' ) }
 								onChange={ () => toggleFields( 'author' ) }
 							/>

@@ -7,18 +7,18 @@ import GoogleFontLoader from 'react-google-font-loader';
 /**
  * WordPress dependencies.
  */
-const { isEqual } = lodash;
+import { isEqual } from 'lodash';
 
-const { InnerBlocks } = wp.blockEditor;
+import { InnerBlocks } from '@wordpress/block-editor';
 
-const { useViewportMatch } = wp.compose;
+import { useViewportMatch } from '@wordpress/compose';
 
-const { useSelect } = wp.data;
+import { useSelect } from '@wordpress/data';
 
-const {
+import {
 	Fragment,
 	useEffect
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies

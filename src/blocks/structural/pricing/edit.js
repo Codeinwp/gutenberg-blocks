@@ -1,19 +1,19 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { InnerBlocks } = wp.blockEditor;
+import { InnerBlocks } from '@wordpress/block-editor';
 
 const TEMPLATE =  [
 	[ 'themeisle-blocks/advanced-heading', {
-		content: __( 'Basic' ),
+		content: __( 'Basic', 'otter-blocks' ),
 		align: 'center',
 		tag: 'h3',
 		fontSize: 24
 	} ],
 	[ 'themeisle-blocks/advanced-heading', {
-		content: __( '$9.99' ),
+		content: __( '$9.99', 'otter-blocks' ),
 		align: 'center',
 		tag: 'h4',
 		fontSize: 36,
@@ -21,28 +21,28 @@ const TEMPLATE =  [
 		fontVariant: 'normal'
 	} ],
 	[ 'themeisle-blocks/advanced-heading', {
-		content: __( 'Per Month' ),
+		content: __( 'Per Month', 'otter-blocks' ),
 		align: 'center',
 		tag: 'p',
 		fontSize: 12,
 		marginBottom: 0
 	} ],
 	[ 'themeisle-blocks/advanced-heading', {
-		content: __( 'First Feature' ),
+		content: __( 'First Feature', 'otter-blocks' ),
 		align: 'center',
 		tag: 'p',
 		fontSize: 12,
 		marginBottom: 0
 	} ],
 	[ 'themeisle-blocks/advanced-heading', {
-		content: __( 'Second Feature' ),
+		content: __( 'Second Feature', 'otter-blocks' ),
 		align: 'center',
 		tag: 'p',
 		fontSize: 12,
 		marginBottom: 0
 	} ],
 	[ 'themeisle-blocks/advanced-heading', {
-		content: __( 'Last Feature' ),
+		content: __( 'Last Feature', 'otter-blocks' ),
 		align: 'center',
 		tag: 'p',
 		fontSize: 12,
@@ -52,7 +52,7 @@ const TEMPLATE =  [
 		align: 'center',
 		buttons: 1,
 		data: [ {
-			text: __( 'Buy Now' ),
+			text: __( 'Buy Now', 'otter-blocks' ),
 			newTab: false,
 			color: '#ffffff',
 			background: '#32373c',

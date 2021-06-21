@@ -13,15 +13,15 @@ import {
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { filter } = lodash;
+import { filter } from 'lodash';
 
-const { RichText } = wp.blockEditor;
+import { RichText } from '@wordpress/block-editor';
 
-const { Button } = wp.components;
+import { Button } from '@wordpress/components';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 const Slide = ({
 	images,
@@ -92,7 +92,7 @@ const Slide = ({
 						<div className="wp-block-themeisle-blocks-slider-item-move-menu">
 							<Button
 								icon={ <Icon icon={ chevronLeft } /> }
-								label={ __( 'Move image backward' ) }
+								label={ __( 'Move image backward', 'otter-blocks' ) }
 								showTooltip={ true }
 								onClick={ isFirstItem ? undefined : () => onMoveBackward() }
 								className="wp-block-themeisle-blocks-slider-item-move-backward"
@@ -102,7 +102,7 @@ const Slide = ({
 
 							<Button
 								icon={ <Icon icon={ chevronRight } /> }
-								label={ __( 'Move image forward' ) }
+								label={ __( 'Move image forward', 'otter-blocks' ) }
 								showTooltip={ true }
 								onClick={ isLastItem ? undefined : () => onMoveForward() }
 								className="wp-block-themeisle-blocks-slider-item-move-forward"
@@ -115,7 +115,7 @@ const Slide = ({
 						<div className="wp-block-themeisle-blocks-slider-item-delete-menu">
 							<Button
 								icon={ <Icon icon={ closeSmall } /> }
-								label={ __( 'Remove image' ) }
+								label={ __( 'Remove image', 'otter-blocks' ) }
 								showTooltip={ true }
 								onClick={ onRemoveImage }
 								className="wp-block-themeisle-blocks-slider-item-delete"
@@ -127,7 +127,7 @@ const Slide = ({
 				{ ( isSelected || ! RichText.isEmpty( image.caption ) ) && (
 					<RichText
 						tagName="figcaption"
-						placeholder={ isSelected ? __( 'Write caption…' ) : null }
+						placeholder={ isSelected ? __( 'Write caption…', 'otter-blocks' ) : null }
 						value={ image.caption }
 						onChange={ changeCaption }
 						multiline={ false }

@@ -1,23 +1,23 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
-	__experimentalColorGradientControl: ColorGradientControl,
+import {
+	__experimentalColorGradientControl as ColorGradientControl,
 	InspectorControls
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	PanelBody,
 	Placeholder,
 	Spinner
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	lazy,
 	Suspense
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -58,11 +58,11 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Settings' ) }
+				title={ __( 'Settings', 'otter-blocks' ) }
 			>
 				<Suspense fallback={<Placeholder><Spinner /></Placeholder>}>
 					<IconPickerControl
-						label={ __( 'Icon Picker' ) }
+						label={ __( 'Icon Picker', 'otter-blocks' ) }
 						library={ attributes.library }
 						prefix={ attributes.iconPrefix }
 						icon={ attributes.icon }
@@ -72,13 +72,13 @@ const Inspector = ({
 				</Suspense>
 
 				<ColorGradientControl
-					label={ __( 'Content Color' ) }
+					label={ __( 'Content Color', 'otter-blocks' ) }
 					colorValue={ attributes.contentColor }
 					onColorChange={ onDefaultContentColorChange }
 				/>
 
 				<ColorGradientControl
-					label={ __( 'Icon Color' ) }
+					label={ __( 'Icon Color', 'otter-blocks' ) }
 					colorValue={ attributes.iconColor }
 					onColorChange={ onDefaultIconColorChange }
 				/>

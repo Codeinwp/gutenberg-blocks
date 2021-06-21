@@ -6,9 +6,9 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { omit } = lodash;
+import { omit } from 'lodash';
 
-const { RichText } = wp.blockEditor;
+import { RichText } from '@wordpress/block-editor';
 
 import SliderControls from './components/slider-controls.js';
 

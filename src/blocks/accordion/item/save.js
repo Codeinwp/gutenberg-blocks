@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-const { InnerBlocks, RichText } = wp.blockEditor;
+import { InnerBlocks, RichText } from '@wordpress/block-editor';
 
 const Save = ({
 	attributes,

@@ -1,21 +1,21 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
-	__experimentalColorGradientControl: ColorGradientControl,
+import { clamp } from 'lodash';
+
+import {
+	__experimentalColorGradientControl as ColorGradientControl,
 	InspectorControls
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	PanelBody,
 	RangeControl,
 	SelectControl,
 	TextControl
-} = wp.components;
-
-const { clamp } = lodash;
+} from '@wordpress/components';
 
 const Inspector = ({
 	attributes,
@@ -82,17 +82,17 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Settings' ) }
+				title={ __( 'Settings', 'otter-blocks' ) }
 			>
 				<TextControl
-					label={ __( 'Title' ) }
+					label={ __( 'Title', 'otter-blocks' ) }
 					value={ attributes.title }
 					onChange={ onTitleChange }
 				/>
 
 				<RangeControl
-					label={ __( 'Percentage' ) }
-					help={ __( 'The value of the progress bar.' ) }
+					label={ __( 'Percentage', 'otter-blocks' ) }
+					help={ __( 'The value of the progress bar.', 'otter-blocks' ) }
 					value={ attributes.percentage }
 					onChange={ onPercentageChange }
 					min={ 0 }
@@ -100,8 +100,8 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Duration' ) }
-					help={ __( 'The duration of the animation.' ) }
+					label={ __( 'Duration', 'otter-blocks' ) }
+					help={ __( 'The duration of the animation.', 'otter-blocks' ) }
 					value={ attributes.duration }
 					onChange={ onDurationChange }
 					min={ 0 }
@@ -111,38 +111,38 @@ const Inspector = ({
 
 				{ 30 <= attributes.height && (
 					<SelectControl
-						label={ __( 'Title Style' ) }
+						label={ __( 'Title Style', 'otter-blocks' ) }
 						value={ attributes.titleStyle }
 						options={ [
-							{ label: __( 'Default' ), value: 'default' },
-							{ label: __( 'Highlight' ), value: 'highlight' },
-							{ label: __( 'Outer' ), value: 'outer' }
+							{ label: __( 'Default', 'otter-blocks' ), value: 'default' },
+							{ label: __( 'Highlight', 'otter-blocks' ), value: 'highlight' },
+							{ label: __( 'Outer', 'otter-blocks' ), value: 'outer' }
 						] }
 						onChange={ selectTitleStyle }
 					/>
 				) }
 
 				<SelectControl
-					label={ __( 'Show Percentage' ) }
+					label={ __( 'Show Percentage', 'otter-blocks' ) }
 					value={ attributes.percentagePosition }
 					options={ [
-						{ label: __( 'Default' ), value: 'default' },
-						{ label: __( 'Append' ), value: 'append' },
-						{ label: __( 'Tooltip' ), value: 'tooltip' },
-						{ label: __( 'Outer' ), value: 'outer' },
-						{ label: __( 'Hide' ), value: 'hide' }
+						{ label: __( 'Default', 'otter-blocks' ), value: 'default' },
+						{ label: __( 'Append', 'otter-blocks' ), value: 'append' },
+						{ label: __( 'Tooltip', 'otter-blocks' ), value: 'tooltip' },
+						{ label: __( 'Outer', 'otter-blocks' ), value: 'outer' },
+						{ label: __( 'Hide', 'otter-blocks' ), value: 'hide' }
 					] }
 					onChange={ selectPercentagePosition }
 				/>
 		   		</PanelBody>
 
 			<PanelBody
-				title={ __( 'Style' ) }
+				title={ __( 'Style', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<RangeControl
-					label={ __( 'Height' ) }
-					help={ __( 'The height of the progress bar.' ) }
+					label={ __( 'Height', 'otter-blocks' ) }
+					help={ __( 'The height of the progress bar.', 'otter-blocks' ) }
 					value={ attributes.height }
 					onChange={ onHeightChange }
 					min={ 0 }
@@ -150,8 +150,8 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Border Radius' ) }
-					help={ __( 'Round the corners of the progress bar.' ) }
+					label={ __( 'Border Radius', 'otter-blocks' ) }
+					help={ __( 'Round the corners of the progress bar.', 'otter-blocks' ) }
 					value={ attributes.borderRadius }
 					onChange={ onBorderRadiusChange }
 					initialPosition={ 5 }
@@ -160,25 +160,25 @@ const Inspector = ({
 				/>
 
 				<ColorGradientControl
-					label={ __( 'Progress Color' ) }
+					label={ __( 'Progress Color', 'otter-blocks' ) }
 					colorValue={ attributes.barBackgroundColor }
 					onColorChange={ onBarBackgroundColorChange }
 				/>
 
 				<ColorGradientControl
-					label={ __( 'Title Color' ) }
+					label={ __( 'Title Color', 'otter-blocks' ) }
 					colorValue={ attributes.titleColor }
 					onColorChange={ onTitleColorChange }
 				/>
 
 				<ColorGradientControl
-					label={ __( 'Percentage Color' ) }
+					label={ __( 'Percentage Color', 'otter-blocks' ) }
 					colorValue={ attributes.percentageColor }
 					onColorChange={ onPerncetageColorChange }
 				/>
 
 				<ColorGradientControl
-					label={ __( 'Background Color' ) }
+					label={ __( 'Background Color', 'otter-blocks' ) }
 					colorValue={ attributes.backgroundColor }
 					onColorChange={ onBackgroundColorChange }
 				/>

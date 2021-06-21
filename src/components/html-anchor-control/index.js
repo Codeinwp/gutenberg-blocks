@@ -6,22 +6,22 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { InspectorAdvancedControls } = wp.blockEditor;
+import { InspectorAdvancedControls } from '@wordpress/block-editor';
 
-const { useInstanceId } = wp.compose;
+import { useInstanceId } from '@wordpress/compose';
 
-const {
+import {
 	BaseControl,
 	Button,
 	Notice
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	useEffect,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -44,8 +44,8 @@ const HTMLAnchorControl = ({
 	return (
 		<InspectorAdvancedControls>
 			<BaseControl
-				label={ __( 'HTML Anchor' ) }
-				help={ __( 'Anchors lets you link directly to a section on a page.' ) }
+				label={ __( 'HTML Anchor', 'otter-blocks' ) }
+				help={ __( 'Anchors lets you link directly to a section on a page.', 'otter-blocks' ) }
 				id={ `wp-block-themeisle-blocks-html-anchor-control-${ instanceId }` }
 			>
 				<div className="wp-block-themeisle-blocks-html-anchor-control">
@@ -60,7 +60,7 @@ const HTMLAnchorControl = ({
 
 					<Button
 						icon={ isEditing ? 'yes' : 'edit' }
-						label={ isEditing ? __( 'Save' ) : __( 'Edit' ) }
+						label={ isEditing ? __( 'Save', 'otter-blocks' ) : __( 'Edit', 'otter-blocks' ) }
 						showTooltip={ true }
 						disabled={ isInvalid ? true : false }
 						className={ classnames(
@@ -85,7 +85,7 @@ const HTMLAnchorControl = ({
 					isDismissible={ false }
 					className="wp-block-themeisle-blocks-anchor-control-notice"
 				>
-					{ __( 'This ID has already been used in this page. Please consider using a different ID to avoid conflict.' ) }
+					{ __( 'This ID has already been used in this page. Please consider using a different ID to avoid conflict.', 'otter-blocks' ) }
 				</Notice>
 			) }
 		</InspectorAdvancedControls>

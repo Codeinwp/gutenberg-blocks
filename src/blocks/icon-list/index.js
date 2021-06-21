@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -16,8 +16,8 @@ import edit from './edit.js';
 import save from './save.js';
 
 registerBlockType( 'themeisle-blocks/icon-list', {
-	title: __( 'Icon List' ),
-	description: __( 'Display an icon list in a beautiful layout.' ),
+	title: __( 'Icon List', 'otter-blocks' ),
+	description: __( 'Display an icon list in a beautiful layout.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [
@@ -29,12 +29,12 @@ registerBlockType( 'themeisle-blocks/icon-list', {
 	styles: [
 		{
 			name: 'vertical',
-			label: __( 'Vertical' ),
+			label: __( 'Vertical', 'otter-blocks' ),
 			isDefault: true
 		},
 		{
 			name: 'horizontal',
-			label: __( 'Horizontal' )
+			label: __( 'Horizontal', 'otter-blocks' )
 		}
 	],
 	edit,

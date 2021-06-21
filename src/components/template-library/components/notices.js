@@ -1,12 +1,12 @@
 /**
  * WordPress dependencies
  */
-const { Notice } = wp.components;
+import { Notice } from '@wordpress/components';
 
-const {
+import {
 	useDispatch,
 	useSelect
-} = wp.data;
+} from '@wordpress/data';
 
 const Notices = () => {
 	const notices = useSelect( select => select( 'core/notices' ).getNotices( 'themeisle-blocks/notices/template-library' ) );
