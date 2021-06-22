@@ -7,8 +7,9 @@ import { SortableTab } from './components/sortableTabs';
 const { __ } = wp.i18n;
 
 const {
-	__experimentalColorGradientControl: ColorGradientControl,
-	InspectorControls
+	ContrastChecker,
+	InspectorControls,
+	PanelColorSettings
 } = wp.blockEditor;
 
 const { PanelBody, Button, RangeControl } = wp.components;
@@ -80,16 +81,6 @@ const Inspector = ({
 				</Button>
 			</PanelBody>
 			<PanelBody title={__( 'Settings' )} initialOpen={true}>
-				<ColorGradientControl
-					label={ __( 'Selected Tab Color' ) }
-					colorValue={ attributes.tabColor }
-					onColorChange={ onTabColorChange }
-				/>
-				<ColorGradientControl
-					label={ __( 'Selected Title Tab Color' ) }
-					colorValue={ attributes.activeTitleColor }
-					onColorChange={ onActiveTitleColorChange }
-				/>
 				<RangeControl
 					label={ __( 'Border Width' ) }
 					value={ attributes.borderWidth }
@@ -97,12 +88,36 @@ const Inspector = ({
 					min={ 0 }
 					max={ 5 }
 				/>
-				<ColorGradientControl
-					label={ __( 'Border Color' ) }
-					colorValue={ attributes.borderColor }
-					onColorChange={ onBorderColorChange }
-				/>
 			</PanelBody>
+			<PanelColorSettings
+				title={ __( 'Color' ) }
+				initialOpen={ false }
+				colorSettings={ [
+					{
+						value: attributes.activeTitleColor,
+						onChange: onActiveTitleColorChange,
+						label: __( 'Active Title Color' )
+					},
+					{
+						value: attributes.tabColor,
+						onChange: onTabColorChange,
+						label: __( 'Background' )
+					},
+					{
+						value: attributes.borderColor,
+						onChange: onBorderColorChange,
+						label: __( 'Border Color' )
+					}
+				] }
+			>
+
+				<ContrastChecker
+					{ ...{
+						textColor: attributes.activeTitleColor,
+						backgroundColor: attributes.tabColor
+					} }
+				/>
+			</PanelColorSettings>
 		</InspectorControls>
 	);
 };
