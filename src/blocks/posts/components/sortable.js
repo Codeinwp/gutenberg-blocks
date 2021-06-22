@@ -144,7 +144,7 @@ export const SortableItem = ({
 							/>
 
 							<ToggleControl
-								label={ 'Display Box Shadow?', 'otter-blocks' }
+								label={ __( 'Display Box Shadow?', 'otter-blocks' ) }
 								checked={ getFields( 'imageBoxShadow', 'otter-blocks' ) }
 								onChange={ () => toggleFields( 'imageBoxShadow' ) }
 							/>
@@ -179,13 +179,13 @@ export const SortableItem = ({
 					{ ( 'meta' === value ) && (
 						<Fragment>
 							<ToggleControl
-								label={ 'Display Date?', 'otter-blocks' }
+								label={ __( 'Display Date?', 'otter-blocks' ) }
 								checked={ getFields( 'date' ) }
 								onChange={ () => toggleFields( 'date' ) }
 							/>
 
 							<ToggleControl
-								label={ 'Display Author?', 'otter-blocks' }
+								label={ __( 'Display Author?', 'otter-blocks' ) }
 								checked={ getFields( 'author' ) }
 								onChange={ () => toggleFields( 'author' ) }
 							/>

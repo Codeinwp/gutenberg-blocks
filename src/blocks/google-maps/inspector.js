@@ -251,31 +251,31 @@ const Inspector = ({
 				</BaseControl>
 
 				<ToggleControl
-					label={ 'Draggable Map', 'otter-blocks' }
+					label={ __( 'Draggable Map', 'otter-blocks' ) }
 					checked={ attributes.draggable }
 					onChange={ toggleDraggable }
 				/>
 
 				<ToggleControl
-					label={ 'Map Type Control', 'otter-blocks' }
+					label={ __( 'Map Type Control', 'otter-blocks' ) }
 					checked={ attributes.mapTypeControl }
 					onChange={ toggleMapTypeControl }
 				/>
 
 				<ToggleControl
-					label={ 'Zoom Control', 'otter-blocks' }
+					label={ __( 'Zoom Control', 'otter-blocks' ) }
 					checked={ attributes.zoomControl }
 					onChange={ toggleZoomControl }
 				/>
 
 				<ToggleControl
-					label={ 'Full Screen Control', 'otter-blocks' }
+					label={ __( 'Full Screen Control', 'otter-blocks' ) }
 					checked={ attributes.fullscreenControl }
 					onChange={ toggleFullScreenControl }
 				/>
 
 				<ToggleControl
-					label={ 'Streen View Control', 'otter-blocks' }
+					label={ __( 'Streen View Control', 'otter-blocks' ) }
 					checked={ attributes.streetViewControl }
 					onChange={ toggleStreetViewControl }
 				/>
