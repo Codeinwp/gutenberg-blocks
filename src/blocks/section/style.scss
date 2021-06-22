@@ -1,5 +1,4 @@
 .wp-block-themeisle-blocks-advanced-columns {
-
 	.wp-themeisle-block-overlay,
 	.wp-block-themeisle-blocks-advanced-columns-overlay {
 		position: absolute;
@@ -59,22 +58,23 @@
 }
 
 @media ( min-width: 600px ) {
-
-	&.has-vertical-flex-start {
-		.innerblocks-wrap {
-			align-items: flex-start;
+	.wp-block-themeisle-blocks-advanced-columns {
+		&.has-vertical-flex-start {
+			.innerblocks-wrap {
+				align-items: flex-start;
+			}
 		}
-	}
 
-	&.has-vertical-center {
-		.innerblocks-wrap {
-			align-items: center;
-		}
-	}	
+		&.has-vertical-center {
+			.innerblocks-wrap {
+				align-items: center;
+			}
+		}	
 
-	&.has-vertical-flex-end {
-		.innerblocks-wrap {
-			align-items: flex-end;
+		&.has-vertical-flex-end {
+			.innerblocks-wrap {
+				align-items: flex-end;
+			}
 		}
 	}
 }
