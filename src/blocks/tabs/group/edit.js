@@ -31,7 +31,7 @@ import defaultAttributes from './attributes.js';
 import defaults from '../../../plugins/options/global-defaults/defaults.js';
 const IDs = [];
 
-const Tabs = ({ clientId, attributes, setAttributes, name }) => {
+const Tabs = ({ clientId, attributes, setAttributes, name, isSelected }) => {
 
 	useEffect( () => {
 		initBlock();
@@ -180,7 +180,7 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 			color: ${ attributes.activeTitleColor };
 		}
 
-		.wp-block-themeisle-blocks-tabs-header.active, .wp-block-themeisle-blocks-tabs-header.active::before, .wp-block-themeisle-blocks-tabs-header.active::after {
+		.wp-block-themeisle-blocks-tabs-header, .wp-block-themeisle-blocks-tabs-header.active, .wp-block-themeisle-blocks-tabs-header.active::before, .wp-block-themeisle-blocks-tabs-header.active::after {
 			border-width: ${ attributes.borderWidth !== undefined ? attributes.borderWidth : 3 }px;
 		}
 	`;
@@ -255,13 +255,15 @@ const Tabs = ({ clientId, attributes, setAttributes, name }) => {
 			<div id={ attributes.id } className="wp-block-themeisle-blocks-tabs" style={{ borderColor: attributes.borderColor }}>
 				<div css={tabStyle} className="wp-block-themeisle-blocks-tabs-headers">
 					<TabHeaders headers={attributes.headers} />
-					<AddTab />
+					{
+						isSelected ? ( <AddTab /> ) : ( <Fragment></Fragment> )
+					}
 				</div>
 				<div ref={ contentRef } className="wp-block-themeisle-blocks-tabs-content" css={contentStyle}>
 					<InnerBlocks
 						allowedBlocks={ [ 'themeisle-blocks/tabs-item' ] }
 						template={ [ [ 'themeisle-blocks/tabs-item' ] ] }
-						orientation="vertical"
+						orientation="horizontal"
 						renderAppender={ '' }
 					/>
 				</div>

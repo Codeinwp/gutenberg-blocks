@@ -14,6 +14,13 @@
 			padding: 5px 10px;
 			white-space: nowrap;
 			border-color: inherit;
+			cursor: pointer;
+
+			border-color: transparent;
+			border-style: solid;
+			border-bottom-style: none;
+			border-left-style: none;
+			border-right-style: none;
 
 			&.active {
 				border: 3px solid;

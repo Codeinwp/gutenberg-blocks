@@ -16,6 +16,12 @@
 			white-space: nowrap;
 			cursor: pointer;
 
+			border-color: transparent;
+			border-style: solid;
+			border-bottom-style: none;
+			border-left-style: none;
+			border-right-style: none;
+
 			svg {
 				fill: gray;
 				max-width: 24px;

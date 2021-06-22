@@ -49,6 +49,18 @@ class Tabs_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
+				'selector'   => ' .wp-block-themeisle-blocks-tabs-header',
+				'properties' => array(
+					array(
+						'property' => 'border-width',
+						'value'    => 'borderWidth',
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
 				'selector'   => ' .wp-block-themeisle-blocks-tabs-header.active',
 				'properties' => array(
 					array(
