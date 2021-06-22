@@ -34,7 +34,7 @@ const Edit = ({
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
-	}, []);
+	}, [ attributes.id ]);
 
 	const onChangeFile = value => {
 		if ( '' === value || null === value ) {

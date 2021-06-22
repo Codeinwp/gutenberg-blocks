@@ -42,7 +42,7 @@ const Edit = ({
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
-	}, []);
+	}, [ attributes.id ]);
 
 	const overallRatings = Math.round( attributes.features.reduce( ( accumulator, feature ) =>  accumulator + feature.rating, 0 ) / attributes.features.length );
 

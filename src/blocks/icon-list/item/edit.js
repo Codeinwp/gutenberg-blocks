@@ -61,7 +61,7 @@ const Edit = ({
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
-	}, []);
+	}, [ attributes.id ]);
 
 	const Icon = themeIsleIcons.icons[ attributes.icon ];
 	const  iconClassName = `${ attributes.iconPrefix || parentAttributes.defaultIconPrefix } fa-${ attributes.icon || parentAttributes.defaultIcon }`;

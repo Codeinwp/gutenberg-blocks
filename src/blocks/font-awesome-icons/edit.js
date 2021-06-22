@@ -26,7 +26,7 @@ const Edit = ({
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
-	}, []);
+	}, [ attributes.id ]);
 
 	let iconStyle = {
 		borderRadius: attributes.borderRadius + '%',

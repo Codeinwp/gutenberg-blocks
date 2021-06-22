@@ -53,7 +53,7 @@ const Edit = ({
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
-	}, []);
+	}, [ attributes.id ]);
 
 	const mapRef = useRef( null );
 	const [ map, setMap ] = useState( null );

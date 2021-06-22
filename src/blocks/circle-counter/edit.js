@@ -43,7 +43,7 @@ const CircularProgressBarBlock = ({
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
-	}, []);
+	}, [ attributes.id ]);
 
 	const progressRef = useRef( null );
 	const valueRef = useRef( null );

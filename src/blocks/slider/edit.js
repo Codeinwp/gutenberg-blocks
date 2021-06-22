@@ -39,6 +39,12 @@ const Edit = ({
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => {
 			unsubscribe();
+
+		};
+	}, [ attributes.id ]);
+
+	useEffect( () => {
+		return () => {
 			if ( attributes.images.length ) {
 				sliderRef.current.destroy();
 			}

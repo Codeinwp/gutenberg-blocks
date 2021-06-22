@@ -37,7 +37,7 @@ const ProgressBar = ({
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
-	}, []);
+	}, [ attributes.id ]);
 
 	const [ showPercentage, setShowPercentage ] = useState( false );
 

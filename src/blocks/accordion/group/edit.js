@@ -39,7 +39,7 @@ const Edit = ({
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
-	}, []);
+	}, [ attributes.id ]);
 
 	const styles = css`
 		&.wp-block-themeisle-blocks-accordion .wp-block-themeisle-blocks-accordion-item .wp-block-themeisle-blocks-accordion-item__title {

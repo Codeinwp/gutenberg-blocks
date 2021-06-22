@@ -77,7 +77,7 @@ const Edit = ({
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
-	}, []);
+	}, [ attributes.id ]);
 
 	const [ dividerViewType, setDividerViewType ] = useState( 'top' );
 

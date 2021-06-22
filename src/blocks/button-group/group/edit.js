@@ -46,7 +46,7 @@ const Edit = ({
 			isPreviewTablet: __experimentalGetPreviewDeviceType ? 'Tablet' === __experimentalGetPreviewDeviceType() : false,
 			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false
 		};
-	}, []);
+	}, [ attributes.id ]);
 
 	const isLarger = useViewportMatch( 'large', '>=' );
 
