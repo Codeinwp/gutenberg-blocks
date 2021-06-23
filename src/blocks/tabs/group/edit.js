@@ -242,7 +242,7 @@ const Tabs = ({ clientId, attributes, setAttributes, name, isSelected }) => {
 
 	return (
 		<Fragment>
-			<Toolbar attributes={ attributes } setAttributes={ setAttributes } selectedTab={ activeTab } moveTab={ moveTab }/>
+			<Toolbar attributes={ attributes } setAttributes={ setAttributes } selectedTab={ activeTab } selectTab={ selectTab } moveTab={ moveTab }/>
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
