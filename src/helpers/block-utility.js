@@ -95,7 +95,6 @@ const generatePrefix = ( name ) => {
 export const addBlockId = ( args ) => {
 
 	const { attributes, setAttributes, clientId, idPrefix, name, defaultAttributes } = args;
-	console.log( 'Id', attributes?.id );
 
 	/**
 	 * Create an alias for the global id tracker
@@ -117,7 +116,6 @@ export const addBlockId = ( args ) => {
 	const idIsAlreadyUsed = attributes.id && localIDs[name].has( attributes.id );
 
 	if ( attributes.id === undefined ) {
-		console.log( 'Brand new', instanceId );
 
 		// If the id is undefined, then the block is newly created, and so we need to apply the Global Defaults
 		addGlobalDefaults( attributes, setAttributes, name, defaultAttributes );
@@ -127,14 +125,12 @@ export const addBlockId = ( args ) => {
 		localIDs[name].add( instanceId );
 		blockIDs.push( instanceId );
 	} else if ( idIsAlreadyUsed ) {
-		console.log( 'Already used', attributes?.id, instanceId );
 
 		// The block must be a copy and its is already used
 		// Generate a new one and save it to `localIDs` to keep track of it in local mode.
 		setAttributes({ id: instanceId });
 		localIDs[name].add( instanceId );
 	} else {
-		console.log( 'No change', attributes?.id );
 
 		// No conflicts, save the current id only to keep track of it both in local and global mode.
 		localIDs[name].add( attributes.id );
