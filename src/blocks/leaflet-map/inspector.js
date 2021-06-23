@@ -157,13 +157,13 @@ const Inspector = ({
 				</BaseControl>
 
 				<ToggleControl
-					label={ 'Draggable Map', 'otter-blocks' }
+					label={ __( 'Draggable Map', 'otter-blocks' ) }
 					checked={ attributes.draggable }
 					onChange={ toggleDraggable }
 				/>
 
 				<ToggleControl
-					label={ 'Zoom Control', 'otter-blocks' }
+					label={ __( 'Zoom Control', 'otter-blocks' ) }
 					checked={ attributes.zoomControl }
 					onChange={ toggleZoomControl }
 				/>
