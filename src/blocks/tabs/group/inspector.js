@@ -70,7 +70,15 @@ const Inspector = ({
 			<PanelBody title={__( 'Tabs Management' )} initialOpen={true}>
 				<p>{ __( 'Press and hold to use drag and drop to sort the tabs' ) }</p>
 				{
-					0 < attributes.headers?.length && ( <TabsList pressDelay={200} items={ attributes.headers } onSortEnd={onSortEnd} axis={'y'} /> )
+					0 < attributes.headers?.length && (
+						<TabsList
+							items={ attributes.headers }
+							onSortEnd={onSortEnd}
+							useDragHandle
+							axis="y"
+							lockAxis="y"
+						/>
+					)
 				}
 				<Button
 					isSecondary
