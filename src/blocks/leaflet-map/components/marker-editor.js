@@ -12,7 +12,7 @@ import {
 	useRef
 } from '@wordpress/element';
 
-import { oldEditor } from '@wordpress/old-editor';
+import oldEditor from '@wordpress/old-editor';
 
 const MarkerEditor = ({
 	value,
