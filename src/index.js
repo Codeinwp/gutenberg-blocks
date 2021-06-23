@@ -3,7 +3,7 @@
  */
 import './editor.scss';
 import 'core-js';
-import 'regenerator-runtime/runtime';
+import 'regenerator-runtime/runtime.js';
 
 /**
  * An entry point to set __webpack_public_path__ variable.
