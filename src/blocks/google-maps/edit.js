@@ -27,8 +27,8 @@ import { StyleSwitcherBlockControl } from '../../components/style-switcher-contr
 import MarkerModal from './components/marker-modal.js';
 import Map from './components/map.js';
 import styles from './components/styles.js';
-
-const IDs = [];
+import defaultAttributes from './attributes.js';
+import { blockInit } from '../../helpers/block-utility.js';
 
 const Edit = ({
 	attributes,
@@ -38,8 +38,42 @@ const Edit = ({
 	isSelected,
 	toggleSelection
 }) => {
+
 	useEffect( () => {
-		initBlock();
+		const unsubscribe = blockInit( clientId, defaultAttributes );
+		return () => unsubscribe();
+	}, [ attributes.id ]);
+
+	useEffect( () => {
+
+		const setApi = async() => {
+			await wp.api.loadPromise.then( () => {
+				settingsRef.current = new wp.api.models.Settings();
+			});
+
+			if ( false === Boolean( window.themeisleGutenberg.mapsAPI ) ) {
+				if ( ! isAPILoaded ) {
+					settingsRef.current.fetch().then( response => {
+						setAPI( response.themeisle_google_map_block_api_key );
+						setAPILoaded( true );
+
+						if ( '' !== response.themeisle_google_map_block_api_key ) {
+							setAPISaved( true );
+							enqueueScript( response.themeisle_google_map_block_api_key );
+						}
+					});
+				}
+			} else {
+				if ( ! isAPILoaded ) {
+					setAPI( window.themeisleGutenberg.mapsAPI );
+					setAPILoaded( true );
+					setAPISaved( true );
+					enqueueScript( window.themeisleGutenberg.mapsAPI );
+				}
+			}
+		};
+
+		setApi();
 
 		window.isMapLoaded = window.isMapLoaded || false;
 		window[`removeMarker_${ clientId.substr( 0, 8 ) }`] = removeMarker;
@@ -85,45 +119,6 @@ const Edit = ({
 	const [ isModalOpen, setModalOpen ] = useState( false );
 	const [ isAdvanced, setAdvanced ] = useState( false );
 	const [ selectedMarker, setSelectedMarker ] = useState({});
-
-	const initBlock = async() => {
-		if ( attributes.id === undefined ) {
-			const instanceId = `wp-block-themeisle-blocks-google-map-${ clientId.substr( 0, 8 ) }`;
-			await setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-google-map-${ clientId.substr( 0, 8 ) }`;
-			await setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else {
-			IDs.push( attributes.id );
-		}
-
-		await wp.api.loadPromise.then( () => {
-			settingsRef.current = new wp.api.models.Settings();
-		});
-
-		if ( false === Boolean( window.themeisleGutenberg.mapsAPI ) ) {
-			if ( ! isAPILoaded ) {
-				settingsRef.current.fetch().then( response => {
-					setAPI( response.themeisle_google_map_block_api_key );
-					setAPILoaded( true );
-
-					if ( '' !== response.themeisle_google_map_block_api_key ) {
-						setAPISaved( true );
-						enqueueScript( response.themeisle_google_map_block_api_key );
-					}
-				});
-			}
-		} else {
-			if ( ! isAPILoaded ) {
-				setAPI( window.themeisleGutenberg.mapsAPI );
-				setAPILoaded( true );
-				setAPISaved( true );
-				enqueueScript( window.themeisleGutenberg.mapsAPI );
-			}
-		}
-	};
 
 	const enqueueScript = api => {
 		if ( ! window.isMapLoaded ) {

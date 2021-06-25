@@ -1,8 +1,6 @@
 /**
  * WordPress dependencies...
  */
-const { isEqual } = lodash;
-
 const {
 	Fragment,
 	useEffect
@@ -12,64 +10,23 @@ const {
  * Internal dependencies
  */
 import defaultAttributes from './attributes.js';
-import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Controls from './controls.js';
 import Inspector from './inspector.js';
 import themeIsleIcons from './../../helpers/themeisle-icons';
-
-const IDs = [];
+import { blockInit } from '../../helpers/block-utility.js';
 
 const Edit = ({
 	attributes,
 	setAttributes,
 	className,
 	isSelected,
-	clientId,
-	name
+	clientId
 }) => {
+
 	useEffect( () => {
-		initBlock();
-	}, []);
-
-	const initBlock = () => {
-		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
-
-		if ( attributes.id === undefined ) {
-			let attrs;
-			const instanceId = `wp-block-themeisle-blocks-font-awesome-icons-${ clientId.substr( 0, 8 ) }`;
-
-			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
-
-			if ( undefined !== globalDefaults ) {
-				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
-					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
-
-					Object.keys( attrs ).map( i => {
-						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
-							return delete attrs[i];
-						}
-					});
-				}
-			}
-
-			setAttributes({
-				...attrs,
-				id: instanceId
-			});
-
-			IDs.push( instanceId );
-			blockIDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-font-awesome-icons-${ clientId.substr( 0, 8 ) }`;
-			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else {
-			IDs.push( attributes.id );
-			blockIDs.push( attributes.id );
-		}
-
-		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
-	};
+		const unsubscribe = blockInit( clientId, defaultAttributes );
+		return () => unsubscribe();
+	}, [ attributes.id ]);
 
 	let iconStyle = {
 		borderRadius: attributes.borderRadius + '%',
@@ -118,7 +75,7 @@ const Edit = ({
 						background: ${ attributes.backgroundColorHover ? attributes.backgroundColorHover : attributes.backgroundColor } !important;
 						border-color: ${ attributes.borderColorHover ? attributes.borderColorHover : attributes.borderColor } !important;
 					}
-					
+
 					#${ attributes.id } .${ className }-container:hover svg {
 						fill: ${ attributes.textColorHover ? attributes.textColorHover : attributes.textColor } !important;
 					}`
