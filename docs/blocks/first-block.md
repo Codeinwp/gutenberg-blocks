@@ -22,6 +22,9 @@ Open the `index.js` file and paste this code:
 ```javascript
 // Import the function that register the block
 import { useBlockProps } from '@wordpress/block-editor';
+// Import the translation function, see: https://developer.wordpress.org/themes/functionality/internationalization/
+// If your WordPress use a different language, you will probably see the below strings translated (where is the case)
+import { __ } from '@wordpress/i18n';
 
 // Register the block under the internal name as 'themeisle-blocks/tutorial-1' with the fallowing options
 registerBlockType( 'themeisle-blocks/tutorial-1', {
@@ -178,7 +181,11 @@ const Save = ({ attributes }) {
 export default Save;
 ```
 
-*The Save component is a special one (not in the good sense), because it has some restriction on what it can do and how to change it*. 
-> In the edit fuction, you can even create Netflix - Hardi, circa 2020
+*The Save component is a special one (not in the good sense), because it has some restriction on what it can do and how to change it*.
 
-Changing the save function will have a particular topic: `Deprecation`. The Save function is the one that can break the page on changing. When the user updates the plugin, it must not break his page and destroy all his work. That is why changing the Save function has some restrictions and why we use PHP hacks to avoid them (～￣▽￣)～.
+In the `edit` function we have all the freedom to do what we want.
+> In the edit function, you can even create Netflix - Hardi, circa 2020
+
+Changing the save function will have a particular topic: `Deprecation`. The Save function is the one that can break the page on changing. When the user updates the plugin, it must not break his page and destroy all his work. That is why changing the Save function has some restrictions and why we use PHP hacks to avoid some of them (～￣▽￣)～.
+
+### [Go to Attributes & Edit](editor.md)
