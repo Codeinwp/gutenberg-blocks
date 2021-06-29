@@ -21,7 +21,7 @@ Open the `index.js` file and paste this code:
 
 ```javascript
 // Import the function that register the block
-import { useBlockProps } from '@wordpress/block-editor';
+import { registerBlockType } from '@wordpress/block-editor';
 // Import the translation function, see: https://developer.wordpress.org/themes/functionality/internationalization/
 // If your WordPress use a different language, you will probably see the below strings translated (where is the case)
 import { __ } from '@wordpress/i18n';
