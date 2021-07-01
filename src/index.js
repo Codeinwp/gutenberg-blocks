@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import './editor.scss';
-import 'core-js';
 import 'regenerator-runtime/runtime.js';
 
 /**
