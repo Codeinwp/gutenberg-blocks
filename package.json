@@ -52,7 +52,7 @@
 		"eslint-plugin-react": "^7.24.0",
 		"grunt": "^1.4.1",
 		"grunt-version": "^2.0.0",
-		"mini-css-extract-plugin": "^1.6.0",
+		"mini-css-extract-plugin": "^1.6.2",
 		"node-sass": "^5.0.0",
 		"postcss-loader": "^4.3.0",
 		"regenerator-runtime": "^0.13.7",
