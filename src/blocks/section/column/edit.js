@@ -6,8 +6,6 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies
  */
-const { isEqual } = lodash;
-
 const { ResizableBox } = wp.components;
 
 const { useViewportMatch } = wp.compose;
@@ -29,11 +27,9 @@ const {
  * Internal dependencies
  */
 import defaultAttributes from './attributes.js';
-import defaults from '../../../plugins/options/global-defaults/defaults.js';
 import layouts from '../layouts.js';
 import Inspector from './inspector.js';
-
-const IDs = [];
+import { blockInit } from '../../../helpers/block-utility.js';
 
 const Edit = ({
 	attributes,
@@ -41,7 +37,6 @@ const Edit = ({
 	className,
 	isSelected,
 	clientId,
-	name,
 	toggleSelection
 }) => {
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
@@ -92,52 +87,14 @@ const Edit = ({
 	const isSmaller = useViewportMatch( 'small', '<=' );
 
 	useEffect( () => {
-		initBlock();
-	}, []);
+		const unsubscribe = blockInit( clientId, defaultAttributes );
+		return () => unsubscribe();
+	}, [ attributes.id ]);
 
 	useEffect( () => {
 		updateWidth();
 	}, [ attributes.columnWidth ]);
 
-	const initBlock = () => {
-		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
-
-		if ( attributes.id === undefined ) {
-			let attrs;
-			const instanceId = `wp-block-themeisle-blocks-advanced-column-${ clientId.substr( 0, 8 ) }`;
-
-			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
-
-			if ( undefined !== globalDefaults ) {
-				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
-					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
-
-					Object.keys( attrs ).map( i => {
-						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
-							return delete attrs[i];
-						}
-					});
-				}
-			}
-
-			setAttributes({
-				...attrs,
-				id: instanceId
-			});
-
-			IDs.push( instanceId );
-			blockIDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-advanced-column-${ clientId.substr( 0, 8 ) }`;
-			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else {
-			IDs.push( attributes.id );
-			blockIDs.push( attributes.id );
-		}
-
-		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
-	};
 
 	const [ currentWidth, setCurrentWidth ] = useState( 0 );
 	const [ nextWidth, setNextWidth ] = useState( 0 );

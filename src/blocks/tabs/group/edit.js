@@ -16,8 +16,6 @@ import {
  */
 const { __ } = wp.i18n;
 
-const { isEqual } = lodash;
-
 const { createBlock } = wp.blocks;
 
 const { InnerBlocks } = wp.blockEditor;
@@ -41,62 +39,16 @@ const {
  */
 import Inspector from './inspector.js';
 import Controls from './controls.js';
+import { blockInit } from '../../../helpers/block-utility.js';
 import defaultAttributes from './attributes.js';
-import defaults from '../../../plugins/options/global-defaults/defaults.js';
 
-const IDs = [];
 
-const Edit = ({
-	attributes,
-	setAttributes,
-	className,
-	isSelected,
-	clientId,
-	name
-}) => {
+const Edit = ({ clientId, attributes, setAttributes, isSelected }) => {
+
 	useEffect( () => {
-		initBlock();
-	}, []);
-
-	const initBlock = () => {
-		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
-
-		if ( attributes.id === undefined ) {
-			let attrs;
-			const instanceId = `wp-block-themeisle-blocks-tabs-${ clientId.substr( 0, 8 ) }`;
-
-			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
-
-			if ( undefined !== globalDefaults ) {
-				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
-					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
-
-					Object.keys( attrs ).map( i => {
-						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
-							return delete attrs[i];
-						}
-					});
-				}
-			}
-
-			setAttributes({
-				...attrs,
-				id: instanceId
-			});
-
-			IDs.push( instanceId );
-			blockIDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-tabs-${ clientId.substr( 0, 8 ) }`;
-			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else {
-			IDs.push( attributes.id );
-			blockIDs.push( attributes.id );
-		}
-
-		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
-	};
+		const unsubscribe = blockInit( clientId, defaultAttributes );
+		return () => unsubscribe();
+	}, [ attributes.id ]);
 
 	const contentRef = useRef( null );
 

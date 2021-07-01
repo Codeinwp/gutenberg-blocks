@@ -8,7 +8,6 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 const {
-	isEqual,
 	merge
 } = lodash;
 
@@ -27,8 +26,9 @@ const {
 /**
  * Internal dependencies
  */
-import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Inspector from './inspector';
+import defaultAttributes from './attributes';
+import { blockInit } from '../../helpers/block-utility';
 
 /**
  * Definition of the action type for the marker reducer
@@ -41,8 +41,6 @@ export const ActionType = {
 	INIT: 'INIT'
 };
 
-const IDs = [];
-
 const Edit = ({
 	clientId,
 	attributes,
@@ -51,52 +49,11 @@ const Edit = ({
 	isSelected,
 	toggleSelection
 }) => {
-	const initBlock = () => {
-		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
 
-		if ( attributes.id === undefined ) {
-			let attrs;
-			const instanceId = `wp-block-themeisle-blocks-map-${clientId.substr( 0, 8 )}`;
-
-			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
-
-			if ( undefined !== globalDefaults ) {
-				if ( ! isEqual( defaults[name], window.themeisleGutenberg.globalDefaults[name]) ) {
-					attrs = { ...window.themeisleGutenberg.globalDefaults[name] };
-
-					Object.keys( attrs ).map( i => {
-						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
-							return delete attrs[i];
-						}
-					});
-				}
-			}
-
-			setAttributes({
-				...attrs,
-				id: instanceId
-			});
-
-			IDs.push( instanceId );
-			blockIDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-map-${clientId.substr( 0, 8 )}`;
-			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else {
-			IDs.push( attributes.id );
-			blockIDs.push( attributes.id );
-		}
-
-		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
-	};
-
-	/**
-	 * Add an ID to the block.
-	 */
 	useEffect( () => {
-		initBlock();
-	}, []);
+		const unsubscribe = blockInit( clientId, defaultAttributes );
+		return () => unsubscribe();
+	}, [ attributes.id ]);
 
 	const mapRef = useRef( null );
 	const [ map, setMap ] = useState( null );
