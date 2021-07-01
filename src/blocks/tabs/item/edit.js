@@ -76,7 +76,7 @@ const Edit = ({
 		<Fragment>
 			<Inspector
 				setAttributes={ setAttributes }
-				selectParent={ selectBlock }
+				selectParent={ () => selectBlock( parentClientId ) }
 			/>
 
 			<div
