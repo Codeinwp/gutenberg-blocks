@@ -1,35 +1,35 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	cloneDeep,
 	isEqual,
 	merge
-} = lodash;
+} from 'lodash';
 
-const apiFetch = wp.apiFetch;
+import apiFetch from '@wordpress/api-fetch';
 
-const {
+import {
 	PanelBody,
 	Snackbar,
 	ToggleControl
-} = wp.components;
+} from '@wordpress/components';
 
-const { useDispatch } = wp.data;
+import { useDispatch } from '@wordpress/data';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useRef,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
-const {
+import {
 	PluginSidebar,
 	PluginSidebarMoreMenuItem
-} = wp.editPost;
+} from '@wordpress/edit-post';
 
 /**
  * Internal dependencies
@@ -106,7 +106,7 @@ const Options = () => {
 
 		model.save().then( response => {
 			setDefault( Boolean( response.themeisle_blocks_settings_default_block ) );
-			dispatchNotice( __( 'Option updated.' ) );
+			dispatchNotice( __( 'Option updated.', 'otter-blocks' ) );
 		});
 	};
 
@@ -147,7 +147,7 @@ const Options = () => {
 
 		await model.save().then( () => {
 			window.themeisleGutenberg.globalDefaults = filterDefault;
-			dispatchNotice( __( 'Option updated.' ) );
+			dispatchNotice( __( 'Option updated.', 'otter-blocks' ) );
 		});
 	};
 
@@ -157,17 +157,17 @@ const Options = () => {
 				<PluginSidebarMoreMenuItem
 					target="wp-block-themeisle-blocks-options"
 				>
-					{ __( 'Otter Options' ) }
+					{ __( 'Otter Options', 'otter-blocks' ) }
 				</PluginSidebarMoreMenuItem>
 			) }
 
 			<PluginSidebar
-				title={ __( 'Otter Options' ) }
+				title={ __( 'Otter Options', 'otter-blocks' ) }
 				name="wp-block-themeisle-blocks-options"
 			>
 				<PanelBody className="wp-block-themeisle-blocks-options-general">
 					<ToggleControl
-						label={ __( 'Make Section block your default block for Pages?' ) }
+						label={ __( 'Make Section block your default block for Pages?', 'otter-blocks' ) }
 						checked={ isDefault }
 						onChange={ changeOptions }
 					/>

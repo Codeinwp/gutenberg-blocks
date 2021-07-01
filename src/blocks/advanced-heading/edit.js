@@ -8,20 +8,20 @@ import GoogleFontLoader from 'react-google-font-loader';
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
 const { createBlock } = wp.blocks;
 
-const { RichText } = wp.blockEditor;
+import { RichText } from '@wordpress/block-editor';
 
-const { useViewportMatch } = wp.compose;
+import { useViewportMatch } from '@wordpress/compose';
 
-const { useSelect } = wp.data;
+import { useSelect } from '@wordpress/data';
 
-const {
+import {
 	Fragment,
 	useEffect
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -234,7 +234,7 @@ const Edit = ({
 					className
 				) }
 				value={ attributes.content }
-				placeholder={ __( 'Write heading…' ) }
+				placeholder={ __( 'Write heading…', 'otter-blocks' ) }
 				tagName={ attributes.tag }
 				formattingControls={ [ 'bold', 'italic', 'link', 'strikethrough', 'highlight' ] }
 				allowedFormats={ [ 'core/bold', 'core/italic', 'core/link', 'core/strikethrough', 'themeisle-blocks/highlight' ] }

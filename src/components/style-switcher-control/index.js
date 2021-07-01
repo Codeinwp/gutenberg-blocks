@@ -6,18 +6,18 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const {
+import {
 	BaseControl,
 	Button,
 	Dropdown,
 	Toolbar
-} = wp.components;
+} from '@wordpress/components';
 
-const { useInstanceId } = wp.compose;
+import { useInstanceId } from '@wordpress/compose';
 
-const { BlockControls } = wp.blockEditor;
+import { BlockControls } from '@wordpress/block-editor';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 /**
  * Internal dependencies

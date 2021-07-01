@@ -1,13 +1,13 @@
 /**
  * WordPress dependencies
  */
-const {
+import {
 	Circle,
 	Path,
 	Polygon,
 	Rect,
 	SVG
-} = wp.primitives;
+} from '@wordpress/primitives';
 
 export const balance = ( props ) => {
 	return (

@@ -6,17 +6,18 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
+import { isEqual } from 'lodash';
 
-const { ResizableBox } = wp.components;
+import { ResizableBox } from '@wordpress/components';
 
-const { RichText } = wp.editor;
+import { RichText } from '@wordpress/editor';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useRef,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies

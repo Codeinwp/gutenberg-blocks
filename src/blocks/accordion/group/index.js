@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -14,8 +14,8 @@ import edit from './edit.js';
 import save from './save.js';
 
 registerBlockType( 'themeisle-blocks/accordion', {
-	title: __( 'Accordion' ),
-	description: __( 'Vertically collapsing accordions perfect for displaying your FAQs.' ),
+	title: __( 'Accordion', 'otter-blocks' ),
+	description: __( 'Vertically collapsing accordions perfect for displaying your FAQs.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [

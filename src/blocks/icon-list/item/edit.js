@@ -6,18 +6,18 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { RichText } = wp.blockEditor;
+import { RichText } from '@wordpress/block-editor';
 
-const { createBlock } = wp.blocks;
+import { createBlock } from '@wordpress/blocks';
 
-const { useSelect } = wp.data;
+import { useSelect } from '@wordpress/data';
 
-const {
+import {
 	Fragment,
 	useEffect
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -130,7 +130,7 @@ const Edit = ({
 				<RichText
 					identifier="content"
 					tagName="p"
-					placeholder={ __( 'Write your content…' ) }
+					placeholder={ __( 'Write your content…', 'otter-blocks' ) }
 					className={ classnames(
 						{ 'wp-block-themeisle-blocks-icon-list-item-content': ! attributes.contentColor },
 						{ 'wp-block-themeisle-blocks-icon-list-item-content-custom': attributes.contentColor }

@@ -1,14 +1,14 @@
 /**
  * WordPress Dependencies
  */
-const {
+import {
 	Placeholder,
 	Spinner
-} = wp.components;
+} from '@wordpress/components';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
-const { useSelect } = wp.data;
+import { useSelect } from '@wordpress/data';
 
 const Thumbnail = ({
 	id,

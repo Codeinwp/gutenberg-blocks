@@ -1,12 +1,12 @@
 /**
  * WordPress dependencies
  */
-const {
+import {
 	Path,
 	SVG
-} = wp.components;
+} from '@wordpress/components';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 export const SliderControlsArrows = ({ attributes }) => {
 	return (

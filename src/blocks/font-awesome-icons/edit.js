@@ -1,10 +1,10 @@
 /**
  * WordPress dependencies...
  */
-const {
+import {
 	Fragment,
 	useEffect
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies

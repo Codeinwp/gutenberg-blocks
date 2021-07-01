@@ -1,14 +1,14 @@
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
-	__experimentalColorGradientControl: ColorGradientControl,
+import {
+	__experimentalColorGradientControl as ColorGradientControl,
 	InspectorControls
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	Button,
 	ButtonGroup,
 	PanelBody,
@@ -16,14 +16,14 @@ const {
 	Placeholder,
 	SelectControl,
 	Spinner
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	lazy,
 	Suspense,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -65,7 +65,7 @@ const Inspector = ({
 					isPrimary={ ! hover }
 					onClick={ () => setHover( false ) }
 				>
-					{ __( 'Normal' ) }
+					{ __( 'Normal', 'otter-blocks' ) }
 				</Button>
 
 				<Button
@@ -74,7 +74,7 @@ const Inspector = ({
 					isPrimary={ hover }
 					onClick={ () => setHover( true ) }
 				>
-					{ __( 'Hover' ) }
+					{ __( 'Hover', 'otter-blocks' ) }
 				</Button>
 			</ButtonGroup>
 
@@ -84,20 +84,20 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Color' ) }
+				title={ __( 'Color', 'otter-blocks' ) }
 			>
 				<HoverControl/>
 
 				{ ! hover ? (
 					<Fragment key="without-hover">
 						<ColorGradientControl
-							label={ 'Color' }
+							label={ __( 'Color', 'otter-blocks' ) }
 							colorValue={ attributes.color }
 							onColorChange={ e => setAttributes({ color: e }) }
 						/>
 
 						<ColorGradientControl
-							label={ 'Background' }
+							label={ __( 'Background', 'otter-blocks' ) }
 							colorValue={ attributes.background }
 							gradientValue={ attributes.backgroundGradient }
 							onColorChange={ e => setAttributes({ background: e }) }
@@ -107,13 +107,13 @@ const Inspector = ({
 				) : (
 					<Fragment key="with-hover">
 						<ColorGradientControl
-							label={ 'Hover Color' }
+							label={ __( 'Hover Color', 'otter-blocks' ) }
 							colorValue={ attributes.hoverColor }
 							onColorChange={ e => setAttributes({ hoverColor: e }) }
 						/>
 
 						<ColorGradientControl
-							label={ 'Hover Background' }
+							label={ __( 'Hover Background', 'otter-blocks' ) }
 							colorValue={ attributes.hoverBackground }
 							gradientValue={ attributes.hoverBackgroundGradient }
 							onColorChange={ e => setAttributes({ hoverBackground: e }) }
@@ -124,27 +124,27 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Border & Box Shadow' ) }
+				title={ __( 'Border & Box Shadow', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<HoverControl/>
 
 				{ ! hover ? (
 					<ColorGradientControl
-						label={ 'Border' }
+						label={ __( 'Border', 'otter-blocks' ) }
 						colorValue={ attributes.border }
 						onColorChange={ e => setAttributes({ border: e }) }
 					/>
 				) : (
 					<ColorGradientControl
-						label={ 'Hover Border' }
+						label={ __( 'Hover Border', 'otter-blocks' ) }
 						colorValue={ attributes.hoverBorder }
 						onColorChange={ e => setAttributes({ hoverBorder: e }) }
 					/>
 				) }
 
 				<RangeControl
-					label={ __( 'Border Width' ) }
+					label={ __( 'Border Width', 'otter-blocks' ) }
 					value={ attributes.borderSize }
 					onChange={ e => setAttributes({ borderSize: e }) }
 					min={ 0 }
@@ -152,7 +152,7 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Border Radius' ) }
+					label={ __( 'Border Radius', 'otter-blocks' ) }
 					value={ attributes.borderRadius }
 					onChange={ e => setAttributes({ borderRadius: e }) }
 					min={ 0 }
@@ -160,7 +160,7 @@ const Inspector = ({
 				/>
 
 				<ControlPanelControl
-					label={ 'Box Shadow' }
+					label={ __( 'Box Shadow', 'otter-blocks' ) }
 					attributes={ attributes }
 					setAttributes={ setAttributes }
 					resetValues={ {
@@ -185,13 +185,13 @@ const Inspector = ({
 					{ ! hover ? (
 						<Fragment key="without-hover">
 							<ColorGradientControl
-								label={ 'Shadow Color' }
+								label={ __( 'Shadow Color', 'otter-blocks' ) }
 								colorValue={ attributes.boxShadowColor }
 								onColorChange={ e => setAttributes({ boxShadowColor: e }) }
 							/>
 
 							<RangeControl
-								label={ __( 'Opacity' ) }
+								label={ __( 'Opacity', 'otter-blocks' ) }
 								value={ attributes.boxShadowColorOpacity }
 								onChange={ e => setAttributes({ boxShadowColorOpacity: e }) }
 								min={ 0 }
@@ -199,7 +199,7 @@ const Inspector = ({
 							/>
 
 							<RangeControl
-								label={ __( 'Blur' ) }
+								label={ __( 'Blur', 'otter-blocks' ) }
 								value={ attributes.boxShadowBlur }
 								onChange={ e => setAttributes({ boxShadowBlur: e }) }
 								min={ 0 }
@@ -207,7 +207,7 @@ const Inspector = ({
 							/>
 
 							<RangeControl
-								label={ __( 'Spread' ) }
+								label={ __( 'Spread', 'otter-blocks' ) }
 								value={ attributes.boxShadowSpread }
 								onChange={ e => setAttributes({ boxShadowSpread: e }) }
 								min={ -100 }
@@ -215,7 +215,7 @@ const Inspector = ({
 							/>
 
 							<RangeControl
-								label={ __( 'Horizontal' ) }
+								label={ __( 'Horizontal', 'otter-blocks' ) }
 								value={ attributes.boxShadowHorizontal }
 								onChange={ e => setAttributes({ boxShadowHorizontal: e }) }
 								min={ -100 }
@@ -223,7 +223,7 @@ const Inspector = ({
 							/>
 
 							<RangeControl
-								label={ __( 'Vertical' ) }
+								label={ __( 'Vertical', 'otter-blocks' ) }
 								value={ attributes.boxShadowVertical }
 								onChange={ e => setAttributes({ boxShadowVertical: e }) }
 								min={ -100 }
@@ -233,13 +233,13 @@ const Inspector = ({
 					) : (
 						<Fragment key="with-hover">
 							<ColorGradientControl
-								label={ 'Shadow Color on Hover' }
+								label={ __( 'Shadow Color on Hover', 'otter-blocks' ) }
 								colorValue={ attributes.hoverBoxShadowColor }
 								onColorChange={ e => setAttributes({ hoverBoxShadowColor: e }) }
 							/>
 
 							<RangeControl
-								label={ __( 'Opacity' ) }
+								label={ __( 'Opacity', 'otter-blocks' ) }
 								value={ attributes.hoverBoxShadowColorOpacity }
 								onChange={ e => setAttributes({ hoverBoxShadowColorOpacity: e }) }
 								min={ 0 }
@@ -247,7 +247,7 @@ const Inspector = ({
 							/>
 
 							<RangeControl
-								label={ __( 'Blur' ) }
+								label={ __( 'Blur', 'otter-blocks' ) }
 								value={ attributes.hoverBoxShadowBlur }
 								onChange={ e => setAttributes({ hoverBoxShadowBlur: e }) }
 								min={ 0 }
@@ -255,7 +255,7 @@ const Inspector = ({
 							/>
 
 							<RangeControl
-								label={ __( 'Spread' ) }
+								label={ __( 'Spread', 'otter-blocks' ) }
 								value={ attributes.hoverBoxShadowSpread }
 								onChange={ e => setAttributes({ hoverBoxShadowSpread: e }) }
 								min={ -100 }
@@ -263,7 +263,7 @@ const Inspector = ({
 							/>
 
 							<RangeControl
-								label={ __( 'Horizontal' ) }
+								label={ __( 'Horizontal', 'otter-blocks' ) }
 								value={ attributes.hoverBoxShadowHorizontal }
 								onChange={ e => setAttributes({ hoverBoxShadowHorizontal: e }) }
 								min={ -100 }
@@ -271,7 +271,7 @@ const Inspector = ({
 							/>
 
 							<RangeControl
-								label={ __( 'Vertical' ) }
+								label={ __( 'Vertical', 'otter-blocks' ) }
 								value={ attributes.hoverBoxShadowVertical }
 								onChange={ e => setAttributes({ hoverBoxShadowVertical: e }) }
 								min={ -100 }
@@ -283,17 +283,17 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Icon Settings' ) }
+				title={ __( 'Icon Settings', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<SelectControl
-					label={ __( 'Icon Position' ) }
+					label={ __( 'Icon Position', 'otter-blocks' ) }
 					value={ attributes.iconType }
 					options={ [
-						{ label: __( 'No Icon' ), value: 'none' },
-						{ label: __( 'Left' ), value: 'left' },
-						{ label: __( 'Right' ), value: 'right' },
-						{ label: __( 'Icon Only' ), value: 'only' }
+						{ label: __( 'No Icon', 'otter-blocks' ), value: 'none' },
+						{ label: __( 'Left', 'otter-blocks' ), value: 'left' },
+						{ label: __( 'Right', 'otter-blocks' ), value: 'right' },
+						{ label: __( 'Icon Only', 'otter-blocks' ), value: 'only' }
 					] }
 					onChange={ e => setAttributes({ iconType: e }) }
 				/>
@@ -301,7 +301,7 @@ const Inspector = ({
 				{ 'none' !== attributes.iconType && (
 					<Suspense fallback={<Placeholder><Spinner/></Placeholder>}>
 						<IconPickerControl
-							label={ __( 'Icon Picker' ) }
+							label={ __( 'Icon Picker', 'otter-blocks' ) }
 							library={ attributes.library }
 							prefix={ attributes.prefix }
 							icon={ attributes.icon }

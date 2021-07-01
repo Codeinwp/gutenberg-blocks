@@ -39,7 +39,26 @@ module.exports = {
 	externals: {
 		'react': 'React',
 		'react-dom': 'ReactDOM',
-		'lodash': 'lodash'
+		'lodash': 'lodash',
+		'@wordpress/api-fetch': 'wp.apiFetch',
+		'@wordpress/blocks': 'wp.blocks',
+		'@wordpress/block-editor': 'wp.blockEditor',
+		'@wordpress/components': 'wp.components',
+		'@wordpress/compose': 'wp.compose',
+		'@wordpress/data': 'wp.data',
+		'@wordpress/dom-ready': 'wp.domReady',
+		'@wordpress/edit-post': 'wp.editPost',
+		'@wordpress/editor': 'wp.editor',
+		'@wordpress/element': 'wp.element',
+		'@wordpress/hooks': 'wp.hooks',
+		'@wordpress/i18n': 'wp.i18n',
+		'@wordpress/keycodes': 'wp.keycodes',
+		'@wordpress/old-editor': 'wp.oldEditor',
+		'@wordpress/plugins': 'wp.plugins',
+		'@wordpress/primitives': 'wp.primitives',
+		'@wordpress/rich-text': 'wp.richText',
+		'@wordpress/server-side-render': 'wp.serverSideRender',
+		'regenerator-runtime/runtime.js': 'window.regeneratorRuntime'
 	},
 	output: {
 		path: path.resolve( __dirname, 'build' ),

@@ -1,4 +1,4 @@
-const { without } = lodash;
+import { without } from 'lodash';
 
 // HTML to Plaintext
 export const unescapeHTML = value => {

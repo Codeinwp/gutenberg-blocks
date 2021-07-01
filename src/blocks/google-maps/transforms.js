@@ -1,8 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { createBlock } = wp.blocks;
-const { omit } = lodash;
+import { omit } from 'lodash';
+
+import { createBlock } from '@wordpress/blocks';
 
 const transform = {
 	to: [

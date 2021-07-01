@@ -6,11 +6,11 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { useInstanceId } = wp.compose;
+import { useInstanceId } from '@wordpress/compose';
 
-const {
+import {
 	Button,
 	BaseControl,
 	Dropdown,
@@ -18,13 +18,13 @@ const {
 	MenuItem,
 	SelectControl,
 	TextControl
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -165,11 +165,11 @@ const IconPickerControl = ({
 				renderToggle={ ({ isOpen, onToggle }) => (
 					<Fragment>
 						<SelectControl
-							label={ __( 'Icon Library' ) }
+							label={ __( 'Icon Library', 'otter-blocks' ) }
 							value={ library }
 							options={ [
-								{ label: __( 'Font Awesome' ), value: 'fontawesome' },
-								{ label: __( 'ThemeIsle Icons' ), value: 'themeisle-icons' }
+								{ label: __( 'Font Awesome', 'otter-blocks' ), value: 'fontawesome' },
+								{ label: __( 'ThemeIsle Icons', 'otter-blocks' ), value: 'themeisle-icons' }
 							] }
 							onChange={ changeLibrary }
 						/>
@@ -199,20 +199,20 @@ const IconPickerControl = ({
 													{ icon }
 												</Fragment>
 											) :
-												__( 'Select Icon' )
+												__( 'Select Icon', 'otter-blocks' )
 										) }
 
 										{ 'themeisle-icons' === library && <ThemeIsleIcon/> }
 									</Fragment>
 								) :
-									__( 'Select Icon' )
+									__( 'Select Icon', 'otter-blocks' )
 								}
 							</Button>
 						</BaseControl>
 					</Fragment>
 				) }
 				renderContent={ ({ onToggle }) => (
-					<MenuGroup label={ 'fontawesome' === library ? __( 'Font Awesome Icons' ) : __( 'ThemeIsle Icons' ) }>
+					<MenuGroup label={ 'fontawesome' === library ? __( 'Font Awesome Icons', 'otter-blocks' ) : __( 'ThemeIsle Icons', 'otter-blocks' ) }>
 						<TextControl
 							value={ search }
 							onChange={ e => setSearch( e ) }

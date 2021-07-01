@@ -1,14 +1,14 @@
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { InspectorControls } = wp.blockEditor;
+import { InspectorControls } from '@wordpress/block-editor';
 
-const {
+import {
 	PanelBody,
 	ToggleControl
-} = wp.components;
+} from '@wordpress/components';
 
 const Inspector = ({
 	attributes,
@@ -17,10 +17,10 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Settings' ) }
+				title={ __( 'Settings', 'otter-blocks' ) }
 			>
 				<ToggleControl
-					label={ 'Initially Open' }
+					label={ __( 'Initially Open', 'otter-blocks' ) }
 					checked={ attributes.initialOpen }
 					onChange={ value => setAttributes({ initialOpen: value }) }
 				/>

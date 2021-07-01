@@ -6,11 +6,11 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { Button } = wp.components;
+import { Button } from '@wordpress/components';
 
-const { useInstanceId } = wp.compose;
+import { useInstanceId } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -32,7 +32,7 @@ const SizingControl = ({
 	const id = `inspector-sizing-control-${ instanceId }`;
 
 	if ( options && 1 > options.length ) {
-		return __( 'Please specify more options.' );
+		return __( 'Please specify more options.', 'otter-blocks' );
 	}
 
 	return (
@@ -77,7 +77,7 @@ const SizingControl = ({
 						>
 							<Button
 								icon={ 'linked' === type ? 'admin-links' : 'editor-unlink' }
-								label={ 'linked' === type ? __( 'Unlink Values' ) : __( 'Link Values' ) }
+								label={ 'linked' === type ? __( 'Unlink Values', 'otter-blocks' ) : __( 'Link Values', 'otter-blocks' ) }
 								showTooltip={ true }
 								className="wp-block-themeisle-blocks-sizing-control-item-input"
 								onClick={ () => changeType( 'linked' === type ? 'unlinked' : 'linked' ) }

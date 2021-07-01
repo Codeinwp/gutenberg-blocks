@@ -2,9 +2,9 @@
  * WordPress dependencies
  */
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -14,8 +14,8 @@ import edit from './edit.js';
 import save from './save.js';
 
 registerBlockType( 'themeisle-blocks/testimonials', {
-	title: __( 'Testimonials' ),
-	description: __( 'Display kudos from customers and clients and display them on your website.' ),
+	title: __( 'Testimonials', 'otter-blocks' ),
+	description: __( 'Display kudos from customers and clients and display them on your website.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [

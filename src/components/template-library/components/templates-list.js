@@ -6,13 +6,13 @@ import LazyLoad from 'react-lazy-load';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { BlockPreview } = wp.blockEditor;
+import { BlockPreview } from '@wordpress/block-editor';
 
-const { Spinner } = wp.components;
+import { Spinner } from '@wordpress/components';
 
-const { useViewportMatch } = wp.compose;
+import { useViewportMatch } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -89,7 +89,7 @@ const TemplatesList = ({
 			}) }
 
 			<div
-				aria-label={ __( 'Coming Soon' ) }
+				aria-label={ __( 'Coming Soon', 'otter-blocks' ) }
 				className="library-modal-content__item"
 			>
 				<div className="library-modal-content__preview">

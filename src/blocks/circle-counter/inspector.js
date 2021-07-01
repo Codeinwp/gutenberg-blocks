@@ -1,20 +1,20 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
-	__experimentalColorGradientControl: ColorGradientControl,
+import { clamp } from 'lodash';
+
+import {
+	__experimentalColorGradientControl as ColorGradientControl,
 	InspectorControls
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	PanelBody,
 	RangeControl,
 	SelectControl
-} = wp.components;
-
-const { clamp } = lodash;
+} from '@wordpress/components';
 
 const Inspector = ({
 	attributes,
@@ -70,12 +70,12 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Settings' ) }
+				title={ __( 'Settings', 'otter-blocks' ) }
 				initialOpen={ true }
 			>
 				<RangeControl
-					label={ __( 'Percentage' ) }
-					help={ __( 'The value of the counter.' ) }
+					label={ __( 'Percentage', 'otter-blocks' ) }
+					help={ __( 'The value of the counter.', 'otter-blocks' ) }
 					value={ attributes.percentage }
 					onChange={ onPercentageChange }
 					min={ 0 }
@@ -83,8 +83,8 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Duration' ) }
-					help={ __( 'The duration of the animation.' ) }
+					label={ __( 'Duration', 'otter-blocks' ) }
+					help={ __( 'The duration of the animation.', 'otter-blocks' ) }
 					value={ attributes.duration }
 					onChange={ onDurationChange }
 					min={ 0 }
@@ -93,23 +93,23 @@ const Inspector = ({
 				/>
 
 				<SelectControl
-					label={ __( 'Title Style' ) }
+					label={ __( 'Title Style', 'otter-blocks' ) }
 					value={ attributes.titleStyle }
 					options={ [
-						{ label: __( 'Default' ), value: 'default' },
-						{ label: __( 'Hide' ), value: 'hide' },
-						{ label: __( 'Bottom' ), value: 'bottom' }
+						{ label: __( 'Default', 'otter-blocks' ), value: 'default' },
+						{ label: __( 'Hide', 'otter-blocks' ), value: 'hide' },
+						{ label: __( 'Bottom', 'otter-blocks' ), value: 'bottom' }
 					] }
 					onChange={ selectTitleStyle }
 				/>
 	   		</PanelBody>
 
 			<PanelBody
-				title={ __( 'Style' ) }
+				title={ __( 'Style', 'otter-blocks' ) }
 			>
 				<RangeControl
-					label={ __( 'Height' ) }
-					help={ __( 'The height of the circle counter.' ) }
+					label={ __( 'Height', 'otter-blocks' ) }
+					help={ __( 'The height of the circle counter.', 'otter-blocks' ) }
 					value={ attributes.height }
 					onChange={ onHeightChange }
 					min={ 0 }
@@ -117,8 +117,8 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Circle Thickness' ) }
-					help={ __( 'Change the thickness (stroke width) of the circle.' ) }
+					label={ __( 'Circle Thickness', 'otter-blocks' ) }
+					help={ __( 'Change the thickness (stroke width) of the circle.', 'otter-blocks' ) }
 					value={ attributes.strokeWidth }
 					onChange={ onStrokeWidthChange }
 					initialPosition={ 10 }
@@ -127,8 +127,8 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Font Size Title' ) }
-					help={ __( 'Change the font size of the title.' ) }
+					label={ __( 'Font Size Title', 'otter-blocks' ) }
+					help={ __( 'Change the font size of the title.', 'otter-blocks' ) }
 					value={ attributes.fontSizeTitle }
 					onChange={ onFontSizeTitleChange }
 					initialPosition={ 37 }
@@ -137,8 +137,8 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Font Size Percent' ) }
-					help={ __( 'Change the font size of the inner text.' ) }
+					label={ __( 'Font Size Percent', 'otter-blocks' ) }
+					help={ __( 'Change the font size of the inner text.', 'otter-blocks' ) }
 					value={ attributes.fontSizePercent }
 					onChange={ onFontSizePercentChange }
 					initialPosition={ 27 }
@@ -148,20 +148,20 @@ const Inspector = ({
 
 				{ ( 'hide' !== attributes.titleStyle ) && (
 					<ColorGradientControl
-						label={ __( 'Title Color' ) }
+						label={ __( 'Title Color', 'otter-blocks' ) }
 						colorValue={ attributes.titleColor }
 						onColorChange={ onTitleColorChange }
 					/>
 				) }
 
 				<ColorGradientControl
-					label={ __( 'Progress Color' ) }
+					label={ __( 'Progress Color', 'otter-blocks' ) }
 					colorValue={ attributes.progressColor }
 					onColorChange={ onProgressColorChange }
 				/>
 
 				<ColorGradientControl
-					label={ __( 'Background Color' ) }
+					label={ __( 'Background Color', 'otter-blocks' ) }
 					colorValue={ attributes.backgroundColor }
 					onColorChange={ onBackgroundColorChange }
 				/>

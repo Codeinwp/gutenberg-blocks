@@ -1,16 +1,16 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { InnerBlocks } = wp.blockEditor;
+import { InnerBlocks } from '@wordpress/block-editor';
 
 const TEMPLATE =  [
 	[ 'core/image', {
 		align: 'center'
 	} ],
 	[ 'themeisle-blocks/advanced-heading', {
-		content: __( 'John Doe' ),
+		content: __( 'John Doe', 'otter-blocks' ),
 		align: 'center',
 		fontSize: 24,
 		tag: 'h3',
@@ -20,7 +20,7 @@ const TEMPLATE =  [
 		marginTopMobile: 25
 	} ],
 	[ 'themeisle-blocks/advanced-heading', {
-		content: __( 'Jedi Master' ),
+		content: __( 'Jedi Master', 'otter-blocks' ),
 		align: 'center',
 		fontSize: 14,
 		tag: 'h4',
@@ -28,7 +28,7 @@ const TEMPLATE =  [
 		marginBottom: 10
 	} ],
 	[ 'themeisle-blocks/advanced-heading', {
-		content: __( '"What is the point of being alive if you don’t at least try to do something remarkable?"' ),
+		content: __( '"What is the point of being alive if you don’t at least try to do something remarkable?"', 'otter-blocks' ),
 		align: 'center',
 		color: '#999999',
 		tag: 'p',

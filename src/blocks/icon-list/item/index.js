@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -14,8 +14,8 @@ import edit from './edit.js';
 import save from './save.js';
 
 registerBlockType( 'themeisle-blocks/icon-list-item', {
-	title: __( 'Icon List Item' ),
-	description: __( 'Display an item for the icon list.' ),
+	title: __( 'Icon List Item', 'otter-blocks' ),
+	description: __( 'Display an item for the icon list.', 'otter-blocks' ),
 	icon,
 	attributes,
 	category: 'themeisle-blocks',

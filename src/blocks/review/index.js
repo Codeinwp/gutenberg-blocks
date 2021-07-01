@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -15,8 +15,8 @@ import attributes from './attributes.js';
 import edit from './edit.js';
 
 registerBlockType( 'themeisle-blocks/review', {
-	title: __( 'Product Review' ),
-	description: __( 'Turn your posts into smart reviews with ratings and generate leads with a performing review block.' ),
+	title: __( 'Product Review', 'otter-blocks' ),
+	description: __( 'Turn your posts into smart reviews with ratings and generate leads with a performing review block.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [
@@ -31,12 +31,12 @@ registerBlockType( 'themeisle-blocks/review', {
 	styles: [
 		{
 			name: 'default',
-			label: __( 'Default' ),
+			label: __( 'Default', 'otter-blocks' ),
 			isDefault: true
 		},
 		{
 			name: 'single-column',
-			label: __( 'Single Column' )
+			label: __( 'Single Column', 'otter-blocks' )
 		}
 	],
 	edit,

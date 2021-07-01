@@ -1,15 +1,15 @@
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { InspectorControls } = wp.blockEditor;
+import { InspectorControls } from '@wordpress/block-editor';
 
-const {
+import {
 	PanelBody,
 	RangeControl,
 	SelectControl
-} = wp.components;
+} from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -50,31 +50,31 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Spacing' ) }
+				title={ __( 'Spacing', 'otter-blocks' ) }
 			>
 				<SizingControl
-					label={ __( 'Padding' ) }
+					label={ __( 'Padding', 'otter-blocks' ) }
 					min={ 0 }
 					max={ 100 }
 					onChange={ changePadding }
 					options={ [
 						{
-							label: __( 'Top' ),
+							label: __( 'Top', 'otter-blocks' ),
 							type: 'top',
 							value: attributes.paddingTopBottom
 						},
 						{
-							label: __( 'Right' ),
+							label: __( 'Right', 'otter-blocks' ),
 							type: 'right',
 							value: attributes.paddingLeftRight
 						},
 						{
-							label: __( 'Bottom' ),
+							label: __( 'Bottom', 'otter-blocks' ),
 							type: 'bottom',
 							value: attributes.paddingTopBottom
 						},
 						{
-							label: __( 'Left' ),
+							label: __( 'Left', 'otter-blocks' ),
 							type: 'left',
 							value: attributes.paddingLeftRight
 						}
@@ -82,7 +82,7 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Spacing' ) }
+					label={ __( 'Spacing', 'otter-blocks' ) }
 					value={ attributes.spacing }
 					onChange={ e => setAttributes({ spacing: e }) }
 					min={ 0 }
@@ -90,24 +90,24 @@ const Inspector = ({
 				/>
 
 				<SelectControl
-					label={ __( 'Collapse On' ) }
+					label={ __( 'Collapse On', 'otter-blocks' ) }
 					value={ attributes.collapse }
 					options={ [
-						{ label: __( 'None' ), value: 'collapse-none' },
-						{ label: __( 'Desktop' ), value: 'collapse-desktop' },
-						{ label: __( 'Tablet' ), value: 'collapse-tablet' },
-						{ label: __( 'Mobile' ), value: 'collapse-mobile' }
+						{ label: __( 'None', 'otter-blocks' ), value: 'collapse-none' },
+						{ label: __( 'Desktop', 'otter-blocks' ), value: 'collapse-desktop' },
+						{ label: __( 'Tablet', 'otter-blocks' ), value: 'collapse-tablet' },
+						{ label: __( 'Mobile', 'otter-blocks' ), value: 'collapse-mobile' }
 					] }
 					onChange={ e => setAttributes({ collapse: e }) }
 				/>
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Typography Settings' ) }
+				title={ __( 'Typography Settings', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<RangeControl
-					label={ __( 'Font Size' ) }
+					label={ __( 'Font Size', 'otter-blocks' ) }
 					value={ attributes.fontSize }
 					onChange={ e => setAttributes({ fontSize: e }) }
 					min={ 0 }
@@ -115,7 +115,7 @@ const Inspector = ({
 				/>
 
 				<GoogleFontsControl
-					label={ __( 'Font Family' ) }
+					label={ __( 'Font Family', 'otter-blocks' ) }
 					value={ attributes.fontFamily }
 					onChangeFontFamily={ changeFontFamily }
 					valueVariant={ attributes.fontVariant }
@@ -127,7 +127,7 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Line Height' ) }
+					label={ __( 'Line Height', 'otter-blocks' ) }
 					value={ attributes.lineHeight }
 					onChange={ e => setAttributes({ lineHeight: e }) }
 					min={ 0 }

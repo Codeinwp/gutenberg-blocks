@@ -6,22 +6,24 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies
  */
-const { ResizableBox } = wp.components;
+import { isEqual } from 'lodash';
 
-const { useViewportMatch } = wp.compose;
+import { ResizableBox } from '@wordpress/components';
 
-const {
+import { useViewportMatch } from '@wordpress/compose';
+
+import {
 	useDispatch,
 	useSelect
-} = wp.data;
+} from '@wordpress/data';
 
-const { InnerBlocks } = wp.blockEditor;
+import { InnerBlocks } from '@wordpress/block-editor';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies

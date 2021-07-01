@@ -1,13 +1,13 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	PanelBody,
 	Placeholder,
 	Spinner
-} = wp.components;
+} from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -64,10 +64,10 @@ const GlobalDefaults = ({
 
 	return (
 		<PanelBody
-			title={ 'Global Defaults' }
+			title={ __( 'Global Defaults', 'otter-blocks' ) }
 			className="wp-block-themeisle-blocks-options-global-defaults"
 		>
-			{ __( 'With Global Defaults, you can set site-wide block defaults for Otter.' ) }
+			{ __( 'With Global Defaults, you can set site-wide block defaults for Otter.', 'otter-blocks' ) }
 
 			<div className="wp-block-themeisle-blocks-options-global-defaults-list">
 				{ blocks.map( i => {

@@ -7,21 +7,22 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const {
+import {
+	isEqual,
 	merge
-} = lodash;
+} from 'lodash';
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { ResizableBox } = wp.components;
+import { ResizableBox } from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useState,
 	useRef,
 	useReducer
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -65,7 +66,7 @@ const Edit = ({
 			markerProps.id ??= uuidv4();
 			markerProps.latitude ??= map.getCenter().lat;
 			markerProps.longitude ??= map.getCenter().lng;
-			markerProps.title ??= __( 'Add a title' );
+			markerProps.title ??= __( 'Add a title', 'otter-blocks' );
 			markerProps.description ??= '';
 
 			const markerMap = L.marker([ markerProps.latitude, markerProps.longitude ] || map.getCenter(), {
@@ -144,7 +145,7 @@ const Edit = ({
 			});
 
 		default:
-			console.warn( __( 'The action for the leaflet block do not have a defined action in marker\'s reducer: ' ) + action.type );
+			console.warn( __( 'The action for the leaflet block do not have a defined action in marker\'s reducer: ', 'otter-blocks' ) + action.type );
 		}
 
 		return oldState;
@@ -173,9 +174,9 @@ const Edit = ({
 				gestureHandling: true,
 				gestureHandlingOptions: {
 					text: {
-						touch: __ ( 'Use two fingers to move the map' ),
-						scroll: __ ( 'Use ctrl + scroll to zoom the map' ),
-						scrollMac: __ ( 'Use \u2318 + scroll to zoom the map' )
+						touch: __ ( 'Use two fingers to move the map', 'otter-blocks' ),
+						scroll: __ ( 'Use ctrl + scroll to zoom the map', 'otter-blocks' ),
+						scrollMac: __ ( 'Use \u2318 + scroll to zoom the map', 'otter-blocks' )
 					}
 				}
 			}
@@ -229,7 +230,7 @@ const Edit = ({
 					setActiveAddingToLocation( ! isAddingToLocationActive );
 				});
 
-				button.title = __( 'Add marker on the map with a click' );
+				button.title = __( 'Add marker on the map with a click', 'otter-blocks' );
 				button.appendChild( span );
 
 				return button;
@@ -314,7 +315,7 @@ const Edit = ({
 		title.innerHTML = markerProps.title;
 		description.innerHTML = markerProps.description;
 		deleteButton.onclick = () => dispatch({ type: ActionType.REMOVE, ids: [ markerProps.id ] });
-		deleteButton.innerHTML = 'Delete Marker';
+		deleteButton.innerHTML = __( 'Delete Marker', 'otter-blocks' );
 
 		container.classList.add( 'wp-block-themeisle-blocks-map-overview' );
 		content.classList.add( 'wp-block-themeisle-blocks-map-overview-content' );

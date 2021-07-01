@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -14,23 +14,23 @@ import edit from './edit.js';
 import save from './save.js';
 
 registerBlockType( 'themeisle-blocks/button', {
-	title: __( 'Button' ),
-	description: __( 'Prompt visitors to take action with a button group.' ),
+	title: __( 'Button', 'otter-blocks' ),
+	description: __( 'Prompt visitors to take action with a button group.', 'otter-blocks' ),
 	parent: [ 'themeisle-blocks/button-group' ],
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [
-		__( 'button' ),
-		__( 'buttons' ),
-		__( 'button group' )
+		'button',
+		'buttons',
+		'button group'
 	],
 	attributes,
 	supports: {
 		reusable: false
 	},
 	styles: [
-		{ name: 'fill', label: __( 'Fill' ), isDefault: true },
-		{ name: 'outline', label: __( 'Outline' ) }
+		{ name: 'fill', label: __( 'Fill', 'otter-blocks' ), isDefault: true },
+		{ name: 'outline', label: __( 'Outline', 'otter-blocks' ) }
 	],
 	edit,
 	save

@@ -1,19 +1,19 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { ColorPalette } = wp.blockEditor;
+import { ColorPalette } from '@wordpress/block-editor';
 
-const {
+import {
 	PanelBody,
 	RangeControl,
 	SelectControl
-} = wp.components;
+} from '@wordpress/components';
 
-const { useSelect } = wp.data;
+import { useSelect } from '@wordpress/data';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -373,27 +373,27 @@ const AdvancedHeading = ({
 	return (
 		<Fragment>
 			<PanelBody
-				title={ __( 'General Settings' ) }
+				title={ __( 'General Settings', 'otter-blocks' ) }
 			>
 				<SelectControl
-					label={ __( 'HTML Tag' ) }
+					label={ __( 'HTML Tag', 'otter-blocks' ) }
 					value={ defaults.tag }
 					options={ [
-						{ label: __( 'Heading 1' ), value: 'h1' },
-						{ label: __( 'Heading 2' ), value: 'h2' },
-						{ label: __( 'Heading 3' ), value: 'h3' },
-						{ label: __( 'Heading 4' ), value: 'h4' },
-						{ label: __( 'Heading 5' ), value: 'h5' },
-						{ label: __( 'Heading 6' ), value: 'h6' },
-						{ label: __( 'Division' ), value: 'div' },
-						{ label: __( 'Paragraph' ), value: 'p' },
-						{ label: __( 'Span' ), value: 'span' }
+						{ label: __( 'Heading 1', 'otter-blocks' ), value: 'h1' },
+						{ label: __( 'Heading 2', 'otter-blocks' ), value: 'h2' },
+						{ label: __( 'Heading 3', 'otter-blocks' ), value: 'h3' },
+						{ label: __( 'Heading 4', 'otter-blocks' ), value: 'h4' },
+						{ label: __( 'Heading 5', 'otter-blocks' ), value: 'h5' },
+						{ label: __( 'Heading 6', 'otter-blocks' ), value: 'h6' },
+						{ label: __( 'Division', 'otter-blocks' ), value: 'div' },
+						{ label: __( 'Paragraph', 'otter-blocks' ), value: 'p' },
+						{ label: __( 'Span', 'otter-blocks' ), value: 'span' }
 					] }
 					onChange={ value => changeConfig( blockName, { tag: value }) }
 				/>
 
 				<ColorBaseControl
-					label={ 'Heading Color' }
+					label={ __( 'Heading Color', 'otter-blocks' ) }
 					colorValue={ defaults.headingColor }
 				>
 					<ColorPalette
@@ -405,7 +405,7 @@ const AdvancedHeading = ({
 				<hr/>
 
 				<ResponsiveControl
-					label={ 'Font Size' }
+					label={ __( 'Font Size', 'otter-blocks' ) }
 				>
 					<RangeControl
 						value={ getFontSize || '' }
@@ -417,11 +417,11 @@ const AdvancedHeading = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Typography Settings' ) }
+				title={ __( 'Typography Settings', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<GoogleFontsControl
-					label={ __( 'Font Family' ) }
+					label={ __( 'Font Family', 'otter-blocks' ) }
 					value={ defaults.fontFamily }
 					onChangeFontFamily={ changeFontFamily }
 					valueVariant={ defaults.fontVariant }
@@ -435,7 +435,7 @@ const AdvancedHeading = ({
 				<hr/>
 
 				<RangeControl
-					label={ __( 'Line Height' ) }
+					label={ __( 'Line Height', 'otter-blocks' ) }
 					value={ defaults.lineHeight || '' }
 					onChange={ value => changeConfig( blockName, { lineHeight: value }) }
 					min={ 0 }
@@ -445,7 +445,7 @@ const AdvancedHeading = ({
 				<hr/>
 
 				<RangeControl
-					label={ __( 'Letter Spacing' ) }
+					label={ __( 'Letter Spacing', 'otter-blocks' ) }
 					value={ defaults.letterSpacing || '' }
 					onChange={ value => changeConfig( blockName, { letterSpacing: value }) }
 					min={ -50 }
@@ -454,11 +454,11 @@ const AdvancedHeading = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Spacing' ) }
+				title={ __( 'Spacing', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<ResponsiveControl
-					label={ 'Padding' }
+					label={ __( 'Padding', 'otter-blocks' ) }
 				>
 					<SizingControl
 						type={ getPaddingType }
@@ -468,22 +468,22 @@ const AdvancedHeading = ({
 						onChange={ changePadding }
 						options={ [
 							{
-								label: __( 'Top' ),
+								label: __( 'Top', 'otter-blocks' ),
 								type: 'top',
 								value: getPadding( 'top' )
 							},
 							{
-								label: __( 'Right' ),
+								label: __( 'Right', 'otter-blocks' ),
 								type: 'right',
 								value: getPadding( 'right' )
 							},
 							{
-								label: __( 'Bottom' ),
+								label: __( 'Bottom', 'otter-blocks' ),
 								type: 'bottom',
 								value: getPadding( 'bottom' )
 							},
 							{
-								label: __( 'Left' ),
+								label: __( 'Left', 'otter-blocks' ),
 								type: 'left',
 								value: getPadding( 'left' )
 							}
@@ -494,7 +494,7 @@ const AdvancedHeading = ({
 				<hr/>
 
 				<ResponsiveControl
-					label={ 'Margin' }
+					label={ __( 'Margin', 'otter-blocks' ) }
 				>
 					<SizingControl
 						type={ getMarginType }
@@ -504,21 +504,21 @@ const AdvancedHeading = ({
 						onChange={ changeMargin }
 						options={ [
 							{
-								label: __( 'Top' ),
+								label: __( 'Top', 'otter-blocks' ),
 								type: 'top',
 								value: getMargin( 'top' )
 							},
 							{
-								label: __( 'Right' ),
+								label: __( 'Right', 'otter-blocks' ),
 								disabled: true
 							},
 							{
-								label: __( 'Bottom' ),
+								label: __( 'Bottom', 'otter-blocks' ),
 								type: 'bottom',
 								value: getMargin( 'bottom' )
 							},
 							{
-								label: __( 'Left' ),
+								label: __( 'Left', 'otter-blocks' ),
 								disabled: true
 							}
 						] }

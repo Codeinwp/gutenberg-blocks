@@ -6,17 +6,17 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies.
  */
-const {
+import {
 	omit,
 	pick,
 	times
-} = lodash;
+} from 'lodash';
 
-const { createBlock } = wp.blocks;
+import { createBlock } from '@wordpress/blocks';
 
-const { RichText } = wp.editor;
+import { RichText } from '@wordpress/editor';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 const attributes = {
 	id: {

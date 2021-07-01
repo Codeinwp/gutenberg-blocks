@@ -6,7 +6,7 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies.
  */
-const { ColorIndicator } = wp.components;
+import { ColorIndicator } from '@wordpress/components';
 
 /**
 * Internal dependencies

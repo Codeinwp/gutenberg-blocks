@@ -7,7 +7,7 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies.
  */
-const { RichText } = wp.blockEditor;
+import { RichText } from '@wordpress/block-editor';
 
 const deprecated = [ {
 	attributes: {

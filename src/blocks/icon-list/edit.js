@@ -1,12 +1,12 @@
 /**
  * WordPress dependencies.
  */
-const { InnerBlocks } = wp.blockEditor;
+import { InnerBlocks } from '@wordpress/block-editor';
 
-const {
+import {
 	Fragment,
 	useEffect
-} = wp.element;
+} from '@wordpress/element';
 
 
 /**

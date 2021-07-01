@@ -1,16 +1,16 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	PanelBody,
 	SelectControl
-} = wp.components;
+} from '@wordpress/components';
 
-const { useSelect } = wp.data;
+import { useSelect } from '@wordpress/data';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -347,10 +347,10 @@ const SectionColumn = ({
 	return (
 		<Fragment>
 			<PanelBody
-				title={ __( 'Sizing' ) }
+				title={ __( 'Sizing', 'otter-blocks' ) }
 			>
 				<ResponsiveControl
-					label={ 'Padding' }
+					label={ __( 'Padding', 'otter-blocks' ) }
 				>
 					<SizingControl
 						type={ getPaddingType }
@@ -360,22 +360,22 @@ const SectionColumn = ({
 						onChange={ changePadding }
 						options={ [
 							{
-								label: __( 'Top' ),
+								label: __( 'Top', 'otter-blocks' ),
 								type: 'top',
 								value: getPadding( 'top' )
 							},
 							{
-								label: __( 'Right' ),
+								label: __( 'Right', 'otter-blocks' ),
 								type: 'right',
 								value: getPadding( 'right' )
 							},
 							{
-								label: __( 'Bottom' ),
+								label: __( 'Bottom', 'otter-blocks' ),
 								type: 'bottom',
 								value: getPadding( 'bottom' )
 							},
 							{
-								label: __( 'Left' ),
+								label: __( 'Left', 'otter-blocks' ),
 								type: 'left',
 								value: getPadding( 'left' )
 							}
@@ -386,7 +386,7 @@ const SectionColumn = ({
 				<hr/>
 
 				<ResponsiveControl
-					label={ 'Margin' }
+					label={ __( 'Margin', 'otter-blocks' ) }
 				>
 					<SizingControl
 						type={ getMarginType }
@@ -396,22 +396,22 @@ const SectionColumn = ({
 						onChange={ changeMargin }
 						options={ [
 							{
-								label: __( 'Top' ),
+								label: __( 'Top', 'otter-blocks' ),
 								type: 'top',
 								value: getMargin( 'top' )
 							},
 							{
-								label: __( 'Right' ),
+								label: __( 'Right', 'otter-blocks' ),
 								type: 'right',
 								value: getMargin( 'right' )
 							},
 							{
-								label: __( 'Bottom' ),
+								label: __( 'Bottom', 'otter-blocks' ),
 								type: 'bottom',
 								value: getMargin( 'bottom' )
 							},
 							{
-								label: __( 'Left' ),
+								label: __( 'Left', 'otter-blocks' ),
 								type: 'left',
 								value: getMargin( 'left' )
 							}
@@ -421,14 +421,14 @@ const SectionColumn = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Section Settings' ) }
+				title={ __( 'Section Settings', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<SelectControl
-					label={ __( 'HTML Tag' ) }
+					label={ __( 'HTML Tag', 'otter-blocks' ) }
 					value={ defaults.columnsHTMLTag }
 					options={ [
-						{ label: __( 'Default (div)' ), value: 'div' },
+						{ label: __( 'Default (div)', 'otter-blocks' ), value: 'div' },
 						{ label: 'section', value: 'section' },
 						{ label: 'header', value: 'header' },
 						{ label: 'footer', value: 'footer' },

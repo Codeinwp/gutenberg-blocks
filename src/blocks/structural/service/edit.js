@@ -1,10 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { InnerBlocks } = wp.blockEditor;
-
+import { InnerBlocks } from '@wordpress/block-editor';
 
 const TEMPLATE =  [
 	[ 'themeisle-blocks/font-awesome-icons', {
@@ -13,13 +12,13 @@ const TEMPLATE =  [
 		icon: 'angellist'
 	} ],
 	[ 'themeisle-blocks/advanced-heading', {
-		content: __( 'Basic' ),
+		content: __( 'Basic', 'otter-blocks' ),
 		align: 'center',
 		tag: 'h4',
 		marginBottom: 20
 	} ],
 	[ 'themeisle-blocks/advanced-heading', {
-		content: __( 'Lorem ipsum dolor sit amet elit do, consectetur adipiscing, sed eiusmod tempor incididunt ut labore et dolore magna aliqua.' ),
+		content: __( 'Lorem ipsum dolor sit amet elit do, consectetur adipiscing, sed eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'otter-blocks' ),
 		align: 'center',
 		color: '#999999',
 		tag: 'p',
@@ -30,7 +29,7 @@ const TEMPLATE =  [
 		align: 'center',
 		buttons: 1,
 		data: [ {
-			text: __( 'Know More' ),
+			text: __( 'Know More', 'otter-blocks' ),
 			newTab: false,
 			color: '#ffffff',
 			background: '#32373c',

@@ -10,12 +10,12 @@ import {
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	AlignmentToolbar,
 	BlockControls
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
 const Controls = ({
 	attributes,
@@ -29,17 +29,17 @@ const Controls = ({
 				alignmentControls={ [
 					{
 						icon: alignLeft,
-						title: __( 'Align left' ),
+						title: __( 'Align left', 'otter-blocks' ),
 						align: 'left'
 					},
 					{
 						icon: alignCenter,
-						title: __( 'Align center' ),
+						title: __( 'Align center', 'otter-blocks' ),
 						align: 'center'
 					},
 					{
 						icon: alignRight,
-						title: __( 'Align right' ),
+						title: __( 'Align right', 'otter-blocks' ),
 						align: 'right'
 					}
 				] }

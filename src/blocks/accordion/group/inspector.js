@@ -1,18 +1,18 @@
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	ContrastChecker,
 	InspectorControls,
 	PanelColorSettings
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	PanelBody,
 	SelectControl
-} = wp.components;
+} from '@wordpress/components';
 
 const Inspector = ({
 	attributes,
@@ -21,48 +21,47 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Settings' ) }
+				title={ __( 'Settings', 'otter-blocks' ) }
 			>
 				<SelectControl
-					label={ __( 'Gap' ) }
+					label={ __( 'Gap', 'otter-blocks' ) }
 					value={ attributes.gap }
 					options={ [
-						{ label: __( 'No Gap' ), value: '' },
-						{ label: __( 'Narrow (5px)' ), value: 'narrow' },
-						{ label: __( 'Wide (10px)' ), value: 'wide' },
-						{ label: __( 'Wider (20px)' ), value: 'wider' }
+						{ label: __( 'No Gap', 'otter-blocks' ), value: '' },
+						{ label: __( 'Narrow (5px)', 'otter-blocks' ), value: 'narrow' },
+						{ label: __( 'Wide (10px)', 'otter-blocks' ), value: 'wide' },
+						{ label: __( 'Wider (20px)', 'otter-blocks' ), value: 'wider' }
 					] }
 					onChange={ e => setAttributes({ gap: e }) }
 				/>
 			</PanelBody>
 
 			<PanelColorSettings
-				title={ __( 'Color' ) }
+				title={ __( 'Color', 'otter-blocks' ) }
 				initialOpen={ false }
 				colorSettings={ [
 					{
 						value: attributes.titleColor,
 						onChange: value => setAttributes({ titleColor: value }),
-						label: __( 'Title' )
+						label: __( 'Title', 'otter-blocks' )
 					},
 					{
 						value: attributes.titleBackground,
 						onChange: value => setAttributes({ titleBackground: value }),
-						label: __( 'Title Background' )
+						label: __( 'Title Background', 'otter-blocks' )
 					},
 					{
 						value: attributes.contentBackground,
 						onChange: value => setAttributes({ contentBackground: value }),
-						label: __( 'Content Background' )
+						label: __( 'Content Background', 'otter-blocks' )
 					},
 					{
 						value: attributes.borderColor,
 						onChange: value => setAttributes({ borderColor: value }),
-						label: __( 'Border Color' )
+						label: __( 'Border Color', 'otter-blocks' )
 					}
 				] }
 			>
-
 				<ContrastChecker
 					{ ...{
 						textColor: attributes.titleColor,

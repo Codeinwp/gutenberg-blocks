@@ -6,26 +6,26 @@ import { link, linkOff } from '@wordpress/icons';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { __experimentalLinkControl: LinkControl } = wp.blockEditor;
+import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
 
-const {
+import {
 	KeyboardShortcuts,
 	Popover,
 	ToolbarButton,
 	ToolbarGroup
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
-const {
+import {
 	displayShortcut,
 	rawShortcut
-} = wp.keycodes;
+} from '@wordpress/keycodes';
 
 /**
  * Internal dependencies
@@ -85,7 +85,7 @@ const LinkControlToolbar = ({
 					<ToolbarButton
 						name="link"
 						icon={ link }
-						title={ __( 'Link' ) }
+						title={ __( 'Link', 'otter-blocks' ) }
 						shortcut={ displayShortcut.primary( 'k' ) }
 						onClick={ openLinkControl }
 						className="wp-block-themeisle-toolbar-icon"
@@ -96,7 +96,7 @@ const LinkControlToolbar = ({
 					<ToolbarButton
 						name="link"
 						icon={ linkOff }
-						title={ __( 'Unlink' ) }
+						title={ __( 'Unlink', 'otter-blocks' ) }
 						shortcut={ displayShortcut.primaryShift( 'k' ) }
 						onClick={ unlinkButton }
 						isActive={ true }

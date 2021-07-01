@@ -1,16 +1,16 @@
 /**
  * Wordpress dependencies
  */
-const {
+import {
 	isEmpty,
 	pick
-} = lodash;
+} from 'lodash';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useRef
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies

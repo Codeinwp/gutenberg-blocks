@@ -9,14 +9,14 @@ import GoogleFontLoader from 'react-google-font-loader';
  */
 const { InnerBlocks } = wp.blockEditor;
 
-const { useViewportMatch } = wp.compose;
+import { useViewportMatch } from '@wordpress/compose';
 
-const { useSelect } = wp.data;
+import { useSelect } from '@wordpress/data';
 
-const {
+import {
 	Fragment,
 	useEffect
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies

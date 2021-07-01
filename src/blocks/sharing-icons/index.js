@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -15,8 +15,8 @@ import attributes from './attributes.js';
 import edit from './edit.js';
 
 registerBlockType( 'themeisle-blocks/sharing-icons', {
-	title: __( 'Sharing Icons' ),
-	description: __( 'Share buttons for your website visitors to share content on any social sharing service.' ),
+	title: __( 'Sharing Icons', 'otter-blocks' ),
+	description: __( 'Share buttons for your website visitors to share content on any social sharing service.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [
@@ -29,8 +29,8 @@ registerBlockType( 'themeisle-blocks/sharing-icons', {
 		align: [ 'left', 'center', 'right' ]
 	},
 	styles: [
-		{ name: 'default', label: __( 'Regular' ), isDefault: true },
-		{ name: 'icons', label: __( 'Icons Only' ) }
+		{ name: 'default', label: __( 'Regular', 'otter-blocks' ), isDefault: true },
+		{ name: 'icons', label: __( 'Icons Only', 'otter-blocks' ) }
 	],
 	edit,
 	save: () => null

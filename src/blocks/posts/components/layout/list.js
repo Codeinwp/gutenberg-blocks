@@ -6,10 +6,10 @@ import classnames from 'classnames';
 /**
 * WordPress dependencies
 */
-const {
+import {
 	__,
 	sprintf
-} = wp.i18n;
+} from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -84,11 +84,11 @@ const List = ({
 											return (
 												<p className="wp-block-themeisle-blocks-posts-grid-post-meta">
 													{ ( attributes.displayDate ) && (
-														sprintf( __( 'on %s' ), formatDate( post.date ) )
+														sprintf( __( 'on %s', 'otter-blocks' ), formatDate( post.date ) )
 													) }
 
 													{ ( attributes.displayAuthor && undefined !== author && authors ) && (
-														sprintf( __( ' by %s' ), author.name )
+														sprintf( __( ' by %s', 'otter-blocks' ), author.name )
 													) }
 												</p>
 											);

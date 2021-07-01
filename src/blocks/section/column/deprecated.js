@@ -6,9 +6,9 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies
  */
-const { omit } = lodash;
+import { omit } from 'lodash';
 
-const { InnerBlocks } = wp.blockEditor;
+import { InnerBlocks } from '@wordpress/block-editor';
 
 const attributes = {
 	id: {

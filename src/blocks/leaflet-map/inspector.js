@@ -6,21 +6,19 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
-	useState
-} = wp.element;
+import { useState } from '@wordpress/element';
 
-const {
+import {
 	PanelBody,
 	TextControl,
 	RangeControl,
 	BaseControl,
 	ToggleControl
-} = wp.components;
+} from '@wordpress/components';
 
-const { InspectorControls } = wp.blockEditor;
+import { InspectorControls } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -59,7 +57,7 @@ const Inspector = ({
 		} else {
 			setError({
 				target: 'LOCATION',
-				reason: __( 'Location couldn\'t been found!' )
+				reason: __( 'Location couldn\'t been found!', 'otter-blocks' )
 			});
 		}
 	};
@@ -97,44 +95,44 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Location' ) }
+				title={ __( 'Location', 'otter-blocks' ) }
 			>
 				<TextControl
-					label={ __( 'Location' ) }
+					label={ __( 'Location', 'otter-blocks' ) }
 					type="text"
 					className={ classnames(
 						{ 'wp-block-themeisle-blocks-leaflet-map-input-error': 'LOCATION' === error.target }
 					) }
-					placeholder={ __( 'Enter location. E.g: La Sagrada Familia, Barcelona, Spain' ) }
-					help={ __( 'Press Enter to search the location' ) }
+					placeholder={ __( 'Enter location. E.g: La Sagrada Familia, Barcelona, Spain', 'otter-blocks' ) }
+					help={ __( 'Press Enter to search the location', 'otter-blocks' ) }
 					value={ location }
 					onChange={ setLocation }
 					onKeyDown={ event => searchOnPress( event, 'Enter' ) }
 				/>
 
 				<TextControl
-					label={ __( 'Latitude' ) }
+					label={ __( 'Latitude', 'otter-blocks' ) }
 					type="text"
-					placeholder={ __( 'Enter latitude…' ) }
+					placeholder={ __( 'Enter latitude…', 'otter-blocks' ) }
 					value={ attributes.latitude }
 					onChange={ changeLatitude }
 				/>
 
 				<TextControl
-					label={ __( 'Longitude' ) }
+					label={ __( 'Longitude', 'otter-blocks' ) }
 					type="text"
-					placeholder={ __( 'Enter longitude' ) }
+					placeholder={ __( 'Enter longitude', 'otter-blocks' ) }
 					value={ attributes.longitude }
 					onChange={ changeLongitude }
 				/>
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Positioning & Zooming' ) }
+				title={ __( 'Positioning & Zooming', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<RangeControl
-					label={ __( 'Map Zoom Level' ) }
+					label={ __( 'Map Zoom Level', 'otter-blocks' ) }
 					value={ attributes.zoom }
 					onChange={ changeZoom }
 					min={ 0 }
@@ -142,7 +140,7 @@ const Inspector = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Map Height' ) }
+					label={ __( 'Map Height', 'otter-blocks' ) }
 					value={ attributes.height }
 					onChange={ changeHeight }
 					min={ 100 }
@@ -151,28 +149,28 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Controls' ) }
+				title={ __( 'Controls', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<BaseControl>
-					{ __( 'The following changes will not affect block preview during the editing process. You can click outside the block to see the changes take effect.' ) }
+					{ __( 'The following changes will not affect block preview during the editing process. You can click outside the block to see the changes take effect.', 'otter-blocks' ) }
 				</BaseControl>
 
 				<ToggleControl
-					label={ 'Draggable Map' }
+					label={ __( 'Draggable Map', 'otter-blocks' ) }
 					checked={ attributes.draggable }
 					onChange={ toggleDraggable }
 				/>
 
 				<ToggleControl
-					label={ 'Zoom Control' }
+					label={ __( 'Zoom Control', 'otter-blocks' ) }
 					checked={ attributes.zoomControl }
 					onChange={ toggleZoomControl }
 				/>
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Markers' ) }
+				title={ __( 'Markers', 'otter-blocks' ) }
 				initialOpen={ true }
 			>
 				<MarkerWrapper

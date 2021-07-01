@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -17,8 +17,8 @@ import edit from './edit.js';
 import save from './save.js';
 
 registerBlockType( 'themeisle-blocks/slider', {
-	title: __( 'Slider' ),
-	description: __( 'Minimal image slider to showcase beautiful images.' ),
+	title: __( 'Slider', 'otter-blocks' ),
+	description: __( 'Minimal image slider to showcase beautiful images.', 'otter-blocks' ),
 	icon: 'images-alt2',
 	category: 'themeisle-blocks',
 	keywords: [
