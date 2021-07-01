@@ -109,7 +109,7 @@ class Main {
 	public function init() {
 		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
 			define( 'THEMEISLE_BLOCKS_VERSION', '1.6.7' );
-			define( 'THEMEISLE_BLOCKS_DEV', false );
+			define( 'THEMEISLE_BLOCKS_DEV', true );
 		}
 
 		if ( THEMEISLE_BLOCKS_DEV ) {
