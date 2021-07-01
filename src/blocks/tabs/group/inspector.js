@@ -1,5 +1,7 @@
+/**
+ * External dependencies
+*/
 import { SortableContainer } from 'react-sortable-hoc';
-import { SortableTab } from './components/sortableTabs';
 
 /**
  * WordPress dependencies
@@ -12,83 +14,96 @@ const {
 	PanelColorSettings
 } = wp.blockEditor;
 
-const { PanelBody, Button, RangeControl } = wp.components;
+const {
+	Button,
+	PanelBody,
+	RangeControl
+} = wp.components;
+
+/**
+ * Internal dependencies.
+ */
+import { SortableTab } from './components/sortable-tabs.js';
 
 const Inspector = ({
 	attributes,
 	setAttributes,
+	children,
 	deleteTab,
 	selectTab,
 	addTab,
 	moveTab
 }) => {
-
 	const TabsList = SortableContainer( ({ items }) => {
 		return (
 			<div>
-				{
-					items.map( ( tab, index ) => {
-						return (
-							<SortableTab key={tab.id} tab={tab} index={index} deleteTab={deleteTab} selectTab={selectTab}/>
-						);
-					})
-				}
+				{ items.map( ( tab, index ) => {
+					return (
+						<SortableTab
+							key={ tab.id }
+							tab={ tab }
+							index={ index }
+							deleteTab={ deleteTab }
+							selectTab={ selectTab }
+						/>
+					);
+				}) }
 			</div>
 		);
 	});
 
 	const onSortEnd = ({ oldIndex, newIndex }) => {
-		moveTab( attributes.headers[oldIndex].id, newIndex );
+		moveTab( children[oldIndex].clientId, newIndex );
 	};
 
-	const onTabColorChange = ( value ) => {
-		setAttributes({
-			tabColor: value
-		});
+	const onTabColorChange = value => {
+		setAttributes({ tabColor: value });
 	};
 
-	const onBorderColorChange = ( value ) => {
-		setAttributes({
-			borderColor: value
-		});
+	const onBorderColorChange = value => {
+		setAttributes({ borderColor: value });
 	};
 
-	const onBorderWidthChange = ( value ) => {
-		setAttributes({
-			borderWidth: value
-		});
+	const onBorderWidthChange = value => {
+		setAttributes({ borderWidth: Number( value ) });
 	};
 
-	const onActiveTitleColorChange = ( value ) => {
-		setAttributes({
-			activeTitleColor: value
-		});
+	const onActiveTitleColorChange = value => {
+		setAttributes({ activeTitleColor: value });
 	};
 
 	return (
 		<InspectorControls>
-			<PanelBody title={__( 'Tabs Management' )} initialOpen={true}>
+			<PanelBody
+				title={ __( 'Tabs Management' ) }
+				initialOpen={ true }
+			>
 				<p>{ __( 'Press and hold to use drag and drop to sort the tabs' ) }</p>
-				{
-					0 < attributes.headers?.length && (
-						<TabsList
-							items={ attributes.headers }
-							onSortEnd={onSortEnd}
-							useDragHandle
-							axis="y"
-							lockAxis="y"
-						/>
-					)
-				}
+
+				{ 0 < children?.length && (
+					<TabsList
+						items={ children }
+						onSortEnd={ onSortEnd }
+						useDragHandle
+						axis="y"
+						lockAxis="y"
+					/>
+				) }
+
 				<Button
 					isSecondary
 					isLarge
-					className="wp-block-themeisle-blocks-tabs-inspector-add-tab" onClick={ addTab }
+					className="wp-block-themeisle-blocks-tabs-inspector-add-tab"
+					onClick={ addTab }
 				>
 					{ __( 'Add Tab' ) }
 				</Button>
 			</PanelBody>
-			<PanelBody title={__( 'Settings' )} initialOpen={true}>
+
+			<PanelBody
+				title={__( 'Settings' ) }
+				initialOpen={ true }
+			>
 				<RangeControl
 					label={ __( 'Border Width' ) }
 					value={ attributes.borderWidth }
@@ -97,6 +112,7 @@ const Inspector = ({
 					max={ 5 }
 				/>
 			</PanelBody>
+
 			<PanelColorSettings
 				title={ __( 'Color' ) }
 				initialOpen={ false }
@@ -118,7 +134,6 @@ const Inspector = ({
 					}
 				] }
 			>
-
 				<ContrastChecker
 					{ ...{
 						textColor: attributes.activeTitleColor,

@@ -2,9 +2,6 @@ const attributes = {
 	id: {
 		type: 'string'
 	},
-	headers: {
-		type: 'array'
-	},
 	tabColor: {
 		type: 'string'
 	},

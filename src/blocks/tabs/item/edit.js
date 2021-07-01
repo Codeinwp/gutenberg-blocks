@@ -1,31 +1,44 @@
+/**
+ * External dependencies.
+ */
 import classnames from 'classnames';
 
 /**
  * WordPress dependencies.
  */
-const { useSelect, useDispatch } = wp.data;
-const { isEqual } = lodash;
-const { InnerBlocks, RichText } = wp.blockEditor;
 const { __ } = wp.i18n;
 
 const {
+	InnerBlocks,
+	RichText
+} = wp.blockEditor;
+
+const {
+	useDispatch,
+	useSelect
+} = wp.data;
+
+const {
 	Fragment,
-	useEffect,
 	useRef
 } = wp.element;
 
+/**
+ * Internal dependencies.
+ */
 import Inspector from './inspector.js';
-import defaultAttributes from './attributes.js';
-import defaults from '../../../plugins/options/global-defaults/defaults.js';
 
-const IDs = [];
-
-const Tabs = ({ attributes, setAttributes, clientId, name }) => {
-
+const Edit = ({
+	attributes,
+	setAttributes,
+	className,
+	clientId
+}) => {
 	const contentRef = useRef( null );
 
 	const {
-		parentClientId
+		parentClientId,
+		isFirstBlock
 	} = useSelect( select => {
 		const {
 			getBlock,
@@ -36,94 +49,62 @@ const Tabs = ({ attributes, setAttributes, clientId, name }) => {
 		const parentBlock = getBlock( parentClientId );
 
 		return {
-			parentClientId: parentBlock.clientId
+			parentClientId: parentBlock.clientId,
+			isFirstBlock: clientId === parentBlock.innerBlocks[0].clientId
 		};
 	}, []);
 
 	const { selectBlock } = useDispatch( 'core/block-editor' );
 
-	useEffect( () => {
-		initBlock();
-	}, []);
+	const switchActiveState = () => {
+		const tabs = document.querySelectorAll( `#block-${ parentClientId } .wp-block-themeisle-blocks-tabs__content .wp-block-themeisle-blocks-tabs-item` );
 
-	const initBlock = () => {
-		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
-
-		if ( attributes.id === undefined ) {
-			let attrs;
-			const instanceId = `wp-block-themeisle-blocks-tab-item-${ clientId.substr( 0, 8 ) }`;
-
-			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
-
-			if ( undefined !== globalDefaults ) {
-				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
-					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
-
-					Object.keys( attrs ).map( i => {
-						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
-							return delete attrs[i];
-						}
-					});
-				}
-			}
-
-			setAttributes({
-				...attrs,
-				id: instanceId
-			});
-
-			IDs.push( instanceId );
-			blockIDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-tab-item-${ clientId.substr( 0, 8 ) }`;
-			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else {
-			IDs.push( attributes.id );
-			blockIDs.push( attributes.id );
-		}
-
-		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
-	};
-
-	const switchActiveState = ( parentClientId ) => {
-		const tabs = document.querySelectorAll( `#block-${parentClientId} .wp-block-themeisle-blocks-tabs-content .wp-block-themeisle-blocks-tabs-item` );
 		if ( tabs ) {
 			tabs.forEach( tab => {
-				tab.querySelector( '.wp-block-themeisle-blocks-tabs-item-header' )?.classList.remove( 'active' );
-				tab.querySelector( '.wp-block-themeisle-blocks-tabs-item-content' )?.classList.remove( 'active' );
+				tab.querySelector( '.wp-block-themeisle-blocks-tabs-item__header' )?.classList.remove( 'active' );
+				tab.querySelector( '.wp-block-themeisle-blocks-tabs-item__content' )?.classList.remove( 'active' );
 			});
 		}
 
 		if ( contentRef.current ) {
-			contentRef.current.querySelector( '.wp-block-themeisle-blocks-tabs-item-header' )?.classList.add( 'active' );
-			contentRef.current.querySelector( '.wp-block-themeisle-blocks-tabs-item-content' )?.classList.add( 'active' );
+			contentRef.current.querySelector( '.wp-block-themeisle-blocks-tabs-item__header' )?.classList.add( 'active' );
+			contentRef.current.querySelector( '.wp-block-themeisle-blocks-tabs-item__content' )?.classList.add( 'active' );
 		}
-	};
-
-	const selectParent = () => {
-		selectBlock( parentClientId );
 	};
 
 	return (
 		<Fragment>
-			<Inspector attributes={attributes} setAttributes={setAttributes} selectParent={ selectParent } />
-			<div ref={ contentRef } id={ attributes.id } className="wp-block-themeisle-blocks-tabs-item">
-				<div className="wp-block-themeisle-blocks-tabs-item-header" onClick={() => switchActiveState( parentClientId )}>
-					<RichText
-						placeholder={ __( 'Add title…' ) }
-						value={ attributes.title }
-						onChange={ value => setAttributes({ title: value }) }
-						tagName="div"
-						withoutInteractiveFormatting
-					/>
-				</div>
-				<div  className={classnames( 'wp-block-themeisle-blocks-tabs-item-content' )}>
-					<InnerBlocks template={ [ [ 'core/paragraph', { placeholder: __( 'Insert some text' ) } ] ] } />
+			<Inspector
+				setAttributes={ setAttributes }
+				selectParent={ selectBlock }
+			/>
+
+			<div
+				className={ className }
+				ref={ contentRef }
+			>
+				<RichText
+					placeholder={ __( 'Add title…' ) }
+					value={ attributes.title }
+					onChange={ value => setAttributes({ title: value }) }
+					className={ classnames(
+						'wp-block-themeisle-blocks-tabs-item__header',
+						{
+							'active': isFirstBlock
+						}
+					) }
+					tagName="div"
+					onClick={ switchActiveState }
+					withoutInteractiveFormatting
+				/>
+
+				<div className="wp-block-themeisle-blocks-tabs-item__content">
+					<InnerBlocks
+						template={ [ [ 'core/paragraph' ] ] } />
 				</div>
 			</div>
 		</Fragment>
 	);
 };
 
-export default Tabs;
+export default Edit;

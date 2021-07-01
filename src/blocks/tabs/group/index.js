@@ -4,25 +4,22 @@
 import { video as icon } from '@wordpress/icons';
 
 /**
-  * WordPress dependencies
-  */
+ * WordPress dependencies
+ */
 const { __ } = wp.i18n;
 
 const { registerBlockType } = wp.blocks;
 
 /**
-  * Internal dependencies
-  */
-import './style.scss';
-import './editor.scss';
-
+ * Internal dependencies
+ */
 import edit from './edit.js';
 import save from './save.js';
 import attributes from './attributes.js';
 
 registerBlockType( 'themeisle-blocks/tabs', {
 	title: __( 'Tabs' ),
-	description: __( 'Add tabs to your page.' ),
+	description: __( 'Organize and allow navigation between groups of content with Tabs block.' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [

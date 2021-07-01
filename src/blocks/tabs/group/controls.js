@@ -1,25 +1,37 @@
+/**
+ * External dependencies
+*/
 import { chevronLeft, chevronRight, edit } from '@wordpress/icons';
 
+/**
+ * WordPress dependencies
+*/
 const { __ } = wp.i18n;
-const { ToolbarGroup, ToolbarButton } = wp.components;
+
 const { BlockControls } = wp.blockEditor;
 
-const ToolbarComp = ({attributes, selectedTab, moveTab, selectTab}) => {
+const {
+	ToolbarButton,
+	ToolbarGroup
+} = wp.components;
+
+const Controls = ({
+	children,
+	selectedTab,
+	moveTab,
+	selectTab
+}) => {
 
 	/**
 	 * @type {(number|undefined)} The position of the selected tab
 	 */
-	const index = attributes.headers?.findIndex( ({id}) => id === selectedTab );
+	const index = children?.findIndex( ({ clientId }) => clientId === selectedTab );
 
 	/**
 	 * Move the tab to a given direction
 	 * @param {('left'|'right')} direction
 	 */
 	const moveTabTo = ( direction ) => {
-		if ( index === undefined ) {
-			console.warn( 'Tab Index is undefined' );
-			return;
-		}
 		switch ( direction ) {
 		case 'left':
 			moveTab( selectedTab, index - 1 );
@@ -33,14 +45,36 @@ const ToolbarComp = ({attributes, selectedTab, moveTab, selectTab}) => {
 	return (
 		<BlockControls>
 			<ToolbarGroup label={ __( 'Edit' ) }>
-				<ToolbarButton className={'wp-block-themeisle-blocks-tabs-toolbar-edit'} icon={ edit } iconSize={ 24 } label={ __( 'Edit tab' )} onClick={ () => selectTab( selectedTab ) } />
+				<ToolbarButton
+					label={ __( 'Edit tab' ) }
+					icon={ edit }
+					iconSize={ 24 }
+					className="wp-block-themeisle-blocks-tabs-toolbar-edit"
+					onClick={ () => selectTab( selectedTab ) }
+				/>
 			</ToolbarGroup>
+
 			<ToolbarGroup label={ __( 'Movement' ) }>
-				<ToolbarButton className={'wp-block-themeisle-blocks-tabs-toolbar-mover'} icon={ chevronLeft } iconSize={ 24 } disabled={ 0 === index } label={ __( 'Move tab left' )} onClick={ () => moveTabTo( 'left' ) } />
-				<ToolbarButton className={'wp-block-themeisle-blocks-tabs-toolbar-mover'} icon={ chevronRight } iconSize={ 24 } disabled={ attributes.headers?.length - 1 == index} label={ __( 'Move tab right' )} onClick={ () => moveTabTo( 'right' ) } />
+				<ToolbarButton
+					label={ __( 'Move tab left' ) }
+					icon={ chevronLeft }
+					iconSize={ 24 }
+					disabled={ 0 === index }
+					className="wp-block-themeisle-blocks-tabs-toolbar-mover"
+					onClick={ () => moveTabTo( 'left' ) }
+				/>
+
+				<ToolbarButton
+					label={ __( 'Move tab right' ) }
+					icon={ chevronRight }
+					iconSize={ 24 }
+					disabled={ children?.length - 1 === index }
+					className="wp-block-themeisle-blocks-tabs-toolbar-mover"
+					onClick={ () => moveTabTo( 'right' ) }
+				/>
 			</ToolbarGroup>
 		</BlockControls>
 	);
 };
 
-export default ToolbarComp;
+export default Controls;

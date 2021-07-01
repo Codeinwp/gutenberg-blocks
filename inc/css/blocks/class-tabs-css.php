@@ -32,37 +32,29 @@ class Tabs_CSS extends Base_CSS {
 	 * @access  public
 	 */
 	public function render_css( $block ) {
-
 		$css = new CSS_Utility( $block );
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-tabs-header.active div',
+				'selector'   => ' .wp-block-themeisle-blocks-tabs__header_item',
+				'properties' => array(
+					array(
+						'property' => 'border-width',
+						'value'    => 'borderWidth',
+						'unit'     => 'px',
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-tabs__header_item.active',
 				'properties' => array(
 					array(
 						'property' => 'color',
 						'value'    => 'activeTitleColor',
 					),
-				),
-			)
-		);
-
-		$css->add_item(
-			array(
-				'selector'   => ' .wp-block-themeisle-blocks-tabs-header',
-				'properties' => array(
-					array(
-						'property' => 'border-width',
-						'value'    => 'borderWidth',
-					),
-				),
-			)
-		);
-
-		$css->add_item(
-			array(
-				'selector'   => ' .wp-block-themeisle-blocks-tabs-header.active',
-				'properties' => array(
 					array(
 						'property' => 'background-color',
 						'value'    => 'tabColor',
@@ -70,6 +62,7 @@ class Tabs_CSS extends Base_CSS {
 					array(
 						'property' => 'border-width',
 						'value'    => 'borderWidth',
+						'unit'     => 'px',
 					),
 					array(
 						'property' => 'border-color',
@@ -81,11 +74,12 @@ class Tabs_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-tabs-header.active::before',
+				'selector'   => ' .wp-block-themeisle-blocks-tabs__header_item.active::before',
 				'properties' => array(
 					array(
 						'property' => 'border-width',
 						'value'    => 'borderWidth',
+						'unit'     => 'px',
 					),
 					array(
 						'property' => 'border-color',
@@ -97,11 +91,12 @@ class Tabs_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-tabs-header.active::after',
+				'selector'   => ' .wp-block-themeisle-blocks-tabs__header_item.active::after',
 				'properties' => array(
 					array(
 						'property' => 'border-width',
 						'value'    => 'borderWidth',
+						'unit'     => 'px',
 					),
 					array(
 						'property' => 'border-color',
@@ -113,11 +108,12 @@ class Tabs_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-tabs-item-header',
+				'selector'   => ' .wp-block-themeisle-blocks-tabs-item__header',
 				'properties' => array(
 					array(
 						'property' => 'border-width',
 						'value'    => 'borderWidth',
+						'unit'     => 'px',
 					),
 					array(
 						'property' => 'border-color',
@@ -129,7 +125,7 @@ class Tabs_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-tabs-item-header.active',
+				'selector'   => ' .wp-block-themeisle-blocks-tabs-item__header.active',
 				'properties' => array(
 					array(
 						'property' => 'background-color',
@@ -146,11 +142,12 @@ class Tabs_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-tabs-item-content',
+				'selector'   => ' .wp-block-themeisle-blocks-tabs-item__content',
 				'properties' => array(
 					array(
 						'property' => 'border-width',
 						'value'    => 'borderWidth',
+						'unit'     => 'px',
 					),
 					array(
 						'property' => 'border-color',
@@ -162,7 +159,7 @@ class Tabs_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-tabs-item-content.active',
+				'selector'   => ' .wp-block-themeisle-blocks-tabs-item__content.active',
 				'properties' => array(
 					array(
 						'property' => 'background-color',

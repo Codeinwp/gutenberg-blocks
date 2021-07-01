@@ -1,113 +1,69 @@
 /**
  * WordPress dependencies
  */
+const { __ } = wp.i18n;
+
 const domReady = wp.domReady;
 
-/**
- * Active or deactivate a tab
- * @param {HTMLElement} tab
- * @param {boolean} isActive
- */
-const setTabStatus = ( tab, isActive = false ) => {
-	if ( ! tab ) {
-		return;
-	}
-	if ( isActive ) {
-		tab.classList.add( 'active' );
-	} else {
-		tab.classList.remove( 'active' );
-	}
-};
-
-
-/**
- * Active the first tab
- * @param {NodeListOf<Element>} headers List of headers
- * @param {NodeListOf<Element>} tabs List of the tab
- */
-const activateFirstTab = ( headers, tabs ) => {
-	console.log( 'Active first tabs' );
-	if ( 0 < headers.length ) {
-		headers[0].classList.add( 'active' );
-	}
-
-	if ( 0 < tabs.length ) {
-		const firstTab = tabs[0];
-		setTabStatus( firstTab.querySelector( '.wp-block-themeisle-blocks-tabs-item-header' ), true );
-		setTabStatus( firstTab.querySelector( '.wp-block-themeisle-blocks-tabs-item-content' ), true );
-	}
-};
-
-/**
- *
- * @param {HTMLDivElement} tabsBlock
- */
-const getInnerBlockTabs = ( tabsBlock ) => {
-	const innerBlocks = tabsBlock.querySelectorAll( '.wp-block-themeisle-blocks-tabs' );
-	let innerHeaders = [];
-	let innerTabs = [];
-
-	innerBlocks.forEach( block => {
-		innerHeaders = [ ...innerHeaders, ...Array.from( block.querySelectorAll( '.wp-block-themeisle-blocks-tabs-header' ) ) ];
-		innerTabs = [ ...innerTabs, ...Array.from( block.querySelectorAll( '.wp-block-themeisle-blocks-tabs-item' ) ) ];
-	});
-
-	return { innerHeaders, innerTabs };
-};
-
 domReady( () => {
-	const tabsBlocks = document.querySelectorAll( '.wp-block-themeisle-blocks-tabs' );
+	const tabs = document.querySelectorAll( '.wp-block-themeisle-blocks-tabs' );
 
-	/**
-	 * Used for desktop
-	 * Set activation function for the headers of the parent component
-	 */
-	tabsBlocks.forEach( tabsBlock => {
+	tabs.forEach( tab => {
+		const items = Array.from( tab.querySelectorAll( '.wp-block-themeisle-blocks-tabs__content > .wp-block-themeisle-blocks-tabs-item' ) );
+		const header = document.createElement( 'div' );
+		header.classList.add( 'wp-block-themeisle-blocks-tabs__header' );
+		tab.prepend( header );
 
-		const { innerHeaders, innerTabs } = getInnerBlockTabs( tabsBlock );
+		items.forEach( ( item, index ) => {
+			const headerItem = document.createElement( 'div' );
+			headerItem.classList.add( 'wp-block-themeisle-blocks-tabs__header_item' );
+			const content = item.querySelector( '.wp-block-themeisle-blocks-tabs-item__content' );
 
-		const headers = Array.from( tabsBlock.querySelectorAll( '.wp-block-themeisle-blocks-tabs-header' ) ).filter( header => ! innerHeaders.includes( header ) );
-		const setHeadersInactive = () => {
-			headers.forEach( header => {
-				const target = tabsBlock.querySelector( `#${header.dataset.tabId} .wp-block-themeisle-blocks-tabs-item-content` );
-				setTabStatus( target );
-				setTabStatus( header );
-			});
-		};
+			if ( 0 === index ) {
+				headerItem.classList.add( 'active' );
+				content.classList.add( 'active' );
+			}
 
-		headers.forEach( header => {
-			header.addEventListener( 'click', () => {
-				setHeadersInactive();
+			headerItem.innerHTML = item.dataset.title || __( 'Untitled Tab' );
+			headerItem.tabIndex = 0;
 
-				// Active the tab
-				const target = tabsBlock.querySelector( `#${header.dataset.tabId} .wp-block-themeisle-blocks-tabs-item-content` );
-				setTabStatus( target, true );
-				setTabStatus( header, true );
-			});
-		});
+			const headerMobile = item.querySelector( '.wp-block-themeisle-blocks-tabs-item__header' );
 
-		const tabs = Array.from( tabsBlock.querySelectorAll( '.wp-block-themeisle-blocks-tabs-item' ) ).filter( tab => ! innerTabs.includes( tab ) );
+			const toggleTabs = ( i, o ) => {
+				const content = i.querySelector( '.wp-block-themeisle-blocks-tabs-item__content' );
+				const headerMobile = i.querySelector( '.wp-block-themeisle-blocks-tabs-item__header' );
 
-		/**
-		 * Used for mobile
-		 * Set activation function for each tab
-		 */
-		tabs.forEach( tab => {
-			const header = tab.querySelector( '.wp-block-themeisle-blocks-tabs-item-header' );
-			const content = tab.querySelector( '.wp-block-themeisle-blocks-tabs-item-content' );
+				content.classList.toggle( 'active', o === index );
+				content.classList.toggle( 'hidden', o !== index );
 
-			header.addEventListener( 'click', () => {
-				tabs.forEach( other => {
-					const otherHeader = other.querySelector( '.wp-block-themeisle-blocks-tabs-item-header' );
-					const otherContent = other.querySelector( '.wp-block-themeisle-blocks-tabs-item-content' );
-					setTabStatus( otherContent );
-					setTabStatus( otherHeader );
+				headerMobile.classList.toggle( 'active', o === index );
+				headerMobile.classList.toggle( 'hidden', o !== index );
+
+				const headerItems = Array.from ( header.childNodes );
+
+				headerItems.forEach( ( h, o ) => {
+					h.classList.toggle( 'active', o === index );
+					h.classList.toggle( 'hidden', o !== index );
 				});
-				setTabStatus( content, true );
-				setTabStatus( header, true );
-			});
-		});
+			};
 
-		activateFirstTab( headers, tabs );
+			headerItem.addEventListener( 'click', () => items.forEach( toggleTabs ) );
+			headerItem.addEventListener( 'keyup', event => {
+				if ( 'Enter' === event.code ) {
+					event.preventDefault();
+					items.forEach( toggleTabs );
+				}
+			});
+
+			headerMobile.addEventListener( 'click', () => items.forEach( toggleTabs ) );
+			headerMobile.addEventListener( 'keyup', event => {
+				if ( 'Enter' === event.code ) {
+					event.preventDefault();
+					items.forEach( toggleTabs );
+				}
+			});
+
+			header.appendChild( headerItem );
+		});
 	});
 });
