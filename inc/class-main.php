@@ -510,7 +510,7 @@ class Main {
 			wp_enqueue_script(
 				'themeisle-gutenberg-tabs',
 				plugin_dir_url( $this->get_dir() ) . 'build/tabs.js',
-				array( 'wp-dom-ready' ),
+				array( 'wp-i18n', 'wp-dom-ready' ),
 				self::$assets_version,
 				true
 			);

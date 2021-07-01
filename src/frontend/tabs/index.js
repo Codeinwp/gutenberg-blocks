@@ -9,7 +9,7 @@ domReady( () => {
 	const tabs = document.querySelectorAll( '.wp-block-themeisle-blocks-tabs' );
 
 	tabs.forEach( tab => {
-		const items = Array.from( tab.querySelectorAll( '.wp-block-themeisle-blocks-tabs__content > .wp-block-themeisle-blocks-tabs-item' ) );
+		const items = Array.from( tab.querySelectorAll( ':scope > .wp-block-themeisle-blocks-tabs__content > .wp-block-themeisle-blocks-tabs-item' ) );
 		const header = document.createElement( 'div' );
 		header.classList.add( 'wp-block-themeisle-blocks-tabs__header' );
 		tab.prepend( header );
