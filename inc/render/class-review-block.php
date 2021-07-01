@@ -127,7 +127,7 @@ class Review_Block extends Base_Block {
 				'wp_footer',
 				function() use ( $attributes ) {
 					echo '<script type="application/ld+json">' . wp_json_encode( $this->get_json_ld( $attributes ) ) . '</script>';
-				} 
+				}
 			);
 		}
 
@@ -173,7 +173,7 @@ class Review_Block extends Base_Block {
 
 			if ( isset( $attributes['description'] ) && ! empty( $attributes['description'] ) ) {
 				$html .= '	<p>' . $attributes['description'] . '</p>';
-			}   
+			}
 			$html .= '	</div>';
 		}
 
@@ -259,7 +259,7 @@ class Review_Block extends Base_Block {
 				$carry += $feature['rating'];
 				return $carry;
 			},
-			0 
+			0
 		);
 
 		$rating = round( $rating / count( $features ) );
@@ -519,11 +519,11 @@ class Review_Block extends Base_Block {
 				if ( ! isset( $link['href'] ) || empty( $link['href'] ) ) {
 					continue;
 				}
-				
+
 				if ( ! isset( $attributes['price'] ) && ! isset( $attributes['discounted'] ) ) {
 					continue;
 				}
-				
+
 				$offer = array(
 					'@type'         => 'Offer',
 					'url'           => esc_url( $link['href'] ),

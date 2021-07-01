@@ -133,7 +133,6 @@ const Inspector = ({
 	};
 
 	const changeLinks = ( index, value ) => {
-		console.log( value );
 		const links = [ ...attributes.links ];
 		links[ index ] = {
 			...links[ index ],
