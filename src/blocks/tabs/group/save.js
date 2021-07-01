@@ -3,22 +3,15 @@
  */
 const { InnerBlocks } = wp.blockEditor;
 
-const Save = ({ attributes }) => {
+const Save = ({
+	attributes,
+	className
+}) => {
 	return (
 		<div
 			id={ attributes.id }
-			className="wp-block-themeisle-blocks-tabs"
+			className={ className }
 		>
-			{/* <div className="wp-block-themeisle-blocks-tabs__header">
-				{ attributes.headers?.map( tabHeader => {
-					return (
-						<div className="wp-block-themeisle-blocks-tabs__header_item" data-tab-id={ tabHeader.id }>
-							<div>{ tabHeader.title }</div>
-						</div>
-					);
-				}) }
-			</div> */}
-
 			<div className="wp-block-themeisle-blocks-tabs__content">
 				<InnerBlocks.Content />
 			</div>

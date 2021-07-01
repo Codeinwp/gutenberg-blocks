@@ -45,6 +45,7 @@ import defaultAttributes from './attributes.js';
 const Edit = ({
 	attributes,
 	setAttributes,
+	className,
 	isSelected,
 	clientId
 }) => {
