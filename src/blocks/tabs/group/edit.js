@@ -42,9 +42,12 @@ import Controls from './controls.js';
 import { blockInit } from '../../../helpers/block-utility.js';
 import defaultAttributes from './attributes.js';
 
-
-const Edit = ({ clientId, attributes, setAttributes, isSelected }) => {
-
+const Edit = ({
+	attributes,
+	setAttributes,
+	isSelected,
+	clientId
+}) => {
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
