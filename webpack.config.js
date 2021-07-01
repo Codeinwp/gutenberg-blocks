@@ -54,7 +54,8 @@ module.exports = {
 		'@wordpress/plugins': 'wp.plugins',
 		'@wordpress/primitives': 'wp.primitives',
 		'@wordpress/rich-text': 'wp.richText',
-		'@wordpress/server-side-render': 'wp.serverSideRender'
+		'@wordpress/server-side-render': 'wp.serverSideRender',
+		'regenerator-runtime/runtime.js': 'window.regeneratorRuntime'
 	},
 	output: {
 		path: path.resolve( __dirname, 'build' ),
