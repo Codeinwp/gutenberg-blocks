@@ -6,19 +6,19 @@ import { chevronDown, chevronUp } from '@wordpress/icons';
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	InnerBlocks,
 	RichText
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const { Icon } = wp.components;
+import { Icon } from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -53,7 +53,7 @@ const Edit = ({
 					onClick={ toggle }
 				>
 					<RichText
-						placeholder={ __( 'Add text…' ) }
+						placeholder={ __( 'Add text…', 'otter-blocks' ) }
 						value={ attributes.title }
 						onChange={ value => {
 							if ( ! isOpen ) {

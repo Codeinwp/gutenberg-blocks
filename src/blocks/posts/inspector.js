@@ -1,20 +1,20 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	PanelBody,
 	QueryControls,
 	RangeControl,
 	TextControl,
 	BaseControl,
 	SelectControl
-} = wp.components;
+} from '@wordpress/components';
 
-const { InspectorControls } = wp.blockEditor;
+import { InspectorControls } from '@wordpress/block-editor';
 
-const { useSelect } = wp.data;
+import { useSelect } from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -175,19 +175,19 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Styles' ) }
+				title={ __( 'Styles', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<StyleSwitcherInspectorControl
 					value={ attributes.style }
 					options={ [
 						{
-							label: __( 'Grid' ),
+							label: __( 'Grid', 'otter-blocks' ),
 							value: 'grid',
 							image: window.themeisleGutenberg.assetsPath + '/icons/posts-grid.jpg'
 						},
 						{
-							label: __( 'List' ),
+							label: __( 'List', 'otter-blocks' ),
 							value: 'list',
 							image: window.themeisleGutenberg.assetsPath + '/icons/posts-list.jpg'
 						}
@@ -197,14 +197,14 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Post Types' ) }
+				title={ __( 'Post Types', 'otter-blocks' ) }
 			>
 				<BaseControl>
-					{ __( 'Select the types of the post. If none is selected, the default WordPress post will be displayed.' ) }
+					{ __( 'Select the types of the post. If none is selected, the default WordPress post will be displayed.', 'otter-blocks' ) }
 				</BaseControl>
 
 				<SelectControl
-					label={ __( 'Post Type' ) }
+					label={ __( 'Post Type', 'otter-blocks' ) }
 					value= { attributes.postTypes[0] || null }
 					onChange={ ( value ) => value && setAttributes({ postTypes: [ value ] }) }
 					options= {
@@ -214,11 +214,11 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Settings' ) }
+				title={ __( 'Settings', 'otter-blocks' ) }
 			>
 				{ 'grid' === attributes.style && (
 					<RangeControl
-						label={ __( 'Columns' ) }
+						label={ __( 'Columns', 'otter-blocks' ) }
 						value={ attributes.columns }
 						onChange={ changeColumns }
 						min={ 1 }
@@ -241,8 +241,8 @@ const Inspector = ({
 				/>
 
 				<TextControl
-					label={ __( 'Offset' ) }
-					help={ __( 'Number of post to displace or pass over.' ) }
+					label={ __( 'Offset', 'otter-blocks' ) }
+					help={ __( 'Number of post to displace or pass over.', 'otter-blocks' ) }
 					type="number"
 					value={ attributes.offset }
 					min={ 0 }
@@ -251,7 +251,7 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Design & Layout' ) }
+				title={ __( 'Design & Layout', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<LayoutBuilder

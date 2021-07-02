@@ -6,25 +6,25 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { max } = lodash;
+import { max } from 'lodash';
 
-const { ResizableBox } = wp.components;
+import { ResizableBox } from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useRef,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 import Placeholder from './placeholder.js';
 import Inspector from './inspector.js';
 import Slide from './components/Slide.js';
 import SliderControls from './components/slider-controls.js';
-
-const IDs = [];
+import defaultAttributes from './attributes.js';
+import { blockInit } from '../../helpers/block-utility.js';
 
 const Edit = ({
 	attributes,
@@ -34,9 +34,16 @@ const Edit = ({
 	isSelected,
 	toggleSelection
 }) => {
-	useEffect( () => {
-		initBlock();
 
+	useEffect( () => {
+		const unsubscribe = blockInit( clientId, defaultAttributes );
+		return () => {
+			unsubscribe();
+
+		};
+	}, [ attributes.id ]);
+
+	useEffect( () => {
 		return () => {
 			if ( attributes.images.length ) {
 				sliderRef.current.destroy();
@@ -65,33 +72,6 @@ const Edit = ({
 	const instanceIdRef = useRef( null );
 
 	const [ selectedImage, setSelectedImage ] = useState( null );
-
-	const initBlock = async() => {
-		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
-
-		if ( attributes.id === undefined ) {
-			const instanceId = `wp-block-themeisle-blocks-slider-${ clientId.substr( 0, 8 ) }`;
-			await setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-			instanceIdRef.current = instanceId;
-			blockIDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-slider-${ clientId.substr( 0, 8 ) }`;
-			await setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-			instanceIdRef.current = instanceId;
-		} else {
-			IDs.push( attributes.id );
-			instanceIdRef.current = attributes.id;
-			blockIDs.push( attributes.id );
-		}
-
-		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
-
-		if ( attributes.images.length ) {
-			initSlider();
-		}
-	};
 
 	const initSlider = () => {
 		sliderRef.current = new Glide( `#${ attributes.id || instanceIdRef.current }`, {
@@ -148,8 +128,8 @@ const Edit = ({
 		return (
 			<Placeholder
 				labels={ {
-					title: __( 'Slider' ),
-					instructions: __( 'Drag images, upload new ones or select files from your library.' )
+					title: __( 'Slider', 'otter-blocks' ),
+					instructions: __( 'Drag images, upload new ones or select files from your library.', 'otter-blocks' )
 				} }
 				icon="images-alt2"
 				onSelectImages={ onSelectImages }

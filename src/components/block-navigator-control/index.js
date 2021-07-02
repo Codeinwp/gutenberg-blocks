@@ -1,29 +1,29 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	__experimentalBlockNavigationList,
 	__experimentalBlockNavigationTree,
 	BlockControls
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	Button,
 	Modal,
 	Toolbar
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	useSelect,
 	useDispatch
-} = wp.data;
+} from '@wordpress/data';
 
-const {
+import {
 	Fragment,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies

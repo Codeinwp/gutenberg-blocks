@@ -6,23 +6,23 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const apiFetch = wp.apiFetch;
+import apiFetch from '@wordpress/api-fetch';
 
-const { parse } = wp.blocks;
+import { parse } from '@wordpress/blocks';
 
-const { Modal } = wp.components;
+import { Modal } from '@wordpress/components';
 
-const {
+import {
 	useSelect,
 	useDispatch
-} = wp.data;
+} from '@wordpress/data';
 
-const {
+import {
 	useEffect,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -46,14 +46,14 @@ const Library = ({
 			if ( ! Boolean( window.themeisleGutenberg.isCompatible ) ) {
 				createNotice(
 					'warning',
-					__( 'You are using an older version of Otter. Use the latest version of Otter to have maximum compatibility with Template Library.' ),
+					__( 'You are using an older version of Otter. Use the latest version of Otter to have maximum compatibility with Template Library.', 'otter-blocks' ),
 					{
 						context: 'themeisle-blocks/notices/template-library',
 						id: 'compatibility-warning',
 						isDismissible: false,
 						actions: [
 							{
-								label: __( 'Update Now' ),
+								label: __( 'Update Now', 'otter-blocks' ),
 								url: window.themeisleGutenberg.updatePath
 							}
 						]
@@ -92,7 +92,7 @@ const Library = ({
 			} catch ( error ) {
 				createNotice(
 					'error',
-					__( 'There seems to be an error. Please try again.' ),
+					__( 'There seems to be an error. Please try again.', 'otter-blocks' ),
 					{
 						context: 'themeisle-blocks/notices/template-library',
 						isDismissible: true

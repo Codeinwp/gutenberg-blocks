@@ -6,25 +6,25 @@ import { video } from '@wordpress/icons';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	BlockIcon,
 	MediaPlaceholder
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	Button,
 	ExternalLink,
 	Modal,
 	Placeholder
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 const BlockPlaceholder = ({
 	className,
@@ -59,7 +59,7 @@ const BlockPlaceholder = ({
 		return (
 			<MediaPlaceholder
 				labels={ {
-					title: 'Lottie',
+					title: __( 'Lottie', 'otter-blocks' ),
 					instructions: __( 'Add Lottie animations and files to your website.', 'otter-blocks' )
 				} }
 				icon={ <BlockIcon icon={ video } />}
@@ -85,7 +85,7 @@ const BlockPlaceholder = ({
 						type="url"
 						value={ url }
 						className="components-placeholder__input"
-						aria-label={ 'Lottie' }
+						aria-label={ __( 'Lottie', 'otter-blocks' ) }
 						placeholder={ __( 'Enter URL to embed here…', 'otter-blocks' ) }
 						onChange={ e => setURL( e.target.value ) }
 					/>
@@ -112,7 +112,7 @@ const BlockPlaceholder = ({
 			{ isOpen && (
 				<Modal
 					title={ __( 'Allow JSON Uploads', 'otter-blocks' ) }
-					closeLabel={ __( 'Close', 'otter-blocks' ) }
+					closeLabel={ __( 'Close' ) }
 					onRequestClose={ () => setOpen( false ) }
 					overlayClassName="wp-block-themeisle-blocks-lottie-modal"
 				>

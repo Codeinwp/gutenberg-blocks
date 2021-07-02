@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { Disabled } = wp.components;
+import { Disabled } from '@wordpress/components';
 
-const ServerSideRender = wp.serverSideRender;
+import ServerSideRender from '@wordpress/server-side-render';
 
 const Edit = () => {
 	return (

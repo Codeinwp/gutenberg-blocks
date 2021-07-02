@@ -1,20 +1,29 @@
 /**
  * WordPress dependencies
  */
-const { isUndefined, pickBy } = lodash;
+import {
+	isUndefined,
+	pickBy
+} from 'lodash';
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	Disabled,
 	Placeholder,
 	Spinner
-} = wp.components;
+} from '@wordpress/components';
 
-const { useSelect, dispatch } = wp.data;
+import {
+	useSelect,
+	dispatch
+} from '@wordpress/data';
 
-const { Fragment, useEffect, useState } = wp.element;
-
+import {
+	Fragment,
+	useEffect,
+	useState
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -81,7 +90,7 @@ const Edit = ({
 			<Fragment>
 				<Placeholder>
 					<Spinner/>
-					{ __( 'Loading Posts' ) }
+					{ __( 'Loading Posts', 'otter-blocks' ) }
 				</Placeholder>
 
 				{ ( categoriesList && attributes.offset ) ? (
@@ -100,7 +109,7 @@ const Edit = ({
 		return (
 			<Fragment>
 				<Placeholder>
-					{ __( 'No Posts' ) }
+					{ __( 'No Posts', 'otter-blocks' ) }
 				</Placeholder>
 
 				{ ( categoriesList && attributes.offset || slugs.length ) ? (
@@ -118,16 +127,16 @@ const Edit = ({
 	return (
 		<Fragment>
 			<StyleSwitcherBlockControl
-				label={ __( 'Block Styles' ) }
+				label={ __( 'Block Styles', 'otter-blocks' ) }
 				value={ attributes.style }
 				options={ [
 					{
-						label: __( 'Grid' ),
+						label: __( 'Grid', 'otter-blocks' ),
 						value: 'grid',
 						image: window.themeisleGutenberg.assetsPath + '/icons/posts-grid.jpg'
 					},
 					{
-						label: __( 'List' ),
+						label: __( 'List', 'otter-blocks' ),
 						value: 'list',
 						image: window.themeisleGutenberg.assetsPath + '/icons/posts-list.jpg'
 					}

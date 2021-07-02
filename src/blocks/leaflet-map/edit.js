@@ -7,28 +7,26 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const {
-	isEqual,
-	merge
-} = lodash;
+import { merge } from 'lodash';
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { ResizableBox } = wp.components;
+import { ResizableBox } from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useState,
 	useRef,
 	useReducer
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import defaults from '../../plugins/options/global-defaults/defaults.js';
 import Inspector from './inspector';
+import defaultAttributes from './attributes';
+import { blockInit } from '../../helpers/block-utility';
 
 /**
  * Definition of the action type for the marker reducer
@@ -41,8 +39,6 @@ export const ActionType = {
 	INIT: 'INIT'
 };
 
-const IDs = [];
-
 const Edit = ({
 	clientId,
 	attributes,
@@ -51,52 +47,11 @@ const Edit = ({
 	isSelected,
 	toggleSelection
 }) => {
-	const initBlock = () => {
-		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
 
-		if ( attributes.id === undefined ) {
-			let attrs;
-			const instanceId = `wp-block-themeisle-blocks-map-${clientId.substr( 0, 8 )}`;
-
-			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
-
-			if ( undefined !== globalDefaults ) {
-				if ( ! isEqual( defaults[name], window.themeisleGutenberg.globalDefaults[name]) ) {
-					attrs = { ...window.themeisleGutenberg.globalDefaults[name] };
-
-					Object.keys( attrs ).map( i => {
-						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
-							return delete attrs[i];
-						}
-					});
-				}
-			}
-
-			setAttributes({
-				...attrs,
-				id: instanceId
-			});
-
-			IDs.push( instanceId );
-			blockIDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-map-${clientId.substr( 0, 8 )}`;
-			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else {
-			IDs.push( attributes.id );
-			blockIDs.push( attributes.id );
-		}
-
-		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
-	};
-
-	/**
-	 * Add an ID to the block.
-	 */
 	useEffect( () => {
-		initBlock();
-	}, []);
+		const unsubscribe = blockInit( clientId, defaultAttributes );
+		return () => unsubscribe();
+	}, [ attributes.id ]);
 
 	const mapRef = useRef( null );
 	const [ map, setMap ] = useState( null );
@@ -108,7 +63,7 @@ const Edit = ({
 			markerProps.id ??= uuidv4();
 			markerProps.latitude ??= map.getCenter().lat;
 			markerProps.longitude ??= map.getCenter().lng;
-			markerProps.title ??= __( 'Add a title' );
+			markerProps.title ??= __( 'Add a title', 'otter-blocks' );
 			markerProps.description ??= '';
 
 			const markerMap = L.marker([ markerProps.latitude, markerProps.longitude ] || map.getCenter(), {
@@ -187,7 +142,7 @@ const Edit = ({
 			});
 
 		default:
-			console.warn( __( 'The action for the leaflet block do not have a defined action in marker\'s reducer: ' ) + action.type );
+			console.warn( __( 'The action for the leaflet block do not have a defined action in marker\'s reducer: ', 'otter-blocks' ) + action.type );
 		}
 
 		return oldState;
@@ -216,9 +171,9 @@ const Edit = ({
 				gestureHandling: true,
 				gestureHandlingOptions: {
 					text: {
-						touch: __ ( 'Use two fingers to move the map' ),
-						scroll: __ ( 'Use ctrl + scroll to zoom the map' ),
-						scrollMac: __ ( 'Use \u2318 + scroll to zoom the map' )
+						touch: __ ( 'Use two fingers to move the map', 'otter-blocks' ),
+						scroll: __ ( 'Use ctrl + scroll to zoom the map', 'otter-blocks' ),
+						scrollMac: __ ( 'Use \u2318 + scroll to zoom the map', 'otter-blocks' )
 					}
 				}
 			}
@@ -272,7 +227,7 @@ const Edit = ({
 					setActiveAddingToLocation( ! isAddingToLocationActive );
 				});
 
-				button.title = __( 'Add marker on the map with a click' );
+				button.title = __( 'Add marker on the map with a click', 'otter-blocks' );
 				button.appendChild( span );
 
 				return button;
@@ -357,7 +312,7 @@ const Edit = ({
 		title.innerHTML = markerProps.title;
 		description.innerHTML = markerProps.description;
 		deleteButton.onclick = () => dispatch({ type: ActionType.REMOVE, ids: [ markerProps.id ] });
-		deleteButton.innerHTML = 'Delete Marker';
+		deleteButton.innerHTML = __( 'Delete Marker', 'otter-blocks' );
 
 		container.classList.add( 'wp-block-themeisle-blocks-map-overview' );
 		content.classList.add( 'wp-block-themeisle-blocks-map-overview-content' );

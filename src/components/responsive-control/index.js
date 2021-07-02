@@ -6,23 +6,23 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	Button,
 	Dropdown,
 	Icon
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	useInstanceId,
 	useViewportMatch
-} = wp.compose;
+} from '@wordpress/compose';
 
-const {
+import {
 	useSelect,
 	useDispatch
-} = wp.data;
+} from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -79,7 +79,7 @@ const ResponsiveControl = ({
 							renderToggle={ ({ isOpen, onToggle }) => (
 								<Button
 									icon={ 'Mobile' === getView ? 'smartphone' : getView.toLowerCase() }
-									label={ __( 'Responsiveness Settings' ) }
+									label={ __( 'Responsiveness Settings', 'otter-blocks' ) }
 									showTooltip={ true }
 									className="is-button"
 									onClick={ onToggle }
@@ -89,7 +89,7 @@ const ResponsiveControl = ({
 							renderContent={ () => (
 								<div className="wp-block-themeisle-blocks-responsive-control-settings">
 									<div className="wp-block-themeisle-blocks-responsive-control-settings-title">
-										{ __( 'View' ) }
+										{ __( 'View', 'otter-blocks' ) }
 									</div>
 
 									<Button
@@ -101,7 +101,7 @@ const ResponsiveControl = ({
 									>
 										{ 'Desktop' === getView && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
-											{ __( 'Desktop' ) }
+											{ __( 'Desktop', 'otter-blocks' ) }
 										</span>
 									</Button>
 
@@ -114,7 +114,7 @@ const ResponsiveControl = ({
 									>
 										{ 'Tablet' === getView && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
-											{ __( 'Tablet' ) }
+											{ __( 'Tablet', 'otter-blocks' ) }
 										</span>
 									</Button>
 
@@ -127,7 +127,7 @@ const ResponsiveControl = ({
 									>
 										{ 'Mobile' === getView && <Icon icon={ checkIcon } /> }
 										<span className="popover-title">
-											{ __( 'Mobile' ) }
+											{ __( 'Mobile', 'otter-blocks' ) }
 										</span>
 									</Button>
 								</div>

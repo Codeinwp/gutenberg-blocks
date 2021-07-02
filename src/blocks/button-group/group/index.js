@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -15,14 +15,14 @@ import edit from './edit.js';
 import save from './save.js';
 
 registerBlockType( 'themeisle-blocks/button-group', {
-	title: __( 'Button Group' ),
-	description: __( 'Prompt visitors to take action with a button group.' ),
+	title: __( 'Button Group', 'otter-blocks' ),
+	description: __( 'Prompt visitors to take action with a button group.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [
-		__( 'button' ),
-		__( 'buttons' ),
-		__( 'button group' )
+		'button',
+		'buttons',
+		'button group'
 	],
 	attributes,
 	deprecated,

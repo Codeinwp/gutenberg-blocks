@@ -1,12 +1,12 @@
 /**
  * WordPress dependencies
  */
-const {
+import {
 	filter,
 	every
-} = lodash;
+} from 'lodash';
 
-const { createBlock } = wp.blocks;
+import { createBlock } from '@wordpress/blocks';
 
 const transforms = {
 	from: [

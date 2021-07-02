@@ -1,27 +1,28 @@
 /**
  * WordPress dependencies
  */
-const { pick } = lodash;
+import { pick } from 'lodash';
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	ContrastChecker,
 	InspectorControls,
 	PanelColorSettings,
 	MediaPlaceholder
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	BaseControl,
 	Button,
 	ExternalLink,
 	PanelBody,
 	RangeControl,
-	TextControl
-} = wp.components;
+	TextControl,
+	ToggleControl
+} from '@wordpress/components';
 
-const { useState } = wp.element;
+import { useState } from '@wordpress/element';
 
 const PanelItem = ({
 	title,
@@ -333,9 +334,15 @@ const Inspector = ({
 						<TextControl
 							label={ __( 'Link', 'otter-blocks' ) }
 							type="url"
-							placeholder={ __( 'https://…', 'otter-blocks' ) }
+							placeholder={ 'https://…' }
 							value={ link.href }
 							onChange={ href => changeLinks( index, { href }) }
+						/>
+
+						<ToggleControl
+							label={ __( 'Is this Sponsored?', 'otter-blocks' ) }
+							checked={ link.isSponsored }
+							onChange={ () => changeLinks( index, { isSponsored: ! link.isSponsored }) }
 						/>
 					</PanelItem>
 				) ) }

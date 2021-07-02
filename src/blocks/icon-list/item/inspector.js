@@ -1,23 +1,23 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
-	__experimentalColorGradientControl: ColorGradientControl,
+import {
+	__experimentalColorGradientControl as ColorGradientControl,
 	InspectorControls
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	PanelBody,
 	Placeholder,
 	Spinner
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	lazy,
 	Suspense
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies

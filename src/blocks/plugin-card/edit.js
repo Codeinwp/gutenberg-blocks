@@ -1,14 +1,14 @@
 /**
  * WordPress dependencies
  */
-const { Disabled } = wp.components;
+import { Disabled } from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
-const ServerSideRender = wp.serverSideRender;
+import ServerSideRender from '@wordpress/server-side-render';
 
 /**
  * Internal dependencies

@@ -6,16 +6,16 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
-	__experimentalColorGradientControl: ColorGradientControl,
+import {
+	__experimentalColorGradientControl as ColorGradientControl,
 	ColorPalette,
 	InspectorControls,
 	MediaPlaceholder
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	BaseControl,
 	Button,
 	ButtonGroup,
@@ -24,15 +24,15 @@ const {
 	ToggleControl,
 	RangeControl,
 	SelectControl
-} = wp.components;
+} from '@wordpress/components';
 
-const { useSelect } = wp.data;
+import { useSelect } from '@wordpress/data';
 
-const {
+import {
 	Fragment,
 	useState,
 	useEffect
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -976,7 +976,7 @@ const Inspector = ({
 							initialOpen={ false }
 						>
 							<ResponsiveControl
-								label={ 'Padding' }
+								label={ __( 'Padding', 'otter-blocks' ) }
 							>
 								<SizingControl
 									type={ getPaddingType }
@@ -1010,7 +1010,7 @@ const Inspector = ({
 							</ResponsiveControl>
 
 							<ResponsiveControl
-								label={ 'Margin' }
+								label={ __( 'Margin', 'otter-blocks' ) }
 							>
 								<SizingControl
 									type={ getMarginType }
@@ -1056,7 +1056,7 @@ const Inspector = ({
 
 							{ attributes.columnsWidth && (
 								<BaseControl
-									label={ 'Horizontal Align' }
+									label={ __( 'Horizontal Align', 'otter-blocks' ) }
 								>
 									<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
 										<Button
@@ -1102,7 +1102,7 @@ const Inspector = ({
 
 							{ 'custom' === attributes.columnsHeight && (
 								<ResponsiveControl
-									label={ 'Custom Height' }
+									label={ __( 'Custom Height', 'otter-blocks' ) }
 								>
 									<RangeControl
 										value={ getColumnsHeightCustom || '' }
@@ -1135,7 +1135,7 @@ const Inspector = ({
 									colorValue={ attributes.backgroundColor }
 								>
 									<ColorPalette
-										label={ 'Background Color' }
+										label={ __( 'Background Color', 'otter-blocks' ) }
 										value={ attributes.backgroundColor }
 										onChange={ changeBackgroundColor }
 									/>
@@ -1173,7 +1173,7 @@ const Inspector = ({
 										</Button>
 
 										<ControlPanelControl
-											label={ 'Background Settings' }
+											label={ __( 'Background Settings', 'otter-blocks' ) }
 										>
 
 											<SelectControl
@@ -1243,7 +1243,7 @@ const Inspector = ({
 
 							) || 'gradient' === attributes.backgroundType && (
 								<ColorGradientControl
-									label={ 'Background Gradient' }
+									label={ __( 'Background Gradient', 'otter-blocks' ) }
 									gradientValue={ attributes.backgroundGradient }
 									disableCustomColors={ true }
 									onGradientChange={ changeBackgroundGradient }
@@ -1278,7 +1278,7 @@ const Inspector = ({
 									colorValue={ attributes.backgroundOverlayColor }
 								>
 									<ColorPalette
-										label={ 'Overlay Color' }
+										label={ __( 'Overlay Color', 'otter-blocks' ) }
 										value={ attributes.backgroundOverlayColor }
 										onChange={ changeBackgroundOverlayColor }
 									/>
@@ -1316,7 +1316,7 @@ const Inspector = ({
 										</Button>
 
 										<ControlPanelControl
-											label={ 'Background Settings' }
+											label={ __( 'Background Settings', 'otter-blocks' ) }
 										>
 
 											<SelectControl
@@ -1386,7 +1386,7 @@ const Inspector = ({
 
 							) || 'gradient' === attributes.backgroundOverlayType && (
 								<ColorGradientControl
-									label={ 'Background Gradient' }
+									label={ __( 'Background Gradient', 'otter-blocks' ) }
 									gradientValue={ attributes.backgroundOverlayGradient }
 									disableCustomColors={ true }
 									onGradientChange={ changeBackgroundOverlayGradient }
@@ -1395,9 +1395,8 @@ const Inspector = ({
 							) }
 
 							<ControlPanelControl
-								label={ 'CSS Filters' }
+								label={ __( 'CSS Filters', 'otter-blocks' ) }
 							>
-
 								<RangeControl
 									label={ __( 'Blur', 'otter-blocks' ) }
 									value={ attributes.backgroundOverlayFilterBlur }
@@ -1445,7 +1444,6 @@ const Inspector = ({
 									min={ 0 }
 									max={ 100 }
 								/>
-
 							</ControlPanelControl>
 
 							<SelectControl
@@ -1514,7 +1512,7 @@ const Inspector = ({
 								colorValue={ attributes.borderColor }
 							>
 								<ColorPalette
-									label={ 'Border Color' }
+									label={ __( 'Border Color', 'otter-blocks' ) }
 									value={ attributes.borderColor }
 									onChange={ changeBorderColor }
 								/>
@@ -1552,7 +1550,7 @@ const Inspector = ({
 							/>
 
 							<ToggleControl
-								label={ 'Box Shadow' }
+								label={ __( 'Box Shadow', 'otter-blocks' ) }
 								checked={ attributes.boxShadow }
 								onChange={ changeBoxShadow }
 							/>
@@ -1565,16 +1563,15 @@ const Inspector = ({
 										colorValue={ attributes.boxShadowColor }
 									>
 										<ColorPalette
-											label={ 'Shadow Color' }
+											label={ __( 'Shadow Color', 'otter-blocks' ) }
 											value={ attributes.boxShadowColor }
 											onChange={ changeBoxShadowColor }
 										/>
 									</ColorBaseControl>
 
 									<ControlPanelControl
-										label={ 'Border Shadow' }
+										label={ __( 'Border Shadow', 'otter-blocks' ) }
 									>
-
 										<RangeControl
 											label={ __( 'Opacity', 'otter-blocks' ) }
 											value={ attributes.boxShadowColorOpacity }
@@ -1614,7 +1611,6 @@ const Inspector = ({
 											min={ -100 }
 											max={ 100 }
 										/>
-
 									</ControlPanelControl>
 								</Fragment>
 							) }
@@ -1673,7 +1669,7 @@ const Inspector = ({
 									</ColorBaseControl>
 
 									<ResponsiveControl
-										label={ 'Width' }
+										label={ __( 'Width', 'otter-blocks' ) }
 									>
 										<RangeControl
 											value={ getDividerWidth }
@@ -1684,7 +1680,7 @@ const Inspector = ({
 									</ResponsiveControl>
 
 									<ResponsiveControl
-										label={ 'Height' }
+										label={ __( 'Height', 'otter-blocks' ) }
 									>
 										<RangeControl
 											value={ getDividerHeight }
@@ -1696,7 +1692,7 @@ const Inspector = ({
 
 									{ ( 'curve' !== getDividerType && 'cloud' !== getDividerType ) && (
 										<ToggleControl
-											label={ 'Invert Shape Divider' }
+											label={ __( 'Invert Shape Divider', 'otter-blocks' ) }
 											checked={ getDividerInvert }
 											onChange={ changeDividerInvert }
 										/>
@@ -1713,19 +1709,19 @@ const Inspector = ({
 							title={ __( 'Responsive', 'otter-blocks' ) }
 						>
 							<ToggleControl
-								label={ 'Hide this section in Desktop devices?' }
+								label={ __( 'Hide this section in Desktop devices?', 'otter-blocks' ) }
 								checked={ attributes.hide }
 								onChange={ e => changeHideStatus( e, 'Desktop' ) }
 							/>
 
 							<ToggleControl
-								label={ 'Hide this section in Tablet devices?' }
+								label={ __( 'Hide this section in Tablet devices?', 'otter-blocks' ) }
 								checked={ attributes.hideTablet }
 								onChange={ e => changeHideStatus( e, 'Tablet' ) }
 							/>
 
 							<ToggleControl
-								label={ 'Hide this section in Mobile devices?' }
+								label={ __( 'Hide this section in Mobile devices?', 'otter-blocks' ) }
 								checked={ attributes.hideMobile }
 								onChange={ e => changeHideStatus( e, 'Mobile' ) }
 							/>
@@ -1734,7 +1730,7 @@ const Inspector = ({
 
 							{ ( ! attributes.hideTablet && 'collapsedRows' === attributes.layoutTablet ) && (
 								<ToggleControl
-									label={ 'Reverse Columns in Tablet devices?' }
+									label={ __( 'Reverse Columns in Tablet devices?', 'otter-blocks' ) }
 									checked={ attributes.reverseColumnsTablet }
 									onChange={ e => changeReverseColumns( e, 'Tablet' ) }
 								/>
@@ -1742,7 +1738,7 @@ const Inspector = ({
 
 							{ ( ! attributes.hideMobile && 'collapsedRows' === attributes.layoutMobile ) && (
 								<ToggleControl
-									label={ 'Reverse Columns in Mobile devices?' }
+									label={ __( 'Reverse Columns in Mobile devices?', 'otter-blocks' ) }
 									checked={ attributes.reverseColumnsMobile }
 									onChange={ e => changeReverseColumns( e, 'Mobile' ) }
 								/>

@@ -1,16 +1,16 @@
 /**
  * Wordpress dependencies
  */
-const {
+import {
 	isEmpty,
 	pick
-} = lodash;
+} from 'lodash';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useRef
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -18,8 +18,8 @@ const {
 import Placeholder from './placeholder.js';
 import Inspector from './inspector.js';
 import LottiePlayer from './components/lottie-player.js';
-
-const IDs = [];
+import { blockInit } from '../../helpers/block-utility.js';
+import defaultAttributes from './attributes.js';
 
 const Edit = ({
 	attributes,
@@ -28,25 +28,13 @@ const Edit = ({
 	isSelected,
 	clientId
 }) => {
-	useEffect( () => {
-		initBlock();
-	}, []);
 
 	const playerRef = useRef( null );
 
-	const initBlock = () => {
-		if ( attributes.id === undefined ) {
-			const instanceId = `wp-block-themeisle-blocks-lottie-${ clientId.substr( 0, 8 ) }`;
-			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-lottie-${ clientId.substr( 0, 8 ) }`;
-			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else {
-			IDs.push( attributes.id );
-		}
-	};
+	useEffect( () => {
+		const unsubscribe = blockInit( clientId, defaultAttributes );
+		return () => unsubscribe();
+	}, [ attributes.id ]);
 
 	const onChangeFile = value => {
 		if ( '' === value || null === value ) {

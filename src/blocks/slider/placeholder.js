@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { debounce } = lodash;
+import { debounce } from 'lodash';
 
-const { MediaPlaceholder } = wp.blockEditor;
+import { MediaPlaceholder } from '@wordpress/block-editor';
 
 const BlockPlaceholder = ({
 	labels,

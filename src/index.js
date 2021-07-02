@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import './editor.scss';
+import 'regenerator-runtime/runtime.js';
 
 /**
  * An entry point to set __webpack_public_path__ variable.

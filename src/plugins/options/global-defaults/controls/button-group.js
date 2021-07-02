@@ -1,15 +1,15 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	PanelBody,
 	RangeControl,
 	SelectControl
-} = wp.components;
+} from '@wordpress/components';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -40,31 +40,31 @@ const ButtonGroupBlock = ({
 	return (
 		<Fragment>
 			<PanelBody
-				title={ __( 'Spacing' ) }
+				title={ __( 'Spacing', 'otter-blocks' ) }
 			>
 				<SizingControl
-					label={ __( 'Button Padding' ) }
+					label={ __( 'Button Padding', 'otter-blocks' ) }
 					min={ 0 }
 					max={ 100 }
 					onChange={ ( key, value ) => changeConfig( blockName, { [key]: value }) }
 					options={ [
 						{
-							label: __( 'Top' ),
+							label: __( 'Top', 'otter-blocks' ),
 							type: 'paddingTopBottom',
 							value: defaults.paddingTopBottom
 						},
 						{
-							label: __( 'Right' ),
+							label: __( 'Right', 'otter-blocks' ),
 							type: 'paddingLeftRight',
 							value: defaults.paddingLeftRight
 						},
 						{
-							label: __( 'Bottom' ),
+							label: __( 'Bottom', 'otter-blocks' ),
 							type: 'paddingTopBottom',
 							value: defaults.paddingTopBottom
 						},
 						{
-							label: __( 'Left' ),
+							label: __( 'Left', 'otter-blocks' ),
 							type: 'paddingLeftRight',
 							value: defaults.paddingLeftRight
 						}
@@ -74,7 +74,7 @@ const ButtonGroupBlock = ({
 				<hr/>
 
 				<RangeControl
-					label={ __( 'Group Spacing' ) }
+					label={ __( 'Group Spacing', 'otter-blocks' ) }
 					value={ defaults.spacing }
 					onChange={ value => changeConfig( blockName, { spacing: value }) }
 					min={ 0 }
@@ -84,24 +84,24 @@ const ButtonGroupBlock = ({
 				<hr/>
 
 				<SelectControl
-					label={ __( 'Collapse On' ) }
+					label={ __( 'Collapse On', 'otter-blocks' ) }
 					value={ defaults.collapse }
 					options={ [
-						{ label: __( 'None' ), value: 'collapse-none' },
-						{ label: __( 'Desktop' ), value: 'collapse-desktop' },
-						{ label: __( 'Tablet' ), value: 'collapse-tablet' },
-						{ label: __( 'Mobile' ), value: 'collapse-mobile' }
+						{ label: __( 'None', 'otter-blocks' ), value: 'collapse-none' },
+						{ label: __( 'Desktop', 'otter-blocks' ), value: 'collapse-desktop' },
+						{ label: __( 'Tablet', 'otter-blocks' ), value: 'collapse-tablet' },
+						{ label: __( 'Mobile', 'otter-blocks' ), value: 'collapse-mobile' }
 					] }
 					onChange={ value => changeConfig( blockName, { collapse: value }) }
 				/>
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Typography Settings' ) }
+				title={ __( 'Typography Settings', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<RangeControl
-					label={ __( 'Font Size' ) }
+					label={ __( 'Font Size', 'otter-blocks' ) }
 					value={ defaults.fontSize || '' }
 					onChange={ value => changeConfig( blockName, { fontSize: value }) }
 					min={ 0 }
@@ -111,7 +111,7 @@ const ButtonGroupBlock = ({
 				<hr/>
 
 				<GoogleFontsControl
-					label={ __( 'Font Family' ) }
+					label={ __( 'Font Family', 'otter-blocks' ) }
 					value={ defaults.fontFamily }
 					onChangeFontFamily={ changeFontFamily }
 					valueVariant={ defaults.fontVariant }
@@ -125,7 +125,7 @@ const ButtonGroupBlock = ({
 				<hr/>
 
 				<RangeControl
-					label={ __( 'Line Height' ) }
+					label={ __( 'Line Height', 'otter-blocks' ) }
 					value={ defaults.lineHeight || '' }
 					onChange={ value => changeConfig( blockName, { lineHeight: value }) }
 					min={ 0 }

@@ -59,6 +59,13 @@ class Main {
 	public static $is_leaflet_loaded = false;
 
 	/**
+	 * Flag to mark that Tabs script has been loaded.
+	 *
+	 * @var bool $is_tabs_loaded Is Tabs loaded?
+	 */
+	public static $is_tabs_loaded = false;
+
+	/**
 	 * Define assets version.
 	 *
 	 * @var string $assets_version Holds assets version.
@@ -117,7 +124,13 @@ class Main {
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
 		add_action( 'init', array( $this, 'load_server_side_blocks' ), 11 );
-		add_action( 'block_categories', array( $this, 'block_categories' ) );
+
+		if ( version_compare( floatval( get_bloginfo( 'version' ) ), '5.8', '>=' ) ) {
+			add_filter( 'block_categories_all', array( $this, 'block_categories' ) );
+		} else {
+			add_filter( 'block_categories', array( $this, 'block_categories' ) );
+		}
+
 		add_filter( 'render_block', array( $this, 'render_amp' ), 10, 3 );
 
 		if ( isset( $allow_json ) && true === (bool) $allow_json && ! function_exists( 'is_wpcom_vip' ) ) {
@@ -150,7 +163,7 @@ class Main {
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
-			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player' ),
+			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'wp-polyfill', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player' ),
 			self::$assets_version,
 			true
 		);
@@ -184,6 +197,7 @@ class Main {
 				'optionsPath'   => admin_url( 'options-general.php?page=otter' ),
 				'mapsAPI'       => $api,
 				'themeDefaults' => $this->get_global_defaults(),
+				'imageSizes'    => function_exists( 'is_wpcom_vip' ) ? array( 'thumbnail', 'medium', 'medium_large', 'large' ) : get_intermediate_image_sizes(), //phpcs:ignore WordPressVIPMinimum.VIP.RestrictedFunctions.get_intermediate_image_sizes_get_intermediate_image_sizes
 				'isWPVIP'       => function_exists( 'is_wpcom_vip' ),
 				'canTrack'      => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
 			)
@@ -490,6 +504,18 @@ class Main {
 			);
 
 			self::$is_leaflet_loaded = true;
+		}
+
+		if ( ! self::$is_tabs_loaded && has_block( 'themeisle-blocks/tabs', $post ) ) {
+			wp_enqueue_script(
+				'themeisle-gutenberg-tabs',
+				plugin_dir_url( $this->get_dir() ) . 'build/tabs.js',
+				array( 'wp-i18n', 'wp-dom-ready' ),
+				self::$assets_version,
+				true
+			);
+
+			self::$is_circle_counter_loaded = true;
 		}
 	}
 

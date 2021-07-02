@@ -1,21 +1,21 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { __experimentalColorGradientControl: ColorGradientControl } = wp.blockEditor;
+import { __experimentalColorGradientControl as ColorGradientControl } from '@wordpress/block-editor';
 
-const {
+import {
 	Button,
 	ButtonGroup,
 	PanelBody,
 	RangeControl
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 const ButtonBlock = ({
 	blockName,
@@ -33,7 +33,7 @@ const ButtonBlock = ({
 					isPrimary={ ! hover }
 					onClick={ () => setHover( false ) }
 				>
-					{ __( 'Normal' ) }
+					{ __( 'Normal', 'otter-blocks' ) }
 				</Button>
 
 				<Button
@@ -42,7 +42,7 @@ const ButtonBlock = ({
 					isPrimary={ hover }
 					onClick={ () => setHover( true ) }
 				>
-					{ __( 'Hover' ) }
+					{ __( 'Hover', 'otter-blocks' ) }
 				</Button>
 			</ButtonGroup>
 
@@ -52,20 +52,20 @@ const ButtonBlock = ({
 	return (
 		<Fragment>
 			<PanelBody
-				title={ __( 'Color' ) }
+				title={ __( 'Color', 'otter-blocks' ) }
 			>
 				<HoverControl/>
 
 				{ ! hover ? (
 					<Fragment key="without-hover">
 						<ColorGradientControl
-							label={ 'Color' }
+							label={ __( 'Color', 'otter-blocks' ) }
 							colorValue={ defaults.color }
 							onColorChange={ value => changeConfig( blockName, { color: value }) }
 						/>
 
 						<ColorGradientControl
-							label={ 'Background' }
+							label={ __( 'Background', 'otter-blocks' ) }
 							colorValue={ defaults.background }
 							onColorChange={ value => changeConfig( blockName, { background: value }) }
 						/>
@@ -73,13 +73,13 @@ const ButtonBlock = ({
 				) : (
 					<Fragment key="with-hover">
 						<ColorGradientControl
-							label={ 'Hover Color' }
+							label={ __( 'Hover Color', 'otter-blocks' ) }
 							colorValue={ defaults.hoverColor }
 							onColorChange={ value => changeConfig( blockName, { hoverColor: value }) }
 						/>
 
 						<ColorGradientControl
-							label={ 'Hover Background' }
+							label={ __( 'Hover Background', 'otter-blocks' ) }
 							colorValue={ defaults.hoverBackground }
 							onColorChange={ value => changeConfig( blockName, { hoverBackground: value }) }
 						/>
@@ -88,27 +88,27 @@ const ButtonBlock = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Border & Box Shadow' ) }
+				title={ __( 'Border & Box Shadow', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<HoverControl/>
 
 				{ ! hover ? (
 					<ColorGradientControl
-						label={ 'Border' }
+						label={ __( 'Border', 'otter-blocks' ) }
 						colorValue={ defaults.border }
 						onColorChange={ value => changeConfig( blockName, { border: value }) }
 					/>
 				) : (
 					<ColorGradientControl
-						label={ 'Hover Border' }
+						label={ __( 'Hover Border', 'otter-blocks' ) }
 						colorValue={ defaults.hoverBorder }
 						onColorChange={ value => changeConfig( blockName, { hoverBorder: value }) }
 					/>
 				) }
 
 				<RangeControl
-					label={ __( 'Border Width' ) }
+					label={ __( 'Border Width', 'otter-blocks' ) }
 					value={ defaults.borderSize }
 					onChange={ value => changeConfig( blockName, { borderSize: value }) }
 					min={ 0 }
@@ -116,7 +116,7 @@ const ButtonBlock = ({
 				/>
 
 				<RangeControl
-					label={ __( 'Border Radius' ) }
+					label={ __( 'Border Radius', 'otter-blocks' ) }
 					value={ defaults.borderRadius }
 					onChange={ value => changeConfig( blockName, { borderRadius: value }) }
 					min={ 0 }

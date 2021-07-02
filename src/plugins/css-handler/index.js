@@ -1,14 +1,14 @@
 /**
  * WordPress dependencies
  */
-const { debounce } = lodash;
+import { debounce } from 'lodash';
 
-const apiFetch = wp.apiFetch;
+import apiFetch from '@wordpress/api-fetch';
 
-const {
+import {
 	select,
 	subscribe
-} = wp.data;
+} from '@wordpress/data';
 
 const savePostMeta = debounce( async() => {
 	const { getCurrentPostId } = select( 'core/editor' );

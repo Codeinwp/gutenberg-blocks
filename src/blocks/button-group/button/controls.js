@@ -1,9 +1,7 @@
 /**
  * WordPress dependencies...
  */
-// const { __ } = wp.i18n;
-
-const { BlockControls } = wp.blockEditor;
+import { BlockControls } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies

@@ -1,12 +1,12 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
 // reference https://nominatim.org/release-docs/develop/api/Search/
 async function makeSearchRequest( location ) {
 	if ( 'string' !== typeof location ) {
-		throw __( 'Location must be a string' );
+		throw __( 'Location must be a string', 'otter-blocks' );
 	}
 
 	const query = location.split( ' ' ).map( s => encodeURIComponent( s ) ).join( '+' );
@@ -19,7 +19,7 @@ async function makeSearchRequest( location ) {
 		return response.json();
 	}
 
-	return console.warn( __( 'An error has occured: ' ) + response.status );
+	return console.warn( __( 'An error has occured: ', 'otter-blocks' ) + response.status );
 }
 
 export async function getLocation( location ) {

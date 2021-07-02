@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { InnerBlocks } = wp.blockEditor;
+import { InnerBlocks } from '@wordpress/block-editor';
 
 const TEMPLATE =  [
 	[ 'themeisle-blocks/advanced-heading', {

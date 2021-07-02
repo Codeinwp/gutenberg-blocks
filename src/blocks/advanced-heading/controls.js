@@ -1,20 +1,20 @@
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	Button,
 	Dropdown,
 	DropdownMenu,
 	RangeControl,
 	SVG,
 	Toolbar
-} = wp.components;
+} from '@wordpress/components';
 
-const { BlockControls } = wp.blockEditor;
+import { BlockControls } from '@wordpress/block-editor';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 /**
  * Internal dependencies

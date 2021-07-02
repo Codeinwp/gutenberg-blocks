@@ -6,10 +6,10 @@ import classnames from 'classnames';
 /**
 * WordPress dependencies
 */
-const {
+import {
 	__,
 	sprintf
-} = wp.i18n;
+} from '@wordpress/i18n';
 
 /**
  * Internal dependencies

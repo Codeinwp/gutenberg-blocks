@@ -1,4 +1,7 @@
-const { registerGenericStore } = wp.data;
+/**
+ * WordPress dependencies
+ */
+import { registerGenericStore } from '@wordpress/data';
 
 const defaultValues = {
 	posts: {

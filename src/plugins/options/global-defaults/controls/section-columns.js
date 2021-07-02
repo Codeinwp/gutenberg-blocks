@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	BaseControl,
 	Button,
 	ButtonGroup,
@@ -12,11 +12,11 @@ const {
 	RangeControl,
 	SelectControl,
 	ToggleControl
-} = wp.components;
+} from '@wordpress/components';
 
-const { useSelect } = wp.data;
+import { useSelect } from '@wordpress/data';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -394,24 +394,24 @@ const SectionColumns = ({
 	return (
 		<Fragment>
 			<PanelBody
-				title={ __( 'Sizing' ) }
+				title={ __( 'Sizing', 'otter-blocks' ) }
 			>
 				<SelectControl
-					label={ __( 'Columns Gap' ) }
+					label={ __( 'Columns Gap', 'otter-blocks' ) }
 					value={ defaults.columnsGap }
 					options={ [
-						{ label: __( 'Default (10px)' ), value: 'default' },
-						{ label: __( 'No Gap' ), value: 'nogap' },
-						{ label: __( 'Narrow (5px)' ), value: 'narrow' },
-						{ label: __( 'Extended (15px)' ), value: 'extended' },
-						{ label: __( 'Wide (20px)' ), value: 'wide' },
-						{ label: __( 'Wider (30px)' ), value: 'wider' }
+						{ label: __( 'Default (10px)', 'otter-blocks' ), value: 'default' },
+						{ label: __( 'No Gap', 'otter-blocks' ), value: 'nogap' },
+						{ label: __( 'Narrow (5px)', 'otter-blocks' ), value: 'narrow' },
+						{ label: __( 'Extended (15px)', 'otter-blocks' ), value: 'extended' },
+						{ label: __( 'Wide (20px)', 'otter-blocks' ), value: 'wide' },
+						{ label: __( 'Wider (30px)', 'otter-blocks' ), value: 'wider' }
 					] }
 					onChange={ value => changeConfig( blockName, { columnsGap: value }) }
 				/>
 
 				<ResponsiveControl
-					label={ 'Padding' }
+					label={ __( 'Padding', 'otter-blocks' ) }
 				>
 					<SizingControl
 						type={ getPaddingType }
@@ -421,22 +421,22 @@ const SectionColumns = ({
 						onChange={ changePadding }
 						options={ [
 							{
-								label: __( 'Top' ),
+								label: __( 'Top', 'otter-blocks' ),
 								type: 'top',
 								value: getPadding( 'top' )
 							},
 							{
-								label: __( 'Right' ),
+								label: __( 'Right', 'otter-blocks' ),
 								type: 'right',
 								value: getPadding( 'right' )
 							},
 							{
-								label: __( 'Bottom' ),
+								label: __( 'Bottom', 'otter-blocks' ),
 								type: 'bottom',
 								value: getPadding( 'bottom' )
 							},
 							{
-								label: __( 'Left' ),
+								label: __( 'Left', 'otter-blocks' ),
 								type: 'left',
 								value: getPadding( 'left' )
 							}
@@ -447,7 +447,7 @@ const SectionColumns = ({
 				<hr/>
 
 				<ResponsiveControl
-					label={ 'Margin' }
+					label={ __( 'Margin', 'otter-blocks' ) }
 				>
 					<SizingControl
 						type={ getMarginType }
@@ -457,21 +457,21 @@ const SectionColumns = ({
 						onChange={ changeMargin }
 						options={ [
 							{
-								label: __( 'Top' ),
+								label: __( 'Top', 'otter-blocks' ),
 								type: 'top',
 								value: getMargin( 'top' )
 							},
 							{
-								label: __( 'Right' ),
+								label: __( 'Right', 'otter-blocks' ),
 								disabled: true
 							},
 							{
-								label: __( 'Bottom' ),
+								label: __( 'Bottom', 'otter-blocks' ),
 								type: 'bottom',
 								value: getMargin( 'bottom' )
 							},
 							{
-								label: __( 'Left' ),
+								label: __( 'Left', 'otter-blocks' ),
 								disabled: true
 							}
 						] }
@@ -480,14 +480,14 @@ const SectionColumns = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Section Structure' ) }
+				title={ __( 'Section Structure', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<SelectControl
-					label={ __( 'HTML Tag' ) }
+					label={ __( 'HTML Tag', 'otter-blocks' ) }
 					value={ defaults.columnsHTMLTag }
 					options={ [
-						{ label: __( 'Default (div)' ), value: 'div' },
+						{ label: __( 'Default (div)', 'otter-blocks' ), value: 'div' },
 						{ label: 'section', value: 'section' },
 						{ label: 'header', value: 'header' },
 						{ label: 'footer', value: 'footer' },
@@ -500,7 +500,7 @@ const SectionColumns = ({
 				<hr/>
 
 				<RangeControl
-					label={ __( 'Maximum Content Width' ) }
+					label={ __( 'Maximum Content Width', 'otter-blocks' ) }
 					value={ defaults.columnsWidth || '' }
 					onChange={ changeColumnsWidth }
 					min={ 0 }
@@ -512,12 +512,12 @@ const SectionColumns = ({
 				{ defaults.columnsWidth && (
 					<Fragment>
 						<BaseControl
-							label={ 'Horizontal Align' }
+							label={ __( 'Horizontal Align', 'otter-blocks' ) }
 						>
 							<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
 								<Button
 									icon="editor-alignleft"
-									label={ __( 'Left' ) }
+									label={ __( 'Left', 'otter-blocks' ) }
 									showTooltip={ true }
 									isLarge
 									isPrimary={ 'flex-start' === defaults.horizontalAlign }
@@ -526,7 +526,7 @@ const SectionColumns = ({
 
 								<Button
 									icon="editor-aligncenter"
-									label={ __( 'Center' ) }
+									label={ __( 'Center', 'otter-blocks' ) }
 									showTooltip={ true }
 									isLarge
 									isPrimary={ 'center' === defaults.horizontalAlign }
@@ -535,7 +535,7 @@ const SectionColumns = ({
 
 								<Button
 									icon="editor-alignright"
-									label={ __( 'Right' ) }
+									label={ __( 'Right', 'otter-blocks' ) }
 									showTooltip={ true }
 									isLarge
 									isPrimary={ 'flex-end' === defaults.horizontalAlign }
@@ -549,12 +549,12 @@ const SectionColumns = ({
 				) }
 
 				<SelectControl
-					label={ __( 'Minimum Height' ) }
+					label={ __( 'Minimum Height', 'otter-blocks' ) }
 					value={ defaults.columnsHeight }
 					options={ [
-						{ label: __( 'Default' ), value: 'auto' },
-						{ label: __( 'Fit to Screen' ), value: '100vh' },
-						{ label: __( 'Custom' ), value: 'custom' }
+						{ label: __( 'Default', 'otter-blocks' ), value: 'auto' },
+						{ label: __( 'Fit to Screen', 'otter-blocks' ), value: '100vh' },
+						{ label: __( 'Custom', 'otter-blocks' ), value: 'custom' }
 					] }
 					onChange={ value => changeConfig( blockName, { columnsHeight: value }) }
 				/>
@@ -564,7 +564,7 @@ const SectionColumns = ({
 				{ 'custom' === defaults.columnsHeight && (
 					<Fragment>
 						<ResponsiveControl
-							label={ 'Custom Height' }
+							label={ __( 'Custom Height', 'otter-blocks' ) }
 						>
 							<RangeControl
 								value={ getColumnsHeightCustom || '' }
@@ -579,7 +579,7 @@ const SectionColumns = ({
 				) }
 
 				<BaseControl
-					label={ 'Vertical Align' }
+					label={ __( 'Vertical Align', 'otter-blocks' ) }
 				>
 					<ButtonGroup className="wp-block-themeisle-icon-buttom-group">
 						<Button
@@ -587,7 +587,7 @@ const SectionColumns = ({
 								icon={ topIcon }
 								size={ 20 }
 							/> }
-							label={ __( 'Top' ) }
+							label={ __( 'Top', 'otter-blocks' ) }
 							showTooltip={ true }
 							isLarge
 							isPrimary={ 'flex-start' === defaults.verticalAlign }
@@ -599,7 +599,7 @@ const SectionColumns = ({
 								icon={ middleIcon }
 								size={ 20 }
 							/> }
-							label={ __( 'Middle' ) }
+							label={ __( 'Middle', 'otter-blocks' ) }
 							showTooltip={ true }
 							isLarge
 							isPrimary={ 'center' === defaults.verticalAlign }
@@ -611,7 +611,7 @@ const SectionColumns = ({
 								icon={ bottomIcon }
 								size={ 20 }
 							/> }
-							label={ __( 'Bottom' ) }
+							label={ __( 'Bottom', 'otter-blocks' ) }
 							showTooltip={ true }
 							isLarge
 							isPrimary={ 'flex-end' === defaults.verticalAlign }
@@ -622,23 +622,23 @@ const SectionColumns = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Responsive' ) }
+				title={ __( 'Responsive', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<ToggleControl
-					label={ 'Hide this section in Desktop devices?' }
+					label={ __( 'Hide this section in Desktop devices?', 'otter-blocks' ) }
 					checked={ defaults.hide }
 					onChange={ value => changeConfig( blockName, { hide: value }) }
 				/>
 
 				<ToggleControl
-					label={ 'Hide this section in Tablet devices?' }
+					label={ __( 'Hide this section in Tablet devices?', 'otter-blocks' ) }
 					checked={ defaults.hideTablet }
 					onChange={ value => changeConfig( blockName, { hideTablet: value }) }
 				/>
 
 				<ToggleControl
-					label={ 'Hide this section in Mobile devices?' }
+					label={ __( 'Hide this section in Mobile devices?', 'otter-blocks' ) }
 					checked={ defaults.hideMobile }
 					onChange={ value => changeConfig( blockName, { hideMobile: value }) }
 				/>

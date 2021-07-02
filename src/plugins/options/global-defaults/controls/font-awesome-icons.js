@@ -1,24 +1,24 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	Button,
 	ButtonGroup,
 	PanelBody,
 	RangeControl
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	ColorPalette,
 	ContrastChecker
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	Fragment,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -35,10 +35,10 @@ const ButtonGroupBlock = ({
 	return (
 		<Fragment>
 			<PanelBody
-				title={ __( 'Sizing' ) }
+				title={ __( 'Sizing', 'otter-blocks' ) }
 			>
 				<RangeControl
-					label={ __( 'Icon Size' ) }
+					label={ __( 'Icon Size', 'otter-blocks' ) }
 					value={ defaults.fontSize || '' }
 					initialPosition={ 16 }
 					onChange={ value => changeConfig( blockName, { fontSize: value }) }
@@ -49,7 +49,7 @@ const ButtonGroupBlock = ({
 				<hr/>
 
 				<RangeControl
-					label={ __( 'Padding' ) }
+					label={ __( 'Padding', 'otter-blocks' ) }
 					value={ defaults.padding || '' }
 					initialPosition={ 5 }
 					onChange={ value => changeConfig( blockName, { padding: value }) }
@@ -60,7 +60,7 @@ const ButtonGroupBlock = ({
 				<hr/>
 
 				<RangeControl
-					label={ __( 'Margin' ) }
+					label={ __( 'Margin', 'otter-blocks' ) }
 					value={ defaults.margin || '' }
 					initialPosition={ 5 }
 					onChange={ value => changeConfig( blockName, { margin: value }) }
@@ -70,7 +70,7 @@ const ButtonGroupBlock = ({
 			</PanelBody>
 
 			<PanelBody
-				title={ __( 'Color' ) }
+				title={ __( 'Color', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
 				<ButtonGroup>
@@ -80,7 +80,7 @@ const ButtonGroupBlock = ({
 						isPrimary={ ! hover }
 						onClick={ () => setHover( false ) }
 					>
-						{ __( 'Normal' ) }
+						{ __( 'Normal', 'otter-blocks' ) }
 					</Button>
 
 					<Button
@@ -89,29 +89,29 @@ const ButtonGroupBlock = ({
 						isPrimary={ hover }
 						onClick={ () => setHover( true ) }
 					>
-						{ __( 'Hover' ) }
+						{ __( 'Hover', 'otter-blocks' ) }
 					</Button>
 				</ButtonGroup>
 
 				{ hover ? (
 					<Fragment>
 						<ColorBaseControl
-							label={ 'Hover Background' }
+							label={ __( 'Hover Background', 'otter-blocks' ) }
 							colorValue={ defaults.backgroundColorHover }
 						>
 							<ColorPalette
-								label={ 'Hover Background' }
+								label={ __( 'Hover Background', 'otter-blocks' ) }
 								value={ defaults.backgroundColorHover }
 								onChange={ value => changeConfig( blockName, { backgroundColorHover: value }) }
 							/>
 						</ColorBaseControl>
 
 						<ColorBaseControl
-							label={ 'Hover Icon' }
+							label={ __( 'Hover Icon', 'otter-blocks' ) }
 							colorValue={ defaults.textColorHover }
 						>
 							<ColorPalette
-								label={ 'Hover Icon' }
+								label={ __( 'Hover Icon', 'otter-blocks' ) }
 								value={ defaults.textColorHover }
 								onChange={ value => changeConfig( blockName, { textColorHover: value }) }
 							/>
@@ -127,22 +127,22 @@ const ButtonGroupBlock = ({
 				) : (
 					<Fragment>
 						<ColorBaseControl
-							label={ 'Background' }
+							label={ __( 'Background', 'otter-blocks' ) }
 							colorValue={ defaults.backgroundColor }
 						>
 							<ColorPalette
-								label={ 'Background' }
+								label={ __( 'Background', 'otter-blocks' ) }
 								value={ defaults.backgroundColor }
 								onChange={ value => changeConfig( blockName, { backgroundColor: value }) }
 							/>
 						</ColorBaseControl>
 
 						<ColorBaseControl
-							label={ 'Icon' }
+							label={ __( 'Icon', 'otter-blocks' ) }
 							colorValue={ defaults.textColor }
 						>
 							<ColorPalette
-								label={ 'Icon' }
+								label={ __( 'Icon', 'otter-blocks' ) }
 								value={ defaults.textColor }
 								onChange={ value => changeConfig( blockName, { textColor: value }) }
 							/>

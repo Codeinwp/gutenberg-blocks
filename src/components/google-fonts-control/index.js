@@ -6,16 +6,16 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const {
+import {
 	startCase,
 	toLower
-} = lodash;
+} from 'lodash';
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { useInstanceId } = wp.compose;
+import { useInstanceId } from '@wordpress/compose';
 
-const {
+import {
 	Button,
 	BaseControl,
 	Dropdown,
@@ -23,12 +23,12 @@ const {
 	MenuItem,
 	SelectControl,
 	TextControl
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	useEffect,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
 * Internal dependencies

@@ -1,17 +1,17 @@
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { PanelBody } = wp.components;
+import { PanelBody } from '@wordpress/components';
 
-const { createHigherOrderComponent } = wp.compose;
+import { createHigherOrderComponent } from '@wordpress/compose';
 
-const { InspectorControls } = wp.blockEditor;
+import { InspectorControls } from '@wordpress/block-editor';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
-const { addFilter } = wp.hooks;
+import { addFilter } from '@wordpress/hooks';
 
 /**
  * Internal dependencies.
@@ -39,7 +39,7 @@ const withGalleryExtension = createHigherOrderComponent( BlockEdit => {
 					{ !! props.attributes.images.length && (
 						<InspectorControls>
 							<PanelBody
-								title={ __( 'Images' ) }
+								title={ __( 'Images', 'otter-blocks' ) }
 								initialOpen={ false }
 							>
 								<ImageGrid

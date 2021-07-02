@@ -1,15 +1,15 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	Button,
 	ExternalLink,
 	Placeholder,
 	Spinner,
 	TextControl
-} = wp.components;
+} from '@wordpress/components';
 
 const BlockPlaceholder = ({
 	className,
@@ -24,7 +24,7 @@ const BlockPlaceholder = ({
 		return (
 			<Placeholder>
 				<Spinner/>
-				{ __( 'Loading…' ) }
+				{ __( 'Loading…', 'otter-blocks' ) }
 			</Placeholder>
 		);
 	}
@@ -33,14 +33,14 @@ const BlockPlaceholder = ({
 		return (
 			<Placeholder
 				icon="admin-site"
-				label={ __( 'Google Maps' ) }
-				instructions={ __( 'A Google Maps API key is required, please enter one below.' ) }
+				label={ __( 'Google Maps', 'otter-blocks' ) }
+				instructions={ __( 'A Google Maps API key is required, please enter one below.', 'otter-blocks' ) }
 				className={ className }
 			>
 				<div className="components-placeholder__actions">
 					<TextControl
 						type="text"
-						placeholder={ __( 'Google Maps API Key' ) }
+						placeholder={ __( 'Google Maps API Key', 'otter-blocks' ) }
 						value={ api }
 						className="components-placeholder__input"
 						onChange={ changeAPI }
@@ -54,12 +54,12 @@ const BlockPlaceholder = ({
 						isBusy={ isSaving }
 						disabled={ '' === api }
 					>
-						{ __( 'Save' ) }
+						{ __( 'Save', 'otter-blocks' ) }
 					</Button>
 				</div>
 
 				<div className="components-placeholder__learn-more">
-					{ __( 'You need to activate Maps and Places API.' ) } <ExternalLink href="https://developers.google.com/maps/documentation/javascript/get-api-key">{ __( 'Need an API key? Get one here.' ) }</ExternalLink>
+					{ __( 'You need to activate Maps and Places API.', 'otter-blocks' ) } <ExternalLink href="https://developers.google.com/maps/documentation/javascript/get-api-key">{ __( 'Need an API key? Get one here.', 'otter-blocks' ) }</ExternalLink>
 				</div>
 			</Placeholder>
 		);

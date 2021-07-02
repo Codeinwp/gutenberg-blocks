@@ -1,29 +1,29 @@
 /**
  * WordPress dependencies...
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	Button,
 	ButtonGroup,
 	PanelBody,
 	Placeholder,
 	RangeControl,
 	Spinner
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	ColorPalette,
 	ContrastChecker,
 	InspectorControls
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	Fragment,
 	lazy,
 	Suspense,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -132,33 +132,33 @@ const Inspector = ({
 				{ hover ? (
 					<Fragment>
 						<ColorBaseControl
-							label={ 'Hover Background' }
+							label={ __( 'Hover Background', 'otter-blocks' ) }
 							colorValue={ attributes.backgroundColorHover }
 						>
 							<ColorPalette
-								label={ 'Hover Background' }
+								label={ __( 'Hover Background', 'otter-blocks' ) }
 								value={ attributes.backgroundColorHover }
 								onChange={ e => setAttributes({ backgroundColorHover: e }) }
 							/>
 						</ColorBaseControl>
 
 						<ColorBaseControl
-							label={ 'Hover Icon' }
+							label={ __( 'Hover Icon', 'otter-blocks' ) }
 							colorValue={ attributes.textColorHover }
 						>
 							<ColorPalette
-								label={ 'Hover Icon' }
+								label={ __( 'Hover Icon', 'otter-blocks' ) }
 								value={ attributes.textColorHover }
 								onChange={ e => setAttributes({ textColorHover: e }) }
 							/>
 						</ColorBaseControl>
 
 						<ColorBaseControl
-							label={ 'Hover Border' }
+							label={ __( 'Hover Border', 'otter-blocks' ) }
 							colorValue={ attributes.borderColorHover }
 						>
 							<ColorPalette
-								label={ 'Hover Border' }
+								label={ __( 'Hover Border', 'otter-blocks' ) }
 								value={ attributes.borderColorHover }
 								onChange={ e => setAttributes({ borderColorHover: e }) }
 							/>
@@ -174,33 +174,33 @@ const Inspector = ({
 				) : (
 					<Fragment>
 						<ColorBaseControl
-							label={ 'Background' }
+							label={ __( 'Background', 'otter-blocks' ) }
 							colorValue={ attributes.backgroundColor }
 						>
 							<ColorPalette
-								label={ 'Background' }
+								label={ __( 'Background', 'otter-blocks' ) }
 								value={ attributes.backgroundColor }
 								onChange={ e => setAttributes({ backgroundColor: e }) }
 							/>
 						</ColorBaseControl>
 
 						<ColorBaseControl
-							label={ 'Icon' }
+							label={ __( 'Icon', 'otter-blocks' ) }
 							colorValue={ attributes.textColor }
 						>
 							<ColorPalette
-								label={ 'Icon' }
+								label={ __( 'Icon', 'otter-blocks' ) }
 								value={ attributes.textColor }
 								onChange={ e => setAttributes({ textColor: e }) }
 							/>
 						</ColorBaseControl>
 
 						<ColorBaseControl
-							label={ 'Border' }
+							label={ __( 'Border', 'otter-blocks' ) }
 							colorValue={ attributes.borderColor }
 						>
 							<ColorPalette
-								label={ 'Border' }
+								label={ __( 'Border', 'otter-blocks' ) }
 								value={ attributes.borderColor }
 								onChange={ e => setAttributes({ borderColor: e }) }
 							/>

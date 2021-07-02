@@ -1,35 +1,35 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	cloneDeep,
 	isEqual,
 	merge
-} = lodash;
+} from 'lodash';
 
-const apiFetch = wp.apiFetch;
+import apiFetch from '@wordpress/api-fetch';
 
-const {
+import {
 	PanelBody,
 	Snackbar,
 	ToggleControl
-} = wp.components;
+} from '@wordpress/components';
 
-const { useDispatch } = wp.data;
+import { useDispatch } from '@wordpress/data';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useRef,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
-const {
+import {
 	PluginSidebar,
 	PluginSidebarMoreMenuItem
-} = wp.editPost;
+} from '@wordpress/edit-post';
 
 /**
  * Internal dependencies

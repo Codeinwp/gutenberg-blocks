@@ -1,12 +1,12 @@
 /**
  * WordPress dependencies
  */
-const { debounce } = lodash;
+import { debounce } from 'lodash';
 
-const {
+import {
 	select,
 	subscribe
-} = wp.data;
+} from '@wordpress/data';
 
 window.themeisleGutenberg.dataLogging = {};
 

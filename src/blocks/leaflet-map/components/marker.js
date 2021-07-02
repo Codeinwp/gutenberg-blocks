@@ -6,16 +6,14 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
-	useState
-} = wp.element;
+import { useState } from '@wordpress/element';
 
-const {
+import {
 	Button,
 	TextControl
-} = wp.components;
+} from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -67,7 +65,7 @@ const Marker = ({
 		} else {
 			setError({
 				target: 'LOCATION',
-				reason: 'Location couldn\'t been found!'
+				reason: __( 'Location couldn\'t been found!', 'otter-blocks' )
 			});
 		}
 	};

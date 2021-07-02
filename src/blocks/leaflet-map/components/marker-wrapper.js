@@ -6,11 +6,11 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { Button } = wp.components;
+import { Button } from '@wordpress/components';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 import { ActionType } from '../edit.js';
 

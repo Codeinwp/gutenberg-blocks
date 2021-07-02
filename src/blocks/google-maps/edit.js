@@ -7,16 +7,16 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { ResizableBox } = wp.components;
+import { ResizableBox } from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useRef,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -27,8 +27,8 @@ import { StyleSwitcherBlockControl } from '../../components/style-switcher-contr
 import MarkerModal from './components/marker-modal.js';
 import Map from './components/map.js';
 import styles from './components/styles.js';
-
-const IDs = [];
+import defaultAttributes from './attributes.js';
+import { blockInit } from '../../helpers/block-utility.js';
 
 const Edit = ({
 	attributes,
@@ -38,8 +38,42 @@ const Edit = ({
 	isSelected,
 	toggleSelection
 }) => {
+
 	useEffect( () => {
-		initBlock();
+		const unsubscribe = blockInit( clientId, defaultAttributes );
+		return () => unsubscribe();
+	}, [ attributes.id ]);
+
+	useEffect( () => {
+
+		const setApi = async() => {
+			await wp.api.loadPromise.then( () => {
+				settingsRef.current = new wp.api.models.Settings();
+			});
+
+			if ( false === Boolean( window.themeisleGutenberg.mapsAPI ) ) {
+				if ( ! isAPILoaded ) {
+					settingsRef.current.fetch().then( response => {
+						setAPI( response.themeisle_google_map_block_api_key );
+						setAPILoaded( true );
+
+						if ( '' !== response.themeisle_google_map_block_api_key ) {
+							setAPISaved( true );
+							enqueueScript( response.themeisle_google_map_block_api_key );
+						}
+					});
+				}
+			} else {
+				if ( ! isAPILoaded ) {
+					setAPI( window.themeisleGutenberg.mapsAPI );
+					setAPILoaded( true );
+					setAPISaved( true );
+					enqueueScript( window.themeisleGutenberg.mapsAPI );
+				}
+			}
+		};
+
+		setApi();
 
 		window.isMapLoaded = window.isMapLoaded || false;
 		window[`removeMarker_${ clientId.substr( 0, 8 ) }`] = removeMarker;
@@ -85,45 +119,6 @@ const Edit = ({
 	const [ isModalOpen, setModalOpen ] = useState( false );
 	const [ isAdvanced, setAdvanced ] = useState( false );
 	const [ selectedMarker, setSelectedMarker ] = useState({});
-
-	const initBlock = async() => {
-		if ( attributes.id === undefined ) {
-			const instanceId = `wp-block-themeisle-blocks-google-map-${ clientId.substr( 0, 8 ) }`;
-			await setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-google-map-${ clientId.substr( 0, 8 ) }`;
-			await setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else {
-			IDs.push( attributes.id );
-		}
-
-		await wp.api.loadPromise.then( () => {
-			settingsRef.current = new wp.api.models.Settings();
-		});
-
-		if ( false === Boolean( window.themeisleGutenberg.mapsAPI ) ) {
-			if ( ! isAPILoaded ) {
-				settingsRef.current.fetch().then( response => {
-					setAPI( response.themeisle_google_map_block_api_key );
-					setAPILoaded( true );
-
-					if ( '' !== response.themeisle_google_map_block_api_key ) {
-						setAPISaved( true );
-						enqueueScript( response.themeisle_google_map_block_api_key );
-					}
-				});
-			}
-		} else {
-			if ( ! isAPILoaded ) {
-				setAPI( window.themeisleGutenberg.mapsAPI );
-				setAPILoaded( true );
-				setAPISaved( true );
-				enqueueScript( window.themeisleGutenberg.mapsAPI );
-			}
-		}
-	};
 
 	const enqueueScript = api => {
 		if ( ! window.isMapLoaded ) {
@@ -266,7 +261,7 @@ const Edit = ({
 	};
 
 	const addInfoWindow = ( marker, id, title, description ) => {
-		const contentString = `<div class="wp-block-themeisle-blocks-map-overview"><h6 class="wp-block-themeisle-blocks-map-overview-title">${ title }</h6><div class="wp-block-themeisle-blocks-map-overview-content">${ description ? `<p>${ description }</p>` : '' }<a class="wp-block-themeisle-blocks-map-overview-delete" onclick="removeMarker_${ clientId.substr( 0, 8 ) }( '${ id }' )">${ __( 'Delete Marker' ) }</a></div></div>`;
+		const contentString = `<div class="wp-block-themeisle-blocks-map-overview"><h6 class="wp-block-themeisle-blocks-map-overview-title">${ title }</h6><div class="wp-block-themeisle-blocks-map-overview-content">${ description ? `<p>${ description }</p>` : '' }<a class="wp-block-themeisle-blocks-map-overview-delete" onclick="removeMarker_${ clientId.substr( 0, 8 ) }( '${ id }' )">${ __( 'Delete Marker', 'otter-blocks' ) }</a></div></div>`;
 
 		const infowindow = new google.maps.InfoWindow({
 			content: contentString
@@ -328,7 +323,7 @@ const Edit = ({
 				google.maps.event.clearListeners( mapRef.current, 'click' );
 
 				const id = uuidv4();
-				const title = __( 'Custom Marker' );
+				const title = __( 'Custom Marker', 'otter-blocks' );
 				const latitude = e.latLng.lat();
 				const longitude = e.latLng.lng();
 
@@ -351,7 +346,7 @@ const Edit = ({
 
 	const addMarkerManual = () => {
 		const id = uuidv4();
-		const title = __( 'Custom Marker' );
+		const title = __( 'Custom Marker', 'otter-blocks' );
 		const location = mapRef.current.getCenter();
 		const latitude = location.lat();
 		const longitude = location.lng();
@@ -450,36 +445,36 @@ const Edit = ({
 	return (
 		<Fragment>
 			<StyleSwitcherBlockControl
-				label={ __( 'Block Styles' ) }
+				label={ __( 'Block Styles', 'otter-blocks' ) }
 				value={ attributes.style }
 				options={ [
 					{
-						label: __( 'Standard' ),
+						label: __( 'Standard', 'otter-blocks' ),
 						value: 'standard',
 						image: window.themeisleGutenberg.assetsPath + '/icons/map-standard.png'
 					},
 					{
-						label: __( 'Silver' ),
+						label: __( 'Silver', 'otter-blocks' ),
 						value: 'silver',
 						image: window.themeisleGutenberg.assetsPath + '/icons/map-silver.png'
 					},
 					{
-						label: __( 'Retro' ),
+						label: __( 'Retro', 'otter-blocks' ),
 						value: 'retro',
 						image: window.themeisleGutenberg.assetsPath + '/icons/map-retro.png'
 					},
 					{
-						label: __( 'Dark' ),
+						label: __( 'Dark', 'otter-blocks' ),
 						value: 'dark',
 						image: window.themeisleGutenberg.assetsPath + '/icons/map-dark.png'
 					},
 					{
-						label: __( 'Night' ),
+						label: __( 'Night', 'otter-blocks' ),
 						value: 'night',
 						image: window.themeisleGutenberg.assetsPath + '/icons/map-night.png'
 					},
 					{
-						label: __( 'Aubergine' ),
+						label: __( 'Aubergine', 'otter-blocks' ),
 						value: 'aubergine',
 						image: window.themeisleGutenberg.assetsPath + '/icons/map-aubergine.png'
 					}

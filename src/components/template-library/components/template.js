@@ -6,9 +6,9 @@ import LazyLoad from 'react-lazy-load';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { Button } = wp.components;
+import { Button } from '@wordpress/components';
 
 const Template = ({
 	template,
@@ -17,7 +17,7 @@ const Template = ({
 }) => {
 	return (
 		<div
-			aria-label={ template.title || __( 'Untitled Gutenberg Template' ) }
+			aria-label={ template.title || __( 'Untitled Gutenberg Template', 'otter-blocks' ) }
 			className="library-modal-content__item"
 			tabindex="0"
 		>
@@ -31,11 +31,11 @@ const Template = ({
 				<div className="library-modal-content__footer_meta">
 					<h4 className="library-modal-content__footer_meta_area">
 						{ ( template.title ) && (
-							template.title + ( template.author && __( ' by ' ) + template.author )
+							template.title + ( template.author && __( ' by ', 'otter-blocks' ) + template.author )
 						) }
 
 						{ ( ! template.title && template.author ) && (
-							__( 'Author: ' ) + template.author
+							__( 'Author: ', 'otter-blocks' ) + template.author
 						) }
 					</h4>
 				</div>
@@ -48,7 +48,7 @@ const Template = ({
 						onClick={ () => importPreview( template ) }
 						tabindex="0"
 					>
-						{ __( 'Preview' ) }
+						{ __( 'Preview', 'otter-blocks' ) }
 					</Button>
 
 					<Button
@@ -58,7 +58,7 @@ const Template = ({
 						onClick={ () => importTemplate( template.template_url ) }
 						tabindex="0"
 					>
-						{ __( 'Insert' ) }
+						{ __( 'Insert', 'otter-blocks' ) }
 					</Button>
 				</div>
 			</div>

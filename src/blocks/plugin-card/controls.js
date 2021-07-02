@@ -1,17 +1,16 @@
 /**
  * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n';
 
-const { __ } = wp.i18n;
-
-const {
+import {
 	Dashicon,
 	Button,
 	Toolbar,
 	Tooltip
-} = wp.components;
+} from '@wordpress/components';
 
-const { BlockControls } = wp.blockEditor;
+import { BlockControls } from '@wordpress/block-editor';
 
 const Controls = ({ setAttributes }) => {
 	return (

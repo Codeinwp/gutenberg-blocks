@@ -1,20 +1,20 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { getBlockType } = wp.blocks;
+import { getBlockType } from '@wordpress/blocks';
 
-const {
+import {
 	Button,
 	Icon,
 	Modal
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	Fragment,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 const BlockItem = ({
 	blockName,

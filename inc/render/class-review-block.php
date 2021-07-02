@@ -96,12 +96,14 @@ class Review_Block extends Base_Block {
 				'type'    => 'array',
 				'default' => array(
 					array(
-						'label' => __( 'Buy on Amazon', 'otter-blocks' ),
-						'href'  => '',
+						'label'       => __( 'Buy on Amazon', 'otter-blocks' ),
+						'href'        => '',
+						'isSponsored' => false,
 					),
 					array(
-						'label' => __( 'Buy on eBay', 'otter-blocks' ),
-						'href'  => '',
+						'label'       => __( 'Buy on eBay', 'otter-blocks' ),
+						'href'        => '',
+						'isSponsored' => false,
 					),
 				),
 			),
@@ -228,7 +230,8 @@ class Review_Block extends Base_Block {
 			$html .= '		<div class="wp-block-themeisle-blocks-review__footer_buttons">';
 
 			foreach ( $attributes['links'] as $link ) {
-				$html .= '	<a href="' . $link['href'] . '" target="_blank">' . $link['label'] . '</a>';
+				$rel   = ( isset( $link['isSponsored'] ) && true === $link['isSponsored'] ) ? 'sponsored' : 'nofollow';
+				$html .= '	<a href="' . esc_url( $link['href'] ) . '" rel="' . $rel . '" target="_blank">' . esc_html( $link['label'] ) . '</a>';
 			}
 			$html .= '		</div>';
 			$html .= '	</div>';
@@ -523,7 +526,7 @@ class Review_Block extends Base_Block {
 
 				$offer = array(
 					'@type'         => 'Offer',
-					'url'           => $link['href'],
+					'url'           => esc_url( $link['href'] ),
 					'priceCurrency' => isset( $attributes['currency'] ) ? $attributes['currency'] : 'USD',
 					'price'         => isset( $attributes['discounted'] ) ? $attributes['discounted'] : $attributes['price'],
 				);
@@ -538,6 +541,6 @@ class Review_Block extends Base_Block {
 			}
 		}
 
-		return $json;
+		return apply_filters( 'themeisle_gutenberg_review_block_schema', $json, $attributes );
 	}
 }

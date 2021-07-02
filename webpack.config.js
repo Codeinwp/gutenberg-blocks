@@ -31,12 +31,34 @@ module.exports = {
 		],
 		lottie: [
 			...glob.sync( './src/frontend/lottie/index.js' )
+		],
+		tabs: [
+			...glob.sync( './src/frontend/tabs/index.js' )
 		]
 	},
 	externals: {
 		'react': 'React',
 		'react-dom': 'ReactDOM',
-		'lodash': 'lodash'
+		'lodash': 'lodash',
+		'@wordpress/api-fetch': 'wp.apiFetch',
+		'@wordpress/blocks': 'wp.blocks',
+		'@wordpress/block-editor': 'wp.blockEditor',
+		'@wordpress/components': 'wp.components',
+		'@wordpress/compose': 'wp.compose',
+		'@wordpress/data': 'wp.data',
+		'@wordpress/dom-ready': 'wp.domReady',
+		'@wordpress/edit-post': 'wp.editPost',
+		'@wordpress/editor': 'wp.editor',
+		'@wordpress/element': 'wp.element',
+		'@wordpress/hooks': 'wp.hooks',
+		'@wordpress/i18n': 'wp.i18n',
+		'@wordpress/keycodes': 'wp.keycodes',
+		'@wordpress/old-editor': 'wp.oldEditor',
+		'@wordpress/plugins': 'wp.plugins',
+		'@wordpress/primitives': 'wp.primitives',
+		'@wordpress/rich-text': 'wp.richText',
+		'@wordpress/server-side-render': 'wp.serverSideRender',
+		'regenerator-runtime/runtime.js': 'window.regeneratorRuntime'
 	},
 	output: {
 		path: path.resolve( __dirname, 'build' ),
@@ -52,7 +74,12 @@ module.exports = {
 					loader: 'babel-loader',
 					options: {
 						presets: [
-							'@babel/preset-env',
+							[
+								'@babel/preset-env', {
+									useBuiltIns: 'entry',
+									corejs: '3.14'
+								}
+							],
 							'@emotion/babel-preset-css-prop'
 						],
 						plugins: [
@@ -71,8 +98,8 @@ module.exports = {
 				{
 					loader: 'eslint-loader',
 					options: {
-						fix: true,
-					},
+						fix: true
+					}
 				} ]
 			},
 			{

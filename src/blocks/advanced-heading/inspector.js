@@ -6,28 +6,28 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	AlignmentToolbar,
 	ColorPalette,
 	InspectorControls
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	Button,
 	Dashicon,
 	PanelBody,
 	RangeControl,
 	ToggleControl
-} = wp.components;
+} from '@wordpress/components';
 
-const { useSelect } = wp.data;
+import { useSelect } from '@wordpress/data';
 
-const {
+import {
 	Fragment,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -452,14 +452,14 @@ const Inspector = ({
 								colorValue={ attributes.headingColor }
 							>
 								<ColorPalette
-									label={ 'Heading Color' }
+									label={ __( 'Heading Color', 'otter-blocks' ) }
 									value={ attributes.headingColor }
 									onChange={ changeHeadingColor }
 								/>
 							</ColorBaseControl>
 
 							<ResponsiveControl
-								label={ 'Font Size' }
+								label={ __( 'Font Size', 'otter-blocks' ) }
 							>
 								<RangeControl
 									value={ getFontSize || '' }
@@ -470,7 +470,7 @@ const Inspector = ({
 							</ResponsiveControl>
 
 							<ResponsiveControl
-								label={ 'Alignment' }
+								label={ __( 'Alignment', 'otter-blocks' ) }
 							>
 								<AlignmentToolbar
 									value={ getAlignment }
@@ -513,7 +513,7 @@ const Inspector = ({
 							/>
 
 							<ToggleControl
-								label={ 'Shadow Properties' }
+								label={ __( 'Shadow Properties', 'otter-blocks' ) }
 								checked={ attributes.textShadow }
 								onChange={ changeTextShadow }
 							/>
@@ -533,7 +533,7 @@ const Inspector = ({
 									</ColorBaseControl>
 
 									<ControlPanelControl
-										label={ 'Shadow Properties' }
+										label={ __( 'Shadow Properties', 'otter-blocks' ) }
 									>
 										<RangeControl
 											label={ __( 'Opacity', 'otter-blocks' ) }
@@ -584,7 +584,7 @@ const Inspector = ({
 								colorValue={ attributes.highlightColor }
 							>
 								<ColorPalette
-									label={ 'Highlight Color' }
+									label={ __( 'Highlight Color', 'otter-blocks' ) }
 									value={ attributes.highlightColor }
 									onChange={ changeHighlightColor }
 								/>
@@ -595,7 +595,7 @@ const Inspector = ({
 								colorValue={ attributes.highlightBackground }
 							>
 								<ColorPalette
-									label={ 'Highlight Background' }
+									label={ __( 'Highlight Background', 'otter-blocks' ) }
 									value={ attributes.highlightBackground }
 									onChange={ changeHighlightBackground }
 								/>
@@ -607,7 +607,7 @@ const Inspector = ({
 							initialOpen={ false }
 						>
 							<ResponsiveControl
-								label={ 'Padding' }
+								label={ __( 'Padding', 'otter-blocks' ) }
 							>
 								<SizingControl
 									type={ getPaddingType }
@@ -641,7 +641,7 @@ const Inspector = ({
 							</ResponsiveControl>
 
 							<ResponsiveControl
-								label={ 'Margin' }
+								label={ __( 'Margin', 'otter-blocks' ) }
 							>
 								<SizingControl
 									type={ getMarginType }

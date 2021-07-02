@@ -7,20 +7,20 @@ import { backup, Icon } from '@wordpress/icons';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	Button,
 	Dropdown
-} = wp.components;
+} from '@wordpress/components';
 
-const { useInstanceId } = wp.compose;
+import { useInstanceId } from '@wordpress/compose';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies

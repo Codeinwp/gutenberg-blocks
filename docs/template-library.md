@@ -48,9 +48,9 @@ The process of adding new templates to the Template Library is reasonably straig
 $templates_list = array(
 	...
 	array(
-		'title'			=> __( 'Example Header Block', 'textdomain' ),
+		'title'			=> __( 'Example Header Block', 'otter-blocks' ),
 		'type'			=> 'block',
-		'author'		=> __( 'Otter', 'textdomain' ),
+		'author'		=> __( 'Otter', 'otter-blocks' ),
 		'keywords'		=> array( 'example', 'header' ),
 		'categories'		=> array( 'header' ),
 		'template_url'		=> 'template.json',
@@ -68,9 +68,9 @@ Once you have generated JSON and screenshot for your template, you can hook it i
 function plugin_add_new_templates( $templates_list ) {
 	$templates = array(
 		array(
-			'title'			=> __( 'Example Header Block', 'textdomain' ),
+			'title'			=> __( 'Example Header Block', 'otter-blocks' ),
 			'type'			=> 'block',
-			'author'		=> __( 'Otter', 'textdomain' ),
+			'author'		=> __( 'Otter', 'otter-blocks' ),
 			'keywords'		=> array( 'example', 'header' ),
 			'categories'		=> array( 'header' ),
 			'template_url'		=> 'template.json',

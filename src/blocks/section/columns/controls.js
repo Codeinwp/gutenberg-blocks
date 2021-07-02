@@ -1,10 +1,10 @@
 /**
  * WordPress dependencies.
  */
-const {
+import {
 	BlockControls,
 	BlockVerticalAlignmentToolbar
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
 const Controls = ({
 	attributes,

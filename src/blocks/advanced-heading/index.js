@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -24,9 +24,9 @@ registerBlockType( 'themeisle-blocks/advanced-heading', {
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [
-		__( 'heading', 'otter-blocks' ),
-		__( 'title', 'otter-blocks' ),
-		__( 'advanced heading', 'otter-blocks' )
+		'heading',
+		'title',
+		'advanced Heading'
 	],
 	attributes,
 	deprecated,

@@ -6,19 +6,19 @@ import { brush } from '@wordpress/icons';
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	registerFormatType,
 	toggleFormat
-} = wp.richText;
+} from '@wordpress/rich-text';
 
-const {
+import {
 	RichTextShortcut,
 	RichTextToolbarButton
-} = wp.blockEditor;
+} from '@wordpress/block-editor';;
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 const name = 'themeisle-blocks/highlight';
 

@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies...
  */
-const { __, sprintf } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -18,10 +18,7 @@ import save from './save.js';
 
 registerBlockType( 'themeisle-blocks/font-awesome-icons', {
 	title: __( 'Icon', 'otter-blocks' ),
-
-	/** translators: %1$s Font Awesome
-	   	translators: %2$s ThemeIsle Icons */
-	description: sprintf( __( 'Add icons from %1$s or %2$s library to your website.', 'otter-blocks' ), 'Font Awesome', 'ThemeIsle Icons' ),
+	description: __( 'Add icons from Font Awesome or ThemeIsle Icons library to your website.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [

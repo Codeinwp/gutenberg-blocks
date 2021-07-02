@@ -8,9 +8,7 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
-
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -40,7 +38,7 @@ const LayoutBuilder = ({
 				) }
 			>
 				<SortableItem
-					value={ __( 'image' ) }
+					value={ 'image' }
 					disabled={ true }
 					getFields={ getFields }
 					toggleFields={ toggleFields }

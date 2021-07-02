@@ -6,29 +6,29 @@ import scrollIntoView from 'dom-scroll-into-view';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const apiFetch = wp.apiFetch;
+import apiFetch from '@wordpress/api-fetch';
 
-const {
+import {
 	Placeholder,
 	Dashicon,
 	TextControl,
 	Spinner
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	useEffect,
 	useRef,
 	useState
-} = wp.element;
+} from '@wordpress/element';
 
-const {
+import {
 	DOWN,
 	ENTER,
 	TAB,
 	UP
-} = wp.keycodes;
+} from '@wordpress/keycodes';
 
 const BlockPlaceholder = ({
 	setAttributes,

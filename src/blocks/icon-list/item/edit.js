@@ -6,30 +6,26 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { isEqual } = lodash;
+import { __ } from '@wordpress/i18n';
 
-const { __ } = wp.i18n;
+import { RichText } from '@wordpress/block-editor';
 
-const { RichText } = wp.blockEditor;
+import { createBlock } from '@wordpress/blocks';
 
-const { createBlock } = wp.blocks;
+import { useSelect } from '@wordpress/data';
 
-const { useSelect } = wp.data;
-
-const {
+import {
 	Fragment,
 	useEffect
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import defaultAttributes from './attributes.js';
-import defaults from '../../../plugins/options/global-defaults/defaults.js';
 import Inspector from './inspector.js';
 import themeIsleIcons from './../../../helpers/themeisle-icons.js';
-
-const IDs = [];
+import { blockInit } from '../../../helpers/block-utility.js';
 
 const Edit = ({
 	attributes,
@@ -63,48 +59,9 @@ const Edit = ({
 	}, []);
 
 	useEffect( () => {
-		initBlock();
-	}, []);
-
-	const initBlock = () => {
-		const blockIDs = window.themeisleGutenberg.blockIDs ? window.themeisleGutenberg.blockIDs : [];
-
-		if ( attributes.id === undefined ) {
-			let attrs;
-			const instanceId = `wp-block-themeisle-blocks-icon-list-item-${ clientId.substr( 0, 8 ) }`;
-
-			const globalDefaults = window.themeisleGutenberg.globalDefaults ? window.themeisleGutenberg.globalDefaults : undefined;
-
-			if ( undefined !== globalDefaults ) {
-				if ( ! isEqual( defaults[ name ], window.themeisleGutenberg.globalDefaults[ name ]) ) {
-					attrs = { ...window.themeisleGutenberg.globalDefaults[ name ] };
-
-					Object.keys( attrs ).map( i => {
-						if ( attributes[i] !== attrs[i] && ( undefined !== defaultAttributes[i].default && attributes[i] !== defaultAttributes[i].default ) ) {
-							return delete attrs[i];
-						}
-					});
-				}
-			}
-
-			setAttributes({
-				...attrs,
-				id: instanceId
-			});
-
-			IDs.push( instanceId );
-			blockIDs.push( instanceId );
-		} else if ( IDs.includes( attributes.id ) ) {
-			const instanceId = `wp-block-themeisle-blocks-icon-list-item-${ clientId.substr( 0, 8 ) }`;
-			setAttributes({ id: instanceId });
-			IDs.push( instanceId );
-		} else {
-			IDs.push( attributes.id );
-			blockIDs.push( attributes.id );
-		}
-
-		window.themeisleGutenberg.blockIDs = [ ...blockIDs ];
-	};
+		const unsubscribe = blockInit( clientId, defaultAttributes );
+		return () => unsubscribe();
+	}, [ attributes.id ]);
 
 	const Icon = themeIsleIcons.icons[ attributes.icon ];
 	const  iconClassName = `${ attributes.iconPrefix || parentAttributes.defaultIconPrefix } fa-${ attributes.icon || parentAttributes.defaultIcon }`;

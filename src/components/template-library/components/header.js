@@ -6,21 +6,21 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const {
+import {
 	startCase,
 	toLower
-} = lodash;
+} from 'lodash';
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	Button,
 	Dashicon,
 	Icon,
 	TextControl,
 	Tooltip,
 	SelectControl
-} = wp.components;
+} from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -53,7 +53,7 @@ const Header = ({
 		});
 
 		const options = [
-			{ label: __( 'All Categories' ), value: 'all' },
+			{ label: __( 'All Categories', 'otter-blocks' ), value: 'all' },
 			...categories
 		];
 
@@ -69,10 +69,10 @@ const Header = ({
 					{ preview ? (
 						<Button
 							className="library-modal-header-tabs-button back-to-library"
-							aria-label={ __( 'Back to Library' ) }
+							aria-label={ __( 'Back to Library', 'otter-blocks' ) }
 							onClick={ () => setPreview( false ) }
 						>
-							<Dashicon icon="arrow-left-alt" /> { __( 'Back to Library' ) }
+							<Dashicon icon="arrow-left-alt" /> { __( 'Back to Library', 'otter-blocks' ) }
 						</Button>
 					) :
 						<div className="library-modal-header-tabs-button">
@@ -91,7 +91,7 @@ const Header = ({
 							onClick={ () => changeTab( 'block' ) }
 						>
 							<Dashicon icon="screenoptions" />
-							{ __( 'Blocks' ) }
+							{ __( 'Blocks', 'otter-blocks' ) }
 						</Button>
 
 						<Button
@@ -102,7 +102,7 @@ const Header = ({
 							onClick={ () => changeTab( 'template' ) }
 						>
 							<Dashicon icon="editor-table" />
-							{ __( 'Templates' ) }
+							{ __( 'Templates', 'otter-blocks' ) }
 						</Button>
 					</div>
 				) }
@@ -115,14 +115,14 @@ const Header = ({
 							tabindex="0"
 						>
 							<Dashicon icon="arrow-down-alt" size={ 16 } />
-							{ __( 'Insert' ) }
+							{ __( 'Insert', 'otter-blocks' ) }
 						</Button>
 					) }
 
-					<Tooltip text={ __( 'Close' ) }>
+					<Tooltip text={ __( 'Close', 'otter-blocks' ) }>
 						<Button
 							className="library-modal-header-tabs-button"
-							aria-label={ __( 'Close settings' ) }
+							aria-label={ __( 'Close settings', 'otter-blocks' ) }
 							onClick={ close }
 						>
 							<Dashicon icon="no-alt" />
@@ -143,7 +143,7 @@ const Header = ({
 					<TextControl
 						type="text"
 						value={ search || '' }
-						placeholder={ __( 'Search' ) }
+						placeholder={ __( 'Search', 'otter-blocks' ) }
 						className="library-modal-search-control"
 						onChange={ changeSearch }
 					/>

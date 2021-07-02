@@ -1,9 +1,9 @@
 /**
  * Wordpress dependencies
  */
-const { isEmpty } = lodash;
+import { isEmpty } from 'lodash';
 
-const { useEffect } = wp.element;
+import { useEffect } from '@wordpress/element';
 
 const LottiePlayer = ({
 	attributes,

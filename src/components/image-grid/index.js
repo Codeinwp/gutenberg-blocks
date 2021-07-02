@@ -1,12 +1,12 @@
 /**
  * WordPress dependencies
  */
-const { debounce } = lodash;
+import { debounce } from 'lodash';
 
-const {
+import {
 	MediaUpload,
 	MediaUploadCheck
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
 /**
  * Internal dependencies

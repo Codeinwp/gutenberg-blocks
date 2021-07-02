@@ -6,17 +6,17 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	BaseControl,
 	Button,
 	ExternalLink,
 	SelectControl,
 	TextControl
-} = wp.components;
+} from '@wordpress/components';
 
-const { useRef } = wp.element;
+import { useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -63,12 +63,12 @@ const Marker = ({
 					className="wp-block-themeisle-blocks-google-map-marker-title"
 					onClick={ () => openMarker( marker.id ) }
 				>
-					{ marker.title || __( 'Custom Marker' ) }
+					{ marker.title || __( 'Custom Marker', 'otter-blocks' ) }
 				</Button>
 
 				<Button
 					icon="no-alt"
-					label={ __( 'Remove Marker' ) }
+					label={ __( 'Remove Marker', 'otter-blocks' ) }
 					showTooltip={ true }
 					className="wp-block-themeisle-blocks-google-map-marker-remove"
 					onClick={ () => removeMarker( marker.id ) }
@@ -82,13 +82,13 @@ const Marker = ({
 				) }
 			>
 				<BaseControl
-					label={ __( 'Location' ) }
+					label={ __( 'Location', 'otter-blocks' ) }
 					id={ `themeisle-location-search-${ marker.id }` }
 				>
 					<input
 						type="text"
 						id={ `themeisle-location-search-${ marker.id }` }
-						placeholder={ __( 'Enter a location…' ) }
+						placeholder={ __( 'Enter a location…', 'otter-blocks' ) }
 						value={ marker.location }
 						className="wp-block-themeisle-blocks-google-map-search"
 						ref={ searchRef }
@@ -99,50 +99,50 @@ const Marker = ({
 
 					{ ! isPlaceAPIAvailable && (
 						<p>
-							{ __( 'To enable locations earch, please ensure Places API is activated in the Google Developers Console.' ) + ' ' }
+							{ __( 'To enable locations earch, please ensure Places API is activated in the Google Developers Console.', 'otter-blocks' ) + ' ' }
 							<ExternalLink href="https://developers.google.com/places/web-service/intro">
-								{ __( 'More info.' ) }
+								{ __( 'More info.', 'otter-blocks' ) }
 							</ExternalLink>
 						</p>
 					) }
 				</BaseControl>
 
 				<TextControl
-					label={ __( 'Latitude' ) }
+					label={ __( 'Latitude', 'otter-blocks' ) }
 					type="text"
 					value={ marker.latitude }
 					onChange={ e => changeMarkerProp( marker.id, 'latitude', e ) }
 				/>
 
 				<TextControl
-					label={ __( 'Longitude' ) }
+					label={ __( 'Longitude', 'otter-blocks' ) }
 					type="text"
 					value={ marker.longitude }
 					onChange={ e => changeMarkerProp( marker.id, 'longitude', e ) }
 				/>
 
 				<SelectControl
-					label={ __( 'Map Icon' ) }
+					label={ __( 'Map Icon', 'otter-blocks' ) }
 					value={ marker.icon || 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' }
 					options={ [
-						{ label: __( 'Red' ), value: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' },
-						{ label: __( 'Blue' ), value: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' },
-						{ label: __( 'Yellow' ), value: 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png' },
-						{ label: __( 'Green' ), value: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png' },
-						{ label: __( 'Orange' ), value: 'https://maps.google.com/mapfiles/ms/icons/orange-dot.png' }
+						{ label: __( 'Red', 'otter-blocks' ), value: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' },
+						{ label: __( 'Blue', 'otter-blocks' ), value: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' },
+						{ label: __( 'Yellow', 'otter-blocks' ), value: 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png' },
+						{ label: __( 'Green', 'otter-blocks' ), value: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png' },
+						{ label: __( 'Orange', 'otter-blocks' ), value: 'https://maps.google.com/mapfiles/ms/icons/orange-dot.png' }
 					] }
 					onChange={ e => changeMarkerProp( marker.id, 'icon', e ) }
 				/>
 
 				<TextControl
-					label={ __( 'Title' ) }
+					label={ __( 'Title', 'otter-blocks' ) }
 					type="text"
 					value={ marker.title }
 					onChange={ e => changeMarkerProp( marker.id, 'title', e ) }
 				/>
 
 				<MarkerEditor
-					label={ __( 'Description' ) }
+					label={ __( 'Description', 'otter-blocks' ) }
 					type="text"
 					value={ marker.description }
 					onChange={ e => changeMarkerProp( marker.id, 'description', e ) }

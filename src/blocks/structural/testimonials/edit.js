@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { InnerBlocks } = wp.blockEditor;
+import { InnerBlocks } from '@wordpress/block-editor';
 
 const TEMPLATE =  [
 	[ 'core/image', {
@@ -28,7 +28,7 @@ const TEMPLATE =  [
 		marginBottom: 10
 	} ],
 	[ 'themeisle-blocks/advanced-heading', {
-		content: __( 'What is the point of being alive if you don’t at least try to do something remarkable?', 'otter-blocks' ),
+		content: __( '"What is the point of being alive if you don’t at least try to do something remarkable?"', 'otter-blocks' ),
 		align: 'center',
 		color: '#999999',
 		tag: 'p',
