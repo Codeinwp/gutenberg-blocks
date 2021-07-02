@@ -6,14 +6,14 @@ import { chevronLeft, chevronRight, edit } from '@wordpress/icons';
 /**
  * WordPress dependencies
 */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { BlockControls } = wp.blockEditor;
+import { BlockControls } from '@wordpress/block-editor';
 
-const {
+import {
 	ToolbarButton,
 	ToolbarGroup
-} = wp.components;
+} from '@wordpress/components';
 
 const Controls = ({
 	children,
@@ -44,9 +44,9 @@ const Controls = ({
 
 	return (
 		<BlockControls>
-			<ToolbarGroup label={ __( 'Edit' ) }>
+			<ToolbarGroup label={ __( 'Edit', 'otter-blocks' ) }>
 				<ToolbarButton
-					label={ __( 'Edit tab' ) }
+					label={ __( 'Edit tab', 'otter-blocks' ) }
 					icon={ edit }
 					iconSize={ 24 }
 					className="wp-block-themeisle-blocks-tabs-toolbar-edit"
@@ -54,9 +54,9 @@ const Controls = ({
 				/>
 			</ToolbarGroup>
 
-			<ToolbarGroup label={ __( 'Movement' ) }>
+			<ToolbarGroup label={ __( 'Movement', 'otter-blocks' ) }>
 				<ToolbarButton
-					label={ __( 'Move tab left' ) }
+					label={ __( 'Move tab left', 'otter-blocks' ) }
 					icon={ chevronLeft }
 					iconSize={ 24 }
 					disabled={ 0 === index }
@@ -65,7 +65,7 @@ const Controls = ({
 				/>
 
 				<ToolbarButton
-					label={ __( 'Move tab right' ) }
+					label={ __( 'Move tab right', 'otter-blocks' ) }
 					icon={ chevronRight }
 					iconSize={ 24 }
 					disabled={ children?.length - 1 === index }

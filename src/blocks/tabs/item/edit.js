@@ -6,22 +6,22 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	InnerBlocks,
 	RichText
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	useDispatch,
 	useSelect
-} = wp.data;
+} from '@wordpress/data';
 
-const {
+import {
 	Fragment,
 	useRef
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -84,7 +84,7 @@ const Edit = ({
 				ref={ contentRef }
 			>
 				<RichText
-					placeholder={ __( 'Add title…' ) }
+					placeholder={ __( 'Add title…', 'otter-blocks' ) }
 					value={ attributes.title }
 					onChange={ value => setAttributes({ title: value }) }
 					className={ classnames(

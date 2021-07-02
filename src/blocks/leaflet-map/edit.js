@@ -7,10 +7,7 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import {
-	isEqual,
-	merge
-} from 'lodash';
+import { merge } from 'lodash';
 
 import { __ } from '@wordpress/i18n';
 

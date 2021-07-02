@@ -10,7 +10,7 @@ import GoogleFontLoader from 'react-google-font-loader';
  */
 import { __ } from '@wordpress/i18n';
 
-const { createBlock } = wp.blocks;
+import { createBlock } from '@wordpress/blocks';
 
 import { RichText } from '@wordpress/block-editor';
 

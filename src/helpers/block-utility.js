@@ -1,10 +1,22 @@
+/**
+ * External dependencies.
+ */
 import { v4 as uuidv4 } from 'uuid';
 
+/**
+ * WordPress dependencies.
+ */
+import { isEqual } from 'lodash';
+
+import {
+	dispatch,
+	select
+} from '@wordpress/data';
+
+/**
+ * Internal dependencies.
+ */
 import globalDefaultsBlocksAttrs from '../plugins/options/global-defaults/defaults.js';
-const {
-	isEqual
-} = lodash;
-const { select, dispatch } = wp.data;
 
 /**
  * Initiate the global id tracker with an empty list if it is the case.

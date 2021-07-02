@@ -1,17 +1,17 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	InspectorControls
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	PanelBody,
 	Button,
 	TextControl
-} = wp.components;
+} from '@wordpress/components';
 
 const Inspector = ({
 	setAttributes,
@@ -27,19 +27,19 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Settings' ) }
+				title={ __( 'Settings', 'otter-blocks' ) }
 			>
 				<Button
 					isSecondary
 					onClick={ () => selectParent() }
 				>
-					{ __( 'Back to the Tabs' ) }
+					{ __( 'Back to the Tabs', 'otter-blocks' ) }
 				</Button>
 
 				<TextControl
 					type="text"
-					label={ __( 'Title' ) }
-					placeholder={ __( 'Insert a title' ) }
+					label={ __( 'Title', 'otter-blocks' ) }
+					placeholder={ __( 'Insert a title', 'otter-blocks' ) }
 					onChange={ onTitleChange } />
 			</PanelBody>
 		</InspectorControls>

@@ -6,8 +6,6 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies
  */
-import { isEqual } from 'lodash';
-
 import { ResizableBox } from '@wordpress/components';
 
 import { useViewportMatch } from '@wordpress/compose';

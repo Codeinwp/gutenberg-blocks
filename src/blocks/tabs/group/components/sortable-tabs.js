@@ -9,9 +9,9 @@ import {
 /**
  * WordPress dependencies
 */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { Button } = wp.components;
+import { Button } from '@wordpress/components';
 
 const DragHandle = SortableHandle( () => {
 	return (
@@ -27,12 +27,12 @@ export const SortableTab = SortableElement( ({ tab, deleteTab, selectTab }) => {
 			<DragHandle/>
 
 			<div className="wp-block-themeisle-blocks-tabs-inspector-tab-option__name">
-				{ tab.attributes.title || __( 'Untitled Tab' ) }
+				{ tab.attributes.title || __( 'Untitled Tab', 'otter-blocks' ) }
 			</div>
 
 			<Button
 				icon="edit"
-				label={ __( 'Edit Tab' ) }
+				label={ __( 'Edit Tab', 'otter-blocks' ) }
 				showTooltip={ true }
 				className="wp-block-themeisle-blocks-tabs-inspector-tab-option__actions"
 				onClick={ () => selectTab( tab.clientId ) }
@@ -40,7 +40,7 @@ export const SortableTab = SortableElement( ({ tab, deleteTab, selectTab }) => {
 
 			<Button
 				icon="no-alt"
-				label={ __( 'Remove Tab' ) }
+				label={ __( 'Remove Tab', 'otter-blocks' ) }
 				showTooltip={ true }
 				className="wp-block-themeisle-blocks-tabs-inspector-tab-option__actions"
 				onClick={ () => deleteTab( tab.clientId ) }

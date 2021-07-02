@@ -7,10 +7,7 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies
  */
-import {
-	isEqual,
-	times
-} from 'lodash';
+import { times } from 'lodash';
 
 import { useViewportMatch } from '@wordpress/compose';
 

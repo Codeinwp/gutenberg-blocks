@@ -8,10 +8,7 @@ import classnames from 'classnames';
  */
 import { __ } from '@wordpress/i18n';
 
-import {
-	isEqual,
-	range
-} from 'lodash';
+import { range } from 'lodash';
 
 import { ResizableBox } from '@wordpress/components';
 

@@ -13,7 +13,7 @@ import {
 /**
  * WordPress dependencies.
  */
-const { InnerBlocks } = wp.blockEditor;
+import { InnerBlocks } from '@wordpress/block-editor';
 
 import {
 	Fragment,

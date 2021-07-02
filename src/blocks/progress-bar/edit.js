@@ -6,8 +6,6 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { isEqual } from 'lodash';
-
 import { ResizableBox } from '@wordpress/components';
 
 import { RichText } from '@wordpress/editor';

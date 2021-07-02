@@ -1,8 +1,12 @@
-import { addBlockId } from './block-utility';
+/**
+ * WordPress dependencies.
+ */
+import { useEffect } from '@wordpress/element';
 
-const {
-	useEffect
-} = wp.element;
+/**
+ * Internal dependencies.
+ */
+import { addBlockId } from './block-utility';
 
 /**
  * Enhance the block by adding the id generating functions

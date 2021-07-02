@@ -6,9 +6,9 @@ import { video as icon } from '@wordpress/icons';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -18,8 +18,8 @@ import save from './save.js';
 import attributes from './attributes.js';
 
 registerBlockType( 'themeisle-blocks/tabs', {
-	title: __( 'Tabs' ),
-	description: __( 'Organize and allow navigation between groups of content with Tabs block.' ),
+	title: __( 'Tabs', 'otter-blocks' ),
+	description: __( 'Organize and allow navigation between groups of content with Tabs block.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [

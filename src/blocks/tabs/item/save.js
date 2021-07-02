@@ -1,12 +1,12 @@
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	InnerBlocks,
 	RichText
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
 const Save = ({
 	attributes,
@@ -20,7 +20,7 @@ const Save = ({
 			<RichText.Content
 				tagName="div"
 				className="wp-block-themeisle-blocks-tabs-item__header"
-				value={ attributes.title || __( 'Untitled Tab' ) }
+				value={ attributes.title || __( 'Untitled Tab', 'otter-blocks' ) }
 				tabIndex="0"
 			/>
 

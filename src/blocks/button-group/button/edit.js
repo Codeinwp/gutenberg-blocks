@@ -15,7 +15,7 @@ import hexToRgba from 'hex-rgba';
  */
 import { __ } from '@wordpress/i18n';
 
-const { RichText } = wp.blockEditor;
+import { RichText } from '@wordpress/block-editor';
 
 import { useSelect } from '@wordpress/data';
 

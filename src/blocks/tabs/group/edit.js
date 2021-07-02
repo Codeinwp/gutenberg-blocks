@@ -14,25 +14,25 @@ import {
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { createBlock } = wp.blocks;
+import { createBlock } from '@wordpress/blocks';
 
-const { InnerBlocks } = wp.blockEditor;
+import { InnerBlocks } from '@wordpress/block-editor';
 
-const { Icon } = wp.components;
+import { Icon } from '@wordpress/components';
 
-const {
+import {
 	useSelect,
 	useDispatch
-} = wp.data;
+} from '@wordpress/data';
 
-const {
+import {
 	Fragment,
 	useEffect,
 	useState,
 	useRef
-} = wp.element;
+} from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -232,7 +232,7 @@ const Edit = ({
 					{ children?.map( tabHeader => {
 						return (
 							<TabHeader
-								title={ tabHeader.attributes.title || __( 'Insert Title' ) }
+								title={ tabHeader.attributes.title || __( 'Insert Title', 'otter-blocks' ) }
 								active={ tabHeader.clientId === activeTab }
 								onClick={ () => toggleActiveTab( tabHeader.clientId ) }
 							/>

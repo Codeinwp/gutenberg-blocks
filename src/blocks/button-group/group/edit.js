@@ -7,7 +7,7 @@ import GoogleFontLoader from 'react-google-font-loader';
 /**
  * WordPress dependencies.
  */
-const { InnerBlocks } = wp.blockEditor;
+import { InnerBlocks } from '@wordpress/block-editor';
 
 import { useViewportMatch } from '@wordpress/compose';
 

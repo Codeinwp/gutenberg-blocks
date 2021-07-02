@@ -6,19 +6,19 @@ import { SortableContainer } from 'react-sortable-hoc';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	ContrastChecker,
 	InspectorControls,
 	PanelColorSettings
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
+import {
 	Button,
 	PanelBody,
 	RangeControl
-} = wp.components;
+} from '@wordpress/components';
 
 /**
  * Internal dependencies.
@@ -75,10 +75,10 @@ const Inspector = ({
 	return (
 		<InspectorControls>
 			<PanelBody
-				title={ __( 'Tabs Management' ) }
+				title={ __( 'Tabs Management', 'otter-blocks' ) }
 				initialOpen={ true }
 			>
-				<p>{ __( 'Press and hold to use drag and drop to sort the tabs' ) }</p>
+				<p>{ __( 'Press and hold to use drag and drop to sort the tabs', 'otter-blocks' ) }</p>
 
 				{ 0 < children?.length && (
 					<TabsList
@@ -96,16 +96,16 @@ const Inspector = ({
 					className="wp-block-themeisle-blocks-tabs-inspector-add-tab"
 					onClick={ addTab }
 				>
-					{ __( 'Add Tab' ) }
+					{ __( 'Add Tab', 'otter-blocks' ) }
 				</Button>
 			</PanelBody>
 
 			<PanelBody
-				title={__( 'Settings' ) }
+				title={__( 'Settings', 'otter-blocks' ) }
 				initialOpen={ true }
 			>
 				<RangeControl
-					label={ __( 'Border Width' ) }
+					label={ __( 'Border Width', 'otter-blocks' ) }
 					value={ attributes.borderWidth }
 					onChange={ onBorderWidthChange }
 					min={ 0 }
@@ -114,23 +114,23 @@ const Inspector = ({
 			</PanelBody>
 
 			<PanelColorSettings
-				title={ __( 'Color' ) }
+				title={ __( 'Color', 'otter-blocks' ) }
 				initialOpen={ false }
 				colorSettings={ [
 					{
 						value: attributes.activeTitleColor,
 						onChange: onActiveTitleColorChange,
-						label: __( 'Active Title Color' )
+						label: __( 'Active Title Color', 'otter-blocks' )
 					},
 					{
 						value: attributes.tabColor,
 						onChange: onTabColorChange,
-						label: __( 'Background' )
+						label: __( 'Background', 'otter-blocks' )
 					},
 					{
 						value: attributes.borderColor,
 						onChange: onBorderColorChange,
-						label: __( 'Border Color' )
+						label: __( 'Border Color', 'otter-blocks' )
 					}
 				] }
 			>

@@ -8,8 +8,6 @@ import getSymbolFromCurrency from 'currency-symbol-map';
 /**
  * WordPress dependencies.
  */
-import { isEqual } from 'lodash';
-
 import {
 	__,
 	sprintf
