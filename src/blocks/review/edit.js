@@ -132,7 +132,7 @@ const Edit = ({
 									color: attributes.textColor
 								} }
 							>
-								{ sprintf( __( '%d out of 10', 'otter-blocks' ), overallRatings || 0 ) }
+								{ /** translators: %s Rating score. **/ sprintf( __( '%d out of 10', 'otter-blocks' ), overallRatings || 0 ) }
 							</span>
 						</div>
 
@@ -236,7 +236,7 @@ const Edit = ({
 									color: attributes.textColor
 								} }
 							>
-								{ __( 'Pros' ) }
+								{ __( 'Pros', 'otter-blocks' ) }
 							</h4>
 
 							{ attributes.pros.map( ( pro, index ) => (
