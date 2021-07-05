@@ -130,7 +130,15 @@ Generated optimized autoload files containing 55 classes
 
 ## [Dream on for the working code](https://www.youtube.com/watch?v=89dGC8de0CA)
 
-The PHP is error is gone, so there will be nothing to stop us. Except some wrong selection.
+The PHP is error is gone, so there will be nothing to stop us. Except some exception. If you preview the page you will see that nothing is happening, because the `color` has no value assigned. Go back to Editor and check the  `Code editor`. You will have something like this. As you can see, the default value from the `attributes` scheme are not saved. 
+
+```HTML
+<!-- wp:themeisle-blocks/tutorial-2 -->
+<div class="wp-block-themeisle-blocks-tutorial-2 tutorial"><p>The text is: Hello</p></div>
+<!-- /wp:themeisle-blocks/tutorial-2 -->
+```
+
+TODO: [fix the PHP code ಥ_ಥ](https://www.youtube.com/watch?v=p47fEXGabaY)
 
 References:
 1. https://winnercrespo.com/naming-conventions/
