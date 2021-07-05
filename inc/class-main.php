@@ -19,24 +19,28 @@ class Main {
 	 * @var bool $is_fa_loaded Is FA loaded?
 	 */
 	public static $is_fa_loaded = false;
+
 	/**
 	 * Flag to mark that the Glide related scripts has been loaded.
 	 *
 	 * @var bool $is_glide_loaded Is FA loaded?
 	 */
 	public static $is_glide_loaded = false;
+
 	/**
 	 * Flag to mark that maps scripts has been loaded.
 	 *
 	 * @var bool $is_map_loaded Is Map loaded?
 	 */
 	public static $is_map_loaded = false;
+
 	/**
 	 * Flag to mark that progress bar scripts has been loaded.
 	 *
 	 * @var bool $is_progress_bar_loaded Is Map loaded?
 	 */
 	public static $is_progress_bar_loaded = false;
+
 	/**
 	 * Flag to mark that circulat progress bar scripts has been loaded.
 	 *
@@ -71,6 +75,7 @@ class Main {
 	 * @var string $assets_version Holds assets version.
 	 */
 	public static $assets_version = null;
+
 	/**
 	 * Singleton.
 	 *
