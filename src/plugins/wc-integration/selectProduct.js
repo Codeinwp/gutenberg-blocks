@@ -18,8 +18,6 @@ const SelectProducts = ({ products, setAttributes }) => {
 		};
 	}) ];
 
-	console.log( options, productId );
-
 	useEffect( () => {
 		const selectedProduct = products?.filter( ({ id }) => id === productId );
 		if ( 0 < selectedProduct?.length ) {

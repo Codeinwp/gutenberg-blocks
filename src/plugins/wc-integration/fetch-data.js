@@ -12,13 +12,26 @@ const getWCProductData = async() => {
 	});
 };
 
+const extractImageData = ( image ) => {
+	return {
+		id: image.id,
+		alt: image.alt,
+		url: image.src
+	};
+};
+
+const cleanDescription = ( description ) => {
+	return $( '<p>' ).html( description ).find( 'img' ).remove().end().text();
+};
+
 const extractProductData = rawProduct => {
 	return {
 		title: rawProduct?.name,
-		description: rawProduct?.description,
+		description: cleanDescription( rawProduct?.description ),
 		price: rawProduct?.price,
 		discounted: rawProduct?.sale_price,
-		links: [ { label: 'Test', href: rawProduct?.external_url, isSpoonsored: false } ]
+		links: [ { label: 'Test', href: rawProduct?.external_url, isSpoonsored: false } ],
+		image: 0 < rawProduct?.images?.length ? extractImageData( rawProduct?.images[0]) : undefined
 	};
 };
 

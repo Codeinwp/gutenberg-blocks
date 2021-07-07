@@ -9,27 +9,21 @@ import { createHigherOrderComponent } from '@wordpress/compose';
 
 import { InspectorControls } from '@wordpress/block-editor';
 
-import { Fragment, useState, useEffect } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 
 import { addFilter } from '@wordpress/hooks';
 import { extractProductsData } from './fetch-data';
 
 import SelectProducts from './selectProduct';
 
+let products = [];
+
+extractProductsData().then( ( resp ) => products = resp );
+
 const withWooCommerceIntegrationExtension = createHigherOrderComponent(
 	( BlockEdit ) => {
 		return ( props ) => {
 			if ( 'themeisle-blocks/review' === props.name ) {
-				const [ products, setProducts ] = useState([]);
-
-				useEffect( () => {
-					extractProductsData().then( ( resp ) => setProducts( resp ) );
-				}, []);
-
-				useEffect( () => {
-					console.log( products );
-				}, [ products ]);
-
 				return (
 					<Fragment>
 						<BlockEdit {...props} />
