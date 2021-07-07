@@ -137,6 +137,7 @@ class Main {
 		}
 
 		add_filter( 'render_block', array( $this, 'render_amp' ), 10, 3 );
+		add_filter( 'render_block', array( $this, 'render_blocks' ), 10, 3 );
 
 		if ( isset( $allow_json ) && true === (bool) $allow_json && ! function_exists( 'is_wpcom_vip' ) ) {
 			add_filter( 'upload_mimes', array( $this, 'allow_json' ) ); //phpcs:ignore WordPressVIPMinimum.Filters.RestrictedHook.UploadMimes
@@ -168,7 +169,7 @@ class Main {
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
-			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'wp-polyfill', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player' ),
+			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'wp-polyfill', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player', 'macy' ),
 			self::$assets_version,
 			true
 		);
@@ -257,6 +258,14 @@ class Main {
 			plugin_dir_url( $this->get_dir() ) . 'assets/leaflet/leaflet-gesture-handling.min.css',
 			[],
 			self::$assets_version
+		);
+
+		wp_enqueue_script(
+			'macy',
+			plugin_dir_url( $this->get_dir() ) . 'assets/macy/macy.js',
+			[],
+			self::$assets_version,
+			true
 		);
 	}
 
@@ -700,6 +709,44 @@ class Main {
 				),
 			)
 		);
+	}
+
+	/**
+	 * Render Blocks
+	 *
+	 * @param string $block_content Content of block.
+	 * @param array  $block Block Attributes.
+	 *
+	 * @return mixed
+	 *
+	 * @since  1.7.0
+	 * @access public
+	 */
+	public function render_blocks( $block_content, $block ) {
+		if ( 'core/gallery' === $block['blockName'] && isset( $block['attrs']['isMasonry'] ) ) {
+			wp_enqueue_script(
+				'macy',
+				plugin_dir_url( $this->get_dir() ) . 'assets/macy/macy.js',
+				[],
+				self::$assets_version,
+				true
+			);
+
+			wp_enqueue_script(
+				'themeisle-gutenberg-masonry',
+				plugin_dir_url( $this->get_dir() ) . 'build/masonry.js',
+				array( 'macy' ),
+				self::$assets_version,
+				true
+			);;
+
+			$margin = isset( $block['attrs']['margin'] ) ? $block['attrs']['margin'] : 0;
+
+			$output = '<div class="wp-block-themeisle-blocks-masonry" data-margin="' . $margin . '">' . $block_content . '</div>';
+
+			return $output;
+		}
+		return $block_content;
 	}
 
 	/**
