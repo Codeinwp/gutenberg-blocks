@@ -14,44 +14,46 @@ import { Fragment, useState, useEffect } from '@wordpress/element';
 import { addFilter } from '@wordpress/hooks';
 import { extractProductsData } from './fetch-data';
 
+import SelectProducts from './selectProduct';
 
-const withWooCommerceIntegrationExtension = createHigherOrderComponent( BlockEdit => {
-	return ( props ) => {
+const withWooCommerceIntegrationExtension = createHigherOrderComponent(
+	( BlockEdit ) => {
+		return ( props ) => {
+			if ( 'themeisle-blocks/review' === props.name ) {
+				const [ products, setProducts ] = useState([]);
 
-		if ( 'themeisle-blocks/review' === props.name ) {
-			const [ wcData, setWCData ] = useState([]);
+				useEffect( () => {
+					extractProductsData().then( ( resp ) => setProducts( resp ) );
+				}, []);
 
-			useEffect( () => {
-				extractProductsData().then( resp => setWCData( resp ) );
-			}, []);
+				useEffect( () => {
+					console.log( products );
+				}, [ products ]);
 
-			useEffect( () => {
-				console.log( wcData );
-			}, [ wcData ]);
+				return (
+					<Fragment>
+						<BlockEdit {...props} />
 
+						<InspectorControls>
+							<PanelBody
+								title={__( 'WooCommerce Integration', 'otter-blocks' )}
+								initialOpen={false}
+							>
+								<SelectProducts products={ products } setAttributes={ props.setAttributes } />
+							</PanelBody>
+						</InspectorControls>
+					</Fragment>
+				);
+			}
 
-			return (
-				<Fragment>
-					 <BlockEdit { ...props } />
+			return <BlockEdit {...props} />;
+		};
+	},
+	'withWooCommerceIntegrationExtension'
+);
 
-
-					<InspectorControls>
-							 <PanelBody
-							title={ __( 'Images', 'otter-blocks' ) }
-							initialOpen={ false }
-						>
-
-							 </PanelBody>
-					</InspectorControls>
-
-				 </Fragment>
-			);
-		}
-
-		return <BlockEdit { ...props } />;
-	};
-}, 'withWooCommerceIntegrationExtension' );
-
-addFilter( 'editor.BlockEdit', 'themeisle-gutenberg/woocommerce-integration-extension', withWooCommerceIntegrationExtension );
-
-
+addFilter(
+	'editor.BlockEdit',
+	'themeisle-gutenberg/woocommerce-integration-extension',
+	withWooCommerceIntegrationExtension
+);

@@ -6,6 +6,7 @@ import apiFetch from '@wordpress/api-fetch';
  * @returns {Promise.<object>}
  */
 const getWCProductData = async() => {
+
 	return new Promise( ( resolve, reject ) => {
 		apiFetch({ path: 'wc/v3/products' }).then( resp => resolve( resp ) ).catch( err => reject( err ) );
 	});
@@ -24,6 +25,8 @@ const extractProductData = rawProduct => {
 export const extractProductsData = async() => {
 	return new Promise( async( resolve, reject ) => {
 		const rawData = await getWCProductData();
-		resolve( rawData.map( product => extractProductData( product ) ) );
+		resolve( rawData.map( product => {
+			return { id: product.id, product: extractProductData( product ) };
+		}) );
 	});
 };
