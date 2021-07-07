@@ -738,7 +738,7 @@ class Main {
 				array( 'macy' ),
 				self::$assets_version,
 				true
-			);;
+			);
 
 			$margin = isset( $block['attrs']['margin'] ) ? $block['attrs']['margin'] : 0;
 
