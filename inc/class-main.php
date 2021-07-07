@@ -735,7 +735,7 @@ class Main {
 			wp_enqueue_script(
 				'themeisle-gutenberg-masonry',
 				plugin_dir_url( $this->get_dir() ) . 'build/masonry.js',
-				array( 'macy' ),
+				array( 'wp-dom-ready', 'macy' ),
 				self::$assets_version,
 				true
 			);
