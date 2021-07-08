@@ -58,7 +58,8 @@ module.exports = {
 		'@wordpress/primitives': 'wp.primitives',
 		'@wordpress/rich-text': 'wp.richText',
 		'@wordpress/server-side-render': 'wp.serverSideRender',
-		'regenerator-runtime/runtime.js': 'window.regeneratorRuntime'
+		'regenerator-runtime/runtime.js': 'window.regeneratorRuntime',
+		'@woocommerce/block-data': 'wc.wcBlocksData'
 	},
 	output: {
 		path: path.resolve( __dirname, 'build' ),
