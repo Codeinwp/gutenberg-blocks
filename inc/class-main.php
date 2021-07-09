@@ -723,7 +723,7 @@ class Main {
 	 * @access public
 	 */
 	public function render_blocks( $block_content, $block ) {
-		if ( 'core/gallery' === $block['blockName'] && isset( $block['attrs']['isMasonry'] ) ) {
+		if ( ! is_admin() && 'core/gallery' === $block['blockName'] && isset( $block['attrs']['isMasonry'] ) ) {
 			wp_enqueue_script(
 				'macy',
 				plugin_dir_url( $this->get_dir() ) . 'assets/macy/macy.js',
@@ -746,6 +746,7 @@ class Main {
 
 			return $output;
 		}
+
 		return $block_content;
 	}
 

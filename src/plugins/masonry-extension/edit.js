@@ -82,7 +82,7 @@ const Edit = ({
 				>
 					<ToggleControl
 						label={ __( 'Masonry Layout', 'otter-blocks' ) }
-						help={ __( 'Toggle on to transform your boaring gallery to an exciting masonry layout.', 'otter-blocks' ) }
+						help={ __( 'Toggle on to transform your boring gallery to an exciting masonry layout.', 'otter-blocks' ) }
 						checked={ props.attributes.isMasonry }
 						onChange={ toggleMasonry }
 					/>
@@ -99,7 +99,13 @@ const Edit = ({
 				</PanelBody>
 			</InspectorControls>
 
-			<BlockEdit { ...props } />
+			{ props.attributes.isMasonry ? (
+				<div class="wp-block-themeisle-blocks-masonry">
+					<BlockEdit { ...props } />
+				</div>
+			) : (
+				<BlockEdit { ...props } />
+			) }
 		</Fragment>
 	);
 };

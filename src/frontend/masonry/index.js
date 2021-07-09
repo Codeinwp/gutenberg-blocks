@@ -22,7 +22,7 @@ domReady( () => {
 		columns = pattern.exec( columns );
 		columns = columns ? Number( columns[1]) : 3;
 
-		container.className = '';
+		container.removeAttribute( 'class' );
 
 		Macy({
 			container: gallery.querySelector( '.blocks-gallery-grid' ),
