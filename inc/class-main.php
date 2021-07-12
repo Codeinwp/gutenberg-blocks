@@ -647,6 +647,7 @@ class Main {
 			'\ThemeIsle\GutenbergBlocks\CSS\Block_Frontend',
 			'\ThemeIsle\GutenbergBlocks\CSS\CSS_Handler',
 			'\ThemeIsle\GutenbergBlocks\Plugins\Options_Settings',
+			'\ThemeIsle\GutenbergBlocks\Server\Filter_Blocks_Server',
 			'\ThemeIsle\GutenbergBlocks\Server\Plugin_Card_Server',
 			'\ThemeIsle\GutenbergBlocks\Server\Template_Library_Server',
 		);
