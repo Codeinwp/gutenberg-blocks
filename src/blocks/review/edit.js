@@ -37,7 +37,8 @@ const Edit = ({
 	setAttributes,
 	clientId,
 	className,
-	isSelected
+	isSelected,
+	productAttributes
 }) => {
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
@@ -115,7 +116,8 @@ const Edit = ({
 					<RichText
 						placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
 						allowedFormats={ [] }
-						value={ attributes.title }
+						value={ productAttributes?.title || attributes.title }
+						disabled= { productAttributes?.title !== undefined }
 						onChange={ title => setAttributes({ title }) }
 						tagName="h3"
 						style={ {
@@ -142,11 +144,11 @@ const Edit = ({
 								color: attributes.textColor
 							} }
 						>
-							{ ( attributes.price && attributes.discounted ) && (
-								<del>{ ( getSymbolFromCurrency( attributes.currency ) ?? '$' ) + '' + attributes.price || 0 }</del>
+							{ ( ( productAttributes?.price && productAttributes?.discounted ) || ( attributes.price && attributes.discounted ) ) && (
+								<del>{ ( getSymbolFromCurrency( productAttributes?.currency || attributes.currency ) ?? '$' ) + '' + productAttributes?.price || attributes.price || 0 }</del>
 							) }
 
-							{ ( attributes.price || attributes.discounted ) && ( getSymbolFromCurrency( attributes.currency ) ?? '$' ) + '' + ( attributes.discounted ? attributes.discounted : attributes.price ) }
+							{ ( attributes.price || attributes.discounted || productAttributes?.price || productAttributes?.discounted ) && ( getSymbolFromCurrency(  productAttributes?.currency || attributes.currency ) ?? '$' ) + '' + ( ( productAttributes?.discounted || attributes.discounted ) ? ( productAttributes?.discounted || attributes.discounted ) : ( productAttributes?.price || attributes.price ) ) }
 						</span>
 					</div>
 				</div>
@@ -170,8 +172,9 @@ const Edit = ({
 						{ ( isSelected || attributes.description ) && (
 							<RichText
 								placeholder={ __( 'Product description or a small review…', 'otter-blocks' ) }
-								value={ attributes.description }
+								value={ productAttributes?.description || attributes.description }
 								onChange={ description => setAttributes({ description }) }
+								disabled= { productAttributes?.description !== undefined }
 								tagName="p"
 								style={ {
 									color: attributes.textColor
@@ -202,7 +205,8 @@ const Edit = ({
 								<div className="wp-block-themeisle-blocks-review__left_feature">
 									<RichText
 										placeholder={ __( 'Feature title', 'otter-blocks' ) }
-										value={ feature.title }
+										value={ productAttributes?.title || feature.title }
+										disabled= { productAttributes?.title !== undefined }
 										className="wp-block-themeisle-blocks-review__left_feature_title"
 										onChange={ title => changeFeature( index, { title }) }
 										tagName="span"
@@ -286,7 +290,7 @@ const Edit = ({
 					) }
 				</div>
 
-				{ 0 < attributes.links.length && (
+				{ ( 0 < productAttributes?.links?.length || 0 < attributes.links.length ) && (
 					<div className="wp-block-themeisle-blocks-review__footer">
 						<span
 							className="wp-block-themeisle-blocks-review__footer_label"
@@ -298,10 +302,11 @@ const Edit = ({
 						</span>
 
 						<div className="wp-block-themeisle-blocks-review__footer_buttons">
-							{ attributes.links.map( ( link, index ) => (
+							{ ( productAttributes?.links || attributes.links ).map( ( link, index ) => (
 								<RichText
 									placeholder={ __( 'Button label', 'otter-blocks' ) }
 									value={ link.label }
+									disabled={ 0 < productAttributes?.links }
 									onChange={ label => changeLinks( index, { label }) }
 									tagName="span"
 									style={ {

@@ -7,30 +7,46 @@ import { createHigherOrderComponent } from '@wordpress/compose';
 import { InspectorControls } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import { addFilter } from '@wordpress/hooks';
-import { select } from '@wordpress/data';
+import { select, useSelect } from '@wordpress/data';
 import { COLLECTIONS_STORE_KEY } from '@woocommerce/block-data';
 
 import { extractProductsData } from './utility';
-import SelectProducts from './selectProduct';
+import SelectProducts from './SelectProduct';
 
 const { getCollection } = select( COLLECTIONS_STORE_KEY );
-
+console.log( getCollection( '/wc/store', 'products' ) );
 
 const withWooCommerceIntegrationExtension = createHigherOrderComponent(
 	( BlockEdit ) => {
 		return ( props ) => {
 			if ( 'themeisle-blocks/review' === props.name ) {
-				const productData =  getCollection( '/wc/store', 'products' );
+				const productData = useSelect( select => {
+					const { getCollection } = select( COLLECTIONS_STORE_KEY );
+					return getCollection( '/wc/store', 'products' );
+				}, [ props.attributes ]); //getCollection( '/wc/store', 'products' );
+				const products = extractProductsData( productData );
+				const selectedProduct = products?.filter( ({ id }) => id === props?.attributes?.postId )[0] || undefined;
+				console.log( products, selectedProduct );
 				return (
 					<Fragment>
-						<BlockEdit {...props} />
+						<BlockEdit
+							{...props}
+							productAttributes={ props?.attributes?.postId && 0 < products?.length && selectedProduct?.product ? selectedProduct.product : undefined}
+						/>
 
 						<InspectorControls>
 							<PanelBody
-								title={__( 'WooCommerce Integration', 'otter-blocks' )}
+								title={__(
+									'WooCommerce Integration',
+									'otter-blocks'
+								)}
 								initialOpen={false}
 							>
-								<SelectProducts products={ extractProductsData( productData ) } setAttributes={ props.setAttributes } />
+								<SelectProducts
+									products={products}
+									setAttributes={props.setAttributes}
+									attributes={props.attributes}
+								/>
 							</PanelBody>
 						</InspectorControls>
 					</Fragment>
