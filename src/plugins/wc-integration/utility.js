@@ -6,14 +6,14 @@ const extractImageData = ( image ) => {
 	};
 };
 
-const cleanDescription = ( description ) => {
-	return $( '<p>' ).html( description ).find( 'img' ).remove().end().text();
-};
+// const cleanDescription = ( description ) => {
+// 	return $( '<p>' ).html( description ).find( 'img' ).remove().end().text();
+// };
 
 const extractProductData = rawProduct => {
 	return {
 		title: rawProduct?.name,
-		description: rawProduct?.short_description || cleanDescription( rawProduct?.description ),
+		description: rawProduct?.short_description,
 		price: rawProduct?.prices?.price,
 		discounted: rawProduct?.prices?.price !== rawProduct?.prices?.sale_price ? rawProduct?.prices?.sale_price : undefined,
 		currency: rawProduct?.prices?.currency_code,

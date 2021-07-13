@@ -205,8 +205,7 @@ const Edit = ({
 								<div className="wp-block-themeisle-blocks-review__left_feature">
 									<RichText
 										placeholder={ __( 'Feature title', 'otter-blocks' ) }
-										value={ productAttributes?.title || feature.title }
-										disabled= { productAttributes?.title !== undefined }
+										value={ feature.title }
 										className="wp-block-themeisle-blocks-review__left_feature_title"
 										onChange={ title => changeFeature( index, { title }) }
 										tagName="span"

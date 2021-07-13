@@ -92,10 +92,6 @@ const attributes = {
 	},
 	postId: {
 		type: 'number'
-	},
-	isSync: {
-		type: 'boolean',
-		default: false
 	}
 };
 
