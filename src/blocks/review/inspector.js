@@ -19,7 +19,8 @@ import {
 	PanelBody,
 	RangeControl,
 	TextControl,
-	ToggleControl
+	ToggleControl,
+	Notice
 } from '@wordpress/components';
 
 import { useState } from '@wordpress/element';
@@ -61,7 +62,8 @@ const PanelItem = ({
 
 const Inspector = ({
 	attributes,
-	setAttributes
+	setAttributes,
+	productAttributes
 }) => {
 	const addFeature = () => {
 		const features = [ ...attributes.features ];
@@ -152,11 +154,23 @@ const Inspector = ({
 			<PanelBody
 				title={ __( 'Product Details', 'otter-blocks' ) }
 			>
+				{
+					attributes.postId && (
+						<Notice
+							status="warning"
+							isDismissible={ false }
+							className="wp-block-themeisle-blocks-anchor-control-notice"
+						>
+							{__( 'WooCommerce product synchronization is active. Some options might be disabled.', 'otter-blocks' ) }
+						</Notice>
+					)
+				}
 				<TextControl
 					label={ __( 'Product Name', 'otter-blocks' ) }
 					type="text"
 					placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
 					value={ attributes.title }
+					disabled={ '' !== productAttributes?.title }
 					onChange={ title => setAttributes({ title }) }
 				/>
 
@@ -180,6 +194,7 @@ const Inspector = ({
 					label={ __( 'Price', 'otter-blocks' ) }
 					type="number"
 					value={ attributes.price }
+					disabled={ productAttributes?.price }
 					onChange={ value => setAttributes({ price: Number( value ) }) }
 				/>
 
@@ -187,10 +202,11 @@ const Inspector = ({
 					label={ __( 'Discounted Price', 'otter-blocks' ) }
 					type="number"
 					value={ attributes.discounted }
+					disabled={ productAttributes?.discounted }
 					onChange={ value => setAttributes({ discounted: Number( value ) }) }
 				/>
 
-				{ ! attributes.image ? (
+				{ ! ( attributes.image && productAttributes?.image ) ? (
 					<MediaPlaceholder
 						labels={ {
 							title: __( 'Product Image', 'otter-blocks' )
@@ -205,13 +221,14 @@ const Inspector = ({
 						className="wp-block-themeisle-blocks-review__inspector_image"
 					>
 						<img
-							src={ attributes.image.url }
-							alt={ attributes.image.alt }
+							src={ productAttributes?.image?.url || attributes.image.url }
+							alt={ productAttributes?.image?.url || attributes.image.alt }
 						/>
 
 						<Button
 							isSecondary
 							onClick={ () => setAttributes({ image: undefined }) }
+							disabled={ productAttributes?.image?.url }
 						>
 							{ __( 'Remove image', 'otter-blocks' ) }
 						</Button>
@@ -318,6 +335,47 @@ const Inspector = ({
 				title={ __( 'Links', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
+				{
+					attributes.postId && (
+						<Notice
+							status="warning"
+							isDismissible={ false }
+							className="wp-block-themeisle-blocks-anchor-control-notice"
+						>
+							{__( 'WooCommerce product synchronization is active. Some options might be disabled.', 'otter-blocks' ) }
+						</Notice>
+					)
+				}
+
+				{ 0 < productAttributes?.links?.length && productAttributes?.links?.map( ( link, index ) => (
+					<PanelItem
+						title={ link.label || __( 'Link', 'otter-blocks' ) }
+						remove={ () => removeLinks( index ) }
+					>
+						<TextControl
+							label={ __( 'Label', 'otter-blocks' ) }
+							type="text"
+							placeholder={ __( 'Button label', 'otter-blocks' ) }
+							disabled={ true }
+							value={ link.label }
+						/>
+
+						<TextControl
+							label={ __( 'Link', 'otter-blocks' ) }
+							type="url"
+							placeholder={ 'https://…' }
+							value={ link.href }
+							disabled={ true }
+						/>
+
+						<ToggleControl
+							label={ __( 'Is this Sponsored?', 'otter-blocks' ) }
+							checked={ link.isSponsored }
+							disabled={ true }
+						/>
+					</PanelItem>
+				) ) }
+
 				{ 0 < attributes.links.length && attributes.links.map( ( link, index ) => (
 					<PanelItem
 						title={ link.label || __( 'Link', 'otter-blocks' ) }

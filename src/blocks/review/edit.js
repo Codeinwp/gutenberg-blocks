@@ -98,6 +98,7 @@ const Edit = ({
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
+				productAttributes={ productAttributes }
 			/>
 
 			<div
@@ -162,7 +163,12 @@ const Edit = ({
 							}
 						) }
 					>
-						{ attributes.image && (
+						{ ( productAttributes?.image ) ? (
+							<img
+								src={ productAttributes?.image?.url }
+								alt={ productAttributes?.image?.alt }
+							/>
+						) : attributes.image && (
 							<img
 								src={ attributes.image.url }
 								alt={ attributes.image.alt }
