@@ -122,6 +122,32 @@ class Review_Block extends Base_Block {
 	 */
 	protected function render( $attributes ) {
 
+		$sv = '';
+		if( isset( $attributes['postId'] ) && intval($attributes['postId']) >= 0) {
+			$request = new \WP_REST_Request( 'GET', '/wc/v3/products/' . $attributes['postId'] );
+			$response = rest_do_request($request);
+			$server = rest_get_server();
+			$data = $server->response_to_data( $response, false );
+			$json = wp_json_encode( $data );
+			$sv .= $json;
+
+			$attributes['title'] = $data['name'];
+			$attributes['description'] = $data['short_description'];
+			$attributes['price'] = $data['price'];
+			// $attributes['currency'] = $data['currency'];
+
+			if( ! empty( $data['sale_price'] ) && $data['price'] !== $data['sale_price'] ) {
+				$attributes['discounted'] = $data['sale_price'];
+			}
+
+			if ( ! empty( $data['images'] ) ) {
+				$img = $data['images'][0];
+				$attributes['image'] = array( 'url' => $img['src'], 'alt' => $img['alt'] );
+			}
+		}
+
+
+
 		if ( isset( $attributes['title'] ) && ! empty( $attributes['title'] ) && isset( $attributes['features'] ) && count( $attributes['features'] ) > 0 ) {
 			add_action(
 				'wp_footer',
@@ -237,6 +263,8 @@ class Review_Block extends Base_Block {
 			$html .= '	</div>';
 		}
 		$html .= '</div>';
+
+		$html .= $sv;
 
 		return $html;
 	}
