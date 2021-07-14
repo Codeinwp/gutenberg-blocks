@@ -125,49 +125,54 @@ class Review_Block extends Base_Block {
 		$sv = ''; // For debuging
 
 		if ( isset( $attributes['postId'] ) && intval( $attributes['postId'] ) >= 0 ) {
-			$request  = new \WP_REST_Request( 'GET', '/wc/v3/products/' . $attributes['postId'] );
+			$attributes['postId'] = -1;
+			$request  = new \WP_REST_Request( 'GET', '/wc/v3/products/' .  $attributes['postId']);
 			$response = rest_do_request( $request );
 			$server   = rest_get_server();
-			$data     = $server->response_to_data( $response, false );
 
-			// For debuging
-			// $json = wp_json_encode( $data );
-			// $sv .= $json;
-			$attributes['title']       = $data['name'];
-			$attributes['description'] = $data['short_description'];
-			$attributes['price']       = $data['price'];
-			// $attributes['currency'] = $data['currency'];
-			if ( ! empty( $data['sale_price'] ) && $data['price'] !== $data['sale_price'] ) {
-				$attributes['discounted'] = $data['sale_price'];
-			}
+			if( ! $response->is_error() ) {
+				$data     = $server->response_to_data( $response, false );
+				// For debuging
+				// $json = wp_json_encode( $data );
+				// $sv .= $json;
+				$attributes['title']       = $data['name'];
+				$attributes['description'] = $data['short_description'];
+				$attributes['price']       = $data['price'];
+				// $attributes['currency'] = $data['currency'];
+				if ( ! empty( $data['sale_price'] ) && $data['price'] !== $data['sale_price'] ) {
+					$attributes['discounted'] = $data['sale_price'];
+				}
 
-			if ( ! empty( $data['images'] ) ) {
-				$img                 = $data['images'][0];
-				$attributes['image'] = array(
-					'url' => $img['src'],
-					'alt' => $img['alt'],
-				);
-			}
+				if ( ! empty( $data['images'] ) ) {
+					$img                 = $data['images'][0];
+					$attributes['image'] = array(
+						'url' => $img['src'],
+						'alt' => $img['alt'],
+					);
+				}
 
-			// for future use
-			$out_of_stock_label = ( $data['stock_status'] === 'outofstock' ) ? '' : '';
+				// for future use
+				$out_of_stock_label = ( $data['stock_status'] === 'outofstock' ) ? '' : '';
 
-			if ( empty( $data['external_url'] ) ) {
-				$attributes['links'] = array(
-					array(
-						'label'       => 'Buy Now' . $out_of_stock_label,
-						'href'        => $data['permalink'],
-						'isSponsored' => false,
-					),
-				);
+				if ( empty( $data['external_url'] ) ) {
+					$attributes['links'] = array(
+						array(
+							'label'       => 'Buy Now' . $out_of_stock_label,
+							'href'        => $data['permalink'],
+							'isSponsored' => false,
+						),
+					);
+				} else {
+					$attributes['links'] = array(
+						array(
+							'label'       => 'Buy Now' . $out_of_stock_label,
+							'href'        => $data['external_url'],
+							'isSponsored' => true,
+						),
+					);
+				}
 			} else {
-				$attributes['links'] = array(
-					array(
-						'label'       => 'Buy Now' . $out_of_stock_label,
-						'href'        => $data['external_url'],
-						'isSponsored' => true,
-					),
-				);
+				error_log('[Review Block - WC] Product with the id: ' . $attributes['postId'] . ' does not longer exists!');
 			}
 		}
 
