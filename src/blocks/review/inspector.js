@@ -169,7 +169,7 @@ const Inspector = ({
 					label={ __( 'Product Name', 'otter-blocks' ) }
 					type="text"
 					placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
-					value={ attributes.title }
+					value={ productAttributes?.title || attributes.title }
 					disabled={ '' !== productAttributes?.title }
 					onChange={ title => setAttributes({ title }) }
 				/>
@@ -179,7 +179,8 @@ const Inspector = ({
 						label={ __( 'Currency', 'otter-blocks' ) }
 						type="text"
 						placeholder={ __( 'Currency code, like USD or EUR.', 'otter-blocks' ) }
-						value={ attributes.currency }
+						value={ productAttributes?.currency ||  attributes.currency }
+						disabled={ productAttributes?.currency }
 						onChange={ currency => setAttributes({ currency }) }
 					/>
 
@@ -193,7 +194,7 @@ const Inspector = ({
 				<TextControl
 					label={ __( 'Price', 'otter-blocks' ) }
 					type="number"
-					value={ attributes.price }
+					value={ productAttributes?.price || attributes.price }
 					disabled={ productAttributes?.price }
 					onChange={ value => setAttributes({ price: Number( value ) }) }
 				/>
@@ -201,12 +202,12 @@ const Inspector = ({
 				<TextControl
 					label={ __( 'Discounted Price', 'otter-blocks' ) }
 					type="number"
-					value={ attributes.discounted }
-					disabled={ productAttributes?.discounted }
+					value={ productAttributes?.discounted || attributes.discounted }
+					disabled={ productAttributes?.discounted || productAttributes?.price }
 					onChange={ value => setAttributes({ discounted: Number( value ) }) }
 				/>
 
-				{ ! ( attributes.image && productAttributes?.image ) ? (
+				{ ! ( attributes.image || productAttributes?.image ) ? (
 					<MediaPlaceholder
 						labels={ {
 							title: __( 'Product Image', 'otter-blocks' )
