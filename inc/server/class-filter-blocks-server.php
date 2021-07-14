@@ -97,10 +97,16 @@ class Filter_Blocks_Server {
 
 		$post_ids = array();
 
+		$posts_per_page = -1;
+
+		if ( function_exists( 'is_wpcom_vip' ) ) {
+			$posts_per_page = 100;
+		}
+
 		foreach ( $post_types as $key => $post_type ) {
 			$posts = get_posts(
 				array(
-					'posts_per_page' => -1,
+					'posts_per_page' => $posts_per_page,
 					'post_type'      => $post_type,
 				)
 			);
@@ -114,7 +120,13 @@ class Filter_Blocks_Server {
 	
 				foreach ( $post_blocks as $post_block ) {
 					if ( $block === $post_block['blockName'] ) {
-						$blocks[] = $post_block;
+						$blocks[] = array_merge(
+							array(
+								'ID'         => $post->ID,
+								'post_title' => $post->post_title,
+							),
+							$post_block
+						);
 					}
 				}
 			}

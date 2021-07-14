@@ -1,0 +1,113 @@
+.wp-block-themeisle-blocks-review-comparison {
+	table-layout: fixed;
+	border-spacing: 0;
+	margin: 20px 0;
+
+	thead {
+		tr {
+			th {
+				border-bottom: 1px solid #dddddd;
+			}
+
+			td {
+				padding: 20px;
+				text-align: center;
+				border-style: solid;
+				border-width: 1px 0 1px 1px;
+				border-color: #dddddd;
+				color: #000000;
+
+				&:first-child {
+					border-width: 1px 1px 0 1px;
+				}
+
+				&:last-child {
+					border-width: 1px;
+				}
+
+				img {
+					height: auto;
+					max-width: 100%;
+				}
+			}
+		}
+	}
+
+	tbody {
+		th {
+			border-width: 0 0 1px 1px;
+			border-style: solid;
+			border-color: #dddddd;
+			text-align: left;
+		}
+
+		td {
+			border-style: solid;
+			border-width: 0 0 1px 1px;;
+			border-color: #dddddd;
+			color: #000000;
+
+			del {
+				color: #A2A2A2;
+				padding-right: 5px;
+			}
+
+			.wp-block-themeisle-blocks-review-comparison__ratings {
+				display: flex;
+
+				svg {
+					max-width: 25px;
+					max-height: 25px;
+					width: 100%;
+					fill: #8F8F8F;
+
+					&.low {
+						fill: #D56159;
+					}
+
+					&.medium {
+						fill: #F2A141;
+					}
+
+					&.high {
+						fill: #63A76E;
+					}
+				}
+			}
+
+			.wp-block-themeisle-blocks-review-comparison__rating_container {
+				margin-bottom: 10px;
+			}
+
+			.wp-block-themeisle-blocks-review-comparison__buttons {
+				display: flex;
+				flex-direction: column;
+
+				span {
+					font-size: .8em;
+					font-weight: 600;
+					padding: 8px 12px;
+					transition: all .15s ease-in-out;
+					text-align: center;
+					border: 1px solid transparent;
+					border-radius: 3px;
+					text-transform: uppercase;
+					cursor: pointer;
+					line-height: normal;
+					font-family: inherit;
+					background: #1357BD;
+					color: #ffffff;
+					margin: 10px;
+				}
+			}
+
+			&:last-child {
+				border-width: 0 1px 1px 1px;
+			}
+		}
+	}
+
+	tr {
+		background-color: #ffffff;
+	}
+}
