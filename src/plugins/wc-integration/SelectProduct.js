@@ -29,7 +29,8 @@ const SelectProducts = ({ products, setAttributes, attributes }) => {
 		const selectedProduct = products?.filter( ({ id }) => id === productId );
 		if ( 0 < selectedProduct?.length ) {
 			setAttributes({
-				postId: selectedProduct[0]?.id
+				postId: selectedProduct[0]?.id,
+				currency: selectedProduct[0]?.product?.currency
 			});
 		} else {
 			setAttributes({

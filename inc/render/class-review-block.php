@@ -122,23 +122,20 @@ class Review_Block extends Base_Block {
 	 */
 	protected function render( $attributes ) {
 
-		$sv = ''; // For debuging
-
+		/**
+		 * Reference: https://woocommerce.github.io/woocommerce-rest-api-docs/#create-a-product
+		 * Chapter: Products -> Retrieve a product
+		 */
 		if ( isset( $attributes['postId'] ) && intval( $attributes['postId'] ) >= 0 ) {
-			$attributes['postId'] = -1;
 			$request  = new \WP_REST_Request( 'GET', '/wc/v3/products/' .  $attributes['postId']);
 			$response = rest_do_request( $request );
 			$server   = rest_get_server();
 
 			if( ! $response->is_error() ) {
 				$data     = $server->response_to_data( $response, false );
-				// For debuging
-				// $json = wp_json_encode( $data );
-				// $sv .= $json;
 				$attributes['title']       = $data['name'];
 				$attributes['description'] = $data['short_description'];
 				$attributes['price']       = $data['price'];
-				// $attributes['currency'] = $data['currency'];
 				if ( ! empty( $data['sale_price'] ) && $data['price'] !== $data['sale_price'] ) {
 					$attributes['discounted'] = $data['sale_price'];
 				}
@@ -172,11 +169,9 @@ class Review_Block extends Base_Block {
 					);
 				}
 			} else {
-				error_log('[Review Block - WC] Product with the id: ' . $attributes['postId'] . ' does not longer exists!');
+				error_log('[Otter][Review Block - WC] Product with the id: ' . $attributes['postId'] . ' does no longer exists!');
 			}
 		}
-
-
 
 		if ( isset( $attributes['title'] ) && ! empty( $attributes['title'] ) && isset( $attributes['features'] ) && count( $attributes['features'] ) > 0 ) {
 			add_action(
@@ -293,8 +288,6 @@ class Review_Block extends Base_Block {
 			$html .= '	</div>';
 		}
 		$html .= '</div>';
-
-		$html .= $sv;
 
 		return $html;
 	}
