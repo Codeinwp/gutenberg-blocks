@@ -6,6 +6,7 @@ import { debounce } from 'lodash';
 import apiFetch from '@wordpress/api-fetch';
 
 import {
+	dispatch,
 	select,
 	subscribe
 } from '@wordpress/data';
@@ -22,6 +23,7 @@ let reusableBlocks = {};
 subscribe( () => {
 	const {
 		isCurrentPostPublished,
+		getEditedPostAttribute,
 		isSavingPost,
 		isPublishingPost,
 		isAutosavingPost,
@@ -31,6 +33,24 @@ subscribe( () => {
 	const { __experimentalReusableBlocks } = select( 'core/block-editor' ).getSettings();
 
 	const { isSavingEntityRecord } = select( 'core' );
+
+	const { getBlocks } = select( 'core/block-editor' );
+
+	const { editPost } = dispatch( 'core/editor' );
+
+	const meta = getEditedPostAttribute( 'meta' ) || {};
+
+	if ( undefined !== meta._themeisle_gutenberg_block_has_review ) {
+		const hasReview = getBlocks().some( block => 'themeisle-blocks/review' === block.name );
+
+		if ( meta._themeisle_gutenberg_block_has_review !== hasReview ) {
+			editPost({
+				meta: {
+					'_themeisle_gutenberg_block_has_review': hasReview
+				}
+			});
+		}
+	}
 
 	let isSavingReusableBlock;
 
