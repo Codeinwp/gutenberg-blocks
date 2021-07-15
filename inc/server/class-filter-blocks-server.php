@@ -95,17 +95,17 @@ class Filter_Blocks_Server {
 		unset( $post_types['attachment'] );
 		array_push( $post_types, 'wp_block' );
 
-		$posts_per_page = -1;
-
-		if ( function_exists( 'is_wpcom_vip' ) ) {
-			$posts_per_page = 100;
-		}
-
 		foreach ( $post_types as $key => $post_type ) {
 			$posts = get_posts(
 				array(
-					'posts_per_page' => $posts_per_page,
+					'posts_per_page' => 100,
 					'post_type'      => $post_type,
+					'meta_query'    => array(
+						array(
+							'key'       => '_themeisle_gutenberg_block_has_review',
+							'value'     => true,
+						)
+					)
 				)
 			);
 

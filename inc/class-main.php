@@ -129,6 +129,7 @@ class Main {
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
 		add_action( 'init', array( $this, 'load_server_side_blocks' ), 11 );
+		add_action( 'init', array( $this, 'register_meta' ), 11 );
 
 		if ( version_compare( floatval( get_bloginfo( 'version' ) ), '5.8', '>=' ) ) {
 			add_filter( 'block_categories_all', array( $this, 'block_categories' ) );
@@ -700,6 +701,29 @@ class Main {
 					'slug'  => 'themeisle-blocks',
 					'title' => $this->name,
 				),
+			)
+		);
+	}
+
+	/**
+	 * Register post meta.
+	 *
+	 * @return mixed
+	 * @since   1.7.0
+	 * @access public
+	 * @link   https://developer.wordpress.org/reference/functions/register_meta/
+	 */
+	public function register_meta() {
+		register_post_meta(
+			'',
+			'_themeisle_gutenberg_block_has_review',
+			array(
+				'show_in_rest'  => true,
+				'single'        => true,
+				'type'          => 'boolean',
+				'auth_callback' => function() {
+					return current_user_can( 'edit_posts' );
+				},
 			)
 		);
 	}
