@@ -95,8 +95,6 @@ class Filter_Blocks_Server {
 		unset( $post_types['attachment'] );
 		array_push( $post_types, 'wp_block' );
 
-		$post_ids = array();
-
 		$posts_per_page = -1;
 
 		if ( function_exists( 'is_wpcom_vip' ) ) {

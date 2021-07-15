@@ -96,7 +96,7 @@ const Edit = ({
 			return;
 		}
 
-		attributes.reviews.map( value => {
+		attributes.reviews.forEach( value => {
 			const values = value.split( '-' );
 			const review = data.find( review => review.ID === Number( values[0]) && review.attrs.id.slice( review.attrs.id.length - 8 ) === values[1]);
 			const currency = getSymbolFromCurrency( review.attrs.currency ) ?? '$';
@@ -106,7 +106,7 @@ const Edit = ({
 
 			const featureRatings = [];
 
-			features.map( feature => {
+			features.forEach( feature => {
 				featureRatings.push(
 					<div className="wp-block-themeisle-blocks-review-comparison__rating_container">
 						<div className="wp-block-themeisle-blocks-review-comparison__rating_title">{ feature.title }</div>
@@ -117,7 +117,7 @@ const Edit = ({
 
 			const buttonLinks = [];
 
-			links.map( link => {
+			links.forEach( link => {
 				buttonLinks.push(
 					<span>{ link.label }</span>
 				);
