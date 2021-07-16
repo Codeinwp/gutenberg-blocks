@@ -114,17 +114,31 @@ const Edit = ({
 						borderColor: attributes.primaryColor
 					} }
 				>
-					<RichText
-						placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
-						allowedFormats={ [] }
-						value={ productAttributes?.title || attributes.title }
-						disabled= { productAttributes?.title !== undefined }
-						onChange={ title => setAttributes({ title }) }
-						tagName="h3"
-						style={ {
-							color: attributes.textColor
-						} }
-					/>
+					{
+						! productAttributes?.title ? (
+							<RichText
+								placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
+								allowedFormats={ [] }
+								value={ attributes.title }
+								onChange={ title => setAttributes({ title }) }
+								tagName="h3"
+								style={ {
+									color: attributes.textColor
+								} }
+							/>
+						) : (
+							<RichText.Content
+								placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
+								allowedFormats={ [] }
+								value={ productAttributes?.title }
+								tagName="h3"
+								style={ {
+									color: attributes.textColor
+								} }
+							/>
+						)
+					}
+
 
 					<div className="wp-block-themeisle-blocks-review__header_meta">
 						<div className="wp-block-themeisle-blocks-review__header_ratings">
@@ -175,12 +189,20 @@ const Edit = ({
 							/>
 						) }
 
-						{ ( isSelected || attributes.description ) && (
+						{ ( isSelected || attributes.description ) && ! productAttributes?.description ? (
 							<RichText
 								placeholder={ __( 'Product description or a small review…', 'otter-blocks' ) }
-								value={ productAttributes?.description || attributes.description }
+								value={ attributes.description }
 								onChange={ description => setAttributes({ description }) }
-								disabled= { productAttributes?.description !== undefined }
+								tagName="p"
+								style={ {
+									color: attributes.textColor
+								} }
+							/>
+						) : (
+							<RichText.Content
+								placeholder={ __( 'Product description or a small review…', 'otter-blocks' ) }
+								value={ productAttributes?.description }
 								tagName="p"
 								style={ {
 									color: attributes.textColor

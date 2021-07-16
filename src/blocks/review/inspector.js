@@ -149,6 +149,8 @@ const Inspector = ({
 		setAttributes({ links });
 	};
 
+	console.log( productAttributes );
+
 	return (
 		<InspectorControls>
 			<PanelBody
@@ -170,7 +172,7 @@ const Inspector = ({
 					type="text"
 					placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
 					value={ productAttributes?.title || attributes.title }
-					disabled={ '' !== productAttributes?.title }
+					disabled={ productAttributes?.title }
 					onChange={ title => setAttributes({ title }) }
 				/>
 

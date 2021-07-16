@@ -61,7 +61,7 @@ const withWooCommerceIntegrationExtension = createHigherOrderComponent(
 								initialOpen={false}
 							>
 								<SelectProducts
-									products={products}
+									products={  products }
 									setAttributes={props.setAttributes}
 									attributes={props.attributes}
 								/>
