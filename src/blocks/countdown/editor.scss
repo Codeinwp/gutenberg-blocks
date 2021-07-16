@@ -1,0 +1,41 @@
+.wp-block-themeisle-blocks-countdown {
+	.wp-block-themeisle-blocks-countdown-date-picker {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		.wp-block-themeisle-blocks-countdown-date-picker__container {
+			width: 300px;
+		}
+
+	}
+	.wp-block-themeisle-blocks-countdown-container {
+		.wp-block-themeisle-blocks-countdown-display {
+			display: flex;
+			flex-direction: row;
+			gap: 12px;
+			.wp-block-themeisle-blocks-countdown-display-component {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+				width: max-content;
+
+				.wp-block-themeisle-blocks-countdown-display-component_value {
+					font-size: xx-large;
+				}
+
+				.wp-block-themeisle-blocks-countdown-display-component_name {
+					font-size: medium;
+				}
+			}
+		}
+	}
+
+}
+
+// This modify the look of the DateTimePicker
+// file: http://localhost:8889/wp-content/themes/neve/assets/css/gutenberg-editor-style.min.css?ver=2.11.6
+.editor-styles-wrapper .wp-block table td, .editor-styles-wrapper .wp-block table th {
+	padding: unset;
+}
