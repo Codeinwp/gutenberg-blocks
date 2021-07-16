@@ -149,8 +149,6 @@ const Inspector = ({
 		setAttributes({ links });
 	};
 
-	console.log( productAttributes );
-
 	return (
 		<InspectorControls>
 			<PanelBody

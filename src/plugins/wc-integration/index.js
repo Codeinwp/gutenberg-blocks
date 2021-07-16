@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n';
 import { PanelBody } from '@wordpress/components';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { InspectorControls } from '@wordpress/block-editor';
-import { Fragment } from '@wordpress/element';
+import { Fragment, useEffect } from '@wordpress/element';
 import { addFilter } from '@wordpress/hooks';
 import { select } from '@wordpress/data';
 import { COLLECTIONS_STORE_KEY } from '@woocommerce/block-data';
@@ -44,6 +44,11 @@ const withWooCommerceIntegrationExtension = createHigherOrderComponent(
 
 				const products = extractProductsData( wcProductData );
 				const selectedProduct = products?.filter( ({ id }) => id === props?.attributes?.postId )[0] || undefined;
+
+				useEffect( () => {
+
+					// Empty useEffect for triggering the refresh
+				}, [ wcProductData ]);
 
 				return (
 					<Fragment>
