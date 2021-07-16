@@ -23,7 +23,7 @@ import {
 	Notice
 } from '@wordpress/components';
 
-import { useState } from '@wordpress/element';
+import { useState, Fragment } from '@wordpress/element';
 
 const PanelItem = ({
 	title,
@@ -377,43 +377,51 @@ const Inspector = ({
 					</PanelItem>
 				) ) }
 
-				{ 0 < attributes.links.length && attributes.links.map( ( link, index ) => (
-					<PanelItem
-						title={ link.label || __( 'Link', 'otter-blocks' ) }
-						remove={ () => removeLinks( index ) }
-					>
-						<TextControl
-							label={ __( 'Label', 'otter-blocks' ) }
-							type="text"
-							placeholder={ __( 'Button label', 'otter-blocks' ) }
-							value={ link.label }
-							onChange={ label => changeLinks( index, { label }) }
-						/>
+				{
+					! ( 0 < productAttributes?.links?.length ) && (
+						<Fragment>
+							{ 0 < attributes.links.length && attributes.links.map( ( link, index ) => (
+								<PanelItem
+									title={ link.label || __( 'Link', 'otter-blocks' ) }
+									remove={ () => removeLinks( index ) }
+								>
+									<TextControl
+										label={ __( 'Label', 'otter-blocks' ) }
+										type="text"
+										placeholder={ __( 'Button label', 'otter-blocks' ) }
+										value={ link.label }
+										onChange={ label => changeLinks( index, { label }) }
+									/>
 
-						<TextControl
-							label={ __( 'Link', 'otter-blocks' ) }
-							type="url"
-							placeholder={ 'https://…' }
-							value={ link.href }
-							onChange={ href => changeLinks( index, { href }) }
-						/>
+									<TextControl
+										label={ __( 'Link', 'otter-blocks' ) }
+										type="url"
+										placeholder={ 'https://…' }
+										value={ link.href }
+										onChange={ href => changeLinks( index, { href }) }
+									/>
 
-						<ToggleControl
-							label={ __( 'Is this Sponsored?', 'otter-blocks' ) }
-							checked={ link.isSponsored }
-							onChange={ () => changeLinks( index, { isSponsored: ! link.isSponsored }) }
-						/>
-					</PanelItem>
-				) ) }
+									<ToggleControl
+										label={ __( 'Is this Sponsored?', 'otter-blocks' ) }
+										checked={ link.isSponsored }
+										onChange={ () => changeLinks( index, { isSponsored: ! link.isSponsored }) }
+									/>
+								</PanelItem>
+							) ) }
 
-				<Button
-					isSecondary
-					isLarge
-					className="wp-block-themeisle-blocks-review__inspector_add"
-					onClick={ addLinks }
-				>
-					{ __( 'Add Links', 'otter-blocks' ) }
-				</Button>
+							<Button
+								isSecondary
+								isLarge
+								className="wp-block-themeisle-blocks-review__inspector_add"
+								onClick={ addLinks }
+							>
+								{ __( 'Add Links', 'otter-blocks' ) }
+							</Button>
+						</Fragment>
+					)
+				}
+
+
 			</PanelBody>
 
 			<PanelColorSettings
