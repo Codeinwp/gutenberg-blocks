@@ -107,3 +107,22 @@ export const convertToTitleCase = ( word ) => {
 	}
 	throw 'The parameter must be a string.';
 };
+
+/**
+ * Insert an item between the element of the array
+ * @param {Array} arr
+ * @param {any} item
+ * @returns
+ */
+export const insertBetweenItems = ( arr, item ) => {
+	const _arr = [];
+	arr?.forEach( ( listItem, index ) => {
+		_arr.push( listItem );
+
+		// Omit to add for the list item
+		if ( index < arr.length - 1 ) {
+			_arr.push( item );
+		}
+	});
+	return _arr;
+};
