@@ -215,12 +215,6 @@
 	&.is-style-single-column {
 		grid-template-columns: 1fr;
 		grid-template-areas: 'header' 'left' 'right' 'footer';
-
-		.wp-block-themeisle-blocks-review__right {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			gap: 50px;
-		}
 	}
 }
 
@@ -295,6 +289,18 @@
 					margin-left: 0;
 					margin-right: 20px;
 				}
+			}
+		}
+	}
+}
+
+@media ( min-width: 600px ) {
+	.wp-block-themeisle-blocks-review {
+		&.is-style-single-column {
+			.wp-block-themeisle-blocks-review__right {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 50px;
 			}
 		}
 	}

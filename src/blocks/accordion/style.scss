@@ -61,10 +61,10 @@
 
 	&:not( .is-narrow-gap ):not( .is-wide-gap ):not( .is-wider-gap ) {
 		.wp-block-themeisle-blocks-accordion-item {
-			&:not( :first-child ) {
-				.wp-block-themeisle-blocks-accordion-item__title {
-					border-top: none;
-				}
+			&:not( :first-child ):not(.wp-block-themeisle-blocks-accordion) > {
+					.wp-block-themeisle-blocks-accordion-item__title {
+						border-top: none;
+					}
 			}
 		}
 	}

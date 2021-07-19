@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import './style.scss';
 import './editor.scss';
 import 'regenerator-runtime/runtime.js';
 
