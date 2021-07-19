@@ -127,12 +127,12 @@ class Review_Block extends Base_Block {
 		 * Chapter: Products -> Retrieve a product
 		 */
 		if ( isset( $attributes['postId'] ) && intval( $attributes['postId'] ) >= 0 ) {
-			$request  = new \WP_REST_Request( 'GET', '/wc/v3/products/' .  $attributes['postId']);
+			$request  = new \WP_REST_Request( 'GET', '/wc/v3/products/' . $attributes['postId'] );
 			$response = rest_do_request( $request );
 			$server   = rest_get_server();
 
-			if( ! $response->is_error() ) {
-				$data     = $server->response_to_data( $response, false );
+			if ( ! $response->is_error() ) {
+				$data                      = $server->response_to_data( $response, false );
 				$attributes['title']       = $data['name'];
 				$attributes['description'] = $data['short_description'];
 				$attributes['price']       = $data['price'];
@@ -148,8 +148,8 @@ class Review_Block extends Base_Block {
 					);
 				}
 
-				// for future use
-				$out_of_stock_label = ( $data['stock_status'] === 'outofstock' ) ? '' : '';
+				// for future use.
+				$out_of_stock_label = ( 'outofstock' === $data['stock_status'] ) ? '' : '';
 
 				if ( empty( $data['external_url'] ) ) {
 					$attributes['links'] = array(
@@ -168,8 +168,6 @@ class Review_Block extends Base_Block {
 						),
 					);
 				}
-			} else {
-				error_log('[Otter][Review Block - WC] Product with the id: ' . $attributes['postId'] . ' does no longer exists!');
 			}
 		}
 
