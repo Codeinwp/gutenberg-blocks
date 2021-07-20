@@ -29,30 +29,33 @@ class Block_Conditions {
 	/**
 	 * Render Block
 	 *
+	 * @param string $block_content Content of block.
+	 * @param array  $block Block Attributes.
+	 * 
 	 * @since   1.7.0
 	 * @access  public
 	 */
 	public function render_blocks( $block_content, $block ) {
 		if ( ! is_admin() && isset( $block['attrs']['otterConditions'] ) ) {
-            foreach ( $block['attrs']['otterConditions'] as $condition ) {
-                if ( 'loggedInUser' === $condition['type'] && ! is_user_logged_in() ) {
-                    return;
-                }
+			foreach ( $block['attrs']['otterConditions'] as $condition ) {
+				if ( 'loggedInUser' === $condition['type'] && ! is_user_logged_in() ) {
+					return;
+				}
 
-                if ( 'loggedOutUser' === $condition['type'] && is_user_logged_in() ) {
-                    return;
-                }
+				if ( 'loggedOutUser' === $condition['type'] && is_user_logged_in() ) {
+					return;
+				}
 
-                if ( 'userRoles' === $condition['type'] ) {
-                    if ( ! is_user_logged_in() ) {
-                        return;
-                    }
+				if ( 'userRoles' === $condition['type'] ) {
+					if ( ! is_user_logged_in() ) {
+						return;
+					}
 
-                    if ( isset( $condition['roles'] ) && ! $this->has_user_roles( $condition['roles'] ) ) {
-                        return;
-                    }
-                }
-            }
+					if ( isset( $condition['roles'] ) && ! $this->has_user_roles( $condition['roles'] ) ) {
+						return;
+					}
+				}
+			}
 		}
 
 		return $block_content;
@@ -60,23 +63,25 @@ class Block_Conditions {
 
 	/**
 	 * Check current user's role.
+	 * 
+	 * @param array $roles Selected user roles.
 	 *
 	 * @since   1.7.0
 	 * @access  public
 	 */
-    public function has_user_roles( $roles ) {
-        $user = wp_get_current_user();
+	public function has_user_roles( $roles ) {
+		$user = wp_get_current_user();
 
-        $user_roles = (array) $user->roles;
-    
-        foreach ( (array) $roles as $role ) {
-            if ( in_array( $role, $user_roles ) ) {
-                return true;
-            }
-        }
+		$user_roles = (array) $user->roles;
+	
+		foreach ( (array) $roles as $role ) {
+			if ( in_array( $role, $user_roles ) ) {
+				return true;
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
 	/**
 	 * The instance method for the static class.
