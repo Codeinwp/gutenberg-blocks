@@ -22,6 +22,7 @@ const SelectProducts = ({ products, setAttributes, attributes }) => {
 		const selectedProduct = products?.filter( ({ id }) => id === targetId );
 		if ( 0 < selectedProduct?.length ) {
 			setAttributes( selectedProduct[0]?.product );
+			setProductId( -1 );
 		}
 	};
 
