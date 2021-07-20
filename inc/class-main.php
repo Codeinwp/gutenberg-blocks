@@ -192,6 +192,8 @@ class Main {
 
 		wp_set_script_translations( 'themeisle-gutenberg-blocks', 'otter-blocks' );
 
+		global $wp_roles;
+
 		wp_localize_script(
 			'themeisle-gutenberg-blocks',
 			'themeisleGutenberg',
@@ -206,6 +208,7 @@ class Main {
 				'imageSizes'    => function_exists( 'is_wpcom_vip' ) ? array( 'thumbnail', 'medium', 'medium_large', 'large' ) : get_intermediate_image_sizes(), //phpcs:ignore WordPressVIPMinimum.VIP.RestrictedFunctions.get_intermediate_image_sizes_get_intermediate_image_sizes
 				'isWPVIP'       => function_exists( 'is_wpcom_vip' ),
 				'canTrack'      => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
+				'userRoles'     => $wp_roles->roles,
 			)
 		);
 
@@ -655,6 +658,7 @@ class Main {
 		$classnames = array(
 			'\ThemeIsle\GutenbergBlocks\CSS\Block_Frontend',
 			'\ThemeIsle\GutenbergBlocks\CSS\CSS_Handler',
+			'\ThemeIsle\GutenbergBlocks\Plugins\Block_Conditions',
 			'\ThemeIsle\GutenbergBlocks\Plugins\Options_Settings',
 			'\ThemeIsle\GutenbergBlocks\Server\Plugin_Card_Server',
 			'\ThemeIsle\GutenbergBlocks\Server\Template_Library_Server',
