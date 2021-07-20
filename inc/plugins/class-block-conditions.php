@@ -51,7 +51,7 @@ class Block_Conditions {
 						return;
 					}
 
-					if ( isset( $condition['roles'] ) && ! $this->has_user_roles( $condition['roles'] ) ) {
+					if ( isset( $condition['roles'] ) && 'true' === $condition['visibility'] ? ! $this->has_user_roles( $condition['roles'] ) : $this->has_user_roles( $condition['roles'] ) ) {
 						return;
 					}
 				}

@@ -67,11 +67,19 @@ const Edit = ({
 
 	const changeCondition = ( value, key ) => {
 		let otterConditions = [ ...attributes.otterConditions  ];
+
+		let attrs = {};
+
+		if ( 'userRoles' === value ) {
+			attrs.visibility = true;
+		}
+
 		if ( 'none' === value ) {
 			otterConditions[ key ] = {};
 		} else {
 			otterConditions[ key ] = {
-				type: value
+				type: value,
+				...attrs
 			};
 		}
 		setAttributes({ otterConditions });
@@ -80,6 +88,12 @@ const Edit = ({
 	const changeRoles = ( value, key ) => {
 		let otterConditions = [ ...attributes.otterConditions  ];
 		otterConditions[ key ].roles = value;
+		setAttributes({ otterConditions });
+	};
+
+	const changeVisibility = ( value, key ) => {
+		let otterConditions = [ ...attributes.otterConditions  ];
+		otterConditions[ key ].visibility = value;
 		setAttributes({ otterConditions });
 	};
 
@@ -110,7 +124,7 @@ const Edit = ({
 			{
 				value: 'userRoles',
 				label: __( 'User Roles', 'otter-blocks' ),
-				help: __( 'The selected block will only be visible to selected users.' ),
+				help: __( 'The selected block will only be visible to defined user roles.' ),
 				disabled: otterConditions.find( ( condition, i ) => ( 'loggedOutUser' === condition.type || 'loggedOutUser' === condition.type ) && n !== i )
 			}
 		];
@@ -147,6 +161,24 @@ const Edit = ({
 								onChange={ roles => changeRoles( roles, n ) }
 								__experimentalExpandOnFocus={ true }
 								__experimentalValidateInput={ newValue => Object.keys( window.themeisleGutenberg.userRoles ).includes( newValue ) }
+							/>
+						) }
+
+						{ 'userRoles' === i.type && (
+							<SelectControl
+								label={ __( 'If condition is true, the block should be:', 'otter-blocks' ) }
+								options={ [
+									{
+										value: true,
+										label: __( 'Visible', 'otter-blocks' )
+									},
+									{
+										value: false,
+										label: __( 'Hidden', 'otter-blocks' )
+									}
+								] }
+								value={ i.visibility }
+								onChange={ e => changeVisibility( e, n ) }
 							/>
 						) }
 					</PanelTab>
