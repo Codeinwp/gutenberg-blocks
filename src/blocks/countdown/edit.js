@@ -1,4 +1,9 @@
 /* eslint-disable no-unused-vars */
+/** @jsx jsx */
+import {
+	jsx,
+	css
+} from '@emotion/react';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import { DateTimePicker, Button } from '@wordpress/components';
@@ -49,6 +54,44 @@ const Edit = ({ attributes, setAttributes, clientId }) => {
 		};
 	}, [ date ]);
 
+	const baseCSS = css`
+	.wp-block-themeisle-blocks-countdown-display-component .wp-block-themeisle-blocks-countdown-display-component_value {
+		color: ${ attributes.valueColor };
+		font-size: ${ attributes.valueFontSize }px !important;
+	}
+
+	.wp-block-themeisle-blocks-countdown-display-component .wp-block-themeisle-blocks-countdown-display-component_label {
+		color: ${ attributes.labelColor };
+		font-size: ${ attributes.labelFontSize }px !important;
+	}
+
+	.wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display {
+		gap: ${ attributes.gap }px;
+	}
+	`;
+
+	const blockStyle = {
+		ignoreSeperator: false,
+		styleName: 'block-style',
+		dynamicCSS: css`
+		.wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component.block-style {
+			background-color: ${ attributes.backgroundColor || 'crimson' };
+			height: ${ attributes.width || 80 }px;
+			width: ${ attributes.height || 80 }px;
+			border-radius: ${ attributes.borderRadius || 10 }px;
+			border-width: ${ attributes.borderWidth }px;
+			border-style: ${ 0 < attributes.borderRadius ? 'solid' : 'unset' }
+		}
+		`
+	};
+
+	const defaultStyle = {
+		ignoreSeperator: false,
+		styleName: 'default-style',
+		dynamicCSS: css``
+	};
+
+
 	return (
 		<Fragment>
 			<Controls
@@ -59,7 +102,7 @@ const Edit = ({ attributes, setAttributes, clientId }) => {
 				attributes={ attributes }
 				setAttributes={ setAttributes }
 			/>
-			<div className="wp-block-themeisle-blocks-countdown" id={ attributes.id }>
+			<div css={[ baseCSS, blockStyle.dynamicCSS ]} className="wp-block-themeisle-blocks-countdown" id={ attributes.id }>
 				{
 					( ! attributes?.date || isEditing ) && (
 						<div className="wp-block-themeisle-blocks-countdown-date-picker">
@@ -83,7 +126,7 @@ const Edit = ({ attributes, setAttributes, clientId }) => {
 						</div>
 					)
 				}
-				<DisplayTime time={ getIntervalFromUnix( unixTime, {exclude: attributes?.exclude }) || time} />
+				<DisplayTime time={ getIntervalFromUnix( unixTime, {exclude: attributes?.exclude }) || time} {...blockStyle}/>
 			</div>
 		</Fragment>
 	);

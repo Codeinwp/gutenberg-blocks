@@ -1,11 +1,14 @@
-
-
 import { __ } from '@wordpress/i18n';
 import {
 	PanelBody,
-	ToggleControl
+	ToggleControl,
+	RangeControl
 } from '@wordpress/components';
-import { InspectorControls } from '@wordpress/block-editor';
+import {
+	ContrastChecker,
+	InspectorControls,
+	PanelColorSettings
+} from '@wordpress/block-editor';
 
 
 const Inspector = ({
@@ -24,6 +27,46 @@ const Inspector = ({
 				exclude: attributes?.exclude ? [ ...attributes?.exclude, componentName ] : [ componentName ]
 			});
 		}
+	};
+
+	const onBackgroundColorChange = value => {
+		setAttributes({ backgroundColor: value});
+	};
+
+	const onLabelColorChange = value => {
+		setAttributes({ labelColor: value});
+	};
+
+	const onValueColorChange = value => {
+		setAttributes({ valueColor: value});
+	};
+
+	const onGapChange = value => {
+		setAttributes({ gap: Number( value )});
+	};
+
+	const onWidthChange = value => {
+		setAttributes({ width: Number( value )});
+	};
+
+	const onHeightChange = value => {
+		setAttributes({ height: Number( value )});
+	};
+
+	const onBorderRadiusChange = value => {
+		setAttributes({ borderRadius: Number( value ) });
+	};
+
+	const onValueFontSizeChange = value => {
+		setAttributes({ valueFontSize: Number( value ) });
+	};
+
+	const onLabelFontSizeChange = value => {
+		setAttributes({ labelFontSize: Number( value ) });
+	};
+
+	const onBorderWidthChange = value => {
+		setAttributes({ borderWidth: Number( value ) });
 	};
 
 	return (
@@ -54,7 +97,92 @@ const Inspector = ({
 					onChange={ value => excludeComponent( value, 'second' ) }
 				/>
 
+				<RangeControl
+					label={ __( 'Box Spacing', 'otter-blocks' ) }
+					value={ attributes.gap }
+					onChange={ onGapChange }
+					min={ 0 }
+					max={ 100 }
+				/>
+
+				<RangeControl
+					label={ __( 'Box Height', 'otter-blocks' ) }
+					value={ attributes.height }
+					onChange={ onHeightChange }
+					min={ 40 }
+					max={ 500 }
+				/>
+
+				<RangeControl
+					label={ __( 'Box Width', 'otter-blocks' ) }
+					value={ attributes.width }
+					onChange={ onWidthChange }
+					min={ 40 }
+					max={ 500 }
+				/>
+
+				<RangeControl
+					label={ __( 'Border Radius', 'otter-blocks' ) }
+					value={ attributes.borderRadius }
+					onChange={ onBorderRadiusChange }
+					min={ 0 }
+					max={ 200 }
+				/>
+
+				<RangeControl
+					label={ __( 'Border Width', 'otter-blocks' ) }
+					value={ attributes.borderWidth }
+					onChange={ onBorderWidthChange }
+					min={ 0 }
+					max={ 50 }
+				/>
+
+				<RangeControl
+					label={ __( 'Value Font Size', 'otter-blocks' ) }
+					value={ attributes.valueFontSize }
+					onChange={ onValueFontSizeChange }
+					min={ 0 }
+					max={ 64 }
+				/>
+
+				<RangeControl
+					label={ __( 'Label Font Size', 'otter-blocks' ) }
+					value={ attributes.labelFontSize }
+					onChange={ onLabelFontSizeChange }
+					min={ 0 }
+					max={ 64 }
+				/>
+
 			</PanelBody>
+
+			<PanelColorSettings
+				title={ __( 'Color', 'otter-blocks' ) }
+				initialOpen={ false }
+				colorSettings={ [
+					{
+						value: attributes.backgroundColor,
+						onChange: onBackgroundColorChange,
+						label: __( 'Background', 'otter-blocks' )
+					},
+					{
+						value: attributes.labelColor,
+						onChange: onLabelColorChange,
+						label: __( 'Label', 'otter-blocks' )
+					},
+					{
+						value: attributes.valueColor,
+						onChange: onValueColorChange,
+						label: __( 'Value', 'otter-blocks' )
+					}
+				] }
+			>
+				<ContrastChecker
+					{ ...{
+						textColor: attributes.backgroundColor,
+						backgroundColor: attributes.valueColor
+					} }
+				/>
+			</PanelColorSettings>
 		</InspectorControls>
 	);
 };

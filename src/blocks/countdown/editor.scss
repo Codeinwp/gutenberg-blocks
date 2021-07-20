@@ -23,12 +23,21 @@
 				align-items: center;
 				flex-direction: column;
 				width: max-content;
+				border: unset;
+				border-radius: 10px;
+
+				&.block-style {
+
+					&[name="separator"] {
+						display: none;
+					}
+				}
 
 				.wp-block-themeisle-blocks-countdown-display-component_value {
 					font-size: 2rem;
 				}
 
-				.wp-block-themeisle-blocks-countdown-display-component_name {
+				.wp-block-themeisle-blocks-countdown-display-component_label {
 					font-size: 1rem;
 					min-height: 2rem;
 				}
