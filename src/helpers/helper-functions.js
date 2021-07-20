@@ -1,3 +1,4 @@
+
 import { without } from 'lodash';
 
 // HTML to Plaintext
@@ -125,4 +126,55 @@ export const insertBetweenItems = ( arr, item ) => {
 		}
 	});
 	return _arr;
+};
+
+const _MS_PER_SECONDS = 1000;
+const _MS_PER_MINUTES = _MS_PER_SECONDS * 60;
+const _MS_PER_HOURS = _MS_PER_MINUTES * 60;
+const _MS_PER_DAY = _MS_PER_HOURS * 24;
+
+export const getIntervalFromUnix = ( unixTime, settings ) => {
+
+	unixTime = unixTime ? unixTime : 0;
+
+	const days = Math.floor( unixTime / _MS_PER_DAY );
+	const hours = Math.floor( unixTime / _MS_PER_HOURS % 24 );
+	const minutes = Math.floor( unixTime / _MS_PER_MINUTES % 60 );
+	const seconds = Math.floor( unixTime / _MS_PER_SECONDS % 60 );
+
+	let time = [
+		{
+			tag: 'day',
+			name: 1 < days ? 'Days' : 'Day',
+			value: days
+		},
+		{
+			tag: 'hour',
+			name: 1 < hours ? 'Hours' : 'Hour',
+			value: hours
+		},
+		{
+			tag: 'minute',
+			name: 1 < minutes ? 'Minutes' : 'Minute',
+			value: minutes
+		},
+		{
+			tag: 'second',
+			name: 1 < seconds ? 'Seconds' : 'Second',
+			value: seconds
+		}
+	];
+
+	if ( settings?.exclude ) {
+		time = time.filter( ({ tag }) => ! settings.exclude.includes( tag ) );
+	}
+
+	if ( ! settings?.keepNeg ) {
+		time = time.map( obj => {
+			obj.value = Math.max( 0, obj.value );
+			return obj;
+		});
+	}
+
+	return time;
 };

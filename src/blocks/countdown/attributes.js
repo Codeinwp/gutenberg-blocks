@@ -4,6 +4,9 @@ const attributes = {
 	},
 	date: {
 		type: 'string'
+	},
+	exclude: {
+		type: 'array'
 	}
 };
 

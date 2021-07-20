@@ -10,6 +10,9 @@
 
 	}
 	.wp-block-themeisle-blocks-countdown-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		.wp-block-themeisle-blocks-countdown-display {
 			display: flex;
 			flex-direction: row;
@@ -22,11 +25,12 @@
 				width: max-content;
 
 				.wp-block-themeisle-blocks-countdown-display-component_value {
-					font-size: xx-large;
+					font-size: 2rem;
 				}
 
 				.wp-block-themeisle-blocks-countdown-display-component_name {
-					font-size: medium;
+					font-size: 1rem;
+					min-height: 2rem;
 				}
 			}
 		}

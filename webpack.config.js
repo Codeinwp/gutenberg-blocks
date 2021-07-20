@@ -34,6 +34,9 @@ module.exports = {
 		],
 		tabs: [
 			...glob.sync( './src/frontend/tabs/index.js' )
+		],
+		countdown: [
+			...glob.sync( './src/frontend/countdown/index.js' )
 		]
 	},
 	externals: {

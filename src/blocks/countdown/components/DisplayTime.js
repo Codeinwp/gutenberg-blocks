@@ -1,11 +1,9 @@
-/* eslint-disable no-unused-vars */
-
 import { Fragment } from '@wordpress/element';
 import { insertBetweenItems } from '../../../helpers/helper-functions';
 
-const DisplayTimeComponent = ({ name, value, key }) => {
+const DisplayTimeComponent = ({ name, value, tag, key }) => {
 	return (
-		<div key={key} className="wp-block-themeisle-blocks-countdown-display-component">
+		<div key={key} name ={ tag }className="wp-block-themeisle-blocks-countdown-display-component">
 			<div className="wp-block-themeisle-blocks-countdown-display-component_value">
 				{ value }
 			</div>
@@ -16,22 +14,12 @@ const DisplayTimeComponent = ({ name, value, key }) => {
 	);
 };
 
-/**
- *
- * @param {Array} time
- * @param {Object} settings
- * @returns
- */
-const applySettings = ( time, settings ) => {
-	return time.fillter( ({ name }) => ! settings.excluded.includes( name ) );
-};
 
-const DisplayTime = ({ time, settings }) => {
+const DisplayTime = ({ time }) => {
 
-	const elemToDisplay = insertBetweenItems( time, {name: 'asf', value: ':'});
+	const elemToDisplay = insertBetweenItems( time, {name: ' ', value: ':'});
 
 	const renderElem = elemToDisplay?.map( ( elem, key ) => <DisplayTimeComponent {...elem} key={key} /> );
-	console.log( renderElem, insertBetweenItems( renderElem, <DisplayTime name=':' value='' />  ) );
 
 	return time !== undefined ? (
 		<div className="wp-block-themeisle-blocks-countdown-container">

@@ -70,6 +70,13 @@ class Main {
 	public static $is_tabs_loaded = false;
 
 	/**
+	 * Flag to mark that Countdown script has been loaded.
+	 *
+	 * @var bool $is_countdown_loaded Is Tabs loaded?
+	 */
+	public static $is_countdown_loaded = false;
+
+	/**
 	 * Define assets version.
 	 *
 	 * @var string $assets_version Holds assets version.
@@ -516,6 +523,18 @@ class Main {
 				'themeisle-gutenberg-tabs',
 				plugin_dir_url( $this->get_dir() ) . 'build/tabs.js',
 				array( 'wp-i18n', 'wp-dom-ready' ),
+				self::$assets_version,
+				true
+			);
+
+			self::$is_circle_counter_loaded = true;
+		}
+
+		if ( ! self::$is_countdown_loaded && has_block( 'themeisle-blocks/countdown', $post ) ) {
+			wp_enqueue_script(
+				'themeisle-gutenberg-countdown',
+				plugin_dir_url( $this->get_dir() ) . 'build/countdown.js',
+				array( 'wp-dom-ready', 'wp-i18n', 'lodash' ),
 				self::$assets_version,
 				true
 			);
