@@ -139,14 +139,14 @@ class Review_Block extends Base_Block {
 
 			$attributes['image'] = array(
 				'url' => \wp_get_attachment_image_url( $product->get_image_id(), '' ),
-				'alt' => \get_post_meta( $product->get_image_id(), '_wp_attachment_image_alt', true),
+				'alt' => \get_post_meta( $product->get_image_id(), '_wp_attachment_image_alt', true ),
 			);
 
 			$attributes['links'] = array(
 				array(
 					'label'       => 'Buy Now',
-					'href'        => method_exists($product, 'get_product_url') ? $product->get_product_url() : $product->add_to_cart_url(),
-					'isSponsored' => method_exists($product, 'get_product_url'),
+					'href'        => method_exists( $product, 'get_product_url' ) ? $product->get_product_url() : $product->add_to_cart_url(),
+					'isSponsored' => method_exists( $product, 'get_product_url' ),
 				),
 			);
 
