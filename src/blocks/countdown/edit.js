@@ -46,13 +46,13 @@ const Edit = ({ attributes, setAttributes, clientId }) => {
 
 	useEffect( () => {
 		const interval = setInterval( () => {
-			setUnixTime( new Date( date ) - new Date() );
+			setUnixTime( new Date( attributes.date || date ) - new Date() );
 		}, 500 );
 
 		return () => {
 			clearInterval( interval );
 		};
-	}, [ date ]);
+	}, [ date, attributes.date ]);
 
 	const baseCSS = css`
 	.wp-block-themeisle-blocks-countdown-display-component .wp-block-themeisle-blocks-countdown-display-component_value {
@@ -75,7 +75,7 @@ const Edit = ({ attributes, setAttributes, clientId }) => {
 		styleName: 'block-style',
 		dynamicCSS: css`
 		.wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component.block-style {
-			background-color: ${ attributes.backgroundColor || 'crimson' };
+			background-color: ${ attributes.backgroundColor };
 			height: ${ attributes.width || 80 }px;
 			width: ${ attributes.height || 80 }px;
 			border-radius: ${ attributes.borderRadius || 10 }px;
@@ -104,13 +104,14 @@ const Edit = ({ attributes, setAttributes, clientId }) => {
 			/>
 			<div css={[ baseCSS, blockStyle.dynamicCSS ]} className="wp-block-themeisle-blocks-countdown" id={ attributes.id }>
 				{
+
 					( ! attributes?.date || isEditing ) && (
 						<div className="wp-block-themeisle-blocks-countdown-date-picker">
 							<div className="wp-block-themeisle-blocks-countdown-date-picker__container">
 								<DateTimePicker
 									currentDate={ date }
 									onChange={ setDate }
-									is12Hour={ false }
+									is12Hour={ attributes?.is12Hour }
 								/>
 							</div>
 							<Button

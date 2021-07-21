@@ -2,7 +2,8 @@ import { __ } from '@wordpress/i18n';
 import {
 	PanelBody,
 	ToggleControl,
-	RangeControl
+	RangeControl,
+	DateTimePicker
 } from '@wordpress/components';
 import {
 	ContrastChecker,
@@ -71,6 +72,21 @@ const Inspector = ({
 
 	return (
 		<InspectorControls>
+			<PanelBody
+				title={ __( 'Time', 'otter-blocks' ) }
+				initialOpen={ true }
+			>
+				<ToggleControl
+					label={ __( '12 Hours Format', 'otter-blocks' ) }
+					checked={ attributes?.is12Hour }
+					onChange={ value =>  setAttributes({ is12Hour: value})}
+				/>
+				<DateTimePicker
+					currentDate={ attributes.date }
+					onChange={ date => setAttributes({ date }) }
+					is12Hour={ attributes?.is12Hour }
+				/>
+			</PanelBody>
 			<PanelBody
 				title={ __( 'Settings', 'otter-blocks' ) }
 				initialOpen={ true }
