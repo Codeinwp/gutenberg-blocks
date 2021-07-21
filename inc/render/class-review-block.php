@@ -123,53 +123,36 @@ class Review_Block extends Base_Block {
 	protected function render( $attributes ) {
 
 		/**
-		 * Reference: https://woocommerce.github.io/woocommerce-rest-api-docs/#create-a-product
+		 * Reference: https://woocommerce.github.io/code-reference/classes/WC-Product.html | https://woocommerce.github.io/woocommerce-rest-api-docs/#create-a-product
 		 * Chapter: Products -> Retrieve a product
 		 */
-		if ( isset( $attributes['postId'] ) && intval( $attributes['postId'] ) >= 0 ) {
-			$request  = new \WP_REST_Request( 'GET', '/wc/v3/products/' . $attributes['postId'] );
-			$response = rest_do_request( $request );
-			$server   = rest_get_server();
+		if ( isset( $attributes['postId'] ) && intval( $attributes['postId'] ) >= 0 && class_exists( 'WooCommerce' ) ) {
 
-			if ( ! $response->is_error() ) {
-				$data                      = $server->response_to_data( $response, false );
-				$attributes['title']       = $data['name'];
-				$attributes['description'] = $data['short_description'];
-				$attributes['price']       = $data['price'];
-				if ( ! empty( $data['sale_price'] ) && $data['price'] !== $data['sale_price'] ) {
-					$attributes['discounted'] = $data['sale_price'];
-				}
+			$product = wc_get_product( $attributes['postId'] );
 
-				if ( ! empty( $data['images'] ) ) {
-					$img                 = $data['images'][0];
-					$attributes['image'] = array(
-						'url' => $img['src'],
-						'alt' => $img['alt'],
-					);
-				}
-
-				// for future use.
-				$out_of_stock_label = ( 'outofstock' === $data['stock_status'] ) ? '' : '';
-
-				if ( empty( $data['external_url'] ) ) {
-					$attributes['links'] = array(
-						array(
-							'label'       => 'Buy Now' . $out_of_stock_label,
-							'href'        => $data['permalink'],
-							'isSponsored' => false,
-						),
-					);
-				} else {
-					$attributes['links'] = array(
-						array(
-							'label'       => 'Buy Now' . $out_of_stock_label,
-							'href'        => $data['external_url'],
-							'isSponsored' => true,
-						),
-					);
-				}
+			$attributes['title']       = $product->get_name();
+			$attributes['description'] = $product->get_short_description();
+			$attributes['price']       = $product->get_price();
+			if ( ! empty( $product->get_sale_price() ) && $product->get_price() !== $product->get_sale_price() ) {
+				$attributes['discounted'] = $product->get_sale_price();
 			}
+
+			$attributes['image'] = array(
+				'url' => \wp_get_attachment_image_url( $product->get_image_id(), '' ),
+				'alt' => \get_post_meta( $product->get_image_id(), '_wp_attachment_image_alt', true),
+			);
+
+			$attributes['links'] = array(
+				array(
+					'label'       => 'Buy Now',
+					'href'        => method_exists($product, 'get_product_url') ? $product->get_product_url() : $product->add_to_cart_url(),
+					'isSponsored' => method_exists($product, 'get_product_url'),
+				),
+			);
+
 		}
+
+
 
 		if ( isset( $attributes['title'] ) && ! empty( $attributes['title'] ) && isset( $attributes['features'] ) && count( $attributes['features'] ) > 0 ) {
 			add_action(
