@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /**
  * WordPress dependencies.
  */
@@ -12,7 +13,8 @@ import {
 	Button,
 	FormTokenField,
 	PanelBody,
-	SelectControl
+	SelectControl,
+	TextControl
 } from '@wordpress/components';
 
 import { useSelect } from '@wordpress/data';
@@ -108,8 +110,12 @@ const Edit = ({
 
 		let attrs = {};
 
-		if ( 'userRoles' === value ) {
+		if ( 'userRoles' === value || 'postAuthor' === value || 'postMeta' === value ) {
 			attrs.visibility = true;
+		}
+
+		if ( 'postMeta' === value ) {
+			attrs.meta_compare = 'is_true';
 		}
 
 		if ( 'none' === value ) {
@@ -142,6 +148,12 @@ const Edit = ({
 		setAttributes({ otterConditions });
 	};
 
+	const changeValue = ( value, index, key, field ) => {
+		let otterConditions = [ ...attributes.otterConditions  ];
+		otterConditions[ index ][ key ][ field ] = value;
+		setAttributes({ otterConditions });
+	};
+
 	const getConditions = () => {
 		const conditions = [
 			{
@@ -168,6 +180,11 @@ const Edit = ({
 				value: 'postAuthor',
 				label: __( 'Post Author', 'otter-blocks' ),
 				help: __( 'The selected block will only be visible to posts written by selected authors.' )
+			},
+			{
+				value: 'postMeta',
+				label: __( 'Post Meta', 'otter-blocks' ),
+				help: __( 'The selected block will only be visible based on post meta condition.' )
 			}
 		];
 
@@ -224,6 +241,7 @@ const Edit = ({
 
 												<optgroup label={ __( 'Posts', 'otter-blocks' ) }>
 													<option value="postAuthor">{ __( 'Post Author', 'otter-blocks' ) }</option>
+													<option value="postMeta">{ __( 'Post Meta', 'otter-blocks' ) }</option>
 												</optgroup>
 											</select>
 										</BaseControl>
@@ -250,7 +268,56 @@ const Edit = ({
 											/>
 										) }
 
-										{ ( 'userRoles' === i.type || 'postAuthor' === i.type ) && (
+										{ 'postMeta' === i.type && (
+											<Fragment>
+												<TextControl
+													label={ __( 'Meta Key', 'otter-blocks' ) }
+													help={ __( 'Key of the meta you want to compare.', 'otter-blocks' ) }
+													placeholder={ __( '_meta_key', 'otter-blocks' ) }
+													value={ i.meta_key }
+													onChange={ e => changeValue( e, index, n, 'meta_key' ) }
+												/>
+
+												<SelectControl
+													label={ __( 'Compare Operator', 'otter-blocks' ) }
+													options={ [
+														{
+															value: 'is_true',
+															label: __( 'Is True', 'otter-blocks' )
+														},
+														{
+															value: 'is_false',
+															label: __( 'Is False', 'otter-blocks' )
+														},
+														{
+															value: 'is_empty',
+															label: __( 'Is Empty', 'otter-blocks' )
+														},
+														{
+															value: 'if_equals',
+															label: __( 'If Equals', 'otter-blocks' )
+														},
+														{
+															value: 'if_contains',
+															label: __( 'If Contains', 'otter-blocks' )
+														}
+													] }
+													value={ i.meta_compare }
+													onChange={ e => changeValue( e, index, n, 'meta_compare' ) }
+												/>
+
+												{ ( 'if_equals' === i.meta_compare || 'if_contains' === i.meta_compare ) && (
+													<TextControl
+														label={ __( 'Meta Value', 'otter-blocks' ) }
+														help={ __( 'Value of the meta to compare.', 'otter-blocks' ) }
+														value={ i.meta_value }
+														onChange={ e => changeValue( e, index, n, 'meta_value' ) }
+													/>
+												) }
+											</Fragment>
+										) }
+
+										{ ( 'userRoles' === i.type || 'postAuthor' === i.type || 'postMeta' === i.type ) && (
 											<SelectControl
 												label={ __( 'If condition is true, the block should be:', 'otter-blocks' ) }
 												options={ [

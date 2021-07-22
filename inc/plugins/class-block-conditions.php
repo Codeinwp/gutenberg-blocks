@@ -121,6 +121,16 @@ class Block_Conditions {
 			}
 		}
 
+		if ( 'postMeta' === $condition['type'] ) {
+			if ( isset( $condition['meta_key'] ) ) {
+				if ( $visibility ) {
+					return $this->has_meta( $condition );
+				} else {
+					return ! $this->has_meta( $condition );
+				}
+			}
+		}
+
 		return true;
 	}
 
@@ -129,8 +139,8 @@ class Block_Conditions {
 	 * 
 	 * @param array $roles Selected user roles.
 	 *
-	 * @since   1.7.0
-	 * @access  public
+	 * @since  1.7.0
+	 * @access public
 	 */
 	public function has_user_roles( $roles ) {
 		$user = wp_get_current_user();
@@ -149,18 +159,53 @@ class Block_Conditions {
 	/**
 	 * Check current user's role.
 	 * 
-	 * @param array $roles Selected user roles.
+	 * @param array $authors Selected user roles.
 	 *
-	 * @since   1.7.0
-	 * @access  public
+	 * @since  1.7.0
+	 * @access public
 	 */
 	public function has_author( $authors ) {
-		$id = get_the_author_meta( 'ID' );
-		$user = get_user_by( 'id', $id );
+		$id       = get_the_author_meta( 'ID' );
+		$user     = get_user_by( 'id', $id );
 		$username = $user->user_login;
 
 		if ( in_array( $username, $authors ) ) {
 			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check meta compare.
+	 * 
+	 * @param array $condition Condition.
+	 *
+	 * @since  1.7.0
+	 * @access public
+	 */
+	public function has_meta( $condition ) {
+		if ( ! isset( $condition['meta_key'] ) || ! isset( $condition['meta_compare'] ) ) {
+			return true;
+		}
+
+		$id   = get_the_ID();
+		$meta = get_post_meta( $id, $condition['meta_key'], true );
+
+		if ( 'is_true' === $condition['meta_compare'] ) {
+			return true === boolval( $meta );
+		}
+
+		if ( 'is_false' === $condition['meta_compare'] ) {
+			return false === boolval( $meta );
+		}
+
+		if ( 'is_empty' === $condition['meta_compare'] ) {
+			return empty( $meta );
+		}
+
+		if ( 'if_contains' === $condition['meta_compare'] && isset( $condition['meta_value'] ) ) {
+			return false !== strpos( $meta, $condition['meta_value'] );
 		}
 
 		return false;
