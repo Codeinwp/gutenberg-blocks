@@ -1,5 +1,4 @@
 .wp-block-themeisle-blocks-panel-tab {
-    margin: 10px 0;
     z-index: 999999;
 
     .wp-block-themeisle-blocks-panel-tab__header {
@@ -48,6 +47,10 @@
                 overflow: visible;
                 white-space: normal;
             }
+        }
+
+        .components-base-control {
+            margin: 12px 0;
         }
     }
 }

@@ -37,28 +37,91 @@ class Block_Conditions {
 	 */
 	public function render_blocks( $block_content, $block ) {
 		if ( ! is_admin() && isset( $block['attrs']['otterConditions'] ) ) {
-			foreach ( $block['attrs']['otterConditions'] as $condition ) {
-				if ( 'loggedInUser' === $condition['type'] && ! is_user_logged_in() ) {
-					return;
+			$display = true;
+
+			foreach ( $block['attrs']['otterConditions'] as $group ) {
+				if ( 0 === count( $group ) ) {
+					continue;
 				}
 
-				if ( 'loggedOutUser' === $condition['type'] && is_user_logged_in() ) {
-					return;
-				}
+				$visibility = true;
 
-				if ( 'userRoles' === $condition['type'] ) {
-					if ( ! is_user_logged_in() ) {
-						return;
-					}
-
-					if ( isset( $condition['roles'] ) && 'true' === $condition['visibility'] ? ! $this->has_user_roles( $condition['roles'] ) : $this->has_user_roles( $condition['roles'] ) ) {
-						return;
+				foreach ( $group as $condition ) {
+					if ( ! $this->evaluate_condition( $condition ) ) {
+						$visibility = false;
 					}
 				}
+
+				if ( true === $visibility ) {
+					$display = true;
+					break;
+				}
+		
+
+				if ( false === $visibility ) {
+					$display = false;
+				}
+			}
+
+			if ( false === $display ) {
+				return;
 			}
 		}
 
 		return $block_content;
+	}
+
+	/**
+	 * Evaluate single condition
+	 *
+	 * @param array $condition condition.
+	 *
+	 * @return bool
+	 */
+	public function evaluate_condition( $condition ) {
+		if ( ! isset( $condition['type'] ) ) {
+			return true;
+		}
+
+		$visibility = isset( $condition['visibility'] ) ? boolval( $condition['visibility'] ) : true;
+
+		if ( 'loggedInUser' === $condition['type'] ) {
+			if ( is_user_logged_in() ) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		if ( 'loggedOutUser' === $condition['type'] ) {
+			if ( is_user_logged_in() ) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		if ( 'userRoles' === $condition['type'] ) {
+			if ( isset( $condition['roles'] ) ) {
+				if ( $visibility ) {
+					return $this->has_user_roles( $condition['roles'] );
+				} else {
+					return ! $this->has_user_roles( $condition['roles'] );
+				}
+			}
+		}
+
+		if ( 'postAuthor' === $condition['type'] ) {
+			if ( isset( $condition['authors'] ) ) {
+				if ( $visibility ) {
+					return $this->has_author( $condition['authors'] );
+				} else {
+					return ! $this->has_author( $condition['authors'] );
+				}
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -78,6 +141,26 @@ class Block_Conditions {
 			if ( in_array( $role, $user_roles ) ) {
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check current user's role.
+	 * 
+	 * @param array $roles Selected user roles.
+	 *
+	 * @since   1.7.0
+	 * @access  public
+	 */
+	public function has_author( $authors ) {
+		$id = get_the_author_meta( 'ID' );
+		$user = get_user_by( 'id', $id );
+		$username = $user->user_login;
+
+		if ( in_array( $username, $authors ) ) {
+			return true;
 		}
 
 		return false;

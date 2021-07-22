@@ -19,9 +19,7 @@ const addAttribute = ( props ) => {
 	props.attributes = assign( props.attributes, {
 		otterConditions: {
 			type: 'array',
-			items: {
-				type: 'object'
-			}
+			default: []
 		}
 	});
 
