@@ -14,30 +14,15 @@ module.exports = {
 			'./src/plugins/registerPlugin.js',
 			...glob.sync( './src/blocks/**/index.js' )
 		],
-		'leaflet-map': [
-			...glob.sync( './src/frontend/leaflet-map/index.js' )
-		],
-		maps: [
-			...glob.sync( './src/frontend/google-map/index.js' )
-		],
-		slider: [
-			...glob.sync( './src/frontend/slider/index.js' )
-		],
-		'progress-bar': [
-			...glob.sync( './src/frontend/progress-bar/index.js' )
-		],
-		'circle-counter': [
-			...glob.sync( './src/frontend/circle-counter/index.js' )
-		],
-		lottie: [
-			...glob.sync( './src/frontend/lottie/index.js' )
-		],
-		tabs: [
-			...glob.sync( './src/frontend/tabs/index.js' )
-		],
-		countdown: [
-			...glob.sync( './src/frontend/countdown/index.js' )
-		]
+		'leaflet-map': './src/frontend/leaflet-map/index.js',
+		maps: './src/frontend/google-map/index.js',
+		slider: './src/frontend/slider/index.js',
+		'progress-bar': './src/frontend/progress-bar/index.js',
+		'circle-counter': './src/frontend/circle-counter/index.js',
+		lottie: './src/frontend/lottie/index.js',
+		tabs: './src/frontend/tabs/index.js',
+		masonry: './src/frontend/masonry/index.js',
+		countdown: './src/frontend/countdown/index.js'
 	},
 	externals: {
 		'react': 'React',

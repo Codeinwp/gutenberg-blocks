@@ -18,7 +18,9 @@ const getComponentsUpdate = ( root ) => {
 		if ( elem ) {
 			const valueElem = elem.querySelector( '.wp-block-themeisle-blocks-countdown-display-component_value' );
 			acc[componentName] = ( value ) => {
-				valueElem.innerHTML = value;
+				if ( parseInt( valueElem.innerHTML ) !== value ) {
+					valueElem.innerHTML = value;
+				}
 			};
 		}
 
