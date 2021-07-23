@@ -79,6 +79,7 @@ class Base_CSS {
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Progress_Bar_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Review_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Tabs_CSS',
+			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Countdown_CSS',
 		);
 	}
 
