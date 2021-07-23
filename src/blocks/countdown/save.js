@@ -1,11 +1,11 @@
 import DisplayTime from './components/DisplayTime';
 import { getIntervalFromUnix } from '../../helpers/helper-functions';
 
-const Save = ({ attributes }) => {
+const Save = ({ attributes, className }) => {
 	return (
-		<div className="wp-block-themeisle-blocks-countdown" id={ attributes.id } data-date={ attributes.date }>
+		<div className={ className } id={ attributes.id } data-date={ attributes.date }>
 			<DisplayTime
-				time={ getIntervalFromUnix( 0, {exclude: attributes?.exclude }) } styleName={ attributes.style } />
+				time={ getIntervalFromUnix( 0, {exclude: attributes?.exclude }) } hasSeparators={ attributes?.hasSeparators } />
 		</div>
 	);
 };

@@ -33,11 +33,11 @@ const time = [
 	}
 ];
 
-const Edit = ({ attributes, setAttributes, clientId }) => {
+const Edit = ({ attributes, setAttributes, className, clientId }) => {
 
 	const [ date, setDate ] = useState( attributes.date );
 	const [ unixTime, setUnixTime ] = useState( 0 );
-	const [ isEditing, setEdit ] = useState( true );
+	const [ isEditing, setEdit ] = useState( false );
 
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
@@ -68,30 +68,18 @@ const Edit = ({ attributes, setAttributes, clientId }) => {
 	.wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display {
 		gap: ${ attributes.gap }px;
 	}
+
+	.wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component {
+		background-color: ${ attributes.backgroundColor };
+		height: ${ attributes.height }px !important;
+		width: ${ attributes.width }px !important;
+		border-radius: ${ attributes.borderRadius }px;
+		border-width: ${ attributes.borderWidth }px;
+		border-color: ${ attributes.borderColor };
+	}
 	`;
 
-	const blockStyle = {
-		ignoreSeperator: false,
-		styleName: 'block-style',
-		dynamicCSS: css`
-		.wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component.block-style {
-			background-color: ${ attributes.backgroundColor };
-			height: ${ attributes.width || 80 }px;
-			width: ${ attributes.height || 80 }px;
-			border-radius: ${ attributes.borderRadius || 10 }px;
-			border-width: ${ attributes.borderWidth }px;
-			border-style: ${ 0 < attributes.borderRadius ? 'solid' : 'unset' }
-		}
-		`
-	};
-
-	const defaultStyle = {
-		ignoreSeperator: false,
-		styleName: 'default-style',
-		dynamicCSS: css``
-	};
-
-
+	// border-style: ${ 0 < attributes.borderRadius ? 'solid' : 'unset' };
 	return (
 		<Fragment>
 			<Controls
@@ -102,10 +90,10 @@ const Edit = ({ attributes, setAttributes, clientId }) => {
 				attributes={ attributes }
 				setAttributes={ setAttributes }
 			/>
-			<div css={[ baseCSS, blockStyle.dynamicCSS ]} className="wp-block-themeisle-blocks-countdown" id={ attributes.id }>
+			<div css={[ baseCSS ]} className={ className } id={ attributes.id }>
 				{
 
-					( ! attributes?.date || isEditing ) && (
+					( isEditing ) && (
 						<div className="wp-block-themeisle-blocks-countdown-date-picker">
 							<div className="wp-block-themeisle-blocks-countdown-date-picker__container">
 								<DateTimePicker
@@ -127,7 +115,7 @@ const Edit = ({ attributes, setAttributes, clientId }) => {
 						</div>
 					)
 				}
-				<DisplayTime time={ getIntervalFromUnix( unixTime, {exclude: attributes?.exclude }) || time} {...blockStyle}/>
+				<DisplayTime time={ getIntervalFromUnix( unixTime, {exclude: attributes?.exclude }) || time} hasSeparators={ attributes.hasSeparators }/>
 			</div>
 		</Fragment>
 	);

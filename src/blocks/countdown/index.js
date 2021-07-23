@@ -32,6 +32,37 @@ registerBlockType( 'themeisle-blocks/countdown', {
 	],
 	attributes,
 	edit,
-	save
+	save,
+	styles: [
+		{
+			name: 'simple',
+			label: __( 'Simple', 'otter-blocks' )
+		},
+		{
+			name: 'square',
+			label: __( 'Square', 'otter-blocks' ),
+			isDefault: true
+		},
+		{
+			name: 'round',
+			label: __( 'Round', 'otter-blocks' )
+		},
+		{
+			name: 'card',
+			label: __( 'Asymmetric', 'otter-blocks' )
+		},
+		{
+			name: 'pocket',
+			label: __( 'Pocket', 'otter-blocks' )
+		},
+		{
+			name: 'circle',
+			label: __( 'Circle', 'otter-blocks' )
+		},
+		{
+			name: 'custom',
+			label: __( 'Custom', 'otter-blocks' )
+		}
+	]
 });
 

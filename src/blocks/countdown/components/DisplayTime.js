@@ -18,9 +18,9 @@ const DisplayTimeComponent = ({ name, value, tag, key, styleName }) => {
 };
 
 
-const DisplayTime = ({ time, ignoreSeperator, styleName }) => {
+const DisplayTime = ({ time, hasSeparators, styleName }) => {
 
-	const elemToDisplay = ! ignoreSeperator ? insertBetweenItems( time, { name: ' ', value: ':', tag: 'separator' }) : time;
+	const elemToDisplay = hasSeparators ? insertBetweenItems( time, { name: ' ', value: ':', tag: 'separator' }) : time;
 
 	const renderElem = elemToDisplay?.map( ( elem, key ) => <DisplayTimeComponent {...elem} key={key} styleName={styleName} /> );
 

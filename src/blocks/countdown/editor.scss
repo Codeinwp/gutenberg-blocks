@@ -25,13 +25,7 @@
 				width: max-content;
 				border: unset;
 				border-radius: 10px;
-
-				&.block-style {
-
-					&[name="separator"] {
-						display: none;
-					}
-				}
+				border-width: 2px;
 
 				.wp-block-themeisle-blocks-countdown-display-component_value {
 					font-size: 2rem;
@@ -45,6 +39,93 @@
 		}
 	}
 
+	&.is-style-simple {
+		.wp-block-themeisle-blocks-countdown-container {
+			.wp-block-themeisle-blocks-countdown-display {
+				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
+					height: 80px;
+					width: 80px;
+				}
+			}
+		}
+	}
+
+	&.is-style-square {
+		.wp-block-themeisle-blocks-countdown-container {
+			.wp-block-themeisle-blocks-countdown-display {
+				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
+					border-radius: 0px;
+					border-style: solid;
+					height: 123px;
+					width: 123px;
+				}
+			}
+		}
+	}
+
+	&.is-style-card {
+		.wp-block-themeisle-blocks-countdown-container {
+			.wp-block-themeisle-blocks-countdown-display {
+				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
+					border-radius: 25% 10%;
+					border-style: solid;
+					height: 123px;
+					width: 123px;
+				}
+			}
+		}
+	}
+
+	&.is-style-pocket {
+		.wp-block-themeisle-blocks-countdown-container {
+			.wp-block-themeisle-blocks-countdown-display {
+				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
+					border-radius: 10% 10% 40% 40%;
+					border-style: solid;
+					height: 123px;
+					width: 123px;
+				}
+			}
+		}
+	}
+
+	&.is-style-round {
+		.wp-block-themeisle-blocks-countdown-container {
+			.wp-block-themeisle-blocks-countdown-display {
+				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
+					border-radius: 10%;
+					border-style: solid;
+					height: 123px;
+					width: 123px;
+				}
+			}
+		}
+	}
+
+	&.is-style-circle {
+		.wp-block-themeisle-blocks-countdown-container {
+			.wp-block-themeisle-blocks-countdown-display {
+				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
+					border-radius: 100%;
+					border-style: solid;
+					height: 123px;
+					width: 123px;
+				}
+			}
+		}
+	}
+
+	&.is-style-custom {
+		.wp-block-themeisle-blocks-countdown-container {
+			.wp-block-themeisle-blocks-countdown-display {
+				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
+					border-style: solid;
+					height: 123px;
+					width: 123px;
+				}
+			}
+		}
+	}
 }
 
 // This modify the look of the DateTimePicker

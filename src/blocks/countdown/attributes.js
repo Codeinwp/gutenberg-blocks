@@ -41,11 +41,17 @@ const attributes = {
 	borderWidth: {
 		type: 'number'
 	},
+	borderColor: {
+		type: 'string'
+	},
 	valueFontSize: {
 		type: 'number'
 	},
 	labelFontSize: {
 		type: 'number'
+	},
+	hasSeparators: {
+		type: 'boolean'
 	}
 };
 

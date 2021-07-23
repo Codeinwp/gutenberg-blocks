@@ -70,6 +70,10 @@ const Inspector = ({
 		setAttributes({ borderWidth: Number( value ) });
 	};
 
+	const onBorderColorChange = value => {
+		setAttributes({ borderColor: value });
+	};
+
 	return (
 		<InspectorControls>
 			<PanelBody
@@ -113,6 +117,12 @@ const Inspector = ({
 					onChange={ value => excludeComponent( value, 'second' ) }
 				/>
 
+				<ToggleControl
+					label={ __( 'Display Separators', 'otter-blocks' ) }
+					checked={ attributes?.hasSeparators }
+					onChange={ hasSeparators => setAttributes({ hasSeparators }) }
+				/>
+
 				<RangeControl
 					label={ __( 'Box Spacing', 'otter-blocks' ) }
 					value={ attributes.gap }
@@ -126,7 +136,7 @@ const Inspector = ({
 					value={ attributes.height }
 					onChange={ onHeightChange }
 					min={ 40 }
-					max={ 500 }
+					max={ 300 }
 				/>
 
 				<RangeControl
@@ -134,7 +144,7 @@ const Inspector = ({
 					value={ attributes.width }
 					onChange={ onWidthChange }
 					min={ 40 }
-					max={ 500 }
+					max={ 300 }
 				/>
 
 				<RangeControl
@@ -142,7 +152,7 @@ const Inspector = ({
 					value={ attributes.borderRadius }
 					onChange={ onBorderRadiusChange }
 					min={ 0 }
-					max={ 200 }
+					max={ 15 }
 				/>
 
 				<RangeControl
@@ -189,6 +199,11 @@ const Inspector = ({
 						value: attributes.valueColor,
 						onChange: onValueColorChange,
 						label: __( 'Value', 'otter-blocks' )
+					},
+					{
+						value: attributes.borderColor,
+						onChange: onBorderColorChange,
+						label: __( 'Border', 'otter-blocks' )
 					}
 				] }
 			>

@@ -8,9 +8,9 @@ import domReady from '@wordpress/dom-ready';
 import { getIntervalFromUnix } from '../../helpers/helper-functions';
 
 /**
- *
+ * Get an object with the update function for every component
  * @param {HTMLDivElement} root
- * @returns
+ * @returns {Object.<string, Function>}
  */
 const getComponentsUpdate = ( root ) => {
 	return [ 'second', 'minute', 'hour', 'day' ].reduce( ( acc, componentName ) => {
@@ -26,13 +26,23 @@ const getComponentsUpdate = ( root ) => {
 	}, {});
 };
 
+/**
+ *
+ * @param {*} date The deadline of the countdown
+ * @param {*} updateComponents The object with the update functions
+ * @returns {Function} Function that update the countdown every time it is called. You can send a callback to be triggered when is finised.
+ */
 const updateTime = ( date, updateComponents ) => {
 	const _date = new Date( date );
-	return () => {
+	return ( onFinishCb ) => {
 		const time = getIntervalFromUnix( _date - Date.now() );
 		time.forEach( ({ tag, value}) => {
 			updateComponents[tag]( value );
 		});
+
+		if ( 0 >= time ) {
+			onFinishCb();
+		}
 	};
 };
 
@@ -45,7 +55,7 @@ domReady( () => {
 		if ( date ) {
 			const update = updateTime( date, getComponentsUpdate( countdown ) );
 			const interval = setInterval( () => {
-				update();
+				update( () => clearInterval( interval ) );
 			}, 500 );
 		}
 	});
