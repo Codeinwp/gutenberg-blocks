@@ -131,6 +131,12 @@ class Block_Conditions {
 			}
 		}
 
+		if ( 'dateRange' === $condition['type'] ) {
+			if ( isset( $condition['start_date'] ) ) {
+				return $this->has_date_range( $condition );
+			}
+		}
+
 		return true;
 	}
 
@@ -206,6 +212,40 @@ class Block_Conditions {
 
 		if ( 'if_contains' === $condition['meta_compare'] && isset( $condition['meta_value'] ) ) {
 			return false !== strpos( $meta, $condition['meta_value'] );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check date range.
+	 * 
+	 * @param array $condition Condition.
+	 *
+	 * @since  1.7.0
+	 * @access public
+	 */
+	public function has_date_range( $condition ) {
+		if ( ! isset( $condition['start_date'] ) ) {
+			return true;
+		}
+
+		$offset       = 60 * get_option( 'gmt_offset' );
+		$sign         = $offset < 0 ? '-' : '+';
+		$absmin       = abs( $offset );
+		$timezone     = sprintf( '%s%02d:%02d', $sign, $absmin / 60, $absmin % 60 );
+		$start_date   = strtotime( $condition['start_date'] . $timezone );
+		$current_time = current_time( 'timestamp' );
+		$start_date   = $current_time > $start_date;
+		$end_date     = true;
+
+		if ( isset( $condition['end_date'] ) ) {
+			$end_date = strtotime( $condition['end_date'] . $timezone );
+			$end_date = $current_time < $end_date;
+		}
+
+		if ( $start_date && $end_date ) {
+			return true;
 		}
 
 		return false;

@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 /**
  * WordPress dependencies.
  */
@@ -11,11 +10,18 @@ import { InspectorControls } from '@wordpress/block-editor';
 import {
 	BaseControl,
 	Button,
+	DateTimePicker,
+	Dropdown,
 	FormTokenField,
 	PanelBody,
 	SelectControl,
 	TextControl
 } from '@wordpress/components';
+
+import {
+	format,
+	__experimentalGetSettings
+} from '@wordpress/date';
 
 import { useSelect } from '@wordpress/data';
 
@@ -115,6 +121,7 @@ const Edit = ({
 		}
 
 		if ( 'postMeta' === value ) {
+			// eslint-disable-next-line camelcase
 			attrs.meta_compare = 'is_true';
 		}
 
@@ -150,7 +157,11 @@ const Edit = ({
 
 	const changeValue = ( value, index, key, field ) => {
 		let otterConditions = [ ...attributes.otterConditions  ];
-		otterConditions[ index ][ key ][ field ] = value;
+		if ( null !== value ) {
+			otterConditions[ index ][ key ][ field ] = value;
+		} else {
+			delete otterConditions[ index ][ key ][ field ];
+		}
 		setAttributes({ otterConditions });
 	};
 
@@ -185,6 +196,11 @@ const Edit = ({
 				value: 'postMeta',
 				label: __( 'Post Meta', 'otter-blocks' ),
 				help: __( 'The selected block will only be visible based on post meta condition.' )
+			},
+			{
+				value: 'dateRange',
+				label: __( 'Date Range', 'otter-blocks' ),
+				help: __( 'The selected block will only be visible based the date range. Timezone is used based on your WordPress settings.' )
 			}
 		];
 
@@ -199,6 +215,44 @@ const Edit = ({
 					<span>{ label }</span>
 				</div>
 			</div>
+		);
+	};
+
+	const DateRange = ({
+		label,
+		id,
+		value,
+		onChange
+	}) => {
+		const settings = __experimentalGetSettings();
+
+		return (
+			<BaseControl
+				label={ label }
+				id={ id }
+			>
+				<Dropdown
+					position="bottom left"
+					renderToggle={ ({ onToggle, isOpen }) => (
+						<>
+							<Button
+								id={ id }
+								onClick={ onToggle }
+								isSecondary
+								aria-expanded={ isOpen }
+							>
+								{ value ? format( settings.formats.datetime, value ) : __( 'Select Date', 'otter-blocks' ) }
+							</Button>
+						</>
+					) }
+					renderContent={ () => (
+						<DateTimePicker
+							currentDate={ value }
+							onChange={ onChange }
+						/>
+					) }
+				/>
+			</BaseControl>
 		);
 	};
 
@@ -242,6 +296,10 @@ const Edit = ({
 												<optgroup label={ __( 'Posts', 'otter-blocks' ) }>
 													<option value="postAuthor">{ __( 'Post Author', 'otter-blocks' ) }</option>
 													<option value="postMeta">{ __( 'Post Meta', 'otter-blocks' ) }</option>
+												</optgroup>
+
+												<optgroup label={ __( 'Date & Time', 'otter-blocks' ) }>
+													<option value="dateRange">{ __( 'Date Range', 'otter-blocks' ) }</option>
 												</optgroup>
 											</select>
 										</BaseControl>
@@ -314,6 +372,24 @@ const Edit = ({
 														onChange={ e => changeValue( e, index, n, 'meta_value' ) }
 													/>
 												) }
+											</Fragment>
+										) }
+
+										{ 'dateRange' === i.type && (
+											<Fragment>
+												<DateRange
+													label={ __( 'Start Date', 'otter-blocks' ) }
+													id={ `wp-block-themeisle-blocks-conditions-date-start${ index }-${ n }` }
+													value={ i.start_date }
+													onChange={ e => changeValue( e, index, n, 'start_date' ) }
+												/>
+
+												<DateRange
+													label={ __( 'End Date (Optional)', 'otter-blocks' ) }
+													id={ `wp-block-themeisle-blocks-conditions-date-end${ index }-${ n }` }
+													value={ i.end_date }
+													onChange={ e => changeValue( e, index, n, 'end_date' ) }
+												/>
 											</Fragment>
 										) }
 

@@ -51,6 +51,16 @@
 
         .components-base-control {
             margin: 12px 0;
+
+            .components-dropdown {
+                width: 100%;
+
+                .components-button {
+                    display: flex;
+                    justify-content: center;
+                    width: 100%;
+                }
+            }
         }
     }
 }
