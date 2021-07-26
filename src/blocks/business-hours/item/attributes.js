@@ -11,7 +11,10 @@ const attributes = {
 	backgroundColor: {
 		type: 'string'
 	},
-	textColor: {
+	labelColor: {
+		type: 'string'
+	},
+	timeColor: {
 		type: 'string'
 	},
 	borderRadius: {

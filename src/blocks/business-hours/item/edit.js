@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/** @jsx jsx */
 
 import { __ } from '@wordpress/i18n';
 
@@ -11,10 +12,16 @@ import {
 
 import { RichText } from '@wordpress/block-editor';
 
+
 /**
  * Internal dependencies
  */
 import Inspector from './inspector.js';
+
+import {
+	css,
+	jsx
+} from '@emotion/react';
 
 import { blockInit } from '../../../helpers/block-utility.js';
 import defaultAttributes from './attributes.js';
@@ -26,11 +33,16 @@ const Edit = ({ attributes, setAttributes, clientId, className }) => {
 		return () => unsubscribe();
 	}, [ attributes.id ]);
 
+	const baseCSS = css`
+		background-color: ${ attributes.backgroundColor };
+		border-radius: ${ attributes.borderRadius }px;
+	`;
+
 	return (
 		<Fragment>
 			<Inspector attributes={ attributes } setAttributes={ setAttributes }/>
-			<div className={className} id={ attributes.id }>
-				<div className="wp-block-themeisle-blocks-business-hours-item-label">
+			<div css={ baseCSS } className={ className } id={ attributes.id }>
+				<div css={ css`color: ${ attributes.labelColor }` } className="wp-block-themeisle-blocks-business-hours-item-label">
 					<RichText
 						placeholder={ __( 'Add day', 'otter-blocks' ) }
 						value={ attributes.label }
@@ -40,7 +52,7 @@ const Edit = ({ attributes, setAttributes, clientId, className }) => {
 						tagName="div"
 					/>
 				</div>
-				<div className="wp-block-themeisle-blocks-business-hours-item-time">
+				<div css={ css`color: ${ attributes.timeColor }`} className="wp-block-themeisle-blocks-business-hours-item-time">
 					<RichText
 						placeholder={ __( 'Add time interval', 'otter-blocks' ) }
 						value={ attributes.time }

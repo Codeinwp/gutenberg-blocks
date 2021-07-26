@@ -5,6 +5,15 @@ const attributes = {
 	title: {
 		type: 'string'
 	},
+	titleFontSize: {
+		type: 'number'
+	},
+	titleColor: {
+		type: 'string'
+	},
+	itemsFontSize: {
+		type: 'number'
+	},
 	backgroundColor: {
 		type: 'string'
 	},

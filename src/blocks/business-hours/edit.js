@@ -1,4 +1,6 @@
 /* eslint-disable no-unused-vars */
+/** @jsx jsx */
+
 import { __ } from '@wordpress/i18n';
 
 import {
@@ -7,6 +9,11 @@ import {
 	useState,
 	useRef
 } from '@wordpress/element';
+
+import {
+	css,
+	jsx
+} from '@emotion/react';
 
 import { RichText } from '@wordpress/block-editor';
 
@@ -26,11 +33,33 @@ const Edit = ({ attributes, setAttributes, clientId, className, isSelected }) =>
 		return () => unsubscribe();
 	}, [ attributes.id ]);
 
+	const baseCSS = css`
+		background-color: ${ attributes.backgroundColor };
+		border-radius: ${ attributes.borderRadius }px;
+		border-width: ${ attributes.borderWidth }px;
+		border-color: ${ attributes.borderColor };
+	`;
+
+	const titleCSS = css`
+		font-size: ${ attributes.titleFontSize }px;
+		color: ${ attributes.titleColor }px;
+	`;
+
+	const contentCSS = css`
+		div > div.block-editor-block-list__layout div + div {
+			margin-bottom: ${ attributes.gap }px;
+		}
+
+		.wp-block-themeisle-blocks-business-hours-item {
+			font-size: ${ attributes.itemsFontSize }px;
+		}
+	`;
+
 	return (
 		<Fragment>
 			<Inspector attributes={ attributes } setAttributes={ setAttributes }/>
-			<div className={className} id={ attributes.id }>
-				<div className="wp-block-themeisle-blocks-business-hours-title">
+			<div css={ baseCSS } className={className} id={ attributes.id }>
+				<div css={ titleCSS } className="wp-block-themeisle-blocks-business-hours-title">
 					<RichText
 						placeholder={ __( 'Add title', 'otter-blocks' ) }
 						value={ attributes.title }
@@ -40,7 +69,7 @@ const Edit = ({ attributes, setAttributes, clientId, className, isSelected }) =>
 						tagName="div"
 					/>
 				</div>
-				<div className="wp-block-themeisle-blocks-business-hours-content">
+				<div css={ contentCSS } className="wp-block-themeisle-blocks-business-hours-content">
 					<InnerBlocks
 						allowedBlocks={ [ 'themeisle-blocks/business-hours-item' ] }
 						template={ [ [ 'themeisle-blocks/business-hours-item' ] ] }
