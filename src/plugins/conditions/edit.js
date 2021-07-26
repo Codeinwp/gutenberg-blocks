@@ -470,6 +470,144 @@ const Edit = ({
 											</BaseControl>
 										) }
 
+										{ 'timeRecurring' === i.type && (
+											<Fragment>
+												<BaseControl
+													label={ __( 'Start Time', 'otter-blocks' ) }
+												>
+													<div className="wp-block-themeisle-blocks-conditions">
+														<input
+															aria-label={ __( 'Hours', 'otter-blocks' ) }
+															class="components-datetime__time-field-hours-input"
+															type="number"
+															step="1"
+															min="0"
+															max="23"
+															value={ i.start_time ? i.start_time.split( ':' )[0] : '' }
+															onChange={ e => {
+																const value = e.target.value;
+
+																if ( 0 > value || 23 < value ) {
+																	return;
+																}
+
+																let time = i.start_time || '00:00';
+																time = time.split( ':' );
+																time[0] = `00${ value }`.slice( -2 );
+																time = time.join( ':' );
+																changeValue( time, index, n, 'start_time' );
+															} }
+														/>
+
+														{ ' : ' }
+
+														<input
+															aria-label={ __( 'Minutes', 'otter-blocks' ) }
+															class="components-datetime__time-field-hours-input"
+															type="number"
+															step="1"
+															min="0"
+															max="59"
+															value={ i.start_time ? i.start_time.split( ':' )[1] : '' }
+															onChange={ e => {
+																const value = e.target.value;
+
+																if ( 0 > value || 59 < value ) {
+																	return;
+																}
+
+																let time = i.start_time || '00:00';
+																time = time.split( ':' );
+																time[1] = `00${ value }`.slice( -2 );
+																time = time.join( ':' );
+																changeValue( time, index, n, 'start_time' );
+															} }
+														/>
+
+														<Button
+															isSecondary
+															isSmall
+															disabled={ ! i.start_time }
+															onClick={ () => {
+																let otterConditions = [ ...attributes.otterConditions  ];
+																delete otterConditions[ index ][ n ].start_time;
+																setAttributes({ otterConditions });
+															} }
+														>
+															{ __( 'Reset', 'otter-blocks' ) }
+														</Button>
+													</div>
+												</BaseControl>
+
+												<BaseControl
+													label={ __( 'End Time', 'otter-blocks' ) }
+												>
+													<div className="wp-block-themeisle-blocks-conditions">
+														<input
+															aria-label={ __( 'Hours', 'otter-blocks' ) }
+															class="components-datetime__time-field-hours-input"
+															type="number"
+															step="1"
+															min="0"
+															max="23"
+															value={ i.end_time ? i.end_time.split( ':' )[0] : '' }
+															onChange={ e => {
+																const value = e.target.value;
+
+																if ( 0 > value || 23 < value ) {
+																	return;
+																}
+
+																let time = i.end_time || '00:00';
+																time = time.split( ':' );
+																time[0] = `00${ value }`.slice( -2 );
+																time = time.join( ':' );
+																changeValue( time, index, n, 'end_time' );
+															} }
+														/>
+
+														{ ' : ' }
+
+														<input
+															aria-label={ __( 'Minutes', 'otter-blocks' ) }
+															class="components-datetime__time-field-hours-input"
+															type="number"
+															step="1"
+															min="0"
+															max="59"
+															value={ i.end_time ? i.end_time.split( ':' )[1] : '' }
+															onChange={ e => {
+																const value = e.target.value;
+
+																if ( 0 > value || 59 < value ) {
+																	return;
+																}
+
+																let time = i.end_time || '00:00';
+																time = time.split( ':' );
+																time[1] = `00${ value }`.slice( -2 );
+																time = time.join( ':' );
+																changeValue( time, index, n, 'end_time' );
+															} }
+														/>
+
+														<Button
+															isSecondary
+															isSmall
+															disabled={ ! i.end_time }
+															onClick={ () => {
+																let otterConditions = [ ...attributes.otterConditions  ];
+																delete otterConditions[ index ][ n ].end_time;
+																setAttributes({ otterConditions });
+															} }
+														>
+															{ __( 'Reset', 'otter-blocks' ) }
+														</Button>
+													</div>
+												</BaseControl>
+											</Fragment>
+										) }
+
 										{ ( 'userRoles' === i.type || 'postAuthor' === i.type || 'postMeta' === i.type ) && (
 											<SelectControl
 												label={ __( 'If condition is true, the block should be:', 'otter-blocks' ) }

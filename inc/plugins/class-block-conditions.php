@@ -143,6 +143,12 @@ class Block_Conditions {
 			}
 		}
 
+		if ( 'timeRecurring' === $condition['type'] ) {
+			if ( isset( $condition['start_time'] ) ) {
+				return $this->has_time_recurring( $condition );
+			}
+		}
+
 		return true;
 	}
 
@@ -236,10 +242,7 @@ class Block_Conditions {
 			return true;
 		}
 
-		$offset       = 60 * get_option( 'gmt_offset' );
-		$sign         = $offset < 0 ? '-' : '+';
-		$absmin       = abs( $offset );
-		$timezone     = sprintf( '%s%02d:%02d', $sign, $absmin / 60, $absmin % 60 );
+		$timezone     = $this->get_timezone();
 		$start_date   = strtotime( $condition['start_date'] . $timezone );
 		$current_time = current_time( 'timestamp' );
 		$start_date   = $current_time > $start_date;
@@ -274,6 +277,52 @@ class Block_Conditions {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Check recurring days.
+	 * 
+	 * @param array $condition Condition.
+	 *
+	 * @since  1.7.0
+	 * @access public
+	 */
+	public function has_time_recurring( $condition ) {
+		if ( ! isset( $condition['start_time'] ) ) {
+			return true;
+		}
+
+		$timezone     = $this->get_timezone();
+		$start_time   = strtotime( $condition['start_time'] . $timezone );
+		$current_time = current_time( 'timestamp' );
+		$start_time   = $current_time > $start_time;
+		$end_time     = true;
+
+		if ( isset( $condition['end_time'] ) ) {
+			$end_time = strtotime( $condition['end_time'] . $timezone );
+			$end_time = $current_time < $end_time;
+		}
+
+		if ( $start_time && $end_time ) {
+			return true;
+		}
+
+		return false;
+	}
+
+
+	/**
+	 * Get WordPress timezone..
+	 *
+	 * @since  1.7.0
+	 * @access public
+	 */
+	public function get_timezone() {
+		$offset   = 60 * get_option( 'gmt_offset' );
+		$sign     = $offset < 0 ? '-' : '+';
+		$absmin   = abs( $offset );
+		$timezone = sprintf( '%s%02d:%02d', $sign, $absmin / 60, $absmin % 60 );
+		return $timezone;
 	}
 
 	/**

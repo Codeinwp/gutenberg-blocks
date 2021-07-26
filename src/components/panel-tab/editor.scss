@@ -61,6 +61,14 @@
 					width: 100%;
 				}
 			}
+
+			.components-datetime__time-field-hours-input {
+				min-width: 60px;
+			}
+
+			.components-datetime__timezone {
+				display: inline-block;
+			}
 		}
 	}
 }

@@ -1,3 +1,14 @@
+.wp-block-themeisle-blocks-conditions {
+	margin-top: 10px;
+
+	.components-button {
+		&.is-small {
+			margin-left: 10px;
+			height: 28px;
+		}
+	}
+}
+
 .wp-block-themeisle-blocks-conditions__operator-wrapper {
 	position: relative;
 	height: 45px;
