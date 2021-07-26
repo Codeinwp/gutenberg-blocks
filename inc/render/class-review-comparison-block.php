@@ -133,7 +133,7 @@ class Review_Comparison_Block extends Base_Block {
 
 			$table_price .= '<td>';
 			if ( isset( $block['attrs']['price'] ) ) {
-				$currency = Main::get_currency( isset( $attributes['currency'] ) ? $attributes['currency'] : 'USD' );
+				$currency = Main::get_currency( isset( $block['attrs']['currency'] ) ? $block['attrs']['currency'] : 'USD' );
 
 				if ( isset( $block['attrs']['discounted'] ) ) {
 					$table_price .= '<del>' . $currency . $block['attrs']['price'] . '</del> ' . $currency . $block['attrs']['discounted'];
