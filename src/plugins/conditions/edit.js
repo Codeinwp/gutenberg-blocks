@@ -10,6 +10,7 @@ import { InspectorControls } from '@wordpress/block-editor';
 import {
 	BaseControl,
 	Button,
+	CheckboxControl,
 	DateTimePicker,
 	Dropdown,
 	FormTokenField,
@@ -165,6 +166,24 @@ const Edit = ({
 		setAttributes({ otterConditions });
 	};
 
+	const changeDays = ( value, index, key ) => {
+		let otterConditions = [ ...attributes.otterConditions  ];
+
+		if ( ! otterConditions[ index ][ key ].days ) {
+			otterConditions[ index ][ key ].days = [];
+		}
+
+		const hasDay = otterConditions[ index ][ key ].days.indexOf( value );
+
+		if ( -1 !== hasDay ) {
+			otterConditions[ index ][ key ].days.splice( hasDay, 1 );
+		} else {
+			otterConditions[ index ][ key ].days.push( value );
+		}
+
+		setAttributes({ otterConditions });
+	};
+
 	const getConditions = () => {
 		const conditions = [
 			{
@@ -201,11 +220,52 @@ const Edit = ({
 				value: 'dateRange',
 				label: __( 'Date Range', 'otter-blocks' ),
 				help: __( 'The selected block will only be visible based the date range. Timezone is used based on your WordPress settings.' )
+			},
+			{
+				value: 'dateRecurring',
+				label: __( 'Date Recurring', 'otter-blocks' ),
+				help: __( 'The selected block will only be visible on the selected days. Timezone is used based on your WordPress settings.' )
+			},
+			{
+				value: 'timeRecurring',
+				label: __( 'Time Recurring', 'otter-blocks' ),
+				help: __( 'The selected block will only be visible during selected time. Timezone is used based on your WordPress settings.' )
 			}
 		];
 
 		return conditions;
 	};
+
+	const week = [
+		{
+			value: 'monday',
+			label: __( 'Monday', 'otter-blocks' )
+		},
+		{
+			value: 'tuesday',
+			label: __( 'Tuesday', 'otter-blocks' )
+		},
+		{
+			value: 'wednesday',
+			label: __( 'Wednesday', 'otter-blocks' )
+		},
+		{
+			value: 'thursday',
+			label: __( 'Thursday', 'otter-blocks' )
+		},
+		{
+			value: 'friday',
+			label: __( 'Friday', 'otter-blocks' )
+		},
+		{
+			value: 'saturday',
+			label: __( 'Saturday', 'otter-blocks' )
+		},
+		{
+			value: 'sunday',
+			label: __( 'Sunday', 'otter-blocks' )
+		}
+	];
 
 	const Separator = ({ label }) => {
 		return (
@@ -300,6 +360,8 @@ const Edit = ({
 
 												<optgroup label={ __( 'Date & Time', 'otter-blocks' ) }>
 													<option value="dateRange">{ __( 'Date Range', 'otter-blocks' ) }</option>
+													<option value="dateRecurring">{ __( 'Date Recurring', 'otter-blocks' ) }</option>
+													<option value="timeRecurring">{ __( 'Time Recurring', 'otter-blocks' ) }</option>
 												</optgroup>
 											</select>
 										</BaseControl>
@@ -391,6 +453,21 @@ const Edit = ({
 													onChange={ e => changeValue( e, index, n, 'end_date' ) }
 												/>
 											</Fragment>
+										) }
+
+										{ 'dateRecurring' === i.type && (
+											<BaseControl
+												label={ __( 'Recurring Days', 'otter-blocks' ) }
+												help={ __( 'You can use this in combination with other Date Time conditions to make more complex conditions.', 'otter-blocks' ) }
+											>
+												{ week.map( ({ label, value }) => (
+													<CheckboxControl
+														label={ label }
+														checked={ i.days && i.days.includes( value ) }
+														onChange={ () => changeDays( value, index, n ) }
+													/>
+												) ) }
+											</BaseControl>
 										) }
 
 										{ ( 'userRoles' === i.type || 'postAuthor' === i.type || 'postMeta' === i.type ) && (

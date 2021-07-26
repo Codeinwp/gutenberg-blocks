@@ -137,6 +137,12 @@ class Block_Conditions {
 			}
 		}
 
+		if ( 'dateRecurring' === $condition['type'] ) {
+			if ( isset( $condition['days'] ) ) {
+				return $this->has_date_recurring( $condition['days'] );
+			}
+		}
+
 		return true;
 	}
 
@@ -249,6 +255,25 @@ class Block_Conditions {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Check recurring days.
+	 * 
+	 * @param array $days Days of Week.
+	 *
+	 * @since  1.7.0
+	 * @access public
+	 */
+	public function has_date_recurring( $days ) {
+		$time = current_time( 'l' );
+		$day  = strtolower( $time );
+
+		if ( ! in_array( $day, $days ) ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
