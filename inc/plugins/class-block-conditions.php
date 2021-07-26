@@ -24,6 +24,7 @@ class Block_Conditions {
 	 */
 	public function init() {
 		add_action( 'render_block', array( $this, 'render_blocks' ), 999, 2 );
+		add_action( 'wp_loaded', array( $this, 'add_attributes_to_blocks' ), 999 );
 	}
 
 	/**
@@ -36,7 +37,7 @@ class Block_Conditions {
 	 * @access  public
 	 */
 	public function render_blocks( $block_content, $block ) {
-		if ( ! is_admin() && isset( $block['attrs']['otterConditions'] ) ) {
+		if ( ! is_admin() && ! ( defined( 'REST_REQUEST' ) && REST_REQUEST ) && isset( $block['attrs']['otterConditions'] ) ) {
 			$display = true;
 
 			foreach ( $block['attrs']['otterConditions'] as $group ) {
@@ -69,6 +70,24 @@ class Block_Conditions {
 		}
 
 		return $block_content;
+	}
+
+	/**
+	 * Adds the `otterConditions` attributes to all blocks, to avoid `Invalid parameter(s): attributes`
+	 * error in Gutenberg.
+	 *
+	 * @since   1.7.0
+	 * @access  public
+	 */
+	public function add_attributes_to_blocks() {
+		$registered_blocks = \WP_Block_Type_Registry::get_instance()->get_all_registered();
+
+		foreach ( $registered_blocks as $name => $block ) {
+			$block->attributes['otterConditions'] = array(
+				'type'    => 'array',
+				'default' => array(),
+			);
+		}
 	}
 
 	/**
