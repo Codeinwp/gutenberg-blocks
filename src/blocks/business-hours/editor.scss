@@ -1,0 +1,16 @@
+.wp-block-themeisle-blocks-business-hours {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	.wp-block-themeisle-blocks-business-hours-title {
+		text-align: center;
+	}
+
+	.wp-block-themeisle-blocks-business-hours-content {
+		display: flex;
+		flex-direction: column;
+		width: 400px;
+	}
+}
