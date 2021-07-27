@@ -119,7 +119,7 @@ const Edit = ({
 
 			links.forEach( link => {
 				buttonLinks.push(
-					<span>{ link.label }</span>
+					<span className="wp-block-button__link">{ link.label }</span>
 				);
 			});
 
@@ -129,7 +129,7 @@ const Edit = ({
 			tableRating.push( <td><div className="wp-block-themeisle-blocks-review-comparison__ratings">{ getStars( overallRatings ) }</div></td> );
 			tableDescription.push( <td>{ review.attrs.description }</td> );
 			tableStatistics.push( <td>{ featureRatings }</td> );
-			tableLinks.push( <td><div className="wp-block-themeisle-blocks-review-comparison__buttons">{ buttonLinks }</div></td> );
+			tableLinks.push( <td><div className="wp-block-themeisle-blocks-review-comparison__buttons wp-block-button">{ buttonLinks }</div></td> );
 		});
 	}, [ attributes.reviews, data ]);
 

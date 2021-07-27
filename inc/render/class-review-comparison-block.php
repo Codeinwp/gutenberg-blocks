@@ -181,10 +181,10 @@ class Review_Comparison_Block extends Base_Block {
 
 			$table_links .= '<td>';
 			if ( 0 < count( $links ) ) {
-				$table_links .= '<div class="wp-block-themeisle-blocks-review-comparison__buttons">';
+				$table_links .= '<div class="wp-block-themeisle-blocks-review-comparison__buttons wp-block-button">';
 				foreach ( $links as $link ) {
 					$rel          = ( isset( $link['isSponsored'] ) && true === $link['isSponsored'] ) ? 'sponsored' : 'nofollow';
-					$table_links .= '	<a href="' . esc_url( $link['href'] ) . '" rel="' . $rel . '" target="_blank">' . esc_html( $link['label'] ) . '</a>';
+					$table_links .= '	<a href="' . esc_url( $link['href'] ) . '" rel="' . $rel . '" class="wp-block-button__link" target="_blank">' . esc_html( $link['label'] ) . '</a>';
 				}
 				$table_links .= '</div>';
 			}
