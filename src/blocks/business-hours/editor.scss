@@ -3,16 +3,22 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	padding: 15px;
 
-	.wp-block-themeisle-blocks-business-hours-title {
-		text-align: center;
-	}
-
-	.wp-block-themeisle-blocks-business-hours-content {
+	.wp-block-themeisle-blocks-business-hours-container {
+		width: 500px;
 		display: flex;
 		flex-direction: column;
-		width: 400px;
-		padding: 10px;
+		padding: 15px;
+
+		.wp-block-themeisle-blocks-business-hours-title {
+			text-align: center;
+		}
+
+		.wp-block-themeisle-blocks-business-hours-content {
+			display: flex;
+			flex-direction: column;
+			padding: 10px;
+		}
 	}
+
 }

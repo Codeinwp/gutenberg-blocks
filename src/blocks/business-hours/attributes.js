@@ -2,6 +2,10 @@ const attributes = {
 	id: {
 		type: 'string'
 	},
+	width: {
+		type: 'number',
+		default: 500
+	},
 	title: {
 		type: 'string'
 	},
@@ -27,7 +31,7 @@ const attributes = {
 		type: 'string'
 	},
 	borderRadius: {
-		type: 'string'
+		type: 'number'
 	},
 	heightItem: {
 		type: 'number'

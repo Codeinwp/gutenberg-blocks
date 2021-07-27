@@ -2,7 +2,7 @@
 /** @jsx jsx */
 
 import { __ } from '@wordpress/i18n';
-
+import { ResizableBox } from '@wordpress/components';
 import {
 	Fragment,
 	useEffect,
@@ -26,24 +26,26 @@ import { InnerBlocks } from '@wordpress/block-editor';
 import { blockInit } from '../../helpers/block-utility.js';
 import defaultAttributes from './attributes.js';
 
-const Edit = ({ attributes, setAttributes, clientId, className, isSelected }) => {
+const Edit = ({ attributes, setAttributes, clientId, className, isSelected, toggleSelection }) => {
 
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
 	}, [ attributes.id ]);
 
-	const baseCSS = css`
-		background-color: ${ attributes.backgroundColor };
-		border-radius: ${ attributes.borderRadius }px;
-		border-width: ${ attributes.borderWidth }px;
-		border-color: ${ attributes.borderColor };
-	`;
-
-	const titleCSS = css`
-		font-size: ${ attributes.titleFontSize }px;
-		color: ${ attributes.titleColor }px;
-	`;
+	const style = {
+		container: {
+			backgroundColor: attributes.backgroundColor,
+			borderRadius: attributes.borderRadius + 'px',
+			borderWidth: attributes.borderWidth + 'px',
+			borderColor: attributes.borderColor,
+			width: attributes.width + 'px'
+		},
+		title: {
+			fontSize: attributes.titleFontSize + 'px',
+			color: attributes.color
+		}
+	};
 
 	const contentCSS = css`
 		div > div.block-editor-block-list__layout div + div {
@@ -58,24 +60,49 @@ const Edit = ({ attributes, setAttributes, clientId, className, isSelected }) =>
 	return (
 		<Fragment>
 			<Inspector attributes={ attributes } setAttributes={ setAttributes }/>
-			<div css={ baseCSS } className={className} id={ attributes.id }>
-				<div css={ titleCSS } className="wp-block-themeisle-blocks-business-hours-title">
-					<RichText
-						placeholder={ __( 'Add title', 'otter-blocks' ) }
-						value={ attributes.title }
-						onChange={ title => {
-							setAttributes({ title });
-						} }
-						tagName="div"
-					/>
-				</div>
-				<div css={ contentCSS } className="wp-block-themeisle-blocks-business-hours-content">
-					<InnerBlocks
-						allowedBlocks={ [ 'themeisle-blocks/business-hours-item' ] }
-						template={ [ [ 'themeisle-blocks/business-hours-item' ] ] }
-						renderAppender={ isSelected ? InnerBlocks.ButtonBlockAppender : '' }
-					/>
-				</div>
+			<div className={className} id={ attributes.id }>
+				<ResizableBox
+					size={ {
+						width: attributes.width
+					} }
+					minWidth={ 200 }
+					maxWidth={ 800 }
+					enable={ {
+						top: false,
+						right: true,
+						bottom: false,
+						left: false
+					} }
+					showHandle={ isSelected }
+					onResizeStop={ ( event, direction, elt, delta ) => {
+						setAttributes({ width: Number( attributes.width + delta.width ) });
+						toggleSelection( true );
+					} }
+					onResizeStart={ () => {
+						toggleSelection( false );
+					} }
+				>
+					<div style={ style.container } className="wp-block-themeisle-blocks-business-hours-container">
+						<div style={ style.title } className="wp-block-themeisle-blocks-business-hours-title">
+							<RichText
+								placeholder={ __( 'Add title', 'otter-blocks' ) }
+								value={ attributes.title }
+								onChange={ title => {
+									setAttributes({ title });
+								} }
+								tagName="div"
+							/>
+						</div>
+						<div css={ contentCSS } className="wp-block-themeisle-blocks-business-hours-content">
+							<InnerBlocks
+								allowedBlocks={ [ 'themeisle-blocks/business-hours-item' ] }
+								template={ [ [ 'themeisle-blocks/business-hours-item' ] ] }
+								renderAppender={ isSelected ? InnerBlocks.ButtonBlockAppender : '' }
+							/>
+						</div>
+
+					</div>
+				</ResizableBox>
 			</div>
 		</Fragment>
 	);
