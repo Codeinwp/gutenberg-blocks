@@ -89,9 +89,6 @@ const attributes = {
 	},
 	buttonTextColor: {
 		type: 'string'
-	},
-	postId: {
-		type: 'number'
 	}
 };
 

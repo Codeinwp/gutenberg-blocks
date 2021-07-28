@@ -155,7 +155,7 @@ const Inspector = ({
 				title={ __( 'Product Details', 'otter-blocks' ) }
 			>
 				{
-					attributes.postId && (
+					attributes.product && (
 						<Notice
 							status="warning"
 							isDismissible={ false }
@@ -170,7 +170,7 @@ const Inspector = ({
 					type="text"
 					placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
 					value={ productAttributes?.title || attributes.title }
-					disabled={ productAttributes?.title }
+					disabled={ attributes.product }
 					onChange={ title => setAttributes({ title }) }
 				/>
 
@@ -180,7 +180,7 @@ const Inspector = ({
 						type="text"
 						placeholder={ __( 'Currency code, like USD or EUR.', 'otter-blocks' ) }
 						value={ productAttributes?.currency ||  attributes.currency }
-						disabled={ productAttributes?.currency }
+						disabled={ attributes.product }
 						onChange={ currency => setAttributes({ currency }) }
 					/>
 
@@ -195,7 +195,7 @@ const Inspector = ({
 					label={ __( 'Price', 'otter-blocks' ) }
 					type="number"
 					value={ productAttributes?.price || attributes.price }
-					disabled={ productAttributes?.price }
+					disabled={ attributes.product }
 					onChange={ value => setAttributes({ price: Number( value ) }) }
 				/>
 
@@ -203,7 +203,7 @@ const Inspector = ({
 					label={ __( 'Discounted Price', 'otter-blocks' ) }
 					type="number"
 					value={ productAttributes?.discounted || attributes.discounted }
-					disabled={ productAttributes?.discounted || productAttributes?.price }
+					disabled={ attributes.product }
 					onChange={ value => setAttributes({ discounted: Number( value ) }) }
 				/>
 
@@ -229,7 +229,7 @@ const Inspector = ({
 						<Button
 							isSecondary
 							onClick={ () => setAttributes({ image: undefined }) }
-							disabled={ productAttributes?.image?.url }
+							disabled={ attributes.product }
 						>
 							{ __( 'Remove image', 'otter-blocks' ) }
 						</Button>
@@ -337,7 +337,7 @@ const Inspector = ({
 				initialOpen={ false }
 			>
 				{
-					attributes.postId && (
+					attributes.product && (
 						<Notice
 							status="warning"
 							isDismissible={ false }
@@ -357,7 +357,7 @@ const Inspector = ({
 							label={ __( 'Label', 'otter-blocks' ) }
 							type="text"
 							placeholder={ __( 'Button label', 'otter-blocks' ) }
-							disabled={ true }
+							disabled={ attributes.product }
 							value={ link.label }
 						/>
 
@@ -366,13 +366,13 @@ const Inspector = ({
 							type="url"
 							placeholder={ 'https://…' }
 							value={ link.href }
-							disabled={ true }
+							disabled={ attributes.product }
 						/>
 
 						<ToggleControl
 							label={ __( 'Is this Sponsored?', 'otter-blocks' ) }
 							checked={ link.isSponsored }
-							disabled={ true }
+							disabled={ attributes.product }
 						/>
 					</PanelItem>
 				) ) }

@@ -16,6 +16,11 @@ import {
 import { RichText } from '@wordpress/block-editor';
 
 import {
+	Placeholder,
+	Spinner
+} from '@wordpress/components';
+
+import {
 	Fragment,
 	useEffect
 } from '@wordpress/element';
@@ -38,7 +43,8 @@ const Edit = ({
 	clientId,
 	className,
 	isSelected,
-	productAttributes
+	status = 'isInactive',
+	productAttributes = {}
 }) => {
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
@@ -92,6 +98,38 @@ const Edit = ({
 		};
 		setAttributes({ links });
 	};
+
+
+	if ( 'isLoading' === status ) {
+		return (
+			<Fragment>
+				<Inspector
+					attributes={ attributes }
+					setAttributes={ setAttributes }
+					productAttributes={ productAttributes }
+				/>
+
+				<Placeholder><Spinner/></Placeholder>
+			</Fragment>
+		);
+	}
+
+
+	if ( 'object' === typeof status && null !== status && status.isError ) {
+		return (
+			<Fragment>
+				<Inspector
+					attributes={ attributes }
+					setAttributes={ setAttributes }
+					productAttributes={ productAttributes }
+				/>
+
+				<Placeholder
+					instructions={ status.message }
+				/>
+			</Fragment>
+		);
+	}
 
 	return (
 		<Fragment>

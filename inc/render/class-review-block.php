@@ -121,38 +121,35 @@ class Review_Block extends Base_Block {
 	 * @return mixed|string
 	 */
 	protected function render( $attributes ) {
+		if ( isset( $attributes['product'] ) && intval( $attributes['product'] ) >= 0 && defined( 'NEVE_PRO_VERSION' ) && class_exists( 'WooCommerce' ) ) {
+			$product = wc_get_product( $attributes['product'] );
 
-		/**
-		 * Reference: https://woocommerce.github.io/code-reference/classes/WC-Product.html | https://woocommerce.github.io/woocommerce-rest-api-docs/#create-a-product
-		 * Chapter: Products -> Retrieve a product
-		 */
-		if ( isset( $attributes['postId'] ) && intval( $attributes['postId'] ) >= 0 && class_exists( 'WooCommerce' ) ) {
-
-			$product = wc_get_product( $attributes['postId'] );
+			if ( ! $product ) {
+				return;
+			}
 
 			$attributes['title']       = $product->get_name();
 			$attributes['description'] = $product->get_short_description();
 			$attributes['price']       = $product->get_price();
+			$attributes['currency']    = get_woocommerce_currency();
+
 			if ( ! empty( $product->get_sale_price() ) && $product->get_price() !== $product->get_sale_price() ) {
 				$attributes['discounted'] = $product->get_sale_price();
 			}
 
 			$attributes['image'] = array(
-				'url' => \wp_get_attachment_image_url( $product->get_image_id(), '' ),
-				'alt' => \get_post_meta( $product->get_image_id(), '_wp_attachment_image_alt', true ),
+				'url' => wp_get_attachment_image_url( $product->get_image_id(), '' ),
+				'alt' => get_post_meta( $product->get_image_id(), '_wp_attachment_image_alt', true ),
 			);
 
 			$attributes['links'] = array(
 				array(
-					'label'       => 'Buy Now',
-					'href'        => method_exists( $product, 'get_product_url' ) ? $product->get_product_url() : $product->add_to_cart_url(),
+					'label'       => __( 'Buy Now', 'otter-blocks' ),
+					'href'        => method_exists( $product, 'get_product_url' ) ? $product->get_product_url() : $product->get_permalink(),
 					'isSponsored' => method_exists( $product, 'get_product_url' ),
 				),
 			);
-
 		}
-
-
 
 		if ( isset( $attributes['title'] ) && ! empty( $attributes['title'] ) && isset( $attributes['features'] ) && count( $attributes['features'] ) > 0 ) {
 			add_action(
