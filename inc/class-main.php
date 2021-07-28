@@ -735,6 +735,7 @@ class Main {
 				},
 			)
 		);
+	}
 
 	/**
 	 * Render Blocks
