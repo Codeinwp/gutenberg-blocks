@@ -36,16 +36,11 @@ class Countdown_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component',
+				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component:not([name="separator"])',
 				'properties' => array(
 					array(
 						'property' => 'background-color',
 						'value'    => 'backgroundColor',
-					),
-					array(
-						'property' => 'height',
-						'value'    => 'height',
-						'unit'     => 'px',
 					),
 					array(
 						'property' => 'width',
@@ -65,6 +60,18 @@ class Countdown_CSS extends Base_CSS {
 					array(
 						'property' => 'border-color',
 						'value'    => 'borderColor',
+					),
+				),
+			)
+		);
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component',
+				'properties' => array(
+					array(
+						'property' => 'height',
+						'value'    => 'height',
+						'unit'     => 'px',
 					),
 				),
 			)
