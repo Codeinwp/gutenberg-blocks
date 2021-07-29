@@ -28,6 +28,7 @@ module.exports = {
 		'react': 'React',
 		'react-dom': 'ReactDOM',
 		'lodash': 'lodash',
+		'moment': 'moment',
 		'@wordpress/api-fetch': 'wp.apiFetch',
 		'@wordpress/blocks': 'wp.blocks',
 		'@wordpress/block-editor': 'wp.blockEditor',
