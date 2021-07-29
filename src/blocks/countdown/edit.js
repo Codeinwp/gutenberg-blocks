@@ -1,43 +1,21 @@
-/* eslint-disable no-unused-vars */
+
 /** @jsx jsx */
 import {
 	jsx,
 	css
 } from '@emotion/react';
-import { __ } from '@wordpress/i18n';
 import { Fragment, useState, useEffect } from '@wordpress/element';
-import { DateTimePicker, Button } from '@wordpress/components';
 import { blockInit } from '../../helpers/block-utility';
 import defaultAttributes from './attributes.js';
 import DisplayTime from './components/DisplayTime';
-import Controls from './controls.js';
 import Inspector from './inspector';
 import { getIntervalFromUnix } from '../../helpers/helper-functions';
 
-const time = [
-	{
-		name: 'day',
-		value: '1'
-	},
-	{
-		name: 'hour',
-		value: '30'
-	},
-	{
-		name: 'minute',
-		value: '12'
-	},
-	{
-		name: 'seconds',
-		value: '59'
-	}
-];
-
 const Edit = ({ attributes, setAttributes, className, clientId }) => {
 
-	const [ date, setDate ] = useState( attributes.date );
+
 	const [ unixTime, setUnixTime ] = useState( 0 );
-	const [ isEditing, setEdit ] = useState( false );
+
 
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
@@ -70,52 +48,31 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 	}
 
 	.wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component {
-		background-color: ${ attributes.backgroundColor };
 		height: ${ attributes.height }px !important;
+	}
+
+	.wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
+		background-color: ${ attributes.backgroundColor };
 		width: ${ attributes.width }px !important;
 		border-radius: ${ attributes.borderRadius }px;
-		border-width: ${ attributes.borderWidth }px;
-		border-color: ${ attributes.borderColor };
+		border-width: ${ attributes.borderWidth }px !important;
+		border-color: ${ attributes.borderColor } !important;
 	}
 	`;
 
-	// border-style: ${ 0 < attributes.borderRadius ? 'solid' : 'unset' };
 	return (
 		<Fragment>
-			<Controls
+			{/* <Controls
 				isEditing={ isEditing }
 				setEdit={ setEdit }
-			/>
+			/> */}
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
+				className={ className }
 			/>
 			<div css={[ baseCSS ]} className={ className } id={ attributes.id }>
-				{
-
-					( isEditing ) && (
-						<div className="wp-block-themeisle-blocks-countdown-date-picker">
-							<div className="wp-block-themeisle-blocks-countdown-date-picker__container">
-								<DateTimePicker
-									currentDate={ date }
-									onChange={ setDate }
-									is12Hour={ attributes?.is12Hour }
-								/>
-							</div>
-							<Button
-								isPrimary
-								onClick={ () => {
-									setAttributes({ date });
-									setEdit( false );
-								} }
-							>
-								{ __( 'Save Date', 'otter-blocks' ) }
-							</Button>
-							<br/>
-						</div>
-					)
-				}
-				<DisplayTime time={ getIntervalFromUnix( unixTime, {exclude: attributes?.exclude }) || time} hasSeparators={ attributes.hasSeparators }/>
+				<DisplayTime time={ getIntervalFromUnix( unixTime, {exclude: attributes?.exclude }) } hasSeparators={ attributes.hasSeparators }/>
 			</div>
 		</Fragment>
 	);
