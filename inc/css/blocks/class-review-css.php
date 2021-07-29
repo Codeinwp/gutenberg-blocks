@@ -24,7 +24,7 @@ class Review_CSS extends Base_CSS {
 	public $block_prefix = 'review';
 
 	/**
-	 * Generate Accordion CSS
+	 * Generate Review CSS
 	 *
 	 * @param mixed $block Block data.
 	 * @return string
