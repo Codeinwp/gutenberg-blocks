@@ -39,6 +39,10 @@ registerBlockType( 'themeisle-blocks/countdown', {
 			label: __( 'Simple', 'otter-blocks' )
 		},
 		{
+			name: 'modern',
+			label: __( 'Modern', 'otter-blocks' )
+		},
+		{
 			name: 'square',
 			label: __( 'Square', 'otter-blocks' ),
 			isDefault: true

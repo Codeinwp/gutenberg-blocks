@@ -8,9 +8,6 @@ const attributes = {
 	date: {
 		type: 'string'
 	},
-	is12Hour: {
-		type: 'boolean'
-	},
 	exclude: {
 		type: 'array'
 	},

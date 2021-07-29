@@ -3,6 +3,8 @@ import {
 	PanelBody,
 	ToggleControl,
 	RangeControl,
+	Dropdown,
+	Button,
 	DateTimePicker
 } from '@wordpress/components';
 import {
@@ -11,10 +13,12 @@ import {
 	PanelColorSettings
 } from '@wordpress/block-editor';
 
+import moment from 'moment';
 
 const Inspector = ({
 	attributes,
-	setAttributes
+	setAttributes,
+	className
 }) => {
 
 
@@ -80,15 +84,26 @@ const Inspector = ({
 				title={ __( 'Time', 'otter-blocks' ) }
 				initialOpen={ true }
 			>
-				<ToggleControl
-					label={ __( '12 Hours Format', 'otter-blocks' ) }
-					checked={ attributes?.is12Hour }
-					onChange={ value =>  setAttributes({ is12Hour: value})}
-				/>
-				<DateTimePicker
-					currentDate={ attributes.date }
-					onChange={ date => setAttributes({ date }) }
-					is12Hour={ attributes?.is12Hour }
+				<Dropdown
+					position="bottom left"
+					headerTitle={ __( 'Select the date for the deadline', 'otter-blocks' ) }
+					renderToggle={ ({ onToggle, isOpen }) => (
+						<>
+							<Button
+								onClick={ onToggle }
+								isSecondary
+								aria-expanded={ isOpen }
+							>
+								{ attributes.date ? attributes.date : __( 'Select Date', 'otter-blocks' ) }
+							</Button>
+						</>
+					) }
+					renderContent={ () => (
+						<DateTimePicker
+							currentDate={ attributes.date }
+							onChange={ value => setAttributes({ date: moment( value ).utc().format() }) }
+						/>
+					) }
 				/>
 			</PanelBody>
 			<PanelBody
@@ -147,13 +162,18 @@ const Inspector = ({
 					max={ 300 }
 				/>
 
-				<RangeControl
-					label={ __( 'Border Radius', 'otter-blocks' ) }
-					value={ attributes.borderRadius }
-					onChange={ onBorderRadiusChange }
-					min={ 0 }
-					max={ 15 }
-				/>
+				{
+					className.includes( 'is-style-custom' ) && (
+						<RangeControl
+							label={ __( 'Border Radius', 'otter-blocks' ) }
+							value={ attributes.borderRadius }
+							onChange={ onBorderRadiusChange }
+							min={ 0 }
+							max={ 15 }
+						/>
+					)
+				}
+
 
 				<RangeControl
 					label={ __( 'Border Width', 'otter-blocks' ) }

@@ -39,7 +39,7 @@ const updateTime = ( date, updateComponents ) => {
 	return ( onFinishCb ) => {
 		const time = getIntervalFromUnix( _date - Date.now() );
 		time.forEach( ({ tag, value}) => {
-			updateComponents[tag]( value );
+			updateComponents[tag]?.( value );
 		});
 
 		if ( 0 >= time ) {
