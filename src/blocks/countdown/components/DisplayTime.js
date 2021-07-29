@@ -1,5 +1,6 @@
 import { Fragment } from '@wordpress/element';
 import { insertBetweenItems } from '../../../helpers/helper-functions';
+import { __ } from '@wordpress/i18n';
 
 const DisplayTimeComponent = ({ name, value, tag, key, styles }) => {
 	const compStyle = 'sep' !== name ? { ...styles.allComponents, ...styles.mainComponents } : styles.allComponents;
@@ -25,7 +26,7 @@ const DisplayTimeComponent = ({ name, value, tag, key, styles }) => {
 					'wp-block-themeisle-blocks-countdown-display-component_label'
 				}
 			>
-				{ name }
+				{ __( name, 'otter-blocks' ) }
 			</div>
 		</div>
 	);

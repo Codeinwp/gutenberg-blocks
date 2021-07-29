@@ -1,4 +1,5 @@
 import { getIntervalFromUnix } from '../../helpers/helper-functions';
+import { __ } from '@wordpress/i18n';
 
 const DisplayTimeComponent = ({ name, value, tag, key }) => {
 	return (
@@ -7,7 +8,7 @@ const DisplayTimeComponent = ({ name, value, tag, key }) => {
 				{ value }
 			</div>
 			<div className={ 'wp-block-themeisle-blocks-countdown-display-component_label'}>
-				{ name }
+				{ __( name, 'otter-blocks' ) }
 			</div>
 		</div>
 	);
