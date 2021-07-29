@@ -132,11 +132,15 @@ const Inspector = ({
 					onChange={ value => excludeComponent( value, 'second' ) }
 				/>
 
-				<ToggleControl
-					label={ __( 'Display Separators', 'otter-blocks' ) }
-					checked={ attributes?.hasSeparators }
-					onChange={ hasSeparators => setAttributes({ hasSeparators }) }
-				/>
+				{
+					! className.includes( 'is-style-modern' ) && (
+						<ToggleControl
+							label={ __( 'Display Separators', 'otter-blocks' ) }
+							checked={ attributes?.hasSeparators }
+							onChange={ hasSeparators => setAttributes({ hasSeparators }) }
+						/>
+					)
+				}
 
 				<RangeControl
 					label={ __( 'Box Spacing', 'otter-blocks' ) }

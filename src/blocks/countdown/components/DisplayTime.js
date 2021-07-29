@@ -33,6 +33,7 @@ const DisplayTimeComponent = ({ name, value, tag, key, styles }) => {
 };
 
 const DisplayTime = ({ time, hasSeparators, styles }) => {
+
 	const elemToDisplay = hasSeparators ?
 		insertBetweenItems( time, {
 			name: 'sep',
@@ -47,7 +48,7 @@ const DisplayTime = ({ time, hasSeparators, styles }) => {
 
 	return time !== undefined ? (
 		<div className={ 'wp-block-themeisle-blocks-countdown-container' }>
-			<div className={ 'wp-block-themeisle-blocks-countdown-display' }>
+			<div style={ styles.display } className={ 'wp-block-themeisle-blocks-countdown-display' }>
 				{renderElem}
 			</div>
 		</div>

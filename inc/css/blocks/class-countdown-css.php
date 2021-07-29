@@ -48,11 +48,6 @@ class Countdown_CSS extends Base_CSS {
 						'unit'     => 'px',
 					),
 					array(
-						'property' => 'border-radius',
-						'value'    => 'borderRadius',
-						'unit'     => 'px',
-					),
-					array(
 						'property' => 'border-width',
 						'value'    => 'borderWidth',
 						'unit'     => 'px',
@@ -64,6 +59,20 @@ class Countdown_CSS extends Base_CSS {
 				),
 			)
 		);
+
+		$css->add_item(
+			array(
+				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]).is-custom-style',
+				'properties' => array(
+					array(
+						'property' => 'border-radius',
+						'value'    => 'borderRadius',
+						'unit'     => 'px',
+					),
+				),
+			)
+		);
+
 		$css->add_item(
 			array(
 				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component',

@@ -1,4 +1,5 @@
 import { getIntervalFromUnix } from '../../helpers/helper-functions';
+import { insertBetweenItems } from '../../helpers/helper-functions';
 import { __ } from '@wordpress/i18n';
 
 const DisplayTimeComponent = ({ name, value, tag, key }) => {

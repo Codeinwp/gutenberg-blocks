@@ -44,11 +44,14 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 		mainComponents: {
 			backgroundColor: attributes.backgroundColor,
 			width: attributes.width,
-			borderRadius: attributes.borderRadius,
 			borderWidth: attributes.borderWidth,
 			borderColor: attributes.borderColor
 		}
 	};
+
+	if ( className.includes( 'is-style-custom' ) ) {
+		styles.mainComponents.borderRadius = attributes.borderRadius;
+	}
 
 	return (
 		<Fragment>

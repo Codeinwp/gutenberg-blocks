@@ -18,7 +18,7 @@
 		.wp-block-themeisle-blocks-countdown-display {
 			display: flex;
 			flex-direction: row;
-			gap: 12px;
+			gap: 6px;
 			.wp-block-themeisle-blocks-countdown-display-component {
 				display: flex;
 				justify-content: center;
@@ -139,6 +139,10 @@
 						border-right: 1px solid black;
 						border-radius: 0px;
 					}
+				}
+
+				.wp-block-themeisle-blocks-countdown-display-component[name="separator"] {
+					display: none;
 				}
 			}
 		}
