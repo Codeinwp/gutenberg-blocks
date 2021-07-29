@@ -1,29 +1,52 @@
 import { Fragment } from '@wordpress/element';
 import { insertBetweenItems } from '../../../helpers/helper-functions';
 
-const DisplayTimeComponent = ({ name, value, tag, key }) => {
+const DisplayTimeComponent = ({ name, value, tag, key, styles }) => {
+	const compStyle = 'sep' !== name ? { ...styles.allComponents, ...styles.mainComponents } : styles.allComponents;
+
 	return (
-		<div key={key} name ={ tag } className={'wp-block-themeisle-blocks-countdown-display-component'}>
-			<div className={ 'wp-block-themeisle-blocks-countdown-display-component_value' }>
+		<div
+			key={ key }
+			style={ compStyle }
+			name={ tag }
+			className={ 'wp-block-themeisle-blocks-countdown-display-component' }
+		>
+			<div
+				style={ styles.value }
+				className={
+					'wp-block-themeisle-blocks-countdown-display-component_value'
+				}
+			>
 				{ value }
 			</div>
-			<div className={ 'wp-block-themeisle-blocks-countdown-display-component_label'}>
+			<div
+				style={ styles.label }
+				className={
+					'wp-block-themeisle-blocks-countdown-display-component_label'
+				}
+			>
 				{ name }
 			</div>
 		</div>
 	);
 };
 
+const DisplayTime = ({ time, hasSeparators, styles }) => {
+	const elemToDisplay = hasSeparators ?
+		insertBetweenItems( time, {
+			name: 'sep',
+			value: ':',
+			tag: 'separator'
+		}) :
+		time;
 
-const DisplayTime = ({ time, hasSeparators }) => {
-
-	const elemToDisplay = hasSeparators ? insertBetweenItems( time, { name: 'sep', value: ':', tag: 'separator' }) : time;
-
-	const renderElem = elemToDisplay?.map( ( elem, key ) => <DisplayTimeComponent {...elem} key={key} /> );
+	const renderElem = elemToDisplay?.map( ( elem, key ) => (
+		<DisplayTimeComponent { ...elem } key={ key } styles={ styles } />
+	) );
 
 	return time !== undefined ? (
 		<div className={ 'wp-block-themeisle-blocks-countdown-container' }>
-			<div className={  'wp-block-themeisle-blocks-countdown-display' }>
+			<div className={ 'wp-block-themeisle-blocks-countdown-display' }>
 				{renderElem}
 			</div>
 		</div>

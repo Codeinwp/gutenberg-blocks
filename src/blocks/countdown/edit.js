@@ -24,13 +24,15 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 
 	useEffect( () => {
 		const interval = setInterval( () => {
-			setUnixTime( new Date( attributes.date || date ) - new Date() );
+			if ( attributes.date ) {
+				setUnixTime( new Date( attributes.date ) - new Date() );
+			}
 		}, 500 );
 
 		return () => {
 			clearInterval( interval );
 		};
-	}, [ date, attributes.date ]);
+	}, [ attributes.date ]);
 
 	const baseCSS = css`
 	.wp-block-themeisle-blocks-countdown-display-component .wp-block-themeisle-blocks-countdown-display-component_value {
@@ -60,6 +62,30 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 	}
 	`;
 
+	const styles = {
+		value: {
+			color: attributes.valueColor,
+			fontSize: attributes.valueFontSize + 'px'
+		},
+		label: {
+			color: attributes.labelColor,
+			fontSize: attributes.labelFontSize + 'px'
+		},
+		display: {
+			gap: attributes.gap + 'px'
+		},
+		allComponents: {
+			height: attributes.height + 'px'
+		},
+		mainComponents: {
+			backgroundColor: attributes.backgroundColor,
+			width: attributes.width,
+			borderRadius: attributes.borderRadius,
+			borderWidth: attributes.borderWidth,
+			borderColor: attributes.borderColor
+		}
+	};
+
 	return (
 		<Fragment>
 			{/* <Controls
@@ -72,7 +98,11 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 				className={ className }
 			/>
 			<div css={[ baseCSS ]} className={ className } id={ attributes.id }>
-				<DisplayTime time={ getIntervalFromUnix( unixTime, {exclude: attributes?.exclude }) } hasSeparators={ attributes.hasSeparators }/>
+				<DisplayTime
+					time={ getIntervalFromUnix( unixTime, {exclude: attributes?.exclude }) }
+					styles={ styles }
+					hasSeparators={ attributes.hasSeparators }
+				/>
 			</div>
 		</Fragment>
 	);
