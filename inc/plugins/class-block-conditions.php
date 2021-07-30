@@ -263,7 +263,7 @@ class Block_Conditions {
 
 		$timezone     = $this->get_timezone();
 		$start_date   = strtotime( $condition['start_date'] . $timezone );
-		$current_time = current_time( 'timestamp' );
+		$current_time = time();
 		$start_date   = $current_time > $start_date;
 		$end_date     = true;
 
@@ -313,7 +313,7 @@ class Block_Conditions {
 
 		$timezone     = $this->get_timezone();
 		$start_time   = strtotime( $condition['start_time'] . $timezone );
-		$current_time = current_time( 'timestamp' );
+		$current_time = time();
 		$start_time   = $current_time > $start_time;
 		$end_time     = true;
 
