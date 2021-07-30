@@ -136,10 +136,10 @@
 				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
 					height: max-content;
 					width: 60px;
+					border-radius: 0px;
 
 					&:not(:last-child) {
 						border-right: 1px solid black;
-						border-radius: 0px;
 					}
 				}
 
