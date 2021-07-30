@@ -173,7 +173,7 @@ const Inspector = ({
 							value={ attributes.borderRadius }
 							onChange={ onBorderRadiusChange }
 							min={ 0 }
-							max={ 15 }
+							max={ 100 }
 						/>
 					)
 				}
