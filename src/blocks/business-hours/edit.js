@@ -36,6 +36,7 @@ const Edit = ({ attributes, setAttributes, clientId, className, isSelected, togg
 	const style = {
 		container: {
 			backgroundColor: attributes.backgroundColor,
+			borderStyle: attributes.borderStyle,
 			borderRadius: attributes.borderRadius + 'px',
 			borderWidth: attributes.borderWidth + 'px',
 			borderColor: attributes.borderColor,

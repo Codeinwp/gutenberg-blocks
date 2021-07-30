@@ -12,6 +12,16 @@
 
 		.wp-block-themeisle-blocks-business-hours-title {
 			text-align: center;
+			position: relative;
+
+			&::after {
+				position: absolute;
+				left: 0;
+				content: '';
+				background-color: black;
+				height: 1px;
+				width: 50%;
+			}
 		}
 
 		.wp-block-themeisle-blocks-business-hours-content {

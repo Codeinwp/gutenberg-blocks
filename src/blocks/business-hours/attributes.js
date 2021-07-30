@@ -24,6 +24,9 @@ const attributes = {
 	gap: {
 		type: 'number'
 	},
+	borderStyle: {
+		type: 'string'
+	},
 	borderWidth: {
 		type: 'number'
 	},
