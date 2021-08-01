@@ -19,7 +19,7 @@
 		"@wordpress/icons": "^4.0.0",
 		"array-move": "^3.0.1",
 		"classnames": "^2.3.1",
-		"core-js": "^3.15.2",
+		"core-js": "^3.16.0",
 		"currency-symbol-map": "^5.0.1",
 		"dom-scroll-into-view": "^2.0.1",
 		"hex-rgba": "^1.0.2",
