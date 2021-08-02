@@ -303,7 +303,21 @@ class Main {
 	 * @param null $post Current post.
 	 */
 	public function enqueue_dependencies( $post = null ) {
-		$content = get_the_content( $post );
+		$content = '';
+
+		if ( 'widgets' === $post ) {
+			$widgets = get_option( 'widget_block', array() );
+	
+			foreach ( $widgets as $widget ) {
+				if ( is_array( $widget ) && isset( $widget['content'] ) ) {
+					$content .= $widget['content'];
+				}
+			}
+
+			$post = $content;
+		} else {
+			$content = get_the_content( $post );
+		}
 
 		if ( strpos( $content, '<!-- wp:' ) === false ) {
 			return false;
@@ -541,7 +555,7 @@ class Main {
 	 * @access  public
 	 */
 	public function enqueue_block_frontend_assets() {
-		global $wp_query;
+		global $wp_query, $wp_registered_sidebars;
 
 		if ( is_admin() ) {
 			return;
@@ -566,6 +580,18 @@ class Main {
 			}
 		);
 
+		$has_widgets = false;
+
+		foreach ( $wp_registered_sidebars as $key => $sidebar ) {
+			if ( is_active_sidebar( $key ) ) {
+				$has_widgets = true;
+				break;
+			}
+		}
+
+		if ( $has_widgets ) {
+			$this->enqueue_dependencies( 'widgets' );
+		}
 	}
 
 	/**
