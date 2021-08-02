@@ -7,6 +7,7 @@ import {
 	Button,
 	DateTimePicker
 } from '@wordpress/components';
+
 import {
 	ContrastChecker,
 	InspectorControls,
@@ -15,12 +16,22 @@ import {
 
 import moment from 'moment';
 
+import { useSelect } from '@wordpress/data';
+
+import ResponsiveControl from '../../components/responsive-control';
+
 const Inspector = ({
 	attributes,
 	setAttributes,
 	className
 }) => {
 
+	const getView = useSelect( ( select ) => {
+		const { getView } = select( 'themeisle-gutenberg/data' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+
+		return __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : getView();
+	}, []);
 
 	const excludeComponent = ( value, componentName ) => {
 		if ( value ) {
@@ -47,31 +58,87 @@ const Inspector = ({
 	};
 
 	const onGapChange = value => {
-		setAttributes({ gap: Number( value )});
+		if ( 'Desktop' === getView ) {
+			setAttributes({ gap: Number( value )});
+		}
+		if ( 'Tablet' === getView ) {
+			setAttributes({ gapTablet: Number( value )});
+		}
+		if ( 'Mobile' === getView ) {
+			setAttributes({ gapMobile: Number( value )});
+		}
 	};
 
 	const onWidthChange = value => {
-		setAttributes({ width: Number( value )});
+		if ( 'Desktop' === getView ) {
+			setAttributes({ width: Number( value )});
+		}
+		if ( 'Tablet' === getView ) {
+			setAttributes({ widthTablet: Number( value )});
+		}
+		if ( 'Mobile' === getView ) {
+			setAttributes({ widthMobile: Number( value )});
+		}
 	};
 
 	const onHeightChange = value => {
-		setAttributes({ height: Number( value )});
+		if ( 'Desktop' === getView ) {
+			setAttributes({ height: Number( value )});
+		}
+		if ( 'Tablet' === getView ) {
+			setAttributes({ heightTablet: Number( value )});
+		}
+		if ( 'Mobile' === getView ) {
+			setAttributes({ heightMobile: Number( value )});
+		}
 	};
 
 	const onBorderRadiusChange = value => {
-		setAttributes({ borderRadius: Number( value ) });
+		if ( 'Desktop' === getView ) {
+			setAttributes({ borderRadius: Number( value )});
+		}
+		if ( 'Tablet' === getView ) {
+			setAttributes({ borderRadiusTablet: Number( value )});
+		}
+		if ( 'Mobile' === getView ) {
+			setAttributes({ borderRadiusMobile: Number( value )});
+		}
 	};
 
 	const onValueFontSizeChange = value => {
-		setAttributes({ valueFontSize: Number( value ) });
+		if ( 'Desktop' === getView ) {
+			setAttributes({ valueFontSize: Number( value ) });
+		}
+		if ( 'Tablet' === getView ) {
+			setAttributes({ valueFontSizeTablet: Number( value )});
+		}
+		if ( 'Mobile' === getView ) {
+			setAttributes({ valueFontSizeMobile: Number( value )});
+		}
 	};
 
 	const onLabelFontSizeChange = value => {
-		setAttributes({ labelFontSize: Number( value ) });
+		if ( 'Desktop' === getView ) {
+			setAttributes({ labelFontSize: Number( value ) });
+		}
+		if ( 'Tablet' === getView ) {
+			setAttributes({ labelFontSizeTablet: Number( value )});
+		}
+		if ( 'Mobile' === getView ) {
+			setAttributes({ labelFontSizeMobile: Number( value )});
+		}
 	};
 
 	const onBorderWidthChange = value => {
-		setAttributes({ borderWidth: Number( value ) });
+		if ( 'Desktop' === getView ) {
+			setAttributes({ borderWidth: Number( value ) });
+		}
+		if ( 'Tablet' === getView ) {
+			setAttributes({ borderWidthTablet: Number( value )});
+		}
+		if ( 'Mobile' === getView ) {
+			setAttributes({ borderWidthMobile: Number( value )});
+		}
 	};
 
 	const onBorderColorChange = value => {
@@ -142,66 +209,92 @@ const Inspector = ({
 					)
 				}
 
-				<RangeControl
+				<ResponsiveControl
 					label={ __( 'Box Spacing', 'otter-blocks' ) }
-					value={ attributes.gap }
-					onChange={ onGapChange }
-					min={ 0 }
-					max={ 100 }
-				/>
+				>
+					<RangeControl
+						value={ 'Mobile' === getView ? attributes.gapMobile : 'Tablet' === getView ? attributes.gapTablet : attributes.gap }
+						onChange={ onGapChange }
+						min={ 0 }
+						max={ 100 }
+					/>
+				</ResponsiveControl>
 
-				<RangeControl
+
+				<ResponsiveControl
 					label={ __( 'Box Height', 'otter-blocks' ) }
-					value={ attributes.height }
-					onChange={ onHeightChange }
-					min={ 40 }
-					max={ 300 }
-				/>
+				>
+					<RangeControl
+						value={ 'Mobile' === getView ? attributes.heightMobile : 'Tablet' === getView ? attributes.heightTablet : attributes.height }
+						onChange={ onHeightChange }
+						min={ 40 }
+						max={ 300 }
+					/>
+				</ResponsiveControl>
 
-				<RangeControl
+				<ResponsiveControl
 					label={ __( 'Box Width', 'otter-blocks' ) }
-					value={ attributes.width }
-					onChange={ onWidthChange }
-					min={ 40 }
-					max={ 300 }
-				/>
+				>
+					<RangeControl
+						value={ 'Mobile' === getView ? attributes.widthMobile : 'Tablet' === getView ? attributes.widthTablet : attributes.width }
+						onChange={ onWidthChange }
+						min={ 40 }
+						max={ 300 }
+					/>
+				</ResponsiveControl>
+
 
 				{
 					className.includes( 'is-style-custom' ) && (
-						<RangeControl
+						<ResponsiveControl
 							label={ __( 'Border Radius', 'otter-blocks' ) }
-							value={ attributes.borderRadius }
-							onChange={ onBorderRadiusChange }
-							min={ 0 }
-							max={ 100 }
-						/>
+						>
+							<RangeControl
+
+								value={ 'Mobile' === getView ? attributes.borderRadiusMobile : 'Tablet' === getView ? attributes.borderRadiusTablet : attributes.borderRadius }
+								onChange={ onBorderRadiusChange }
+								min={ 0 }
+								max={ 100 }
+							/>
+						</ResponsiveControl>
+
 					)
 				}
 
-
-				<RangeControl
+				<ResponsiveControl
 					label={ __( 'Border Width', 'otter-blocks' ) }
-					value={ attributes.borderWidth }
-					onChange={ onBorderWidthChange }
-					min={ 0 }
-					max={ 50 }
-				/>
+				>
+					<RangeControl
 
-				<RangeControl
-					label={ __( 'Value Font Size', 'otter-blocks' ) }
-					value={ attributes.valueFontSize }
-					onChange={ onValueFontSizeChange }
-					min={ 0 }
-					max={ 64 }
-				/>
+						value={ 'Mobile' === getView ? attributes.borderWidthMobile : 'Tablet' === getView ? attributes.borderWidthTablet : attributes.borderWidth }
+						onChange={ onBorderWidthChange }
+						min={ 0 }
+						max={ 50 }
+					/>
+				</ResponsiveControl>
 
-				<RangeControl
+				<ResponsiveControl
+					label={ __( 'Time Value Font Size', 'otter-blocks' ) }
+				>
+					<RangeControl
+						value={ 'Mobile' === getView ? attributes.valueFontSizeMobile : 'Tablet' === getView ? attributes.valueFontSizeTablet : attributes.valueFontSize }
+						onChange={ onValueFontSizeChange }
+						min={ 0 }
+						max={ 64 }
+					/>
+				</ResponsiveControl>
+
+				<ResponsiveControl
 					label={ __( 'Label Font Size', 'otter-blocks' ) }
-					value={ attributes.labelFontSize }
-					onChange={ onLabelFontSizeChange }
-					min={ 0 }
-					max={ 64 }
-				/>
+				>
+					<RangeControl
+						value={ 'Mobile' === getView ? attributes.labelFontSizeMobile : 'Tablet' === getView ? attributes.labelFontSizeTablet : attributes.labelFontSize }
+						onChange={ onLabelFontSizeChange }
+						min={ 0 }
+						max={ 64 }
+					/>
+				</ResponsiveControl>
+
 
 			</PanelBody>
 

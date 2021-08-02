@@ -26,16 +26,46 @@ const attributes = {
 	gap: {
 		type: 'number'
 	},
+	gapTablet: {
+		type: 'number'
+	},
+	gapMobile: {
+		type: 'number'
+	},
 	width: {
+		type: 'number'
+	},
+	widthTablet: {
+		type: 'number'
+	},
+	widthMobile: {
 		type: 'number'
 	},
 	height: {
 		type: 'number'
 	},
+	heightTablet: {
+		type: 'number'
+	},
+	heightMobile: {
+		type: 'number'
+	},
 	borderRadius: {
 		type: 'number'
 	},
+	borderRadiusTablet: {
+		type: 'number'
+	},
+	borderRadiusMobile: {
+		type: 'number'
+	},
 	borderWidth: {
+		type: 'number'
+	},
+	borderWidthTablet: {
+		type: 'number'
+	},
+	borderWidthMobile: {
 		type: 'number'
 	},
 	borderColor: {
@@ -44,7 +74,19 @@ const attributes = {
 	valueFontSize: {
 		type: 'number'
 	},
+	valueFontSizeTablet: {
+		type: 'number'
+	},
+	valueFontSizeMobile: {
+		type: 'number'
+	},
 	labelFontSize: {
+		type: 'number'
+	},
+	labelFontSizeTablet: {
+		type: 'number'
+	},
+	labelFontSizeMobile: {
 		type: 'number'
 	},
 	hasSeparators: {
