@@ -241,6 +241,10 @@ class Block_Conditions {
 			return empty( $meta );
 		}
 
+		if ( 'if_equals' === $condition['meta_compare'] && isset( $condition['meta_value'] ) ) {
+			return $meta === $condition['meta_value'];
+		}
+
 		if ( 'if_contains' === $condition['meta_compare'] && isset( $condition['meta_value'] ) ) {
 			return false !== strpos( $meta, $condition['meta_value'] );
 		}
