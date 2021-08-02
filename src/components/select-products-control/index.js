@@ -14,6 +14,8 @@ import {
 
 import { useSelect } from '@wordpress/data';
 
+import { decodeEntities } from '@wordpress/html-entities';
+
 const SelectProducts = ({
 	label,
 	value,
@@ -43,7 +45,7 @@ const SelectProducts = ({
 					},
 					...results.map( result => ({
 						value: result.id,
-						label: result.name
+						label: decodeEntities( result.name )
 					}) )
 				];
 			}

@@ -130,10 +130,10 @@ class Review_Block extends Base_Block {
 
 			$attributes['title']       = $product->get_name();
 			$attributes['description'] = $product->get_short_description();
-			$attributes['price']       = $product->get_price();
+			$attributes['price']       = $product->get_regular_price() ? $product->get_regular_price() : $product->get_price();
 			$attributes['currency']    = get_woocommerce_currency();
 
-			if ( ! empty( $product->get_sale_price() ) && $product->get_price() !== $product->get_sale_price() ) {
+			if ( ! empty( $product->get_sale_price() ) && $attributes['price'] !== $product->get_sale_price() ) {
 				$attributes['discounted'] = $product->get_sale_price();
 			}
 

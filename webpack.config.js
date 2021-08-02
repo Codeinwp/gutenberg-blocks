@@ -37,6 +37,7 @@ module.exports = {
 		'@wordpress/edit-post': 'wp.editPost',
 		'@wordpress/editor': 'wp.editor',
 		'@wordpress/element': 'wp.element',
+		'@wordpress/html-entities': 'wp.htmlEntities',
 		'@wordpress/hooks': 'wp.hooks',
 		'@wordpress/i18n': 'wp.i18n',
 		'@wordpress/keycodes': 'wp.keycodes',
