@@ -46,6 +46,7 @@ class Block_Frontend extends Base_CSS {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_google_fonts' ), 19 );
 		add_action( 'wp_head', array( $this, 'enqueue_google_fonts_backward' ), 19 );
 		add_filter( 'get_the_excerpt', array( $this, 'get_excerpt_end' ), 20 );
+		add_filter( 'wp_footer', array( $this, 'enqueue_widgets_css' ) );
 	}
 
 	/**
@@ -437,6 +438,73 @@ class Block_Frontend extends Base_CSS {
 		$style .= $this->cycle_through_reusable_blocks( $blocks );
 
 		return $style;
+	}
+
+	/**
+	 * Enqueue widgets CSS file
+	 *
+	 * @since   1.7.0
+	 * @access  public
+	 */
+	public function enqueue_widgets_css() {
+		global $wp_registered_sidebars;
+
+		$has_widgets = false;
+
+		foreach ( $wp_registered_sidebars as $key => $sidebar ) {
+			if ( is_active_sidebar( $key ) ) {
+				$has_widgets = true;
+				break;
+			}
+		}
+
+		if ( ! $has_widgets ) {
+			return;
+		}
+
+		$fonts_list = get_option( 'themeisle_blocks_widgets_fonts', array() );
+		$fonts      = array();
+
+		if ( count( $fonts_list ) > 0 ) {
+			foreach ( $fonts_list as $font ) {
+				if ( empty( $font['fontfamily'] ) ) {
+					continue;
+				}
+				$item = str_replace( ' ', '+', $font['fontfamily'] );
+				if ( count( $font['fontvariant'] ) > 0 ) {
+					$item .= ':' . implode( ',', $font['fontvariant'] );
+				}
+				array_push( $fonts, $item );
+			}
+
+			if ( count( $fonts ) > 0 ) {
+				wp_enqueue_style( 'themeisle-gutenberg-widgets-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ), [], THEMEISLE_BLOCKS_VERSION );
+			}
+		}
+
+		if ( ! CSS_Handler::has_css_file( 'widgets' ) ) {
+			CSS_Handler::save_widgets_styles();
+
+			$css = get_option( 'themeisle_blocks_widgets_css' );
+
+			if ( empty( $css ) ) {
+				$css = $this->get_widgets_css();
+			}
+
+			if ( empty( $css ) ) {
+				return;
+			}
+
+			$style  = "\n" . '<style type="text/css" media="all">' . "\n";
+			$style .= $css;
+			$style .= "\n" . '</style>' . "\n";
+			echo $style;
+			return;
+		}
+
+		$file_url = CSS_Handler::get_css_url( 'widgets' );
+
+		wp_enqueue_style( 'themeisle-gutenberg-widgets', $file_url, array( 'themeisle-block_styles' ), THEMEISLE_BLOCKS_VERSION );
 	}
 
 	/**

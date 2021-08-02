@@ -1,6 +1,8 @@
 /**
  * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n';
+
 import { debounce } from 'lodash';
 
 import apiFetch from '@wordpress/api-fetch';
@@ -11,12 +13,54 @@ import {
 	subscribe
 } from '@wordpress/data';
 
+const { createNotice } = dispatch( 'core/notices' );
+
 const savePostMeta = debounce( async() => {
 	const { getCurrentPostId } = select( 'core/editor' );
 	const postId = getCurrentPostId();
 
+	createNotice(
+		'info',
+		__( 'Saving CSS…', 'otter-blocks' ),
+		{
+			isDismissible: true,
+			type: 'snackbar'
+		}
+	);
+
 	await apiFetch({ path: `themeisle-gutenberg-blocks/v1/save_post_meta/${ postId }`, method: 'POST' });
-}, 1000 );
+
+	createNotice(
+		'info',
+		__( 'CSS saved.', 'otter-blocks' ),
+		{
+			isDismissible: true,
+			type: 'snackbar'
+		}
+	);
+}, 5000 );
+
+const saveWidgets = debounce( async() => {
+	createNotice(
+		'info',
+		__( 'Saving CSS…', 'otter-blocks' ),
+		{
+			isDismissible: true,
+			type: 'snackbar'
+		}
+	);
+
+	await apiFetch({ path: 'themeisle-gutenberg-blocks/v1/save_widgets_styles', method: 'POST' });
+
+	createNotice(
+		'info',
+		__( 'CSS saved.', 'otter-blocks' ),
+		{
+			isDismissible: true,
+			type: 'snackbar'
+		}
+	);
+}, 5000 );
 
 let reusableBlocks = {};
 
@@ -35,6 +79,20 @@ subscribe( () => {
 	const { isSavingEntityRecord } = select( 'core' );
 
 	const { getBlocks } = select( 'core/block-editor' );
+
+	if ( select( 'core/edit-widgets' ) ) {
+		const {
+			isSavingWidgetAreas,
+			getEditedWidgetAreas
+		} = select( 'core/edit-widgets' );
+
+		const isSavingWidgets = isSavingWidgetAreas();
+		const editedAreas = getEditedWidgetAreas();
+
+		if ( isSavingWidgets && 0 < editedAreas.length ) {
+			saveWidgets();
+		}
+	}
 
 	const { editPost } = dispatch( 'core/editor' );
 
