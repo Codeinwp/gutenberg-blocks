@@ -254,6 +254,34 @@ class Base_CSS {
 	}
 
 	/**
+	 * Get Widgets CSS
+	 *
+	 * @return string
+	 * @since   1.7.0
+	 * @access  public
+	 */
+	public function get_widgets_css() {
+		if ( function_exists( 'has_blocks' ) ) {
+			$content = '';
+			$widgets = get_option( 'widget_block', array() );
+
+			foreach ( $widgets as $widget ) {
+				if ( is_array( $widget ) && isset( $widget['content'] ) ) {
+					$content .= $widget['content'];
+				}
+			}
+
+			$blocks = $this->parse_blocks( $content );
+
+			if ( ! is_array( $blocks ) || empty( $blocks ) ) {
+				return;
+			}
+
+			return $this->cycle_through_static_blocks( $blocks );
+		}
+	}
+
+	/**
 	 * Get Reusable Blocks CSS
 	 *
 	 * @param int $post_id Post id.

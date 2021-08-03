@@ -30,6 +30,7 @@ class CSS_Handler extends Base_CSS {
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 		add_action( 'rest_api_init', array( $this, 'autoload_block_classes' ) );
 		add_action( 'before_delete_post', array( __CLASS__, 'delete_css_file' ) );
+		add_action( 'customize_save_after', array( __CLASS__, 'save_widgets_styles' ) );
 	}
 
 	/**
@@ -88,6 +89,20 @@ class CSS_Handler extends Base_CSS {
 				),
 			)
 		);
+
+		register_rest_route(
+			$namespace,
+			'/save_widgets_styles/',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'save_widgets_styles' ),
+					'permission_callback' => function () {
+						return current_user_can( 'edit_theme_options' );
+					},
+				),
+			)
+		);
 	}
 
 	/**
@@ -123,12 +138,19 @@ class CSS_Handler extends Base_CSS {
 	/**
 	 * Get CSS url for post.
 	 *
-	 * @param int $post_id Post id.
+	 * @param int/string $type Post ID or Widget.
 	 *
 	 * @return string File url.
 	 */
-	public static function get_css_url( $post_id ) {
-		$file_name = get_post_meta( $post_id, '_themeisle_gutenberg_block_stylesheet', true );
+	public static function get_css_url( $type = 'widgets' ) {
+		$file_name = '';
+
+		if ( 'widgets' === $type ) {
+			$file_name = get_option( 'themeisle_blocks_widgets_css_file' );
+		} else {
+			$file_name = get_post_meta( $type, '_themeisle_gutenberg_block_stylesheet', true );
+		}
+
 		if ( empty( $file_name ) ) {
 			return false;
 		}
@@ -142,16 +164,23 @@ class CSS_Handler extends Base_CSS {
 	/**
 	 * Check if we have a CSS file for this post.
 	 *
-	 * @param int $post_id Post ID.
+	 * @param int/string $type Post ID or Widget.
 	 *
 	 * @return bool
 	 */
-	public static function has_css_file( $post_id ) {
-		$file_name = get_post_meta( $post_id, '_themeisle_gutenberg_block_stylesheet', true );
+	public static function has_css_file( $type = 'widgets' ) {
+		$file_name = '';
+
+		if ( 'widgets' === $type ) {
+			$file_name = get_option( 'themeisle_blocks_widgets_css_file' );
+		} else {
+			$file_name = get_post_meta( $type, '_themeisle_gutenberg_block_stylesheet', true );
+		}
 
 		if ( empty( $file_name ) ) {
 			return false;
 		}
+
 		$wp_upload_dir = wp_upload_dir( null, false );
 		$basedir       = $wp_upload_dir['basedir'] . '/themeisle-gutenberg/';
 		$file_path     = $basedir . $file_name . '.css';
@@ -285,6 +314,78 @@ class CSS_Handler extends Base_CSS {
 		}
 
 		$wp_filesystem->delete( $file_path, true );
+
+		return true;
+	}
+
+	/**
+	 * Function to save/resave widget styles.
+	 *
+	 * @return  bool
+	 * @since   1.7.0
+	 * @access  public
+	 */
+	public static function save_widgets_styles() {
+		global $wp_filesystem;
+		require_once ABSPATH . '/wp-admin/includes/file.php';
+		WP_Filesystem();
+
+		$css = self::instance()->get_widgets_css();
+
+		if ( empty( $css ) ) {
+			$file_path = get_option( 'themeisle_blocks_widgets_css_file' );
+
+			if ( ! file_exists( $file_path ) ) {
+				return false;
+			}
+
+			delete_option( 'themeisle_blocks_widgets_css_file' );
+			delete_option( 'themeisle_blocks_widgets_css' );
+
+			return $wp_filesystem->delete( $file_path, true );
+		}
+
+		if ( count( self::$google_fonts ) > 0 ) {
+			update_option( 'themeisle_blocks_widgets_fonts', self::$google_fonts );
+		} else {
+			if ( get_option( 'themeisle_blocks_widgets_fonts' ) ) {
+				delete_option( 'themeisle_blocks_widgets_fonts' );
+			}
+		}
+
+		$file_name     = 'widgets-' . time();
+		$wp_upload_dir = wp_upload_dir( null, false );
+		$upload_dir    = $wp_upload_dir['basedir'] . '/themeisle-gutenberg/';
+		$file_path     = $upload_dir . $file_name . '.css';
+
+		$css = wp_filter_nohtml_kses( $css );
+
+		$css = self::compress( $css );
+
+		update_option( 'themeisle_blocks_widgets_css', $css );
+
+		$existing_file      = get_option( 'themeisle_blocks_widgets_css_file' );
+		$existing_file_path = $upload_dir . $existing_file . '.css';
+
+		if ( $existing_file && is_file( $existing_file_path ) ) {
+			$wp_filesystem->delete( $existing_file_path, true );
+		}
+
+		$target_dir = $wp_filesystem->is_dir( $upload_dir );
+
+		if ( ! $wp_filesystem->is_writable( $wp_upload_dir['basedir'] ) ) {
+			return false;
+		}
+
+		if ( ! $target_dir ) {
+			wp_mkdir_p( $upload_dir );
+		}
+
+		$wp_filesystem->put_contents( $file_path, $css, FS_CHMOD_FILE );
+
+		if ( file_exists( $file_path ) ) {
+			update_option( 'themeisle_blocks_widgets_css_file', $file_name );
+		}
 
 		return true;
 	}
