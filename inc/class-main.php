@@ -170,7 +170,7 @@ class Main {
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
-			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'wp-polyfill', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player', 'macy' ),
+			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-html-entities', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'wp-polyfill', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player', 'macy' ),
 			self::$assets_version,
 			true
 		);
@@ -199,17 +199,19 @@ class Main {
 			'themeisle-gutenberg-blocks',
 			'themeisleGutenberg',
 			array(
-				'isCompatible'  => $this->is_compatible(),
-				'packagePath'   => plugin_dir_url( $this->get_dir() ) . 'build/',
-				'assetsPath'    => plugin_dir_url( $this->get_dir() ) . 'assets',
-				'updatePath'    => admin_url( 'update-core.php' ),
-				'optionsPath'   => admin_url( 'options-general.php?page=otter' ),
-				'mapsAPI'       => $api,
-				'themeDefaults' => $this->get_global_defaults(),
-				'imageSizes'    => function_exists( 'is_wpcom_vip' ) ? array( 'thumbnail', 'medium', 'medium_large', 'large' ) : get_intermediate_image_sizes(), //phpcs:ignore WordPressVIPMinimum.VIP.RestrictedFunctions.get_intermediate_image_sizes_get_intermediate_image_sizes
-				'isWPVIP'       => function_exists( 'is_wpcom_vip' ),
-				'canTrack'      => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
-				'userRoles'     => $wp_roles->roles,
+				'isCompatible'   => $this->is_compatible(),
+				'packagePath'    => plugin_dir_url( $this->get_dir() ) . 'build/',
+				'assetsPath'     => plugin_dir_url( $this->get_dir() ) . 'assets',
+				'updatePath'     => admin_url( 'update-core.php' ),
+				'optionsPath'    => admin_url( 'options-general.php?page=otter' ),
+				'mapsAPI'        => $api,
+				'themeDefaults'  => $this->get_global_defaults(),
+				'imageSizes'     => function_exists( 'is_wpcom_vip' ) ? array( 'thumbnail', 'medium', 'medium_large', 'large' ) : get_intermediate_image_sizes(), //phpcs:ignore WordPressVIPMinimum.VIP.RestrictedFunctions.get_intermediate_image_sizes_get_intermediate_image_sizes
+				'isWPVIP'        => function_exists( 'is_wpcom_vip' ),
+				'canTrack'       => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
+				'userRoles'      => $wp_roles->roles,
+				'hasNevePro'     => defined( 'NEVE_PRO_VERSION' ),
+				'hasWooCommerce' => class_exists( 'WooCommerce' ),
 			)
 		);
 

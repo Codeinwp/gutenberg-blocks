@@ -16,6 +16,11 @@ import {
 import { RichText } from '@wordpress/block-editor';
 
 import {
+	Placeholder,
+	Spinner
+} from '@wordpress/components';
+
+import {
 	Fragment,
 	useEffect
 } from '@wordpress/element';
@@ -37,7 +42,9 @@ const Edit = ({
 	setAttributes,
 	clientId,
 	className,
-	isSelected
+	isSelected,
+	status = 'isInactive',
+	productAttributes = {}
 }) => {
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
@@ -92,11 +99,44 @@ const Edit = ({
 		setAttributes({ links });
 	};
 
+
+	if ( 'isLoading' === status ) {
+		return (
+			<Fragment>
+				<Inspector
+					attributes={ attributes }
+					setAttributes={ setAttributes }
+					productAttributes={ productAttributes }
+				/>
+
+				<Placeholder><Spinner/></Placeholder>
+			</Fragment>
+		);
+	}
+
+
+	if ( 'object' === typeof status && null !== status && status.isError ) {
+		return (
+			<Fragment>
+				<Inspector
+					attributes={ attributes }
+					setAttributes={ setAttributes }
+					productAttributes={ productAttributes }
+				/>
+
+				<Placeholder
+					instructions={ status.message }
+				/>
+			</Fragment>
+		);
+	}
+
 	return (
 		<Fragment>
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
+				productAttributes={ productAttributes }
 			/>
 
 			<div
@@ -112,16 +152,31 @@ const Edit = ({
 						borderColor: attributes.primaryColor
 					} }
 				>
-					<RichText
-						placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
-						allowedFormats={ [] }
-						value={ attributes.title }
-						onChange={ title => setAttributes({ title }) }
-						tagName="h3"
-						style={ {
-							color: attributes.textColor
-						} }
-					/>
+					{
+						! productAttributes?.title ? (
+							<RichText
+								placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
+								allowedFormats={ [] }
+								value={ attributes.title }
+								onChange={ title => setAttributes({ title }) }
+								tagName="h3"
+								style={ {
+									color: attributes.textColor
+								} }
+							/>
+						) : (
+							<RichText.Content
+								placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
+								allowedFormats={ [] }
+								value={ productAttributes?.title }
+								tagName="h3"
+								style={ {
+									color: attributes.textColor
+								} }
+							/>
+						)
+					}
+
 
 					<div className="wp-block-themeisle-blocks-review__header_meta">
 						<div className="wp-block-themeisle-blocks-review__header_ratings">
@@ -142,11 +197,11 @@ const Edit = ({
 								color: attributes.textColor
 							} }
 						>
-							{ ( attributes.price && attributes.discounted ) && (
-								<del>{ ( getSymbolFromCurrency( attributes.currency ) ?? '$' ) + '' + attributes.price || 0 }</del>
+							{ ( ( productAttributes?.price && productAttributes?.discounted ) || ( attributes.price && attributes.discounted ) ) && (
+								<del>{ ( getSymbolFromCurrency( productAttributes?.currency || attributes.currency ) ?? '$' ) + '' + productAttributes?.price || attributes.price || 0 }</del>
 							) }
 
-							{ ( attributes.price || attributes.discounted ) && ( getSymbolFromCurrency( attributes.currency ) ?? '$' ) + '' + ( attributes.discounted ? attributes.discounted : attributes.price ) }
+							{ ( attributes.price || attributes.discounted || productAttributes?.price || productAttributes?.discounted ) && ( getSymbolFromCurrency(  productAttributes?.currency || attributes.currency ) ?? '$' ) + '' + ( ( productAttributes?.discounted || attributes.discounted ) ? ( productAttributes?.discounted || attributes.discounted ) : ( productAttributes?.price || attributes.price ) ) }
 						</span>
 					</div>
 				</div>
@@ -160,18 +215,32 @@ const Edit = ({
 							}
 						) }
 					>
-						{ attributes.image && (
+						{ ( productAttributes?.image ) ? (
+							<img
+								src={ productAttributes?.image?.url }
+								alt={ productAttributes?.image?.alt }
+							/>
+						) : attributes.image && (
 							<img
 								src={ attributes.image.url }
 								alt={ attributes.image.alt }
 							/>
 						) }
 
-						{ ( isSelected || attributes.description ) && (
+						{ ( isSelected || attributes.description ) && ! productAttributes?.description ? (
 							<RichText
 								placeholder={ __( 'Product description or a small review…', 'otter-blocks' ) }
 								value={ attributes.description }
 								onChange={ description => setAttributes({ description }) }
+								tagName="p"
+								style={ {
+									color: attributes.textColor
+								} }
+							/>
+						) : (
+							<RichText.Content
+								placeholder={ __( 'Product description or a small review…', 'otter-blocks' ) }
+								value={ productAttributes?.description }
 								tagName="p"
 								style={ {
 									color: attributes.textColor
@@ -286,7 +355,7 @@ const Edit = ({
 					) }
 				</div>
 
-				{ 0 < attributes.links.length && (
+				{ ( 0 < productAttributes?.links?.length || 0 < attributes.links.length ) && (
 					<div className="wp-block-themeisle-blocks-review__footer">
 						<span
 							className="wp-block-themeisle-blocks-review__footer_label"
@@ -298,10 +367,11 @@ const Edit = ({
 						</span>
 
 						<div className="wp-block-themeisle-blocks-review__footer_buttons">
-							{ attributes.links.map( ( link, index ) => (
+							{ ( productAttributes?.links || attributes.links ).map( ( link, index ) => (
 								<RichText
 									placeholder={ __( 'Button label', 'otter-blocks' ) }
 									value={ link.label }
+									disabled={ 0 < productAttributes?.links }
 									onChange={ label => changeLinks( index, { label }) }
 									tagName="span"
 									style={ {
