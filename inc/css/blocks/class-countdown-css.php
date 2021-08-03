@@ -43,18 +43,65 @@ class Countdown_CSS extends Base_CSS {
 						'value'    => 'backgroundColor',
 					),
 					array(
+						'property' => 'border-color',
+						'value'    => 'borderColor',
+					),
+					array(
+						'property'  => 'border-radius',
+						'value'     => 'borderRadius',
+						'unit'      => 'px',
+						'default'   => 0,
+						'condition' => function( $attrs ) {
+							return ! ( isset( $attrs['borderRadiusType'] ) && 'unlinked' === $attrs['borderRadiusType'] );
+						},
+					),
+					array(
+						'property'       => 'border-radius',
+						'pattern'        => 'top-left top-right bottom-right bottom-left',
+						'pattern_values' => array(
+							'top-left'     => array(
+								'value'   => 'borderRadiusTopLeft',
+								'unit'    => '%',
+								'default' => 0,
+							),
+							'top-right'    => array(
+								'value'   => 'borderRadiusTopRight',
+								'unit'    => '%',
+								'default' => 0,
+							),
+							'bottom-right' => array(
+								'value'   => 'borderRadiusBottomRight',
+								'unit'    => '%',
+								'default' => 0,
+							),
+							'bottom-left'  => array(
+								'value'   => 'borderRadiusBottomLeft',
+								'unit'    => '%',
+								'default' => 0,
+							),
+						),
+						'condition'      => function( $attrs ) {
+							return isset( $attrs['borderRadiusType'] ) && 'unlinked' === $attrs['borderRadiusType'];
+						},
+					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'query'      => '@media ( min-width: 961px )',
+				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component:not([name="separator"])',
+				'properties' => array(
+					array(
 						'property' => 'width',
 						'value'    => 'width',
 						'unit'     => 'px',
 					),
 					array(
 						'property' => 'border-width',
-						'value'    => 'borderWidth',
+						'value'    => 'border',
 						'unit'     => 'px',
-					),
-					array(
-						'property' => 'border-color',
-						'value'    => 'borderColor',
 					),
 				),
 			)
@@ -100,47 +147,7 @@ class Countdown_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]).is-custom-style',
-				'properties' => array(
-					array(
-						'property' => 'border-radius',
-						'value'    => 'borderRadius',
-						'unit'     => 'px',
-					),
-				),
-			)
-		);
-
-		$css->add_item(
-			array(
-				'query'      => '@media ( min-width: 600px ) and ( max-width: 960px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]).is-custom-style',
-				'properties' => array(
-					array(
-						'property' => 'border-radius',
-						'value'    => 'borderRadiusTablet',
-						'unit'     => 'px',
-					),
-				),
-			)
-		);
-
-		$css->add_item(
-			array(
-				'query'      => '@media ( max-width: 600px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]).is-custom-style',
-				'properties' => array(
-					array(
-						'property' => 'border-radius',
-						'value'    => 'borderRadiusMobile',
-						'unit'     => 'px',
-					),
-				),
-			)
-		);
-
-		$css->add_item(
-			array(
+				'query'      => '@media ( min-width: 961px )',
 				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component',
 				'properties' => array(
 					array(
@@ -182,6 +189,7 @@ class Countdown_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
+				'query'      => '@media ( min-width: 961px )',
 				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display',
 				'properties' => array(
 					array(
@@ -223,6 +231,7 @@ class Countdown_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
+				'query'      => '@media ( min-width: 961px )',
 				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component .wp-block-themeisle-blocks-countdown-display-component_value',
 				'properties' => array(
 					array(
@@ -268,6 +277,7 @@ class Countdown_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
+				'query'      => '@media ( min-width: 961px )',
 				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component .wp-block-themeisle-blocks-countdown-display-component_label',
 				'properties' => array(
 					array(

@@ -25,138 +25,38 @@
 				align-items: center;
 				flex-direction: column;
 				width: max-content;
-				border: unset;
-				border-radius: 10px;
+				border: solid;
+				border-radius: 10%;
 				border-width: 2px;
+				width: 70px;
+				height: 70px;
+
+				@media ( max-width: 960px ) {
+					width: 70px;
+					height: 70px;
+				}
 
 				.wp-block-themeisle-blocks-countdown-display-component_value {
 					font-size: 1.4rem;
 					line-height: 1.2;
 					text-align: center;
+					width: 100%;
 				}
 
 				.wp-block-themeisle-blocks-countdown-display-component_label {
 					font-size: 0.6rem;
 					min-height: 1rem;
 					text-align: center;
+					width: 100%;
 				}
 
 				&[name="separator"] {
 					.wp-block-themeisle-blocks-countdown-display-component_label {
 						opacity: 0%;
 					}
-				}
-			}
-		}
-	}
-
-	&.is-style-simple {
-		.wp-block-themeisle-blocks-countdown-container {
-			.wp-block-themeisle-blocks-countdown-display {
-				.wp-block-themeisle-blocks-countdown-display-component {
-					height: 40px;
-				}
-
-				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
-					width: 40px;
-				}
-			}
-		}
-	}
-
-	&.is-style-square {
-		.wp-block-themeisle-blocks-countdown-container {
-			.wp-block-themeisle-blocks-countdown-display {
-				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
-					border-radius: 0px;
-					border-style: solid;
-					height: 60px;
-					width: 60px;
-				}
-			}
-		}
-	}
-
-	&.is-style-card {
-		.wp-block-themeisle-blocks-countdown-container {
-			.wp-block-themeisle-blocks-countdown-display {
-				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
-					border-radius: 25% 10%;
-					border-style: solid;
-					height: 60px;
-					width: 60px;
-				}
-			}
-		}
-	}
-
-	&.is-style-pocket {
-		.wp-block-themeisle-blocks-countdown-container {
-			.wp-block-themeisle-blocks-countdown-display {
-				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
-					border-radius: 10% 10% 40% 40%;
-					border-style: solid;
-					height: 60px;
-					width: 60px;
-				}
-			}
-		}
-	}
-
-	&.is-style-round {
-		.wp-block-themeisle-blocks-countdown-container {
-			.wp-block-themeisle-blocks-countdown-display {
-				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
-					border-radius: 10%;
-					border-style: solid;
-					height: 60px;
-					width: 60px;
-				}
-			}
-		}
-	}
-
-	&.is-style-circle {
-		.wp-block-themeisle-blocks-countdown-container {
-			.wp-block-themeisle-blocks-countdown-display {
-				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
-					border-radius: 100%;
-					border-style: solid;
-					height: 60px;
-					width: 60px;
-				}
-			}
-		}
-	}
-
-	&.is-style-modern {
-		.wp-block-themeisle-blocks-countdown-container {
-			.wp-block-themeisle-blocks-countdown-display {
-				gap: 0px;
-				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
-					height: max-content;
-					width: 60px;
-					border-radius: 0px;
-
-					&:not(:last-child) {
-						border-right: 1px solid black;
-					}
-				}
-
-				.wp-block-themeisle-blocks-countdown-display-component[name="separator"] {
-					display: none;
-				}
-			}
-		}
-	}
-
-	&.is-style-custom {
-		.wp-block-themeisle-blocks-countdown-container {
-			.wp-block-themeisle-blocks-countdown-display {
-				.wp-block-themeisle-blocks-countdown-display-component:not([name="separator"]) {
-					border-style: solid;
-					height: 60px;
-					width: 60px;
+					border: unset;
+					background-color: transparent;
+					width: max-content;
 				}
 			}
 		}

@@ -51,13 +51,28 @@ const attributes = {
 		type: 'number'
 	},
 	borderRadius: {
-		type: 'number'
+		type: 'number',
+		default: 0
 	},
-	borderRadiusTablet: {
-		type: 'number'
+	borderRadiusType: {
+		type: 'string',
+		default: 'linked'
 	},
-	borderRadiusMobile: {
-		type: 'number'
+	borderRadiusTopRight: {
+		type: 'number',
+		default: 0
+	},
+	borderRadiusTopLeft: {
+		type: 'number',
+		default: 0
+	},
+	borderRadiusBottomRight: {
+		type: 'number',
+		default: 0
+	},
+	borderRadiusBottomLeft: {
+		type: 'number',
+		default: 0
 	},
 	borderWidth: {
 		type: 'number'

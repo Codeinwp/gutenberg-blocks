@@ -19,11 +19,11 @@ import moment from 'moment';
 import { useSelect } from '@wordpress/data';
 
 import ResponsiveControl from '../../components/responsive-control';
+import SizingControl from '../../components/sizing-control';
 
 const Inspector = ({
 	attributes,
-	setAttributes,
-	className
+	setAttributes
 }) => {
 
 	const getView = useSelect( ( select ) => {
@@ -93,18 +93,6 @@ const Inspector = ({
 		}
 	};
 
-	const onBorderRadiusChange = value => {
-		if ( 'Desktop' === getView ) {
-			setAttributes({ borderRadius: Number( value )});
-		}
-		if ( 'Tablet' === getView ) {
-			setAttributes({ borderRadiusTablet: Number( value )});
-		}
-		if ( 'Mobile' === getView ) {
-			setAttributes({ borderRadiusMobile: Number( value )});
-		}
-	};
-
 	const onValueFontSizeChange = value => {
 		if ( 'Desktop' === getView ) {
 			setAttributes({ valueFontSize: Number( value ) });
@@ -143,6 +131,47 @@ const Inspector = ({
 
 	const onBorderColorChange = value => {
 		setAttributes({ borderColor: value });
+	};
+
+	const changeBorderRadiusType = value => {
+		setAttributes({ borderRadiusType: value });
+	};
+
+	const getBorderRadius = type => {
+		let value;
+
+		if ( 'top-right' == type ) {
+			value = 'linked' === attributes.borderRadiusType ? attributes.borderRadius : attributes.borderRadiusTopRight;
+		}
+
+		if ( 'top-left' == type ) {
+			value = 'linked' === attributes.borderRadiusType ? attributes.borderRadius : attributes.borderRadiusTopLeft;
+		}
+
+		if ( 'bottom-right' == type ) {
+			value = 'linked' === attributes.borderRadiusType ? attributes.borderRadius : attributes.borderRadiusBottomRight;
+		}
+
+		if ( 'bottom-left' == type ) {
+			value = 'linked' === attributes.borderRadiusType ? attributes.borderRadius : attributes.borderRadiusBottomLeft;
+		}
+
+		return value;
+	};
+
+	const borderRadiusDirection = {
+		'top-right': 'borderRadiusTopRight',
+		'top-left': 'borderRadiusTopLeft',
+		'bottom-left': 'borderRadiusBottomLeft',
+		'bottom-right': 'borderRadiusBottomRight'
+	};
+
+	const changeBorderRadius = ( type, value ) => {
+		if ( 'linked' === attributes.borderRadiusType ) {
+			setAttributes({ borderRadius: value });
+		} else {
+			setAttributes({ [borderRadiusDirection[type]]: value });
+		}
 	};
 
 	return (
@@ -199,15 +228,11 @@ const Inspector = ({
 					onChange={ value => excludeComponent( value, 'second' ) }
 				/>
 
-				{
-					! className.includes( 'is-style-modern' ) && (
-						<ToggleControl
-							label={ __( 'Display Separators', 'otter-blocks' ) }
-							checked={ attributes?.hasSeparators }
-							onChange={ hasSeparators => setAttributes({ hasSeparators }) }
-						/>
-					)
-				}
+				<ToggleControl
+					label={ __( 'Display Separators', 'otter-blocks' ) }
+					checked={ attributes?.hasSeparators }
+					onChange={ hasSeparators => setAttributes({ hasSeparators }) }
+				/>
 
 				<ResponsiveControl
 					label={ __( 'Box Spacing', 'otter-blocks' ) }
@@ -243,24 +268,6 @@ const Inspector = ({
 					/>
 				</ResponsiveControl>
 
-
-				{
-					className.includes( 'is-style-custom' ) && (
-						<ResponsiveControl
-							label={ __( 'Border Radius', 'otter-blocks' ) }
-						>
-							<RangeControl
-
-								value={ 'Mobile' === getView ? attributes.borderRadiusMobile : 'Tablet' === getView ? attributes.borderRadiusTablet : attributes.borderRadius }
-								onChange={ onBorderRadiusChange }
-								min={ 0 }
-								max={ 100 }
-							/>
-						</ResponsiveControl>
-
-					)
-				}
-
 				<ResponsiveControl
 					label={ __( 'Border Width', 'otter-blocks' ) }
 				>
@@ -295,6 +302,36 @@ const Inspector = ({
 					/>
 				</ResponsiveControl>
 
+				<SizingControl
+					label={ __( 'Border Radius (%)', 'otter-blocks' ) }
+					type={ attributes.borderRadiusType }
+					min={ 0 }
+					max={ 100 }
+					changeType={ changeBorderRadiusType }
+					onChange={ changeBorderRadius }
+					options={ [
+						{
+							label: __( 'Top Left', 'otter-blocks' ),
+							type: 'top-left',
+							value: getBorderRadius( 'top-left' )
+						},
+						{
+							label: __( 'Top Right', 'otter-blocks' ),
+							type: 'top-right',
+							value: getBorderRadius( 'top-right' )
+						},
+						{
+							label: __( 'Bottom Right', 'otter-blocks' ),
+							type: 'bottom-right',
+							value: getBorderRadius( 'bottom-right' )
+						},
+						{
+							label: __( 'Bottom Left', 'otter-blocks' ),
+							type: 'bottom-left',
+							value: getBorderRadius( 'bottom-left' )
+						}
+					] }
+				/>
 
 			</PanelBody>
 

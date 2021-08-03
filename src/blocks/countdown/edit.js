@@ -142,9 +142,7 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 	}
 
 
-	if ( className.includes( 'is-style-custom' ) ) {
-		styles.mainComponents.borderRadius = isTablet ? attributes.borderRadiusTablet : isMobile ? attributes.borderRadiusMobile : attributes.borderRadius;
-	}
+	styles.mainComponents.borderRadius = 'linked' === attributes.borderRadiusType ? attributes.borderRadius + '%' : `${ attributes.borderRadiusTopLeft }% ${ attributes.borderRadiusTopRight }% ${ attributes.borderRadiusBottomRight }% ${ attributes.borderRadiusBottomLeft }%`;
 
 	return (
 		<Fragment>
