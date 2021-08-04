@@ -1,65 +1,78 @@
-/* eslint-disable no-unused-vars */
-/** @jsx jsx */
-
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
-
-import {
-	Fragment,
-	useEffect,
-	useState,
-	useRef
-} from '@wordpress/element';
 
 import { RichText } from '@wordpress/block-editor';
 
+import {
+	Fragment,
+	useEffect
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
+import defaultAttributes from './attributes.js';
+import { blockInit } from '../../../helpers/block-utility.js';
 import Inspector from './inspector.js';
 
-import {
-	css,
-	jsx
-} from '@emotion/react';
-
-import { blockInit } from '../../../helpers/block-utility.js';
-import defaultAttributes from './attributes.js';
-
-const Edit = ({ attributes, setAttributes, clientId, className }) => {
-
+const Edit = ({
+	attributes,
+	setAttributes,
+	className,
+	clientId
+}) => {
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
 	}, [ attributes.id ]);
 
-	const baseCSS = css`
-		background-color: ${ attributes.backgroundColor };
-		border-radius: ${ attributes.borderRadius }px;
-	`;
+	const style = {
+		backgroundColor: attributes.backgroundColor
+	};
 
 	return (
 		<Fragment>
-			<Inspector attributes={ attributes } setAttributes={ setAttributes }/>
-			<div css={ baseCSS } className={ className } id={ attributes.id }>
-				<div css={ css`color: ${ attributes.labelColor }` } className="wp-block-themeisle-blocks-business-hours-item-label">
+			<Inspector
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+			/>
+
+			<div
+				className={ className }
+				id={ attributes.id }
+				style={ style }
+			>
+				<div
+					className="wp-block-themeisle-blocks-business-hours-item__label"
+					style={ {
+						color: attributes.labelColor
+					} }
+				>
 					<RichText
-						placeholder={ __( 'Add day', 'otter-blocks' ) }
+						placeholder={ __( 'Day', 'otter-blocks' ) }
 						value={ attributes.label }
 						onChange={ label => {
 							setAttributes({ label });
 						} }
-						tagName="div"
+						tagName="span"
 					/>
 				</div>
-				<div css={ css`color: ${ attributes.timeColor }`} className="wp-block-themeisle-blocks-business-hours-item-time">
+
+				<div
+					className="wp-block-themeisle-blocks-business-hours-item__time"
+					style={ {
+						color: attributes.timeColor
+					} }
+				>
 					<RichText
-						placeholder={ __( 'Add time interval', 'otter-blocks' ) }
+						placeholder={ __( 'Opening Hours', 'otter-blocks' ) }
 						value={ attributes.time }
 						onChange={ time => {
 							setAttributes({ time });
 						} }
-						tagName="div"
+						tagName="span"
 					/>
 				</div>
 			</div>

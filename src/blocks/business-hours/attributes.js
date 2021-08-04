@@ -2,11 +2,10 @@ const attributes = {
 	id: {
 		type: 'string'
 	},
-	width: {
-		type: 'number',
-		default: 500
-	},
 	title: {
+		type: 'string'
+	},
+	titleAlignment: {
 		type: 'string'
 	},
 	titleFontSize: {
@@ -24,9 +23,6 @@ const attributes = {
 	gap: {
 		type: 'number'
 	},
-	borderStyle: {
-		type: 'string'
-	},
 	borderWidth: {
 		type: 'number'
 	},
@@ -34,9 +30,6 @@ const attributes = {
 		type: 'string'
 	},
 	borderRadius: {
-		type: 'number'
-	},
-	heightItem: {
 		type: 'number'
 	}
 };

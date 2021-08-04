@@ -1,11 +1,7 @@
-/* eslint-disable no-unused-vars */
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
-
-import {
-	PanelBody,
-	RangeControl,
-	SelectControl
-} from '@wordpress/components';
 
 import {
 	ContrastChecker,
@@ -13,24 +9,12 @@ import {
 	PanelColorSettings
 } from '@wordpress/block-editor';
 
-const Inspector = ({ attributes, setAttributes }) => {
-
-
+const Inspector = ({
+	attributes,
+	setAttributes
+}) => {
 	return (
 		<InspectorControls>
-			<PanelBody
-				title={ __( 'Settings', 'otter-blocks' ) }
-				initialOpen={ true }
-			>
-				<RangeControl
-					label={ __( 'Border Radius', 'otter-blocks' ) }
-					value={ attributes.borderRadius }
-					onChange={ value => setAttributes({ borderRadius: Number( value )})}
-					min={ 0 }
-					max={ 60 }
-				/>
-
-			</PanelBody>
 			<PanelColorSettings
 				title={ __( 'Color', 'otter-blocks' ) }
 				initialOpen={ false }
@@ -54,8 +38,8 @@ const Inspector = ({ attributes, setAttributes }) => {
 			>
 				<ContrastChecker
 					{ ...{
-						textColor: attributes.backgroundColor,
-						backgroundColor: attributes.labelColor
+						textColor: attributes.labelColor,
+						backgroundColor: attributes.backgroundColor
 					} }
 				/>
 			</PanelColorSettings>

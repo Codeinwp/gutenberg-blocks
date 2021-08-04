@@ -1,34 +1,11 @@
+@import 'style';
+
 .wp-block-themeisle-blocks-business-hours {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-
-	.wp-block-themeisle-blocks-business-hours-container {
-		width: 500px;
-		display: flex;
-		flex-direction: column;
-		padding: 15px;
-
-		.wp-block-themeisle-blocks-business-hours-title {
-			text-align: center;
-			position: relative;
-
-			&::after {
-				position: absolute;
-				left: 0;
-				content: '';
-				background-color: black;
-				height: 1px;
-				width: 50%;
+    .wp-block-themeisle-blocks-business-hours__container {
+		.wp-block-themeisle-blocks-business-hours__container__content {
+			.block-editor-block-list__block {
+					margin: 0;
 			}
-		}
-
-		.wp-block-themeisle-blocks-business-hours-content {
-			display: flex;
-			flex-direction: column;
-			padding: 10px;
-		}
-	}
-
+        }
+    }
 }

@@ -17,7 +17,7 @@ import save from './save.js';
 
 registerBlockType( 'themeisle-blocks/business-hours', {
 	title: __( 'Business Hours', 'otter-blocks' ),
-	description: __( 'Display your business schedule.', 'otter-blocks' ),
+	description: __( 'Display your business schedule on your website.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [
@@ -29,6 +29,17 @@ registerBlockType( 'themeisle-blocks/business-hours', {
 	supports: {
 		align: [ 'wide', 'full' ]
 	},
+	styles: [
+		{
+			name: 'default',
+			label: __( 'default', 'otter-blocks' ),
+			isDefault: true
+		},
+		{
+			name: 'black-white',
+			label: __( 'Black & White', 'otter-blocks' )
+		}
+	],
 	edit,
 	save
 });

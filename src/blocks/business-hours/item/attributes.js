@@ -16,9 +16,6 @@ const attributes = {
 	},
 	timeColor: {
 		type: 'string'
-	},
-	borderRadius: {
-		type: 'string'
 	}
 };
 
