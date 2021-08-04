@@ -7,6 +7,8 @@ import { getIntervalFromUnix } from '../../helpers/helper-functions';
 import { useSelect } from '@wordpress/data';
 import { useViewportMatch } from '@wordpress/compose';
 
+const px = value => value ? `${ value }px` : value;
+
 const Edit = ({ attributes, setAttributes, className, clientId }) => {
 
 	const [ unixTime, setUnixTime ] = useState( 0 );
@@ -61,35 +63,34 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 	let isMobile = ! isLarger && ! isLarge && ! isSmall && ! isSmaller;
 
 	if ( isViewportAvailable && ! isMobile ) {
-
 		isDesktop = isPreviewDesktop;
 		isTablet = isPreviewTablet;
 		isMobile = isPreviewMobile;
 	}
 
 
-	let styles = {};
+	let styles;
 
 	if ( isTablet ) {
 		styles = {
 			value: {
 				color: attributes.valueColor,
-				fontSize: attributes.valueFontSizeTablet + 'px'
+				fontSize: px( attributes?.valueFontSizeTablet )
 			},
 			label: {
 				color: attributes.labelColor,
-				fontSize: attributes.labelFontSizeTablet + 'px'
+				fontSize: px( attributes?.labelFontSizeTablet )
 			},
 			display: {
-				gapTablet: attributes.gapTablet + 'px'
+				gap: px( attributes.gapTablet )
 			},
 			allComponents: {
-				height: attributes.heightTablet + 'px'
+				height: px( attributes?.heightTablet )
 			},
 			mainComponents: {
 				backgroundColor: attributes.backgroundColor,
-				width: attributes.widthTablet,
-				borderWidth: attributes.borderWidth,
+				width: px( attributes?.widthTablet ),
+				borderWidth: px( attributes.borderWidthTablet ),
 				borderColor: attributes.borderColor
 			}
 		};
@@ -97,22 +98,22 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 		styles = {
 			value: {
 				color: attributes.valueColor,
-				fontSize: attributes.valueFontSizeMobile + 'px'
+				fontSize: px( attributes.valueFontSizeMobile )
 			},
 			label: {
 				color: attributes.labelColor,
-				fontSize: attributes.labelFontSizeMobile + 'px'
+				fontSize: px( attributes.labelFontSizeMobile )
 			},
 			display: {
-				gap: attributes.gapMobile + 'px'
+				gap: px( attributes.gapMobile )
 			},
 			allComponents: {
-				height: attributes.heightMobile + 'px'
+				height: px( attributes?.heightMobile )
 			},
 			mainComponents: {
 				backgroundColor: attributes.backgroundColor,
-				width: attributes.widthMobile,
-				borderWidth: attributes.borderWidthMobile,
+				width: px( attributes?.widthMobile ),
+				borderWidth: px ( attributes.borderWidthMobile ),
 				borderColor: attributes.borderColor
 			}
 		};
@@ -120,26 +121,30 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 		styles = {
 			value: {
 				color: attributes.valueColor,
-				fontSize: attributes.valueFontSize + 'px'
+				fontSize: px( attributes.valueFontSize )
 			},
 			label: {
 				color: attributes.labelColor,
-				fontSize: attributes.labelFontSize + 'px'
+				fontSize: px(  attributes.labelFontSize )
 			},
 			display: {
-				gap: attributes.gap + 'px'
+				gap: px( attributes.gap )
 			},
 			allComponents: {
-				height: attributes.height + 'px'
+				height: px( attributes.height )
 			},
 			mainComponents: {
 				backgroundColor: attributes.backgroundColor,
-				width: attributes.width,
-				borderWidth: attributes.borderWidth,
+				width: px( attributes.width ),
+				borderWidth: px( attributes.borderWidth ),
 				borderColor: attributes.borderColor
 			}
 		};
 	}
+
+	useEffect( () => {
+		console.table( styles );
+	}, [ attributes ]);
 
 
 	styles.mainComponents.borderRadius = 'linked' === attributes.borderRadiusType ? attributes.borderRadius + '%' : `${ attributes.borderRadiusTopLeft }% ${ attributes.borderRadiusTopRight }% ${ attributes.borderRadiusBottomRight }% ${ attributes.borderRadiusBottomLeft }%`;
