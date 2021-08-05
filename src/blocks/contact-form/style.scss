@@ -1,0 +1,24 @@
+.wp-block-themeisle-blocks-contact-form {
+	.wp-block-themeisle-blocks-contact-form__container {
+		.wp-block-themeisle-blocks-business-contact-form__container__content {
+			.wp-block-themeisle-blocks-contact-form-item {
+				.wp-block-themeisle-blocks-contact-form-item-label {
+					.wp-block-themeisle-blocks-contact-form-item-label__input {
+						width: 100%;
+					}
+
+					.is-required {
+						&::after {
+							content: " *";
+							color: red;
+						}
+					}
+
+					textarea {
+						min-height: 150px;
+					}
+				}
+			}
+		}
+	}
+}
