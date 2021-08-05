@@ -18,6 +18,9 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 		return () => unsubscribe();
 	}, [ attributes.id ]);
 
+	/**
+	 * Update the time interval
+	 */
 	useEffect( () => {
 		const interval = setInterval( () => {
 			if ( attributes.date ) {
@@ -30,6 +33,9 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 		};
 	}, [ attributes.date ]);
 
+	/**
+	 * Determine the platform
+	 */
 	const {
 		isViewportAvailable,
 		isPreviewDesktop,
@@ -68,7 +74,9 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 		isMobile = isPreviewMobile;
 	}
 
-
+	/**
+	 * Compute the components style based on the platform
+	 */
 	let styles;
 
 	if ( isTablet ) {
@@ -142,19 +150,11 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 		};
 	}
 
-	useEffect( () => {
-		console.table( styles );
-	}, [ attributes ]);
-
-
+	// Add `border-radius` for all the platforms
 	styles.mainComponents.borderRadius = 'linked' === attributes.borderRadiusType ? attributes.borderRadius + '%' : `${ attributes.borderRadiusTopLeft }% ${ attributes.borderRadiusTopRight }% ${ attributes.borderRadiusBottomRight }% ${ attributes.borderRadiusBottomLeft }%`;
 
 	return (
 		<Fragment>
-			{/* <Controls
-				isEditing={ isEditing }
-				setEdit={ setEdit }
-			/> */}
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }

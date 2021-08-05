@@ -113,14 +113,14 @@ export const convertToTitleCase = ( word ) => {
  * Insert an item between the element of the array
  * @param {Array} arr
  * @param {any} item
- * @returns
+ * @returns An array with the given item inserted between initial elements
  */
 export const insertBetweenItems = ( arr, item ) => {
 	const _arr = [];
 	arr?.forEach( ( listItem, index ) => {
 		_arr.push( listItem );
 
-		// Omit to add for the list item
+		// Omit to add for the last list item
 		if ( index < arr.length - 1 ) {
 			_arr.push( item );
 		}
@@ -128,21 +128,28 @@ export const insertBetweenItems = ( arr, item ) => {
 	return _arr;
 };
 
+// Time constants
 const _MS_PER_SECONDS = 1000;
 const _MS_PER_MINUTES = _MS_PER_SECONDS * 60;
 const _MS_PER_HOURS = _MS_PER_MINUTES * 60;
 const _MS_PER_DAY = _MS_PER_HOURS * 24;
 
+/**
+ * Get the time interval from the unix time
+ * @param {number} unixTime Time as UNIX
+ * @param {object} settings Options to keep a components or/and allow negative time
+ * @returns An object with the values for days, hours, minutes, seconds
+ */
 export const getIntervalFromUnix = ( unixTime, settings ) => {
 
-	unixTime = unixTime ? unixTime : 0;
+	unixTime = unixTime ? unixTime : 0; // Check for null/undefined
 
 	const days = Math.floor( unixTime / _MS_PER_DAY );
 	const hours = Math.floor( unixTime / _MS_PER_HOURS % 24 );
 	const minutes = Math.floor( unixTime / _MS_PER_MINUTES % 60 );
 	const seconds = Math.floor( unixTime / _MS_PER_SECONDS % 60 );
 
-	let time = [
+	const time = [
 		{
 			tag: 'day',
 			name: 1 < days ? 'Days' : 'Day',
@@ -163,18 +170,14 @@ export const getIntervalFromUnix = ( unixTime, settings ) => {
 			name: 1 < seconds ? 'Seconds' : 'Second',
 			value: seconds
 		}
-	];
-
-	if ( settings?.exclude ) {
-		time = time.filter( ({ tag }) => ! settings.exclude.includes( tag ) );
-	}
-
-	if ( ! settings?.keepNeg ) {
-		time = time.map( obj => {
-			obj.value = Math.max( 0, obj.value );
+	]
+		.filter( ({ tag }) => ! settings?.exclude?.includes( tag ) )
+		.map( obj => {
+			if ( ! settings?.keepNeg ) {
+				obj.value = Math.max( 0, obj.value );
+			}
 			return obj;
 		});
-	}
 
 	return time;
 };
