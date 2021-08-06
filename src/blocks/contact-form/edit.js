@@ -56,7 +56,7 @@ const Edit = ({
 				className={ className }
 				id={ attributes.id }
 			>
-				<form className="wp-block-themeisle-blocks-contact-form__container">
+				<form method="POST" className="wp-block-themeisle-blocks-contact-form__container">
 
 					<div className="wp-block-themeisle-blocks-business-contact-form__container__content">
 						<InnerBlocks
@@ -101,6 +101,12 @@ const Edit = ({
 							renderAppender={ isSelected ? InnerBlocks.ButtonBlockAppender : '' }
 						/>
 					</div>
+					<button
+						className="wp-block-themeisle-blocks-contact-form__container__submit"
+						type="button"
+					>
+						{ __( 'Submit', 'otter-blocks' ) }
+					</button>
 				</form>
 			</div>
 		</Fragment>

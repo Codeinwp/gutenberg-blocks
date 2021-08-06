@@ -31,6 +31,7 @@ const Edit = ({
 	isSelected,
 	clientId
 }) => {
+
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
@@ -59,7 +60,8 @@ const Edit = ({
 					/>
 					{'textarea' !== attributes.type ? (
 						<input
-							type={attributes.type}
+							type={ attributes.type }
+							name={ attributes.id }
 							className={
 								'wp-block-themeisle-blocks-contact-form-item-label__input'
 							}
@@ -68,7 +70,8 @@ const Edit = ({
 						/>
 					) : (
 						<textarea
-							type={attributes.type}
+							type={ attributes.type }
+							name={ attributes.id }
 							required={ attributes.required }
 							className={
 								'wp-block-themeisle-blocks-contact-form-item-label__input'
