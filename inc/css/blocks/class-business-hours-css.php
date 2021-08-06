@@ -44,7 +44,7 @@ class Business_Hours_CSS extends Base_CSS {
 					array(
 						'property' => 'border-radius',
 						'value'    => 'borderRadius',
-                        'unit'     => 'px',
+						'unit'     => 'px',
 					),
 					array(
 						'property' => 'border-width',
@@ -77,7 +77,7 @@ class Business_Hours_CSS extends Base_CSS {
 					array(
 						'property' => 'font-size',
 						'value'    => 'titleFontSize',
-                        'unit'     => 'px',
+						'unit'     => 'px',
 					),
 					array(
 						'property' => 'color',
@@ -94,12 +94,12 @@ class Business_Hours_CSS extends Base_CSS {
 					array(
 						'property' => 'padding-top',
 						'value'    => 'gap',
-                        'unit'     => 'px',
+						'unit'     => 'px',
 					),
 					array(
 						'property' => 'padding-bottom',
 						'value'    => 'gap',
-                        'unit'     => 'px',
+						'unit'     => 'px',
 					),
 				),
 			)
@@ -115,8 +115,8 @@ class Business_Hours_CSS extends Base_CSS {
 						'pattern_values' => array(
 							'borderRadius' => array(
 								'value'   => 'borderRadius',
-                                'unit'    => 'px',
-                                'default' => 0
+								'unit'    => 'px',
+								'default' => 0,
 							),
 						),
 						'condition'      => function( $attrs ) {
@@ -134,7 +134,7 @@ class Business_Hours_CSS extends Base_CSS {
 					array(
 						'property' => 'font-size',
 						'value'    => 'itemsFontSize',
-                        'unit'     => 'px',
+						'unit'     => 'px',
 					),
 				),
 			)
@@ -147,7 +147,7 @@ class Business_Hours_CSS extends Base_CSS {
 					array(
 						'property' => 'font-size',
 						'value'    => 'itemsFontSize',
-                        'unit'     => 'px',
+						'unit'     => 'px',
 					),
 				),
 			)
