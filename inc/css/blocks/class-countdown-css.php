@@ -36,7 +36,7 @@ class Countdown_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component:not([name="separator"])',
+				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component.is-main-component',
 				'properties' => array(
 					array(
 						'property' => 'background-color',
@@ -91,7 +91,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( min-width: 961px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component:not([name="separator"])',
+				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component.is-main-component',
 				'properties' => array(
 					array(
 						'property' => 'width',
@@ -110,7 +110,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( min-width: 600px ) and ( max-width: 960px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component:not([name="separator"])',
+				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component.is-main-component',
 				'properties' => array(
 					array(
 						'property' => 'width',
@@ -129,7 +129,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( max-width: 600px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component:not([name="separator"])',
+				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component.is-main-component',
 				'properties' => array(
 					array(
 						'property' => 'width',

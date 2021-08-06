@@ -1,6 +1,7 @@
 import { Fragment } from '@wordpress/element';
 import { insertBetweenItems } from '../../../helpers/helper-functions';
 import { __ } from '@wordpress/i18n';
+import classnames from 'classnames';
 
 const DisplayTimeComponent = ({ name, value, tag, key, styles }) => {
 	const compStyle = 'sep' !== name ? { ...styles.allComponents, ...styles.mainComponents } : styles.allComponents;
@@ -10,7 +11,7 @@ const DisplayTimeComponent = ({ name, value, tag, key, styles }) => {
 			key={ key }
 			style={ compStyle }
 			name={ tag }
-			className={ 'wp-block-themeisle-blocks-countdown-display-component' }
+			className={ classnames( 'wp-block-themeisle-blocks-countdown-display-component', { 'is-main-component': 'separator' !==  tag }) }
 		>
 			<div
 				style={ styles.value }

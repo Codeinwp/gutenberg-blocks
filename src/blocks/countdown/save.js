@@ -1,10 +1,11 @@
 import { getIntervalFromUnix } from '../../helpers/helper-functions';
 import { insertBetweenItems } from '../../helpers/helper-functions';
 import { __ } from '@wordpress/i18n';
+import classnames from 'classnames';
 
 const DisplayTimeComponent = ({ name, value, tag, key }) => {
 	return (
-		<div key={key} name ={ tag } className={'wp-block-themeisle-blocks-countdown-display-component'}>
+		<div key={key} name ={ tag } className={ classnames( 'wp-block-themeisle-blocks-countdown-display-component', { 'is-main-component': 'separator' !==  tag }) }>
 			<div className={ 'wp-block-themeisle-blocks-countdown-display-component_value' }>
 				{ value }
 			</div>
