@@ -660,6 +660,7 @@ class Main {
 	public function load_server_side_blocks() {
 		$classnames = array(
 			'\ThemeIsle\GutenbergBlocks\Render\About_Author_Block',
+			'\ThemeIsle\GutenbergBlocks\Render\Add_To_Cart_Button_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Google_Map_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Leaflet_Map_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Plugin_Card_Block',
