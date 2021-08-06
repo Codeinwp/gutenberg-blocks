@@ -138,7 +138,7 @@ The PHP is error is gone, so there will be nothing to stop us. Except some excep
 <!-- /wp:themeisle-blocks/tutorial-2 -->
 ```
 
-TODO: [fix the PHP code ಥ_ಥ](https://www.youtube.com/watch?v=p47fEXGabaY)
+Exercise: [fix the PHP code ಥ_ಥ](https://www.youtube.com/watch?v=p47fEXGabaY) if is not working for you
 
 References:
 1. https://winnercrespo.com/naming-conventions/
