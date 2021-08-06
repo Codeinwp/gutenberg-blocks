@@ -447,6 +447,7 @@ class Block_Frontend extends Base_CSS {
 	 * @access  public
 	 */
 	public function enqueue_widgets_css() {
+		$empty = '';
 		global $wp_registered_sidebars;
 
 		$has_widgets = false;
@@ -459,7 +460,7 @@ class Block_Frontend extends Base_CSS {
 		}
 
 		if ( ! $has_widgets ) {
-			return;
+			return $empty;
 		}
 
 		$fonts_list = get_option( 'themeisle_blocks_widgets_fonts', array() );
@@ -492,19 +493,19 @@ class Block_Frontend extends Base_CSS {
 			}
 
 			if ( empty( $css ) ) {
-				return;
+				return $empty;
 			}
 
 			$style  = "\n" . '<style type="text/css" media="all">' . "\n";
 			$style .= $css;
 			$style .= "\n" . '</style>' . "\n";
-			echo $style;
-			return;
+			echo $style;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			return $empty;
 		}
 
 		$file_url = CSS_Handler::get_css_url( 'widgets' );
 
-		wp_enqueue_style( 'themeisle-gutenberg-widgets', $file_url, array( 'themeisle-block_styles' ), THEMEISLE_BLOCKS_VERSION );
+		return wp_enqueue_style( 'themeisle-gutenberg-widgets', $file_url, array( 'themeisle-block_styles' ), THEMEISLE_BLOCKS_VERSION );
 	}
 
 	/**
