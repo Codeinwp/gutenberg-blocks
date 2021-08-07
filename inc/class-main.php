@@ -167,10 +167,18 @@ class Main {
 			true
 		);
 
+		$deps = array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-element', 'wp-html-entities', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'wp-polyfill', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player', 'macy' );
+
+		$current_screen = get_current_screen();
+
+		if ( ! 'widgets' === $current_screen->base ) {
+			array_push( $deps, 'wp-editor', 'wp-edit-post' );
+		}
+
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
-			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-html-entities', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'wp-polyfill', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player', 'macy' ),
+			$deps,
 			self::$assets_version,
 			true
 		);

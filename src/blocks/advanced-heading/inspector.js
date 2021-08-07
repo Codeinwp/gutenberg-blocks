@@ -51,7 +51,7 @@ const Inspector = ({
 }) => {
 	const getView = useSelect( select => {
 		const { getView } = select( 'themeisle-gutenberg/data' );
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' ) ? select( 'core/edit-post' ) : false;
 
 		return __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : getView();
 	}, []);
