@@ -7,7 +7,7 @@ const Save = ({ attributes, className}) => {
 		<div className={className} id={attributes.id}>
 			<label
 				className={
-					'wp-block-themeisle-blocks-contact-form-item-label'
+					'wp-block-themeisle-blocks-form-input-label'
 				}
 			>
 				<RichText.Content
@@ -24,7 +24,7 @@ const Save = ({ attributes, className}) => {
 						type={ attributes.type }
 						name={ attributes.id }
 						className={
-							'wp-block-themeisle-blocks-contact-form-item-label__input'
+							'wp-block-themeisle-blocks-form-input-label__input'
 						}
 						required={ attributes.required }
 						placeholder={attributes.placeholder}
@@ -35,7 +35,7 @@ const Save = ({ attributes, className}) => {
 						name={ attributes.id }
 						required={ attributes.required }
 						className={
-							'wp-block-themeisle-blocks-contact-form-item-label__input'
+							'wp-block-themeisle-blocks-form-input-label__input'
 						}
 						placeholder={attributes.placeholder}
 					/>

@@ -9,13 +9,13 @@ const Save = ({ attributes, className }) => {
 			className={ className }
 			id={ attributes.id }
 		>
-			<form method="POST" className="wp-block-themeisle-blocks-contact-form__container">
+			<form method="POST" className="wp-block-themeisle-blocks-form__container">
 
-				<div className="wp-block-themeisle-blocks-business-contact-form__container__content">
+				<div className="wp-block-themeisle-blocks-business-form__container__content">
 					<InnerBlocks.Content />
 				</div>
 				<button
-					className="wp-block-themeisle-blocks-contact-form__container__submit"
+					className="wp-block-themeisle-blocks-form__container__submit"
 					type="button"
 				>
 					{ __( 'Submit', 'otter-blocks' ) }
