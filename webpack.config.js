@@ -21,7 +21,8 @@ module.exports = {
 		'circle-counter': './src/frontend/circle-counter/index.js',
 		lottie: './src/frontend/lottie/index.js',
 		tabs: './src/frontend/tabs/index.js',
-		masonry: './src/frontend/masonry/index.js'
+		masonry: './src/frontend/masonry/index.js',
+		form: './src/frontend/form/index.js'
 	},
 	externals: {
 		'react': 'React',

@@ -51,7 +51,7 @@ const Edit = ({
 						placeholder={__( 'Add field name', 'otter-blocks' )}
 						className={classnames({
 							'is-required': attributes.required
-						})}
+						}, 'wp-block-themeisle-blocks-form-input-label__label' )}
 						value={attributes.label}
 						onChange={( label ) => {
 							setAttributes({ label });

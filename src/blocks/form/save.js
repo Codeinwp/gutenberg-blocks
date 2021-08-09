@@ -15,8 +15,8 @@ const Save = ({ attributes, className }) => {
 					<InnerBlocks.Content />
 				</div>
 				<button
+					type="submit"
 					className="wp-block-themeisle-blocks-form__container__submit"
-					type="button"
 				>
 					{ __( 'Submit', 'otter-blocks' ) }
 				</button>
