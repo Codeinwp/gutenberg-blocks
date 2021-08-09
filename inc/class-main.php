@@ -132,7 +132,7 @@ class Main {
 
 		$allow_json = get_option( 'themeisle_allow_json_upload' );
 
-		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ), 1 );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_frontend_assets' ) );
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
 		add_action( 'init', array( $this, 'load_server_side_blocks' ), 11 );
@@ -177,7 +177,7 @@ class Main {
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
-			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'wp-polyfill', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player', 'macy' ),
+			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-html-entities', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'wp-polyfill', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player', 'macy' ),
 			self::$assets_version,
 			true
 		);
@@ -200,20 +200,25 @@ class Main {
 
 		wp_set_script_translations( 'themeisle-gutenberg-blocks', 'otter-blocks' );
 
+		global $wp_roles;
+
 		wp_localize_script(
 			'themeisle-gutenberg-blocks',
 			'themeisleGutenberg',
 			array(
-				'isCompatible'  => $this->is_compatible(),
-				'packagePath'   => plugin_dir_url( $this->get_dir() ) . 'build/',
-				'assetsPath'    => plugin_dir_url( $this->get_dir() ) . 'assets',
-				'updatePath'    => admin_url( 'update-core.php' ),
-				'optionsPath'   => admin_url( 'options-general.php?page=otter' ),
-				'mapsAPI'       => $api,
-				'themeDefaults' => $this->get_global_defaults(),
-				'imageSizes'    => function_exists( 'is_wpcom_vip' ) ? array( 'thumbnail', 'medium', 'medium_large', 'large' ) : get_intermediate_image_sizes(), //phpcs:ignore WordPressVIPMinimum.VIP.RestrictedFunctions.get_intermediate_image_sizes_get_intermediate_image_sizes
-				'isWPVIP'       => function_exists( 'is_wpcom_vip' ),
-				'canTrack'      => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
+				'isCompatible'   => $this->is_compatible(),
+				'packagePath'    => plugin_dir_url( $this->get_dir() ) . 'build/',
+				'assetsPath'     => plugin_dir_url( $this->get_dir() ) . 'assets',
+				'updatePath'     => admin_url( 'update-core.php' ),
+				'optionsPath'    => admin_url( 'options-general.php?page=otter' ),
+				'mapsAPI'        => $api,
+				'themeDefaults'  => $this->get_global_defaults(),
+				'imageSizes'     => function_exists( 'is_wpcom_vip' ) ? array( 'thumbnail', 'medium', 'medium_large', 'large' ) : get_intermediate_image_sizes(), //phpcs:ignore WordPressVIPMinimum.VIP.RestrictedFunctions.get_intermediate_image_sizes_get_intermediate_image_sizes
+				'isWPVIP'        => function_exists( 'is_wpcom_vip' ),
+				'canTrack'       => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
+				'userRoles'      => $wp_roles->roles,
+				'hasNevePro'     => defined( 'NEVE_PRO_VERSION' ),
+				'hasWooCommerce' => class_exists( 'WooCommerce' ),
 			)
 		);
 
@@ -310,7 +315,21 @@ class Main {
 	 * @param null $post Current post.
 	 */
 	public function enqueue_dependencies( $post = null ) {
-		$content = get_the_content( $post );
+		$content = '';
+
+		if ( 'widgets' === $post ) {
+			$widgets = get_option( 'widget_block', array() );
+	
+			foreach ( $widgets as $widget ) {
+				if ( is_array( $widget ) && isset( $widget['content'] ) ) {
+					$content .= $widget['content'];
+				}
+			}
+
+			$post = $content;
+		} else {
+			$content = get_the_content( $post );
+		}
 
 		if ( strpos( $content, '<!-- wp:' ) === false ) {
 			return false;
@@ -560,7 +579,7 @@ class Main {
 	 * @access  public
 	 */
 	public function enqueue_block_frontend_assets() {
-		global $wp_query;
+		global $wp_query, $wp_registered_sidebars;
 
 		if ( is_admin() ) {
 			return;
@@ -585,6 +604,18 @@ class Main {
 			}
 		);
 
+		$has_widgets = false;
+
+		foreach ( $wp_registered_sidebars as $key => $sidebar ) {
+			if ( is_active_sidebar( $key ) ) {
+				$has_widgets = true;
+				break;
+			}
+		}
+
+		if ( $has_widgets ) {
+			$this->enqueue_dependencies( 'widgets' );
+		}
 	}
 
 	/**
@@ -676,6 +707,7 @@ class Main {
 		$classnames = array(
 			'\ThemeIsle\GutenbergBlocks\CSS\Block_Frontend',
 			'\ThemeIsle\GutenbergBlocks\CSS\CSS_Handler',
+			'\ThemeIsle\GutenbergBlocks\Plugins\Block_Conditions',
 			'\ThemeIsle\GutenbergBlocks\Plugins\Options_Settings',
 			'\ThemeIsle\GutenbergBlocks\Server\Filter_Blocks_Server',
 			'\ThemeIsle\GutenbergBlocks\Server\Plugin_Card_Server',

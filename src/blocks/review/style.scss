@@ -215,6 +215,12 @@
 	&.is-style-single-column {
 		grid-template-columns: 1fr;
 		grid-template-areas: 'header' 'left' 'right' 'footer';
+
+		.wp-block-themeisle-blocks-review__left {
+			.wp-block-themeisle-blocks-review__left_details {
+				grid-template-columns: 1fr;
+			}
+		}
 	}
 }
 

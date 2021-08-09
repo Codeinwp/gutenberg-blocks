@@ -70,6 +70,8 @@ class Base_CSS {
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Column_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Columns_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Heading_CSS',
+			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Business_Hours_CSS',
+			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Business_Hours_Item_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Button_Group_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Button_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Circle_Counter_CSS',
@@ -245,6 +247,34 @@ class Base_CSS {
 		if ( function_exists( 'has_blocks' ) ) {
 			$content = get_post_field( 'post_content', $post_id );
 			$blocks  = $this->parse_blocks( $content );
+
+			if ( ! is_array( $blocks ) || empty( $blocks ) ) {
+				return;
+			}
+
+			return $this->cycle_through_static_blocks( $blocks );
+		}
+	}
+
+	/**
+	 * Get Widgets CSS
+	 *
+	 * @return string
+	 * @since   1.7.0
+	 * @access  public
+	 */
+	public function get_widgets_css() {
+		if ( function_exists( 'has_blocks' ) ) {
+			$content = '';
+			$widgets = get_option( 'widget_block', array() );
+
+			foreach ( $widgets as $widget ) {
+				if ( is_array( $widget ) && isset( $widget['content'] ) ) {
+					$content .= $widget['content'];
+				}
+			}
+
+			$blocks = $this->parse_blocks( $content );
 
 			if ( ! is_array( $blocks ) || empty( $blocks ) ) {
 				return;

@@ -35,10 +35,12 @@ module.exports = {
 		'@wordpress/components': 'wp.components',
 		'@wordpress/compose': 'wp.compose',
 		'@wordpress/data': 'wp.data',
+		'@wordpress/date': 'wp.date',
 		'@wordpress/dom-ready': 'wp.domReady',
 		'@wordpress/edit-post': 'wp.editPost',
 		'@wordpress/editor': 'wp.editor',
 		'@wordpress/element': 'wp.element',
+		'@wordpress/html-entities': 'wp.htmlEntities',
 		'@wordpress/hooks': 'wp.hooks',
 		'@wordpress/i18n': 'wp.i18n',
 		'@wordpress/keycodes': 'wp.keycodes',
@@ -47,7 +49,8 @@ module.exports = {
 		'@wordpress/primitives': 'wp.primitives',
 		'@wordpress/rich-text': 'wp.richText',
 		'@wordpress/server-side-render': 'wp.serverSideRender',
-		'regenerator-runtime/runtime.js': 'window.regeneratorRuntime'
+		'regenerator-runtime/runtime.js': 'window.regeneratorRuntime',
+		'@woocommerce/block-data': 'wc.wcBlocksData'
 	},
 	output: {
 		path: path.resolve( __dirname, 'build' ),

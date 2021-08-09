@@ -19,10 +19,11 @@ import {
 	PanelBody,
 	RangeControl,
 	TextControl,
-	ToggleControl
+	ToggleControl,
+	Notice
 } from '@wordpress/components';
 
-import { useState } from '@wordpress/element';
+import { useState, Fragment } from '@wordpress/element';
 
 const PanelItem = ({
 	title,
@@ -61,7 +62,8 @@ const PanelItem = ({
 
 const Inspector = ({
 	attributes,
-	setAttributes
+	setAttributes,
+	productAttributes
 }) => {
 	const addFeature = () => {
 		const features = [ ...attributes.features ];
@@ -152,11 +154,23 @@ const Inspector = ({
 			<PanelBody
 				title={ __( 'Product Details', 'otter-blocks' ) }
 			>
+				{
+					attributes.product && (
+						<Notice
+							status="warning"
+							isDismissible={ false }
+							className="wp-block-themeisle-blocks-anchor-control-notice"
+						>
+							{__( 'WooCommerce product synchronization is active. Some options might be disabled.', 'otter-blocks' ) }
+						</Notice>
+					)
+				}
 				<TextControl
 					label={ __( 'Product Name', 'otter-blocks' ) }
 					type="text"
 					placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
-					value={ attributes.title }
+					value={ productAttributes?.title || attributes.title }
+					disabled={ attributes.product }
 					onChange={ title => setAttributes({ title }) }
 				/>
 
@@ -165,7 +179,8 @@ const Inspector = ({
 						label={ __( 'Currency', 'otter-blocks' ) }
 						type="text"
 						placeholder={ __( 'Currency code, like USD or EUR.', 'otter-blocks' ) }
-						value={ attributes.currency }
+						value={ productAttributes?.currency ||  attributes.currency }
+						disabled={ attributes.product }
 						onChange={ currency => setAttributes({ currency }) }
 					/>
 
@@ -179,18 +194,20 @@ const Inspector = ({
 				<TextControl
 					label={ __( 'Price', 'otter-blocks' ) }
 					type="number"
-					value={ attributes.price }
+					value={ productAttributes?.price || attributes.price }
+					disabled={ attributes.product }
 					onChange={ value => setAttributes({ price: Number( value ) }) }
 				/>
 
 				<TextControl
 					label={ __( 'Discounted Price', 'otter-blocks' ) }
 					type="number"
-					value={ attributes.discounted }
+					value={ productAttributes?.discounted || attributes.discounted }
+					disabled={ attributes.product }
 					onChange={ value => setAttributes({ discounted: Number( value ) }) }
 				/>
 
-				{ ! attributes.image ? (
+				{ ! ( attributes.image || productAttributes?.image ) ? (
 					<MediaPlaceholder
 						labels={ {
 							title: __( 'Product Image', 'otter-blocks' )
@@ -205,13 +222,14 @@ const Inspector = ({
 						className="wp-block-themeisle-blocks-review__inspector_image"
 					>
 						<img
-							src={ attributes.image.url }
-							alt={ attributes.image.alt }
+							src={ productAttributes?.image?.url || attributes.image.url }
+							alt={ productAttributes?.image?.url || attributes.image.alt }
 						/>
 
 						<Button
 							isSecondary
 							onClick={ () => setAttributes({ image: undefined }) }
+							disabled={ attributes.product }
 						>
 							{ __( 'Remove image', 'otter-blocks' ) }
 						</Button>
@@ -318,7 +336,19 @@ const Inspector = ({
 				title={ __( 'Links', 'otter-blocks' ) }
 				initialOpen={ false }
 			>
-				{ 0 < attributes.links.length && attributes.links.map( ( link, index ) => (
+				{
+					attributes.product && (
+						<Notice
+							status="warning"
+							isDismissible={ false }
+							className="wp-block-themeisle-blocks-anchor-control-notice"
+						>
+							{__( 'WooCommerce product synchronization is active. Some options might be disabled.', 'otter-blocks' ) }
+						</Notice>
+					)
+				}
+
+				{ 0 < productAttributes?.links?.length && productAttributes?.links?.map( ( link, index ) => (
 					<PanelItem
 						title={ link.label || __( 'Link', 'otter-blocks' ) }
 						remove={ () => removeLinks( index ) }
@@ -327,8 +357,8 @@ const Inspector = ({
 							label={ __( 'Label', 'otter-blocks' ) }
 							type="text"
 							placeholder={ __( 'Button label', 'otter-blocks' ) }
+							disabled={ attributes.product }
 							value={ link.label }
-							onChange={ label => changeLinks( index, { label }) }
 						/>
 
 						<TextControl
@@ -336,25 +366,62 @@ const Inspector = ({
 							type="url"
 							placeholder={ 'https://…' }
 							value={ link.href }
-							onChange={ href => changeLinks( index, { href }) }
+							disabled={ attributes.product }
 						/>
 
 						<ToggleControl
 							label={ __( 'Is this Sponsored?', 'otter-blocks' ) }
 							checked={ link.isSponsored }
-							onChange={ () => changeLinks( index, { isSponsored: ! link.isSponsored }) }
+							disabled={ attributes.product }
 						/>
 					</PanelItem>
 				) ) }
 
-				<Button
-					isSecondary
-					isLarge
-					className="wp-block-themeisle-blocks-review__inspector_add"
-					onClick={ addLinks }
-				>
-					{ __( 'Add Links', 'otter-blocks' ) }
-				</Button>
+				{
+					! ( 0 < productAttributes?.links?.length ) && (
+						<Fragment>
+							{ 0 < attributes.links.length && attributes.links.map( ( link, index ) => (
+								<PanelItem
+									title={ link.label || __( 'Link', 'otter-blocks' ) }
+									remove={ () => removeLinks( index ) }
+								>
+									<TextControl
+										label={ __( 'Label', 'otter-blocks' ) }
+										type="text"
+										placeholder={ __( 'Button label', 'otter-blocks' ) }
+										value={ link.label }
+										onChange={ label => changeLinks( index, { label }) }
+									/>
+
+									<TextControl
+										label={ __( 'Link', 'otter-blocks' ) }
+										type="url"
+										placeholder={ 'https://…' }
+										value={ link.href }
+										onChange={ href => changeLinks( index, { href }) }
+									/>
+
+									<ToggleControl
+										label={ __( 'Is this Sponsored?', 'otter-blocks' ) }
+										checked={ link.isSponsored }
+										onChange={ () => changeLinks( index, { isSponsored: ! link.isSponsored }) }
+									/>
+								</PanelItem>
+							) ) }
+
+							<Button
+								isSecondary
+								isLarge
+								className="wp-block-themeisle-blocks-review__inspector_add"
+								onClick={ addLinks }
+							>
+								{ __( 'Add Links', 'otter-blocks' ) }
+							</Button>
+						</Fragment>
+					)
+				}
+
+
 			</PanelBody>
 
 			<PanelColorSettings
