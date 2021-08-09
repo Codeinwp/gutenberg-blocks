@@ -14,11 +14,11 @@ import attributes from './attributes.js';
 import edit from './edit.js';
 import save from './save.js';
 
-registerBlockType( 'themeisle-blocks/contact-form-item', {
-	title: __( 'Contact Form Item', 'otter-blocks' ),
+registerBlockType( 'themeisle-blocks/form-input', {
+	title: __( 'Form Input', 'otter-blocks' ),
 	description: __( 'Display a contact form for your clients.', 'otter-blocks' ),
 	icon,
-	parent: [ 'themeisle-blocks/contact-form' ],
+	parent: [ 'themeisle-blocks/form' ],
 	category: 'themeisle-blocks',
 	keywords: [
 		'business',

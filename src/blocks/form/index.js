@@ -15,15 +15,14 @@ import attributes from './attributes.js';
 import edit from './edit.js';
 import save from './save.js';
 
-registerBlockType( 'themeisle-blocks/contact-form', {
-	title: __( 'Contact Form', 'otter-blocks' ),
-	description: __( 'Display a contact form for your clients.', 'otter-blocks' ),
+registerBlockType( 'themeisle-blocks/form', {
+	title: __( 'Form', 'otter-blocks' ),
+	description: __( 'Display a form for your clients.', 'otter-blocks' ),
 	icon,
 	category: 'themeisle-blocks',
 	keywords: [
 		'business',
 		'form',
-		'contact',
 		'email'
 	],
 	attributes,

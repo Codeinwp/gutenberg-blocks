@@ -20,6 +20,10 @@ import {
 } from '@wordpress/block-editor';
 
 import {
+	Button
+} from '@wordpress/components';
+
+import {
 	Fragment,
 	useEffect
 } from '@wordpress/element';
@@ -56,32 +60,24 @@ const Edit = ({
 				className={ className }
 				id={ attributes.id }
 			>
-				<form method="POST" className="wp-block-themeisle-blocks-contact-form__container">
+				<form method="POST" className="wp-block-themeisle-blocks-form__container">
 
-					<div className="wp-block-themeisle-blocks-business-contact-form__container__content">
+					<div className="wp-block-themeisle-blocks-business-form__container__content">
 						<InnerBlocks
 							allowedBlocks={ [
-								'themeisle-blocks/contact-form-item'
+								'themeisle-blocks/form-input'
 							] }
 							template={ [
 								[
-									'themeisle-blocks/contact-form-item',
+									'themeisle-blocks/form-input',
 									{
-										label: __( 'First Name', 'otter-blocks' ),
-										placeholder: __( 'Add your first name...', 'otter-blocks' ),
+										label: __( 'Name', 'otter-blocks' ),
+										placeholder: __( 'Add your name...', 'otter-blocks' ),
 										type: 'text'
 									}
 								],
 								[
-									'themeisle-blocks/contact-form-item',
-									{
-										label: __( 'Last Name', 'otter-blocks' ),
-										placeholder: __( 'Add your last name...', 'otter-blocks' ),
-										type: 'text'
-									}
-								],
-								[
-									'themeisle-blocks/contact-form-item',
+									'themeisle-blocks/form-input',
 									{
 										label: __( 'Email', 'otter-blocks' ),
 										placeholder: __( 'Add your email...', 'otter-blocks' ),
@@ -90,7 +86,7 @@ const Edit = ({
 									}
 								],
 								[
-									'themeisle-blocks/contact-form-item',
+									'themeisle-blocks/form-input',
 									{
 										label: __( 'Message', 'otter-blocks' ),
 										placeholder: __( 'Add a message...', 'otter-blocks' ),
@@ -102,8 +98,7 @@ const Edit = ({
 						/>
 					</div>
 					<button
-						className="wp-block-themeisle-blocks-contact-form__container__submit"
-						type="button"
+						className="wp-block-themeisle-blocks-form__container__submit"
 					>
 						{ __( 'Submit', 'otter-blocks' ) }
 					</button>

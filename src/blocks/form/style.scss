@@ -1,0 +1,36 @@
+.wp-block-themeisle-blocks-form {
+	.wp-block-themeisle-blocks-form__container {
+		.wp-block-themeisle-blocks-business-form__container__content {
+			.wp-block-themeisle-blocks-form-input {
+				.wp-block-themeisle-blocks-form-input-label {
+					font-size: 1.1em;
+					width: 100%;
+					.wp-block-themeisle-blocks-form-input-label__input {
+						width: 100%;
+						// padding: 10px 10px;
+						// border-radius: 3px;
+						// color: black;
+						// border: 2px solid black;
+						// outline: none;
+					}
+
+					.is-required {
+						&::after {
+							content: " *";
+							color: red;
+						}
+					}
+
+					textarea {
+						min-height: 150px;
+					}
+				}
+			}
+		}
+
+		.wp-block-themeisle-blocks-form__container__submit {
+			font-size: 1em;
+			padding: 0.7rem 1.2rem;
+		}
+	}
+}

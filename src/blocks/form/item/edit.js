@@ -44,7 +44,7 @@ const Edit = ({
 			<div className={className} id={attributes.id}>
 				<label
 					className={
-						'wp-block-themeisle-blocks-contact-form-item-label'
+						'wp-block-themeisle-blocks-form-input-label'
 					}
 				>
 					<RichText
@@ -63,7 +63,7 @@ const Edit = ({
 							type={ attributes.type }
 							name={ attributes.id }
 							className={
-								'wp-block-themeisle-blocks-contact-form-item-label__input'
+								'wp-block-themeisle-blocks-form-input-label__input'
 							}
 							required={ attributes.required }
 							placeholder={attributes.placeholder}
@@ -74,7 +74,7 @@ const Edit = ({
 							name={ attributes.id }
 							required={ attributes.required }
 							className={
-								'wp-block-themeisle-blocks-contact-form-item-label__input'
+								'wp-block-themeisle-blocks-form-input-label__input'
 							}
 							placeholder={attributes.placeholder}
 						/>
