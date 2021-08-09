@@ -16,11 +16,13 @@ const getComponentsUpdate = ( root ) => {
 	return [ 'second', 'minute', 'hour', 'day' ].reduce( ( acc, componentName ) => {
 		const elem = root.querySelector( `div[name=${ componentName }]` );
 		if ( elem ) {
+			const labelElem = elem.querySelector( '.wp-block-themeisle-blocks-countdown-display-component_label' );
 			const valueElem = elem.querySelector( '.wp-block-themeisle-blocks-countdown-display-component_value' );
-			acc[componentName] = ( value ) => {
+			acc[componentName] = ( labelName, value ) => {
 				if ( parseInt( valueElem.innerHTML ) !== value ) {
 					valueElem.innerHTML = value;
 				}
+				labelElem.innerHTML = labelName;
 			};
 		}
 
@@ -38,8 +40,8 @@ const updateTime = ( date, updateComponents ) => {
 	const _date = new Date( date );
 	return ( onFinishCb ) => {
 		const time = getIntervalFromUnix( _date - Date.now() );
-		time.forEach( ({ tag, value}) => {
-			updateComponents[tag]?.( value );
+		time.forEach( ({ tag, value, name}) => {
+			updateComponents[tag]?.( name, value );
 		});
 
 		if ( 0 >= time ) {

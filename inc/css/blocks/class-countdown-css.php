@@ -100,7 +100,7 @@ class Countdown_CSS extends Base_CSS {
 					),
 					array(
 						'property' => 'border-width',
-						'value'    => 'border',
+						'value'    => 'borderWidth',
 						'unit'     => 'px',
 					),
 				),
