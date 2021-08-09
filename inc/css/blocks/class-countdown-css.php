@@ -231,13 +231,21 @@ class Countdown_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'query'      => '@media ( min-width: 961px )',
 				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component .wp-block-themeisle-blocks-countdown-display-component_value',
 				'properties' => array(
 					array(
 						'property' => 'color',
 						'value'    => 'valueColor',
 					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'query'      => '@media ( min-width: 961px )',
+				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component .wp-block-themeisle-blocks-countdown-display-component_value',
+				'properties' => array(
 					array(
 						'property' => 'font-size',
 						'value'    => 'valueFontSize',
@@ -277,13 +285,21 @@ class Countdown_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'query'      => '@media ( min-width: 961px )',
 				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component .wp-block-themeisle-blocks-countdown-display-component_label',
 				'properties' => array(
 					array(
 						'property' => 'color',
 						'value'    => 'labelColor',
 					),
+				),
+			)
+		);
+
+		$css->add_item(
+			array(
+				'query'      => '@media ( min-width: 961px )',
+				'selector'   => ' .wp-block-themeisle-blocks-countdown-container .wp-block-themeisle-blocks-countdown-display .wp-block-themeisle-blocks-countdown-display-component .wp-block-themeisle-blocks-countdown-display-component_label',
+				'properties' => array(
 					array(
 						'property' => 'font-size',
 						'value'    => 'labelFontSize',
