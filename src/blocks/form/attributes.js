@@ -2,6 +2,9 @@ const attributes = {
 	id: {
 		type: 'string'
 	},
+	templateType: {
+		type: 'string'
+	},
 	url: {
 		type: 'string'
 	}
