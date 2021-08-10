@@ -70,6 +70,13 @@ class Main {
 	public static $is_tabs_loaded = false;
 
 	/**
+	 * Flag to mark that Form script has been loaded.
+	 *
+	 * @var bool $is_form_loaded Is Form loaded?
+	 */
+	public static $is_form_loaded = false;
+
+	/**
 	 * Define assets version.
 	 *
 	 * @var string $assets_version Holds assets version.
@@ -312,7 +319,7 @@ class Main {
 
 		if ( 'widgets' === $post ) {
 			$widgets = get_option( 'widget_block', array() );
-	
+
 			foreach ( $widgets as $widget ) {
 				if ( is_array( $widget ) && isset( $widget['content'] ) ) {
 					$content .= $widget['content'];
@@ -549,7 +556,19 @@ class Main {
 				true
 			);
 
-			self::$is_circle_counter_loaded = true;
+			self::$is_tabs_counter_loaded = true;
+		}
+
+		if ( ! self::$is_form_loaded && has_block( 'themeisle-blocks/form', $post ) ) {
+			wp_enqueue_script(
+				'themeisle-gutenberg-tabs',
+				plugin_dir_url( $this->get_dir() ) . 'build/form.js',
+				array( 'wp-i18n', 'wp-dom-ready' ),
+				self::$assets_version,
+				true
+			);
+
+			self::$is_form_counter_loaded = true;
 		}
 	}
 
