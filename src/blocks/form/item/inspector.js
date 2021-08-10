@@ -42,6 +42,7 @@ const Inspector = ({
 					value={ attributes.type }
 					options={ [
 						{ label: __( 'Email', 'otter-blocks' ), value: 'email' },
+						{ label: __( 'Checkbox', 'otter-blocks' ), value: 'checkbox' },
 						{ label: __( 'Date', 'otter-blocks' ), value: 'date' },
 						{ label: __( 'Text', 'otter-blocks' ), value: 'text' },
 						{ label: __( 'Text Area', 'otter-blocks' ), value: 'textarea' },

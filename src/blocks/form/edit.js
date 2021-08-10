@@ -71,6 +71,13 @@ const templates = {
 				placeholder: __( 'Add a message...', 'otter-blocks' ),
 				type: 'textarea'
 			}
+		],
+		[
+			'themeisle-blocks/form-input',
+			{
+				label: __( 'Accept the terms & conditions', 'otter-blocks' ),
+				type: 'checkbox'
+			}
 		]
 	],
 	feedback: [
@@ -106,6 +113,13 @@ const templates = {
 				placeholder: __( 'Add a message...', 'otter-blocks' ),
 				type: 'textarea'
 			}
+		],
+		[
+			'themeisle-blocks/form-input',
+			{
+				label: __( 'Accept the terms & conditions', 'otter-blocks' ),
+				type: 'checkbox'
+			}
 		]
 	],
 	newsletter: [
@@ -132,6 +146,13 @@ const templates = {
 				placeholder: __( 'Add your email...', 'otter-blocks' ),
 				type: 'email',
 				required: true
+			}
+		],
+		[
+			'themeisle-blocks/form-input',
+			{
+				label: __( 'Accept the terms & conditions', 'otter-blocks' ),
+				type: 'checkbox'
 			}
 		]
 	]

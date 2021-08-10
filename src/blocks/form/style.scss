@@ -2,17 +2,23 @@
 	.wp-block-themeisle-blocks-form__container {
 		.wp-block-themeisle-blocks-business-form__container__content {
 			.wp-block-themeisle-blocks-form-input {
+				.wp-block-themeisle-blocks-form-input-label__input {
+					width: 100%;
+					// padding: 10px 10px;
+					// border-radius: 3px;
+					// color: black;
+					// border: 2px solid black;
+					// outline: none;
+
+				}
+
+				textarea {
+					min-height: 150px;
+				}
+
 				.wp-block-themeisle-blocks-form-input-label {
 					font-size: 1.1em;
 					width: 100%;
-					.wp-block-themeisle-blocks-form-input-label__input {
-						width: 100%;
-						// padding: 10px 10px;
-						// border-radius: 3px;
-						// color: black;
-						// border: 2px solid black;
-						// outline: none;
-					}
 
 					.is-required {
 						&::after {
@@ -21,14 +27,31 @@
 						}
 					}
 
-					textarea {
-						min-height: 150px;
+
+				}
+
+				&.is-checkbox {
+					display: flex;
+					flex-direction: row-reverse;
+					justify-content: flex-end;
+					align-items: center;
+
+					.wp-block-themeisle-blocks-form-input-label {
+						width: max-content;
+						font-size: 0.85em;
+						margin: 0px 0px 0px 5px;
+					}
+
+					.wp-block-themeisle-blocks-form-input-label__input {
+						width: max-content;
+						margin: 0px;
 					}
 				}
 			}
 		}
 
 		.wp-block-themeisle-blocks-form__container__submit {
+			margin-top: 8px;
 			font-size: 1em;
 			padding: 0.7rem 1.2rem;
 		}

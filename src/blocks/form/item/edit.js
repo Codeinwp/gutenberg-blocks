@@ -13,7 +13,7 @@ import classnames from 'classnames';
  */
 import { __ } from '@wordpress/i18n';
 
-import { InnerBlocks, RichText } from '@wordpress/block-editor';
+import { RichText } from '@wordpress/block-editor';
 
 import { Fragment, useEffect } from '@wordpress/element';
 
@@ -37,14 +37,47 @@ const Edit = ({
 		return () => unsubscribe();
 	}, [ attributes.id ]);
 
+	const renderInput = type => {
+		switch ( type ) {
+		case 'textarea':
+			return (
+				<textarea
+					type={ attributes.type }
+					name={ attributes.id }
+					required={ attributes.required }
+					className={
+						'wp-block-themeisle-blocks-form-input-label__input'
+					}
+					placeholder={attributes.placeholder}
+				/>
+			);
+
+		default:
+			return (
+				<input
+					type={ attributes.type }
+					name={ attributes.id }
+					className={
+						'wp-block-themeisle-blocks-form-input-label__input'
+					}
+					required={ attributes.required }
+					placeholder={attributes.placeholder}
+				/>
+			);
+		}
+	};
+
 	return (
 		<Fragment>
 			<Inspector attributes={attributes} setAttributes={setAttributes} />
 
-			<div className={className} id={attributes.id}>
+			<div className={ classnames( className, { 'is-checkbox': 'checkbox' === attributes.type }) } id={attributes.id}>
 				<label
+					for={ attributes.id }
 					className={
-						'wp-block-themeisle-blocks-form-input-label'
+						classnames(
+							'wp-block-themeisle-blocks-form-input-label'
+						)
 					}
 				>
 					<RichText
@@ -58,28 +91,10 @@ const Edit = ({
 						}}
 						tagName="div"
 					/>
-					{'textarea' !== attributes.type ? (
-						<input
-							type={ attributes.type }
-							name={ attributes.id }
-							className={
-								'wp-block-themeisle-blocks-form-input-label__input'
-							}
-							required={ attributes.required }
-							placeholder={attributes.placeholder}
-						/>
-					) : (
-						<textarea
-							type={ attributes.type }
-							name={ attributes.id }
-							required={ attributes.required }
-							className={
-								'wp-block-themeisle-blocks-form-input-label__input'
-							}
-							placeholder={attributes.placeholder}
-						/>
-					)}
 				</label>
+				{
+					renderInput( attributes.type )
+				}
 			</div>
 		</Fragment>
 	);
