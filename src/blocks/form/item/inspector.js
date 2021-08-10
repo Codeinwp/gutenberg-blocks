@@ -13,7 +13,8 @@ import {
 import {
 	PanelBody,
 	TextControl,
-	SelectControl
+	SelectControl,
+	ToggleControl
 } from '@wordpress/components';
 
 const Inspector = ({
@@ -26,6 +27,11 @@ const Inspector = ({
 				title={ __( 'Settings', 'otter-blocks' ) }
 				initialOpen={ true }
 			>
+				<ToggleControl
+					label={ __( 'Required', 'otter-blocks' ) }
+					checked={ attributes.required }
+					onChange={ required => setAttributes({ required }) }
+				/>
 				<TextControl
 					label={ __( 'Label', 'otter-blocks' ) }
 					value={ attributes.label }
