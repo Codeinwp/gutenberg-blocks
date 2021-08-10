@@ -47,6 +47,9 @@ const Edit = ({
 		return () => unsubscribe();
 	}, [ attributes.id ]);
 
+	useEffect( () => {
+		setAttributes({ url: themeisleGutenberg.form_url });
+	}, [ themeisleGutenberg?.form_url ]);
 
 	return (
 		<Fragment>

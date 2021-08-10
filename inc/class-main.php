@@ -137,6 +137,8 @@ class Main {
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
 		add_action( 'init', array( $this, 'load_server_side_blocks' ), 11 );
 		add_action( 'init', array( $this, 'register_meta' ), 11 );
+		add_action( 'wp_ajax_get_otter_form', 'get_otter_form' );
+		add_action( 'wp_ajax_nopriv_get_otter_form', 'get_otter_form' );
 
 		if ( version_compare( floatval( get_bloginfo( 'version' ) ), '5.8', '>=' ) ) {
 			add_filter( 'block_categories_all', array( $this, 'block_categories' ) );
@@ -219,6 +221,7 @@ class Main {
 				'userRoles'      => $wp_roles->roles,
 				'hasNevePro'     => defined( 'NEVE_PRO_VERSION' ),
 				'hasWooCommerce' => class_exists( 'WooCommerce' ),
+				'form_url'       => admin_url( 'admin-ajax.php' )
 			)
 		);
 
@@ -563,13 +566,18 @@ class Main {
 			wp_enqueue_script(
 				'themeisle-gutenberg-tabs',
 				plugin_dir_url( $this->get_dir() ) . 'build/form.js',
-				array( 'wp-i18n', 'wp-dom-ready' ),
+				array( 'wp-i18n', 'wp-dom-ready', 'jquery' ),
 				self::$assets_version,
 				true
 			);
 
-			self::$is_form_counter_loaded = true;
+			self::$is_form_loaded = true;
 		}
+	}
+
+	public function get_otter_form() {
+		echo "Hey";
+		wp_die();
 	}
 
 	/**

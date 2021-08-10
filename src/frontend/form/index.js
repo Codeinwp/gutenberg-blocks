@@ -26,11 +26,21 @@ const collectInputFormData = ( form ) => {
 	return exportData;
 };
 
-const sendData = ( data ) => {
-	if ( themeisleGutenberg?.form_url ) {
-		jQuery?.post( themeisleGutenberg?.form_url, data, ( res ) => {
+const sendData = ( url, data ) => {
+	if ( url && data ) {
+
+		jQuery?.post( url, { action: 'get_otter_form', data }, ( res ) => {
 			console.log( res );
 		});
+
+		fetch( url, {
+			method: 'POST',
+			mode: 'cors',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ action: 'get_otter_form', data })
+		}).then( resp => console.log( resp ) );
 	}
 };
 
@@ -38,11 +48,12 @@ domReady( () => {
 	const forms = document.querySelectorAll( '.wp-block-themeisle-blocks-form' );
 
 	forms.forEach( form => {
+		console.log( form?.dataset?.url );
 		const submit = form.querySelector( '.wp-block-themeisle-blocks-form__container__submit' );
 
-		submit?.addEventListener( 'submit', ( event ) => {
+		submit?.addEventListener( 'click', ( event ) => {
 			event.preventDefault();
-			collectInputFormData( form );
+			sendData( form?.dataset?.url, collectInputFormData( form ) );
 		});
 	});
 

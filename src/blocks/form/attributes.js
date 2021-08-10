@@ -1,6 +1,9 @@
 const attributes = {
 	id: {
 		type: 'string'
+	},
+	url: {
+		type: 'string'
 	}
 };
 

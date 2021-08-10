@@ -8,8 +8,9 @@ const Save = ({ attributes, className }) => {
 		<div
 			className={ className }
 			id={ attributes.id }
+			data-url={ attributes.url }
 		>
-			<form method="POST" className="wp-block-themeisle-blocks-form__container">
+			<form  method="POST" className="wp-block-themeisle-blocks-form__container">
 
 				<div className="wp-block-themeisle-blocks-business-form__container__content">
 					<InnerBlocks.Content />
