@@ -30,6 +30,7 @@ const collectInputFormData = ( form ) => {
 	return exportData;
 };
 
+// FIXME: Make this to work with the PHP backend
 const sendData = ( url, data ) => {
 	if ( url && data ) {
 

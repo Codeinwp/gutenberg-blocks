@@ -194,6 +194,12 @@ const Edit = ({
 								<InnerBlocks
 									allowedBlocks={ [
 										'themeisle-blocks/form-input',
+										'themeisle-blocks/form-input-email',
+										'themeisle-blocks/form-input-password',
+										'themeisle-blocks/form-input-number',
+										'themeisle-blocks/form-input-date',
+										'themeisle-blocks/form-input-textarea',
+										'themeisle-blocks/form-input-checkbox',
 										'core/paragraph'
 									] }
 									template={ templates[ attributes.templateType ] }
