@@ -84,7 +84,7 @@ const templates = {
 		[
 			'core/paragraph',
 			{
-				content: __( 'Gives us a feedback!', 'otter-blocks' ),
+				content: __( 'Gives us feedback!', 'otter-blocks' ),
 				align: 'center',
 				style: { typography: { fontSize: '2em'} }
 			}

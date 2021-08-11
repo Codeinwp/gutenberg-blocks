@@ -12,8 +12,6 @@ const collectInputFormData = ( form ) => {
 		const value = input.querySelector( '.wp-block-themeisle-blocks-form-input-label__input' )?.value;
 		const checked = input.querySelector( '.wp-block-themeisle-blocks-form-input-label__input[type="checkbox"]' )?.checked;
 
-		console.log( checked, value );
-
 		if ( label && value ) {
 			exportData.push({
 				label,
@@ -34,18 +32,20 @@ const collectInputFormData = ( form ) => {
 const sendData = ( url, data ) => {
 	if ( url && data ) {
 
+		// BUG: the request is succesful, but it return always 0
 		jQuery?.post( url, { action: 'get_otter_form', data }, ( res ) => {
 			console.log( res );
 		});
 
-		fetch( url, {
-			method: 'POST',
-			mode: 'cors',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ action: 'get_otter_form', data })
-		}).then( resp => console.log( resp ) );
+		// BUG: this does not work like the jQuery version, it gives code 400 [Bad Request]
+		// fetch( url, {
+		// 	method: 'POST',
+		// 	mode: 'cors',
+		// 	headers: {
+		// 		'Content-Type': 'application/json'
+		// 	},
+		// 	body: JSON.stringify({ action: 'get_otter_form', data })
+		// }).then( resp => console.log( resp ) );
 	}
 };
 
@@ -56,7 +56,7 @@ domReady( () => {
 		console.log( form?.dataset?.url );
 		const submit = form.querySelector( '.wp-block-themeisle-blocks-form__container__submit' );
 
-		submit?.addEventListener( 'click', ( event ) => {
+		submit?.addEventListener( 'submit', ( event ) => {
 			event.preventDefault();
 			sendData( form?.dataset?.url, collectInputFormData( form ) );
 		});

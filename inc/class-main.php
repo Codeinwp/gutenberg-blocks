@@ -137,6 +137,7 @@ class Main {
 		add_action( 'init', array( $this, 'autoload_classes' ), 11 );
 		add_action( 'init', array( $this, 'load_server_side_blocks' ), 11 );
 		add_action( 'init', array( $this, 'register_meta' ), 11 );
+
 		add_action( 'wp_ajax_get_otter_form', 'get_otter_form' );
 		add_action( 'wp_ajax_nopriv_get_otter_form', 'get_otter_form' );
 
@@ -562,7 +563,6 @@ class Main {
 			self::$is_tabs_counter_loaded = true;
 		}
 
-		// FIXME: Why is this not working?
 		if ( ! self::$is_form_loaded && has_block( 'themeisle-blocks/form', $post ) ) {
 			wp_enqueue_script(
 				'themeisle-gutenberg-tabs',
@@ -576,6 +576,7 @@ class Main {
 		}
 	}
 
+	// FIXME: Make it to return the desired result
 	public function get_otter_form() {
 		echo "Hey";
 		wp_die();
