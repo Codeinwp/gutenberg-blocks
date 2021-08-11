@@ -215,21 +215,29 @@ const Edit = ({
 						</form>
 					) : (
 						<Fragment>
-							<Placeholder>
-								{
-									Object.keys( templates ).map( templateName => {
-										return (
-											<Button
-												isPrimary
-												onClick={ () => {
-													setAttributes({ templateType: templateName});
-												}}
-											>
-												{ __( templateName, 'otter-blocks' ) }
-											</Button>
-										);
-									})
-								}
+							<Placeholder >
+								<div className={ 'wp-block-themeisle-blocks-form__container__placeholder' }>
+									<p>
+										{ __( 'Select one of the fallowing formats:', 'otter-blocks' ) }
+									</p>
+
+									{
+										Object.keys( templates ).map( templateName => {
+											return (
+												<Button
+													isPrimary
+													onClick={ () => {
+														setAttributes({ templateType: templateName});
+													}}
+												>
+													{ __( templateName, 'otter-blocks' ) }
+												</Button>
+											);
+										})
+									}
+
+								</div>
+
 							</Placeholder>
 						</Fragment>
 					)

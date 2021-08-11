@@ -562,6 +562,7 @@ class Main {
 			self::$is_tabs_counter_loaded = true;
 		}
 
+		// FIXME: Why is this not working?
 		if ( ! self::$is_form_loaded && has_block( 'themeisle-blocks/form', $post ) ) {
 			wp_enqueue_script(
 				'themeisle-gutenberg-tabs',
