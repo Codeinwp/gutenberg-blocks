@@ -9,7 +9,7 @@ const blocksVariation = [
 	{
 		name: 'themeisle-blocks/form-input-email',
 		description: 'Insert an email field',
-		icon: '',
+		icon: 'email',
 		title: 'Email',
 		attributes: {
 			type: 'email'
@@ -18,7 +18,7 @@ const blocksVariation = [
 	{
 		name: 'themeisle-blocks/form-input-password',
 		description: 'Insert a password field',
-		icon: '',
+		icon: 'lock',
 		title: 'Password',
 		attributes: {
 			type: 'password'
@@ -27,7 +27,7 @@ const blocksVariation = [
 	{
 		name: 'themeisle-blocks/form-input-number',
 		description: 'Insert a number field',
-		icon: '',
+		icon: 'calculator',
 		title: 'Number',
 		attributes: {
 			type: 'number'
@@ -36,7 +36,7 @@ const blocksVariation = [
 	{
 		name: 'themeisle-blocks/form-input-date',
 		description: 'Insert a date field',
-		icon: '',
+		icon: 'calendar-alt',
 		title: 'Date',
 		attributes: {
 			type: 'date'
@@ -45,7 +45,7 @@ const blocksVariation = [
 	{
 		name: 'themeisle-blocks/form-input-checkbox',
 		description: 'Insert a checkbox',
-		icon: '',
+		icon: 'saved',
 		title: 'Checkbox',
 		attributes: {
 			type: 'checkbox'
@@ -54,7 +54,7 @@ const blocksVariation = [
 	{
 		name: 'themeisle-blocks/form-input-textarea',
 		description: 'Insert a text-area field',
-		icon: '',
+		icon: 'welcome-write-blog',
 		title: 'Text Area',
 		attributes: {
 			type: 'textarea'

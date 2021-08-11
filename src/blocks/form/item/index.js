@@ -8,8 +8,6 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-
-import { mapIcon as icon } from '../../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
 import save from './save.js';
@@ -17,7 +15,7 @@ import save from './save.js';
 registerBlockType( 'themeisle-blocks/form-input', {
 	title: __( 'Form Input', 'otter-blocks' ),
 	description: __( 'Display a contact form for your clients.', 'otter-blocks' ),
-	icon,
+	icon: 'button',
 	parent: [ 'themeisle-blocks/form' ],
 	category: 'themeisle-blocks',
 	keywords: [
