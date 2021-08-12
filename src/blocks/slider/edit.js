@@ -126,14 +126,23 @@ const Edit = ({
 
 	if ( Array.isArray( attributes.images ) && ! attributes.images.length ) {
 		return (
-			<Placeholder
-				labels={ {
-					title: __( 'Slider', 'otter-blocks' ),
-					instructions: __( 'Drag images, upload new ones or select files from your library.', 'otter-blocks' )
-				} }
-				icon="images-alt2"
-				onSelectImages={ onSelectImages }
-			/>
+			<Fragment>
+				<Inspector
+					attributes={ attributes }
+					setAttributes={ setAttributes }
+					slider={ sliderRef.current }
+					changePerView={ changePerView }
+					onSelectImages={ onSelectImages }
+				/>
+				<Placeholder
+					labels={ {
+						title: __( 'Slider', 'otter-blocks' ),
+						instructions: __( 'Drag images, upload new ones or select files from your library.', 'otter-blocks' )
+					} }
+					icon="images-alt2"
+					onSelectImages={ onSelectImages }
+				/>
+			</Fragment>
 		);
 	}
 
@@ -146,7 +155,6 @@ const Edit = ({
 				changePerView={ changePerView }
 				onSelectImages={ onSelectImages }
 			/>
-
 			<ResizableBox
 				size={ {
 					height: attributes.height

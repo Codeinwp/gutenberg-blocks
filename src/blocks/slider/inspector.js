@@ -61,7 +61,7 @@ const Inspector = ({
 		<InspectorControls>
 			<PanelBody
 				title={ __( 'Images', 'otter-blocks' ) }
-				initialOpen={ false }
+				initialOpen={ attributes.images.length ? false : true}
 			>
 				<ImageGrid
 					attributes={ attributes }
@@ -71,8 +71,9 @@ const Inspector = ({
 
 			<PanelBody
 				title={ __( 'Settings', 'otter-blocks' ) }
+				initialOpen={ attributes.images.length ? true : false }
 			>
-				{ attributes.images.length && (
+				{ attributes.images.length ? (
 					<Fragment>
 						<RangeControl
 							label={ __( 'Slides Per Page', 'otter-blocks' ) }
@@ -146,6 +147,8 @@ const Inspector = ({
 							onChange={ toggleBullets }
 						/>
 					</Fragment>
+				) : (
+					__( 'Add some images', 'otter-blocks' )
 				) }
 			</PanelBody>
 		</InspectorControls>
