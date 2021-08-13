@@ -79,7 +79,6 @@ class Advanced_Heading_CSS extends Base_CSS {
 					array(
 						'property' => 'line-height',
 						'value'    => 'lineHeight',
-						'unit'     => 'px',
 					),
 					array(
 						'property' => 'letter-spacing',
