@@ -13,11 +13,11 @@ const Save = ({
 		<div className={ className } >
 			<label
 				for={ attributes.id }
-				className="wp-block-themeisle-blocks-form-input-label"
+				className="wp-block-themeisle-blocks-form-textarea-label"
 			>
 				<RichText.Content
 					value={ attributes.label }
-					className="wp-block-themeisle-blocks-form-input-label__label"
+					className="wp-block-themeisle-blocks-form-textarea-label__label"
 					tagName="span"
 				/>
 
@@ -26,14 +26,15 @@ const Save = ({
 				) }
 			</label>
 
-			<input
-				type={ attributes.type }
+			<textarea
 				name={ attributes.id }
 				id={ attributes.id }
 				required={ attributes.isRequired }
 				placeholder={ attributes.placeholder }
-				className="wp-block-themeisle-blocks-form-input-input"
-			/>
+				rows={ 10 }
+				className="wp-block-themeisle-blocks-form-textarea-input"
+			>
+			</textarea>
 		</div>
 	);
 };

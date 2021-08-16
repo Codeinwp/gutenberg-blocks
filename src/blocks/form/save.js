@@ -3,9 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 
-import {
-	InnerBlocks
-} from '@wordpress/block-editor';
+import { InnerBlocks } from '@wordpress/block-editor';
 
 const Save = ({
 	attributes,
@@ -18,10 +16,7 @@ const Save = ({
 			data-url={ attributes.url }
 		>
 			<div className="wp-block-themeisle-blocks-form__container">
-
-				<div className="wp-block-themeisle-blocks-business-form__container__content">
-					<InnerBlocks.Content />
-				</div>
+				<InnerBlocks.Content />
 
 				<div className="wp-block-button">
 					<button className="wp-block-button__link">

@@ -35,10 +35,16 @@ const TEMPLATE = [
 		}
 	],
 	[
-		'themeisle-blocks/form-input',
+		'themeisle-blocks/form-textarea',
 		{
-			label: __( 'Message', 'otter-blocks' ),
-			type: 'textarea'
+			label: __( 'Message', 'otter-blocks' )
+		}
+	],
+	[
+		'core/paragraph',
+		{
+			content: __( 'You agree to receive email communication from us by submitting this form and understand that your contact information will be stored with us.', 'otter-blocks' ),
+			fontSize: 'extra-small'
 		}
 	]
 ];
@@ -66,11 +72,9 @@ const Edit = ({
 				id={ attributes.id }
 			>
 				<div className="wp-block-themeisle-blocks-form__container">
-					<div className="wp-block-themeisle-blocks-business-form__container__content">
-						<InnerBlocks
-							template={ TEMPLATE }
-						/>
-					</div>
+					<InnerBlocks
+						template={ TEMPLATE }
+					/>
 
 					<div className="wp-block-button">
 						<button className="wp-block-button__link">

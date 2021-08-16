@@ -38,11 +38,11 @@ const Edit = ({
 			<div className={ className } >
 				<label
 					for={ attributes.id }
-					className="wp-block-themeisle-blocks-form-input-label"
+					className="wp-block-themeisle-blocks-form-textarea-label"
 				>
 					<RichText
 						placeholder={ __( 'Type here…', 'otter-blocks' )}
-						className="wp-block-themeisle-blocks-form-input-label__label"
+						className="wp-block-themeisle-blocks-form-textarea-label__label"
 						value={ attributes.label }
 						onChange={ label => setAttributes({ label }) }
 						tagName="span"
@@ -53,15 +53,16 @@ const Edit = ({
 					) }
 				</label>
 
-				<input
-					type={ attributes.type }
+				<textarea
 					placeholder={ attributes.placeholder }
 					name={ attributes.id }
 					id={ attributes.id }
 					required={ attributes.isRequired }
 					disabled
-					className="wp-block-themeisle-blocks-form-input-input components-text-control__input"
-				/>
+					rows={ 10 }
+					className="wp-block-themeisle-blocks-form-textarea-input components-textarea-control__input"
+				>
+				</textarea>
 			</div>
 		</Fragment>
 	);

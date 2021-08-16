@@ -20,9 +20,8 @@ registerBlockType( 'themeisle-blocks/form-input', {
 	parent: [ 'themeisle-blocks/form' ],
 	category: 'themeisle-blocks',
 	keywords: [
-		'business',
-		'form',
-		'contact',
+		'input',
+		'text',
 		'email'
 	],
 	attributes,
@@ -55,15 +54,6 @@ registerBlockType( 'themeisle-blocks/form-input', {
 			title: __( 'Date Field', 'otter-blocks' ),
 			attributes: {
 				type: 'date'
-			}
-		},
-		{
-			name: 'themeisle-blocks/form-input-textarea',
-			description: __( 'Insert a textarea field', 'otter-blocks' ),
-			icon: 'welcome-write-blog',
-			title: __( 'Textarea Field', 'otter-blocks' ),
-			attributes: {
-				type: 'textarea'
 			}
 		}
 	],

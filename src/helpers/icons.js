@@ -54,7 +54,7 @@ export const contactIcon = () => {
 export const inputIcon = () => {
 	return (
 		<SVG viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-			<Path d="M 2 6 C 0.9069372 6 0 6.9069372 0 8 L 0 16 C 0 17.093063 0.9069372 18 2 18 L 22 18 C 23.093063 18 24 17.093063 24 16 L 24 8 C 24 6.9069372 23.093063 6 22 6 L 2 6 z M 2 8 L 22 8 L 22 16 L 2 16 L 2 8 z M 4 12 L 4 14 L 6 14 L 6 12 L 4 12 z M 8 12 L 8 14 L 10 14 L 10 12 L 8 12 z M 12 12 L 12 14 L 14 14 L 14 12 L 12 12 z" />
+			<Path d="M 1 9 L 1 10 L 1 23 L 31 23 L 31 9 L 1 9 z M 3 11 L 29 11 L 29 21 L 3 21 L 3 11 z M 5 17 L 5 19 L 7 19 L 7 17 L 5 17 z M 9 17 L 9 19 L 11 19 L 11 17 L 9 17 z M 13 17 L 13 19 L 15 19 L 15 17 L 13 17 z" />
 		</SVG>
 	);
 };

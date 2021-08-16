@@ -9,8 +9,8 @@ const collectInputFormData = ( form ) => {
 
 	inputs?.forEach( input => {
 		const label = input.querySelector( '.wp-block-themeisle-blocks-form-input-label__label' )?.innerHTML;
-		const value = input.querySelector( '.wp-block-themeisle-blocks-form-input-label__input' )?.value;
-		const checked = input.querySelector( '.wp-block-themeisle-blocks-form-input-label__input[type="checkbox"]' )?.checked;
+		const value = input.querySelector( '.wp-block-themeisle-blocks-form-input-input' )?.value;
+		const checked = input.querySelector( '.wp-block-themeisle-blocks-form-input-input[type="checkbox"]' )?.checked;
 
 		if ( label && value ) {
 			exportData.push({
