@@ -10,7 +10,7 @@ import { registerBlockType } from '@wordpress/blocks';
  */
 import './style.scss';
 import './editor.scss';
-import { mapIcon as icon } from '../../helpers/icons.js';
+import { contactIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
 import save from './save.js';

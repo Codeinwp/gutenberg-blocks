@@ -221,8 +221,7 @@ class Main {
 				'canTrack'       => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
 				'userRoles'      => $wp_roles->roles,
 				'hasNevePro'     => defined( 'NEVE_PRO_VERSION' ),
-				'hasWooCommerce' => class_exists( 'WooCommerce' ),
-				'form_url'       => admin_url( 'admin-ajax.php' )
+				'hasWooCommerce' => class_exists( 'WooCommerce' )
 			)
 		);
 

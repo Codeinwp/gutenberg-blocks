@@ -43,6 +43,22 @@ export const buttonsIcon = () => {
 	);
 };
 
+export const contactIcon = () => {
+	return (
+		<SVG viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+			<Path d="M 5 5 L 5 27 L 27 27 L 27 5 Z M 7 7 L 25 7 L 25 25 L 7 25 Z M 14 9 L 14 15 L 23 15 L 23 9 Z M 9 11 L 9 13 L 12 13 L 12 11 Z M 16 11 L 21 11 L 21 13 L 16 13 Z M 14 17 L 14 23 L 23 23 L 23 17 Z M 9 19 L 9 21 L 12 21 L 12 19 Z M 16 19 L 21 19 L 21 21 L 16 21 Z" />
+		</SVG>
+	);
+};
+
+export const inputIcon = () => {
+	return (
+		<SVG viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+			<Path d="M 2 6 C 0.9069372 6 0 6.9069372 0 8 L 0 16 C 0 17.093063 0.9069372 18 2 18 L 22 18 C 23.093063 18 24 17.093063 24 16 L 24 8 C 24 6.9069372 23.093063 6 22 6 L 2 6 z M 2 8 L 22 8 L 22 16 L 2 16 L 2 8 z M 4 12 L 4 14 L 6 14 L 6 12 L 4 12 z M 8 12 L 8 14 L 10 14 L 10 12 L 8 12 z M 12 12 L 12 14 L 14 14 L 14 12 L 12 12 z" />
+		</SVG>
+	);
+};
+
 export const columnsIcon = () => {
 	return (
 		<SVG viewBox="0 0 32 32" style={ { padding: '1px', fill: '#000000' } } xmlns="http://www.w3.org/2000/svg">

@@ -2,22 +2,17 @@ const attributes = {
 	id: {
 		type: 'string'
 	},
-	label: {
-		type: 'string'
-	},
 	type: {
-		type: 'string'
+		type: 'string',
+		default: 'text'
 	},
-	name: {
-		type: 'string'
-	},
-	value: {
+	label: {
 		type: 'string'
 	},
 	placeholder: {
 		type: 'string'
 	},
-	required: {
+	isRequired: {
 		type: 'boolean'
 	}
 };
