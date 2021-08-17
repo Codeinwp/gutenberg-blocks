@@ -721,6 +721,7 @@ class Main {
 			'\ThemeIsle\GutenbergBlocks\Server\Filter_Blocks_Server',
 			'\ThemeIsle\GutenbergBlocks\Server\Plugin_Card_Server',
 			'\ThemeIsle\GutenbergBlocks\Server\Template_Library_Server',
+			'\ThemeIsle\GutenbergBlocks\Server\Form_Server',
 		);
 
 		foreach ( $classnames as $classname ) {
