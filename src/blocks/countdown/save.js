@@ -36,7 +36,7 @@ const DisplayTime = ({ time, hasSeparators }) => {
 
 const Save = ({ attributes, className }) => {
 	return (
-		<div className={ className } id={ attributes.id } data-date={ attributes.date }>
+		<div className={ className } id={ attributes.id } data-date={ attributes.date } data-server-timezone={ attributes.serverTimezone }>
 			<DisplayTime
 				time={ getIntervalFromUnix( 0, {exclude: attributes?.exclude }) } hasSeparators={ attributes?.hasSeparators } />
 		</div>

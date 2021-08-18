@@ -36,10 +36,19 @@ const getComponentsUpdate = ( root ) => {
  * @param {*} updateComponents The object with the update functions
  * @returns {Function} Function that update the countdown every time it is called. You can send a callback to be triggered when is finised.
  */
-const updateTime = ( date, updateComponents ) => {
-	const _date = Date.parse( date );
+const updateTime = ( date, updateComponents, serverTimezone ) => {
+
+	const minuteDiff = moment( ).utcOffset( ) - Number( serverTimezone ) * 60;
+	const _date = moment( date );
+
+	if ( 0 <= minuteDiff )  {
+		_date.subtract( minuteDiff, 'm' );
+	} else {
+		_date.add( Math.abs( minuteDiff ), 'm' );
+	}
+
 	return ( onFinishCb ) => {
-		const time = getIntervalFromUnix( _date -  Date.now() ) ;
+		const time = getIntervalFromUnix( _date - new Date() ) ;
 		time.forEach( ({ tag, value, name}) => {
 			updateComponents[tag]?.( name, value );
 		});
@@ -54,10 +63,11 @@ domReady( () => {
 	const countdowns = document.querySelectorAll( '.wp-block-themeisle-blocks-countdown' );
 
 	countdowns.forEach( countdown => {
-		const date = countdown.dataset.date;
+		const date = countdown.dataset?.date;
+		const serverTimezone = countdown.dataset?.serverTimezone;
 
 		if ( date ) {
-			const update = updateTime( date, getComponentsUpdate( countdown ) );
+			const update = updateTime( date, getComponentsUpdate( countdown ), serverTimezone );
 			const interval = setInterval( () => {
 				update( () => clearInterval( interval ) );
 			}, 500 );

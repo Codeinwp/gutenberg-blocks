@@ -2,7 +2,7 @@ const attributes = {
 	id: {
 		type: 'string'
 	},
-	style: {
+	serverTimezone: {
 		type: 'string'
 	},
 	date: {

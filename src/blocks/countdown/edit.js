@@ -24,7 +24,15 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 	useEffect( () => {
 		const interval = setInterval( () => {
 			if ( attributes.date ) {
-				setUnixTime( new Date( attributes.date ) - new Date() );
+				const minuteDiff = moment( ).utcOffset( ) - Number( themeisleGutenberg.serverOffset.hours ) * 60;
+				const newDate = moment( attributes.date );
+
+				if ( 0 <= minuteDiff )  {
+					newDate.subtract( minuteDiff, 'm' );
+				} else {
+					newDate.add( Math.abs( minuteDiff ), 'm' );
+				}
+				setUnixTime( newDate - new Date() );
 			}
 		}, 500 );
 

@@ -174,6 +174,26 @@ const Inspector = ({
 		}
 	};
 
+	const calculateDate = ( date ) => {
+		const minuteDiff = moment( ).utcOffset( ) - Number( themeisleGutenberg.serverOffset.hours ) * 60;
+		const newDate = moment( date );
+
+		if ( 0 <= minuteDiff )  {
+			newDate.subtract( minuteDiff, 'm' );
+		} else {
+			newDate.add( Math.abs( minuteDiff ), 'm' );
+		}
+
+		return newDate;
+	};
+
+	const changeTime = ( date ) => {
+		setAttributes({
+			date: moment( calculateDate( date ) ).utcOffset( themeisleGutenberg.serverOffset.hours ).format(),
+			serverTimezone: themeisleGutenberg.serverOffset.hours.toString()
+		});
+	};
+
 	return (
 		<InspectorControls>
 			<PanelBody
@@ -190,14 +210,14 @@ const Inspector = ({
 								isSecondary
 								aria-expanded={ isOpen }
 							>
-								{ attributes.date ? attributes.date : __( 'Select Date', 'otter-blocks' ) }
+								{ attributes.date ? moment( calculateDate( attributes.date ) ).format( 'DD-MMM-YYYY hh:mm A' ) : __( 'Select Date', 'otter-blocks' ) }
 							</Button>
 						</>
 					) }
 					renderContent={ () => (
 						<DateTimePicker
-							currentDate={ attributes.date }
-							onChange={ value => setAttributes({ date: moment( value ).utc().format() }) }
+							currentDate={ calculateDate( attributes.date ) }
+							onChange={ changeTime }
 						/>
 					) }
 				/>

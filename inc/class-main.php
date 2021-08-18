@@ -219,6 +219,7 @@ class Main {
 				'userRoles'      => $wp_roles->roles,
 				'hasNevePro'     => defined( 'NEVE_PRO_VERSION' ),
 				'hasWooCommerce' => class_exists( 'WooCommerce' ),
+				'serverOffset'   => array( 'hours' => get_option('gmt_offset'), 'zone' => get_option( 'timezone_string' ) ),
 			)
 		);
 
@@ -319,7 +320,7 @@ class Main {
 
 		if ( 'widgets' === $post ) {
 			$widgets = get_option( 'widget_block', array() );
-	
+
 			foreach ( $widgets as $widget ) {
 				if ( is_array( $widget ) && isset( $widget['content'] ) ) {
 					$content .= $widget['content'];
@@ -563,7 +564,7 @@ class Main {
 			wp_enqueue_script(
 				'themeisle-gutenberg-countdown',
 				plugin_dir_url( $this->get_dir() ) . 'build/countdown.js',
-				array( 'wp-dom-ready', 'wp-i18n', 'lodash' ),
+				array( 'wp-dom-ready', 'wp-i18n', 'moment' ),
 				self::$assets_version,
 				true
 			);
