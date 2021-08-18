@@ -30,7 +30,10 @@ class Add_To_Cart_Button_Block extends Base_Block {
 	 */
 	protected function set_attributes() {
 		$this->attributes = array(
-			'product' => array(
+			'className' => array(
+				'type' => 'string',
+			),
+			'product'   => array(
 				'type' => 'number',
 			),
 		);
@@ -52,6 +55,9 @@ class Add_To_Cart_Button_Block extends Base_Block {
 		if ( ! $product ) {
 			return;
 		}
+
+		$class = isset( $attributes['className'] ) ? $attributes['className'] : '';
+		$class = 'wp-block-button ' . esc_attr( $class );
 
 		$attrs = array(
 			'aria-label'       => $product->add_to_cart_description(),
@@ -77,6 +83,6 @@ class Add_To_Cart_Button_Block extends Base_Block {
 			esc_html( $product->add_to_cart_text() )
 		);
 
-		return '<div class="wp-block-button">' . $button . '</div>';
+		return '<div class="' . $class . '">' . $button . '</div>';
 	}
 }

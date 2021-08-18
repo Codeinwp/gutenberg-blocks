@@ -24,6 +24,21 @@ registerBlockType( 'themeisle-blocks/add-to-cart-button', {
 		'products'
 	],
 	attributes,
+	styles: [
+		{
+			name: 'default',
+			label: __( 'Default', 'otter-blocks' ),
+			isDefault: true
+		},
+		{
+			name: 'primary',
+			label: __( 'Primary', 'otter-blocks' )
+		},
+		{
+			name: 'secondary',
+			label: __( 'Secondary', 'otter-blocks' )
+		}
+	],
 	edit,
 	save: () => null
 });
