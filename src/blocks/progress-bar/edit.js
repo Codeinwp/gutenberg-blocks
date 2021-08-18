@@ -8,7 +8,7 @@ import classnames from 'classnames';
  */
 import { ResizableBox } from '@wordpress/components';
 
-import { RichText } from '@wordpress/editor';
+import { RichText } from '@wordpress/block-editor';
 
 import {
 	Fragment,
