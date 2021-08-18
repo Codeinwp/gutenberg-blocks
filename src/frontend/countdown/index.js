@@ -37,9 +37,9 @@ const getComponentsUpdate = ( root ) => {
  * @returns {Function} Function that update the countdown every time it is called. You can send a callback to be triggered when is finised.
  */
 const updateTime = ( date, updateComponents ) => {
-	const _date = new Date( date );
+	const _date = Date.parse( date );
 	return ( onFinishCb ) => {
-		const time = getIntervalFromUnix( _date - Date.now() );
+		const time = getIntervalFromUnix( _date -  Date.now() ) ;
 		time.forEach( ({ tag, value, name}) => {
 			updateComponents[tag]?.( name, value );
 		});
