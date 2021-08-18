@@ -79,6 +79,9 @@ class Advanced_Heading_CSS extends Base_CSS {
 					array(
 						'property' => 'line-height',
 						'value'    => 'lineHeight',
+						'format'   => function( $value, $attrs ) {
+							return 2 > $value ? 0.3 * log( $value ) + 1 : $value;
+						},
 					),
 					array(
 						'property' => 'letter-spacing',
