@@ -183,7 +183,7 @@ const Edit = ({
 		fontWeight: 'regular' === attributes.fontVariant ? 'normal' : attributes.fontVariant,
 		fontStyle: attributes.fontStyle,
 		textTransform: attributes.textTransform,
-		lineHeight: attributes.lineHeight,
+		lineHeight: 3 < attributes.lineHeight ? attributes.lineHeight + 'px' : attributes.lineHeight,
 		letterSpacing: attributes.letterSpacing && `${ attributes.letterSpacing }px`,
 		...stylesheet,
 		...textShadowStyle
