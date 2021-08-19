@@ -19,7 +19,7 @@
 				.wp-block-themeisle-blocks-business-hours-item {
 					background-color: #fff;
 
-					&:nth-child(even) {
+					&:nth-of-type(even) {
 						background-color: #f9fafc;
 					}
 				}
@@ -30,7 +30,7 @@
 						border-radius: 0;
 					}
 	
-					&:nth-child(even) {
+					&:nth-of-type(even) {
 						.wp-block-themeisle-blocks-business-hours-item {
 							background-color: #f9fafc;
 						}
