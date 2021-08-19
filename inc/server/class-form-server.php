@@ -99,9 +99,9 @@ class Form_Server {
 
 		$email_title = "[Otter]" . __( 'Someone has completed a form', 'otter-blocks' );
 		$email_body = array_reduce( $data, function( $text, $input ) {
-			$text .= $input->{'label'} . ': ' .$input->{'value'} . "\n";
+			$text .= '<b>' . $input->{'label'} . '</b>' . ': ' .$input->{'value'} . "<br>";
 			return $text;
-		} , "[Otter]" . __( 'Data from users', 'otter-blocks' ) . "\n\n" );
+		}, '<p>' . __( 'Data from user', 'otter-blocks' ) . "</p> <br>" );
 
 		// TODO: Send email
 		$to = get_site_option( 'admin_email' );
@@ -109,7 +109,7 @@ class Form_Server {
 		wp_mail($to, $email_title, $email_body, $headers);
 
 		// Check the result
-		$return['email_body'] = $email_body;
+		$return['email_body'] = $to . ' | ' . $email_body;
 		return rest_ensure_response( $return );
 	}
 
