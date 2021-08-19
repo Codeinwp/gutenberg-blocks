@@ -501,7 +501,8 @@ const Inspector = ({
 								value={ attributes.lineHeight }
 								onChange={ changeLineHeight }
 								min={ 0 }
-								max={ 200 }
+								step={ 0.1 }
+								max={ 3 }
 							/>
 
 							<RangeControl
