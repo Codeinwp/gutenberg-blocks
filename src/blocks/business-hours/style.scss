@@ -3,6 +3,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	overflow: hidden;
 
 	&.is-style-black-white {
 		background-color: #2a2730;
@@ -21,10 +22,6 @@
 					&:nth-child(even) {
 						background-color: #f9fafc;
 					}
-
-					&:last-child {
-						border-radius: 0 0 10px 10px;
-					}
 				}
 
 				.block-editor-block-list__block {
@@ -36,12 +33,6 @@
 					&:nth-child(even) {
 						.wp-block-themeisle-blocks-business-hours-item {
 							background-color: #f9fafc;
-						}
-					}
-
-					&:last-child {
-						.wp-block-themeisle-blocks-business-hours-item {
-							border-radius: 0 0 10px 10px;
 						}
 					}
 				}
@@ -80,7 +71,11 @@
 				.wp-block-themeisle-blocks-business-hours-item__time {
 					width: 50%;
 				}
-			}			
+			}
+
+			.wp-block-separator {
+				margin: 0;
+			}
 		}
 	}
 }

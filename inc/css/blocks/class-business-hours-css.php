@@ -107,28 +107,6 @@ class Business_Hours_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-business-hours__container .wp-block-themeisle-blocks-business-hours__container__content .wp-block-themeisle-blocks-business-hours-item:last-child',
-				'properties' => array(
-					array(
-						'property'       => 'border-radius',
-						'pattern'        => '0 0 borderRadius borderRadius',
-						'pattern_values' => array(
-							'borderRadius' => array(
-								'value'   => 'borderRadius',
-								'unit'    => 'px',
-								'default' => 0,
-							),
-						),
-						'condition'      => function( $attrs ) {
-							return isset( $attrs['borderRadius'] ) && ! empty( $attrs['borderRadius'] );
-						},
-					),
-				),
-			)
-		);
-
-		$css->add_item(
-			array(
 				'selector'   => ' .wp-block-themeisle-blocks-business-hours__container .wp-block-themeisle-blocks-business-hours__container__content .wp-block-themeisle-blocks-business-hours-item .wp-block-themeisle-blocks-business-hours-item__label',
 				'properties' => array(
 					array(
