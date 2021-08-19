@@ -41,5 +41,23 @@
 		.wp-block-button {
 			margin-top: 1.5em;
 		}
+
+	}
+
+	.wp-block-themeisle-blocks-form-server-msg {
+		width: 100%;
+		text-align: left;
+		padding: 1rem;
+		font-size: 1rem;
+		background-color: white;
+		border-radius: 10%;
+
+		&.success {
+			color: green;
+		}
+
+		&.error {
+			color: red;
+		}
 	}
 }
