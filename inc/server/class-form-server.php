@@ -90,27 +90,28 @@ class Form_Server {
 			'success' => false,
 		);
 
-
-		//var_dump( $request->get_body() );
-
-		$return['success'] = true;
-
 		$data = json_decode( $request->get_body() );
 
 		$email_title = "[Otter]" . __( 'Someone has completed a form', 'otter-blocks' );
 		$email_body = array_reduce( $data, function( $text, $input ) {
-			$text .= '<b>' . $input->{'label'} . '</b>' . ': ' .$input->{'value'} . "<br>";
+			$text .= '<b>' . esc_html( $input->{'label'} ) . '</b>' . ': ' . esc_html( $input->{'value'} ) . "<br>";
 			return $text;
-		}, '<p>' . __( 'Data from user', 'otter-blocks' ) . "</p> <br>" );
+		}, '' . __( 'Data from user', 'otter-blocks' ) . "<br>" );
 
 		// TODO: Send email
 		$to = get_site_option( 'admin_email' );
 		$headers = array('Content-Type: text/html; charset=UTF-8');
-		wp_mail($to, $email_title, $email_body, $headers);
 
-		// Check the result
-		$return['email_body'] = $to . ' | ' . $email_body;
-		return rest_ensure_response( $return );
+		try {
+			wp_mail($to, $email_title, $email_body, $headers);
+			$return['success'] = true;
+			$return['email_body'] = $to . ' | ' . $email_body;
+		} catch (\Exception $e) {
+			error_log($e->getMessage(), 0);
+			$return['error'] = $e->getMessage();
+		} finally {
+			return rest_ensure_response( $return );
+		}
 	}
 
 

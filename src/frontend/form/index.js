@@ -23,17 +23,17 @@ const collectAndSendInputFormData = ( form ) => {
 		// TODO: use checkbox in the future versions
 		const checked = input.querySelector( '.wp-block-themeisle-blocks-form-input-input[type="checkbox"]' )?.checked;
 
-		if ( valueElem?.checkValidity() ) {
-			if ( label && valueElem?.value ) {
-				exportData.push({
-					label,
-					value: valueElem?.value,
-					checked
-				});
-			};
-		} else {
+		if ( valueElem?.hasAttribute( 'required' ) &&  ! valueElem?.checkValidity() ) {
 			errors.push( valueElem );
 		}
+
+		if ( label && valueElem?.value ) {
+			exportData.push({
+				label,
+				value: valueElem?.value,
+				checked
+			});
+		};
 	});
 
 	if ( 0 < errors.length ) {
@@ -71,7 +71,9 @@ const collectAndSendInputFormData = ( form ) => {
 
 			// Delete it after a fixed time
 			setTimeout( () => {
-				form.removeChild( msg );
+				if ( msg ) {
+					form.removeChild( msg );
+				}
 			}, 5000 );
 		});
 	}
