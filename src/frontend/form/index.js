@@ -15,6 +15,7 @@ const collectAndSendInputFormData = ( form ) => {
 	const inputs = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-input' );
 	const textarea = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-textarea' );
 	const errors = [];
+	const data = {};
 
 	[ ...inputs, ...textarea ]?.forEach( input => {
 		const label = input.querySelector( '.wp-block-themeisle-blocks-form-input-label__label, .wp-block-themeisle-blocks-form-textarea-label__label' )?.innerHTML;
@@ -42,11 +43,16 @@ const collectAndSendInputFormData = ( form ) => {
 			input?.reportValidity();
 		});
 	} else {
-		console.log( 'Send Email', exportData );
+		data.data = exportData;
+		if ( form?.dataset?.emailTitle ) {
+			data.emailTitle = form?.dataset?.emailTitle;
+		}
+
+		console.log( 'Send Email', data );
 		apiFetch({
 			path: 'themeisle-gutenberg-blocks/v1/forms',
 			method: 'POST',
-			data: exportData
+			data
 		}).then( res => {
 			const msg = document.createElement( 'div' );
 			msg.classList.add( 'wp-block-themeisle-blocks-form-server-msg' );

@@ -90,10 +90,10 @@ class Form_Server {
 			'success' => false,
 		);
 
-		$data = json_decode( $request->get_body() );
+		$data = json_decode( $request->get_body(), true );
 
-		$email_title = "[Otter]" . __( 'Someone has completed a form', 'otter-blocks' );
-		$email_body = array_reduce( $data, function( $text, $input ) {
+		$email_title = "[Otter] " .  ( isset( $data['emailTitle']  ) ? $data['emailTitle'] : __( 'A new submission', 'otter-blocks' ) );
+		$email_body = array_reduce( $data['data'], function( $text, $input ) {
 			$text .= '<b>' . esc_html( $input->{'label'} ) . '</b>' . ': ' . esc_html( $input->{'value'} ) . "<br>";
 			return $text;
 		}, '' . __( 'Data from user', 'otter-blocks' ) . "<br>" );

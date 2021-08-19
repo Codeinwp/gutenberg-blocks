@@ -13,6 +13,7 @@ const Save = ({
 		<div
 			className={ className }
 			id={ attributes.id }
+			data-email-title={ attributes.emailTitle }
 		>
 			<div className="wp-block-themeisle-blocks-form__container">
 				<InnerBlocks.Content />
