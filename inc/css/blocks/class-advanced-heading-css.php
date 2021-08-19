@@ -80,7 +80,7 @@ class Advanced_Heading_CSS extends Base_CSS {
 						'property' => 'line-height',
 						'value'    => 'lineHeight',
 						'format'   => function( $value, $attrs ) {
-							return 3 < $value ?  $value . 'px' : $value;
+							return 3 < $value ? $value . 'px' : $value;
 						},
 					),
 					array(
