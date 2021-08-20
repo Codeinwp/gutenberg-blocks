@@ -3,6 +3,8 @@
  */
 import { Icon } from '@wordpress/components';
 
+import { select } from '@wordpress/data';
+
 import { registerPlugin } from '@wordpress/plugins';
 
 /**
@@ -20,8 +22,9 @@ import './wc-integration/index.js';
 import './masonry-extension/index.js';
 
 const icon = <Icon icon={ otterIcon } />;
-
-registerPlugin( 'themeisle-blocks', {
-	icon,
-	render: Options
-});
+if ( select( 'core/editor' ) ) {
+	registerPlugin( 'themeisle-blocks', {
+		icon,
+		render: Options
+	});
+}

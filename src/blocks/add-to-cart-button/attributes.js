@@ -1,6 +1,6 @@
 const attributes = {
-	id: {
-		type: 'string'
+	product: {
+		type: 'number'
 	}
 };
 

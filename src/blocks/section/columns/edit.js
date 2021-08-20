@@ -52,7 +52,7 @@ const Edit = ({
 		isPreviewMobile
 	} = useSelect( select => {
 		const { getBlock } = select( 'core/block-editor' );
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' ) ? select( 'core/edit-post' ) : false;
 		const sectionBlock = getBlock( clientId );
 
 		return {

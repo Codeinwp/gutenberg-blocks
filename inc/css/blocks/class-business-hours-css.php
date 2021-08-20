@@ -44,7 +44,7 @@ class Business_Hours_CSS extends Base_CSS {
 					array(
 						'property' => 'border-radius',
 						'value'    => 'borderRadius',
-                        'unit'     => 'px',
+						'unit'     => 'px',
 					),
 					array(
 						'property' => 'border-width',
@@ -77,7 +77,7 @@ class Business_Hours_CSS extends Base_CSS {
 					array(
 						'property' => 'font-size',
 						'value'    => 'titleFontSize',
-                        'unit'     => 'px',
+						'unit'     => 'px',
 					),
 					array(
 						'property' => 'color',
@@ -94,34 +94,12 @@ class Business_Hours_CSS extends Base_CSS {
 					array(
 						'property' => 'padding-top',
 						'value'    => 'gap',
-                        'unit'     => 'px',
+						'unit'     => 'px',
 					),
 					array(
 						'property' => 'padding-bottom',
 						'value'    => 'gap',
-                        'unit'     => 'px',
-					),
-				),
-			)
-		);
-
-		$css->add_item(
-			array(
-				'selector'   => ' .wp-block-themeisle-blocks-business-hours__container .wp-block-themeisle-blocks-business-hours__container__content .wp-block-themeisle-blocks-business-hours-item:last-child',
-				'properties' => array(
-					array(
-						'property'       => 'border-radius',
-						'pattern'        => '0 0 borderRadius borderRadius',
-						'pattern_values' => array(
-							'borderRadius' => array(
-								'value'   => 'borderRadius',
-                                'unit'    => 'px',
-                                'default' => 0
-							),
-						),
-						'condition'      => function( $attrs ) {
-							return isset( $attrs['borderRadius'] ) && ! empty( $attrs['borderRadius'] );
-						},
+						'unit'     => 'px',
 					),
 				),
 			)
@@ -134,7 +112,7 @@ class Business_Hours_CSS extends Base_CSS {
 					array(
 						'property' => 'font-size',
 						'value'    => 'itemsFontSize',
-                        'unit'     => 'px',
+						'unit'     => 'px',
 					),
 				),
 			)
@@ -147,7 +125,7 @@ class Business_Hours_CSS extends Base_CSS {
 					array(
 						'property' => 'font-size',
 						'value'    => 'itemsFontSize',
-                        'unit'     => 'px',
+						'unit'     => 'px',
 					),
 				),
 			)
