@@ -2,7 +2,7 @@ const attributes = {
 	id: {
 		type: 'string'
 	},
-	emailTitle: {
+	subject: {
 		type: 'string'
 	}
 };

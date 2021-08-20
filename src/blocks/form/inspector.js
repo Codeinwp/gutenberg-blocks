@@ -19,10 +19,10 @@ const Inspector = ({
 				initialOpen={ true }
 			>
 				<TextControl
-					label={ __( 'Email Title', 'otter-blocks' ) }
+					label={ __( 'Email Subject', 'otter-blocks' ) }
 					placeholder={ __( 'A new submission', 'otter-blocks' ) }
-					value={ attributes.emailTitle }
-					onChange={ emailTitle => setAttributes({ emailTitle }) }
+					value={ attributes.subject }
+					onChange={ subject => setAttributes({ subject }) }
 					help={ __( 'Customize the email title send by this form.', 'otter-blocks' ) }
 				/>
 	   		</PanelBody>

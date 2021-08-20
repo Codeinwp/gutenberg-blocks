@@ -39,17 +39,15 @@ const collectAndSendInputFormData = ( form ) => {
 	});
 
 	if ( 0 < errors.length ) {
-		console.log( 'Errors', errors, exportData );
 		errors.forEach( input => {
 			input?.reportValidity();
 		});
 	} else {
 		data.data = exportData;
-		if ( form?.dataset?.emailTitle ) {
-			data.emailTitle = form?.dataset?.emailTitle;
+		if ( form?.dataset?.emailSubject ) {
+			data.emailTitle = form?.dataset?.emailSubject;
 		}
 
-		console.log( 'Send Email', data );
 		apiFetch({
 			path: 'themeisle-gutenberg-blocks/v1/forms',
 			method: 'POST',
