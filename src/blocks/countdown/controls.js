@@ -1,6 +1,15 @@
+/**
+ * External dependencies.
+ */
 import { edit } from '@wordpress/icons';
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
+
 import { BlockControls } from '@wordpress/block-editor';
+
 import {
 	ToolbarButton,
 	ToolbarGroup
@@ -10,8 +19,6 @@ const Controls = ({
 	isEditing,
 	setEdit
 }) => {
-
-
 	return (
 		<BlockControls>
 			<ToolbarGroup label={ __( 'Edit', 'otter-blocks' ) }>

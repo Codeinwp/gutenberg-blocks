@@ -2,9 +2,6 @@ const attributes = {
 	id: {
 		type: 'string'
 	},
-	serverTimezone: {
-		type: 'string'
-	},
 	date: {
 		type: 'string'
 	},

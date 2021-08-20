@@ -4,21 +4,20 @@
 import { calendar as icon } from '@wordpress/icons';
 
 /**
-  * WordPress dependencies
-  */
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
 
 import { registerBlockType } from '@wordpress/blocks';
 
 /**
-  * Internal dependencies
-  */
+ * Internal dependencies
+ */
 import './style.scss';
 import './editor.scss';
 import attributes from './attributes.js';
 import edit from './edit.js';
 import save from './save.js';
-
 
 registerBlockType( 'themeisle-blocks/countdown', {
 	title: __( 'Countdown', 'otter-blocks' ),

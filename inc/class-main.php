@@ -219,7 +219,6 @@ class Main {
 				'userRoles'      => $wp_roles->roles,
 				'hasNevePro'     => defined( 'NEVE_PRO_VERSION' ),
 				'hasWooCommerce' => class_exists( 'WooCommerce' ),
-				'serverOffset'   => array( 'hours' => get_option('gmt_offset'), 'zone' => get_option( 'timezone_string' ) ),
 			)
 		);
 

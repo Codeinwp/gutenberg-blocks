@@ -1,16 +1,33 @@
-import { Fragment, useState, useEffect } from '@wordpress/element';
+/**
+ * WordPress dependencies
+ */
+import {
+	Fragment,
+	useState,
+	useEffect
+} from '@wordpress/element';
+
+import { useViewportMatch } from '@wordpress/compose';
+
+import { useSelect } from '@wordpress/data';
+
+/**
+ * Internal dependencies
+ */
 import { blockInit } from '../../helpers/block-utility';
 import defaultAttributes from './attributes.js';
-import DisplayTime from './components/DisplayTime';
-import Inspector from './inspector';
-import { getIntervalFromUnix } from '../../helpers/helper-functions';
-import { useSelect } from '@wordpress/data';
-import { useViewportMatch } from '@wordpress/compose';
+import Inspector from './inspector.js';
+import { getIntervalFromUnix } from '../../helpers/helper-functions.js';
+import DisplayTime from './components/display-time.js';
 
 const px = value => value ? `${ value }px` : value;
 
-const Edit = ({ attributes, setAttributes, className, clientId }) => {
-
+const Edit = ({
+	attributes,
+	setAttributes,
+	className,
+	clientId
+}) => {
 	const [ unixTime, setUnixTime ] = useState( 0 );
 
 	useEffect( () => {
@@ -24,15 +41,7 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 	useEffect( () => {
 		const interval = setInterval( () => {
 			if ( attributes.date ) {
-				const minuteDiff = moment( ).utcOffset( ) - Number( themeisleGutenberg.serverOffset.hours ) * 60;
-				const newDate = moment( attributes.date );
-
-				if ( 0 <= minuteDiff )  {
-					newDate.subtract( minuteDiff, 'm' );
-				} else {
-					newDate.add( Math.abs( minuteDiff ), 'm' );
-				}
-				setUnixTime( newDate - new Date() );
+				setUnixTime( new Date( attributes.date ) - new Date() );
 			}
 		}, 500 );
 
@@ -166,9 +175,12 @@ const Edit = ({ attributes, setAttributes, className, clientId }) => {
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
-				className={ className }
 			/>
-			<div className={ className } id={ attributes.id }>
+
+			<div
+				id={ attributes.id }
+				className={ className }
+			>
 				<DisplayTime
 					time={ getIntervalFromUnix( unixTime, {exclude: attributes?.exclude }) }
 					styles={ styles }

@@ -1,11 +1,12 @@
-/* eslint-disable no-unused-vars */
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
-
 import domReady from '@wordpress/dom-ready';
-import { getIntervalFromUnix } from '../../helpers/helper-functions';
+
+/**
+ * Internal dependencies
+ */
+import { getIntervalFromUnix } from '../../helpers/helper-functions.js';
 
 /**
  * Get an object with the update function for every component
@@ -22,6 +23,7 @@ const getComponentsUpdate = ( root ) => {
 				if ( parseInt( valueElem.innerHTML ) !== value ) {
 					valueElem.innerHTML = value;
 				}
+
 				labelElem.innerHTML = labelName;
 			};
 		}
@@ -36,19 +38,10 @@ const getComponentsUpdate = ( root ) => {
  * @param {*} updateComponents The object with the update functions
  * @returns {Function} Function that update the countdown every time it is called. You can send a callback to be triggered when is finised.
  */
-const updateTime = ( date, updateComponents, serverTimezone ) => {
-
-	const minuteDiff = moment( ).utcOffset( ) - Number( serverTimezone ) * 60;
-	const _date = moment( date );
-
-	if ( 0 <= minuteDiff )  {
-		_date.subtract( minuteDiff, 'm' );
-	} else {
-		_date.add( Math.abs( minuteDiff ), 'm' );
-	}
-
+const updateTime = ( date, updateComponents ) => {
+	const _date = new Date( date );
 	return ( onFinishCb ) => {
-		const time = getIntervalFromUnix( _date - new Date() ) ;
+		const time = getIntervalFromUnix( _date - Date.now() );
 		time.forEach( ({ tag, value, name}) => {
 			updateComponents[tag]?.( name, value );
 		});
@@ -63,11 +56,10 @@ domReady( () => {
 	const countdowns = document.querySelectorAll( '.wp-block-themeisle-blocks-countdown' );
 
 	countdowns.forEach( countdown => {
-		const date = countdown.dataset?.date;
-		const serverTimezone = countdown.dataset?.serverTimezone;
+		const date = countdown.dataset.date;
 
 		if ( date ) {
-			const update = updateTime( date, getComponentsUpdate( countdown ), serverTimezone );
+			const update = updateTime( date, getComponentsUpdate( countdown ) );
 			const interval = setInterval( () => {
 				update( () => clearInterval( interval ) );
 			}, 500 );

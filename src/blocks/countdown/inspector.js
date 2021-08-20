@@ -1,4 +1,14 @@
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
+
+import {
+	ContrastChecker,
+	InspectorControls,
+	PanelColorSettings
+} from '@wordpress/block-editor';
+
 import {
 	PanelBody,
 	ToggleControl,
@@ -8,24 +18,20 @@ import {
 	DateTimePicker
 } from '@wordpress/components';
 
-import {
-	ContrastChecker,
-	InspectorControls,
-	PanelColorSettings
-} from '@wordpress/block-editor';
+import { useSelect } from '@wordpress/data';
 
 import moment from 'moment';
 
-import { useSelect } from '@wordpress/data';
-
-import ResponsiveControl from '../../components/responsive-control';
-import SizingControl from '../../components/sizing-control';
+/**
+ * Internal dependencies
+ */
+import ResponsiveControl from '../../components/responsive-control/index.js';
+import SizingControl from '../../components/sizing-control/index.js';
 
 const Inspector = ({
 	attributes,
 	setAttributes
 }) => {
-
 	const getView = useSelect( ( select ) => {
 		const { getView } = select( 'themeisle-gutenberg/data' );
 		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
@@ -174,26 +180,6 @@ const Inspector = ({
 		}
 	};
 
-	const calculateDate = ( date ) => {
-		const minuteDiff = moment( ).utcOffset( ) - Number( themeisleGutenberg.serverOffset.hours ) * 60;
-		const newDate = moment( date );
-
-		if ( 0 <= minuteDiff )  {
-			newDate.subtract( minuteDiff, 'm' );
-		} else {
-			newDate.add( Math.abs( minuteDiff ), 'm' );
-		}
-
-		return newDate;
-	};
-
-	const changeTime = ( date ) => {
-		setAttributes({
-			date: moment( calculateDate( date ) ).utcOffset( themeisleGutenberg.serverOffset.hours ).format(),
-			serverTimezone: themeisleGutenberg.serverOffset.hours.toString()
-		});
-	};
-
 	return (
 		<InspectorControls>
 			<PanelBody
@@ -210,14 +196,14 @@ const Inspector = ({
 								isSecondary
 								aria-expanded={ isOpen }
 							>
-								{ attributes.date ? moment( calculateDate( attributes.date ) ).format( 'DD-MMM-YYYY hh:mm A' ) : __( 'Select Date', 'otter-blocks' ) }
+								{ attributes.date ? attributes.date : __( 'Select Date', 'otter-blocks' ) }
 							</Button>
 						</>
 					) }
 					renderContent={ () => (
 						<DateTimePicker
-							currentDate={ calculateDate( attributes.date ) }
-							onChange={ changeTime }
+							currentDate={ attributes.date }
+							onChange={ value => setAttributes({ date: moment( value ).utc().format() }) }
 						/>
 					) }
 				/>
