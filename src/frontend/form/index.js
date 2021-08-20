@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n';
 import domReady from '@wordpress/dom-ready';
 import apiFetch from '@wordpress/api-fetch';
 
+/** @type {Array.<HTMLDivElement>} */
 const msgs = [];
 
 /**
@@ -67,7 +68,9 @@ const collectAndSendInputFormData = ( form ) => {
 			// Remove old messages
 			let _msg = msgs.pop();
 			while ( _msg ) {
-				form.removeChild( _msg );
+				if ( form === _msg.parentNode ) {
+					form.removeChild( _msg );
+				}
 				_msg = msgs.pop();
 			}
 
@@ -77,10 +80,27 @@ const collectAndSendInputFormData = ( form ) => {
 
 			// Delete it after a fixed time
 			setTimeout( () => {
-				if ( msg ) {
+				if ( msg && form === msg.parentNode ) {
 					form.removeChild( msg );
 				}
-			}, 5000 );
+			}, 10000 );
+		})?.catch( error => {
+			console.error( error );
+			const msg = document.createElement( 'div' );
+			msg.classList.add( 'wp-block-themeisle-blocks-form-server-msg' );
+			msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
+			msg.classList.add( 'error' );
+
+			// Add the new message to the page
+			msgs.push( msg );
+			form.appendChild( msg );
+
+			// Delete it after a fixed time
+			setTimeout( () => {
+				if ( msg && form === msg.parentNode ) {
+					form.removeChild( msg );
+				}
+			}, 10000 );
 		});
 	}
 };

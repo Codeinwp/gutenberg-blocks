@@ -221,7 +221,7 @@ class Main {
 				'canTrack'       => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
 				'userRoles'      => $wp_roles->roles,
 				'hasNevePro'     => defined( 'NEVE_PRO_VERSION' ),
-				'hasWooCommerce' => class_exists( 'WooCommerce' )
+				'hasWooCommerce' => class_exists( 'WooCommerce' ),
 			)
 		);
 
@@ -577,7 +577,7 @@ class Main {
 
 	// FIXME: Make it to return the desired result
 	public function get_otter_form() {
-		echo "Hey";
+		echo 'Hey';
 		wp_die();
 	}
 
