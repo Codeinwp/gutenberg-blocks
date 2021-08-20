@@ -1,15 +1,17 @@
 /**
  * WordPress dependencies
  */
+import { useViewportMatch } from '@wordpress/compose';
+
+import { useSelect } from '@wordpress/data';
+
 import {
 	Fragment,
 	useState,
 	useEffect
 } from '@wordpress/element';
 
-import { useViewportMatch } from '@wordpress/compose';
-
-import { useSelect } from '@wordpress/data';
+import moment from 'moment';
 
 /**
  * Internal dependencies
@@ -17,7 +19,10 @@ import { useSelect } from '@wordpress/data';
 import { blockInit } from '../../helpers/block-utility';
 import defaultAttributes from './attributes.js';
 import Inspector from './inspector.js';
-import { getIntervalFromUnix } from '../../helpers/helper-functions.js';
+import {
+	getIntervalFromUnix,
+	getTimezone
+} from '../../helpers/helper-functions.js';
 import DisplayTime from './components/display-time.js';
 
 const px = value => value ? `${ value }px` : value;
@@ -41,7 +46,9 @@ const Edit = ({
 	useEffect( () => {
 		const interval = setInterval( () => {
 			if ( attributes.date ) {
-				setUnixTime( new Date( attributes.date ) - new Date() );
+				let date = attributes.date + getTimezone();
+				date = moment( date ).unix() * 1000;
+				setUnixTime( new Date( date ) - new Date() );
 			}
 		}, 500 );
 
@@ -59,8 +66,7 @@ const Edit = ({
 		isPreviewTablet,
 		isPreviewMobile
 	} = useSelect( select => {
-
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' ) ? select( 'core/edit-post' ) : false;
 
 		return {
 			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
@@ -77,7 +83,6 @@ const Edit = ({
 	const isSmall = useViewportMatch( 'small', '>=' );
 
 	const isSmaller = useViewportMatch( 'small', '<=' );
-
 
 	let isDesktop = isLarger && ! isLarge && isSmall && ! isSmaller;
 
@@ -182,7 +187,7 @@ const Edit = ({
 				className={ className }
 			>
 				<DisplayTime
-					time={ getIntervalFromUnix( unixTime, {exclude: attributes?.exclude }) }
+					time={ getIntervalFromUnix( unixTime, { exclude: attributes?.exclude }) }
 					styles={ styles }
 					hasSeparators={ attributes.hasSeparators }
 				/>

@@ -177,7 +177,7 @@ class Main {
 		wp_enqueue_script(
 			'themeisle-gutenberg-blocks',
 			plugin_dir_url( $this->get_dir() ) . 'build/blocks.js',
-			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-html-entities', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'wp-polyfill', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player', 'macy' ),
+			array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-date', 'wp-editor', 'wp-edit-post', 'wp-element', 'wp-html-entities', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'wp-polyfill', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player', 'macy' ),
 			self::$assets_version,
 			true
 		);
@@ -563,7 +563,7 @@ class Main {
 			wp_enqueue_script(
 				'themeisle-gutenberg-countdown',
 				plugin_dir_url( $this->get_dir() ) . 'build/countdown.js',
-				array( 'wp-dom-ready', 'wp-i18n', 'moment' ),
+				array( 'wp-i18n', 'wp-date', 'wp-dom-ready', 'lodash', 'moment' ),
 				self::$assets_version,
 				true
 			);

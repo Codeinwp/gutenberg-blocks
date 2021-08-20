@@ -3,10 +3,15 @@
  */
 import domReady from '@wordpress/dom-ready';
 
+import moment from 'moment';
+
 /**
  * Internal dependencies
  */
-import { getIntervalFromUnix } from '../../helpers/helper-functions.js';
+import {
+	getIntervalFromUnix,
+	getTimezone
+} from '../../helpers/helper-functions.js';
 
 /**
  * Get an object with the update function for every component
@@ -39,7 +44,8 @@ const getComponentsUpdate = ( root ) => {
  * @returns {Function} Function that update the countdown every time it is called. You can send a callback to be triggered when is finised.
  */
 const updateTime = ( date, updateComponents ) => {
-	const _date = new Date( date );
+	let _date = date + getTimezone();
+	_date = moment( _date ).unix() * 1000;
 	return ( onFinishCb ) => {
 		const time = getIntervalFromUnix( _date - Date.now() );
 		time.forEach( ({ tag, value, name}) => {

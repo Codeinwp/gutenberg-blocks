@@ -1,6 +1,10 @@
 
 import { without } from 'lodash';
 
+import { sprintf } from '@wordpress/i18n';
+
+import { __experimentalGetSettings } from '@wordpress/date';
+
 // HTML to Plaintext
 export const unescapeHTML = value => {
 	const htmlNode = document.createElement( 'div' );
@@ -180,4 +184,14 @@ export const getIntervalFromUnix = ( unixTime, settings ) => {
 		});
 
 	return time;
+};
+
+// Get site's timezone.
+export const getTimezone = () => {
+	const settings = __experimentalGetSettings();
+	const offset   = 60 * settings.timezone.offset;
+	const sign     = 0 > offset ? '-' : '+';
+	const absmin   = Math.abs( offset );
+	const timezone = sprintf( '%s%02d:%02d', sign, absmin / 60, absmin % 60 );
+	return timezone;
 };

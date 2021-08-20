@@ -20,7 +20,10 @@ import {
 
 import { useSelect } from '@wordpress/data';
 
-import moment from 'moment';
+import {
+	format,
+	__experimentalGetSettings
+} from '@wordpress/date';
 
 /**
  * Internal dependencies
@@ -180,6 +183,8 @@ const Inspector = ({
 		}
 	};
 
+	const settings = __experimentalGetSettings();
+
 	return (
 		<InspectorControls>
 			<PanelBody
@@ -196,38 +201,41 @@ const Inspector = ({
 								isSecondary
 								aria-expanded={ isOpen }
 							>
-								{ attributes.date ? attributes.date : __( 'Select Date', 'otter-blocks' ) }
+								{ attributes.date ? format( settings.formats.datetime, attributes.date ) : __( 'Select Date', 'otter-blocks' ) }
 							</Button>
 						</>
 					) }
 					renderContent={ () => (
 						<DateTimePicker
 							currentDate={ attributes.date }
-							onChange={ value => setAttributes({ date: moment( value ).utc().format() }) }
+							onChange={ date => setAttributes({ date }) }
 						/>
 					) }
 				/>
 			</PanelBody>
+
 			<PanelBody
 				title={ __( 'Settings', 'otter-blocks' ) }
 				initialOpen={ true }
 			>
-
 				<ToggleControl
 					label={ __( 'Display Days', 'otter-blocks' ) }
 					checked={ ! attributes?.exclude?.includes( 'day' ) }
 					onChange={ value => excludeComponent( value, 'day' ) }
 				/>
+
 				<ToggleControl
 					label={ __( 'Display Hours', 'otter-blocks' ) }
 					checked={ ! attributes?.exclude?.includes( 'hour' ) }
 					onChange={ value => excludeComponent( value, 'hour' ) }
 				/>
+
 				<ToggleControl
 					label={ __( 'Display Minutes', 'otter-blocks' ) }
 					checked={ ! attributes?.exclude?.includes( 'minute' ) }
 					onChange={ value => excludeComponent( value, 'minute' ) }
 				/>
+
 				<ToggleControl
 					label={ __( 'Display Seconds', 'otter-blocks' ) }
 					checked={ ! attributes?.exclude?.includes( 'second' ) }
@@ -250,7 +258,6 @@ const Inspector = ({
 						max={ 100 }
 					/>
 				</ResponsiveControl>
-
 
 				<ResponsiveControl
 					label={ __( 'Box Height', 'otter-blocks' ) }

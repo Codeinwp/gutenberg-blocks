@@ -28,12 +28,8 @@ const DisplayTimeComponent = ({
 				}
 			) }
 		>
-			<div className="wp-block-themeisle-blocks-countdown-display-component_value">
-				{ value }
-			</div>
-			<div className="wp-block-themeisle-blocks-countdown-display-component_label">
-				{ name }
-			</div>
+			<div className="wp-block-themeisle-blocks-countdown-display-component_value">{ value }</div>
+			<div className="wp-block-themeisle-blocks-countdown-display-component_label">{ name }</div>
 		</div>
 	);
 };
