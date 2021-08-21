@@ -1,25 +1,27 @@
-
 .wp-block-themeisle-blocks-countdown {
-	.wp-block-themeisle-blocks-countdown-date-picker {
+	.wp-block-themeisle-blocks-countdown__date-picker {
 		width: 100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
-		.wp-block-themeisle-blocks-countdown-date-picker__container {
+
+		.wp-block-themeisle-blocks-countdown__date-picker__container {
 			width: 300px;
 		}
-
 	}
-	.wp-block-themeisle-blocks-countdown-container {
+
+	.wp-block-themeisle-blocks-countdown__container {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		.wp-block-themeisle-blocks-countdown-display {
+
+		.wp-block-themeisle-blocks-countdown__display {
 			display: flex;
 			flex-direction: row;
 			gap: 6px;
-			.wp-block-themeisle-blocks-countdown-display-component {
+
+			.wp-block-themeisle-blocks-countdown__display-area {
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -36,14 +38,14 @@
 					height: 70px;
 				}
 
-				.wp-block-themeisle-blocks-countdown-display-component_value {
+				.wp-block-themeisle-blocks-countdown__display-area__value {
 					font-size: 1.4rem;
 					line-height: 1.2;
 					text-align: center;
 					width: 100%;
 				}
 
-				.wp-block-themeisle-blocks-countdown-display-component_label {
+				.wp-block-themeisle-blocks-countdown__display-area__label {
 					font-size: 0.6rem;
 					min-height: 1rem;
 					text-align: center;
@@ -51,9 +53,10 @@
 				}
 
 				&[name="separator"] {
-					.wp-block-themeisle-blocks-countdown-display-component_label {
+					.wp-block-themeisle-blocks-countdown__display-area__label {
 						opacity: 0%;
 					}
+
 					border: unset;
 					background-color: transparent;
 					width: max-content;
@@ -61,10 +64,4 @@
 			}
 		}
 	}
-}
-
-// This modify the look of the DateTimePicker
-// file: http://localhost:8889/wp-content/themes/neve/assets/css/gutenberg-editor-style.min.css?ver=2.11.6
-.editor-styles-wrapper .wp-block table td, .editor-styles-wrapper .wp-block table th {
-	padding: unset;
 }
