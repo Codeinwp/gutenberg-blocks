@@ -13,7 +13,7 @@ import { addFilter } from '@wordpress/hooks';
 import Edit from './edit.js';
 
 const addAttribute = ( props ) => {
-	if ( 'themeisle-blocks/review' === props.name && Boolean( window.themeisleGutenberg.hasNevePro ) && Boolean( window.themeisleGutenberg.hasWooCommerce ) ) {
+	if ( 'themeisle-blocks/review' === props.name ) {
 		props.attributes = assign( props.attributes, {
 			product: {
 				type: 'number'
@@ -26,7 +26,7 @@ const addAttribute = ( props ) => {
 
 const withWooCommerceExtension = createHigherOrderComponent( ( BlockEdit ) => {
 	return ( props ) => {
-		if ( 'themeisle-blocks/review' === props.name && Boolean( window.themeisleGutenberg.hasNevePro ) && Boolean( window.themeisleGutenberg.hasWooCommerce ) ) {
+		if ( 'themeisle-blocks/review' === props.name ) {
 			return (
 				<Edit
 					BlockEdit={ BlockEdit }
@@ -40,5 +40,7 @@ const withWooCommerceExtension = createHigherOrderComponent( ( BlockEdit ) => {
 }, 'withWooCommerceExtension' );
 
 
-addFilter( 'blocks.registerBlockType', 'themeisle-gutenberg/review-woocommerce-extension-attributes', addAttribute );
-addFilter( 'editor.BlockEdit', 'themeisle-gutenberg/review-woocommerce-extension', withWooCommerceExtension );
+if ( Boolean( window.themeisleGutenberg.hasNevePro ) && Boolean( window.themeisleGutenberg.hasWooCommerce ) ) {
+	addFilter( 'blocks.registerBlockType', 'themeisle-gutenberg/review-woocommerce-extension-attributes', addAttribute );
+	addFilter( 'editor.BlockEdit', 'themeisle-gutenberg/review-woocommerce-extension', withWooCommerceExtension );
+}

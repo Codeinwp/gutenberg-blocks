@@ -37,7 +37,7 @@ class Block_Conditions {
 	 * @access  public
 	 */
 	public function render_blocks( $block_content, $block ) {
-		if ( ! is_admin() && ! ( defined( 'REST_REQUEST' ) && REST_REQUEST ) && isset( $block['attrs']['otterConditions'] ) ) {
+		if ( ! is_admin() && ! ( defined( 'REST_REQUEST' ) && REST_REQUEST ) && isset( $block['attrs']['otterConditions'] ) && defined( 'NEVE_PRO_VERSION' ) ) {
 			$display = true;
 
 			foreach ( $block['attrs']['otterConditions'] as $group ) {

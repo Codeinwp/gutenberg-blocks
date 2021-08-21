@@ -50,6 +50,10 @@ class Add_To_Cart_Button_Block extends Base_Block {
 	 * @return mixed|string
 	 */
 	protected function render( $attributes ) {
+		if ( ! defined( 'NEVE_PRO_VERSION' ) || ! class_exists( 'WooCommerce' ) ) {
+			return;
+		}
+
 		$product = wc_get_product( $attributes['product'] );
 
 		if ( ! $product ) {

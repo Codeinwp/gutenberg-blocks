@@ -61,7 +61,7 @@ class Review_Comparison_Block extends Base_Block {
 	 * @return mixed|string
 	 */
 	protected function render( $attributes ) {
-		if ( ! isset( $attributes['reviews'] ) ) {
+		if ( ! defined( 'NEVE_PRO_VERSION' ) || ! class_exists( 'WooCommerce' ) || ! isset( $attributes['reviews'] ) ) {
 			return;
 		}
 

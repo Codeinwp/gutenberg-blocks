@@ -37,6 +37,7 @@ const withConditions = createHigherOrderComponent( BlockEdit => {
 	};
 }, 'withMasonryExtension' );
 
-
-addFilter( 'blocks.registerBlockType', 'themeisle-gutenberg/conditions', addAttribute );
-addFilter( 'editor.BlockEdit', 'themeisle-gutenberg/conditions', withConditions );
+if ( Boolean( window.themeisleGutenberg.hasNevePro ) ) {
+	addFilter( 'blocks.registerBlockType', 'themeisle-gutenberg/conditions', addAttribute );
+	addFilter( 'editor.BlockEdit', 'themeisle-gutenberg/conditions', withConditions );
+}
