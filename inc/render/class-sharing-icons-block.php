@@ -121,7 +121,7 @@ class Sharing_Icons_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	protected function render( $attributes ) {
+	protected function render( $attributes, $content = null ) {
 		$social_attributes = $this->get_social_profiles();
 
 		if ( isset( $attributes['className'] ) && strpos( $attributes['className'], 'is-style-icons' ) !== false ) {

@@ -122,7 +122,7 @@ class Posts_Grid_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	protected function render( $attributes ) {
+	protected function render( $attributes, $content = null ) {
 		$categories = 0;
 
 		if ( isset( $attributes['categories'] ) ) {

@@ -121,7 +121,7 @@ class Review_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	protected function render( $attributes ) {
+	protected function render( $attributes, $content = null ) {
 		if ( isset( $attributes['product'] ) && intval( $attributes['product'] ) >= 0 && defined( 'NEVE_PRO_VERSION' ) && class_exists( 'WooCommerce' ) ) {
 			$product = wc_get_product( $attributes['product'] );
 

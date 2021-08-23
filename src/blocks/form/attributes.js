@@ -4,6 +4,9 @@ const attributes = {
 	},
 	subject: {
 		type: 'string'
+	},
+	emailTo: {
+		type: 'string'
 	}
 };
 

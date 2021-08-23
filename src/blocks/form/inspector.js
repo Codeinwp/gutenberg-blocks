@@ -25,6 +25,14 @@ const Inspector = ({
 					onChange={ subject => setAttributes({ subject }) }
 					help={ __( 'Customize the email title send by this form.', 'otter-blocks' ) }
 				/>
+
+				<TextControl
+					label={ __( 'Email To', 'otter-blocks' ) }
+					placeholder={ __( 'Default is to admin site', 'otter-blocks' ) }
+					value={ attributes.emailTo }
+					onChange={ emailTo => setAttributes({ emailTo }) }
+					help={ __( 'Send to form data to another email. (Admin is default).', 'otter-blocks' ) }
+				/>
 	   		</PanelBody>
 		</InspectorControls>
 	);

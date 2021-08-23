@@ -47,6 +47,9 @@ const collectAndSendInputFormData = ( form ) => {
 		if ( form?.dataset?.emailSubject ) {
 			data.emailTitle = form?.dataset?.emailSubject;
 		}
+		if ( window?.themeisleOptions?.formTo ) {
+			data.emailTo = window?.themeisleOptions?.formTo;
+		}
 
 		apiFetch({
 			path: 'themeisle-gutenberg-blocks/v1/forms',

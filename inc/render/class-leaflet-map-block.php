@@ -81,7 +81,7 @@ class Leaflet_Map_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	protected function render( $attributes ) {
+	protected function render( $attributes, $content = null ) {
 		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
 			$link = 'https://www.openstreetmap.org/export/embed.html?bbox=' . stripslashes( esc_attr( $attributes['bbox'] ) ) . '&amp;layer=mapnik';
 

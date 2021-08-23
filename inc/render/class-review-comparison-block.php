@@ -60,7 +60,7 @@ class Review_Comparison_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	protected function render( $attributes ) {
+	protected function render( $attributes, $content = null ) {
 		if ( ! isset( $attributes['reviews'] ) ) {
 			return;
 		}
@@ -82,7 +82,7 @@ class Review_Comparison_Block extends Base_Block {
 			if ( ! has_blocks( $post->post_content ) ) {
 				continue;
 			}
-			
+
 			$post_blocks = parse_blocks( $post->post_content );
 
 			$block = [];

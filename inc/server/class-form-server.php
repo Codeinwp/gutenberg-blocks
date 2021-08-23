@@ -95,8 +95,13 @@ class Form_Server {
 		$email_title = '[Otter] ' . ( isset( $data['emailTitle'] ) ? $data['emailTitle'] : __( 'A new submission', 'otter-blocks' ) );
 		$email_body  = $this->prepare_body( $data['data'] );
 
+		// Sent the form date to the admin site as a default behaviour
+		$to = sanitize_email( get_site_option( 'admin_email' ) );
+		// Check if we need to send it to another user email.
+		if ( isset( $data['emailTo'] ) ) {
+			$to = sanitize_email( base64_decode( $data['emailTo'] ) );
+		}
 
-		$to      = sanitize_email( get_site_option( 'admin_email' ) );
 		$from    = sanitize_email( get_site_option( 'admin_email' ) );
 		$headers = array( 'Content-Type: text/html; charset=UTF-8', 'From: Admin <' . $from . '>' );
 

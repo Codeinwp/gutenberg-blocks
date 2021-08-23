@@ -94,7 +94,7 @@ class Google_Map_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	protected function render( $attributes ) {
+	protected function render( $attributes, $content = null ) {
 		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
 			$apikey = get_option( 'themeisle_google_map_block_api_key' );
 

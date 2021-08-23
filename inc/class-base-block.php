@@ -51,11 +51,11 @@ abstract class Base_Block {
 	 * This method will pe passed to the render_callback parameter and it will output
 	 * the server side output of the block.
 	 *
-	 * @param array $attributes Block attrs.
-	 *
+	 * @param array  $attributes Block attrs.
+	 * @param string $content The original content
 	 * @return mixed
 	 */
-	abstract protected function render( $attributes );
+	abstract protected function render( $attributes, $content = null );
 
 	/**
 	 * Base_Block constructor.
@@ -104,8 +104,8 @@ abstract class Base_Block {
 	 *
 	 * @return string
 	 */
-	public function render_callback( $attributes ) {
+	public function render_callback( $attributes, $content ) {
 		// give a chance to our themes to overwrite the template of blocks.
-		return apply_filters( 'themeisle_gutenberg_template_' . $this->block_slug, $this->render( $attributes ) );
+		return apply_filters( 'themeisle_gutenberg_template_' . $this->block_slug, $this->render( $attributes, $content ) );
 	}
 }

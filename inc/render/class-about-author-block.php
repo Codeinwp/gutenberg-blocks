@@ -42,7 +42,7 @@ class About_Author_Block extends Base_Block {
 	 *
 	 * @return mixed|string
 	 */
-	protected function render( $attributes ) {
+	protected function render( $attributes, $content = null ) {
 		$img_markup = sprintf(
 			'<a href="%1$s"><img src="%2$s" class="author-image" /></a>',
 			esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
