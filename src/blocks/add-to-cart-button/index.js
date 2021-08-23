@@ -5,6 +5,8 @@ import { __ } from '@wordpress/i18n';
 
 import { registerBlockType } from '@wordpress/blocks';
 
+import { Placeholder } from '@wordpress/components';
+
 import { store as icon } from '@wordpress/icons';
 
 /**
