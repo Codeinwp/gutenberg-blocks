@@ -567,7 +567,7 @@ class Main {
 				true
 			);
 
-			self::$is_tabs_counter_loaded = true;
+			self::$is_tabs_loaded = true;
 		}
 
 		if ( ! self::$is_form_loaded && has_block( 'themeisle-blocks/form', $post ) ) {
@@ -581,12 +581,6 @@ class Main {
 
 			self::$is_form_loaded = true;
 		}
-	}
-
-	// FIXME: Make it to return the desired result
-	public function get_otter_form() {
-		echo 'Hey';
-		wp_die();
 	}
 
 	/**

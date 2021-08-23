@@ -52,7 +52,7 @@ abstract class Base_Block {
 	 * the server side output of the block.
 	 *
 	 * @param array  $attributes Block attrs.
-	 * @param string $content The original content
+	 * @param string $content Block content.
 	 * @return mixed
 	 */
 	abstract protected function render( $attributes, $content = null );
@@ -100,8 +100,8 @@ abstract class Base_Block {
 	/**
 	 * The render callback passed to the `register_block_type` function.
 	 *
-	 * @param array $attributes Block attrs.
-	 *
+	 * @param array  $attributes Block attrs.
+	 * @param string $content Block content.
 	 * @return string
 	 */
 	public function render_callback( $attributes, $content ) {

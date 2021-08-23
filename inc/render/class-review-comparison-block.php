@@ -56,8 +56,8 @@ class Review_Comparison_Block extends Base_Block {
 	 * This method will pe passed to the render_callback parameter and it will output
 	 * the server side output of the block.
 	 *
-	 * @param array $attributes Blocks attrs.
-	 *
+	 * @param array  $attributes Blocks attrs.
+	 * @param string $content Block content.
 	 * @return mixed|string
 	 */
 	protected function render( $attributes, $content = null ) {

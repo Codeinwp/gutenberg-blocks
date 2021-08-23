@@ -95,7 +95,7 @@ class Form_Server {
 		$email_title = '[Otter] ' . ( isset( $data['emailTitle'] ) ? $data['emailTitle'] : __( 'A new submission', 'otter-blocks' ) );
 		$email_body  = $this->prepare_body( $data['data'] );
 
-		// Sent the form date to the admin site as a default behaviour
+		// Sent the form date to the admin site as a default behaviour.
 		$to = sanitize_email( get_site_option( 'admin_email' ) );
 		// Check if we need to send it to another user email.
 		if ( isset( $data['emailTo'] ) ) {
@@ -119,7 +119,7 @@ class Form_Server {
 	/**
 	 * Body template preparation
 	 *
-	 * @param array $data Data from the forms
+	 * @param array $data Data from the forms.
 	 *
 	 * @return string
 	 */
@@ -132,7 +132,7 @@ class Form_Server {
 			<!-- view port meta tag -->
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-			<title><?php esc_html__( esc_html__( 'Mail From: ', 'otter-blocks' ) . sanitize_email( get_site_option( 'admin_email' ) ) ); ?></title>
+			<title><?php esc_html__( 'Mail From: ', 'otter-blocks' ) . sanitize_email( get_site_option( 'admin_email' ) ); ?></title>
 		</head>
 		<body>
 		<table>
