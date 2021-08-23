@@ -38,7 +38,7 @@ const Edit = ({
 		isPreviewTablet,
 		isPreviewMobile
 	} = useSelect( select => {
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' ) ? select( 'core/edit-post' ) : false;
 
 		return {
 			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,

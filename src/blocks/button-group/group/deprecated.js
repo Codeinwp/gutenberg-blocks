@@ -14,7 +14,7 @@ import {
 
 import { createBlock } from '@wordpress/blocks';
 
-import { RichText } from '@wordpress/editor';
+import { RichText } from '@wordpress/block-editor';
 
 import { Fragment } from '@wordpress/element';
 

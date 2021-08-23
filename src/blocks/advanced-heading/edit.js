@@ -46,7 +46,7 @@ const Edit = ({
 		isPreviewTablet,
 		isPreviewMobile
 	} = useSelect( select => {
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' ) ? select( 'core/edit-post' ) : false;
 
 		return {
 			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
@@ -183,7 +183,7 @@ const Edit = ({
 		fontWeight: 'regular' === attributes.fontVariant ? 'normal' : attributes.fontVariant,
 		fontStyle: attributes.fontStyle,
 		textTransform: attributes.textTransform,
-		lineHeight: attributes.lineHeight && `${ attributes.lineHeight }px`,
+		lineHeight: 3 < attributes.lineHeight ? attributes.lineHeight + 'px' : attributes.lineHeight,
 		letterSpacing: attributes.letterSpacing && `${ attributes.letterSpacing }px`,
 		...stylesheet,
 		...textShadowStyle

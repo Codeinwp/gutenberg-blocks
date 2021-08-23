@@ -29,8 +29,15 @@ registerBlockType( 'themeisle-blocks/button', {
 		reusable: false
 	},
 	styles: [
-		{ name: 'fill', label: __( 'Fill', 'otter-blocks' ), isDefault: true },
-		{ name: 'outline', label: __( 'Outline', 'otter-blocks' ) }
+		{
+			name: 'fill',
+			label: __( 'Fill', 'otter-blocks' ),
+			isDefault: true
+		},
+		{
+			name: 'outline',
+			label: __( 'Outline', 'otter-blocks' )
+		}
 	],
 	edit,
 	save
