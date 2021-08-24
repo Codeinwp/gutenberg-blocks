@@ -114,7 +114,7 @@ const BlockPlaceholder = ({
 					/>
 
 					<MenuGroup>
-						{ data.filter( review => review.attrs.title.toLowerCase().includes( query.toLowerCase() ) ).map( review => {
+						{ data.filter( review => ( review.attrs.title || __( 'Untitled review', 'otter-blocks'  ) ).toLowerCase().includes( query.toLowerCase() ) ).map( review => {
 							const ID = review.ID + '-' + review.attrs.id.slice( review.attrs.id.length - 8 );
 
 							return (

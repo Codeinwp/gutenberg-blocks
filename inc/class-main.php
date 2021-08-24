@@ -320,7 +320,7 @@ class Main {
 
 		if ( 'widgets' === $post ) {
 			$widgets = get_option( 'widget_block', array() );
-	
+
 			foreach ( $widgets as $widget ) {
 				if ( is_array( $widget ) && isset( $widget['content'] ) ) {
 					$content .= $widget['content'];
