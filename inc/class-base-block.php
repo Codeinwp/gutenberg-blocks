@@ -52,10 +52,9 @@ abstract class Base_Block {
 	 * the server side output of the block.
 	 *
 	 * @param array  $attributes Block attrs.
-	 * @param string $content Block content.
 	 * @return mixed
 	 */
-	abstract protected function render( $attributes, $content = null );
+	abstract protected function render( $attributes );
 
 	/**
 	 * Base_Block constructor.
@@ -101,11 +100,10 @@ abstract class Base_Block {
 	 * The render callback passed to the `register_block_type` function.
 	 *
 	 * @param array  $attributes Block attrs.
-	 * @param string $content Block content.
 	 * @return string
 	 */
-	public function render_callback( $attributes, $content ) {
+	public function render_callback( $attributes ) {
 		// give a chance to our themes to overwrite the template of blocks.
-		return apply_filters( 'themeisle_gutenberg_template_' . $this->block_slug, $this->render( $attributes, $content ) );
+		return apply_filters( 'themeisle_gutenberg_template_' . $this->block_slug, $this->render( $attributes ) );
 	}
 }

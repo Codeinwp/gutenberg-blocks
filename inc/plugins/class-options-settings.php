@@ -81,7 +81,39 @@ class Options_Settings {
 				'default'           => false,
 			)
 		);
+
+		register_setting(
+			'themeisle_blocks_settings',
+			'themeisle_blocks_form_emails',
+			array(
+				'type'              => 'array',
+				'description'       => __( 'Email used in the Form block.', 'otter-blocks' ),
+				'sanitize_callback' => '' /* function( $array ) {
+					return array_map( function( $item ) {
+						return $item;
+					} , $array );
+				}*/,
+				'show_in_rest' => array(
+					'schema' => array(
+						'type'  => 'array',
+						'items' => array(
+							'type' => 'object',
+							'properties' => array(
+								'form'    => array(
+									'type' => 'string',
+								),
+								'email' => array(
+									'type'   => 'string',
+								),
+							),
+						),
+					),
+				),
+				'default'           => array(),
+			)
+		);
 	}
+
 
 	/**
 	 * Display Default Block

@@ -47,8 +47,8 @@ const collectAndSendInputFormData = ( form ) => {
 		if ( form?.dataset?.emailSubject ) {
 			data.emailTitle = form?.dataset?.emailSubject;
 		}
-		if ( window?.themeisleOptions?.formTo ) {
-			data.emailTo = window?.themeisleOptions?.formTo;
+		if ( form?.dataset?.optionName ) {
+			data.formOption = form?.dataset?.optionName;
 		}
 
 		apiFetch({

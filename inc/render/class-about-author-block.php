@@ -39,10 +39,9 @@ class About_Author_Block extends Base_Block {
 	 * the server side output of the block.
 	 *
 	 * @param array  $attributes Block attrs.
-	 * @param string $content Block content.
 	 * @return mixed|string
 	 */
-	protected function render( $attributes, $content = null ) {
+	protected function render( $attributes ) {
 		$img_markup = sprintf(
 			'<a href="%1$s"><img src="%2$s" class="author-image" /></a>',
 			esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),

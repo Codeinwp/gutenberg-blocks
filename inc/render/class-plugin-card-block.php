@@ -49,7 +49,7 @@ class Plugin_Card_Block extends Base_Block {
 	 * @param string $content Block content.
 	 * @return mixed|string
 	 */
-	protected function render( $attributes, $content = null ) {
+	protected function render( $attributes ) {
 		if ( empty( $attributes['slug'] ) ) {
 			return;
 		}

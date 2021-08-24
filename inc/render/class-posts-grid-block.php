@@ -119,10 +119,9 @@ class Posts_Grid_Block extends Base_Block {
 	 * the server side output of the block.
 	 *
 	 * @param array  $attributes Blocks attrs.
-	 * @param string $content Block content.
 	 * @return mixed|string
 	 */
-	protected function render( $attributes, $content = null ) {
+	protected function render( $attributes ) {
 		$categories = 0;
 
 		if ( isset( $attributes['categories'] ) ) {

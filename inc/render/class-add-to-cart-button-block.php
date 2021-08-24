@@ -46,7 +46,6 @@ class Add_To_Cart_Button_Block extends Base_Block {
 	 * the server side output of the block.
 	 *
 	 * @param array  $attributes Block attrs.
-	 * @param string $content Block content.
 	 * @return mixed|string
 	 */
 	protected function render( $attributes ) {

@@ -574,7 +574,7 @@ class Main {
 			wp_enqueue_script(
 				'themeisle-gutenberg-tabs',
 				plugin_dir_url( $this->get_dir() ) . 'build/form.js',
-				array( 'wp-i18n', 'wp-dom-ready', 'jquery' ),
+				array( 'wp-i18n', 'wp-dom-ready', 'jquery', 'wp-api' ),
 				self::$assets_version,
 				true
 			);
@@ -698,7 +698,6 @@ class Main {
 			'\ThemeIsle\GutenbergBlocks\Render\Review_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Review_Comparison_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Sharing_Icons_Block',
-			'\ThemeIsle\GutenbergBlocks\Render\Form_Block',
 		);
 
 		foreach ( $classnames as $classname ) {

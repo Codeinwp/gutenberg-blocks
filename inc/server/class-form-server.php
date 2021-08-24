@@ -92,23 +92,29 @@ class Form_Server {
 
 		$data = json_decode( $request->get_body(), true );
 
-		$email_title = '[Otter] ' . ( isset( $data['emailTitle'] ) ? $data['emailTitle'] : __( 'A new submission', 'otter-blocks' ) );
+		$email_subject = '[Otter] ' . ( isset( $data['emailSubject'] ) ? $data['emailSubject'] : __( 'A new submission', 'otter-blocks' ) );
 		$email_body  = $this->prepare_body( $data['data'] );
 
 		// Sent the form date to the admin site as a default behaviour.
 		$to = sanitize_email( get_site_option( 'admin_email' ) );
 		// Check if we need to send it to another user email.
-		if ( isset( $data['emailTo'] ) ) {
-			$to = sanitize_email( base64_decode( $data['emailTo'] ) );
+		if ( isset( $data['formOption'] ) ) {
+			$option_name = sanitize_text_field( $data['formOption'] );
+			$form_emails = get_option('themeisle_blocks_form_emails');
+
+			foreach( $form_emails as $form ) {
+				if( $form['form'] === $option_name ) {
+					$to = $form['email'];
+				}
+			}
 		}
 
 		$from    = sanitize_email( get_site_option( 'admin_email' ) );
 		$headers = array( 'Content-Type: text/html; charset=UTF-8', 'From: Admin <' . $from . '>' );
 
 		try {
-			wp_mail( $to, $email_title, $email_body, $headers );
+			wp_mail( $to, $email_subject, $email_body, $headers );
 			$return['success']    = true;
-			$return['email_body'] = $to . ' | ' . $email_body;
 		} catch ( \Exception $e ) {
 			$return['error'] = $e->getMessage();
 		} finally {

@@ -7,6 +7,9 @@ const attributes = {
 	},
 	emailTo: {
 		type: 'string'
+	},
+	optionName: {
+		type: 'string'
 	}
 };
 

@@ -10,6 +10,10 @@ import {
 	useEffect
 } from '@wordpress/element';
 
+import {
+	select
+} from '@wordpress/data';
+
 /**
  * Internal dependencies
  */
@@ -59,6 +63,13 @@ const Edit = ({
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
 	}, [ attributes.id ]);
+
+	useEffect( () => {
+		if ( attributes.id && select( 'core/editor' ).getCurrentPostId() ) {
+			setAttributes({ optionName: `${ select( 'core/editor' ).getCurrentPostId() }_${ attributes.id.slice( -8 ) }` });
+		}
+	}, [ attributes.id ]);
+
 
 	return (
 		<Fragment>
