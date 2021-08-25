@@ -113,11 +113,43 @@ class Filter_Blocks_Server {
 				if ( ! has_blocks( $post->post_content ) ) {
 					$response = new \WP_REST_Response( $blocks, 200 );
 				}
-	
+
 				$post_blocks = parse_blocks( $post->post_content );
-	
+
 				foreach ( $post_blocks as $post_block ) {
 					if ( $block === $post_block['blockName'] ) {
+						if ( 'themeisle-blocks/review' === $post_block['blockName'] ) {
+							if ( isset( $post_block['attrs']['product'] ) && intval( $post_block['attrs']['product'] ) >= 0 && class_exists( 'WooCommerce' ) ) {
+								$product = wc_get_product( $post_block['attrs']['product'] );
+
+								if ( ! $product ) {
+									continue;
+								}
+
+								$post_block['attrs']['title']       = $product->get_name();
+								$post_block['attrs']['description'] = $product->get_short_description();
+								$post_block['attrs']['price']       = $product->get_regular_price() ? $product->get_regular_price() : $product->get_price();
+								$post_block['attrs']['currency']    = get_woocommerce_currency();
+
+								if ( ! empty( $product->get_sale_price() ) && $post_block['attrs']['price'] !== $product->get_sale_price() ) {
+									$post_block['attrs']['discounted'] = $product->get_sale_price();
+								}
+
+								$post_block['attrs']['image'] = array(
+									'url' => wp_get_attachment_image_url( $product->get_image_id(), '' ),
+									'alt' => get_post_meta( $product->get_image_id(), '_wp_attachment_image_alt', true ),
+								);
+
+								$post_block['attrs']['links'] = array(
+									array(
+										'label'       => __( 'Buy Now', 'otter-blocks' ),
+										'href'        => method_exists( $product, 'get_product_url' ) ? $product->get_product_url() : $product->get_permalink(),
+										'isSponsored' => method_exists( $product, 'get_product_url' ),
+									),
+								);
+							}
+						}
+
 						$blocks[] = array_merge(
 							array(
 								'ID'         => $post->ID,
