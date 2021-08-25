@@ -12,7 +12,7 @@ const msgs = [];
  * @param {HTMLDivElement} form The element that contains all the inputs
  */
 const collectAndSendInputFormData = ( form ) => {
-	const exportData = [];
+	const exportData = [ { label: __( 'Form submission from', 'otter-blocks' ), value: window.location.href } ];
 	const inputs = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-input' );
 	const textarea = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-textarea' );
 	const errors = [];
@@ -44,7 +44,7 @@ const collectAndSendInputFormData = ( form ) => {
 		});
 	} else {
 		data.data = exportData;
-		if ( form?.dataset?.emailSubject ) {
+		if ( '' !== form?.dataset?.emailSubject ) {
 			data.emailTitle = form?.dataset?.emailSubject;
 		}
 		if ( form?.dataset?.optionName ) {

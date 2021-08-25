@@ -138,9 +138,6 @@ class Main {
 		add_action( 'init', array( $this, 'load_server_side_blocks' ), 11 );
 		add_action( 'init', array( $this, 'register_meta' ), 11 );
 
-		add_action( 'wp_ajax_get_otter_form', 'get_otter_form' );
-		add_action( 'wp_ajax_nopriv_get_otter_form', 'get_otter_form' );
-
 		if ( version_compare( floatval( get_bloginfo( 'version' ) ), '5.8', '>=' ) ) {
 			add_filter( 'block_categories_all', array( $this, 'block_categories' ) );
 		} else {
@@ -574,7 +571,7 @@ class Main {
 			wp_enqueue_script(
 				'themeisle-gutenberg-tabs',
 				plugin_dir_url( $this->get_dir() ) . 'build/form.js',
-				array( 'wp-i18n', 'wp-dom-ready', 'jquery', 'wp-api' ),
+				array( 'wp-i18n', 'wp-dom-ready' ),
 				self::$assets_version,
 				true
 			);

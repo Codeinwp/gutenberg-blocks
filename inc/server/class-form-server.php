@@ -45,21 +45,6 @@ class Form_Server {
 	 */
 	public function register_routes() {
 		$namespace = $this->namespace . $this->version;
-
-		register_rest_route(
-			$namespace,
-			'/forms',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_form_data' ),
-					'permission_callback' => function () {
-						return __return_true();
-					},
-				),
-			)
-		);
-
 		register_rest_route(
 			$namespace,
 			'/forms',
@@ -92,7 +77,7 @@ class Form_Server {
 
 		$data = json_decode( $request->get_body(), true );
 
-		$email_subject = '[Otter] ' . ( isset( $data['emailSubject'] ) ? $data['emailSubject'] : __( 'A new submission', 'otter-blocks' ) );
+		$email_subject = ( isset( $data['emailSubject'] ) ? $data['emailSubject'] : ( __( 'A new form submission on ', 'otter-blocks' ) . get_bloginfo( 'name' ) ));
 		$email_body  = $this->prepare_body( $data['data'] );
 
 		// Sent the form date to the admin site as a default behaviour.
@@ -109,8 +94,7 @@ class Form_Server {
 			}
 		}
 
-		$from    = sanitize_email( get_site_option( 'admin_email' ) );
-		$headers = array( 'Content-Type: text/html; charset=UTF-8', 'From: Admin <' . $from . '>' );
+		$headers = array( 'Content-Type: text/html; charset=UTF-8', 'From: ' . esc_url( get_site_url() ) );
 
 		try {
 			wp_mail( $to, $email_subject, $email_body, $headers );
