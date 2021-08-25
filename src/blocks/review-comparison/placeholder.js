@@ -60,10 +60,13 @@ const BlockPlaceholder = ({
 		</span>
 	);
 
-	const getNiceValues = () => attributes.reviews.map( value => {
+	const getNiceValues = () => attributes.reviews.filter( value => {
 		const values = value.split( '-' );
-		let label = data.find( review => review.ID === Number( values[0]) && review.attrs.id.slice( review.attrs.id.length - 8 ) === values[1]);
-		label = label.attrs.title || __( 'Untitled review', 'otter-blocks' );
+		return data.find( review => review.ID === Number( values[0]) && review.attrs.id.slice( review.attrs.id.length - 8 ) === values[1]);
+	}).map( value => {
+		const values = value.split( '-' );
+		const review = data.find( review => review.ID === Number( values[0]) && review.attrs.id.slice( review.attrs.id.length - 8 ) === values[1]);
+		const label = review.attrs.title || __( 'Untitled review', 'otter-blocks' );
 
 		return {
 			label,

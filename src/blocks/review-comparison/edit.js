@@ -99,6 +99,11 @@ const Edit = ({
 		attributes.reviews.forEach( value => {
 			const values = value.split( '-' );
 			const review = data.find( review => review.ID === Number( values[0]) && review.attrs.id.slice( review.attrs.id.length - 8 ) === values[1]);
+
+			if ( ! review ) {
+				return;
+			}
+
 			const currency = getSymbolFromCurrency( review.attrs.currency ) ?? '$';
 			const features = review.attrs.features || defaultReviewAttributes.features.default;
 			const overallRatings = Math.round( features.reduce( ( accumulator, feature ) =>  accumulator + feature.rating, 0 ) / features.length ) / 2;

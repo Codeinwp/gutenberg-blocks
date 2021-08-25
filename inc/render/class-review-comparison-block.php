@@ -79,7 +79,7 @@ class Review_Comparison_Block extends Base_Block {
 			$id   = explode( '-', $review );
 			$post = get_post( $id[0] );
 
-			if ( ! has_blocks( $post->post_content ) ) {
+			if ( is_null( $post ) || ! has_blocks( $post->post_content ) ) {
 				continue;
 			}
 
