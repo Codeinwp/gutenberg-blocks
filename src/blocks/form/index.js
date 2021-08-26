@@ -39,7 +39,37 @@ registerBlockType( 'themeisle-blocks/form', {
 			icon: icon,
 			title: __( 'Contact Form', 'otter-blocks' ),
 			attributes: {
-				atemplateType: 'contact'
+				innerBlocks: [
+					[
+						'themeisle-blocks/form-input',
+						{
+							label: __( 'Name', 'otter-blocks' ),
+							type: 'text',
+							isRequired: true
+						}
+					],
+					[
+						'themeisle-blocks/form-input',
+						{
+							label: __( 'Email', 'otter-blocks' ),
+							type: 'email',
+							isRequired: true
+						}
+					],
+					[
+						'themeisle-blocks/form-textarea',
+						{
+							label: __( 'Message', 'otter-blocks' )
+						}
+					],
+					[
+						'core/paragraph',
+						{
+							content: __( 'You agree to receive email communication from us by submitting this form and understand that your contact information will be stored with us.', 'otter-blocks' ),
+							fontSize: 'extra-small'
+						}
+					]
+				]
 			}
 		},
 		{
@@ -48,7 +78,29 @@ registerBlockType( 'themeisle-blocks/form', {
 			icon: icon,
 			title: __( 'Feedback Form', 'otter-blocks' ),
 			attributes: {
-				templateType: 'feedback'
+				innerBlocks: [
+					[
+						'themeisle-blocks/form-input',
+						{
+							label: __( 'Email', 'otter-blocks' ),
+							type: 'email',
+							isRequired: true
+						}
+					],
+					[
+						'themeisle-blocks/form-textarea',
+						{
+							label: __( 'Message', 'otter-blocks' )
+						}
+					],
+					[
+						'core/paragraph',
+						{
+							content: __( 'You agree to receive email communication from us by submitting this form and understand that your contact information will be stored with us.', 'otter-blocks' ),
+							fontSize: 'extra-small'
+						}
+					]
+				]
 			}
 		},
 		{
@@ -57,7 +109,45 @@ registerBlockType( 'themeisle-blocks/form', {
 			icon: icon,
 			title: __( 'Appointment Form', 'otter-blocks' ),
 			attributes: {
-				templateType: 'appointment'
+				innerBlocks: [
+					[
+						'themeisle-blocks/form-input',
+						{
+							label: __( 'Name', 'otter-blocks' ),
+							type: 'text',
+							isRequired: true
+						}
+					],
+					[
+						'themeisle-blocks/form-input',
+						{
+							label: __( 'Phone', 'otter-blocks' ),
+							type: 'text',
+							isRequired: true
+						}
+					],
+					[
+						'themeisle-blocks/form-input',
+						{
+							label: __( 'Email', 'otter-blocks' ),
+							type: 'email',
+							isRequired: true
+						}
+					],
+					[
+						'themeisle-blocks/form-textarea',
+						{
+							label: __( 'Message', 'otter-blocks' )
+						}
+					],
+					[
+						'core/paragraph',
+						{
+							content: __( 'You agree to receive email communication from us by submitting this form and understand that your contact information will be stored with us.', 'otter-blocks' ),
+							fontSize: 'extra-small'
+						}
+					]
+				]
 			}
 		}
 	]
