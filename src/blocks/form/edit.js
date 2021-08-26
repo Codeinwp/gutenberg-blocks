@@ -16,11 +16,6 @@ import {
 	useDispatch
 } from '@wordpress/data';
 
-// import {
-// 	Button,
-// 	Placeholder
-// } from '@wordpress/components';
-
 import {
 	createBlocksFromInnerBlocksTemplate
 } from '@wordpress/blocks';
@@ -37,9 +32,6 @@ import { get } from 'lodash';
 import { blockInit } from '../../helpers/block-utility.js';
 import defaultAttributes from './attributes.js';
 import Inspector from './inspector.js';
-
-// import { contactIcon as icon } from '../../helpers/icons.js';
-
 
 const Edit = ({
 	attributes,
@@ -84,7 +76,6 @@ const Edit = ({
 		[ name ]
 	);
 	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
-
 
 	return (
 		<Fragment>
