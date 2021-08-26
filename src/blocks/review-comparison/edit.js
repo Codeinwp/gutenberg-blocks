@@ -132,7 +132,7 @@ const Edit = ({
 			tableName.push( <td>{ review.attrs.title || __( 'Untitled review', 'otter-blocks' ) }</td> );
 			tablePrice.push( <td>{ review.attrs.discounted ? <Fragment><del>{ currency + review.attrs.price }</del> { currency + review.attrs.discounted }</Fragment> : ( review.attrs.price ? ( currency + review.attrs.price ) : '-' ) }</td> );
 			tableRating.push( <td><div className="wp-block-themeisle-blocks-review-comparison__ratings">{ getStars( overallRatings ) }</div></td> );
-			tableDescription.push( <td>{ review.attrs.description }</td> );
+			tableDescription.push( <td dangerouslySetInnerHTML={ { __html: review.attrs.description } }></td> );
 			tableStatistics.push( <td>{ featureRatings }</td> );
 			tableLinks.push( <td><div className="wp-block-themeisle-blocks-review-comparison__buttons wp-block-button">{ buttonLinks }</div></td> );
 		});
