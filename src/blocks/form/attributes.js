@@ -10,6 +10,9 @@ const attributes = {
 	},
 	optionName: {
 		type: 'string'
+	},
+	templateType: {
+		type: 'string'
 	}
 };
 

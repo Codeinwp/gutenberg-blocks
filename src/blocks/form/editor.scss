@@ -9,4 +9,13 @@
 			}
 		}
 	}
+
+	.wp-block-themeisle-blocks-form_placeholder {
+		display: flex;
+		flex-direction: row;
+		margin: 10px;
+		.wp-block-themeisle-blocks-form_placeholder__button {
+			border: 1.5px solid black;
+		}
+	}
 }

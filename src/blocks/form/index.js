@@ -31,5 +31,34 @@ registerBlockType( 'themeisle-blocks/form', {
 		align: [ 'wide', 'full' ]
 	},
 	edit,
-	save
+	save,
+	variations: [
+		{
+			name: 'themeisle-blocks/form-contact',
+			description: __( 'Contact form for clients', 'otter-blocks' ),
+			icon: icon,
+			title: __( 'Contact Form', 'otter-blocks' ),
+			attributes: {
+				atemplateType: 'contact'
+			}
+		},
+		{
+			name: 'themeisle-blocks/form-feedback',
+			description: __( 'Request a feedback from clients', 'otter-blocks' ),
+			icon: icon,
+			title: __( 'Feedback Form', 'otter-blocks' ),
+			attributes: {
+				templateType: 'feedback'
+			}
+		},
+		{
+			name: 'themeisle-blocks/form-appointment',
+			description: __( 'Request an appointment from clients', 'otter-blocks' ),
+			icon: icon,
+			title: __( 'Appointment Form', 'otter-blocks' ),
+			attributes: {
+				templateType: 'appointment'
+			}
+		}
+	]
 });
