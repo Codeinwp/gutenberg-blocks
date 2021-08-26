@@ -61,7 +61,7 @@ class Review_Comparison_Block extends Base_Block {
 	 * @return mixed|string
 	 */
 	protected function render( $attributes ) {
-		if ( ! defined( 'NEVE_PRO_VERSION' ) || ! class_exists( 'WooCommerce' ) || ! isset( $attributes['reviews'] ) ) {
+		if ( ! 'valid' === apply_filters( 'product_neve_license_status', false ) || ! class_exists( 'WooCommerce' ) || ! isset( $attributes['reviews'] ) ) {
 			return;
 		}
 
