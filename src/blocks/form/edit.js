@@ -21,7 +21,7 @@ import {
 } from '@wordpress/blocks';
 
 import {
-	__experimentalBlockVariationPicker
+	__experimentalBlockVariationPicker as VariationPicker
 } from '@wordpress/block-editor';
 
 import { get } from 'lodash';
@@ -101,7 +101,7 @@ const Edit = ({
 							</div>
 						</div>
 					) : (
-						<__experimentalBlockVariationPicker
+						<VariationPicker
 							icon={ get( blockType, [ 'icon', 'src' ]) }
 							label={ get( blockType, [ 'title' ]) }
 							variations={ variations }
