@@ -22,6 +22,7 @@ import './wc-integration/index.js';
 import './masonry-extension/index.js';
 
 const icon = <Icon icon={ otterIcon } />;
+
 if ( select( 'core/editor' ) ) {
 	registerPlugin( 'themeisle-blocks', {
 		icon,
