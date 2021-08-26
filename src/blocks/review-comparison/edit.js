@@ -99,6 +99,11 @@ const Edit = ({
 		attributes.reviews.forEach( value => {
 			const values = value.split( '-' );
 			const review = data.find( review => review.ID === Number( values[0]) && review.attrs.id.slice( review.attrs.id.length - 8 ) === values[1]);
+
+			if ( ! review ) {
+				return;
+			}
+
 			const currency = getSymbolFromCurrency( review.attrs.currency ) ?? '$';
 			const features = review.attrs.features || defaultReviewAttributes.features.default;
 			const overallRatings = Math.round( features.reduce( ( accumulator, feature ) =>  accumulator + feature.rating, 0 ) / features.length ) / 2;
@@ -127,7 +132,7 @@ const Edit = ({
 			tableName.push( <td>{ review.attrs.title || __( 'Untitled review', 'otter-blocks' ) }</td> );
 			tablePrice.push( <td>{ review.attrs.discounted ? <Fragment><del>{ currency + review.attrs.price }</del> { currency + review.attrs.discounted }</Fragment> : ( review.attrs.price ? ( currency + review.attrs.price ) : '-' ) }</td> );
 			tableRating.push( <td><div className="wp-block-themeisle-blocks-review-comparison__ratings">{ getStars( overallRatings ) }</div></td> );
-			tableDescription.push( <td>{ review.attrs.description }</td> );
+			tableDescription.push( <td dangerouslySetInnerHTML={ { __html: review.attrs.description } }></td> );
 			tableStatistics.push( <td>{ featureRatings }</td> );
 			tableLinks.push( <td><div className="wp-block-themeisle-blocks-review-comparison__buttons wp-block-button">{ buttonLinks }</div></td> );
 		});

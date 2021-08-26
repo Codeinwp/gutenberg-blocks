@@ -61,7 +61,7 @@ class Review_Comparison_Block extends Base_Block {
 	 * @return mixed|string
 	 */
 	protected function render( $attributes ) {
-		if ( ! isset( $attributes['reviews'] ) ) {
+		if ( ! 'valid' === apply_filters( 'product_neve_license_status', false ) || ! class_exists( 'WooCommerce' ) || ! isset( $attributes['reviews'] ) ) {
 			return;
 		}
 
@@ -79,10 +79,10 @@ class Review_Comparison_Block extends Base_Block {
 			$id   = explode( '-', $review );
 			$post = get_post( $id[0] );
 
-			if ( ! has_blocks( $post->post_content ) ) {
+			if ( is_null( $post ) || ! has_blocks( $post->post_content ) ) {
 				continue;
 			}
-			
+
 			$post_blocks = parse_blocks( $post->post_content );
 
 			$block = [];
@@ -92,6 +92,36 @@ class Review_Comparison_Block extends Base_Block {
 					$block = $post_block;
 					break;
 				}
+			}
+
+			if ( isset( $block['attrs']['product'] ) && intval( $block['attrs']['product'] ) >= 0 && class_exists( 'WooCommerce' ) ) {
+				$product = wc_get_product( $block['attrs']['product'] );
+
+				if ( ! $product ) {
+					continue;
+				}
+
+				$block['attrs']['title']       = $product->get_name();
+				$block['attrs']['description'] = $product->get_short_description();
+				$block['attrs']['price']       = $product->get_regular_price() ? $product->get_regular_price() : $product->get_price();
+				$block['attrs']['currency']    = get_woocommerce_currency();
+
+				if ( ! empty( $product->get_sale_price() ) && $block['attrs']['price'] !== $product->get_sale_price() ) {
+					$block['attrs']['discounted'] = $product->get_sale_price();
+				}
+
+				$block['attrs']['image'] = array(
+					'url' => wp_get_attachment_image_url( $product->get_image_id(), '' ),
+					'alt' => get_post_meta( $product->get_image_id(), '_wp_attachment_image_alt', true ),
+				);
+
+				$block['attrs']['links'] = array(
+					array(
+						'label'       => __( 'Buy Now', 'otter-blocks' ),
+						'href'        => method_exists( $product, 'get_product_url' ) ? $product->get_product_url() : $product->get_permalink(),
+						'isSponsored' => method_exists( $product, 'get_product_url' ),
+					),
+				);
 			}
 
 			$features = array(
