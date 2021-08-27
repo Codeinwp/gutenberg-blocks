@@ -571,7 +571,7 @@ class Main {
 			wp_enqueue_script(
 				'themeisle-gutenberg-tabs',
 				plugin_dir_url( $this->get_dir() ) . 'build/form.js',
-				array( 'wp-i18n', 'wp-dom-ready' ),
+				array( 'wp-i18n', 'wp-dom-ready', 'wp-api-fetch' ),
 				self::$assets_version,
 				true
 			);
