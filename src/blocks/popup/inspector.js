@@ -111,13 +111,15 @@ const Inspector = ({
 					/>
 				) }
 
-				<ToggleControl
-					label={ __( 'Dismiss for Recurring Visitors', 'otter-blocks' ) }
-					checked={ attributes.recurringClose }
-					onChange={ () => setAttributes({ recurringClose: ! attributes.recurringClose }) }
-				/>
+				{ 'onClick' !== attributes.trigger && (
+					<ToggleControl
+						label={ __( 'Dismiss for Recurring Visitors', 'otter-blocks' ) }
+						checked={ attributes.recurringClose }
+						onChange={ () => setAttributes({ recurringClose: ! attributes.recurringClose }) }
+					/>
+				) }
 
-				{ attributes.recurringClose && (
+				{ ( attributes.recurringClose && 'onClick' !== attributes.trigger ) && (
 					<RangeControl
 						label={ __( 'Display Interval', 'otter-blocks' ) }
 						help={ __( 'Number of days until the popup is shown again.', 'otter-blocks' ) }
