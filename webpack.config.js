@@ -22,7 +22,8 @@ module.exports = {
 		lottie: './src/frontend/lottie/index.js',
 		tabs: './src/frontend/tabs/index.js',
 		masonry: './src/frontend/masonry/index.js',
-		countdown: './src/frontend/countdown/index.js'
+		countdown: './src/frontend/countdown/index.js',
+		popup: './src/frontend/popup/index.js'
 	},
 	externals: {
 		'react': 'React',
