@@ -232,6 +232,7 @@ class Main {
 				'isWPVIP'        => function_exists( 'is_wpcom_vip' ),
 				'canTrack'       => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
 				'userRoles'      => $wp_roles->roles,
+				'hasNeve'        => defined( 'NEVE_VERSION' ),
 				'hasNevePro'     => 'valid' === apply_filters( 'product_neve_license_status', false ),
 				'hasWooCommerce' => class_exists( 'WooCommerce' ),
 			)
