@@ -51,15 +51,20 @@ const collectAndSendInputFormData = ( form ) => {
 			data.formOption = form?.dataset?.optionName;
 		}
 
+		const msgAnchor = form.querySelector( '.wp-block-button' );
+		msgAnchor?.classList.add( 'has-submit-msg' );
+		msgAnchor?.classList.add( 'loading' );
+
 		apiFetch({
 			path: 'themeisle-gutenberg-blocks/v1/forms',
 			method: 'POST',
 			data
 		}).then( res => {
+			msgAnchor?.classList.remove( 'loading' );
 			const msg = document.createElement( 'div' );
 			msg.classList.add( 'wp-block-themeisle-blocks-form-server-msg' );
 			if ( res?.success ) {
-				msg.innerHTML = __( 'Succes', 'otter-blocks' );
+				msg.innerHTML = __( 'Success', 'otter-blocks' );
 				msg.classList.add( 'success' );
 			} else {
 				msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
@@ -69,24 +74,27 @@ const collectAndSendInputFormData = ( form ) => {
 			// Remove old messages
 			let _msg = msgs.pop();
 			while ( _msg ) {
-				if ( form === _msg.parentNode ) {
-					form.removeChild( _msg );
+				if ( msgAnchor === _msg.parentNode ) {
+					msgAnchor.removeChild( _msg );
 				}
 				_msg = msgs.pop();
 			}
 
 			// Add the new message to the page
 			msgs.push( msg );
-			form.appendChild( msg );
+			msgAnchor.appendChild( msg );
 
 			// Delete it after a fixed time
 			setTimeout( () => {
-				if ( msg && form === msg.parentNode ) {
+				if ( msg && msgAnchor === msg.parentNode ) {
 					form.removeChild( msg );
 				}
 			}, 10000 );
 		})?.catch( error => {
+			msgAnchor?.classList.remove( 'loading' );
+
 			console.error( error );
+
 			const msg = document.createElement( 'div' );
 			msg.classList.add( 'wp-block-themeisle-blocks-form-server-msg' );
 			msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
@@ -94,12 +102,12 @@ const collectAndSendInputFormData = ( form ) => {
 
 			// Add the new message to the page
 			msgs.push( msg );
-			form.appendChild( msg );
+			msgAnchor.appendChild( msg );
 
 			// Delete it after a fixed time
 			setTimeout( () => {
-				if ( msg && form === msg.parentNode ) {
-					form.removeChild( msg );
+				if ( msg && msgAnchor === msg.parentNode ) {
+					msgAnchor.removeChild( msg );
 				}
 			}, 10000 );
 		});
