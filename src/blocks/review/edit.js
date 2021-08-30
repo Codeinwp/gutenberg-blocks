@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import getSymbolFromCurrency from 'currency-symbol-map';
 
 /**
- * WordPress dependencies.
+* WordPress dependencies.
  */
 import {
 	__,
@@ -198,7 +198,7 @@ const Edit = ({
 							} }
 						>
 							{ ( ( productAttributes?.price && productAttributes?.discounted ) || ( attributes.price && attributes.discounted ) ) && (
-								<del>{ ( getSymbolFromCurrency( productAttributes?.currency || attributes.currency ) ?? '$' ) + '' + productAttributes?.price || attributes.price || 0 }</del>
+								<del>{ ( getSymbolFromCurrency( productAttributes?.currency || attributes.currency ) ?? '$' ) + '' + ( productAttributes?.price || attributes.price ) || 0 }</del>
 							) }
 
 							{ ( attributes.price || attributes.discounted || productAttributes?.price || productAttributes?.discounted ) && ( getSymbolFromCurrency(  productAttributes?.currency || attributes.currency ) ?? '$' ) + '' + ( ( productAttributes?.discounted || attributes.discounted ) ? ( productAttributes?.discounted || attributes.discounted ) : ( productAttributes?.price || attributes.price ) ) }
