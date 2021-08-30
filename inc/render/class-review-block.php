@@ -177,7 +177,7 @@ class Review_Block extends Base_Block {
 		$html .= '			<div class="wp-block-themeisle-blocks-review__header_ratings">';
 		$html .= $this->get_overall_stars( $this->get_overall_ratings( $attributes['features'] ) );
 		// translators: Overall rating from 0 to 10.
-		$html .= '				<span>' . sprintf( __( '%s out of 10', 'otter-blocks' ), $this->get_overall_ratings( $attributes['features'] ) ) . '</span>';
+		$html .= '				<span>' . sprintf( __( '%g out of 10', 'otter-blocks' ), $this->get_overall_ratings( $attributes['features'] ) ) . '</span>';
 		$html .= '			</div>';
 
 		if ( isset( $attributes['price'] ) || isset( $attributes['discounted'] ) ) {
@@ -292,7 +292,7 @@ class Review_Block extends Base_Block {
 			0
 		);
 
-		$rating = round( $rating / count( $features ) );
+		$rating = $rating / count( $features );
 
 		return $rating;
 	}
@@ -310,11 +310,11 @@ class Review_Block extends Base_Block {
 		for ( $i = 0; $i < 10; $i++ ) {
 			$class = '';
 
-			if ( $ratings <= 3 && $i < $ratings ) {
+			if ( round( $ratings ) <= 3 && $i < round( $ratings ) ) {
 				$class = 'low';
-			} elseif ( $ratings > 3 && $ratings < 8 && $i < $ratings ) {
+			} elseif ( round( $ratings ) > 3 && round( $ratings ) < 8 && $i < round( $ratings ) ) {
 				$class = 'medium';
-			} elseif ( $ratings > 7 && $ratings <= 10 && $i < $ratings ) {
+			} elseif ( round( $ratings ) > 7 && round( $ratings ) <= 10 && $i < round( $ratings ) ) {
 				$class = 'high';
 			}
 

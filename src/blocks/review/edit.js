@@ -51,7 +51,7 @@ const Edit = ({
 		return () => unsubscribe();
 	}, [ attributes.id ]);
 
-	const overallRatings = Math.round( attributes.features.reduce( ( accumulator, feature ) =>  accumulator + feature.rating, 0 ) / attributes.features.length );
+	const overallRatings = ( attributes.features.reduce( ( accumulator, feature ) =>  accumulator + feature.rating, 0 ) / attributes.features.length ).toFixed( 1 );
 
 	const stars = [];
 
@@ -60,9 +60,9 @@ const Edit = ({
 			<StarFilled
 				className={ classnames(
 					{
-						'low': 3 >= overallRatings && i < overallRatings,
-						'medium': 3 < overallRatings && 8 > overallRatings && i < overallRatings,
-						'high': 7 < overallRatings && 10 >= overallRatings && i < overallRatings
+						'low': 3 >= Math.round( overallRatings ) && i < Math.round( overallRatings ),
+						'medium': 3 < Math.round( overallRatings ) && 8 > Math.round( overallRatings ) && i < Math.round( overallRatings ),
+						'high': 7 < Math.round( overallRatings ) && 10 >= Math.round( overallRatings ) && i < Math.round( overallRatings )
 					}
 				) }
 			/>
@@ -187,7 +187,7 @@ const Edit = ({
 									color: attributes.textColor
 								} }
 							>
-								{ /** translators: %s Rating score. **/ sprintf( __( '%d out of 10', 'otter-blocks' ), overallRatings || 0 ) }
+								{ /** translators: %s Rating score. **/ sprintf( __( '%f out of 10', 'otter-blocks' ), Math.abs( overallRatings ) || 0 ) }
 							</span>
 						</div>
 
@@ -258,9 +258,9 @@ const Edit = ({
 									<StarFilled
 										className={ classnames(
 											{
-												'low': 3 >= feature.rating && i < feature.rating,
-												'medium': 3 < feature.rating && 8 > feature.rating && i < feature.rating,
-												'high': 7 < feature.rating && 10 >= feature.rating && i < feature.rating
+												'low': 3 >= Math.round( feature.rating ) && i < Math.round( feature.rating ),
+												'medium': 3 < Math.round( feature.rating ) && 8 > Math.round( feature.rating ) && i < Math.round( feature.rating ),
+												'high': 7 < Math.round( feature.rating ) && 10 >= Math.round( feature.rating ) && i < Math.round( feature.rating )
 											}
 										) }
 									/>
