@@ -831,6 +831,13 @@ class Main {
 
 			return $output;
 		}
+		else if ( ! is_admin() && 'core/image' === $block['blockName'] && isset( $block['attrs']['boxShadow'] ) ) {
+
+
+			$output = '<div class="wp-block-themeisle-blocks-image-extension" id="' . $block['attrs']['id'] . '" >' . $block_content . '</div>';
+
+			return $output;
+		}
 
 		return $block_content;
 	}

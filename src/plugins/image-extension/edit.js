@@ -22,9 +22,6 @@ import ControlPanelControl from '../../components/control-panel-control/index.js
 
 import {
 	Fragment
-
-	// useEffect,
-	// useRef
 } from '@wordpress/element';
 
 const Edit = ({
@@ -138,7 +135,7 @@ const Edit = ({
 				// TODO: Add block modifications
 			}
 			{ attributes.boxShadow ? (
-				<div class="wp-block-themeisle-blocks-image-extension" css={style}>
+				<div className="wp-block-themeisle-blocks-image-extension" css={style}>
 					<BlockEdit { ...props } />
 				</div>
 			) : (
