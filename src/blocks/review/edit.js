@@ -288,7 +288,7 @@ const Edit = ({
 												color: attributes.textColor
 											} }
 										>
-											{ feature.rating }/10
+											{ feature.rating.toFixed( 1 ) }/10
 										</span>
 									</div>
 								</div>

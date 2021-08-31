@@ -217,7 +217,7 @@ class Review_Block extends Base_Block {
 
 				$html .= '		<div class="wp-block-themeisle-blocks-review__left_feature_ratings">';
 				$html .= $this->get_overall_stars( $feature['rating'] );
-				$html .= '			<span>' . $feature['rating'] . '/10</span>';
+				$html .= '			<span>' . round( $feature['rating'], 1 ) . '/10</span>';
 				$html .= '		</div>';
 				$html .= '	</div>';
 			}
@@ -292,7 +292,7 @@ class Review_Block extends Base_Block {
 			0
 		);
 
-		$rating = $rating / count( $features );
+		$rating = round( $rating / count( $features ), 1 );
 
 		return $rating;
 	}
