@@ -55,9 +55,19 @@ const Edit = ({
 		setAttributes({ boxShadowVertical: value });
 	};
 
+	const getShadowColor = () => {
+		if ( attributes.boxShadowColor ) {
+			if ( attributes.boxShadowColor.includes( '#' ) ) {
+				return hexToRgba( attributes.boxShadowColor, attributes.boxShadowColorOpacity );
+			}
+			return attributes.boxShadowColor;
+		}
+		return hexToRgba( '#000000', attributes.boxShadowColorOpacity );
+	};
+
 	const style = css`
 		img {
-			box-shadow: ${ attributes.boxShadowHorizontal }px ${ attributes.boxShadowVertical }px ${ attributes.boxShadowBlur }px ${  hexToRgba( ( attributes.boxShadowColor ? attributes.boxShadowColor : '#000000' ), attributes.boxShadowColorOpacity ) }
+			box-shadow: ${ attributes.boxShadowHorizontal }px ${ attributes.boxShadowVertical }px ${ attributes.boxShadowBlur }px ${ getShadowColor() }
 		}
 	`;
 
