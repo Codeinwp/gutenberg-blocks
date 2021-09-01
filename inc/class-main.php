@@ -832,9 +832,16 @@ class Main {
 			return $output;
 		}
 		else if ( ! is_admin() && 'core/image' === $block['blockName'] && isset( $block['attrs']['boxShadow'] ) ) {
+			// Generate the css using the CSS Utility which will handle the problem.
+			$plugin = new \ThemeIsle\GutenbergBlocks\CSS\Blocks\Core_Image_Plugin_CSS();
+			$shadow =  $plugin->render_css($block);
+			// Strip the selection element and aditional elements. Only the css property is needed.
+			$shadow_propertie = trim(substr($shadow, strpos($shadow, '{') ), '{}');
+			// Inject the inline css
+			$style = ' style="' . $shadow_propertie . '" ';
+			$add_shadows = substr_replace($block_content, " $style ", strpos($block_content, ' src'), 0);
 
-
-			$output = '<div class="wp-block-themeisle-blocks-image-extension" id="' . $block['attrs']['id'] . '" >' . $block_content . '</div>';
+			$output = '<div class="wp-block-themeisle-blocks-image-extension">' . $add_shadows . '</div>';
 
 			return $output;
 		}

@@ -83,7 +83,6 @@ class Base_CSS {
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Review_Comparison_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Tabs_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Countdown_CSS',
-			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Core_Image_Plugin_CSS',
 		);
 	}
 
@@ -325,8 +324,7 @@ class Base_CSS {
 				$path = new $classname();
 
 				if ( method_exists( $path, 'render_css' ) ) {
-					if ( $this->library_prefix . '/' . $path->block_prefix === $block['blockName'] ||
-						'core/' . $path->block_prefix === $block['blockName'] ) {
+					if ( $this->library_prefix . '/' . $path->block_prefix === $block['blockName'] ) {
 							$style .= $path->render_css( $block );
 						}
 					}
