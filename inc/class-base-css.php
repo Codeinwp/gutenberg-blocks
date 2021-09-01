@@ -335,7 +335,6 @@ class Base_CSS {
 				}
 			}
 
-			print_r($style);
 		return $style;
 	}
 
