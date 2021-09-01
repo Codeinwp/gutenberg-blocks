@@ -38,6 +38,10 @@ $base-index: 9999 !default;
 		min-width: 400px;
 		padding: 20px;
 		max-width: 100%;
+
+		@media ( max-width: 600px ) {
+			min-width: 100%;
+		}
 	}
 
 	.wp-block-themeisle-blocks-popup__modal_body {
