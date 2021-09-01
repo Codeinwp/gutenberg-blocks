@@ -19,6 +19,49 @@ import {
 
 import { Fragment } from '@wordpress/element';
 
+const ProFeatures = ({
+	attributes,
+	setAttributes
+}) => {
+	return (
+		<Fragment>
+			<ToggleControl
+				label={ __( 'Close On Anchor Click', 'otter-blocks' ) }
+				checked={ attributes.anchorClose }
+				onChange={ () => setAttributes({ anchorClose: ! attributes.anchorClose }) }
+			/>
+
+			{ attributes.anchorClose && (
+				<TextControl
+					label={ __( 'Close Anchor', 'otter-blocks' ) }
+					help={ __( 'You can use this anchor as an anchor link anywhere on the page to close the popup.', 'otter-blocks' ) }
+					value={ attributes.closeAnchor }
+					onChange={ value => setAttributes({ closeAnchor: value.replace( /[^a-zA-Z]/g, '' ) }) }
+				/>
+			) }
+
+			{ 'onClick' !== attributes.trigger && (
+				<ToggleControl
+					label={ __( 'Dismiss for Recurring Visitors', 'otter-blocks' ) }
+					checked={ attributes.recurringClose }
+					onChange={ () => setAttributes({ recurringClose: ! attributes.recurringClose }) }
+				/>
+			) }
+
+			{ ( attributes.recurringClose && 'onClick' !== attributes.trigger ) && (
+				<RangeControl
+					label={ __( 'Display Interval', 'otter-blocks' ) }
+					help={ __( 'Number of days until the popup is shown again.', 'otter-blocks' ) }
+					min={ 0 }
+					max={ 100 }
+					value={ attributes.recurringTime }
+					onChange={ value => setAttributes({ recurringTime: Number( value ) }) }
+				/>
+			) }
+		</Fragment>
+	);
+};
+
 const Inspector = ({
 	attributes,
 	setAttributes
@@ -53,46 +96,6 @@ const Inspector = ({
 			}
 		];
 	}
-
-	const ProFeatures = () => {
-		return (
-			<Fragment>
-				<ToggleControl
-					label={ __( 'Close On Anchor Click', 'otter-blocks' ) }
-					checked={ attributes.anchorClose }
-					onChange={ () => setAttributes({ anchorClose: ! attributes.anchorClose }) }
-				/>
-
-				{ attributes.anchorClose && (
-					<TextControl
-						label={ __( 'Close Anchor', 'otter-blocks' ) }
-						help={ __( 'You can use this anchor as an anchor link anywhere on the page to close the popup.', 'otter-blocks' ) }
-						value={ attributes.closeAnchor }
-						onChange={ value => setAttributes({ closeAnchor: value.replace( /[^a-zA-Z]/g, '' ) }) }
-					/>
-				) }
-
-				{ 'onClick' !== attributes.trigger && (
-					<ToggleControl
-						label={ __( 'Dismiss for Recurring Visitors', 'otter-blocks' ) }
-						checked={ attributes.recurringClose }
-						onChange={ () => setAttributes({ recurringClose: ! attributes.recurringClose }) }
-					/>
-				) }
-
-				{ ( attributes.recurringClose && 'onClick' !== attributes.trigger ) && (
-					<RangeControl
-						label={ __( 'Display Interval', 'otter-blocks' ) }
-						help={ __( 'Number of days until the popup is shown again.', 'otter-blocks' ) }
-						min={ 0 }
-						max={ 100 }
-						value={ attributes.recurringTime }
-						onChange={ value => setAttributes({ recurringTime: Number( value ) }) }
-					/>
-				) }
-			</Fragment>
-		);
-	};
 
 	return (
 		<InspectorControls>
@@ -156,12 +159,21 @@ const Inspector = ({
 
 				{ ( Boolean( window.themeisleGutenberg.hasNeve ) && ! Boolean( window.themeisleGutenberg.hasNevePro ) ) && (
 					<Disabled>
-						<ProFeatures />
+						<ProFeatures
+							attributes={ attributes }
+							setAttributes={ setAttributes }
+						/>
+
 						<p>{ __( 'You need to have Neve Pro activate Pro features.', 'otter-blocks' )  }</p>
 					</Disabled>
 				) }
 
-				{ Boolean( window.themeisleGutenberg.hasNevePro ) && <ProFeatures /> }
+				{ Boolean( window.themeisleGutenberg.hasNevePro ) && (
+					<ProFeatures
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+					/>
+				) }
 			</PanelBody>
 
 			<PanelBody

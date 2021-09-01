@@ -37,7 +37,7 @@ const attributes = {
 		default: false
 	},
 	recurringTime: {
-		type: 'string'
+		type: 'number'
 	},
 	backgroundColor: {
 		type: 'string'
