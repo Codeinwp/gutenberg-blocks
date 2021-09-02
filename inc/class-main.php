@@ -695,6 +695,8 @@ class Main {
 			'\ThemeIsle\GutenbergBlocks\Render\Review_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Review_Comparison_Block',
 			'\ThemeIsle\GutenbergBlocks\Render\Sharing_Icons_Block',
+			'\ThemeIsle\GutenbergBlocks\Render\Woo_Comparison_Block',
+
 		);
 
 		foreach ( $classnames as $classname ) {
