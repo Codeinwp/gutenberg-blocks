@@ -32,7 +32,7 @@ const Edit = ({
 	const { attributes, setAttributes } = props;
 
 	const changeBoxShadowColor = value => {
-		setAttributes({ boxShadowColor: value });
+		setAttributes({ boxShadowColor: getComputedStyle( document.documentElement, null ).getPropertyValue( value.replace( 'var(', '' ).replace( ')', '' ) ) });
 	};
 
 	const changeBoxShadow = value => {
