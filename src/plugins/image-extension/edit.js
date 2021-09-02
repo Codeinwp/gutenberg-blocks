@@ -32,7 +32,7 @@ const Edit = ({
 	const { attributes, setAttributes } = props;
 
 	const changeBoxShadowColor = value => {
-		setAttributes({ boxShadowColor: getComputedStyle( document.documentElement, null ).getPropertyValue( value.replace( 'var(', '' ).replace( ')', '' ) ) });
+		setAttributes({ boxShadowColor: ( 100 > attributes.boxShadowColorOpacity ) ? getComputedStyle( document.documentElement, null ).getPropertyValue( value.replace( 'var(', '' ).replace( ')', '' ) ) : value });
 	};
 
 	const changeBoxShadow = value => {
@@ -40,7 +40,12 @@ const Edit = ({
 	};
 
 	const changeBoxShadowColorOpacity = value => {
-		setAttributes({ boxShadowColorOpacity: value });
+		const changes = { boxShadowColorOpacity: value };
+		if ( 100 > value && attributes.boxShadowColor?.includes( 'var(' ) ) {
+			changes.boxShadowColor = getComputedStyle( document.documentElement, null ).getPropertyValue( attributes.boxShadowColor.replace( 'var(', '' ).replace( ')', '' ) );
+		}
+
+		setAttributes( changes );
 	};
 
 	const changeBoxShadowBlur = value => {
