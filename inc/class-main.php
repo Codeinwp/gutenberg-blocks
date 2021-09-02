@@ -77,6 +77,13 @@ class Main {
 	public static $is_countdown_loaded = false;
 
 	/**
+	 * Flag to mark that Popup script has been loaded.
+	 *
+	 * @var bool $is_popup_loaded Is Tabs loaded?
+	 */
+	public static $is_popup_loaded = false;
+
+	/**
 	 * Define assets version.
 	 *
 	 * @var string $assets_version Holds assets version.
@@ -225,6 +232,7 @@ class Main {
 				'isWPVIP'        => function_exists( 'is_wpcom_vip' ),
 				'canTrack'       => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
 				'userRoles'      => $wp_roles->roles,
+				'hasNeve'        => defined( 'NEVE_VERSION' ),
 				'hasNevePro'     => 'valid' === apply_filters( 'product_neve_license_status', false ),
 				'hasWooCommerce' => class_exists( 'WooCommerce' ),
 			)
@@ -564,7 +572,7 @@ class Main {
 				true
 			);
 
-			self::$is_circle_counter_loaded = true;
+			self::$is_tabs_loaded = true;
 		}
 
 		if ( ! self::$is_countdown_loaded && has_block( 'themeisle-blocks/countdown', $post ) ) {
@@ -576,7 +584,27 @@ class Main {
 				true
 			);
 
-			self::$is_circle_counter_loaded = true;
+			self::$is_countdown_loaded = true;
+		}
+
+		if ( ! self::$is_popup_loaded && has_block( 'themeisle-blocks/popup', $post ) ) {
+			wp_enqueue_script(
+				'themeisle-gutenberg-popup',
+				plugin_dir_url( $this->get_dir() ) . 'build/popup.js',
+				array( 'wp-dom-ready' ),
+				self::$assets_version,
+				true
+			);
+
+			wp_localize_script(
+				'themeisle-gutenberg-popup',
+				'themeisleGutenberg',
+				array(
+					'isPreview' => is_preview(),
+				)
+			);
+
+			self::$is_popup_loaded = true;
 		}
 	}
 
