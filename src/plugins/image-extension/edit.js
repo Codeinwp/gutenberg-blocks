@@ -75,7 +75,7 @@ const Edit = ({
 		<Fragment>
 			<InspectorControls>
 				<PanelBody
-					title={ __( 'Shadows', 'otter-blocks' ) }
+					title={ __( 'Box Shadow', 'otter-blocks' ) }
 					initialOpen={ false }
 				>
 
