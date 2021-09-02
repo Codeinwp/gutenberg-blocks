@@ -45,7 +45,7 @@ const collectAndSendInputFormData = ( form ) => {
 	} else {
 		data.data = exportData;
 		if ( '' !== form?.dataset?.emailSubject ) {
-			data.emailTitle = form?.dataset?.emailSubject;
+			data.emailSubject = form?.dataset?.emailSubject;
 		}
 		if ( form?.dataset?.optionName ) {
 			data.formOption = form?.dataset?.optionName;
