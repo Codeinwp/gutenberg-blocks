@@ -87,7 +87,7 @@ const collectAndSendInputFormData = ( form ) => {
 			// Delete it after a fixed time
 			setTimeout( () => {
 				if ( msg && msgAnchor === msg.parentNode ) {
-					form.removeChild( msg );
+					msgAnchor.removeChild( msg );
 				}
 			}, 10000 );
 		})?.catch( error => {
