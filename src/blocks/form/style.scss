@@ -1,6 +1,8 @@
 .wp-block-themeisle-blocks-form {
 	.wp-block-themeisle-blocks-form__container {
 		.wp-block-themeisle-blocks-form-input {
+			display: flex;
+			flex-direction: column;
 			.wp-block-themeisle-blocks-form-input-label {
 				width: 100%;
 				font-weight: bold;

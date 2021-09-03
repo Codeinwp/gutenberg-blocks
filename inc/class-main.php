@@ -77,6 +77,13 @@ class Main {
 	public static $is_form_loaded = false;
 
 	/**
+	 * Flag to mark that Countdown script has been loaded.
+	 *
+	 * @var bool $is_countdown_loaded Is Tabs loaded?
+	 */
+	public static $is_countdown_loaded = false;
+
+	/**
 	 * Define assets version.
 	 *
 	 * @var string $assets_version Holds assets version.
@@ -174,7 +181,7 @@ class Main {
 			true
 		);
 
-		$deps = array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-element', 'wp-html-entities', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'wp-polyfill', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player', 'macy' );
+		$deps = array( 'lodash', 'wp-api', 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-date', 'wp-element', 'wp-html-entities', 'wp-keycodes', 'wp-plugins', 'wp-primitives', 'wp-rich-text', 'wp-server-side-render', 'wp-url', 'wp-viewport', 'wp-polyfill', 'themeisle-gutenberg-blocks-vendor', 'glidejs', 'lottie-player', 'macy' );
 
 		$current_screen = get_current_screen();
 
@@ -225,7 +232,7 @@ class Main {
 				'isWPVIP'        => function_exists( 'is_wpcom_vip' ),
 				'canTrack'       => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
 				'userRoles'      => $wp_roles->roles,
-				'hasNevePro'     => defined( 'NEVE_PRO_VERSION' ),
+				'hasNevePro'     => 'valid' === apply_filters( 'product_neve_license_status', false ),
 				'hasWooCommerce' => class_exists( 'WooCommerce' ),
 			)
 		);
@@ -577,6 +584,18 @@ class Main {
 			);
 
 			self::$is_form_loaded = true;
+		}
+
+		if ( ! self::$is_countdown_loaded && has_block( 'themeisle-blocks/countdown', $post ) ) {
+			wp_enqueue_script(
+				'themeisle-gutenberg-countdown',
+				plugin_dir_url( $this->get_dir() ) . 'build/countdown.js',
+				array( 'wp-i18n', 'wp-date', 'wp-dom-ready', 'lodash', 'moment' ),
+				self::$assets_version,
+				true
+			);
+
+			self::$is_circle_counter_loaded = true;
 		}
 	}
 
