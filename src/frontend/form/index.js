@@ -7,6 +7,8 @@ import apiFetch from '@wordpress/api-fetch';
 /** @type {Array.<HTMLDivElement>} */
 const msgs = [];
 
+const TIME_UNTIL_REMOVE = 10_000;
+
 /**
  * Send the date from the form to the server
  * @param {HTMLDivElement} form The element that contains all the inputs
@@ -55,21 +57,11 @@ const collectAndSendInputFormData = ( form ) => {
 		msgAnchor?.classList.add( 'has-submit-msg' );
 		msgAnchor?.classList.add( 'loading' );
 
-		apiFetch({
-			path: 'themeisle-gutenberg-blocks/v1/forms',
-			method: 'POST',
-			data
-		}).then( res => {
-			msgAnchor?.classList.remove( 'loading' );
-			const msg = document.createElement( 'div' );
-			msg.classList.add( 'wp-block-themeisle-blocks-form-server-msg' );
-			if ( res?.success ) {
-				msg.innerHTML = __( 'Success', 'otter-blocks' );
-				msg.classList.add( 'success' );
-			} else {
-				msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
-				msg.classList.add( 'error' );
-			}
+		/**
+		 * Add the message to the anchor element then removed after a fixed time
+		 * @param {HTMLDivElement} msg The message container
+		 */
+		const addThenRemoveMsg = ( msg ) => {
 
 			// Remove old messages
 			let _msg = msgs.pop();
@@ -89,7 +81,26 @@ const collectAndSendInputFormData = ( form ) => {
 				if ( msg && msgAnchor === msg.parentNode ) {
 					msgAnchor.removeChild( msg );
 				}
-			}, 10000 );
+			},  TIME_UNTIL_REMOVE );
+		};
+
+		apiFetch({
+			path: 'themeisle-gutenberg-blocks/v1/forms',
+			method: 'POST',
+			data
+		}).then( res => {
+			msgAnchor?.classList.remove( 'loading' );
+			const msg = document.createElement( 'div' );
+			msg.classList.add( 'wp-block-themeisle-blocks-form-server-msg' );
+			if ( res?.success ) {
+				msg.innerHTML = __( 'Success', 'otter-blocks' );
+				msg.classList.add( 'success' );
+			} else {
+				msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
+				msg.classList.add( 'error' );
+			}
+
+			addThenRemoveMsg( msg );
 		})?.catch( error => {
 			msgAnchor?.classList.remove( 'loading' );
 
@@ -100,16 +111,7 @@ const collectAndSendInputFormData = ( form ) => {
 			msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
 			msg.classList.add( 'error' );
 
-			// Add the new message to the page
-			msgs.push( msg );
-			msgAnchor.appendChild( msg );
-
-			// Delete it after a fixed time
-			setTimeout( () => {
-				if ( msg && msgAnchor === msg.parentNode ) {
-					msgAnchor.removeChild( msg );
-				}
-			}, 10000 );
+			addThenRemoveMsg( msg );
 		});
 	}
 };
