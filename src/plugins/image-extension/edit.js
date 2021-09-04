@@ -1,8 +1,7 @@
 /** @jsx jsx */
 /**
- * WordPress dependencies.
+ * External dependencies.
  */
-import { __ } from '@wordpress/i18n';
 import hexToRgba from 'hex-rgba';
 
 import {
@@ -10,26 +9,60 @@ import {
 	jsx
 } from '@emotion/react';
 
+import { v4 as uuidv4 } from 'uuid';
+
+/**
+ * WordPress dependencies.
+ */
+import { __ } from '@wordpress/i18n';
+
+import {
+	ColorPalette,
+	InspectorControls
+} from '@wordpress/block-editor';
+
 import {
 	PanelBody,
 	RangeControl,
 	ToggleControl
 } from '@wordpress/components';
 
-import { ColorPalette, InspectorControls } from '@wordpress/block-editor';
-import ColorBaseControl from '../../components/color-base-control/index.js';
-import ControlPanelControl from '../../components/control-panel-control/index.js';
+import { useSelect } from '@wordpress/data';
 
 import {
-	Fragment
+	Fragment,
+	useEffect
 } from '@wordpress/element';
+
+/**
+ * Internal dependencies.
+ */
+import ColorBaseControl from '../../components/color-base-control/index.js';
+import ControlPanelControl from '../../components/control-panel-control/index.js';
 
 const Edit = ({
 	BlockEdit,
 	props
 }) => {
-
 	const { attributes, setAttributes } = props;
+
+	const IDs = useSelect( select => select( 'core/block-editor' ).getBlocks().filter( block => 'core/image' === block.name && undefined !== block.attributes.anchor ).map( block => block.attributes.anchor ) );
+
+	useEffect( () => {
+		if ( attributes.boxShadow ) {
+			const isUnique = attributes.anchor ? ( 1 === IDs.filter( id => id === attributes.anchor ).length ) : false;
+
+			if ( ! isUnique ) {
+				const anchor = `wp-block-themeisle-blocks-image-${ uuidv4().substr( 0, 8 ) }`;
+				setAttributes({ anchor });
+			}
+		} else {
+			if ( attributes.anchor && attributes.anchor.includes( 'wp-block-themeisle-blocks-image-' ) ) {
+				const anchor = undefined;
+				setAttributes({ anchor });
+			}
+		}
+	}, [ attributes.boxShadow ]);
 
 	const changeBoxShadowColor = value => {
 		setAttributes({ boxShadowColor: ( 100 > attributes.boxShadowColorOpacity ) ? getComputedStyle( document.documentElement, null ).getPropertyValue( value.replace( 'var(', '' ).replace( ')', '' ) ) : value });
@@ -67,6 +100,7 @@ const Edit = ({
 			}
 			return attributes.boxShadowColor;
 		}
+
 		return hexToRgba( '#000000', attributes.boxShadowColorOpacity );
 	};
 
@@ -78,12 +112,17 @@ const Edit = ({
 
 	return (
 		<Fragment>
+			{ attributes.boxShadow ? (
+				<BlockEdit { ...props } css={ style } />
+			) : (
+				<BlockEdit { ...props } />
+			) }
+
 			<InspectorControls>
 				<PanelBody
 					title={ __( 'Box Shadow', 'otter-blocks' ) }
 					initialOpen={ false }
 				>
-
 					<ToggleControl
 						label={ __( 'Shadow Properties', 'otter-blocks' ) }
 						checked={ attributes.boxShadow }
@@ -92,7 +131,6 @@ const Edit = ({
 
 					{ attributes.boxShadow && (
 						<Fragment>
-
 							<ColorBaseControl
 								label={ __( 'Color', 'otter-blocks' ) }
 								colorValue={ attributes.boxShadowColor }
@@ -139,25 +177,10 @@ const Edit = ({
 									max={ 100 }
 								/>
 							</ControlPanelControl>
-
 						</Fragment>
 					) }
 				</PanelBody>
 			</InspectorControls>
-
-			{
-
-				// TODO: Add block modifications
-			}
-			{ attributes.boxShadow ? (
-				<div className="wp-block-themeisle-blocks-image-extension" css={style}>
-					<BlockEdit { ...props } />
-				</div>
-			) : (
-				<BlockEdit { ...props } />
-			) }
-
-
 		</Fragment>
 	);
 };

@@ -1,8 +1,6 @@
 /**
  * WordPress dependencies.
  */
-// import { __ } from '@wordpress/i18n';
-
 import { assign } from 'lodash';
 
 import { createHigherOrderComponent } from '@wordpress/compose';
@@ -14,7 +12,7 @@ import { addFilter } from '@wordpress/hooks';
  */
 import Edit from './edit.js';
 
-const addAttribute = ( props ) => {
+const addAttribute = props => {
 	if ( 'core/image' === props.name ) {
 		props.attributes = assign( props.attributes, {
 			boxShadow: {

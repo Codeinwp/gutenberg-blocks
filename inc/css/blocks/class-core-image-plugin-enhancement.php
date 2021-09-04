@@ -11,10 +11,19 @@ use ThemeIsle\GutenbergBlocks\Base_CSS;
 
 use ThemeIsle\GutenbergBlocks\CSS\CSS_Utility;
 
+use Masterminds\HTML5;
+
 /**
  * Class Core_Image_Plugin_CSS
  */
 class Core_Image_Plugin_CSS extends Base_CSS {
+
+	/**
+	 * The library under which the blocks are registered.
+	 *
+	 * @var string
+	 */
+	public $library_prefix = 'core';
 
 	/**
 	 * The namespace under which the blocks are registered.
@@ -24,7 +33,7 @@ class Core_Image_Plugin_CSS extends Base_CSS {
 	public $block_prefix = 'image';
 
 	/**
-	 * Generate Business Hours Item CSS
+	 * Generate Icon Block CSS
 	 *
 	 * @param mixed $block Block data.
 	 * @return string
@@ -33,6 +42,23 @@ class Core_Image_Plugin_CSS extends Base_CSS {
 	 */
 	public function render_css( $block ) {
 		$css = new CSS_Utility( $block );
+
+		$html5  = new HTML5();
+		$dom    = $html5->loadHTML( $block['innerHTML'] );
+		$figure = $dom->getElementsByTagName( 'figure' );
+		$style  = '';
+
+		if ( 0 === count( $figure ) ) {
+			return $style;
+		}
+
+		$id = $figure[0]->getAttribute( 'id' );
+
+		if ( ! isset( $id ) || empty( $id ) ) {
+			return $style;
+		}
+
+		$css->set_id( $id );
 
 		$css->add_item(
 			array(
@@ -62,8 +88,7 @@ class Core_Image_Plugin_CSS extends Base_CSS {
 								'default' => '#000',
 								'format'  => function( $value, $attrs ) {
 									$opacity = ( isset( $attrs['boxShadowColorOpacity'] ) ? $attrs['boxShadowColorOpacity'] : 50 ) / 100;
-
-									return strpos($value, '#') !== false ?  $this->hex2rgba( $value, $opacity ) : $value;
+									return strpos( $value, '#' ) !== false ? $this->hex2rgba( $value, $opacity ) : $value;
 								},
 							),
 						),
@@ -73,7 +98,6 @@ class Core_Image_Plugin_CSS extends Base_CSS {
 					),
 				),
 			)
-
 		);
 
 		$style = $css->generate();
