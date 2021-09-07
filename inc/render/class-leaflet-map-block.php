@@ -78,7 +78,6 @@ class Leaflet_Map_Block extends Base_Block {
 	 * the server side output of the block.
 	 *
 	 * @param array $attributes Blocks attrs.
-	 *
 	 * @return mixed|string
 	 */
 	protected function render( $attributes ) {

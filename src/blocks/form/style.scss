@@ -1,0 +1,86 @@
+.wp-block-themeisle-blocks-form {
+	.wp-block-themeisle-blocks-form__container {
+		.wp-block-themeisle-blocks-form-input {
+			display: flex;
+			flex-direction: column;
+			.wp-block-themeisle-blocks-form-input-label {
+				width: 100%;
+				font-weight: bold;
+
+				.required {
+					font-size: 14px;
+					margin-left: 5px;
+					color: #28303d;
+					font-weight: normal;
+				}
+			}
+
+			.wp-block-themeisle-blocks-form-input-input {
+				width: 100%;
+				margin-bottom: 1.5em;
+			}
+		}
+
+		.wp-block-themeisle-blocks-form-textarea {
+			.wp-block-themeisle-blocks-form-textarea-label {
+				width: 100%;
+				font-weight: bold;
+
+				.required {
+					font-size: 14px;
+					margin-left: 5px;
+					color: #28303d;
+				}
+			}
+
+			.wp-block-themeisle-blocks-form-textarea-input {
+				width: 100%;
+				height: 200px;
+				margin-bottom: 1.5em;
+			}
+		}
+
+		.wp-block-button {
+			margin-top: 1.5em;
+		}
+
+	}
+
+	.wp-block-themeisle-blocks-form-server-msg {
+		text-align: left;
+		padding: 1rem;
+		font-size: 1.2rem;
+		border-radius: 10%;
+		margin-left: 10px;
+
+		&.success {
+			color: green;
+		}
+
+		&.error {
+			color: red;
+		}
+	}
+
+	.has-submit-msg {
+		display: flex;
+		align-items: baseline;
+		flex-direction: row;
+	}
+
+	.loading {
+		animation: blink 3s ease-in-out infinite both;
+	}
+
+	@keyframes blink {
+		0%,
+		50%,
+		100% {
+		  opacity: 1;
+		}
+		25%,
+		75% {
+		  opacity: 0.5;
+		}
+	  }
+}

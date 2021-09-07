@@ -70,6 +70,13 @@ class Main {
 	public static $is_tabs_loaded = false;
 
 	/**
+	 * Flag to mark that Form script has been loaded.
+	 *
+	 * @var bool $is_form_loaded Is Form loaded?
+	 */
+	public static $is_form_loaded = false;
+
+	/**
 	 * Flag to mark that Countdown script has been loaded.
 	 *
 	 * @var bool $is_countdown_loaded Is Tabs loaded?
@@ -575,6 +582,18 @@ class Main {
 			self::$is_tabs_loaded = true;
 		}
 
+		if ( ! self::$is_form_loaded && has_block( 'themeisle-blocks/form', $post ) ) {
+			wp_enqueue_script(
+				'themeisle-gutenberg-form',
+				plugin_dir_url( $this->get_dir() ) . 'build/form.js',
+				array( 'wp-i18n', 'wp-dom-ready', 'wp-api-fetch' ),
+				self::$assets_version,
+				true
+			);
+
+			self::$is_form_loaded = true;
+		}
+
 		if ( ! self::$is_countdown_loaded && has_block( 'themeisle-blocks/countdown', $post ) ) {
 			wp_enqueue_script(
 				'themeisle-gutenberg-countdown',
@@ -749,6 +768,7 @@ class Main {
 			'\ThemeIsle\GutenbergBlocks\Server\Filter_Blocks_Server',
 			'\ThemeIsle\GutenbergBlocks\Server\Plugin_Card_Server',
 			'\ThemeIsle\GutenbergBlocks\Server\Template_Library_Server',
+			'\ThemeIsle\GutenbergBlocks\Server\Form_Server',
 		);
 
 		foreach ( $classnames as $classname ) {

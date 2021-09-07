@@ -1,0 +1,26 @@
+@import 'style.scss';
+
+.wp-block-themeisle-blocks-form {
+	.wp-block-themeisle-blocks-form__container {
+		.wp-block-themeisle-blocks-form-input {
+			.wp-block-themeisle-blocks-form-input-input {
+				padding: 10px 5px;
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	.wp-block-themeisle-blocks-form_placeholder {
+		display: flex;
+		flex-direction: row;
+		margin: 10px;
+		.wp-block-themeisle-blocks-form_placeholder__button {
+			border: 1.5px solid black;
+		}
+	}
+
+	.components-placeholder__label > svg {
+		width: 32px;
+		height: 32px;
+	}
+}
