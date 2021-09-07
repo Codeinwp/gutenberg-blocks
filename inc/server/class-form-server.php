@@ -77,18 +77,18 @@ class Form_Server {
 
 		$data = json_decode( $request->get_body(), true );
 
-		$email_subject = ( isset( $data['emailSubject'] ) ? $data['emailSubject'] : ( __( 'A new form submission on ', 'otter-blocks' ) . get_bloginfo( 'name' ) ));
-		$email_body  = $this->prepare_body( $data['data'] );
+		$email_subject = ( isset( $data['emailSubject'] ) ? $data['emailSubject'] : ( __( 'A new form submission on ', 'otter-blocks' ) . get_bloginfo( 'name' ) ) );
+		$email_body    = $this->prepare_body( $data['data'] );
 
 		// Sent the form date to the admin site as a default behaviour.
 		$to = sanitize_email( get_site_option( 'admin_email' ) );
 		// Check if we need to send it to another user email.
 		if ( isset( $data['formOption'] ) ) {
 			$option_name = sanitize_text_field( $data['formOption'] );
-			$form_emails = get_option('themeisle_blocks_form_emails');
+			$form_emails = get_option( 'themeisle_blocks_form_emails' );
 
-			foreach( $form_emails as $form ) {
-				if( $form['form'] === $option_name ) {
+			foreach ( $form_emails as $form ) {
+				if ( $form['form'] === $option_name ) {
 					$to = $form['email'];
 				}
 			}
@@ -98,7 +98,7 @@ class Form_Server {
 
 		try {
 			wp_mail( $to, $email_subject, $email_body, $headers );
-			$return['success']    = true;
+			$return['success'] = true;
 		} catch ( \Exception $e ) {
 			$return['error'] = $e->getMessage();
 		} finally {

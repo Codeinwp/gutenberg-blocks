@@ -51,7 +51,7 @@ abstract class Base_Block {
 	 * This method will pe passed to the render_callback parameter and it will output
 	 * the server side output of the block.
 	 *
-	 * @param array  $attributes Block attrs.
+	 * @param array $attributes Block attrs.
 	 * @return mixed
 	 */
 	abstract protected function render( $attributes );
@@ -99,7 +99,7 @@ abstract class Base_Block {
 	/**
 	 * The render callback passed to the `register_block_type` function.
 	 *
-	 * @param array  $attributes Block attrs.
+	 * @param array $attributes Block attrs.
 	 * @return string
 	 */
 	public function render_callback( $attributes ) {

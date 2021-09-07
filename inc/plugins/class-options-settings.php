@@ -89,23 +89,26 @@ class Options_Settings {
 				'type'              => 'array',
 				'description'       => __( 'Email used in the Form block.', 'otter-blocks' ),
 				'sanitize_callback' => function( $array ) {
-					return array_map( function( $item ) {
-						$item['form'] = sanitize_text_field( $item['form'] );
-						$item['email'] = sanitize_text_field( $item['email'] );
-						return $item;
-					} , $array );
+					return array_map(
+						function( $item ) {
+							$item['form'] = sanitize_text_field( $item['form'] );
+							$item['email'] = sanitize_text_field( $item['email'] );
+							return $item;
+						},
+						$array 
+					);
 				},
-				'show_in_rest' => array(
+				'show_in_rest'      => array(
 					'schema' => array(
 						'type'  => 'array',
 						'items' => array(
-							'type' => 'object',
+							'type'       => 'object',
 							'properties' => array(
-								'form'    => array(
+								'form'  => array(
 									'type' => 'string',
 								),
 								'email' => array(
-									'type'   => 'string',
+									'type' => 'string',
 								),
 							),
 						),
