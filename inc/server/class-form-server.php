@@ -97,6 +97,7 @@ class Form_Server {
 		$headers = array( 'Content-Type: text/html; charset=UTF-8', 'From: ' . esc_url( get_site_url() ) );
 
 		try {
+			// phpcs:ignore
 			wp_mail( $to, $email_subject, $email_body, $headers );
 			$return['success'] = true;
 		} catch ( \Exception $e ) {
