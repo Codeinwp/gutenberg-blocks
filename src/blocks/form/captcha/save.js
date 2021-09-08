@@ -4,14 +4,12 @@
  */
 import { __ } from '@wordpress/i18n';
 
-import { RichText } from '@wordpress/block-editor';
-
 const Save = ({
 	attributes,
 	className
 }) => {
 	return (
-		<div className={ className } >
+		<div className={ className } id={ attributes.id }>
 
 		</div>
 	);

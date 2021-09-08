@@ -7,6 +7,8 @@
 
 namespace ThemeIsle\GutenbergBlocks\Server;
 
+use PHP_CodeSniffer\Reports\Json;
+
 /**
  * Class Plugin_Card_Server
  */
@@ -58,12 +60,35 @@ class Form_Server {
 				),
 			)
 		);
+		register_rest_route(
+			$namespace,
+			'/forms',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_form_settings' ),
+					'permission_callback' => function () {
+						return __return_true();
+					},
+				),
+			)
+		);
 	}
 
 	/**
-	 * Search WordPress Plugin
+	 * Get Form settings
 	 *
-	 * Search WordPress plugin using WordPress.org API.
+	 * @return mixed|\WP_REST_Response
+	 */
+	public function get_form_settings( ) {
+		return rest_ensure_response(
+			array( 'sitekey' => get_site_option( 'themeisle_google_captcha_api_site_key' ) )
+		);
+	}
+
+	/**
+	 * Send email
+	 *
 	 *
 	 * @param mixed $request Search request.
 	 *
@@ -76,6 +101,18 @@ class Form_Server {
 		);
 
 		$data = json_decode( $request->get_body(), true );
+
+		if( isset( $data['token'] ) ) {
+			$resp = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', array(
+				'secret' => get_option('themeisle_google_captcha_api_secret_key'),
+				'response' => $data['token']
+			));
+			$result = json_decode( $resp['body'], true );
+			if( $result['succes'] == false ) {
+				$return['error'] = __( 'The reCaptha was invalid!', 'otter-blocks' );
+				return rest_ensure_response( $return );
+			}
+		}
 
 		$email_subject = ( isset( $data['emailSubject'] ) ? $data['emailSubject'] : ( __( 'A new form submission on ', 'otter-blocks' ) . get_bloginfo( 'name' ) ) );
 		$email_body    = $this->prepare_body( $data['data'] );

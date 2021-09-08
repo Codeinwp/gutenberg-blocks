@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 
 import domReady from '@wordpress/dom-ready';
 import apiFetch from '@wordpress/api-fetch';
+import { loadCapthaScriptThen } from './captcha';
 
 /** @type {Array.<HTMLDivElement>} */
 const msgs = [];
@@ -19,6 +20,8 @@ const collectAndSendInputFormData = ( form ) => {
 	const textarea = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-textarea' );
 	const errors = [];
 	const data = {};
+
+	const id = form?.id;
 
 	[ ...inputs, ...textarea ]?.forEach( input => {
 		const label = input.querySelector( '.wp-block-themeisle-blocks-form-input-label__label, .wp-block-themeisle-blocks-form-textarea-label__label' )?.innerHTML;
@@ -40,7 +43,7 @@ const collectAndSendInputFormData = ( form ) => {
 		};
 	});
 
-	if ( 0 < errors.length ) {
+	if ( 0 < errors.length || ( id && ! window.themeisleGutenberg?.tokens[id]) ) {
 		errors.forEach( input => {
 			input?.reportValidity();
 		});
@@ -52,6 +55,12 @@ const collectAndSendInputFormData = ( form ) => {
 		if ( form?.dataset?.optionName ) {
 			data.formOption = form?.dataset?.optionName;
 		}
+
+		if (  id && window.themeisleGutenberg?.tokens?.[id]) {
+			data.token = window.themeisleGutenberg?.tokens?.[id];
+		}
+
+		console.log( id, window.themeisleGutenberg?.tokens?.[id]);
 
 		const msgAnchor = form.querySelector( '.wp-block-button' );
 		msgAnchor?.classList.add( 'has-submit-msg' );
@@ -119,13 +128,27 @@ const collectAndSendInputFormData = ( form ) => {
 domReady( () => {
 	const forms = document.querySelectorAll( '.wp-block-themeisle-blocks-form' );
 
-	forms.forEach( form => {
-		const sendBtn = form.querySelector( 'button' );
-		sendBtn?.addEventListener( 'click', ( event ) => {
-			event.preventDefault();
+	if ( document.querySelector( '.wp-block-themeisle-blocks-form-captcha' ) ) {
+		loadCapthaScriptThen(
+			() => {
+				forms.forEach( form => {
+					const sendBtn = form.querySelector( 'button' );
+					sendBtn?.addEventListener( 'click', ( event ) => {
+						event.preventDefault();
 
-			collectAndSendInputFormData( form );
+						collectAndSendInputFormData( form );
+					});
+				});
+			}
+		);
+	} else {
+		forms.forEach( form => {
+			const sendBtn = form.querySelector( 'button' );
+			sendBtn?.addEventListener( 'click', ( event ) => {
+				event.preventDefault();
+
+				collectAndSendInputFormData( form );
+			});
 		});
-	});
-
+	}
 });
