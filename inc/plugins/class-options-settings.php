@@ -48,6 +48,30 @@ class Options_Settings {
 
 		register_setting(
 			'themeisle_blocks_settings',
+			'themeisle_google_captcha_api_site_key',
+			array(
+				'type'              => 'string',
+				'description'       => __( 'Google reCaptcha Site API key for the Google Maps Gutenberg Block.', 'otter-blocks' ),
+				'sanitize_callback' => 'sanitize_text_field',
+				'show_in_rest'      => true,
+				'default'           => '',
+			)
+		);
+
+		register_setting(
+			'themeisle_blocks_settings',
+			'themeisle_google_captcha_api_secret_key',
+			array(
+				'type'              => 'string',
+				'description'       => __( 'Google reCaptcha Secret API key for the Google Maps Gutenberg Block.', 'otter-blocks' ),
+				'sanitize_callback' => 'sanitize_text_field',
+				'show_in_rest'      => true,
+				'default'           => '',
+			)
+		);
+
+		register_setting(
+			'themeisle_blocks_settings',
 			'themeisle_blocks_settings_default_block',
 			array(
 				'type'              => 'boolean',
@@ -95,7 +119,7 @@ class Options_Settings {
 							$item['email'] = sanitize_text_field( $item['email'] );
 							return $item;
 						},
-						$array 
+						$array
 					);
 				},
 				'show_in_rest'      => array(
