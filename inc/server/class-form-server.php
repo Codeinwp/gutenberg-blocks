@@ -80,7 +80,7 @@ class Form_Server {
 	 *
 	 * @return mixed|\WP_REST_Response
 	 */
-	public function get_form_settings( ) {
+	public function get_form_settings() {
 		return rest_ensure_response(
 			array( 'sitekey' => get_site_option( 'themeisle_google_captcha_api_site_key' ) )
 		);
@@ -88,7 +88,6 @@ class Form_Server {
 
 	/**
 	 * Send email
-	 *
 	 *
 	 * @param mixed $request Search request.
 	 *
@@ -102,13 +101,19 @@ class Form_Server {
 
 		$data = json_decode( $request->get_body(), true );
 
-		if( isset( $data['token'] ) ) {
-			$resp = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', array(
-				'secret' => get_option('themeisle_google_captcha_api_secret_key'),
-				'response' => $data['token']
-			));
+		if ( isset( $data['token'] ) ) {
+			$secret = get_option( 'themeisle_google_captcha_api_secret_key' );
+			$resp   = wp_remote_post(
+				'https://www.google.com/recaptcha/api/siteverify',
+				array(
+					'body' => 'secret=' . get_option( 'themeisle_google_captcha_api_secret_key' ) . '&response=' . $data['token'],
+					'headers'     => [
+						'Content-Type' => 'application/x-www-form-urlencoded',
+					],
+				)
+			);
 			$result = json_decode( $resp['body'], true );
-			if( $result['succes'] == false ) {
+			if ( $result['success'] == false ) {
 				$return['error'] = __( 'The reCaptha was invalid!', 'otter-blocks' );
 				return rest_ensure_response( $return );
 			}
