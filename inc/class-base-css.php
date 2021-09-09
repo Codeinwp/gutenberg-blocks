@@ -189,7 +189,7 @@ class Base_CSS {
 
 		$rgb = array_map( 'hexdec', $hex );
 
-		if ( $opacity ) {
+		if ( $opacity >= 0 ) {
 			if ( abs( $opacity ) > 1 ) {
 				$opacity = 1.0;
 			}

@@ -4,6 +4,8 @@
  */
 import hexToRgba from 'hex-rgba';
 
+window.hexToRgba = hexToRgba;
+
 import {
 	css,
 	jsx
@@ -65,7 +67,7 @@ const Edit = ({
 	}, [ attributes.boxShadow ]);
 
 	const changeBoxShadowColor = value => {
-		setAttributes({ boxShadowColor: ( 100 > attributes.boxShadowColorOpacity ) ? getComputedStyle( document.documentElement, null ).getPropertyValue( value.replace( 'var(', '' ).replace( ')', '' ) ) : value });
+		setAttributes({ boxShadowColor: ( 100 > attributes.boxShadowColorOpacity ) ? getComputedStyle( document.documentElement, null ).getPropertyValue( value?.replace( 'var(', '' )?.replace( ')', '' ) ) : value });
 	};
 
 	const changeBoxShadow = value => {
@@ -95,13 +97,12 @@ const Edit = ({
 
 	const getShadowColor = () => {
 		if ( attributes.boxShadowColor ) {
-			if ( attributes.boxShadowColor.includes( '#' ) ) {
-				return hexToRgba( attributes.boxShadowColor, attributes.boxShadowColorOpacity );
+			if ( attributes.boxShadowColor.includes( '#' ) && 0 <= attributes.boxShadowColorOpacity ) {
+				return hexToRgba( attributes.boxShadowColor, attributes.boxShadowColorOpacity || 0.00001 );
 			}
 			return attributes.boxShadowColor;
 		}
-
-		return hexToRgba( '#000000', attributes.boxShadowColorOpacity );
+		return hexToRgba( '#000000', attributes.boxShadowColorOpacity !== undefined ? ( attributes.boxShadowColorOpacity || 0.00001 ) : 1 );
 	};
 
 	const style = css`
