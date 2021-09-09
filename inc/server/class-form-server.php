@@ -106,14 +106,14 @@ class Form_Server {
 			$resp   = wp_remote_post(
 				'https://www.google.com/recaptcha/api/siteverify',
 				array(
-					'body' => 'secret=' . get_option( 'themeisle_google_captcha_api_secret_key' ) . '&response=' . $data['token'],
-					'headers'     => [
+					'body'    => 'secret=' . get_option( 'themeisle_google_captcha_api_secret_key' ) . '&response=' . $data['token'],
+					'headers' => [
 						'Content-Type' => 'application/x-www-form-urlencoded',
 					],
 				)
 			);
 			$result = json_decode( $resp['body'], true );
-			if ( $result['success'] == false ) {
+			if ( false == $result['success'] ) {
 				$return['error'] = __( 'The reCaptha was invalid!', 'otter-blocks' );
 				return rest_ensure_response( $return );
 			}
