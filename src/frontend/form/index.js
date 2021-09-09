@@ -14,7 +14,7 @@ const TIME_UNTIL_REMOVE = 10_000;
  * Send the date from the form to the server
  * @param {HTMLDivElement} form The element that contains all the inputs
  */
-const collectAndSendInputFormData = ( form ) => {
+const collectAndSendInputFormData = ( form, hasCaptcha ) => {
 	const exportData = [ { label: __( 'Form submission from', 'otter-blocks' ), value: window.location.href } ];
 	const inputs = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-input' );
 	const textarea = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-textarea' );
@@ -43,7 +43,7 @@ const collectAndSendInputFormData = ( form ) => {
 		};
 	});
 
-	if ( 0 < errors.length || ( id && ! window.themeisleGutenberg?.tokens[id]) ) {
+	if ( 0 < errors.length || ( hasCaptcha && id && ! window.themeisleGutenberg?.tokens[id]) ) {
 		errors.forEach( input => {
 			input?.reportValidity();
 		});
@@ -56,11 +56,9 @@ const collectAndSendInputFormData = ( form ) => {
 			data.formOption = form?.dataset?.optionName;
 		}
 
-		if (  id && window.themeisleGutenberg?.tokens?.[id]) {
+		if ( hasCaptcha &&  id && window.themeisleGutenberg?.tokens?.[id]) {
 			data.token = window.themeisleGutenberg?.tokens?.[id];
 		}
-
-		console.log( id, window.themeisleGutenberg?.tokens?.[id]);
 
 		const msgAnchor = form.querySelector( '.wp-block-button' );
 		msgAnchor?.classList.add( 'has-submit-msg' );
@@ -136,7 +134,7 @@ domReady( () => {
 					sendBtn?.addEventListener( 'click', ( event ) => {
 						event.preventDefault();
 
-						collectAndSendInputFormData( form );
+						collectAndSendInputFormData( form, true );
 					});
 				});
 			}

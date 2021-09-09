@@ -16,7 +16,7 @@ export const loadCapthaScriptThen = ( callback ) => {
 			const { sitekey } = resp;
 			document.body.querySelectorAll( '.wp-block-themeisle-blocks-form-captcha' ).forEach( captchaTarget => {
 				if ( grecaptcha ) {
-					const id = captchaTarget.parentNode?.parentNode?.id;
+					const id = getFormIdFromChild( captchaTarget );
 					grecaptcha?.render(
 						captchaTarget,
 						{
@@ -45,4 +45,19 @@ export const loadCapthaScriptThen = ( callback ) => {
 			}
 		});
 	};
+};
+
+/**
+ * Extract the Form `id` value from which the given child belongs
+ * @param {HTMLDivElement} child
+ * @returns {string | null} Form Id or null
+ */
+const getFormIdFromChild = child => {
+	let parent = child.parentNode;
+
+	while ( parent !== undefined && ! parent.classlist.contains( 'wp-block-themeisle-blocks-form' ) ) {
+		parent = parent.parentNode;
+	}
+
+	return parent.id || null;
 };
