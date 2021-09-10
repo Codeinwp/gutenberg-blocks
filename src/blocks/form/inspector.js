@@ -40,7 +40,12 @@ const Inspector = ({
 
 	useEffect( () => {
 		if ( attributes.apiKey && attributes.provider ) {
-			getListIdOptionFrom( attributes.provider, attributes.apiKey, x => console.log( x ) );
+			getListIdOptionFrom( attributes.provider, attributes.apiKey, x => {
+				console.log( x );
+				x.splice( 0, 0, { label: __( 'None', 'otter-blocks' ), value: '' });
+				setListIDOptions( x );
+				setFetchListIdStatus( 'loaded' );
+			});
 		}
 	}, [ attributes.provider, attributes.apiKey ]);
 

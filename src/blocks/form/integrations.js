@@ -23,7 +23,7 @@ const getListIdOptionFromMailschimp = ( apiKey, callback ) => {
 	const serverName = apiKey?.split( '-' )?.[1];
 	if ( serverName ) {
 
-		// TODO: Try to find why this request is rejected
+		// BUG: Try to find why this request is rejected
 		const url = `https://${ serverName }.api.mailchimp.com/3.0/lists`;
 		fetch( url, {
 			method: 'GET',
@@ -32,9 +32,13 @@ const getListIdOptionFromMailschimp = ( apiKey, callback ) => {
 			}
 		}).then(
 			res => {
-
-				// TODO: Parse data into an array of options
-				callback( res );
+				const result = res?.links?.map( item => {
+					return {
+						label: item.name,
+						value: item.id
+					};
+				}) || [];
+				callback( result );
 			}
 		).catch( err => {
 			console.log( err );
