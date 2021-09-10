@@ -84,7 +84,7 @@ const Edit = ({
 		if ( 100 > value && attributes.boxShadowColor?.includes( 'var(' ) ) {
 			changes.boxShadowColor = getComputedStyle( document.documentElement, null ).getPropertyValue( attributes.boxShadowColor.replace( 'var(', '' ).replace( ')', '' ) );
 		}
-
+		console.log( value );
 		setAttributes( changes );
 	};
 

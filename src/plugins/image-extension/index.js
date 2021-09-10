@@ -25,7 +25,7 @@ const addAttribute = props => {
 			},
 			boxShadowColorOpacity: {
 				type: 'number',
-				default: 100
+				default: 50
 			},
 			boxShadowBlur: {
 				type: 'number',

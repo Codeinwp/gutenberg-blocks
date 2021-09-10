@@ -87,8 +87,8 @@ class Core_Image_Plugin_CSS extends Base_CSS {
 								'value'   => 'boxShadowColor',
 								'default' => '#000',
 								'format'  => function( $value, $attrs ) {
-									$opacity = ( isset( $attrs['boxShadowColorOpacity'] ) ? $attrs['boxShadowColorOpacity'] : 50 ) / 100;
-									return strpos( $value, '#' ) !== false ? $this->hex2rgba( $value, $opacity ) : $value;
+									$opacity = ( isset( $attrs['boxShadowColorOpacity'] ) ? $attrs['boxShadowColorOpacity'] : 50 ) ;
+									return (strpos( $value, '#' ) !== false && $opacity < 100) ? $this->hex2rgba( $value, $opacity / 100 ) : $value;
 								},
 							),
 						),
