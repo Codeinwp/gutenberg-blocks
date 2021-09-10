@@ -16,6 +16,8 @@ export const getListIdOptionFrom = ( provider, apiKey, callback ) => {
  * @param {string} apiKey
  * @param {Function} callback
  * @returns
+ *
+ * @see https://mailchimp.com/developer/marketing/api/list-members/
  */
 const getListIdOptionFromMailschimp = ( apiKey, callback ) => {
 	const serverName = apiKey?.split( '-' )?.[1];
@@ -26,7 +28,7 @@ const getListIdOptionFromMailschimp = ( apiKey, callback ) => {
 		fetch( url, {
 			method: 'GET',
 			headers: {
-				'Authorization': 'Basic ' + ( 'key:' + apiKey ).toString( 'base64' )
+				'Authorization': 'Basic ' + Buffer.from( 'key:' + apiKey ).toString( 'base64' )
 			}
 		}).then(
 			res => {
