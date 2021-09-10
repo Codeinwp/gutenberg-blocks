@@ -67,7 +67,12 @@ const Edit = ({
 	}, [ attributes.boxShadow ]);
 
 	const changeBoxShadowColor = value => {
-		setAttributes({ boxShadowColor: ( 100 > attributes.boxShadowColorOpacity ) ? getComputedStyle( document.documentElement, null ).getPropertyValue( value?.replace( 'var(', '' )?.replace( ')', '' ) ) : value });
+		console.log( value );
+		setAttributes({
+			boxShadowColor: ( 100 > attributes.boxShadowColorOpacity && attributes.boxShadowColor?.includes( 'var(' ) ) ?
+				getComputedStyle( document.documentElement, null ).getPropertyValue( value?.replace( 'var(', '' )?.replace( ')', '' ) ) :
+				value
+		});
 	};
 
 	const changeBoxShadow = value => {
