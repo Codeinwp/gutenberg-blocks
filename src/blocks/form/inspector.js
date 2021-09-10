@@ -7,11 +7,13 @@ import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
 
 import {
+	Fragment,
 	useState,
 	useEffect
 } from '@wordpress/element';
 
-import { TextControl, PanelBody, Button } from '@wordpress/components';
+import { TextControl, PanelBody, Button, SelectControl, Spinner } from '@wordpress/components';
+import { getListIdOptionFrom } from './integrations';
 
 const Inspector = ({
 	attributes,
@@ -20,6 +22,10 @@ const Inspector = ({
 
 	const [ email, setEmail ] = useState( '' );
 	const [ isEmailSaved, toggleEmailSaved ] = useState( false );
+
+	const [ listIDOptions, setListIDOptions ] = useState([ { label: __( 'None', 'otter-blocks' ), value: '' } ]);
+	const [ fetchListIdStatus, setFetchListIdStatus ] = useState( 'loading' );
+	const [ fetchErrors, setFetchErrors ] = useState( '' );
 
 	useEffect( () => {
 		if ( attributes.optionName ) {
@@ -31,6 +37,12 @@ const Inspector = ({
 
 		}
 	}, [ attributes.optionName ]);
+
+	useEffect( () => {
+		if ( attributes.apiKey && attributes.provider ) {
+			getListIdOptionFrom( attributes.provider, attributes.apiKey, x => console.log( x ) );
+		}
+	}, [ attributes.provider, attributes.apiKey ]);
 
 	const saveEmail = () => {
 		( new wp.api.models.Settings() ).fetch().done( res => {
@@ -106,6 +118,55 @@ const Inspector = ({
 					)
 				}
 	   		</PanelBody>
+			<PanelBody
+				title={ __( 'Integration', 'otter-blocks' )}
+				initialOpen={ true }
+			>
+				<SelectControl
+					label={ __( 'Select Provider', 'otter-blocks' ) }
+					value={ attributes.provider }
+					options={ [
+						{ label: __( 'None', 'otter-blocks' ), value: '' },
+						{ label: __( 'Mailchimp', 'otter-blocks' ), value: 'mailchimp' },
+						{ label: __( 'Sendinblue', 'otter-blocks' ), value: 'sendingblue' }
+					] }
+					onChange={ provider => setAttributes({ provider }) }
+				/>
+
+				{
+					attributes.provider && (
+						<Fragment>
+							<TextControl
+								label={ __( 'API Key', 'otter-blocks' ) }
+								help={ __( 'You can find the key in the provider\'s website', 'otter-blocks' ) }
+								value={ attributes.apiKey }
+								onChange={ apiKey => setAttributes({ apiKey })}
+							/>
+
+							{
+								attributes.APIkey && (
+									<Fragment>
+										<SelectControl
+											label={ __( 'List ID', 'otter-blocks' ) }
+											value={ attributes.listID }
+											options={ listIDOptions }
+											onChange={ listId => setAttributes({ listId }) }
+										/>
+										{
+											2 > listIDOptions.length && 'loading' === fetchListIdStatus && (
+												<Fragment>
+													<Spinner/>
+													{ __( 'Fetch data from provider', 'otter-blocks' ) }
+												</Fragment>
+											)
+										}
+									</Fragment>
+								)
+							}
+						</Fragment>
+					)
+				}
+			</PanelBody>
 		</InspectorControls>
 	);
 };

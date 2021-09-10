@@ -10,6 +10,16 @@ const attributes = {
 	},
 	optionName: {
 		type: 'string'
+	},
+	provider: {
+		type: 'string',
+		default: ''
+	},
+	apiKey: {
+		type: 'string'
+	},
+	listID: {
+		type: 'string'
 	}
 };
 
