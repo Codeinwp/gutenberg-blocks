@@ -33,6 +33,11 @@ class Woo_Comparison_Block extends Base_Block {
 			$table = new \Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Main();
 			$table->register_assets();
 		}
+
+		if ( is_admin() && class_exists( '\Neve_Pro\Modules\Woocommerce_Booster\Module' ) ) {
+			$module = new \Neve_Pro\Modules\Woocommerce_Booster\Module();
+			add_action( 'admin_enqueue_scripts', array( $module, 'enqueue_scripts' ) );
+		}
 	}
 
 	/**
@@ -50,7 +55,19 @@ class Woo_Comparison_Block extends Base_Block {
 	 * @return mixed
 	 */
 	protected function set_attributes() {
-		$this->attributes = array();
+		$this->attributes = array(
+			'id'        => array(
+				'type' => 'string',
+			),
+
+			'className' => array(
+				'type' => 'string',
+			),
+			'products'  => array(
+				'type'    => 'array',
+				'default' => array(),
+			),
+		);
 	}
 
 	/**
@@ -64,17 +81,24 @@ class Woo_Comparison_Block extends Base_Block {
 	 * @return mixed|string
 	 */
 	protected function render( $attributes ) {
-		if ( class_exists( 'Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\View\Table' ) ) {
-			ob_start();
-			$table = new \Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\View\Table();
-
-			$_GET['product_ids'] = array( 209, 211 );
-			$table->render_comparison_products_table();
-			$output  = '<div class="nv-ct-enabled nv-ct-comparison-table-content woocommerce">';
-			$output .= ob_get_contents();
-			$output .= '</div>';
-			ob_end_clean();
-			return $output;
+		if ( ! 'valid' === apply_filters( 'product_neve_license_status', false ) || ! class_exists( 'WooCommerce' ) || ! isset( $attributes['products'] ) || ! class_exists( 'Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\View\Table' ) ) {
+			return;
 		}
+
+		ob_start();
+		$table = new \Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\View\Table();
+
+		$_GET['is_woo_comparison_block'] = true;
+		$_GET['product_ids']             = $attributes['products'];
+		$table->render_comparison_products_table( true, true );
+
+		$class = isset( $attributes['className'] ) ? $attributes['className'] : '';
+		$class = 'nv-ct-enabled nv-ct-comparison-table-content woocommerce ' . esc_attr( $class );
+
+		$output  = '<div class="' . $class . '">';
+		$output .= ob_get_contents();
+		$output .= '</div>';
+		ob_end_clean();
+		return $output;
 	}
 }

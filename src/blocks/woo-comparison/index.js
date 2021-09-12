@@ -11,6 +11,7 @@ import { registerBlockType } from '@wordpress/blocks';
 // import './editor.scss';
 // import './style.scss';
 import { faIcon as icon } from '../../helpers/icons.js';
+import attributes from './attributes.js';
 import edit from './edit.js';
 
 registerBlockType( 'themeisle-blocks/woo-comparison', {
@@ -23,6 +24,7 @@ registerBlockType( 'themeisle-blocks/woo-comparison', {
 		'comparison',
 		'table'
 	],
+	attributes,
 	supports: {
 		html: false
 	},
