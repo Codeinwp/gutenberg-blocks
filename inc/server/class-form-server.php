@@ -58,7 +58,23 @@ class Form_Server {
 				),
 			)
 		);
+
+
+		register_rest_route(
+			$namespace,
+			'/mailchimp',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'get_mailchimp_data' ),
+					'permission_callback' => function () {
+						return current_user_can( 'edit_posts' );
+					},
+				),
+			)
+		);
 	}
+
 
 	/**
 	 * Search WordPress Plugin
@@ -170,6 +186,63 @@ class Form_Server {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Search WordPress Plugin
+	 *
+	 * Search WordPress plugin using WordPress.org API.
+	 *
+	 * @param \WP_REST_Request $request Search request.
+	 *
+	 * @return mixed|\WP_REST_Response
+	 */
+	public function get_mailchimp_data( $request ) {
+		$return = array(
+			'success' => false,
+		);
+		$data   = json_decode( $request->get_body(), true );
+
+		if ( isset( $data['apiKey'] ) && ! empty( $data['apiKey'] ) ) {
+			$api_key = $data['apiKey'];
+			$info    = explode( '-', $api_key );
+			if ( 2 == count( $info ) ) {
+				$server_name = $info[1];
+				$url         = 'https://' . $server_name . '.api.mailchimp.com/3.0/lists';
+				$args        = array(
+					'method'  => 'GET',
+					'headers' => array(
+						'Authorization' => 'Basic ' . base64_encode( 'user:' . $api_key ),
+					),
+				);
+
+				$response = wp_remote_post( $url, $args );
+				$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+
+				if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+					$return['error']      = ! empty( $body['detail'] ) && $body['detail'] !== 'null' ? $body['detail'] : 'Invalid request';
+					$return['error_code'] = 3;
+				} else {
+					$return['success'] = true;
+					$return['list_id'] = array_map(
+						function( $item ) {
+							return array(
+								'id'   => $item['id'],
+								'name' => $item['name'],
+							);
+						},
+						$body['lists']
+					);
+				}
+			} else {
+				$return['error']      = 'Invalid key format';
+				$return['error_code'] = 2;
+			}
+		} else {
+			$return['error']      = 'No key api found';
+			$return['error_code'] = 1;
+		}
+
+		return rest_ensure_response( $return );
+	}
 
 	/**
 	 * The instance method for the static class.
