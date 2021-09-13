@@ -89,18 +89,25 @@ class Form_Server {
 
 		$data = json_decode( $request->get_body(), true );
 
-		if (isset( $data['provider'] ) && isset( $data['action'] ) && isset( $data['postUrl'] ) && isset( $data['formId']) ) {
-			switch( $data['provider'] ) {
+		if ( isset( $data['provider'] ) && isset( $data['action'] ) && isset( $data['postUrl'] ) && isset( $data['formId'] ) ) {
+			switch ( $data['provider'] ) {
 				case 'mailchimp':
-					$this->subscribe_to_mailchimp($data);
+					$this->subscribe_to_mailchimp( $data );
 					break;
 			}
 		}
 
-		return $this->send_email($data);
+		return $this->send_email( $data );
 	}
 
-	private function send_email($data) {
+	/**
+	 * Send Email using SMTP
+	 *
+	 * @param mixed $data Data from request body.
+	 *
+	 * @return mixed|\WP_REST_Response
+	 */
+	private function send_email( $data ) {
 		$return = array(
 			'success' => false,
 		);
@@ -199,9 +206,7 @@ class Form_Server {
 	}
 
 	/**
-	 * Search WordPress Plugin
-	 *
-	 * Search WordPress plugin using WordPress.org API.
+	 * Get general information from Mailchimp
 	 *
 	 * @param \WP_REST_Request $request Search request.
 	 *
@@ -232,7 +237,7 @@ class Form_Server {
 				$body     = json_decode( wp_remote_retrieve_body( $response ), true );
 
 				if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-					$return['error']      = ! empty( $body['detail'] ) && $body['detail'] !== 'null' ? $body['detail'] : 'Invalid request!';
+					$return['error']      = ! empty( $body['detail'] ) && 'null' !== $body['detail'] ? $body['detail'] : 'Invalid request!';
 					$return['error_code'] = 3;
 				} else {
 					$return['success'] = true;
@@ -258,79 +263,87 @@ class Form_Server {
 		return rest_ensure_response( $return );
 	}
 
+	/**
+	 * Add a new subscriber to Mailchimp
+	 *
+	 * @param mixed $data Data from request body.
+	 *
+	 * @return mixed|\WP_REST_Response
+	 */
 	private function subscribe_to_mailchimp( $data ) {
 
 		$return = array(
 			'success' => false,
 		);
 
-		// Get the first email from form
+		// Get the first email from form.
 		$email = '';
-		foreach( $data['data'] as $input_field ) {
-			if( 'email' == $input_field['type'] ) {
+		foreach ( $data['data'] as $input_field ) {
+			if ( 'email' == $input_field['type'] ) {
 				$email = $input_field['value'];
 				break;
 			}
 		}
 
-		if( '' === $email ) {
+		if ( '' === $email ) {
 			return rest_ensure_response( $return );
 		}
 
-		// Get the blocks from the post
-		$post_id = url_to_postid($data['postUrl']);
-		$post = get_post($post_id);
-		$blocks = parse_blocks($post->post_content);
+		// Get the blocks from the post.
+		// phpcs:ignore
+		$post_id = url_to_postid( $data['postUrl'] );
+		$post    = get_post( $post_id );
+		$blocks  = parse_blocks( $post->post_content );
 
-		// Get the api credentials from the Form block
-		$api_key = '';
-		$list_id = '';
-		$get_block_attr_from = function($block) use ($data, &$get_block_attr_from, &$api_key, &$list_id) {
-			if( isset( $block['attrs']) && isset( $block['attrs']['id'] ) ) {
-				if( $block['attrs']['id'] === $data['formId'] ) {
-					if( isset($block['attrs']['apiKey']) && isset( $block['attrs']['listId'] ) ) {
+		// Get the api credentials from the Form block.
+		$api_key             = '';
+		$list_id             = '';
+		$get_block_attr_from = function( $block ) use ( $data, &$get_block_attr_from, &$api_key, &$list_id ) {
+			if ( isset( $block['attrs'] ) && isset( $block['attrs']['id'] ) ) {
+				if ( $block['attrs']['id'] === $data['formId'] ) {
+					if ( isset( $block['attrs']['apiKey'] ) && isset( $block['attrs']['listId'] ) ) {
 						$api_key = $block['attrs']['apiKey'];
 						$list_id = $block['attrs']['listId'];
 					}
-				} else if ( isset( $block['innerBlocks']) &&  0 < count($block['innerBlocks']) ) {
-					foreach ($block['innerBlocks'] as $block) {
+				} elseif ( isset( $block['innerBlocks'] ) && 0 < count( $block['innerBlocks'] ) ) {
+					foreach ( $block['innerBlocks'] as $block ) {
 						$get_block_attr_from( $block );
 					}
 				}
 			}
 		};
 
-		foreach ($blocks as $block) {
+		foreach ( $blocks as $block ) {
 			$get_block_attr_from( $block );
 		}
 
-		if( '' === $api_key && '' === $list_id ) {
+		if ( '' === $api_key && '' === $list_id ) {
 			return rest_ensure_response( $return );
 		}
 
-		$info    = explode( '-', $api_key );
+		$info = explode( '-', $api_key );
 		if ( 2 == count( $info ) ) {
 			$server_name = $info[1];
 			$user_status = $this->get_new_user_status_mailchimp( $api_key, $list_id );
 
-			$url         = 'https://' . $server_name . '.api.mailchimp.com/3.0/lists/' . $list_id . '/members/' . md5( strtolower( $email ) );
+			$url       = 'https://' . $server_name . '.api.mailchimp.com/3.0/lists/' . $list_id . '/members/' . md5( strtolower( $email ) );
 			$form_data = array(
 				'email_address' => $email,
 				'status'        => $user_status,
 			);
-			$args        = array(
+			$args      = array(
 				'method'  => 'PUT',
 				'headers' => array(
 					'Authorization' => 'Basic ' . base64_encode( 'user:' . $api_key ),
 				),
-				'body'    => json_encode( $form_data ),
+				'body'    => wp_json_encode( $form_data ),
 			);
 
 			$response = wp_remote_post( $url, $args );
 			$body     = json_decode( wp_remote_retrieve_body( $response ), true );
 
 			if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-				$return['error']      = ! empty( $body['detail'] ) && $body['detail'] !== 'null' ? $body['detail'] : 'Invalid request!';
+				$return['error']      = ! empty( $body['detail'] ) && 'null' !== $body['detail'] ? $body['detail'] : 'Invalid request!';
 				$return['error_code'] = 3;
 			} else {
 				$return['success'] = true;
@@ -370,7 +383,7 @@ class Form_Server {
 			return 'pending';
 		}
 
-		return array_key_exists( 'double_optin', $body ) && $body['double_optin'] === true ? 'pending' : 'subscribed';
+		return array_key_exists( 'double_optin', $body ) && true === $body['double_optin'] ? 'pending' : 'subscribed';
 	}
 
 	/**
