@@ -12,7 +12,7 @@ import {
 	useEffect
 } from '@wordpress/element';
 
-import { TextControl, PanelBody, Button, SelectControl, Spinner } from '@wordpress/components';
+import { TextControl, PanelBody, Button, SelectControl, Spinner, Notice } from '@wordpress/components';
 import { getListIdOptionFrom } from './integrations';
 
 const Inspector = ({
@@ -40,12 +40,18 @@ const Inspector = ({
 
 	useEffect( () => {
 		if ( attributes.apiKey && attributes.provider ) {
-			getListIdOptionFrom( attributes.provider, attributes.apiKey, x => {
-				console.log( x );
-				x.splice( 0, 0, { label: __( 'None', 'otter-blocks' ), value: '' });
-				setListIDOptions( x );
-				setFetchListIdStatus( 'loaded' );
-			});
+			getListIdOptionFrom( attributes.provider, attributes.apiKey,
+				options => {
+					options.splice( 0, 0, { label: __( 'None', 'otter-blocks' ), value: '' });
+					setListIDOptions( options );
+					setFetchListIdStatus( 'loaded' );
+					setFetchErrors( '' );
+				},
+				err => {
+					setFetchErrors( __( err?.error, 'otter-blocks' ) );
+					setFetchListIdStatus( 'loaded' );
+				}
+			);
 		}
 	}, [ attributes.provider, attributes.apiKey ]);
 
@@ -149,7 +155,7 @@ const Inspector = ({
 							/>
 
 							{
-								attributes.APIkey && (
+								attributes.apiKey && (
 									<Fragment>
 										<SelectControl
 											label={ __( 'List ID', 'otter-blocks' ) }
@@ -163,6 +169,15 @@ const Inspector = ({
 													<Spinner/>
 													{ __( 'Fetch data from provider', 'otter-blocks' ) }
 												</Fragment>
+											)
+										}
+										{
+											fetchErrors && (
+												<Notice status="error" isDismissible={true} onDismiss={ () => setFetchErrors( '' ) }>
+													<p>
+														{ __( 'Error', 'otter-blocks' ) }: <code>{fetchErrors}</code>
+													</p>
+												</Notice>
 											)
 										}
 									</Fragment>
