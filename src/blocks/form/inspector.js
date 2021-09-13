@@ -159,7 +159,7 @@ const Inspector = ({
 									<Fragment>
 										<SelectControl
 											label={ __( 'List ID', 'otter-blocks' ) }
-											value={ attributes.listID }
+											value={ attributes.listId }
 											options={ listIDOptions }
 											onChange={ listId => setAttributes({ listId }) }
 										/>
@@ -178,6 +178,20 @@ const Inspector = ({
 														{ __( 'Error', 'otter-blocks' ) }: <code>{fetchErrors}</code>
 													</p>
 												</Notice>
+											)
+										}
+										{
+											2 >= listIDOptions.length && 'loaded' === fetchListIdStatus && (
+												<SelectControl
+													label={ __( 'Select Action', 'otter-blocks' ) }
+													value={ attributes.action }
+													options={ [
+														{ label: __( 'None', 'otter-blocks' ), value: '' },
+														{ label: __( 'Subscribe', 'otter-blocks' ), value: 'subscribe' }
+													] }
+													onChange={ action => setAttributes({ action }) }
+												/>
+
 											)
 										}
 									</Fragment>

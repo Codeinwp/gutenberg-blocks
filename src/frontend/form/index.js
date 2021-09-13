@@ -35,6 +35,7 @@ const collectAndSendInputFormData = ( form ) => {
 			exportData.push({
 				label,
 				value: valueElem?.value,
+				type: valueElem?.type,
 				checked
 			});
 		};
@@ -46,12 +47,28 @@ const collectAndSendInputFormData = ( form ) => {
 		});
 	} else {
 		data.data = exportData;
+
 		if ( '' !== form?.dataset?.emailSubject ) {
 			data.emailSubject = form?.dataset?.emailSubject;
 		}
+
 		if ( form?.dataset?.optionName ) {
 			data.formOption = form?.dataset?.optionName;
 		}
+
+		if ( form?.dataset?.provider ) {
+			data.provider = form?.dataset?.provider;
+		}
+
+		if ( form?.dataset?.action ) {
+			data.action = form?.dataset?.action;
+		}
+
+		if ( form?.id ) {
+			data.formId = form?.id;
+		}
+
+		data.postUrl = window.location.href;
 
 		const msgAnchor = form.querySelector( '.wp-block-button' );
 		msgAnchor?.classList.add( 'has-submit-msg' );

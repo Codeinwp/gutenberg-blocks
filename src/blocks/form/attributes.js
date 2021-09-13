@@ -18,7 +18,10 @@ const attributes = {
 	apiKey: {
 		type: 'string'
 	},
-	listID: {
+	listId: {
+		type: 'string'
+	},
+	action: {
 		type: 'string'
 	}
 };

@@ -15,6 +15,8 @@ const Save = ({
 			id={ attributes.id }
 			data-email-subject={ attributes.subject }
 			data-option-name={ attributes.optionName }
+			data-provider={ attributes.provider }
+			data-action={ attributes.action }
 		>
 			<div className="wp-block-themeisle-blocks-form__container">
 				<InnerBlocks.Content />

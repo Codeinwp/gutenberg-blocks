@@ -87,11 +87,23 @@ class Form_Server {
 	 */
 	public function get_form_data( $request ) {
 
+		$data = json_decode( $request->get_body(), true );
+
+		if (isset( $data['provider'] ) && isset( $data['action'] ) && isset( $data['postUrl'] ) && isset( $data['formId']) ) {
+			switch( $data['provider'] ) {
+				case 'mailchimp':
+					$this->subscribe_to_mailchimp($data);
+					break;
+			}
+		}
+
+		return $this->send_email($data);
+	}
+
+	private function send_email($data) {
 		$return = array(
 			'success' => false,
 		);
-
-		$data = json_decode( $request->get_body(), true );
 
 		$email_subject = ( isset( $data['emailSubject'] ) ? $data['emailSubject'] : ( __( 'A new form submission on ', 'otter-blocks' ) . get_bloginfo( 'name' ) ) );
 		$email_body    = $this->prepare_body( $data['data'] );
@@ -194,6 +206,8 @@ class Form_Server {
 	 * @param \WP_REST_Request $request Search request.
 	 *
 	 * @return mixed|\WP_REST_Response
+	 *
+	 * @see https://mailchimp.com/developer/marketing/api/list-members/
 	 */
 	public function get_mailchimp_data( $request ) {
 		$return = array(
@@ -218,7 +232,7 @@ class Form_Server {
 				$body     = json_decode( wp_remote_retrieve_body( $response ), true );
 
 				if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-					$return['error']      = ! empty( $body['detail'] ) && $body['detail'] !== 'null' ? $body['detail'] : 'Invalid request';
+					$return['error']      = ! empty( $body['detail'] ) && $body['detail'] !== 'null' ? $body['detail'] : 'Invalid request!';
 					$return['error_code'] = 3;
 				} else {
 					$return['success'] = true;
@@ -233,15 +247,130 @@ class Form_Server {
 					);
 				}
 			} else {
-				$return['error']      = 'Invalid key format';
+				$return['error']      = 'Invalid api key format!';
 				$return['error_code'] = 2;
 			}
 		} else {
-			$return['error']      = 'No key api found';
+			$return['error']      = 'No api key found!';
 			$return['error_code'] = 1;
 		}
 
 		return rest_ensure_response( $return );
+	}
+
+	private function subscribe_to_mailchimp( $data ) {
+
+		$return = array(
+			'success' => false,
+		);
+
+		// Get the first email from form
+		$email = '';
+		foreach( $data['data'] as $input_field ) {
+			if( 'email' == $input_field['type'] ) {
+				$email = $input_field['value'];
+				break;
+			}
+		}
+
+		if( '' === $email ) {
+			return rest_ensure_response( $return );
+		}
+
+		// Get the blocks from the post
+		$post_id = url_to_postid($data['postUrl']);
+		$post = get_post($post_id);
+		$blocks = parse_blocks($post->post_content);
+
+		// Get the api credentials from the Form block
+		$api_key = '';
+		$list_id = '';
+		$get_block_attr_from = function($block) use ($data, &$get_block_attr_from, &$api_key, &$list_id) {
+			if( isset( $block['attrs']) && isset( $block['attrs']['id'] ) ) {
+				if( $block['attrs']['id'] === $data['formId'] ) {
+					if( isset($block['attrs']['apiKey']) && isset( $block['attrs']['listId'] ) ) {
+						$api_key = $block['attrs']['apiKey'];
+						$list_id = $block['attrs']['listId'];
+					}
+				} else if ( isset( $block['innerBlocks']) &&  0 < count($block['innerBlocks']) ) {
+					foreach ($block['innerBlocks'] as $block) {
+						$get_block_attr_from( $block );
+					}
+				}
+			}
+		};
+
+		foreach ($blocks as $block) {
+			$get_block_attr_from( $block );
+		}
+
+		if( '' === $api_key && '' === $list_id ) {
+			return rest_ensure_response( $return );
+		}
+
+		$info    = explode( '-', $api_key );
+		if ( 2 == count( $info ) ) {
+			$server_name = $info[1];
+			$user_status = $this->get_new_user_status_mailchimp( $api_key, $list_id );
+
+			$url         = 'https://' . $server_name . '.api.mailchimp.com/3.0/lists/' . $list_id . '/members/' . md5( strtolower( $email ) );
+			$form_data = array(
+				'email_address' => $email,
+				'status'        => $user_status,
+			);
+			$args        = array(
+				'method'  => 'PUT',
+				'headers' => array(
+					'Authorization' => 'Basic ' . base64_encode( 'user:' . $api_key ),
+				),
+				'body'    => json_encode( $form_data ),
+			);
+
+			$response = wp_remote_post( $url, $args );
+			$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+
+			if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+				$return['error']      = ! empty( $body['detail'] ) && $body['detail'] !== 'null' ? $body['detail'] : 'Invalid request!';
+				$return['error_code'] = 3;
+			} else {
+				$return['success'] = true;
+			}
+		} else {
+			$return['error']      = 'Invalid api key format!';
+			$return['error_code'] = 2;
+		}
+
+		return rest_ensure_response( $return );
+	}
+
+	/**
+	 * Check if the subscribing list has double opt-in.
+	 * If the option is activated, return pending status for new users, else return subscribed.
+	 *
+	 * @param string $api_key Api key.
+	 * @param string $list_id List id.
+	 *
+	 * @return string
+	 *
+	 * @see https://github.com/Codeinwp/themeisle-content-forms/blob/master/includes/widgets-public/newsletter_public.php#L181
+	 */
+	private function get_new_user_status_mailchimp( $api_key, $list_id ) {
+		$url  = 'https://' . substr( $api_key, strpos( $api_key, '-' ) + 1 ) . '.api.mailchimp.com/3.0/lists/' . $list_id;
+		$args = array(
+			'method'  => 'GET',
+			'headers' => array(
+				'Authorization' => 'Basic ' . base64_encode( 'user:' . $api_key ),
+			),
+		);
+
+		$response = wp_remote_post( $url, $args );
+
+		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			return 'pending';
+		}
+
+		return array_key_exists( 'double_optin', $body ) && $body['double_optin'] === true ? 'pending' : 'subscribed';
 	}
 
 	/**
