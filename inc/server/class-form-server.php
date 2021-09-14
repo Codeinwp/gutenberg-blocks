@@ -73,6 +73,21 @@ class Form_Server {
 				),
 			)
 		);
+
+		register_rest_route(
+			$namespace,
+			'/sendinblue',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'get_sendinblue_data' ),
+					'permission_callback' => function () {
+						return current_user_can( 'edit_posts' );
+					},
+				),
+			)
+		);
+
 	}
 
 
@@ -92,7 +107,10 @@ class Form_Server {
 		if ( isset( $data['provider'] ) && isset( $data['action'] ) && isset( $data['postUrl'] ) && isset( $data['formId'] ) ) {
 			switch ( $data['provider'] ) {
 				case 'mailchimp':
-					$this->subscribe_to_mailchimp( $data );
+					return $this->subscribe_to_mailchimp( $data );
+					break;
+				case 'sendinblue':
+					return $this->subscribe_to_sendinblue( $data );
 					break;
 			}
 		}
@@ -264,6 +282,59 @@ class Form_Server {
 	}
 
 	/**
+	 * Get general information from Mailchimp
+	 *
+	 * @param \WP_REST_Request $request Search request.
+	 *
+	 * @return mixed|\WP_REST_Response
+	 *
+	 * @see https://mailchimp.com/developer/marketing/api/list-members/
+	 */
+	public function get_sendinblue_data( $request ) {
+		$return = array(
+			'success' => false,
+		);
+		$data   = json_decode( $request->get_body(), true );
+
+		if ( isset( $data['apiKey'] ) && ! empty( $data['apiKey'] ) ) {
+			$api_key = $data['apiKey'];
+
+			$url         = 'https://api.sendinblue.com/v3/contacts/lists';
+			$args        = array(
+				'method'  => 'GET',
+				'headers' => array(
+					'api-key' =>  $api_key,
+				),
+			);
+
+			$response = wp_remote_post( $url, $args );
+			$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+
+			if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+				$return['error']      = ! empty( $body['detail'] ) && 'null' !== $body['detail'] ? $body['detail'] : 'Invalid request!';
+				$return['error_code'] = 3;
+			} else {
+				$return['success'] = true;
+				$return['list_id'] = array_map(
+					function( $item ) {
+						return array(
+							'id'   => $item['id'],
+							'name' => $item['name'],
+						);
+					},
+					$body['lists']
+				);
+			}
+
+		} else {
+			$return['error']      = 'No api key found!';
+			$return['error_code'] = 1;
+		}
+
+		return rest_ensure_response( $return );
+	}
+
+	/**
 	 * Add a new subscriber to Mailchimp
 	 *
 	 * @param mixed $data Data from request body.
@@ -351,6 +422,94 @@ class Form_Server {
 		} else {
 			$return['error']      = 'Invalid api key format!';
 			$return['error_code'] = 2;
+		}
+
+		return rest_ensure_response( $return );
+	}
+
+	/**
+	 * Add a new subscriber to Sendinblue
+	 *
+	 * @param mixed $data Data from request body.
+	 *
+	 * @return mixed|\WP_REST_Response
+	 */
+	private function subscribe_to_sendinblue( $data ) {
+
+		$return = array(
+			'success' => false,
+		);
+
+		// Get the first email from form.
+		$email = '';
+		foreach ( $data['data'] as $input_field ) {
+			if ( 'email' == $input_field['type'] ) {
+				$email = $input_field['value'];
+				break;
+			}
+		}
+
+		if ( '' === $email ) {
+			return rest_ensure_response( $return );
+		}
+
+		// Get the blocks from the post.
+		// phpcs:ignore
+		$post_id = url_to_postid( $data['postUrl'] );
+		$post    = get_post( $post_id );
+		$blocks  = parse_blocks( $post->post_content );
+
+		// Get the api credentials from the Form block.
+		$api_key             = '';
+		$list_id             = '';
+		$get_block_attr_from = function( $block ) use ( $data, &$get_block_attr_from, &$api_key, &$list_id ) {
+			if ( isset( $block['attrs'] ) && isset( $block['attrs']['id'] ) ) {
+				if ( $block['attrs']['id'] === $data['formId'] ) {
+					if ( isset( $block['attrs']['apiKey'] ) && isset( $block['attrs']['listId'] ) ) {
+						$api_key = $block['attrs']['apiKey'];
+						$list_id = $block['attrs']['listId'];
+					}
+				} elseif ( isset( $block['innerBlocks'] ) && 0 < count( $block['innerBlocks'] ) ) {
+					foreach ( $block['innerBlocks'] as $block ) {
+						$get_block_attr_from( $block );
+					}
+				}
+			}
+		};
+
+		foreach ( $blocks as $block ) {
+			$get_block_attr_from( $block );
+		}
+
+		if ( '' === $api_key && '' === $list_id ) {
+			return rest_ensure_response( $return );
+		}
+
+		$url       = 'https://api.sendinblue.com/v3/contacts';
+		$form_data = array(
+			'email'            => $email,
+			'listIds'          => array( (int) $list_id ),
+			'emailBlacklisted' => false,
+			'smsBlacklisted'   => false,
+		);
+		$args      = array(
+			'method'  => 'POST',
+			'headers' => array(
+				'Accept' => 'application/json',
+				'Content-Type' => 'application/json',
+				'api-key'      => $api_key,
+			),
+			'body'    => wp_json_encode( $form_data ),
+		);
+
+		$response = wp_remote_post( $url, $args );
+		$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		if ( is_wp_error( $response ) || 400 === wp_remote_retrieve_response_code( $response ) ) {
+			$return['error']      = ! empty( $body['detail'] ) && 'null' !== $body['detail'] ? $body['detail'] : 'Invalid request!';
+			$return['error_code'] = 3;
+		} else {
+			$return['success'] = true;
 		}
 
 		return rest_ensure_response( $return );
