@@ -139,7 +139,7 @@ const Inspector = ({
 					options={ [
 						{ label: __( 'None', 'otter-blocks' ), value: '' },
 						{ label: __( 'Mailchimp', 'otter-blocks' ), value: 'mailchimp' },
-						{ label: __( 'Sendinblue', 'otter-blocks' ), value: 'sendingblue' }
+						{ label: __( 'Sendinblue', 'otter-blocks' ), value: 'sendinblue' }
 					] }
 					onChange={ provider => setAttributes({ provider }) }
 				/>
