@@ -210,6 +210,13 @@ class Main {
 
 		global $wp_roles;
 
+		$default_fields = array();
+
+		if ( class_exists( '\Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Fields' ) ) {
+			$fields         = new \Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Fields();
+			$default_fields = wp_json_encode( array_keys( ( $fields->get_fields() ) ) );
+		}
+
 		wp_localize_script(
 			'themeisle-gutenberg-blocks',
 			'themeisleGutenberg',
@@ -222,6 +229,18 @@ class Main {
 				'mapsAPI'        => $api,
 				'themeDefaults'  => $this->get_global_defaults(),
 				'imageSizes'     => function_exists( 'is_wpcom_vip' ) ? array( 'thumbnail', 'medium', 'medium_large', 'large' ) : get_intermediate_image_sizes(), //phpcs:ignore WordPressVIPMinimum.VIP.RestrictedFunctions.get_intermediate_image_sizes_get_intermediate_image_sizes
+				'themeMods'      => array(
+					'listingType'           => get_theme_mod( 'neve_comparison_table_product_listing_type', 'column' ),
+					'enableRelatedProducts' => get_theme_mod( 'neve_comparison_table_enable_related_products', false ),
+					'altRow'                => get_theme_mod( 'neve_comparison_table_enable_alternating_row_bg_color', false ),
+					'fields'                => get_theme_mod( 'neve_comparison_table_fields', $default_fields ),
+					'rowColor'              => get_theme_mod( 'neve_comparison_table_rows_background_color', '' ),
+					'headerColor'           => get_theme_mod( 'neve_comparison_table_header_text_color', '' ),
+					'textColor'             => get_theme_mod( 'neve_comparison_table_text_color', '' ),
+					'borderColor'           => get_theme_mod( 'neve_comparison_table_borders_color', '' ),
+					'altRowColor'           => get_theme_mod( 'neve_comparison_table_alternate_row_bg_color', '' ),
+					'defaultFields'         => $default_fields,
+				),
 				'isWPVIP'        => function_exists( 'is_wpcom_vip' ),
 				'canTrack'       => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
 				'userRoles'      => $wp_roles->roles,

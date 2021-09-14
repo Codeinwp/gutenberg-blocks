@@ -55,17 +55,59 @@ class Woo_Comparison_Block extends Base_Block {
 	 * @return mixed
 	 */
 	protected function set_attributes() {
-		$this->attributes = array(
-			'id'        => array(
-				'type' => 'string',
-			),
+		$default_fields = array();
 
-			'className' => array(
+		if ( class_exists( '\Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Fields' ) ) {
+			$fields         = new \Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Fields();
+			$default_fields = wp_json_encode( array_keys( ( $fields->get_fields() ) ) );
+		}
+
+		$this->attributes = array(
+			'id'                    => array(
 				'type' => 'string',
 			),
-			'products'  => array(
+			'className'             => array(
+				'type' => 'string',
+			),
+			'products'              => array(
 				'type'    => 'array',
 				'default' => array(),
+			),
+			'listingType'           => array(
+				'type'    => 'string',
+				'default' => get_theme_mod( 'neve_comparison_table_product_listing_type', 'column' ),
+			),
+			'enableRelatedProducts' => array(
+				'type'    => 'boolean',
+				'default' => get_theme_mod( 'neve_comparison_table_enable_alternating_row_bg_color', false ),
+			),
+			'altRow'                => array(
+				'type'    => 'boolean',
+				'default' => get_theme_mod( 'neve_comparison_table_enable_alternating_row_bg_color', false ),
+			),
+			'fields'                => array(
+				'type'    => 'string',
+				'default' => get_theme_mod( 'neve_comparison_table_fields', $default_fields ),
+			),
+			'rowColor'              => array(
+				'type'    => 'string',
+				'default' => get_theme_mod( 'neve_comparison_table_rows_background_color', '' ),
+			),
+			'headerColor'           => array(
+				'type'    => 'string',
+				'default' => get_theme_mod( 'neve_comparison_table_header_text_color', '' ),
+			),
+			'textColor'             => array(
+				'type'    => 'string',
+				'default' => get_theme_mod( 'neve_comparison_table_text_color', '' ),
+			),
+			'borderColor'           => array(
+				'type'    => 'string',
+				'default' => get_theme_mod( 'neve_comparison_table_borders_color', '' ),
+			),
+			'altRowColor'           => array(
+				'type'    => 'string',
+				'default' => get_theme_mod( 'neve_comparison_table_alternate_row_bg_color', '' ),
 			),
 		);
 	}
@@ -90,12 +132,13 @@ class Woo_Comparison_Block extends Base_Block {
 
 		$_GET['is_woo_comparison_block'] = true;
 		$_GET['product_ids']             = $attributes['products'];
-		$table->render_comparison_products_table( true, true );
+		$table->render_comparison_products_table( true, true, $attributes );
 
+		$id    = isset( $attributes['id'] ) ? $attributes['id'] : 'wp-block-themeisle-blocks-woo-comparison-' . wp_rand( 10, 100 );
 		$class = isset( $attributes['className'] ) ? $attributes['className'] : '';
-		$class = 'nv-ct-enabled nv-ct-comparison-table-content woocommerce ' . esc_attr( $class );
+		$class = 'wp-block-themeisle-blocks-google-map nv-ct-enabled nv-ct-comparison-table-content woocommerce ' . esc_attr( $class );
 
-		$output  = '<div class="' . $class . '">';
+		$output  = '<div id="' . $id . '" class="' . $class . '">';
 		$output .= ob_get_contents();
 		$output .= '</div>';
 		ob_end_clean();
