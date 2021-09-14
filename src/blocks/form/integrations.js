@@ -12,12 +12,12 @@ export const getListIdOptionFrom = ( provider, apiKey, onSuccess, onError ) => {
 /**
  *
  * @param {string} apiKey
- * @param {Function} onSucces
+ * @param {Function} onSuccess
  * @returns
  *
  * @see https://mailchimp.com/developer/marketing/api/list-members/
  */
-const getListIdOptionFromMailschimp = ( apiKey, onSucces, onError ) => {
+const getListIdOptionFromMailschimp = ( apiKey, onSuccess, onError ) => {
 
 	// NOTE: Mailchimp does not allow CORS -> We can not make request from the browser, so we need to use the server via REST
 	wp.apiFetch({ path: 'themeisle-gutenberg-blocks/v1/mailchimp', method: 'POST', data: { apiKey }}).then(
@@ -29,7 +29,7 @@ const getListIdOptionFromMailschimp = ( apiKey, onSucces, onError ) => {
 						value: item.id
 					};
 				}) || [];
-				onSucces( result );
+				onSuccess( result );
 			} else {
 				onError( res );
 			}
@@ -42,12 +42,12 @@ const getListIdOptionFromMailschimp = ( apiKey, onSucces, onError ) => {
 /**
  *
  * @param {string} apiKey
- * @param {Function} onSucces
+ * @param {Function} onSuccess
  * @returns
  *
  * @see https://mailchimp.com/developer/marketing/api/list-members/
  */
-const getListIdOptionFromSendinblue = ( apiKey, onSucces, onError ) => {
+const getListIdOptionFromSendinblue = ( apiKey, onSuccess, onError ) => {
 
 	// NOTE: Mailchimp does not allow CORS -> We can not make request from the browser, so we need to use the server via REST
 	wp.apiFetch({ path: 'themeisle-gutenberg-blocks/v1/sendinblue', method: 'POST', data: { apiKey }}).then(
@@ -59,7 +59,7 @@ const getListIdOptionFromSendinblue = ( apiKey, onSucces, onError ) => {
 						value: item.id
 					};
 				}) || [];
-				onSucces( result );
+				onSuccess( result );
 			} else {
 				onError( res );
 			}

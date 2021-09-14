@@ -22,7 +22,8 @@ const attributes = {
 		type: 'string'
 	},
 	action: {
-		type: 'string'
+		type: 'string',
+		default: 'subscribe'
 	}
 };
 

@@ -44,12 +44,12 @@ const Inspector = ({
 				options => {
 					options.splice( 0, 0, { label: __( 'None', 'otter-blocks' ), value: '' });
 					setListIDOptions( options );
-					setFetchListIdStatus( 'loaded' );
+					setFetchListIdStatus( 'ready' );
 					setFetchErrors( '' );
 				},
 				err => {
 					setFetchErrors( __( err?.error, 'otter-blocks' ) );
-					setFetchListIdStatus( 'loaded' );
+					setFetchListIdStatus( 'error' );
 				}
 			);
 		}
@@ -88,6 +88,8 @@ const Inspector = ({
 			});
 		});
 	};
+
+	console.log( listIDOptions.length, attributes.listId );
 
 	return (
 		<InspectorControls>
@@ -133,16 +135,25 @@ const Inspector = ({
 				title={ __( 'Integration', 'otter-blocks' )}
 				initialOpen={ true }
 			>
+
+				{
+					__( 'Add your client email to an Digital Marketing provider.', 'otter-blocks' )
+				}
+				<br/> <br/>
+				<b> { __( 'You need to have at least one email field in your form. For multiple email fields, only the first will be used.', 'otter-blocks' ) } </b>
 				<SelectControl
-					label={ __( 'Select Provider', 'otter-blocks' ) }
+					label={ __( 'Provider', 'otter-blocks' ) }
 					value={ attributes.provider }
 					options={ [
 						{ label: __( 'None', 'otter-blocks' ), value: '' },
 						{ label: __( 'Mailchimp', 'otter-blocks' ), value: 'mailchimp' },
 						{ label: __( 'Sendinblue', 'otter-blocks' ), value: 'sendinblue' }
 					] }
-					onChange={ provider => setAttributes({ provider }) }
+					onChange={ provider => {
+						setAttributes({ provider, apiKey: '' });
+					} }
 				/>
+
 
 				{
 					attributes.provider && (
@@ -151,39 +162,44 @@ const Inspector = ({
 								label={ __( 'API Key', 'otter-blocks' ) }
 								help={ __( 'You can find the key in the provider\'s website', 'otter-blocks' ) }
 								value={ attributes.apiKey }
-								onChange={ apiKey => setAttributes({ apiKey })}
+								onChange={ apiKey => {
+									setAttributes({ apiKey });
+									setFetchListIdStatus( 'loading' );
+									setFetchErrors( '' );
+								}}
 							/>
 
 							{
-								attributes.apiKey && (
+								attributes.apiKey && 2 > listIDOptions.length && 'loading' === fetchListIdStatus && (
+									<Fragment>
+										<Spinner/>
+										{ __( 'Fetching data from provider.', 'otter-blocks' ) }
+									</Fragment>
+								)
+							}
+							{
+								fetchErrors && (
+									<Notice status="error" isDismissible={true} onDismiss={ () => setFetchErrors( '' ) }>
+										<p>
+											{ __( 'Error', 'otter-blocks' ) }: <code>{fetchErrors}</code>
+										</p>
+									</Notice>
+								)
+							}
+
+							{
+								attributes.apiKey && 'ready' === fetchListIdStatus && (
 									<Fragment>
 										<SelectControl
-											label={ __( 'List ID', 'otter-blocks' ) }
+											label={ __( 'Contact List', 'otter-blocks' ) }
 											value={ attributes.listId }
 											options={ listIDOptions }
 											onChange={ listId => setAttributes({ listId }) }
 										/>
 										{
-											2 > listIDOptions.length && 'loading' === fetchListIdStatus && (
-												<Fragment>
-													<Spinner/>
-													{ __( 'Fetch data from provider', 'otter-blocks' ) }
-												</Fragment>
-											)
-										}
-										{
-											fetchErrors && (
-												<Notice status="error" isDismissible={true} onDismiss={ () => setFetchErrors( '' ) }>
-													<p>
-														{ __( 'Error', 'otter-blocks' ) }: <code>{fetchErrors}</code>
-													</p>
-												</Notice>
-											)
-										}
-										{
-											2 >= listIDOptions.length && 'loaded' === fetchListIdStatus && (
+											2 <= listIDOptions?.length && attributes.listId && (
 												<SelectControl
-													label={ __( 'Select Action', 'otter-blocks' ) }
+													label={ __( 'Action', 'otter-blocks' ) }
 													value={ attributes.action }
 													options={ [
 														{ label: __( 'None', 'otter-blocks' ), value: '' },
@@ -191,7 +207,6 @@ const Inspector = ({
 													] }
 													onChange={ action => setAttributes({ action }) }
 												/>
-
 											)
 										}
 									</Fragment>
