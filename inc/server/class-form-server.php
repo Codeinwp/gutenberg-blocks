@@ -108,10 +108,8 @@ class Form_Server {
 			switch ( $data['provider'] ) {
 				case 'mailchimp':
 					return $this->subscribe_to_mailchimp( $data );
-					break;
 				case 'sendinblue':
 					return $this->subscribe_to_sendinblue( $data );
-					break;
 			}
 		}
 
@@ -299,11 +297,11 @@ class Form_Server {
 		if ( isset( $data['apiKey'] ) && ! empty( $data['apiKey'] ) ) {
 			$api_key = $data['apiKey'];
 
-			$url         = 'https://api.sendinblue.com/v3/contacts/lists';
-			$args        = array(
+			$url  = 'https://api.sendinblue.com/v3/contacts/lists';
+			$args = array(
 				'method'  => 'GET',
 				'headers' => array(
-					'api-key' =>  $api_key,
+					'api-key' => $api_key,
 				),
 			);
 
@@ -325,7 +323,6 @@ class Form_Server {
 					$body['lists']
 				);
 			}
-
 		} else {
 			$return['error']      = 'No api key found!';
 			$return['error_code'] = 1;
@@ -495,7 +492,7 @@ class Form_Server {
 		$args      = array(
 			'method'  => 'POST',
 			'headers' => array(
-				'Accept' => 'application/json',
+				'Accept'       => 'application/json',
 				'Content-Type' => 'application/json',
 				'api-key'      => $api_key,
 			),
