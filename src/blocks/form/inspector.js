@@ -137,10 +137,11 @@ const Inspector = ({
 			>
 
 				{
-					__( 'Add your client email to an Digital Marketing provider.', 'otter-blocks' )
+					__( 'Add your client email to a Digital Marketing provider.', 'otter-blocks' )
 				}
 				<br/> <br/>
 				<b> { __( 'You need to have at least one email field in your form. For multiple email fields, only the first will be used.', 'otter-blocks' ) } </b>
+
 				<SelectControl
 					label={ __( 'Provider', 'otter-blocks' ) }
 					value={ attributes.provider }

@@ -133,6 +133,7 @@ class Form_Server {
 
 		// Sent the form date to the admin site as a default behaviour.
 		$to = sanitize_email( get_site_option( 'admin_email' ) );
+
 		// Check if we need to send it to another user email.
 		if ( isset( $data['formOption'] ) ) {
 			$option_name = sanitize_text_field( $data['formOption'] );
