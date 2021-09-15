@@ -11,8 +11,6 @@ use ThemeIsle\GutenbergBlocks\Base_CSS;
 
 use ThemeIsle\GutenbergBlocks\CSS\CSS_Utility;
 
-use Masterminds\HTML5;
-
 /**
  * Class Core_Image_Plugin_CSS
  */
@@ -33,6 +31,13 @@ class Core_Image_Plugin_CSS extends Base_CSS {
 	public $block_prefix = 'image';
 
 	/**
+	 * The length of the if suffix (formed from the first eight characters of the clientId).
+	 *
+	 * @var int
+	 */
+	private static $ID_SUFFIX_LENGTH = 8;
+
+	/**
 	 * Generate Icon Block CSS
 	 *
 	 * @param mixed $block Block data.
@@ -42,21 +47,17 @@ class Core_Image_Plugin_CSS extends Base_CSS {
 	 */
 	public function render_css( $block ) {
 		$css = new CSS_Utility( $block );
-
-		$html5  = new HTML5();
-		$dom    = $html5->loadHTML( $block['innerHTML'] );
-		$figure = $dom->getElementsByTagName( 'figure' );
 		$style  = '';
 
-		if ( 0 === count( $figure ) ) {
+
+		$re = '/<figure.*id="([^"]*?)".*>/mg';
+		preg_match_all($re, $block['innerHTML'], $matches, PREG_SET_ORDER, 0);
+
+		if ( ! isset($matches[0]) || ! isset($matches[0][1]) ) {
 			return $style;
 		}
 
-		$id = $figure[0]->getAttribute( 'id' );
-
-		if ( ! isset( $id ) || empty( $id ) ) {
-			return $style;
-		}
+		$id = $matches[0][1];
 
 		$css->set_id( $id );
 
