@@ -53,37 +53,14 @@ class Form_Server {
 			array(
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'get_form_data' ),
+					'callback'            => array( $this, 'submit_form' ),
 					'permission_callback' => function () {
 						return __return_true();
 					},
 				),
 			)
 		);
-		register_rest_route(
-			$namespace,
-			'/forms',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_form_settings' ),
-					'permission_callback' => function () {
-						return __return_true();
-					},
-				),
-			)
-		);
-	}
 
-	/**
-	 * Get Form settings
-	 *
-	 * @return mixed|\WP_REST_Response
-	 */
-	public function get_form_settings() {
-		return rest_ensure_response(
-			array( 'sitekey' => get_site_option( 'themeisle_google_captcha_api_site_key' ) )
-		);
 	}
 
 	/**
@@ -93,7 +70,7 @@ class Form_Server {
 	 *
 	 * @return mixed|\WP_REST_Response
 	 */
-	public function get_form_data( $request ) {
+	public function submit_form( $request ) {
 
 		$return = array(
 			'success' => false,
@@ -101,12 +78,14 @@ class Form_Server {
 
 		$data = json_decode( $request->get_body(), true );
 
+		// TODO: Add block verification to check if this form requires a reCaptchaToken.
+		// BUG: If someone send a request without a token for a form with token, the request is valid.
 		if ( isset( $data['token'] ) ) {
 			$secret = get_option( 'themeisle_google_captcha_api_secret_key' );
 			$resp   = wp_remote_post(
 				'https://www.google.com/recaptcha/api/siteverify',
 				array(
-					'body'    => 'secret=' . get_option( 'themeisle_google_captcha_api_secret_key' ) . '&response=' . $data['token'],
+					'body'    => 'secret=' . $secret . '&response=' . $data['token'],
 					'headers' => [
 						'Content-Type' => 'application/x-www-form-urlencoded',
 					],

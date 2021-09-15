@@ -591,6 +591,14 @@ class Main {
 				true
 			);
 
+			wp_localize_script(
+				'themeisle-gutenberg-form',
+				'themeisleGutenbergForm',
+				array(
+					'reRecaptchaSitekey' => get_option( 'themeisle_google_captcha_api_site_key' ),
+				)
+			);
+
 			self::$is_form_loaded = true;
 		}
 
@@ -625,6 +633,7 @@ class Main {
 
 			self::$is_popup_loaded = true;
 		}
+
 	}
 
 	/**

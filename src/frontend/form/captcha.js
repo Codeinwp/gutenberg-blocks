@@ -1,63 +1,51 @@
+export const addCaptchaOnPage = ( forms ) => {
+	if ( window?.grecaptcha === undefined && window?.themeisleGutenbergForm?.reRecaptchaSitekey ) {
+		const script = document.createElement( 'script' );
+		script.src = 'https://www.google.com/recaptcha/api.js';
+		script.id = 'recaptcha';
+		document.body.appendChild( script );
 
-import apiFetch from '@wordpress/api-fetch';
-
-export const loadCapthaScriptThen = ( callback ) => {
-	window.isCaptchaScriptAdded = true;
-	const script = document.createElement( 'script' );
-	script.src = 'https://www.google.com/recaptcha/api.js';
-	script.id = 'recaptcha';
-	document.body.appendChild( script );
-
-	script.onload = () => {
-		apiFetch({
-			path: 'themeisle-gutenberg-blocks/v1/forms',
-			method: 'GET'
-		}).then( resp => {
-			const { sitekey } = resp;
-			document.body.querySelectorAll( '.wp-block-themeisle-blocks-form-captcha' ).forEach( captchaTarget => {
-				if ( grecaptcha ) {
-					const id = getFormIdFromChild( captchaTarget );
-					grecaptcha?.render(
-						captchaTarget,
-						{
-							sitekey,
-							callback: ( token ) => {
-								console.log( token, 'id', id );
-								if ( ! window.themeisleGutenberg?.tokens ) {
-									window.themeisleGutenberg = {};
-									window.themeisleGutenberg.tokens = {};
-								}
-								window.themeisleGutenberg.tokens[id] = token;
-							},
-							'expired-callback': () => {
-								if ( ! window.themeisleGutenberg?.tokens ) {
-									window.themeisleGutenberg = {};
-									window.themeisleGutenberg.tokens = {};
-								}
-								window.themeisleGutenberg.tokens[id] = null;
-							}
-						}
-					);
-				}
-			});
-			if ( callback ) {
-				callback();
-			}
-		});
-	};
+		script.onload = () => {
+			setTimeout( () => {
+				forms.forEach( form => {
+					if ( form?.dataset?.hasCaptcha ) {
+						renderCapthcaOn( form );
+					}
+				});
+			}, 200 );
+		};
+	}
 };
 
 /**
- * Extract the Form `id` value from which the given child belongs
- * @param {HTMLDivElement} child
- * @returns {string | null} Form Id or null
+ * Render the captcha component on form
+ * @param {HTMLDivElement} form The form container
  */
-const getFormIdFromChild = child => {
-	let parent = child.parentNode;
+const renderCapthcaOn = form => {
+	const id = form.id;
 
-	while ( parent !== undefined && ! parent.classlist.contains( 'wp-block-themeisle-blocks-form' ) ) {
-		parent = parent.parentNode;
-	}
+	const captchaNode = document.createElement( 'div' );
+	const container = form.querySelector( '.wp-block-themeisle-blocks-form__container' );
+	container?.insertBefore( captchaNode, container.lastChild );
 
-	return parent.id || null;
+	window.grecaptcha?.render(
+		captchaNode,
+		{
+			sitekey: window?.themeisleGutenbergForm?.reRecaptchaSitekey,
+			callback: ( token ) => {
+				if ( ! window.themeisleGutenberg?.tokens ) {
+					window.themeisleGutenberg = {};
+					window.themeisleGutenberg.tokens = {};
+				}
+				window.themeisleGutenberg.tokens[id] = token;
+			},
+			'expired-callback': () => {
+				if ( ! window.themeisleGutenberg?.tokens ) {
+					window.themeisleGutenberg = {};
+					window.themeisleGutenberg.tokens = {};
+				}
+				window.themeisleGutenberg.tokens[id] = null;
+			}
+		}
+	);
 };

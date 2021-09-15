@@ -10,6 +10,9 @@ const attributes = {
 	},
 	optionName: {
 		type: 'string'
+	},
+	hasCaptcha: {
+		type: 'boolean'
 	}
 };
 

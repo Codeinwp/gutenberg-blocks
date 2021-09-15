@@ -11,7 +11,7 @@ import {
 	useEffect
 } from '@wordpress/element';
 
-import { TextControl, PanelBody, Button } from '@wordpress/components';
+import { TextControl, PanelBody, Button, ToggleControl } from '@wordpress/components';
 
 const Inspector = ({
 	attributes,
@@ -86,6 +86,13 @@ const Inspector = ({
 					value={ email }
 					onChange={ email => setEmail( email ) }
 					help={ __( 'Send form data to another email. (Admin is default).', 'otter-blocks' ) }
+				/>
+
+				<ToggleControl
+					label={ __( 'Add captcha', 'otter-blocks' ) }
+					checked={ attributes.hasCaptcha }
+					onChange={ hasCaptcha => setAttributes({ hasCaptcha }) }
+					help={ __( 'Add Google reCaptcha for protection againts bots.', 'otter-blocks' ) }
 				/>
 
 				<Button

@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 
 import domReady from '@wordpress/dom-ready';
 import apiFetch from '@wordpress/api-fetch';
-import { loadCapthaScriptThen } from './captcha';
+import { addCaptchaOnPage, loadCapthaScriptThen } from './captcha';
 
 /** @type {Array.<HTMLDivElement>} */
 const msgs = [];
@@ -14,7 +14,7 @@ const TIME_UNTIL_REMOVE = 10_000;
  * Send the date from the form to the server
  * @param {HTMLDivElement} form The element that contains all the inputs
  */
-const collectAndSendInputFormData = ( form, hasCaptcha ) => {
+const collectAndSendInputFormData = ( form ) => {
 	const exportData = [ { label: __( 'Form submission from', 'otter-blocks' ), value: window.location.href } ];
 	const inputs = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-input' );
 	const textarea = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-textarea' );
@@ -43,7 +43,7 @@ const collectAndSendInputFormData = ( form, hasCaptcha ) => {
 		};
 	});
 
-	if ( 0 < errors.length || ( hasCaptcha && id && ! window.themeisleGutenberg?.tokens[id]) ) {
+	if ( 0 < errors.length || ( form?.dataset?.hasCaptcha && id && ! window.themeisleGutenberg?.tokens[id]) ) {
 		errors.forEach( input => {
 			input?.reportValidity();
 		});
@@ -56,7 +56,7 @@ const collectAndSendInputFormData = ( form, hasCaptcha ) => {
 			data.formOption = form?.dataset?.optionName;
 		}
 
-		if ( hasCaptcha &&  id && window.themeisleGutenberg?.tokens?.[id]) {
+		if ( form?.dataset?.hasCaptcha &&  id && window.themeisleGutenberg?.tokens?.[id]) {
 			data.token = window.themeisleGutenberg?.tokens?.[id];
 		}
 
@@ -126,27 +126,15 @@ const collectAndSendInputFormData = ( form, hasCaptcha ) => {
 domReady( () => {
 	const forms = document.querySelectorAll( '.wp-block-themeisle-blocks-form' );
 
-	if ( document.querySelector( '.wp-block-themeisle-blocks-form-captcha' ) ) {
-		loadCapthaScriptThen(
-			() => {
-				forms.forEach( form => {
-					const sendBtn = form.querySelector( 'button' );
-					sendBtn?.addEventListener( 'click', ( event ) => {
-						event.preventDefault();
+	addCaptchaOnPage( forms );
 
-						collectAndSendInputFormData( form, true );
-					});
-				});
-			}
-		);
-	} else {
-		forms.forEach( form => {
-			const sendBtn = form.querySelector( 'button' );
-			sendBtn?.addEventListener( 'click', ( event ) => {
-				event.preventDefault();
+	forms.forEach( form => {
+		const sendBtn = form.querySelector( 'button' );
+		sendBtn?.addEventListener( 'click', ( event ) => {
+			event.preventDefault();
 
-				collectAndSendInputFormData( form );
-			});
+			collectAndSendInputFormData( form );
 		});
-	}
+	});
+
 });
