@@ -196,7 +196,7 @@ const Inspector = ({
 					type="number"
 					value={ productAttributes?.price || attributes.price }
 					disabled={ attributes.product }
-					onChange={ value => setAttributes({ price: Number( value ) }) }
+					onChange={ value => setAttributes({ price: '' !== value ? Number( value ) : undefined }) }
 				/>
 
 				<TextControl
@@ -204,7 +204,7 @@ const Inspector = ({
 					type="number"
 					value={ productAttributes?.discounted || attributes.discounted }
 					disabled={ attributes.product }
-					onChange={ value => setAttributes({ discounted: Number( value ) }) }
+					onChange={ value => setAttributes({ discounted: '' !== value ? Number( value ) : undefined }) }
 				/>
 
 				{ ! ( attributes.image || productAttributes?.image ) ? (
