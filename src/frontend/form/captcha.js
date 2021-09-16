@@ -12,7 +12,7 @@ export const addCaptchaOnPage = ( forms ) => {
 						renderCapthcaOn( form );
 					}
 				});
-			}, 200 );
+			}, 500 );
 		};
 	}
 };

@@ -84,7 +84,6 @@ class Form_Server {
 			return $return;
 		}
 
-		// TODO: Add block verification to check if this form requires a reCaptchaToken.
 		$attrs = $this->extract_form_attr( $data );
 
 		if( empty( $attrs ) ) {
