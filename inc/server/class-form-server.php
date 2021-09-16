@@ -7,9 +7,6 @@
 
 namespace ThemeIsle\GutenbergBlocks\Server;
 
-use EmptyIterator;
-use PHP_CodeSniffer\Reports\Json;
-
 /**
  * Class Plugin_Card_Server
  */
@@ -79,22 +76,22 @@ class Form_Server {
 
 		$data = json_decode( $request->get_body(), true );
 
-		if( ! $this->has_requiered_data( $data ) ) {
-			$return['error'] =  __( 'Invalid request!' , 'otter-blocks' );
+		if ( ! $this->has_requiered_data( $data ) ) {
+			$return['error'] = __( 'Invalid request!', 'otter-blocks' );
 			return $return;
 		}
 
 		$attrs = $this->extract_form_attr( $data );
 
-		if( empty( $attrs ) ) {
-			$return['error'] =  __( 'The form does not exists!' , 'otter-blocks' );
+		if ( empty( $attrs ) ) {
+			$return['error'] = __( 'The form does not exists!', 'otter-blocks' );
 			return $return;
 		}
 
 		$reasons = $this->check_form_conditions( $data, $attrs );
 
-		if( 0 < count($reasons) ) {
-			$return['error'] =  __( 'Invalid request!' , 'otter-blocks' );
+		if ( 0 < count( $reasons ) ) {
+			$return['error']   = __( 'Invalid request!', 'otter-blocks' );
 			$return['reasons'] = wp_json_encode( $reasons );
 			return $return;
 		}
@@ -210,28 +207,51 @@ class Form_Server {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Check for requiered data.
+	 *
+	 * @access private
+	 * @param array $data Data from the request.
+	 *
+	 * @return boolean
+	 */
 	private function has_requiered_data( $data ) {
 		return isset( $data['postUrl'] ) && isset( $data['formId'] );
 	}
 
-
+	/**
+	 * Check if the data request has the data needed by form: captha, integrations.
+	 *
+	 * @access private
+	 * @param array $data Data from the request.
+	 * @param array $attrs Block form attributes.
+	 *
+	 * @return array
+	 */
 	private function check_form_conditions( $data, $attrs ) {
-		$reasons = array();
-		$has_captcha = ( isset($attrs['hasCaptcha']) && true === $attrs['hasCaptcha']) ? true : false;
-		if( $has_captcha && ! isset($data['token']) ) {
+		$reasons     = array();
+		$has_captcha = ( isset( $attrs['hasCaptcha'] ) && true === $attrs['hasCaptcha'] ) ? true : false;
+		if ( $has_captcha && ! isset( $data['token'] ) ) {
 			$reasons += array(
-				__( 'Token is missing!' , 'otter-blocks' )
+				__( 'Token is missing!', 'otter-blocks' ),
 			);
 		}
 
-		// TODO: Add form integration validation here
-
+		// TODO: Add form integration validation here.
 		return $reasons;
 	}
 
-
+	/**
+	 * Extract the form attributes with the formId from the request.
+	 *
+	 * @access private
+	 * @param array $data Data from the request.
+	 *
+	 * @return array
+	 */
 	private function extract_form_attr( $data ) {
 
+		// phpcs:ignore
 		$post_id = url_to_postid( $data['postUrl'] );
 		$post    = get_post( $post_id );
 		$blocks  = parse_blocks( $post->post_content );
@@ -252,7 +272,7 @@ class Form_Server {
 
 		foreach ( $blocks as $block ) {
 			$attrs = $get_block_attr_from( $block );
-			if( !empty( $attrs ) ) {
+			if ( ! empty( $attrs ) ) {
 				return $attrs;
 			}
 		}
