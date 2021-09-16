@@ -15,7 +15,6 @@ const Save = ({
 			id={ attributes.id }
 			data-email-subject={ attributes.subject }
 			data-option-name={ attributes.optionName }
-			data-has-captcha={ attributes.hasCaptcha }
 		>
 			<div className="wp-block-themeisle-blocks-form__container">
 				<InnerBlocks.Content />

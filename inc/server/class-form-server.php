@@ -81,14 +81,7 @@ class Form_Server {
 			return $return;
 		}
 
-		$attrs = $this->extract_form_attr( $data );
-
-		if ( empty( $attrs ) ) {
-			$return['error'] = __( 'The form does not exists!', 'otter-blocks' );
-			return $return;
-		}
-
-		$reasons = $this->check_form_conditions( $data, $attrs );
+		$reasons = $this->check_form_conditions( $data );
 
 		if ( 0 < count( $reasons ) ) {
 			$return['error']   = __( 'Invalid request!', 'otter-blocks' );
@@ -216,7 +209,7 @@ class Form_Server {
 	 * @return boolean
 	 */
 	private function has_requiered_data( $data ) {
-		return isset( $data['postUrl'] ) && isset( $data['formId'] );
+		return isset( $data['postUrl'] ) && isset( $data['formId'] ) && isset( $data['formOption'] ) && isset( $data['nonceValue'] )  && wp_verify_nonce( $data['nonceValue'], 'form-verification');
 	}
 
 	/**
@@ -224,60 +217,31 @@ class Form_Server {
 	 *
 	 * @access private
 	 * @param array $data Data from the request.
-	 * @param array $attrs Block form attributes.
 	 *
 	 * @return array
 	 */
-	private function check_form_conditions( $data, $attrs ) {
+	private function check_form_conditions( $data ) {
 		$reasons     = array();
-		$has_captcha = ( isset( $attrs['hasCaptcha'] ) && true === $attrs['hasCaptcha'] ) ? true : false;
+		$has_captcha = false;
+
+		if ( isset( $data['formOption'] ) ) {
+			$option_name = sanitize_text_field( $data['formOption'] );
+			$form_emails = get_option( 'themeisle_blocks_form_emails' );
+
+			foreach ( $form_emails as $form ) {
+				if ( $form['form'] === $option_name ) {
+					$has_captcha = $form['has_captcha'];
+				}
+			}
+		}
+
 		if ( $has_captcha && ! isset( $data['token'] ) ) {
 			$reasons += array(
 				__( 'Token is missing!', 'otter-blocks' ),
 			);
 		}
-
 		// TODO: Add form integration validation here.
 		return $reasons;
-	}
-
-	/**
-	 * Extract the form attributes with the formId from the request.
-	 *
-	 * @access private
-	 * @param array $data Data from the request.
-	 *
-	 * @return array
-	 */
-	private function extract_form_attr( $data ) {
-
-		// phpcs:ignore
-		$post_id = url_to_postid( $data['postUrl'] );
-		$post    = get_post( $post_id );
-		$blocks  = parse_blocks( $post->post_content );
-
-		$get_block_attr_from = function( $block ) use ( $data, &$get_block_attr_from ) {
-			if ( isset( $block['attrs'] ) && isset( $block['attrs']['id'] ) ) {
-				if ( $block['attrs']['id'] === $data['formId'] ) {
-					return $block['attrs'];
-				} elseif ( isset( $block['innerBlocks'] ) && 0 < count( $block['innerBlocks'] ) ) {
-					foreach ( $block['innerBlocks'] as $block ) {
-						$get_block_attr_from( $block );
-					}
-				} else {
-					return array();
-				}
-			}
-		};
-
-		foreach ( $blocks as $block ) {
-			$attrs = $get_block_attr_from( $block );
-			if ( ! empty( $attrs ) ) {
-				return $attrs;
-			}
-		}
-
-		return array();
 	}
 
 	/**

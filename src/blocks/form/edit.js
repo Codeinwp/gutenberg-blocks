@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * WordPress dependencies
  */
@@ -28,6 +29,8 @@ import {
 
 import { get } from 'lodash';
 
+import { createBlock } from '@wordpress/blocks';
+
 /**
  * Internal dependencies
  */
@@ -52,6 +55,19 @@ const Edit = ({
 	const [ isSaving, setSaving ] = useState( false );
 	const settingsRef = useRef( null );
 
+	const { children, insertBlock, removeBlock } = useSelect( select => {
+		const {
+			getBlock,
+			insertBlock,
+			removeBlock
+		} = select( 'core/block-editor' );
+		return ({
+			children: getBlock( clientId ).innerBlocks,
+			insertBlock,
+			removeBlock
+		});
+	});
+
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe();
@@ -64,6 +80,26 @@ const Edit = ({
 			setAttributes({ optionName: `${ select( 'core/editor' ).getCurrentPostId() }_${ attributes.id.slice( -8 ) }` });
 		}
 	}, [ attributes.id ]);
+
+	useEffect( () => {
+		if ( children ) {
+			console.log( children );
+
+			const verificationBlocks = children.filter( ({ name }) => 'themeisle-blocks/form-nonce' === name );
+
+			console.log( verificationBlocks );
+
+			if ( 2 <= verificationBlocks.length ) {
+				verificationBlocks.slice( 1 ).forEach( block => {
+					removeBlock( block.clientId, false );
+				});
+			} else if ( 0 === verificationBlocks.length ) {
+				console.log( 'Add block' );
+				const nonceBlock = createBlock( 'themeisle-blocks/form-nonce' );
+				insertBlock( nonceBlock, ( children?.length ) || 0, clientId, false );
+			}
+		}
+	}, [ children ]);
 
 	const hasInnerBlocks = useSelect(
 		( select ) =>
@@ -88,6 +124,37 @@ const Edit = ({
 		[ name ]
 	);
 	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
+
+	/**
+	 * Save the captcha setting
+	 */
+	useEffect( () => {
+		( new wp.api.models.Settings() ).fetch().done( res => {
+			const emails = res.themeisle_blocks_form_emails ? res.themeisle_blocks_form_emails : [];
+			let isMissing = true;
+
+			emails?.forEach( ({ form }, index )=> {
+				if ( form === attributes.optionName ) {
+					emails[index].hasCaptcha = attributes.hasCaptcha; // update the value
+					isMissing = false;
+				}
+			});
+
+			if ( isMissing ) {
+				emails.push({
+					form: attributes.optionName,
+					hasCaptcha: attributes.hasCaptcha
+				});
+			}
+
+			const model = new wp.api.models.Settings({
+				// eslint-disable-next-line camelcase
+				themeisle_blocks_form_emails: emails
+			});
+
+			model.save();
+		});
+	}, [ attributes.hasCaptcha ]);
 
 	useEffect( () => {
 
