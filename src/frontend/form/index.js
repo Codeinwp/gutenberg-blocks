@@ -60,6 +60,12 @@ const collectAndSendInputFormData = ( form ) => {
 			data.token = window.themeisleGutenberg?.tokens?.[id];
 		}
 
+		if ( form?.id ) {
+			data.formId = form?.id;
+		}
+
+		data.postUrl = window.location.href;
+
 		const msgAnchor = form.querySelector( '.wp-block-button' );
 		msgAnchor?.classList.add( 'has-submit-msg' );
 		msgAnchor?.classList.add( 'loading' );

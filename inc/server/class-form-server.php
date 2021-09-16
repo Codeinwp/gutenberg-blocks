@@ -7,6 +7,7 @@
 
 namespace ThemeIsle\GutenbergBlocks\Server;
 
+use EmptyIterator;
 use PHP_CodeSniffer\Reports\Json;
 
 /**
@@ -78,8 +79,27 @@ class Form_Server {
 
 		$data = json_decode( $request->get_body(), true );
 
+		if( ! $this->has_requiered_data( $data ) ) {
+			$return['error'] =  __( 'Invalid request!' , 'otter-blocks' );
+			return $return;
+		}
+
 		// TODO: Add block verification to check if this form requires a reCaptchaToken.
-		// BUG: If someone send a request without a token for a form with token, the request is valid.
+		$attrs = $this->extract_form_attr( $data );
+
+		if( empty( $attrs ) ) {
+			$return['error'] =  __( 'The form does not exists!' , 'otter-blocks' );
+			return $return;
+		}
+
+		$reasons = $this->check_form_conditions( $data, $attrs );
+
+		if( 0 < count($reasons) ) {
+			$return['error'] =  __( 'Invalid request!' , 'otter-blocks' );
+			$return['reasons'] = wp_json_encode( $reasons );
+			return $return;
+		}
+
 		if ( isset( $data['token'] ) ) {
 			$secret = get_option( 'themeisle_google_captcha_api_secret_key' );
 			$resp   = wp_remote_post(
@@ -191,6 +211,55 @@ class Form_Server {
 		return ob_get_clean();
 	}
 
+	private function has_requiered_data( $data ) {
+		return isset( $data['postUrl'] ) && isset( $data['formId'] );
+	}
+
+
+	private function check_form_conditions( $data, $attrs ) {
+		$reasons = array();
+		$has_captcha = ( isset($attrs['hasCaptcha']) && true === $attrs['hasCaptcha']) ? true : false;
+		if( $has_captcha && ! isset($data['token']) ) {
+			$reasons += array(
+				__( 'Token is missing!' , 'otter-blocks' )
+			);
+		}
+
+		// TODO: Add form integration validation here
+
+		return $reasons;
+	}
+
+
+	private function extract_form_attr( $data ) {
+
+		$post_id = url_to_postid( $data['postUrl'] );
+		$post    = get_post( $post_id );
+		$blocks  = parse_blocks( $post->post_content );
+
+		$get_block_attr_from = function( $block ) use ( $data, &$get_block_attr_from ) {
+			if ( isset( $block['attrs'] ) && isset( $block['attrs']['id'] ) ) {
+				if ( $block['attrs']['id'] === $data['formId'] ) {
+					return $block['attrs'];
+				} elseif ( isset( $block['innerBlocks'] ) && 0 < count( $block['innerBlocks'] ) ) {
+					foreach ( $block['innerBlocks'] as $block ) {
+						$get_block_attr_from( $block );
+					}
+				} else {
+					return array();
+				}
+			}
+		};
+
+		foreach ( $blocks as $block ) {
+			$attrs = $get_block_attr_from( $block );
+			if( !empty( $attrs ) ) {
+				return $attrs;
+			}
+		}
+
+		return array();
+	}
 
 	/**
 	 * The instance method for the static class.
