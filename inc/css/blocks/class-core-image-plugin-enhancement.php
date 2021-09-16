@@ -39,14 +39,14 @@ class Core_Image_Plugin_CSS extends Base_CSS {
 	 * @access  public
 	 */
 	public function render_css( $block ) {
-		$css = new CSS_Utility( $block );
-		$style  = '';
+		$css   = new CSS_Utility( $block );
+		$style = '';
 
 
 		$re = '/<figure.*id="([^"]*?)".*>/m';
-		preg_match_all($re, $block['innerHTML'], $matches, PREG_SET_ORDER, 0);
+		preg_match_all( $re, $block['innerHTML'], $matches, PREG_SET_ORDER, 0 );
 
-		if ( ! isset($matches[0]) || ! isset($matches[0][1]) ) {
+		if ( ! isset( $matches[0] ) || ! isset( $matches[0][1] ) ) {
 			return $style;
 		}
 
@@ -81,8 +81,8 @@ class Core_Image_Plugin_CSS extends Base_CSS {
 								'value'   => 'boxShadowColor',
 								'default' => '#000',
 								'format'  => function( $value, $attrs ) {
-									$opacity = ( isset( $attrs['boxShadowColorOpacity'] ) ? $attrs['boxShadowColorOpacity'] : 50 ) ;
-									return (strpos( $value, '#' ) !== false && $opacity < 100) ? $this->hex2rgba( $value, $opacity / 100 ) : $value;
+									$opacity = ( isset( $attrs['boxShadowColorOpacity'] ) ? $attrs['boxShadowColorOpacity'] : 50 );
+									return ( strpos( $value, '#' ) !== false && $opacity < 100 ) ? $this->hex2rgba( $value, $opacity / 100 ) : $value;
 								},
 							),
 						),
