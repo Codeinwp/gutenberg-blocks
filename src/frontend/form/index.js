@@ -58,7 +58,7 @@ const collectAndSendInputFormData = ( form ) => {
 			data.formOption = form?.dataset?.optionName;
 		}
 
-		if ( form?.dataset?.hasCaptcha &&  id && window.themeisleGutenberg?.tokens?.[id]) {
+		if (  form?.classList?.contains( 'has-captcha' ) &&  id && window.themeisleGutenberg?.tokens?.[id]) {
 			data.token = window.themeisleGutenberg?.tokens?.[id];
 		}
 

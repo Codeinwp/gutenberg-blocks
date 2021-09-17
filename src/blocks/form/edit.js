@@ -55,17 +55,16 @@ const Edit = ({
 	const [ isSaving, setSaving ] = useState( false );
 	const settingsRef = useRef( null );
 
-	const { children, insertBlock, removeBlock } = useSelect( select => {
+	const {
+		insertBlock,
+		removeBlock
+	} = useDispatch( 'core/block-editor' );
+
+	const children = useSelect( select => {
 		const {
-			getBlock,
-			insertBlock,
-			removeBlock
+			getBlock
 		} = select( 'core/block-editor' );
-		return ({
-			children: getBlock( clientId ).innerBlocks,
-			insertBlock,
-			removeBlock
-		});
+		return getBlock( clientId ).innerBlocks;
 	});
 
 	useEffect( () => {
@@ -96,7 +95,7 @@ const Edit = ({
 			} else if ( 0 === verificationBlocks.length ) {
 				console.log( 'Add block' );
 				const nonceBlock = createBlock( 'themeisle-blocks/form-nonce' );
-				insertBlock( nonceBlock, ( children?.length ) || 0, clientId, false );
+				insertBlock?.( nonceBlock, ( children?.length ) || 0, clientId, false );
 			}
 		}
 	}, [ children ]);

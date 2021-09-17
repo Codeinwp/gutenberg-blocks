@@ -8,7 +8,7 @@ export const addCaptchaOnPage = ( forms ) => {
 		script.onload = () => {
 			setTimeout( () => {
 				forms.forEach( form => {
-					if ( form?.dataset?.hasCaptcha ) {
+					if ( form?.classList?.contains( 'has-captcha' ) ) {
 						renderCapthcaOn( form );
 					}
 				});

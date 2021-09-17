@@ -209,7 +209,8 @@ class Form_Server {
 	 * @return boolean
 	 */
 	private function has_requiered_data( $data ) {
-		return isset( $data['postUrl'] ) && isset( $data['formId'] ) && isset( $data['formOption'] ) && isset( $data['nonceValue'] )  && wp_verify_nonce( $data['nonceValue'], 'form-verification');
+		$has_CSRF_protection = isset( $data['nonceValue'] ) && wp_verify_nonce( $data['nonceValue'], 'form-verification');
+		return isset( $data['postUrl'] ) && isset( $data['formId'] ) && isset( $data['formOption'] ) && $has_CSRF_protection;
 	}
 
 	/**
@@ -230,12 +231,12 @@ class Form_Server {
 
 			foreach ( $form_emails as $form ) {
 				if ( $form['form'] === $option_name ) {
-					$has_captcha = $form['has_captcha'];
+					$has_captcha = $form['hasCaptcha'];
 				}
 			}
 		}
 
-		if ( $has_captcha && ! isset( $data['token'] ) ) {
+		if ( $has_captcha && (! isset( $data['token'] ) || '' ===  $data['token'] )) {
 			$reasons += array(
 				__( 'Token is missing!', 'otter-blocks' ),
 			);

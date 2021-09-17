@@ -4,6 +4,7 @@
 import { __ } from '@wordpress/i18n';
 
 import { InnerBlocks } from '@wordpress/block-editor';
+import classnames from 'classnames';
 
 const Save = ({
 	attributes,
@@ -11,12 +12,12 @@ const Save = ({
 }) => {
 	return (
 		<div
-			className={ className }
+			className={ classnames( className, {'has-captcha': attributes.hasCaptcha }) }
 			id={ attributes.id }
 			data-email-subject={ attributes.subject }
 			data-option-name={ attributes.optionName }
 		>
-			<div className="wp-block-themeisle-blocks-form__container">
+			<div className={'wp-block-themeisle-blocks-form__container'}>
 				<InnerBlocks.Content />
 
 				<div className="wp-block-button">
