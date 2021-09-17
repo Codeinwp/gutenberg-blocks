@@ -45,7 +45,7 @@ const collectAndSendInputFormData = ( form ) => {
 
 	const nonceFieldValue = form.querySelector( '#_nonce_field' )?.value;
 
-	if ( 0 < errors.length || ( form?.dataset?.hasCaptcha && id && ! window.themeisleGutenberg?.tokens[id]) ) {
+	if ( 0 < errors.length || ( form?.classList?.contains( 'has-captcha' ) && id && ! window.themeisleGutenberg?.tokens[id]) ) {
 		errors.forEach( input => {
 			input?.reportValidity();
 		});
@@ -115,8 +115,9 @@ const collectAndSendInputFormData = ( form ) => {
 				msg.innerHTML = __( 'Success', 'otter-blocks' );
 				msg.classList.add( 'success' );
 			} else {
-				msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
+				msg.innerHTML = __( 'Something went wrong! Try again later.', 'otter-blocks' );
 				msg.classList.add( 'error' );
+				console.error( res?.error );
 			}
 
 			addThenRemoveMsg( msg );
