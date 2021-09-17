@@ -128,13 +128,13 @@ class Options_Settings {
 						'items' => array(
 							'type'       => 'object',
 							'properties' => array(
-								'form'  => array(
+								'form'       => array(
 									'type' => 'string',
 								),
-								'email' => array(
+								'email'      => array(
 									'type' => 'string',
 								),
-								'hasCaptcha'=> array(
+								'hasCaptcha' => array(
 									'type' => 'boolean',
 								),
 							),

@@ -209,8 +209,8 @@ class Form_Server {
 	 * @return boolean
 	 */
 	private function has_requiered_data( $data ) {
-		$has_CSRF_protection = isset( $data['nonceValue'] ) && wp_verify_nonce( $data['nonceValue'], 'form-verification');
-		return isset( $data['postUrl'] ) && isset( $data['formId'] ) && isset( $data['formOption'] ) && $has_CSRF_protection;
+		$has_csrf_protection = isset( $data['nonceValue'] ) && wp_verify_nonce( $data['nonceValue'], 'form-verification' );
+		return isset( $data['postUrl'] ) && isset( $data['formId'] ) && isset( $data['formOption'] ) && $has_csrf_protection;
 	}
 
 	/**
@@ -236,7 +236,7 @@ class Form_Server {
 			}
 		}
 
-		if ( $has_captcha && (! isset( $data['token'] ) || '' ===  $data['token'] )) {
+		if ( $has_captcha && ( ! isset( $data['token'] ) || '' === $data['token'] ) ) {
 			$reasons += array(
 				__( 'Token is missing!', 'otter-blocks' ),
 			);

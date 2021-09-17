@@ -42,7 +42,7 @@ class Form_Nonce_Block extends Base_Block {
 	 * @return mixed|string
 	 */
 	protected function render( $attributes ) {
-		$output = '<div class="protection">';
+		$output  = '<div class="protection">';
 		$output .= wp_nonce_field( 'form-verification', '_nonce_field' );
 		$output .= '</div>';
 		return $output;
