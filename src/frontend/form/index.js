@@ -4,9 +4,6 @@ import domReady from '@wordpress/dom-ready';
 import apiFetch from '@wordpress/api-fetch';
 import { addCaptchaOnPage } from './captcha';
 
-/** @type {Array.<HTMLDivElement>} */
-const msgs = [];
-
 const TIME_UNTIL_REMOVE = 10_000;
 
 /**
@@ -14,13 +11,20 @@ const TIME_UNTIL_REMOVE = 10_000;
  * @param {HTMLDivElement} form The element that contains all the inputs
  */
 const collectAndSendInputFormData = ( form ) => {
-	const exportData = [ { label: __( 'Form submission from', 'otter-blocks' ), value: window.location.href } ];
-	const inputs = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-input' );
-	const textarea = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-textarea' );
-	const errors = [];
+	const id = form?.id;
 	const data = {};
 
-	const id = form?.id;
+	/** @type {Array.<HTMLDivElement>} */
+	const messagesElem = [];
+
+	/** @type {Array.<HTMLDivElement>} */
+	const elemsWithError = [];
+
+	const formFieldsData = [ { label: __( 'Form submission from', 'otter-blocks' ), value: window.location.href } ];
+
+	const inputs = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-input' );
+	const textarea = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-textarea' );
+
 
 	[ ...inputs, ...textarea ]?.forEach( input => {
 		const label = input.querySelector( '.wp-block-themeisle-blocks-form-input-label__label, .wp-block-themeisle-blocks-form-textarea-label__label' )?.innerHTML;
@@ -30,11 +34,11 @@ const collectAndSendInputFormData = ( form ) => {
 		const checked = input.querySelector( '.wp-block-themeisle-blocks-form-input-input[type="checkbox"]' )?.checked;
 
 		if ( valueElem?.hasAttribute( 'required' ) &&  ! valueElem?.checkValidity() ) {
-			errors.push( valueElem );
+			elemsWithError.push( valueElem );
 		}
 
 		if ( label && valueElem?.value ) {
-			exportData.push({
+			formFieldsData.push({
 				label,
 				value: valueElem?.value,
 				checked
@@ -44,12 +48,12 @@ const collectAndSendInputFormData = ( form ) => {
 
 	const nonceFieldValue = form.querySelector( '#_nonce_field' )?.value;
 
-	if ( 0 < errors.length || ( form?.classList?.contains( 'has-captcha' ) && id && ! window.themeisleGutenberg?.tokens[id]) ) {
-		errors.forEach( input => {
+	if ( 0 < elemsWithError.length || ( form?.classList?.contains( 'has-captcha' ) && id && ! window.themeisleGutenberg?.tokens[id]) ) {
+		elemsWithError.forEach( input => {
 			input?.reportValidity();
 		});
 	} else {
-		data.data = exportData;
+		data.data = formFieldsData;
 		if ( '' !== form?.dataset?.emailSubject ) {
 			data.emailSubject = form?.dataset?.emailSubject;
 		}
@@ -82,16 +86,16 @@ const collectAndSendInputFormData = ( form ) => {
 		const addThenRemoveMsg = ( msg ) => {
 
 			// Remove old messages
-			let _msg = msgs.pop();
+			let _msg = messagesElem.pop();
 			while ( _msg ) {
 				if ( msgAnchor === _msg.parentNode ) {
 					msgAnchor.removeChild( _msg );
 				}
-				_msg = msgs.pop();
+				_msg = messagesElem.pop();
 			}
 
 			// Add the new message to the page
-			msgs.push( msg );
+			messagesElem.push( msg );
 			msgAnchor.appendChild( msg );
 
 			// Delete it after a fixed time
@@ -110,6 +114,7 @@ const collectAndSendInputFormData = ( form ) => {
 			msgAnchor?.classList.remove( 'loading' );
 			const msg = document.createElement( 'div' );
 			msg.classList.add( 'wp-block-themeisle-blocks-form-server-msg' );
+
 			if ( res?.success ) {
 				msg.innerHTML = __( 'Success', 'otter-blocks' );
 				msg.classList.add( 'success' );
