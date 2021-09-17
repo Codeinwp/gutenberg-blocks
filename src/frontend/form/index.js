@@ -56,14 +56,6 @@ const collectAndSendInputFormData = ( form ) => {
 			data.formOption = form?.dataset?.optionName;
 		}
 
-		if ( form?.dataset?.provider ) {
-			data.provider = form?.dataset?.provider;
-		}
-
-		if ( form?.dataset?.action ) {
-			data.action = form?.dataset?.action;
-		}
-
 		if ( form?.id ) {
 			data.formId = form?.id;
 		}
@@ -115,6 +107,8 @@ const collectAndSendInputFormData = ( form ) => {
 			} else {
 				msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
 				msg.classList.add( 'error' );
+
+				console.error( res?.error, res?.resons );
 			}
 
 			addThenRemoveMsg( msg );

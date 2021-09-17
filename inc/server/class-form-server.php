@@ -51,7 +51,7 @@ class Form_Server {
 			array(
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'get_form_data' ),
+					'callback'            => array( $this, 'submit_form' ),
 					'permission_callback' => function () {
 						return __return_true();
 					},
@@ -59,53 +59,51 @@ class Form_Server {
 			)
 		);
 
-
 		register_rest_route(
 			$namespace,
-			'/mailchimp',
+			'/integration',
 			array(
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'get_mailchimp_data' ),
+					'callback'            => array( $this, 'get_integration_data' ),
 					'permission_callback' => function () {
 						return current_user_can( 'edit_posts' );
 					},
 				),
 			)
 		);
-
-		register_rest_route(
-			$namespace,
-			'/sendinblue',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'get_sendinblue_data' ),
-					'permission_callback' => function () {
-						return current_user_can( 'edit_posts' );
-					},
-				),
-			)
-		);
-
 	}
 
 
 	/**
-	 * Search WordPress Plugin
+	 * Handle the request from the form block
 	 *
-	 * Search WordPress plugin using WordPress.org API.
-	 *
-	 * @param mixed $request Search request.
+	 * @param mixed $request Form request.
 	 *
 	 * @return mixed|\WP_REST_Response
 	 */
-	public function get_form_data( $request ) {
+	public function submit_form( $request ) {
 
 		$data = json_decode( $request->get_body(), true );
 
-		if ( isset( $data['provider'] ) && isset( $data['action'] ) && isset( $data['postUrl'] ) && isset( $data['formId'] ) ) {
-			switch ( $data['provider'] ) {
+		if ( ! $this->has_requiered_data( $data ) ) {
+			$return['error'] = __( 'Invalid request!', 'otter-blocks' );
+			return $return;
+		}
+
+		$reasons = $this->check_form_conditions( $data );
+
+		if ( 0 < count( $reasons ) ) {
+			$return['error']   = __( 'Invalid request!', 'otter-blocks' );
+			$return['reasons'] = $reasons;
+			return $return;
+		}
+
+		$integration = $this->get_form_option_settings( $data['formOption'] );
+
+		// TODO: Add reCaptcha token verification
+		if ( isset( $integration['provider'] ) && isset( $integration['action'] ) ) {
+			switch ( $integration['provider'] ) {
 				case 'mailchimp':
 					return $this->subscribe_to_mailchimp( $data );
 				case 'sendinblue':
@@ -222,6 +220,25 @@ class Form_Server {
 		return ob_get_clean();
 	}
 
+	public function get_integration_data( $request ) {
+		$return = array(
+			'success' => false,
+		);
+
+		$data = json_decode( $request->get_body(), true );
+		if ( isset( $data['provider'] ) ) {
+			switch ( $data['provider'] ) {
+				case 'mailchimp':
+					return $this->get_mailchimp_data( $request );
+				case 'sendinblue':
+					return $this->get_sendinblue_data( $request );
+			}
+		}
+
+		$return['error'] = __( 'Invalid request! Provider is missing.', 'otter-blocks' );
+		return rest_ensure_response( $return );
+	}
+
 	/**
 	 * Get general information from Mailchimp
 	 *
@@ -254,7 +271,7 @@ class Form_Server {
 				$body     = json_decode( wp_remote_retrieve_body( $response ), true );
 
 				if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-					$return['error']      = ! empty( $body['detail'] ) && 'null' !== $body['detail'] ? $body['detail'] : 'Invalid request!';
+					$return['error']      = ! empty( $body['detail'] ) && 'null' !== $body['detail'] ? $body['detail'] : __( 'Invalid request!', 'otter-blocks' );
 					$return['error_code'] = 3;
 				} else {
 					$return['success'] = true;
@@ -269,11 +286,11 @@ class Form_Server {
 					);
 				}
 			} else {
-				$return['error']      = 'Invalid api key format!';
+				$return['error']      = __( 'Invalid key api format!', 'otter-blocks' );
 				$return['error_code'] = 2;
 			}
 		} else {
-			$return['error']      = 'No api key found!';
+			$return['error']      = __( 'No key api found!', 'otter-blocks' );
 			$return['error_code'] = 1;
 		}
 
@@ -325,7 +342,7 @@ class Form_Server {
 				);
 			}
 		} else {
-			$return['error']      = 'No api key found!';
+			$return['error']      = __( 'No key api found!', 'otter-blocks' );
 			$return['error_code'] = 1;
 		}
 
@@ -358,32 +375,13 @@ class Form_Server {
 			return rest_ensure_response( $return );
 		}
 
-		// Get the blocks from the post.
-		// phpcs:ignore
-		$post_id = url_to_postid( $data['postUrl'] );
-		$post    = get_post( $post_id );
-		$blocks  = parse_blocks( $post->post_content );
+		$integration = $this->get_form_option_settings( $data['formOption'] );
 
-		// Get the api credentials from the Form block.
-		$api_key             = '';
-		$list_id             = '';
-		$get_block_attr_from = function( $block ) use ( $data, &$get_block_attr_from, &$api_key, &$list_id ) {
-			if ( isset( $block['attrs'] ) && isset( $block['attrs']['id'] ) ) {
-				if ( $block['attrs']['id'] === $data['formId'] ) {
-					if ( isset( $block['attrs']['apiKey'] ) && isset( $block['attrs']['listId'] ) ) {
-						$api_key = $block['attrs']['apiKey'];
-						$list_id = $block['attrs']['listId'];
-					}
-				} elseif ( isset( $block['innerBlocks'] ) && 0 < count( $block['innerBlocks'] ) ) {
-					foreach ( $block['innerBlocks'] as $block ) {
-						$get_block_attr_from( $block );
-					}
-				}
-			}
-		};
-
-		foreach ( $blocks as $block ) {
-			$get_block_attr_from( $block );
+		if( isset( $integration['apiKey'] ) && '' !== $integration['apiKey'] &&
+			isset( $integration['listId'] ) && '' !== $integration['listId']
+		) {
+			$api_key = $integration['apiKey'];
+			$list_id = $integration['listId'];
 		}
 
 		if ( '' === $api_key && '' === $list_id ) {
@@ -451,32 +449,18 @@ class Form_Server {
 			return rest_ensure_response( $return );
 		}
 
-		// Get the blocks from the post.
-		// phpcs:ignore
-		$post_id = url_to_postid( $data['postUrl'] );
-		$post    = get_post( $post_id );
-		$blocks  = parse_blocks( $post->post_content );
 
 		// Get the api credentials from the Form block.
 		$api_key             = '';
 		$list_id             = '';
-		$get_block_attr_from = function( $block ) use ( $data, &$get_block_attr_from, &$api_key, &$list_id ) {
-			if ( isset( $block['attrs'] ) && isset( $block['attrs']['id'] ) ) {
-				if ( $block['attrs']['id'] === $data['formId'] ) {
-					if ( isset( $block['attrs']['apiKey'] ) && isset( $block['attrs']['listId'] ) ) {
-						$api_key = $block['attrs']['apiKey'];
-						$list_id = $block['attrs']['listId'];
-					}
-				} elseif ( isset( $block['innerBlocks'] ) && 0 < count( $block['innerBlocks'] ) ) {
-					foreach ( $block['innerBlocks'] as $block ) {
-						$get_block_attr_from( $block );
-					}
-				}
-			}
-		};
 
-		foreach ( $blocks as $block ) {
-			$get_block_attr_from( $block );
+		$integration = $this->get_form_option_settings( $data['formOption'] );
+
+		if( isset( $integration['apiKey'] ) && '' !== $integration['apiKey'] &&
+			isset( $integration['listId'] ) && '' !== $integration['listId']
+		) {
+			$api_key = $integration['apiKey'];
+			$list_id = $integration['listId'];
 		}
 
 		if ( '' === $api_key && '' === $list_id ) {
@@ -541,6 +525,80 @@ class Form_Server {
 		}
 
 		return array_key_exists( 'double_optin', $body ) && true === $body['double_optin'] ? 'pending' : 'subscribed';
+	}
+
+	/**
+	 * Check for requiered data.
+	 *
+	 * @access private
+	 * @param array $data Data from the request.
+	 *
+	 * @return boolean
+	 */
+	private function has_requiered_data( $data ) {
+		return isset( $data['postUrl'] ) && isset( $data['formId']) && isset( $data['formOption']);
+	}
+
+	/**
+	 * Check if the data request has the data needed by form: captha, integrations.
+	 *
+	 * @access private
+	 * @param array $data Data from the request.
+	 *
+	 * @return array
+	 */
+	private function check_form_conditions( $data ) {
+		$reasons = array();
+
+		$has_provider = false;
+		$has_creditentials = false;
+
+		$integration = $this->get_form_option_settings( $data['formOption'] );
+
+		if( isset( $integration['provider'] ) && '' !== $integration['provider'] ) {
+			$has_provider = true;
+		}
+		if( isset( $integration['apiKey'] ) && '' !== $integration['apiKey'] &&
+			isset( $integration['listId'] ) && '' !== $integration['listId']
+		) {
+			$has_creditentials = true;
+		}
+
+
+		// TODO: Add form captcha validation here.
+
+		if ( ! $has_provider )  {
+			$reasons += array(
+				__( 'Provider is missing!', 'otter-blocks' ),
+			);
+		}
+
+		if( ! $has_creditentials ) {
+			$reasons += array(
+				__( 'Provider settings are missing!', 'otter-blocks' ),
+			);
+		}
+		return $reasons;
+	}
+
+	/**
+	 * Get form settings from options.
+	 *
+	 * @param string $formOption The name of the option.
+	 * @return array Form settings
+	 */
+	private function get_form_option_settings( $formOption ) {
+		$option_name = sanitize_text_field( $formOption );
+		$form_emails = get_option( 'themeisle_blocks_form_emails' );
+
+		foreach ( $form_emails as $form ) {
+			if ( $form['form'] === $option_name ) {
+				if( isset( $form['integration'])) {
+					return $form['integration'];
+				}
+			}
+		}
+		return array();
 	}
 
 	/**

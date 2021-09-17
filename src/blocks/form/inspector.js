@@ -204,7 +204,8 @@ const Inspector = ({
 													value={ attributes.action }
 													options={ [
 														{ label: __( 'None', 'otter-blocks' ), value: '' },
-														{ label: __( 'Subscribe', 'otter-blocks' ), value: 'subscribe' }
+														{ label: __( 'Subscribe', 'otter-blocks' ), value: 'subscribe' },
+														{ label: __( 'Submit & Subscribe', 'otter-blocks' ), value: 'submit-subscribe' }
 													] }
 													onChange={ action => setAttributes({ action }) }
 												/>

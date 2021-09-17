@@ -77,6 +77,50 @@ const Edit = ({
 	);
 	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
 
+	/**
+	 * Save integration data.
+	 */
+	useEffect( () => {
+		( new wp.api.models.Settings() ).fetch().done( res => {
+			const emails = res.themeisle_blocks_form_emails ? res.themeisle_blocks_form_emails : [];
+			let isMissing = true;
+
+			emails?.forEach( ({ form }, index )=> {
+				if ( form === attributes.optionName ) {
+					if ( emails[index]?.integration ) {
+						emails[index].integration = {};
+					}
+					emails[index].integration.provider = attributes.provider; // update the value
+					emails[index].integration.apiKey = attributes.apiKey;
+					emails[index].integration.listId = attributes.listId;
+					emails[index].integration.action = attributes.action;
+					isMissing = false;
+				}
+			});
+
+			if ( isMissing ) {
+				emails.push({
+					form: attributes.optionName,
+					integration: {
+						provider: attributes.provider,
+						apiKey: attributes.apiKey,
+						listId: attributes.listId,
+						action: attributes.action
+					}
+				});
+			}
+
+			const model = new wp.api.models.Settings({
+				// eslint-disable-next-line camelcase
+				themeisle_blocks_form_emails: emails
+			});
+
+			model.save();
+		});
+	}, [ attributes.hasCaptcha ]);
+
+	const hasIntegrationActive = attributes.provider && attributes.apiKey && attributes.listId;
+
 	return (
 		<Fragment>
 			<Inspector
@@ -96,7 +140,7 @@ const Edit = ({
 
 							<div className="wp-block-button">
 								<button className="wp-block-button__link">
-									{ __( 'Submit', 'otter-blocks' ) }
+									{ __( hasIntegrationActive && 'subscribe' === attributes.action ? 'Subscribe' : 'Submit', 'otter-blocks' ) }
 								</button>
 							</div>
 						</div>

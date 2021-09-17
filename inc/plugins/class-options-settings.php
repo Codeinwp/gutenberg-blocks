@@ -95,7 +95,7 @@ class Options_Settings {
 							$item['email'] = sanitize_text_field( $item['email'] );
 							return $item;
 						},
-						$array 
+						$array
 					);
 				},
 				'show_in_rest'      => array(
@@ -104,11 +104,20 @@ class Options_Settings {
 						'items' => array(
 							'type'       => 'object',
 							'properties' => array(
-								'form'  => array(
+								'form'        => array(
 									'type' => 'string',
 								),
-								'email' => array(
+								'email'       => array(
 									'type' => 'string',
+								),
+								'integration' => array(
+									'type'       => 'object',
+									'properties' => array(
+										'provider' => 'string',
+										'apiKey'   => 'string',
+										'listId'   => 'string',
+										'action'   => 'string',
+									),
 								),
 							),
 						),
