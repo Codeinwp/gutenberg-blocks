@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
 import { __ } from '@wordpress/i18n';
 
 import domReady from '@wordpress/dom-ready';
 import apiFetch from '@wordpress/api-fetch';
-import { addCaptchaOnPage, loadCapthaScriptThen } from './captcha';
+import { addCaptchaOnPage } from './captcha';
 
 /** @type {Array.<HTMLDivElement>} */
 const msgs = [];
@@ -58,7 +57,7 @@ const collectAndSendInputFormData = ( form ) => {
 			data.formOption = form?.dataset?.optionName;
 		}
 
-		if (  form?.classList?.contains( 'has-captcha' ) &&  id && window.themeisleGutenberg?.tokens?.[id]) {
+		if (  form?.classList?.contains( 'has-captcha' ) && id && window.themeisleGutenberg?.tokens?.[id]) {
 			data.token = window.themeisleGutenberg?.tokens?.[id];
 		}
 
@@ -115,9 +114,9 @@ const collectAndSendInputFormData = ( form ) => {
 				msg.innerHTML = __( 'Success', 'otter-blocks' );
 				msg.classList.add( 'success' );
 			} else {
-				msg.innerHTML = __( 'Something went wrong! Try again later.', 'otter-blocks' );
+				msg.innerHTML = __( 'Something went wrong! Try again.', 'otter-blocks' );
 				msg.classList.add( 'error' );
-				console.error( res?.error );
+				console.error( res?.error, res?.reasons );
 			}
 
 			addThenRemoveMsg( msg );
