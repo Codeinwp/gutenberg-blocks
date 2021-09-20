@@ -7,6 +7,10 @@
 
 namespace ThemeIsle\GutenbergBlocks\Server;
 
+use Exception;
+use ThemeIsle\GutenbergBlocks\Integration\Mailchimp_Integration;
+use ThemeIsle\GutenbergBlocks\Integration\Sendinblue_Integration;
+
 /**
  * Class Plugin_Card_Server
  */
@@ -101,7 +105,7 @@ class Form_Server {
 
 		$integration = $this->get_form_option_settings( $data['formOption'] );
 
-		// TODO: Add reCaptcha token verification
+		// TODO: Add reCaptcha token verification.
 		if ( isset( $integration['provider'] ) && isset( $integration['action'] ) ) {
 			switch ( $integration['provider'] ) {
 				case 'mailchimp':
@@ -220,6 +224,12 @@ class Form_Server {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Get data about the given provider
+	 *
+	 * @param \WP_REST_Request $request Search request.
+	 * @return mixed|\WP_REST_Response
+	 */
 	public function get_integration_data( $request ) {
 		$return = array(
 			'success' => false,
@@ -254,57 +264,26 @@ class Form_Server {
 		);
 		$data   = json_decode( $request->get_body(), true );
 
-		if ( isset( $data['apiKey'] ) && ! empty( $data['apiKey'] ) ) {
-			$api_key = $data['apiKey'];
-			$info    = explode( '-', $api_key );
-			if ( 2 == count( $info ) ) {
-				$server_name = $info[1];
-				$url         = 'https://' . $server_name . '.api.mailchimp.com/3.0/lists';
-				$args        = array(
-					'method'  => 'GET',
-					'headers' => array(
-						'Authorization' => 'Basic ' . base64_encode( 'user:' . $api_key ),
-					),
-				);
+		$valid_api_key = Mailchimp_Integration::validate_api_key( $data['apiKey'] );
 
-				$response = wp_remote_post( $url, $args );
-				$body     = json_decode( wp_remote_retrieve_body( $response ), true );
-
-				if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-					$return['error']      = ! empty( $body['detail'] ) && 'null' !== $body['detail'] ? $body['detail'] : __( 'Invalid request!', 'otter-blocks' );
-					$return['error_code'] = 3;
-				} else {
-					$return['success'] = true;
-					$return['list_id'] = array_map(
-						function( $item ) {
-							return array(
-								'id'   => $item['id'],
-								'name' => $item['name'],
-							);
-						},
-						$body['lists']
-					);
-				}
-			} else {
-				$return['error']      = __( 'Invalid key api format!', 'otter-blocks' );
-				$return['error_code'] = 2;
-			}
+		if ( $valid_api_key['valid'] ) {
+			$integ = new Mailchimp_Integration( $data['apiKey'] );
+			return $integ->get_lists();
 		} else {
-			$return['error']      = __( 'No key api found!', 'otter-blocks' );
-			$return['error_code'] = 1;
+			$return['error'] = $valid_api_key['reason'];
 		}
 
 		return rest_ensure_response( $return );
 	}
 
 	/**
-	 * Get general information from Mailchimp
+	 * Get general information from Sendinblue
 	 *
 	 * @param \WP_REST_Request $request Search request.
 	 *
 	 * @return mixed|\WP_REST_Response
 	 *
-	 * @see https://mailchimp.com/developer/marketing/api/list-members/
+	 * @see https://developers.sendinblue.com/reference/getlists-1
 	 */
 	public function get_sendinblue_data( $request ) {
 		$return = array(
@@ -312,38 +291,13 @@ class Form_Server {
 		);
 		$data   = json_decode( $request->get_body(), true );
 
-		if ( isset( $data['apiKey'] ) && ! empty( $data['apiKey'] ) ) {
-			$api_key = $data['apiKey'];
+		$valid_api_key = Sendinblue_Integration::validate_api_key( $data['apiKey'] );
 
-			$url  = 'https://api.sendinblue.com/v3/contacts/lists';
-			$args = array(
-				'method'  => 'GET',
-				'headers' => array(
-					'api-key' => $api_key,
-				),
-			);
-
-			$response = wp_remote_post( $url, $args );
-			$body     = json_decode( wp_remote_retrieve_body( $response ), true );
-
-			if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-				$return['error']      = ! empty( $body['detail'] ) && 'null' !== $body['detail'] ? $body['detail'] : 'Invalid request!';
-				$return['error_code'] = 3;
-			} else {
-				$return['success'] = true;
-				$return['list_id'] = array_map(
-					function( $item ) {
-						return array(
-							'id'   => $item['id'],
-							'name' => $item['name'],
-						);
-					},
-					$body['lists']
-				);
-			}
+		if ( $valid_api_key['valid'] ) {
+			$integ = new Sendinblue_Integration( $data['apiKey'] );
+			return $integ->get_lists();
 		} else {
-			$return['error']      = __( 'No key api found!', 'otter-blocks' );
-			$return['error_code'] = 1;
+			$return['error'] = $valid_api_key['reason'];
 		}
 
 		return rest_ensure_response( $return );
@@ -377,47 +331,24 @@ class Form_Server {
 
 		$integration = $this->get_form_option_settings( $data['formOption'] );
 
-		if( isset( $integration['apiKey'] ) && '' !== $integration['apiKey'] &&
+		if ( isset( $integration['apiKey'] ) && '' !== $integration['apiKey'] &&
 			isset( $integration['listId'] ) && '' !== $integration['listId']
 		) {
 			$api_key = $integration['apiKey'];
 			$list_id = $integration['listId'];
 		}
 
-		if ( '' === $api_key && '' === $list_id ) {
+		if ( '' === $list_id ) {
 			return rest_ensure_response( $return );
 		}
 
-		$info = explode( '-', $api_key );
-		if ( 2 == count( $info ) ) {
-			$server_name = $info[1];
-			$user_status = $this->get_new_user_status_mailchimp( $api_key, $list_id );
+		$valid_api_key = Mailchimp_Integration::validate_api_key( $api_key );
 
-			$url       = 'https://' . $server_name . '.api.mailchimp.com/3.0/lists/' . $list_id . '/members/' . md5( strtolower( $email ) );
-			$form_data = array(
-				'email_address' => $email,
-				'status'        => $user_status,
-			);
-			$args      = array(
-				'method'  => 'PUT',
-				'headers' => array(
-					'Authorization' => 'Basic ' . base64_encode( 'user:' . $api_key ),
-				),
-				'body'    => wp_json_encode( $form_data ),
-			);
-
-			$response = wp_remote_post( $url, $args );
-			$body     = json_decode( wp_remote_retrieve_body( $response ), true );
-
-			if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-				$return['error']      = ! empty( $body['detail'] ) && 'null' !== $body['detail'] ? $body['detail'] : 'Invalid request!';
-				$return['error_code'] = 3;
-			} else {
-				$return['success'] = true;
-			}
+		if ( $valid_api_key['valid'] ) {
+			$mailchimp = new Mailchimp_Integration( $api_key );
+			$return    = $mailchimp->subscribe( $list_id, $email );
 		} else {
-			$return['error']      = 'Invalid api key format!';
-			$return['error_code'] = 2;
+			$return['error'] = $valid_api_key['reason'];
 		}
 
 		return rest_ensure_response( $return );
@@ -449,82 +380,33 @@ class Form_Server {
 			return rest_ensure_response( $return );
 		}
 
-
 		// Get the api credentials from the Form block.
-		$api_key             = '';
-		$list_id             = '';
+		$api_key = '';
+		$list_id = '';
 
 		$integration = $this->get_form_option_settings( $data['formOption'] );
 
-		if( isset( $integration['apiKey'] ) && '' !== $integration['apiKey'] &&
+		if ( isset( $integration['apiKey'] ) && '' !== $integration['apiKey'] &&
 			isset( $integration['listId'] ) && '' !== $integration['listId']
 		) {
 			$api_key = $integration['apiKey'];
 			$list_id = $integration['listId'];
 		}
 
-		if ( '' === $api_key && '' === $list_id ) {
+		if ( '' === $list_id ) {
 			return rest_ensure_response( $return );
 		}
 
-		$url       = 'https://api.sendinblue.com/v3/contacts';
-		$form_data = array(
-			'email'            => $email,
-			'listIds'          => array( (int) $list_id ),
-			'emailBlacklisted' => false,
-			'smsBlacklisted'   => false,
-		);
-		$args      = array(
-			'method'  => 'POST',
-			'headers' => array(
-				'Accept'       => 'application/json',
-				'Content-Type' => 'application/json',
-				'api-key'      => $api_key,
-			),
-			'body'    => wp_json_encode( $form_data ),
-		);
+		$valid_api_key = Sendinblue_Integration::validate_api_key( $data['apiKey'] );
 
-		$response = wp_remote_post( $url, $args );
-		$body     = json_decode( wp_remote_retrieve_body( $response ), true );
-
-		if ( is_wp_error( $response ) || 400 === wp_remote_retrieve_response_code( $response ) ) {
-			$return['error']      = ! empty( $body['detail'] ) && 'null' !== $body['detail'] ? $body['detail'] : 'Invalid request!';
-			$return['error_code'] = 3;
+		if ( $valid_api_key['valid'] ) {
+			$sendinblue = new Sendinblue_Integration( $api_key );
+			$return     = $sendinblue->subscribe( $list_id, $email );
 		} else {
-			$return['success'] = true;
+			$return['error'] = $valid_api_key['reason'];
 		}
 
 		return rest_ensure_response( $return );
-	}
-
-	/**
-	 * Check if the subscribing list has double opt-in.
-	 * If the option is activated, return pending status for new users, else return subscribed.
-	 *
-	 * @param string $api_key Api key.
-	 * @param string $list_id List id.
-	 *
-	 * @return string
-	 *
-	 * @see https://github.com/Codeinwp/themeisle-content-forms/blob/master/includes/widgets-public/newsletter_public.php#L181
-	 */
-	private function get_new_user_status_mailchimp( $api_key, $list_id ) {
-		$url  = 'https://' . substr( $api_key, strpos( $api_key, '-' ) + 1 ) . '.api.mailchimp.com/3.0/lists/' . $list_id;
-		$args = array(
-			'method'  => 'GET',
-			'headers' => array(
-				'Authorization' => 'Basic ' . base64_encode( 'user:' . $api_key ),
-			),
-		);
-
-		$response = wp_remote_post( $url, $args );
-
-		$body = json_decode( wp_remote_retrieve_body( $response ), true );
-		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-			return 'pending';
-		}
-
-		return array_key_exists( 'double_optin', $body ) && true === $body['double_optin'] ? 'pending' : 'subscribed';
 	}
 
 	/**
@@ -536,7 +418,7 @@ class Form_Server {
 	 * @return boolean
 	 */
 	private function has_requiered_data( $data ) {
-		return isset( $data['postUrl'] ) && isset( $data['formId']) && isset( $data['formOption']);
+		return isset( $data['postUrl'] ) && isset( $data['formId'] ) && isset( $data['formOption'] );
 	}
 
 	/**
@@ -550,15 +432,15 @@ class Form_Server {
 	private function check_form_conditions( $data ) {
 		$reasons = array();
 
-		$has_provider = false;
+		$has_provider      = false;
 		$has_creditentials = false;
 
 		$integration = $this->get_form_option_settings( $data['formOption'] );
 
-		if( isset( $integration['provider'] ) && '' !== $integration['provider'] ) {
+		if ( isset( $integration['provider'] ) && '' !== $integration['provider'] ) {
 			$has_provider = true;
 		}
-		if( isset( $integration['apiKey'] ) && '' !== $integration['apiKey'] &&
+		if ( isset( $integration['apiKey'] ) && '' !== $integration['apiKey'] &&
 			isset( $integration['listId'] ) && '' !== $integration['listId']
 		) {
 			$has_creditentials = true;
@@ -566,14 +448,13 @@ class Form_Server {
 
 
 		// TODO: Add form captcha validation here.
-
-		if ( ! $has_provider )  {
+		if ( ! $has_provider ) {
 			$reasons += array(
 				__( 'Provider is missing!', 'otter-blocks' ),
 			);
 		}
 
-		if( ! $has_creditentials ) {
+		if ( ! $has_creditentials ) {
 			$reasons += array(
 				__( 'Provider settings are missing!', 'otter-blocks' ),
 			);
@@ -584,16 +465,16 @@ class Form_Server {
 	/**
 	 * Get form settings from options.
 	 *
-	 * @param string $formOption The name of the option.
+	 * @param string $form_option The name of the option.
 	 * @return array Form settings
 	 */
-	private function get_form_option_settings( $formOption ) {
-		$option_name = sanitize_text_field( $formOption );
+	private function get_form_option_settings( $form_option ) {
+		$option_name = sanitize_text_field( $form_option );
 		$form_emails = get_option( 'themeisle_blocks_form_emails' );
 
 		foreach ( $form_emails as $form ) {
 			if ( $form['form'] === $option_name ) {
-				if( isset( $form['integration'])) {
+				if ( isset( $form['integration'] ) ) {
 					return $form['integration'];
 				}
 			}
