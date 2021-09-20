@@ -12,6 +12,10 @@ import {
 	useEffect
 } from '@wordpress/element';
 
+import {
+	dispatch
+} from '@wordpress/data';
+
 import { TextControl, PanelBody, Button, SelectControl, Spinner, Notice } from '@wordpress/components';
 import { getListIdOptionFrom } from './integrations';
 
@@ -22,10 +26,10 @@ const Inspector = ({
 
 	const [ email, setEmail ] = useState( '' );
 	const [ isEmailSaved, toggleEmailSaved ] = useState( false );
+	const { createNotice } = dispatch( 'core/notices' );
 
 	const [ listIDOptions, setListIDOptions ] = useState([ { label: __( 'None', 'otter-blocks' ), value: '' } ]);
 	const [ fetchListIdStatus, setFetchListIdStatus ] = useState( 'loading' );
-	const [ fetchErrors, setFetchErrors ] = useState( '' );
 
 	useEffect( () => {
 		if ( attributes.optionName ) {
@@ -45,10 +49,17 @@ const Inspector = ({
 					options.splice( 0, 0, { label: __( 'None', 'otter-blocks' ), value: '' });
 					setListIDOptions( options );
 					setFetchListIdStatus( 'ready' );
-					setFetchErrors( '' );
 				},
 				err => {
-					setFetchErrors( __( err?.error, 'otter-blocks' ) );
+					createNotice(
+						'error',
+						__( err?.error, 'otter-blocks' ),
+						{
+							isDismissible: true,
+							type: 'snackbar'
+						}
+					);
+
 					setFetchListIdStatus( 'error' );
 				}
 			);
@@ -166,7 +177,6 @@ const Inspector = ({
 								onChange={ apiKey => {
 									setAttributes({ apiKey });
 									setFetchListIdStatus( 'loading' );
-									setFetchErrors( '' );
 								}}
 							/>
 
@@ -178,16 +188,6 @@ const Inspector = ({
 									</Fragment>
 								)
 							}
-							{
-								fetchErrors && (
-									<Notice status="error" isDismissible={true} onDismiss={ () => setFetchErrors( '' ) }>
-										<p>
-											{ __( 'Error', 'otter-blocks' ) }: <code>{fetchErrors}</code>
-										</p>
-									</Notice>
-								)
-							}
-
 							{
 								attributes.apiKey && 'ready' === fetchListIdStatus && (
 									<Fragment>
