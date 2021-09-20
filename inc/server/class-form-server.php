@@ -90,7 +90,7 @@ class Form_Server {
 		$data = json_decode( $request->get_body(), true );
 
 		if ( ! $this->has_requiered_data( $data ) ) {
-			$return['error'] = __( 'Invalid request!', 'otter-blocks' );
+			$return['error']   = __( 'Invalid request!', 'otter-blocks' );
 			$return['reasons'] = __( 'Essential data is missing!', 'otter-blocks' );
 			return $return;
 		}
@@ -106,8 +106,8 @@ class Form_Server {
 		$integration = $this->get_form_option_settings( $data['formOption'] );
 
 		// TODO: Add reCaptcha token verification.
-		if ( isset( $integration['provider'] ) && isset( $integration['action'] ) && isset( $data['action'] ) &&  ( 'subscribe' === $data['action'] || 'submit-subscribe' === $data['action'] ) ) {
-			if( 'subscribe' === $data['action'] ) {
+		if ( isset( $integration['provider'] ) && isset( $integration['action'] ) && isset( $data['action'] ) && ( 'subscribe' === $data['action'] || 'submit-subscribe' === $data['action'] ) ) {
+			if ( 'subscribe' === $data['action'] ) {
 				switch ( $integration['provider'] ) {
 					case 'mailchimp':
 						return $this->subscribe_to_mailchimp( $data );

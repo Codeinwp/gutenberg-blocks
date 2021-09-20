@@ -199,16 +199,23 @@ const Inspector = ({
 										/>
 										{
 											2 <= listIDOptions?.length && attributes.listId && (
-												<SelectControl
-													label={ __( 'Action', 'otter-blocks' ) }
-													value={ attributes.action }
-													options={ [
-														{ label: __( 'None', 'otter-blocks' ), value: '' },
-														{ label: __( 'Subscribe', 'otter-blocks' ), value: 'subscribe' },
-														{ label: __( 'Submit & Subscribe', 'otter-blocks' ), value: 'submit-subscribe' }
-													] }
-													onChange={ action => setAttributes({ action }) }
-												/>
+												<Fragment>
+													<SelectControl
+														label={ __( 'Action', 'otter-blocks' ) }
+														value={ attributes.action }
+														options={ [
+															{ label: __( 'None', 'otter-blocks' ), value: '' },
+															{ label: __( 'Subscribe', 'otter-blocks' ), value: 'subscribe' },
+															{ label: __( 'Submit & Subscribe', 'otter-blocks' ), value: 'submit-subscribe' }
+														] }
+														onChange={ action => setAttributes({ action }) }
+													/>
+													{
+														'submit-subscribe' === attributes.action && (
+															__( 'This action will add the client to the contact list and send a separata email with the form data to administrator or to the email mentioned in \'Form to\' field. A checkbox for data-sharing consent with third-party will be added on form.', 'otter-blocks' )
+														)
+													}
+												</Fragment>
 											)
 										}
 									</Fragment>
