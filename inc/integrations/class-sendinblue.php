@@ -55,7 +55,7 @@ class Sendinblue_Integration {
 			$body     = json_decode( wp_remote_retrieve_body( $response ), true );
 
 			if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-				$return['error'] = ! empty( $body['detail'] ) && 'null' !== $body['detail'] ? $body['detail'] : __( 'Provider settings are invalid! Please check your API Key and the contact list.', 'otter-blocks' );
+				$return['error'] = ! empty( $body['detail'] ) && 'null' !== $body['detail'] ? $body['detail'] : __( 'Provider settings are invalid! Please check your API Key and the contact list in the form.', 'otter-blocks' );
 			} else {
 				$return['success'] = true;
 				$return['list_id'] = array_map(
@@ -103,7 +103,7 @@ class Sendinblue_Integration {
 		$body     = json_decode( wp_remote_retrieve_body( $response ), true );
 
 		if ( is_wp_error( $response ) || 400 === wp_remote_retrieve_response_code( $response ) ) {
-			$return['error'] = ! empty( $body['detail'] ) && 'null' !== $body['detail'] ? $body['detail'] : 'Invalid request!';
+			$return['error'] = ! empty( $body['detail'] ) && 'null' !== $body['detail'] ? $body['detail'] : __( 'The request has been rejected by the provider!' , 'otter-blocks' );
 		} else {
 			$return['success'] = true;
 		}

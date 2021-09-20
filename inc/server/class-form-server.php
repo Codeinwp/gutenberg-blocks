@@ -91,6 +91,7 @@ class Form_Server {
 
 		if ( ! $this->has_requiered_data( $data ) ) {
 			$return['error'] = __( 'Invalid request!', 'otter-blocks' );
+			$return['reasons'] = __( 'Essential data is missing!', 'otter-blocks' );
 			return $return;
 		}
 
@@ -105,12 +106,23 @@ class Form_Server {
 		$integration = $this->get_form_option_settings( $data['formOption'] );
 
 		// TODO: Add reCaptcha token verification.
-		if ( isset( $integration['provider'] ) && isset( $integration['action'] ) ) {
-			switch ( $integration['provider'] ) {
-				case 'mailchimp':
-					return $this->subscribe_to_mailchimp( $data );
-				case 'sendinblue':
-					return $this->subscribe_to_sendinblue( $data );
+		if ( isset( $integration['provider'] ) && isset( $integration['action'] ) && isset( $data['action'] ) &&  ( 'subscribe' === $data['action'] || 'submit-subscribe' === $data['action'] ) ) {
+			if( 'subscribe' === $data['action'] ) {
+				switch ( $integration['provider'] ) {
+					case 'mailchimp':
+						return $this->subscribe_to_mailchimp( $data );
+					case 'sendinblue':
+						return $this->subscribe_to_sendinblue( $data );
+				}
+			} elseif ( 'submit-subscribe' === $data['action'] && isset( $data['consent'] ) && $data['consent'] ) {
+				switch ( $integration['provider'] ) {
+					case 'mailchimp':
+						$this->subscribe_to_mailchimp( $data );
+						break;
+					case 'sendinblue':
+						$this->subscribe_to_sendinblue( $data );
+						break;
+				}
 			}
 		}
 

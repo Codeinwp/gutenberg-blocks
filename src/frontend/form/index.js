@@ -60,6 +60,15 @@ const collectAndSendInputFormData = ( form ) => {
 			data.formId = form?.id;
 		}
 
+		if ( form.classList.contains( 'is-subscription' ) ) {
+			data.action = 'subscribe';
+		}
+
+		if ( form.classList.contains( 'can-submit-and-subscribe' ) ) {
+			data.action = 'submit-subscribe';
+			data.consent = form.querySelector( '.wp-block-themeisle-blocks-form-consent input' )?.checked || false;
+		}
+
 		data.postUrl = window.location.href;
 
 		const msgAnchor = form.querySelector( '.wp-block-button' );
@@ -108,7 +117,7 @@ const collectAndSendInputFormData = ( form ) => {
 				msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
 				msg.classList.add( 'error' );
 
-				console.error( res?.error, res?.resons );
+				console.error( res?.error, res?.reasons );
 			}
 
 			addThenRemoveMsg( msg );
@@ -131,6 +140,11 @@ domReady( () => {
 	const forms = document.querySelectorAll( '.wp-block-themeisle-blocks-form' );
 
 	forms.forEach( form => {
+
+		if ( form.classList.contains( 'can-submit-and-subscribe' ) ) {
+			renderConsentCheckbox( form );
+		}
+
 		const sendBtn = form.querySelector( 'button' );
 		sendBtn?.addEventListener( 'click', ( event ) => {
 			event.preventDefault();
@@ -140,3 +154,28 @@ domReady( () => {
 	});
 
 });
+
+/**
+ *
+ * @param {HTMLDivElement} form
+ */
+const renderConsentCheckbox = ( form ) => {
+	const container = form.querySelector( '.wp-block-themeisle-blocks-form__container' );
+	const button = form.querySelector( '.wp-block-button' );
+
+	const inputContainer = document.createElement( 'div' );
+	inputContainer.classList.add( 'wp-block-themeisle-blocks-form-consent' );
+	container.insertBefore( inputContainer, button );
+
+	const input = document.createElement( 'input' );
+	input.type = 'checkbox';
+	input.name = 'consent';
+	input.id = 'consent';
+
+	const label = document.createElement( 'label' );
+	label.innerHTML = __( 'Share your email with third-party provider to recceive promotional offers!', 'otter-blocks' );
+	label.htmlFor = 'consent';
+
+	inputContainer.appendChild( input );
+	inputContainer.appendChild( label );
+};

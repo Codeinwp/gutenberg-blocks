@@ -15,7 +15,13 @@ const Save = ({
 
 	return (
 		<div
-			className={ classnames( className, { 'is-subscription': hasIntegrationActive && 'subscribe' === attributes.action  }) }
+			className={
+				classnames(
+					className,
+					{ 'is-subscription': hasIntegrationActive && 'subscribe' === attributes.action  },
+					{ 'can-submit-and-subscribe': hasIntegrationActive && 'submit-subscribe' === attributes.action }
+				)
+			}
 			id={ attributes.id }
 			data-email-subject={ attributes.subject }
 			data-option-name={ attributes.optionName }
@@ -25,7 +31,7 @@ const Save = ({
 
 				<div className="wp-block-button">
 					<button className="wp-block-button__link">
-						{ __( 'Submit', 'otter-blocks' ) }
+						{ __( 'subscribe' === attributes.action ? 'Subscribe' : 'Submit', 'otter-blocks' ) }
 					</button>
 				</div>
 			</div>
