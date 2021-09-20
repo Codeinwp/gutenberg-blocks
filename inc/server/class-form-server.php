@@ -7,7 +7,6 @@
 
 namespace ThemeIsle\GutenbergBlocks\Server;
 
-use Exception;
 use ThemeIsle\GutenbergBlocks\Integration\Mailchimp_Integration;
 use ThemeIsle\GutenbergBlocks\Integration\Sendinblue_Integration;
 
