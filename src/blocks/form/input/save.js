@@ -28,7 +28,7 @@ const Save = ({
 
 			<input
 				type={ attributes.type }
-				name={ attributes.id }
+				name={ attributes.mappedName }
 				id={ attributes.id }
 				required={ attributes.isRequired }
 				placeholder={ attributes.placeholder }

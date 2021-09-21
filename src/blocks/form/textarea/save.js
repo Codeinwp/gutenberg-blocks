@@ -27,7 +27,7 @@ const Save = ({
 			</label>
 
 			<textarea
-				name={ attributes.id }
+				name={ attributes.mappedName }
 				id={ attributes.id }
 				required={ attributes.isRequired }
 				placeholder={ attributes.placeholder }
