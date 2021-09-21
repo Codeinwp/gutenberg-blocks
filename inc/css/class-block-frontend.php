@@ -38,6 +38,13 @@ class Block_Frontend extends Base_CSS {
 	private $has_fonts = true;
 
 	/**
+	 * Inline CSS size.
+	 *
+	 * @var int
+	 */
+	private $total_inline_size = 0;
+
+	/**
 	 * Initialize the class
 	 */
 	public function init() {
@@ -265,6 +272,26 @@ class Block_Frontend extends Base_CSS {
 
 		if ( is_array( $blocks ) || ! empty( $blocks ) ) {
 			$this->enqueue_reusable_styles( $blocks, $footer );
+		}
+
+		$total_inline_limit = 20000;
+		$total_inline_limit = apply_filters( 'styles_inline_size_limit', 20000 );
+
+		$wp_upload_dir = wp_upload_dir( null, false );
+		$basedir       = $wp_upload_dir['basedir'] . '/themeisle-gutenberg/';
+		$file_path     = $basedir . $file_name;
+		$file_size     = filesize( $file_path );
+
+		if ( $this->total_inline_size + $file_size < $total_inline_limit ) {
+			add_action(
+				$location,
+				function () use ( $post_id ) {
+					return $this->get_post_css( $post_id );
+				}
+			);
+
+			$this->total_inline_size += (int) $file_size;
+			return;
 		}
 
 		if ( $footer ) {
