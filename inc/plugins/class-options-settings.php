@@ -134,7 +134,9 @@ class Options_Settings {
 								'email'      => array(
 									'type' => 'string',
 								),
-								'hasCaptcha' => 'boolean',
+								'hasCaptcha' => array(
+									'type' => array( 'boolean', 'number', 'string' ),
+								),
 							),
 						),
 					),
