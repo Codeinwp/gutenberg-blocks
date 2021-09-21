@@ -8,24 +8,36 @@ import { InspectorControls } from '@wordpress/block-editor';
 
 import {
 	useState,
-	useEffect
+	useEffect,
+	Fragment
 } from '@wordpress/element';
 
-import { TextControl, PanelBody, Button, ToggleControl } from '@wordpress/components';
+import { TextControl, PanelBody, Button, ToggleControl, Spinner } from '@wordpress/components';
+
+import {
+	dispatch
+} from '@wordpress/data';
+
+const { createNotice } = dispatch( 'core/notices' );
+
+import api from '@wordpress/api';
 
 const Inspector = ({
 	attributes,
 	setAttributes
 }) => {
 
+	const [ savedEmail, setSavedEmail ] = useState( '' );
 	const [ email, setEmail ] = useState( '' );
-	const [ isEmailSaved, toggleEmailSaved ] = useState( false );
+	const [ isEmailLoaded, setEmailLoading ] = useState( false );
 
 	useEffect( () => {
 		if ( attributes.optionName ) {
-			( new wp.api.models.Settings() ).fetch().done( res => {
+			( new api.models.Settings() ).fetch().done( res => {
 				res.themeisle_blocks_form_emails?.filter( ({ form }) => form === attributes.optionName )?.forEach( item => {
+					setEmailLoading( true );
 					setEmail( item?.email );
+					setSavedEmail( item?.email );
 				});
 			});
 
@@ -33,7 +45,7 @@ const Inspector = ({
 	}, [ attributes.optionName ]);
 
 	const saveEmail = () => {
-		( new wp.api.models.Settings() ).fetch().done( res => {
+		( new api.models.Settings() ).fetch().done( res => {
 			const emails = res.themeisle_blocks_form_emails ? res.themeisle_blocks_form_emails : [];
 			let isMissing = true;
 
@@ -51,17 +63,29 @@ const Inspector = ({
 				});
 			}
 
-			const model = new wp.api.models.Settings({
+			const model = new api.models.Settings({
 				// eslint-disable-next-line camelcase
 				themeisle_blocks_form_emails: emails
 			});
 
-			toggleEmailSaved( false );
+			setEmailLoading( false );
 
 			model.save().then( response => {
-				if ( 0 < response.themeisle_blocks_form_emails?.filter( ({ form }) => form === attributes.optionName )?.length ) {
-					toggleEmailSaved( true );
-				}
+				response.themeisle_blocks_form_emails?.filter( ({ form }) => form === attributes.optionName ).forEach( item => {
+					{
+						setEmailLoading( true );
+						setSavedEmail( item?.email );
+
+						createNotice(
+							'info',
+							__( 'Email has been saved!', 'otter-blocks' ),
+							{
+								isDismissible: true,
+								type: 'snackbar'
+							}
+						);
+					}
+				});
 			});
 		});
 	};
@@ -91,10 +115,18 @@ const Inspector = ({
 				<Button
 					isPrimary
 					onClick={ saveEmail }
+					disabled={ email === savedEmail }
 				>
-					{
-						__( 'Save', 'otter-blocks' )
-					}
+					<Fragment>
+						{
+							! isEmailLoaded && (
+								<Spinner />
+							)
+						}
+						{
+							__( 'Save', 'otter-blocks' )
+						}
+					</Fragment>
 				</Button>
 
 				<ToggleControl
@@ -104,15 +136,6 @@ const Inspector = ({
 					help={ __( 'Add Google reCaptcha for protection againts bots.', 'otter-blocks' ) }
 				/>
 
-				{
-					isEmailSaved && (
-						<p style={{ color: 'green '}}>
-							{
-								__( 'The email was saved!', 'otter-blocks' )
-							}
-						</p>
-					)
-				}
 	   		</PanelBody>
 		</InspectorControls>
 	);

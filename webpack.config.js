@@ -38,6 +38,7 @@ module.exports = {
 		'@wordpress/compose': 'wp.compose',
 		'@wordpress/data': 'wp.data',
 		'@wordpress/date': 'wp.date',
+		'@wordpress/api': 'wp.api',
 		'@wordpress/dom-ready': 'wp.domReady',
 		'@wordpress/edit-post': 'wp.editPost',
 		'@wordpress/editor': 'wp.editor',

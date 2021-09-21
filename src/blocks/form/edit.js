@@ -31,6 +31,8 @@ import { get } from 'lodash';
 
 import { createBlock } from '@wordpress/blocks';
 
+import api from '@wordpress/api';
+
 /**
  * Internal dependencies
  */
@@ -124,11 +126,17 @@ const Edit = ({
 	);
 	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
 
+	useEffect( () => {
+		api.loadPromise.then( () => {
+			settingsRef.current = new api.models.Settings();
+		});
+	}, []);
+
 	/**
 	 * Save the captcha setting
 	 */
 	useEffect( () => {
-		( new wp.api.models.Settings() ).fetch().done( res => {
+		settingsRef?.current?.fetch().done( res => {
 			const emails = res.themeisle_blocks_form_emails ? res.themeisle_blocks_form_emails : [];
 			let isMissing = true;
 
@@ -146,25 +154,21 @@ const Edit = ({
 				});
 			}
 
-			const model = new wp.api.models.Settings({
+			const model = new api.models.Settings({
 				// eslint-disable-next-line camelcase
 				themeisle_blocks_form_emails: emails
 			});
 
 			model.save();
 		});
-	}, [ attributes.hasCaptcha ]);
+	}, [ attributes.hasCaptcha, settingsRef.current ]);
 
 	useEffect( () => {
 
 		const setApi = async() => {
-			await wp.api.loadPromise.then( () => {
-				settingsRef.current = new wp.api.models.Settings();
-			});
-
 			if ( false === Boolean( window.themeisleGutenberg.reCaptchaSiteKey ) || false === Boolean( window.themeisleGutenberg.reCaptchaSecretKey ) ) {
 				if ( ! isAPILoaded ) {
-					settingsRef.current.fetch().then( response => {
+					settingsRef?.current?.fetch().then( response => {
 						setGoogleCaptchaAPISiteKey( response.themeisle_google_captcha_api_site_key );
 						setGoogleCaptchaAPISecretKey( response.themeisle_google_captcha_api_secret_key );
 						setAPILoaded( true );
