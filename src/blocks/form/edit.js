@@ -67,43 +67,7 @@ const Edit = ({
 		insertBlock,
 		removeBlock
 	} = useDispatch( 'core/block-editor' );
-
-	const children = useSelect( select => {
-		const {
-			getBlock
-		} = select( 'core/block-editor' );
-		return getBlock( clientId ).innerBlocks;
-	});
-
-	useEffect( () => {
-		const unsubscribe = blockInit( clientId, defaultAttributes );
-		return () => unsubscribe();
-	}, [ attributes.id ]);
-
-	useEffect( () => {
-		if (  attributes.id && select( 'core/edit-widgets' ) ) {
-			setAttributes({ optionName: `widget_${ attributes.id.slice( -8 ) }` });
-		} else  if ( attributes.id && select( 'core/editor' )?.getCurrentPostId() ) {
-			setAttributes({ optionName: `${ select( 'core/editor' ).getCurrentPostId() }_${ attributes.id.slice( -8 ) }` });
-		}
-	}, [ attributes.id ]);
-
-	useEffect( () => {
-		if ( children ) {
-			const verificationBlocks = children.filter( ({ name }) => 'themeisle-blocks/form-nonce' === name );
-
-			if ( 2 <= verificationBlocks?.length ) {
-				verificationBlocks.slice( 1 ).forEach( block => {
-					removeBlock( block.clientId, false );
-				});
-			} else if ( 0 === verificationBlocks?.length && clientId ) {
-				const nonceBlock = createBlock( 'themeisle-blocks/form-nonce' );
-				if ( nonceBlock ) {
-					insertBlock?.( nonceBlock, ( children?.length ) || 0, clientId, false );
-				}
-			}
-		}
-	}, [ children ]);
+	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
 
 	const hasInnerBlocks = useSelect(
 		( select ) =>
@@ -127,8 +91,53 @@ const Edit = ({
 		},
 		[ name ]
 	);
-	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
 
+	const children = useSelect( select => {
+		const {
+			getBlock
+		} = select( 'core/block-editor' );
+		return getBlock( clientId ).innerBlocks;
+	});
+
+	useEffect( () => {
+		const unsubscribe = blockInit( clientId, defaultAttributes );
+		return () => unsubscribe();
+	}, [ attributes.id ]);
+
+	/**
+	 * Create the form identification tag for Otter Options.
+	 */
+	useEffect( () => {
+		if (  attributes.id && select( 'core/edit-widgets' ) ) {
+			setAttributes({ optionName: `widget_${ attributes.id.slice( -8 ) }` });
+		} else  if ( attributes.id && select( 'core/editor' )?.getCurrentPostId() ) {
+			setAttributes({ optionName: `${ select( 'core/editor' ).getCurrentPostId() }_${ attributes.id.slice( -8 ) }` });
+		}
+	}, [ attributes.id ]);
+
+	/**
+	 * Make sure that a form nonce field is always present.
+	 */
+	useEffect( () => {
+		if ( children ) {
+			const verificationBlocks = children.filter( ({ name }) => 'themeisle-blocks/form-nonce' === name );
+
+			if ( 2 <= verificationBlocks?.length ) {
+				verificationBlocks.slice( 1 ).forEach( block => {
+					removeBlock( block.clientId, false );
+				});
+			} else if ( 0 === verificationBlocks?.length && clientId ) {
+				const nonceBlock = createBlock( 'themeisle-blocks/form-nonce' );
+				if ( nonceBlock ) {
+					insertBlock?.( nonceBlock, ( children?.length ) || 0, clientId, false );
+				}
+			}
+		}
+	}, [ children ]);
+
+	/**
+	 * Load settings.
+	 */
 	useEffect( () => {
 		api.loadPromise.then( () => {
 			settingsRef.current = new api.models.Settings();
@@ -137,7 +146,7 @@ const Edit = ({
 	}, []);
 
 	/**
-	 * Save the captcha setting
+	 * Save the captcha option in settings.
 	 */
 	useEffect( () => {
 		if ( attributes.hasCaptcha !== undefined ) {
@@ -184,13 +193,14 @@ const Edit = ({
 		}
 	}, [ attributes.hasCaptcha, settingsRef.current ]);
 
+	/**
+	 * Check if the API Keys are set.
+	 */
 	useEffect( () => {
 
 		const getAPIData = async() => {
 			if ( ! isAPILoaded ) {
 				settingsRef?.current?.fetch().then( response => {
-					setGoogleCaptchaAPISiteKey( response.themeisle_google_captcha_api_site_key );
-					setGoogleCaptchaAPISecretKey( response.themeisle_google_captcha_api_secret_key );
 					setAPILoaded( true );
 
 					if ( '' !== response.themeisle_google_captcha_api_site_key && '' !== response.themeisle_google_captcha_api_secret_key ) {
@@ -200,19 +210,14 @@ const Edit = ({
 			}
 		};
 
-		if ( areSettingsAvailable ) {
-			if ( false === Boolean( googleCaptchaAPISiteKey ) || false === Boolean( googleCaptchaAPISecretKey ) ) {
-				getAPIData();
-			} else {
-				if ( ! isAPILoaded ) {
-					setAPILoaded( true );
-					setAPISaved( true );
-				}
-			}
-
+		if ( areSettingsAvailable && attributes.hasCaptcha && ! isAPISaved ) {
+			getAPIData();
 		}
-	}, [ areSettingsAvailable, googleCaptchaAPISiteKey, googleCaptchaAPISecretKey, isAPILoaded ]);
+	}, [ areSettingsAvailable, isAPILoaded, isAPISaved, attributes.hasCaptcha ]);
 
+	/**
+	 * Save API Keys in the Otter options.
+	 */
 	const saveAPIKey = () => {
 
 		const model = new wp.api.models.Settings({

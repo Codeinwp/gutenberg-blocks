@@ -11,6 +11,10 @@ import {
 	TextControl
 } from '@wordpress/components';
 
+import {
+	Fragment
+} from '@wordpress/element';
+
 const BlockPlaceholder = ({
 	className,
 	isAPILoaded,
@@ -24,10 +28,15 @@ const BlockPlaceholder = ({
 }) => {
 	if ( ! isAPILoaded ) {
 		return (
-			<Placeholder>
-				<Spinner/>
-				{ __( 'Loading…', 'otter-blocks' ) }
-			</Placeholder>
+			<Fragment>
+				<br/>
+				<Placeholder>
+					<div>
+						<Spinner/>
+						{ __( 'Checking the API Keys for reCaptcha', 'otter-blocks' ) }
+					</div>
+				</Placeholder>
+			</Fragment>
 		);
 	}
 
