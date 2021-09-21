@@ -93,16 +93,16 @@ class Options_Settings {
 						function( $item ) {
 							$item['form'] = sanitize_text_field( $item['form'] );
 							$item['email'] = sanitize_text_field( $item['email'] );
-							if( isset( $item['integration']['provider'] ) ) {
+							if ( isset( $item['integration']['provider'] ) ) {
 								$item['integration']['provider'] = sanitize_text_field( $item['integration']['provider'] );
 							}
-							if( isset( $item['integration']['apiKey'] ) ) {
+							if ( isset( $item['integration']['apiKey'] ) ) {
 								$item['integration']['apiKey'] = sanitize_text_field( $item['integration']['apiKey'] );
 							}
-							if( isset( $item['integration']['listId'] ) ) {
+							if ( isset( $item['integration']['listId'] ) ) {
 								$item['integration']['listId'] = sanitize_text_field( $item['integration']['listId'] );
 							}
-							if( isset( $item['integration']['action'] ) ) {
+							if ( isset( $item['integration']['action'] ) ) {
 								$item['integration']['action'] = sanitize_text_field( $item['integration']['action'] );
 							}
 							return $item;
@@ -119,7 +119,9 @@ class Options_Settings {
 								'form'        => array(
 									'type' => 'string',
 								),
-								'hasCaptcha' => 'boolean',
+								'hasCaptcha'  => array(
+									'type' => array( 'boolean', 'number', 'string' ),
+								),
 								'email'       => array(
 									'type' => 'string',
 								),
