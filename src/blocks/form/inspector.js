@@ -88,13 +88,6 @@ const Inspector = ({
 					help={ __( 'Send form data to another email. (Admin is default).', 'otter-blocks' ) }
 				/>
 
-				<ToggleControl
-					label={ __( 'Add captcha', 'otter-blocks' ) }
-					checked={ attributes.hasCaptcha }
-					onChange={ hasCaptcha => setAttributes({ hasCaptcha }) }
-					help={ __( 'Add Google reCaptcha for protection againts bots.', 'otter-blocks' ) }
-				/>
-
 				<Button
 					isPrimary
 					onClick={ saveEmail }
@@ -103,6 +96,14 @@ const Inspector = ({
 						__( 'Save', 'otter-blocks' )
 					}
 				</Button>
+
+				<ToggleControl
+					label={ __( 'Add captcha', 'otter-blocks' ) }
+					checked={ attributes.hasCaptcha }
+					onChange={ hasCaptcha => setAttributes({ hasCaptcha }) }
+					help={ __( 'Add Google reCaptcha for protection againts bots.', 'otter-blocks' ) }
+				/>
+
 				{
 					isEmailSaved && (
 						<p style={{ color: 'green '}}>

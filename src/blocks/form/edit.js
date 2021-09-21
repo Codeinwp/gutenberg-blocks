@@ -213,6 +213,8 @@ const Edit = ({
 		}
 	};
 
+	console.log( 'INNER BLOCKS', attributes.innerBlocks, variations, name );
+
 	return (
 		<Fragment>
 			<Inspector
@@ -225,7 +227,7 @@ const Edit = ({
 				id={ attributes.id }
 			>
 				{
-					hasInnerBlocks ? (
+					( hasInnerBlocks ) ? (
 						<div className="wp-block-themeisle-blocks-form__container">
 							<InnerBlocks
 							/>
@@ -260,7 +262,7 @@ const Edit = ({
 									replaceInnerBlocks(
 										clientId,
 										createBlocksFromInnerBlocksTemplate(
-											nextVariation.attributes.innerBlocks
+											nextVariation.innerBlocks
 										),
 										true
 									);
