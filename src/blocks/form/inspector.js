@@ -29,7 +29,7 @@ const Inspector = ({
 
 	const [ savedEmail, setSavedEmail ] = useState( '' );
 	const [ email, setEmail ] = useState( '' );
-	const [ isEmailLoaded, setEmailLoading ] = useState( false );
+	const [ isEmailLoaded, setEmailLoading ] = useState( true );
 
 	useEffect( () => {
 		if ( attributes.optionName ) {

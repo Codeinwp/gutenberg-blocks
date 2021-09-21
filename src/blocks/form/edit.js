@@ -43,8 +43,7 @@ import Placeholder from './placeholder.js';
 
 import {
 	dispatch
-} from '@wordpress/data';
-
+} from '@wordpress/data';;
 
 const Edit = ({
 	attributes,
@@ -93,13 +92,15 @@ const Edit = ({
 		if ( children ) {
 			const verificationBlocks = children.filter( ({ name }) => 'themeisle-blocks/form-nonce' === name );
 
-			if ( 2 <= verificationBlocks.length ) {
+			if ( 2 <= verificationBlocks?.length ) {
 				verificationBlocks.slice( 1 ).forEach( block => {
 					removeBlock( block.clientId, false );
 				});
-			} else if ( 0 === verificationBlocks.length ) {
+			} else if ( 0 === verificationBlocks?.length && clientId ) {
 				const nonceBlock = createBlock( 'themeisle-blocks/form-nonce' );
-				insertBlock?.( nonceBlock, ( children?.length ) || 0, clientId, false );
+				if ( nonceBlock ) {
+					insertBlock?.( nonceBlock, ( children?.length ) || 0, clientId, false );
+				}
 			}
 		}
 	}, [ children ]);
@@ -130,7 +131,6 @@ const Edit = ({
 
 	useEffect( () => {
 		api.loadPromise.then( () => {
-			console.info( 'LOADED' );
 			settingsRef.current = new api.models.Settings();
 			setSettingsStatus( true );
 		});
@@ -140,54 +140,54 @@ const Edit = ({
 	 * Save the captcha setting
 	 */
 	useEffect( () => {
+		if ( attributes.hasCaptcha !== undefined ) {
+			settingsRef?.current?.fetch().done( res => {
+				const emails = res.themeisle_blocks_form_emails ? res.themeisle_blocks_form_emails : [];
+				let isMissing = true;
+				let hasChanged = false;
 
-		settingsRef?.current?.fetch().done( res => {
-			const emails = res.themeisle_blocks_form_emails ? res.themeisle_blocks_form_emails : [];
-			let isMissing = true;
-			let hasChanged = false;
-
-			emails?.forEach( ({ form }, index )=> {
-				if ( form === attributes.optionName ) {
-					if ( emails[index].hasCaptcha !== attributes.hasCaptcha ) {
-						hasChanged = true;
+				emails?.forEach( ({ form }, index )=> {
+					if ( form === attributes.optionName ) {
+						if ( emails[index].hasCaptcha !== attributes.hasCaptcha ) {
+							hasChanged = true;
+						}
+						emails[index].hasCaptcha = attributes.hasCaptcha; // update the value
+						isMissing = false;
 					}
-					emails[index].hasCaptcha = attributes.hasCaptcha; // update the value
-					isMissing = false;
+				});
+
+				if ( isMissing ) {
+					emails.push({
+						form: attributes.optionName,
+						hasCaptcha: attributes.hasCaptcha
+					});
+				}
+
+				if ( isMissing || hasChanged ) {
+					const model = new api.models.Settings({
+						// eslint-disable-next-line camelcase
+						themeisle_blocks_form_emails: emails
+					});
+
+					model.save();
+
+					createNotice(
+						'info',
+						__( 'Form preference has been saved!', 'otter-blocks' ),
+						{
+							isDismissible: true,
+							type: 'snackbar'
+						}
+					);
 				}
 			});
-
-			if ( isMissing ) {
-				emails.push({
-					form: attributes.optionName,
-					hasCaptcha: attributes.hasCaptcha
-				});
-			}
-
-			if ( isMissing || hasChanged ) {
-				const model = new api.models.Settings({
-					// eslint-disable-next-line camelcase
-					themeisle_blocks_form_emails: emails
-				});
-
-				model.save();
-
-				createNotice(
-					'info',
-					__( 'Form preference has been saved!', 'otter-blocks' ),
-					{
-						isDismissible: true,
-						type: 'snackbar'
-					}
-				);
-			}
-		});
+		}
 	}, [ attributes.hasCaptcha, settingsRef.current ]);
 
 	useEffect( () => {
 
 		const getAPIData = async() => {
 			if ( ! isAPILoaded ) {
-				console.log( 'GET DATA' );
 				settingsRef?.current?.fetch().then( response => {
 					setGoogleCaptchaAPISiteKey( response.themeisle_google_captcha_api_site_key );
 					setGoogleCaptchaAPISecretKey( response.themeisle_google_captcha_api_secret_key );
@@ -201,7 +201,6 @@ const Edit = ({
 		};
 
 		if ( areSettingsAvailable ) {
-			console.log( 'Ref Loaded' );
 			if ( false === Boolean( googleCaptchaAPISiteKey ) || false === Boolean( googleCaptchaAPISecretKey ) ) {
 				getAPIData();
 			} else {
@@ -212,8 +211,6 @@ const Edit = ({
 			}
 
 		}
-
-		console.count( 'CHECKING' );
 	}, [ areSettingsAvailable, googleCaptchaAPISiteKey, googleCaptchaAPISecretKey, isAPILoaded ]);
 
 	const saveAPIKey = () => {
@@ -247,8 +244,6 @@ const Edit = ({
 		});
 
 	};
-
-	console.log( 'INNER BLOCKS', attributes.innerBlocks, variations, name );
 
 	return (
 		<Fragment>
