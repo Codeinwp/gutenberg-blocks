@@ -41,6 +41,11 @@ import defaultAttributes from './attributes.js';
 import Inspector from './inspector.js';
 import Placeholder from './placeholder.js';
 
+import {
+	dispatch
+} from '@wordpress/data';
+
+
 const Edit = ({
 	attributes,
 	setAttributes,
@@ -49,13 +54,15 @@ const Edit = ({
 	name
 }) => {
 
+	const { createNotice } = dispatch( 'core/notices' );
+
 	const [ googleCaptchaAPISiteKey, setGoogleCaptchaAPISiteKey ] = useState( '' );
 	const [ googleCaptchaAPISecretKey, setGoogleCaptchaAPISecretKey ] = useState( '' );
 	const [ isAPILoaded, setAPILoaded ] = useState( false );
 	const [ isAPISaved, setAPISaved ] = useState( false );
-	// eslint-disable-next-line no-unused-vars
-	const [ isSaving, setSaving ] = useState( false );
+
 	const settingsRef = useRef( null );
+	const [ areSettingsAvailable, setSettingsStatus ] = useState( false );
 
 	const {
 		insertBlock,
@@ -84,18 +91,13 @@ const Edit = ({
 
 	useEffect( () => {
 		if ( children ) {
-			console.log( children );
-
 			const verificationBlocks = children.filter( ({ name }) => 'themeisle-blocks/form-nonce' === name );
-
-			console.log( verificationBlocks );
 
 			if ( 2 <= verificationBlocks.length ) {
 				verificationBlocks.slice( 1 ).forEach( block => {
 					removeBlock( block.clientId, false );
 				});
 			} else if ( 0 === verificationBlocks.length ) {
-				console.log( 'Add block' );
 				const nonceBlock = createBlock( 'themeisle-blocks/form-nonce' );
 				insertBlock?.( nonceBlock, ( children?.length ) || 0, clientId, false );
 			}
@@ -128,7 +130,9 @@ const Edit = ({
 
 	useEffect( () => {
 		api.loadPromise.then( () => {
+			console.info( 'LOADED' );
 			settingsRef.current = new api.models.Settings();
+			setSettingsStatus( true );
 		});
 	}, []);
 
@@ -136,12 +140,17 @@ const Edit = ({
 	 * Save the captcha setting
 	 */
 	useEffect( () => {
+
 		settingsRef?.current?.fetch().done( res => {
 			const emails = res.themeisle_blocks_form_emails ? res.themeisle_blocks_form_emails : [];
 			let isMissing = true;
+			let hasChanged = false;
 
 			emails?.forEach( ({ form }, index )=> {
 				if ( form === attributes.optionName ) {
+					if ( emails[index].hasCaptcha !== attributes.hasCaptcha ) {
+						hasChanged = true;
+					}
 					emails[index].hasCaptcha = attributes.hasCaptcha; // update the value
 					isMissing = false;
 				}
@@ -154,67 +163,89 @@ const Edit = ({
 				});
 			}
 
-			const model = new api.models.Settings({
-				// eslint-disable-next-line camelcase
-				themeisle_blocks_form_emails: emails
-			});
+			if ( isMissing || hasChanged ) {
+				const model = new api.models.Settings({
+					// eslint-disable-next-line camelcase
+					themeisle_blocks_form_emails: emails
+				});
 
-			model.save();
+				model.save();
+
+				createNotice(
+					'info',
+					__( 'Form preference has been saved!', 'otter-blocks' ),
+					{
+						isDismissible: true,
+						type: 'snackbar'
+					}
+				);
+			}
 		});
 	}, [ attributes.hasCaptcha, settingsRef.current ]);
 
 	useEffect( () => {
 
-		const setApi = async() => {
-			if ( false === Boolean( window.themeisleGutenberg.reCaptchaSiteKey ) || false === Boolean( window.themeisleGutenberg.reCaptchaSecretKey ) ) {
-				if ( ! isAPILoaded ) {
-					settingsRef?.current?.fetch().then( response => {
-						setGoogleCaptchaAPISiteKey( response.themeisle_google_captcha_api_site_key );
-						setGoogleCaptchaAPISecretKey( response.themeisle_google_captcha_api_secret_key );
-						setAPILoaded( true );
+		const getAPIData = async() => {
+			if ( ! isAPILoaded ) {
+				console.log( 'GET DATA' );
+				settingsRef?.current?.fetch().then( response => {
+					setGoogleCaptchaAPISiteKey( response.themeisle_google_captcha_api_site_key );
+					setGoogleCaptchaAPISecretKey( response.themeisle_google_captcha_api_secret_key );
+					setAPILoaded( true );
 
-						if ( '' !== response.themeisle_google_captcha_api_site_key && '' !== response.themeisle_google_captcha_api_secret_key ) {
-							setAPISaved( true );
-						}
+					if ( '' !== response.themeisle_google_captcha_api_site_key && '' !== response.themeisle_google_captcha_api_secret_key ) {
+						setAPISaved( true );
+					}
+				});
+			}
+		};
 
-						console.log( response );
-					});
-				}
+		if ( areSettingsAvailable ) {
+			console.log( 'Ref Loaded' );
+			if ( false === Boolean( googleCaptchaAPISiteKey ) || false === Boolean( googleCaptchaAPISecretKey ) ) {
+				getAPIData();
 			} else {
 				if ( ! isAPILoaded ) {
 					setAPILoaded( true );
 					setAPISaved( true );
 				}
 			}
-		};
 
-		setApi();
-	}, []);
+		}
+
+		console.count( 'CHECKING' );
+	}, [ areSettingsAvailable, googleCaptchaAPISiteKey, googleCaptchaAPISecretKey, isAPILoaded ]);
 
 	const saveAPIKey = () => {
-		if ( false === Boolean( window.themeisleGutenberg.mapsAPI ) ) {
-			setSaving( true );
 
-			const model = new wp.api.models.Settings({
-				// eslint-disable-next-line camelcase
-				themeisle_google_captcha_api_site_key: googleCaptchaAPISiteKey,
-				// eslint-disable-next-line camelcase
-				themeisle_google_captcha_api_secret_key: googleCaptchaAPISecretKey
-			});
+		const model = new wp.api.models.Settings({
+			// eslint-disable-next-line camelcase
+			themeisle_google_captcha_api_site_key: googleCaptchaAPISiteKey,
+			// eslint-disable-next-line camelcase
+			themeisle_google_captcha_api_secret_key: googleCaptchaAPISecretKey
+		});
 
-			model.save().then( response => {
-				let saved = false;
+		model.save().then( response => {
+			let saved = false;
 
-				if ( '' !== response.themeisle_google_captcha_api_site_key && '' !== response.themeisle_google_captcha_api_secret_key ) {
-					saved = true;
+			if ( '' !== response.themeisle_google_captcha_api_site_key && '' !== response.themeisle_google_captcha_api_secret_key ) {
+				saved = true;
+			}
+
+			setAPISaved( saved );
+			setGoogleCaptchaAPISecretKey( '' );
+			setGoogleCaptchaAPISiteKey( '' );
+
+			createNotice(
+				'info',
+				__( 'API Keys has been saved!', 'otter-blocks' ),
+				{
+					isDismissible: true,
+					type: 'snackbar'
 				}
+			);
+		});
 
-				setSaving( false );
-				setAPISaved( saved );
-				setGoogleCaptchaAPISecretKey( '' );
-				setGoogleCaptchaAPISiteKey( '' );
-			});
-		}
 	};
 
 	console.log( 'INNER BLOCKS', attributes.innerBlocks, variations, name );

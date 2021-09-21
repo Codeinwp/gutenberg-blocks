@@ -18,7 +18,6 @@ import {
 	dispatch
 } from '@wordpress/data';
 
-const { createNotice } = dispatch( 'core/notices' );
 
 import api from '@wordpress/api';
 
@@ -26,6 +25,7 @@ const Inspector = ({
 	attributes,
 	setAttributes
 }) => {
+	const { createNotice } = dispatch( 'core/notices' );
 
 	const [ savedEmail, setSavedEmail ] = useState( '' );
 	const [ email, setEmail ] = useState( '' );
@@ -135,6 +135,12 @@ const Inspector = ({
 					onChange={ hasCaptcha => setAttributes({ hasCaptcha }) }
 					help={ __( 'Add Google reCaptcha for protection againts bots.', 'otter-blocks' ) }
 				/>
+
+				{
+					attributes.hasCaptcha && (
+						__( 'You can change the API Keys in Settings > Otter', 'otter-blocks' )
+					)
+				}
 
 	   		</PanelBody>
 		</InspectorControls>
