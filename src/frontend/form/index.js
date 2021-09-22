@@ -114,8 +114,20 @@ const collectAndSendInputFormData = ( form ) => {
 				msg.innerHTML = __( 'Success', 'otter-blocks' );
 				msg.classList.add( 'success' );
 			} else {
-				msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
+
 				msg.classList.add( 'error' );
+
+				if ( 'provider' === res?.error_source ) {
+					if ( res?.error.includes( 'invalid' ) || res?.error.includes( 'fake' ) ) {
+						msg.innerHTML = __( 'Error. The email addres does not look correct!', 'otter-blocks' );
+					} else if ( res?.error.includes( 'duplicate' ) || res?.error.includes( 'already' ) ) {
+						msg.innerHTML = __( 'Error. The email was already registered!', 'otter-blocks' );
+					} else {
+						msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
+					}
+				} else {
+					msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
+				}
 
 				console.error( res?.error, res?.reasons );
 			}
