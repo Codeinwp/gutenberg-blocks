@@ -128,10 +128,18 @@ class Options_Settings {
 								'integration' => array(
 									'type'       => 'object',
 									'properties' => array(
-										'provider' => 'string',
-										'apiKey'   => 'string',
-										'listId'   => 'string',
-										'action'   => 'string',
+										'provider' => array(
+											'type' => 'string'
+										),
+										'apiKey'   =>  array(
+											'type' => 'string'
+										),
+										'listId'   =>  array(
+											'type' => 'string'
+										),
+										'action'   =>  array(
+											'type' => 'string'
+										),
 									),
 								),
 							),
