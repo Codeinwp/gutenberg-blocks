@@ -230,7 +230,7 @@ class CSS_Handler extends Base_CSS {
 		require_once ABSPATH . '/wp-admin/includes/file.php';
 		WP_Filesystem();
 
-		$file_name     = 'post-' . $post_id . '-' . time();
+		$file_name     = 'post-v2-' . $post_id . '-' . time();
 		$wp_upload_dir = wp_upload_dir( null, false );
 		$upload_dir    = $wp_upload_dir['basedir'] . '/themeisle-gutenberg/';
 		$file_path     = $upload_dir . $file_name . '.css';

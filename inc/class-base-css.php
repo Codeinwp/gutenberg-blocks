@@ -76,10 +76,12 @@ class Base_CSS {
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Button_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Circle_Counter_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Countdown_CSS',
+			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Core_Image_Plugin_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Font_Awesome_Icons_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Icon_List_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Icon_List_Item_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Progress_Bar_CSS',
+			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Popup_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Review_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Review_Comparison_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Tabs_CSS',
@@ -189,7 +191,7 @@ class Base_CSS {
 
 		$rgb = array_map( 'hexdec', $hex );
 
-		if ( $opacity ) {
+		if ( $opacity >= 0 ) {
 			if ( abs( $opacity ) > 1 ) {
 				$opacity = 1.0;
 			}
@@ -325,11 +327,13 @@ class Base_CSS {
 				$path = new $classname();
 
 				if ( method_exists( $path, 'render_css' ) ) {
-					if ( $this->library_prefix . '/' . $path->block_prefix === $block['blockName'] ) {
+					if ( ( isset( $path->library_prefix ) ? $path->library_prefix : $this->library_prefix ) . '/' . $path->block_prefix === $block['blockName'] ) {
 						$style .= $path->render_css( $block );
 					}
 				}
 			}
+
+			$style .= apply_filters( 'themeisle_gutenberg_blocks_css', $block );
 
 			if ( isset( $block['innerBlocks'] ) && ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
 				$style .= $this->cycle_through_static_blocks( $block['innerBlocks'] );
