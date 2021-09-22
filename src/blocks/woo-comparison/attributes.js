@@ -10,10 +10,6 @@ const attributes = {
 		type: 'string',
 		default: window.themeisleGutenberg.themeMods.listingType
 	},
-	enableRelatedProducts: {
-		type: 'boolean',
-		default: Boolean( window.themeisleGutenberg.themeMods.enableRelatedProducts )
-	},
 	altRow: {
 		type: 'boolean',
 		default: Boolean( window.themeisleGutenberg.themeMods.altRow )

@@ -77,12 +77,6 @@ const Inspector = ({
 				/>
 
 				<ToggleControl
-					label={ __( 'Enable Related Products', 'otter-blocks' ) }
-					checked={ Boolean( attributes.enableRelatedProducts ) }
-					onChange={ () => setAttributes({ enableRelatedProducts: ! Boolean( attributes.enableRelatedProducts ) }) }
-				/>
-
-				<ToggleControl
 					label={ __( 'Enable Alternating Row Color', 'otter-blocks' ) }
 					checked={ Boolean( attributes.altRow ) }
 					onChange={ () => setAttributes({ altRow: ! Boolean( attributes.altRow ) }) }
