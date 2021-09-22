@@ -154,7 +154,7 @@ const Edit = ({
 									replaceInnerBlocks(
 										clientId,
 										createBlocksFromInnerBlocksTemplate(
-											nextVariation.attributes.innerBlocks
+											nextVariation.innerBlocks
 										),
 										true
 									);
