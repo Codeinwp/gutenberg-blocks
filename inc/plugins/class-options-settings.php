@@ -129,16 +129,16 @@ class Options_Settings {
 									'type'       => 'object',
 									'properties' => array(
 										'provider' => array(
-											'type' => 'string'
+											'type' => 'string',
 										),
-										'apiKey'   =>  array(
-											'type' => 'string'
+										'apiKey'   => array(
+											'type' => 'string',
 										),
-										'listId'   =>  array(
-											'type' => 'string'
+										'listId'   => array(
+											'type' => 'string',
 										),
-										'action'   =>  array(
-											'type' => 'string'
+										'action'   => array(
+											'type' => 'string',
 										),
 									),
 								),
