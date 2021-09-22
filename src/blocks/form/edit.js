@@ -26,6 +26,8 @@ import {
 
 import { get } from 'lodash';
 
+import api from '@wordpress/api';
+
 /**
  * Internal dependencies
  */
@@ -81,43 +83,46 @@ const Edit = ({
 	 * Save integration data.
 	 */
 	useEffect( () => {
-		( new wp.api.models.Settings() ).fetch().done( res => {
-			const emails = res.themeisle_blocks_form_emails ? res.themeisle_blocks_form_emails : [];
-			let isMissing = true;
+		api.loadPromise.then( () => {
+			( new api.models.Settings() ).fetch().done( res => {
+				const emails = res.themeisle_blocks_form_emails ? res.themeisle_blocks_form_emails : [];
+				let isMissing = true;
 
-			emails?.forEach( ({ form }, index )=> {
-				if ( form === attributes.optionName ) {
-					if ( emails[index]?.integration ) {
-						emails[index].integration = {};
-					}
-					emails[index].integration.provider = attributes.provider; // update the value
-					emails[index].integration.apiKey = attributes.apiKey;
-					emails[index].integration.listId = attributes.listId;
-					emails[index].integration.action = attributes.action;
-					isMissing = false;
-				}
-			});
-
-			if ( isMissing ) {
-				emails.push({
-					form: attributes.optionName,
-					integration: {
-						provider: attributes.provider,
-						apiKey: attributes.apiKey,
-						listId: attributes.listId,
-						action: attributes.action
+				emails?.forEach( ({ form }, index )=> {
+					if ( form === attributes.optionName ) {
+						if ( emails[index]?.integration ) {
+							emails[index].integration = {};
+						}
+						emails[index].integration.provider = attributes.provider; // update the value
+						emails[index].integration.apiKey = attributes.apiKey;
+						emails[index].integration.listId = attributes.listId;
+						emails[index].integration.action = attributes.action;
+						isMissing = false;
 					}
 				});
-			}
 
-			const model = new wp.api.models.Settings({
-				// eslint-disable-next-line camelcase
-				themeisle_blocks_form_emails: emails
+				if ( isMissing ) {
+					emails.push({
+						form: attributes.optionName,
+						integration: {
+							provider: attributes.provider,
+							apiKey: attributes.apiKey,
+							listId: attributes.listId,
+							action: attributes.action
+						}
+					});
+				}
+
+				const model = new api.models.Settings({
+					// eslint-disable-next-line camelcase
+					themeisle_blocks_form_emails: emails
+				});
+
+				model.save();
 			});
-
-			model.save();
-		});
-	}, [ attributes.hasCaptcha ]);
+		}
+		);
+	}, [ attributes.optionName, attributes.provider, attributes.apiKey, attributes.listId, attributes.action ]);
 
 	const hasIntegrationActive = attributes.provider && attributes.apiKey && attributes.listId;
 

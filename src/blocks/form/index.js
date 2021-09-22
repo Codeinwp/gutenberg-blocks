@@ -72,40 +72,10 @@ registerBlockType( 'themeisle-blocks/form', {
 
 		},
 		{
-			name: 'themeisle-blocks/form-feedback',
-			description: __( 'Request a feedback from clients', 'otter-blocks' ),
+			name: 'themeisle-blocks/form-subscribe',
+			description: __( 'Add the clients to your subscription list', 'otter-blocks' ),
 			icon: icon,
-			title: __( 'Feedback Form', 'otter-blocks' ),
-			innerBlocks: [
-				[
-					'themeisle-blocks/form-input',
-					{
-						label: __( 'Email', 'otter-blocks' ),
-						type: 'email',
-						isRequired: true
-					}
-				],
-				[
-					'themeisle-blocks/form-textarea',
-					{
-						label: __( 'Message', 'otter-blocks' )
-					}
-				],
-				[
-					'core/paragraph',
-					{
-						content: __( 'You agree to receive email communication from us by submitting this form and understand that your contact information will be stored with us.', 'otter-blocks' ),
-						fontSize: 'extra-small'
-					}
-				]
-			]
-
-		},
-		{
-			name: 'themeisle-blocks/form-appointment',
-			description: __( 'Request an appointment from clients', 'otter-blocks' ),
-			icon: icon,
-			title: __( 'Appointment Form', 'otter-blocks' ),
+			title: __( 'Subscribe Form', 'otter-blocks' ),
 			innerBlocks: [
 				[
 					'themeisle-blocks/form-input',
@@ -118,23 +88,9 @@ registerBlockType( 'themeisle-blocks/form', {
 				[
 					'themeisle-blocks/form-input',
 					{
-						label: __( 'Phone', 'otter-blocks' ),
-						type: 'text',
-						isRequired: true
-					}
-				],
-				[
-					'themeisle-blocks/form-input',
-					{
 						label: __( 'Email', 'otter-blocks' ),
 						type: 'email',
 						isRequired: true
-					}
-				],
-				[
-					'themeisle-blocks/form-textarea',
-					{
-						label: __( 'Message', 'otter-blocks' )
 					}
 				],
 				[
@@ -145,6 +101,7 @@ registerBlockType( 'themeisle-blocks/form', {
 					}
 				]
 			]
+
 		}
 	]
 });
