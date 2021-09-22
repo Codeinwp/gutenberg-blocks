@@ -43,7 +43,11 @@ class Form_Nonce_Block extends Base_Block {
 	 */
 	protected function render( $attributes ) {
 		$output  = '<div class="protection">';
-		$output .= wp_nonce_field( 'form-verification', '_nonce_field' );
+		if( isset( $attributes['formId'] ) ) {
+			$output .= wp_nonce_field( 'form-verification', $attributes['formId'] . '_nonce_field', true, false );
+		} else {
+			$output .= wp_nonce_field( 'form-verification', '_nonce_field', true, false );
+		}
 		$output .= '</div>';
 		return $output;
 	}

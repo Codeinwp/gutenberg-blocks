@@ -10,6 +10,8 @@ import { registerBlockType } from '@wordpress/blocks';
  */
 import { inputIcon as icon } from '../../../helpers/icons.js';
 
+import edit from './edit.js';
+
 registerBlockType( 'themeisle-blocks/form-nonce', {
 	title: __( 'Nonce Field', 'otter-blocks' ),
 	description: __( 'Protect the form from CSRF.', 'otter-blocks' ),
@@ -21,10 +23,15 @@ registerBlockType( 'themeisle-blocks/form-nonce', {
 		'csrf',
 		'field'
 	],
-	attributes: {},
-	supports: {
-		align: [ 'wide', 'full' ]
+	attributes: {
+		formId: {
+			type: 'string'
+		}
 	},
-	edit: () => null,
+	supports: {
+		align: [ 'wide', 'full' ],
+		inserter: false
+	},
+	edit: edit,
 	save: () => null
 });

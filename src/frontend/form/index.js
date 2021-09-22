@@ -46,7 +46,8 @@ const collectAndSendInputFormData = ( form ) => {
 		};
 	});
 
-	const nonceFieldValue = form.querySelector( '#_nonce_field' )?.value;
+	const query = `.protection #${ form.id || '' }_nonce_field`;
+	const nonceFieldValue = form.querySelector( query )?.value;
 
 	if ( 0 < elemsWithError.length || ( form?.classList?.contains( 'has-captcha' ) && id && ! window.themeisleGutenberg?.tokens[id]) ) {
 		elemsWithError.forEach( input => {
