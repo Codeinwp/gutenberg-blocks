@@ -408,7 +408,7 @@ class Form_Server {
 			return rest_ensure_response( $return );
 		}
 
-		$valid_api_key = Sendinblue_Integration::validate_api_key( $data['apiKey'] );
+		$valid_api_key = Sendinblue_Integration::validate_api_key( $api_key );
 
 		if ( $valid_api_key['valid'] ) {
 			$sendinblue = new Sendinblue_Integration( $api_key );
