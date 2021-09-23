@@ -9,8 +9,9 @@ const TIME_UNTIL_REMOVE = 10_000;
 /**
  * Send the date from the form to the server
  * @param {HTMLDivElement} form The element that contains all the inputs
+ * @param {HTMLButtonElement} btn The submit button
  */
-const collectAndSendInputFormData = ( form ) => {
+const collectAndSendInputFormData = ( form, btn ) => {
 	const id = form?.id;
 	const data = {};
 
@@ -126,6 +127,7 @@ const collectAndSendInputFormData = ( form ) => {
 			}
 
 			addThenRemoveMsg( msg );
+			btn.disabled = false;
 		})?.catch( error => {
 			msgAnchor?.classList.remove( 'loading' );
 
@@ -137,6 +139,7 @@ const collectAndSendInputFormData = ( form ) => {
 			msg.classList.add( 'error' );
 
 			addThenRemoveMsg( msg );
+			btn.disabled = false;
 		});
 	}
 };
@@ -149,9 +152,11 @@ domReady( () => {
 	forms.forEach( form => {
 		const sendBtn = form.querySelector( 'button' );
 		sendBtn?.addEventListener( 'click', ( event ) => {
-			event.preventDefault();
-
-			collectAndSendInputFormData( form );
+			if ( ! sendBtn.disabled ) {
+				event.preventDefault();
+				sendBtn.disabled = true;
+				collectAndSendInputFormData( form, sendBtn );
+			}
 		});
 	});
 

@@ -182,7 +182,7 @@ const Edit = ({
 
 					createNotice(
 						'info',
-						__( 'Form preference has been saved!', 'otter-blocks' ),
+						__( 'Form preference has been saved.', 'otter-blocks' ),
 						{
 							isDismissible: true,
 							type: 'snackbar'
@@ -240,7 +240,7 @@ const Edit = ({
 
 			createNotice(
 				'info',
-				__( 'API Keys has been saved!', 'otter-blocks' ),
+				__( 'API Keys has been saved.', 'otter-blocks' ),
 				{
 					isDismissible: true,
 					type: 'snackbar'
