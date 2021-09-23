@@ -50,7 +50,7 @@ const collectAndSendInputFormData = ( form, btn ) => {
 	const query = `.protection #${ form.id || '' }_nonce_field`;
 	const nonceFieldValue = form.querySelector( query )?.value;
 
-	if ( 0 < elemsWithError.length || ( form?.classList?.contains( 'has-captcha' ) && id && ! window.themeisleGutenberg?.tokens[id]) ) {
+	if ( 0 < elemsWithError.length || ( form?.classList?.contains( 'has-captcha' ) && id && ! window.themeisleGutenberg?.tokens[id].token ) ) {
 		elemsWithError.forEach( input => {
 			input?.reportValidity();
 		});
@@ -63,8 +63,8 @@ const collectAndSendInputFormData = ( form, btn ) => {
 			data.formOption = form?.dataset?.optionName;
 		}
 
-		if (  form?.classList?.contains( 'has-captcha' ) && id && window.themeisleGutenberg?.tokens?.[id]) {
-			data.token = window.themeisleGutenberg?.tokens?.[id];
+		if (  form?.classList?.contains( 'has-captcha' ) && id && window.themeisleGutenberg?.tokens?.[id].token ) {
+			data.token = window.themeisleGutenberg?.tokens?.[id].token;
 		}
 
 		if ( form?.id ) {
@@ -127,6 +127,10 @@ const collectAndSendInputFormData = ( form, btn ) => {
 			}
 
 			addThenRemoveMsg( msg );
+
+			if ( window.themeisleGutenberg?.tokens?.[id].reset ) {
+				window.themeisleGutenberg?.tokens?.[id].reset();
+			}
 			btn.disabled = false;
 		})?.catch( error => {
 			msgAnchor?.classList.remove( 'loading' );
@@ -139,6 +143,9 @@ const collectAndSendInputFormData = ( form, btn ) => {
 			msg.classList.add( 'error' );
 
 			addThenRemoveMsg( msg );
+			if ( window.themeisleGutenberg?.tokens?.[id].reset ) {
+				window.themeisleGutenberg?.tokens?.[id].reset();
+			}
 			btn.disabled = false;
 		});
 	}

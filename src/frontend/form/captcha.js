@@ -37,7 +37,7 @@ const renderCapthcaOn = ( form ) => {
 	container?.insertBefore( captchaNode, container.lastChild );
 
 
-	window.grecaptcha?.render(
+	const captcha = window.grecaptcha?.render(
 		captchaNode,
 		{
 			sitekey: window?.themeisleGutenbergForm?.reRecaptchaSitekey,
@@ -46,15 +46,23 @@ const renderCapthcaOn = ( form ) => {
 					window.themeisleGutenberg = {};
 					window.themeisleGutenberg.tokens = {};
 				}
-				window.themeisleGutenberg.tokens[id] = token;
+				window.themeisleGutenberg.tokens[id] = {
+					token,
+					reset: () => window.grecaptcha?.reset( captcha )
+				};
 			},
 			'expired-callback': () => {
 				if ( ! window.themeisleGutenberg?.tokens ) {
 					window.themeisleGutenberg = {};
 					window.themeisleGutenberg.tokens = {};
 				}
-				window.themeisleGutenberg.tokens[id] = null;
+				window.themeisleGutenberg.tokens[id] = {
+					token: null,
+					reset: () => null
+				};
 			}
 		}
 	);
+
+	return captcha;
 };
