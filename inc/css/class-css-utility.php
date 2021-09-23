@@ -41,7 +41,7 @@
  * ) );
  *
  * $style = $css->generate();
- * 
+ *
  * Inspired by https://github.com/kirki-framework/wp-css-generator
  *
  * @package ThemeIsle\GutenbergBlocks\CSS
@@ -69,6 +69,13 @@ class CSS_Utility {
 	public $css_array = array();
 
 	/**
+	 * Variable to hold custom block ID.
+	 *
+	 * @var string
+	 */
+	public $block_id;
+
+	/**
 	 * Constructor
 	 *
 	 * @access public
@@ -76,6 +83,17 @@ class CSS_Utility {
 	 */
 	public function __construct( $block ) {
 		$this->block = $block;
+	}
+
+	/**
+	 * Define custom Block ID.
+	 *
+	 * @access public
+	 * @since 1.7.0
+	 * @param string $id Block ID.
+	 */
+	public function set_id( $id ) {
+		$this->block_id = $id;
 	}
 
 	/**
@@ -117,8 +135,12 @@ class CSS_Utility {
 
 		$attrs = $this->block['attrs'];
 
-		if ( ! isset( $attrs['id'] ) ) {
-			return $style;
+		if ( ! isset( $this->block_id ) ) {
+			if ( ! isset( $attrs['id'] ) ) {
+				return $style;
+			}
+
+			$this->block_id = $attrs['id'];
 		}
 
 		foreach ( $this->css_array as $media_query => $css_items ) {
@@ -178,7 +200,7 @@ class CSS_Utility {
 				}
 
 				if ( '' !== $item_style ) {
-					$selector = strpos( $selector, '[id]' ) !== false ? str_replace( '[id]', '#' . $attrs['id'], $selector ) : '#' . $attrs['id'] . $selector;
+					$selector = strpos( $selector, '[id]' ) !== false ? str_replace( '[id]', '#' . $this->block_id, $selector ) : '#' . $this->block_id . $selector;
 					$style   .= $selector . ' {' . $item_style . '}';
 				}
 			}
