@@ -119,7 +119,7 @@ const collectAndSendInputFormData = ( form ) => {
 
 				if ( 'provider' === res?.error_source ) {
 					if ( res?.error.includes( 'invalid' ) || res?.error.includes( 'fake' ) ) {
-						msg.innerHTML = __( 'Error. The email addres does not look correct!', 'otter-blocks' );
+						msg.innerHTML = __( 'Error. The email address does not look correct!', 'otter-blocks' );
 					} else if ( res?.error.includes( 'duplicate' ) || res?.error.includes( 'already' ) ) {
 						msg.innerHTML = __( 'Error. The email was already registered!', 'otter-blocks' );
 					} else {

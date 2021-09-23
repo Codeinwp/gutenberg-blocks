@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /**
  * WordPress dependencies
  */
@@ -16,8 +15,10 @@ import {
 	dispatch
 } from '@wordpress/data';
 
-import { TextControl, PanelBody, Button, SelectControl, Spinner, Notice } from '@wordpress/components';
+import { TextControl, PanelBody, Button, SelectControl, Spinner } from '@wordpress/components';
 import { getListIdOptionFrom } from './integrations';
+
+import api from '@wordpress/api';
 
 const Inspector = ({
 	attributes,
@@ -33,12 +34,13 @@ const Inspector = ({
 
 	useEffect( () => {
 		if ( attributes.optionName ) {
-			( new wp.api.models.Settings() ).fetch().done( res => {
-				res.themeisle_blocks_form_emails?.filter( ({ form }) => form === attributes.optionName )?.forEach( item => {
-					setEmail( item?.email );
+			api.loadPromise.then( () => {
+				( new api.models.Settings() ).fetch().done( res => {
+					res.themeisle_blocks_form_emails?.filter( ({ form }) => form === attributes.optionName )?.forEach( item => {
+						setEmail( item?.email );
+					});
 				});
 			});
-
 		}
 	}, [ attributes.optionName ]);
 
@@ -67,7 +69,7 @@ const Inspector = ({
 	}, [ attributes.provider, attributes.apiKey ]);
 
 	const saveEmail = () => {
-		( new wp.api.models.Settings() ).fetch().done( res => {
+		( new api.models.Settings() ).fetch().done( res => {
 			const emails = res.themeisle_blocks_form_emails ? res.themeisle_blocks_form_emails : [];
 			let isMissing = true;
 
