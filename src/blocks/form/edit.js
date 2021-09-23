@@ -267,15 +267,10 @@ const Edit = ({
 							<InnerBlocks
 							/>
 
-							<div className="wp-block-button">
-								<button className="wp-block-button__link">
-									{ __( 'Submit', 'otter-blocks' ) }
-								</button>
-							</div>
 							{
 								attributes.hasCaptcha && ( ! isAPILoaded || ! isAPISaved ) && (
 									<Placeholder
-										className={ className }
+										className={ 'wp-block-themeisle-blocks-form-captcha-field' }
 										isAPILoaded={ isAPILoaded }
 										isAPISaved={ isAPISaved }
 										saveAPIKey={ saveAPIKey }
@@ -286,6 +281,12 @@ const Edit = ({
 									/>
 								)
 							}
+
+							<div className="wp-block-button">
+								<button className="wp-block-button__link">
+									{ __( 'Submit', 'otter-blocks' ) }
+								</button>
+							</div>
 						</div>
 					) : (
 						<VariationPicker
