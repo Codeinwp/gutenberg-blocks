@@ -175,8 +175,9 @@ const Inspector = ({
 								help={ __( 'You can find the key in the provider\'s website', 'otter-blocks' ) }
 								value={ attributes.apiKey }
 								onChange={ apiKey => {
-									setAttributes({ apiKey });
 									setFetchListIdStatus( 'loading' );
+									setListIDOptions([]);
+									setAttributes({ apiKey });
 								}}
 							/>
 
