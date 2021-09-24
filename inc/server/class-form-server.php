@@ -448,9 +448,6 @@ class Form_Server {
 
 		$integration = $this->get_form_option_settings( $data['formOption'] );
 
-		if ( isset( $integration['provider'] ) && '' !== $integration['provider'] ) {
-			$has_provider = true;
-		}
 		if ( isset( $integration['apiKey'] ) && '' !== $integration['apiKey'] &&
 			isset( $integration['listId'] ) && '' !== $integration['listId']
 		) {
@@ -459,12 +456,6 @@ class Form_Server {
 
 
 		// TODO: Add form captcha validation here.
-		if ( ! $has_provider ) {
-			$reasons += array(
-				__( 'Provider is missing!', 'otter-blocks' ),
-			);
-		}
-
 		if ( ! $has_creditentials ) {
 			$reasons += array(
 				__( 'Provider settings are missing!', 'otter-blocks' ),
