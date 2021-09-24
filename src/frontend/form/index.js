@@ -50,10 +50,51 @@ const collectAndSendInputFormData = ( form, btn ) => {
 	const query = `.protection #${ form.id || '' }_nonce_field`;
 	const nonceFieldValue = form.querySelector( query )?.value;
 
+	const msgAnchor = form.querySelector( '.wp-block-button' );
+	msgAnchor?.classList.add( 'has-submit-msg' );
+
+	/**
+		 * Add the message to the anchor element then removed after a fixed time
+		 * @param {HTMLDivElement} msg The message container
+		 */
+	const addThenRemoveMsg = ( msg ) => {
+
+		// Remove old messages
+		let _msg = messagesElem.pop();
+		while ( _msg ) {
+			if ( msgAnchor === _msg.parentNode ) {
+				msgAnchor.removeChild( _msg );
+			}
+			_msg = messagesElem.pop();
+		}
+
+		// Add the new message to the page
+		messagesElem.push( msg );
+		msgAnchor.appendChild( msg );
+
+		// Delete it after a fixed time
+		setTimeout( () => {
+			if ( msg && msgAnchor === msg.parentNode ) {
+				msgAnchor.removeChild( msg );
+			}
+		},  TIME_UNTIL_REMOVE );
+	};
+
 	if ( 0 < elemsWithError.length || ( form?.classList?.contains( 'has-captcha' ) && id && ! window.themeisleGutenberg?.tokens[id].token ) ) {
 		elemsWithError.forEach( input => {
 			input?.reportValidity();
 		});
+		if (  form?.classList?.contains( 'has-captcha' ) && id && ! window.themeisleGutenberg?.tokens[id].token  ) {
+			const msg = document.createElement( 'div' );
+			msg.classList.add( 'wp-block-themeisle-blocks-form-server-msg' );
+			if ( ! window.hasOwnProperty( 'grecaptcha' ) ) {
+				msg.innerHTML = __( '⚠ Captcha is not loaded. Please check your browser plugins to allow the Google reCaptcha.', 'otter-blocks' );
+			} else {
+				msg.innerHTML = __( '⚠ Please check the captcha.', 'otter-blocks' );
+			}
+			msg.classList.add( 'warning' );
+			addThenRemoveMsg( msg );
+		}
 	} else {
 		data.data = formFieldsData;
 		if ( '' !== form?.dataset?.emailSubject ) {
@@ -77,36 +118,7 @@ const collectAndSendInputFormData = ( form, btn ) => {
 
 		data.postUrl = window.location.href;
 
-		const msgAnchor = form.querySelector( '.wp-block-button' );
-		msgAnchor?.classList.add( 'has-submit-msg' );
 		msgAnchor?.classList.add( 'loading' );
-
-		/**
-		 * Add the message to the anchor element then removed after a fixed time
-		 * @param {HTMLDivElement} msg The message container
-		 */
-		const addThenRemoveMsg = ( msg ) => {
-
-			// Remove old messages
-			let _msg = messagesElem.pop();
-			while ( _msg ) {
-				if ( msgAnchor === _msg.parentNode ) {
-					msgAnchor.removeChild( _msg );
-				}
-				_msg = messagesElem.pop();
-			}
-
-			// Add the new message to the page
-			messagesElem.push( msg );
-			msgAnchor.appendChild( msg );
-
-			// Delete it after a fixed time
-			setTimeout( () => {
-				if ( msg && msgAnchor === msg.parentNode ) {
-					msgAnchor.removeChild( msg );
-				}
-			},  TIME_UNTIL_REMOVE );
-		};
 
 		apiFetch({
 			path: 'themeisle-gutenberg-blocks/v1/forms',

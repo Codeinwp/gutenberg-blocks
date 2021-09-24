@@ -60,6 +60,10 @@
 		&.error {
 			color: red;
 		}
+
+		&.warning {
+			color: rgb(255, 196, 0);
+		}
 	}
 
 	.has-submit-msg {
