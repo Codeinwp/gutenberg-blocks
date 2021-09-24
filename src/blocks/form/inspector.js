@@ -102,8 +102,6 @@ const Inspector = ({
 		});
 	};
 
-	console.log( listIDOptions.length, attributes.listId );
-
 	return (
 		<InspectorControls>
 			<PanelBody

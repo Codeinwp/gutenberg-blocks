@@ -112,10 +112,12 @@ const collectAndSendInputFormData = ( form, btn ) => {
 				msg.classList.add( 'error' );
 
 				if ( 'provider' === res?.error_source ) {
-					if ( res?.error.includes( 'invalid' ) || res?.error.includes( 'fake' ) ) {
-						msg.innerHTML = __( 'Error. The email address does not look correct!', 'otter-blocks' );
-					} else if ( res?.error.includes( 'duplicate' ) || res?.error.includes( 'already' ) ) {
-						msg.innerHTML = __( 'Error. The email was already registered!', 'otter-blocks' );
+					if ( res?.error.includes( 'invalid' ) || res?.error.includes( 'fake' ) ) { // mailchimp
+						msg.classList.add( 'warning' );
+						msg.innerHTML = __( '⚠ The email address does not look correct!', 'otter-blocks' );
+					} else if ( res?.error.includes( 'duplicate' ) || res?.error.includes( 'already' ) ) { // sendinblue
+						msg.classList.add( 'info' );
+						msg.innerHTML = __( '🛈 The email was already registered!', 'otter-blocks' );
 					} else {
 						msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
 					}

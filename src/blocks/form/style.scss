@@ -70,6 +70,14 @@
 		&.error {
 			color: red;
 		}
+
+		&.info {
+			color: rgb(79, 123, 204);
+		}
+
+		&.warning {
+			color: rgb(255, 196, 0);
+		}
 	}
 
 	.has-submit-msg {
