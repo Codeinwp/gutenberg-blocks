@@ -1,19 +1,16 @@
-/* eslint-disable no-unused-vars */
 import { __ } from '@wordpress/i18n';
 
 import domReady from '@wordpress/dom-ready';
 import apiFetch from '@wordpress/api-fetch';
-
-/** @type {Array.<HTMLDivElement>} */
-const msgs = [];
 
 const TIME_UNTIL_REMOVE = 10_000;
 
 /**
  * Send the date from the form to the server
  * @param {HTMLDivElement} form The element that contains all the inputs
+ * @param {HTMLButtonElement} btn The submit button
  */
-const collectAndSendInputFormData = ( form ) => {
+const collectAndSendInputFormData = ( form, btn ) => {
 	const exportData = [ { label: __( 'Form submission from', 'otter-blocks' ), value: window.location.href } ];
 	const inputs = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-input' );
 	const textarea = form?.querySelectorAll( '.wp-block-themeisle-blocks-form__container .wp-block-themeisle-blocks-form-textarea' );
@@ -40,10 +37,35 @@ const collectAndSendInputFormData = ( form ) => {
 		};
 	});
 
+
+	const msgAnchor = form.querySelector( '.wp-block-button' );
+	msgAnchor?.classList.add( 'has-submit-msg' );
+
+	/**
+	 * Add the message to the anchor element then removed after a fixed time
+	 * @param {HTMLDivElement} msg The message container
+	 */
+	const addThenRemoveMsg = ( msg ) => {
+
+		// Remove old messages
+		msgAnchor.querySelectorAll( '.wp-block-themeisle-blocks-form-server-msg' ).forEach( _msg => msgAnchor.removeChild( _msg ) );
+
+		// Add the new message to the page
+		msgAnchor.appendChild( msg );
+
+		// Delete it after a fixed time
+		setTimeout( () => {
+			if ( msg && msgAnchor === msg.parentNode ) {
+				msgAnchor.removeChild( msg );
+			}
+		},  TIME_UNTIL_REMOVE );
+	};
+
 	if ( 0 < errors.length ) {
 		errors.forEach( input => {
 			input?.reportValidity();
 		});
+		btn.disabled = false;
 	} else {
 		data.data = exportData;
 		if ( '' !== form?.dataset?.emailSubject ) {
@@ -55,34 +77,24 @@ const collectAndSendInputFormData = ( form ) => {
 
 		const msgAnchor = form.querySelector( '.wp-block-button' );
 		msgAnchor?.classList.add( 'has-submit-msg' );
+
+		if ( form?.id ) {
+			data.formId = form?.id;
+		}
+
+		if ( form.classList.contains( 'is-subscription' ) ) {
+			data.action = 'subscribe';
+		}
+
+		if ( form.classList.contains( 'can-submit-and-subscribe' ) ) {
+			data.action = 'submit-subscribe';
+			data.consent = form.querySelector( '.wp-block-themeisle-blocks-form-consent input' )?.checked || false;
+		}
+
+		data.postUrl = window.location.href;
+
 		msgAnchor?.classList.add( 'loading' );
 
-		/**
-		 * Add the message to the anchor element then removed after a fixed time
-		 * @param {HTMLDivElement} msg The message container
-		 */
-		const addThenRemoveMsg = ( msg ) => {
-
-			// Remove old messages
-			let _msg = msgs.pop();
-			while ( _msg ) {
-				if ( msgAnchor === _msg.parentNode ) {
-					msgAnchor.removeChild( _msg );
-				}
-				_msg = msgs.pop();
-			}
-
-			// Add the new message to the page
-			msgs.push( msg );
-			msgAnchor.appendChild( msg );
-
-			// Delete it after a fixed time
-			setTimeout( () => {
-				if ( msg && msgAnchor === msg.parentNode ) {
-					msgAnchor.removeChild( msg );
-				}
-			},  TIME_UNTIL_REMOVE );
-		};
 
 		apiFetch({
 			path: 'themeisle-gutenberg-blocks/v1/forms',
@@ -101,6 +113,7 @@ const collectAndSendInputFormData = ( form ) => {
 			}
 
 			addThenRemoveMsg( msg );
+			btn.disabled = false;
 		})?.catch( error => {
 			msgAnchor?.classList.remove( 'loading' );
 
@@ -112,6 +125,7 @@ const collectAndSendInputFormData = ( form ) => {
 			msg.classList.add( 'error' );
 
 			addThenRemoveMsg( msg );
+			btn.disabled = false;
 		});
 	}
 };
@@ -123,8 +137,8 @@ domReady( () => {
 		const sendBtn = form.querySelector( 'button' );
 		sendBtn?.addEventListener( 'click', ( event ) => {
 			event.preventDefault();
-
-			collectAndSendInputFormData( form );
+			sendBtn.disabled = true;
+			collectAndSendInputFormData( form, sendBtn );
 		});
 	});
 
