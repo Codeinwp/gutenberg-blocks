@@ -16,9 +16,6 @@ const collectAndSendInputFormData = ( form, btn ) => {
 	const data = {};
 
 	/** @type {Array.<HTMLDivElement>} */
-	const messagesElem = [];
-
-	/** @type {Array.<HTMLDivElement>} */
 	const elemsWithError = [];
 
 	const formFieldsData = [ { label: __( 'Form submission from', 'otter-blocks' ), value: window.location.href } ];
@@ -60,16 +57,9 @@ const collectAndSendInputFormData = ( form, btn ) => {
 	const addThenRemoveMsg = ( msg ) => {
 
 		// Remove old messages
-		let _msg = messagesElem.pop();
-		while ( _msg ) {
-			if ( msgAnchor === _msg.parentNode ) {
-				msgAnchor.removeChild( _msg );
-			}
-			_msg = messagesElem.pop();
-		}
+		msgAnchor.querySelectorAll( '.wp-block-themeisle-blocks-form-server-msg' ).forEach( _msg => msgAnchor.removeChild( _msg ) );
 
 		// Add the new message to the page
-		messagesElem.push( msg );
 		msgAnchor.appendChild( msg );
 
 		// Delete it after a fixed time
@@ -95,6 +85,7 @@ const collectAndSendInputFormData = ( form, btn ) => {
 			msg.classList.add( 'warning' );
 			addThenRemoveMsg( msg );
 		}
+		btn.disabled = false;
 	} else {
 		data.data = formFieldsData;
 		if ( '' !== form?.dataset?.emailSubject ) {
