@@ -32,7 +32,7 @@ const BlockPlaceholder = ({
 	onComplete
 }) => {
 	const { data, status } = useSelect( select => {
-		let data = false;
+		let data = [];
 		let status = 'loading';
 
 		const { COLLECTIONS_STORE_KEY } = window.wc.wcBlocksData;
