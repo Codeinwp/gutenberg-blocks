@@ -13,6 +13,20 @@ const attributes = {
 	},
 	hasCaptcha: {
 		type: 'boolean'
+	},
+	provider: {
+		type: 'string',
+		default: ''
+	},
+	apiKey: {
+		type: 'string'
+	},
+	listId: {
+		type: 'string'
+	},
+	action: {
+		type: 'string',
+		default: 'subscribe'
 	}
 };
 

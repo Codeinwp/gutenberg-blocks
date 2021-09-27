@@ -39,6 +39,7 @@ const collectAndSendInputFormData = ( form, btn ) => {
 			formFieldsData.push({
 				label,
 				value: valueElem?.value,
+				type: valueElem?.type,
 				checked
 			});
 		};
@@ -70,27 +71,18 @@ const collectAndSendInputFormData = ( form, btn ) => {
 		},  TIME_UNTIL_REMOVE );
 	};
 
-	if ( 0 < elemsWithError.length || ( form?.classList?.contains( 'has-captcha' ) && id && ! window.themeisleGutenberg?.tokens[id].token ) ) {
-		elemsWithError.forEach( input => {
+	if ( 0 < errors.length ) {
+		errors.forEach( input => {
 			input?.reportValidity();
 		});
-		if (  form?.classList?.contains( 'has-captcha' ) && id && ! window.themeisleGutenberg?.tokens[id].token  ) {
-			const msg = document.createElement( 'div' );
-			msg.classList.add( 'wp-block-themeisle-blocks-form-server-msg' );
-			if ( ! window.hasOwnProperty( 'grecaptcha' ) ) {
-				msg.innerHTML = __( '⚠ Captcha is not loaded. Please check your browser plugins to allow the Google reCaptcha.', 'otter-blocks' );
-			} else {
-				msg.innerHTML = __( '⚠ Please check the captcha.', 'otter-blocks' );
-			}
-			msg.classList.add( 'warning' );
-			addThenRemoveMsg( msg );
-		}
 		btn.disabled = false;
 	} else {
-		data.data = formFieldsData;
+		data.data = exportData;
+
 		if ( '' !== form?.dataset?.emailSubject ) {
 			data.emailSubject = form?.dataset?.emailSubject;
 		}
+
 		if ( form?.dataset?.optionName ) {
 			data.formOption = form?.dataset?.optionName;
 		}
@@ -110,6 +102,23 @@ const collectAndSendInputFormData = ( form, btn ) => {
 		data.postUrl = window.location.href;
 
 		msgAnchor?.classList.add( 'loading' );
+		if ( form?.id ) {
+			data.formId = form?.id;
+		}
+
+		if ( form.classList.contains( 'is-subscription' ) ) {
+			data.action = 'subscribe';
+		}
+
+		if ( form.classList.contains( 'can-submit-and-subscribe' ) ) {
+			data.action = 'submit-subscribe';
+			data.consent = form.querySelector( '.wp-block-themeisle-blocks-form-consent input' )?.checked || false;
+		}
+
+		data.postUrl = window.location.href;
+
+		msgAnchor?.classList.add( 'loading' );
+
 
 		apiFetch({
 			path: 'themeisle-gutenberg-blocks/v1/forms',
@@ -124,8 +133,23 @@ const collectAndSendInputFormData = ( form, btn ) => {
 				msg.innerHTML = __( 'Success', 'otter-blocks' );
 				msg.classList.add( 'success' );
 			} else {
-				msg.innerHTML = __( 'Something went wrong! Try again.', 'otter-blocks' );
+
 				msg.classList.add( 'error' );
+
+				if ( 'provider' === res?.error_source ) {
+					if ( res?.error.includes( 'invalid' ) || res?.error.includes( 'fake' ) ) { // mailchimp
+						msg.classList.add( 'warning' );
+						msg.innerHTML = __( '⚠ The email address does not look correct!', 'otter-blocks' );
+					} else if ( res?.error.includes( 'duplicate' ) || res?.error.includes( 'already' ) ) { // sendinblue
+						msg.classList.add( 'info' );
+						msg.innerHTML = __( '🛈 The email was already registered!', 'otter-blocks' );
+					} else {
+						msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
+					}
+				} else {
+					msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
+				}
+
 				console.error( res?.error, res?.reasons );
 			}
 
@@ -160,6 +184,11 @@ domReady( () => {
 	addCaptchaOnPage( forms );
 
 	forms.forEach( form => {
+
+		if ( form.classList.contains( 'can-submit-and-subscribe' ) ) {
+			renderConsentCheckbox( form );
+		}
+
 		const sendBtn = form.querySelector( 'button' );
 		sendBtn?.addEventListener( 'click', ( event ) => {
 			if ( ! sendBtn.disabled ) {
@@ -171,3 +200,28 @@ domReady( () => {
 	});
 
 });
+
+/**
+ * Render a checkbox for consent
+ * @param {HTMLDivElement} form
+ */
+const renderConsentCheckbox = ( form ) => {
+	const container = form.querySelector( '.wp-block-themeisle-blocks-form__container' );
+	const button = form.querySelector( '.wp-block-button' );
+
+	const inputContainer = document.createElement( 'div' );
+	inputContainer.classList.add( 'wp-block-themeisle-blocks-form-consent' );
+	container.insertBefore( inputContainer, button );
+
+	const input = document.createElement( 'input' );
+	input.type = 'checkbox';
+	input.name = 'consent';
+	input.id = 'consent';
+
+	const label = document.createElement( 'label' );
+	label.innerHTML = __( 'Share your email with third-party provider to recceive promotional offers!', 'otter-blocks' );
+	label.htmlFor = 'consent';
+
+	inputContainer.appendChild( input );
+	inputContainer.appendChild( label );
+};
