@@ -27,11 +27,8 @@ class Woo_Comparison_Block extends Base_Block {
 		}
 
 		if ( is_admin() && class_exists( '\Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Main' ) ) {
-			$style_path = neve_is_new_skin() ? '/style-main-new' : '/assets/css/style-legacy';
-			wp_enqueue_style( 'neve-style', get_template_directory_uri() . $style_path . ( ( NEVE_DEBUG ) ? '' : '.min' ) . '.css', array( 'neve-gutenberg-style', 'nv-ct-style' ), apply_filters( 'neve_version_filter', NEVE_VERSION ) );
-
 			$style_path = neve_is_new_skin() ? 'css/woocommerce' : 'css/woocommerce-legacy';
-			wp_enqueue_style( 'neve-woocommerce', NEVE_ASSETS_URL . $style_path . ( ( NEVE_DEBUG ) ? '' : '.min' ) . '.css', array( 'neve-style', 'woocommerce-general' ), apply_filters( 'neve_version_filter', NEVE_VERSION ) );
+			wp_enqueue_style( 'neve-woocommerce', NEVE_ASSETS_URL . $style_path . ( ( NEVE_DEBUG ) ? '' : '.min' ) . '.css', array( 'woocommerce-general' ), apply_filters( 'neve_version_filter', NEVE_VERSION ) );
 
 			$table = new \Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Main();
 			$table->register_assets();
@@ -135,7 +132,7 @@ class Woo_Comparison_Block extends Base_Block {
 
 		$id    = isset( $attributes['id'] ) ? $attributes['id'] : 'wp-block-themeisle-blocks-woo-comparison-' . wp_rand( 10, 100 );
 		$class = isset( $attributes['className'] ) ? $attributes['className'] : '';
-		$class = 'wp-block-themeisle-blocks-google-map nv-ct-enabled nv-ct-comparison-table-content woocommerce ' . esc_attr( $class );
+		$class = 'wp-block-themeisle-blocks-woo-comparison nv-ct-enabled nv-ct-comparison-table-content woocommerce ' . esc_attr( $class );
 
 		$output  = '<div id="' . $id . '" class="' . $class . '">';
 		$output .= ob_get_contents();

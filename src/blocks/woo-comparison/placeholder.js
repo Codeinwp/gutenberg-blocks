@@ -32,21 +32,32 @@ const BlockPlaceholder = ({
 	onComplete
 }) => {
 	const { data, status } = useSelect( select => {
-		let data = [];
+		let data = false;
 		let status = 'loading';
 
 		const { COLLECTIONS_STORE_KEY } = window.wc.wcBlocksData;
 
-		const error = select( COLLECTIONS_STORE_KEY ).getCollectionError( '/wc/store', 'products', { per_page: 100 });
+		const args =  [
+			'/wc/store', 'products',
+			{
+				per_page: 100
+			}
+		];
+
+		const error = select( COLLECTIONS_STORE_KEY ).getCollectionError( ...args );
 
 		if ( error ) {
 			status = 'error';
 		} else {
-			data = select( COLLECTIONS_STORE_KEY ).getCollection( '/wc/store', 'products', { per_page: 100 });
+			data = select( COLLECTIONS_STORE_KEY ).getCollection( ...args );
+
+			const hasLoaded = select( COLLECTIONS_STORE_KEY ).hasFinishedResolution( 'getCollection', args );
+
+			if ( hasLoaded ) {
+				status = 'loaded';
+			}
 
 			if ( ! isEmpty( data ) ) {
-				status = 'loaded';
-
 				data = data.map( result => ({
 					value: result.id,
 					label: decodeEntities( result.name )
