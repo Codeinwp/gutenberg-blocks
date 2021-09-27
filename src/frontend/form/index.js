@@ -71,13 +71,26 @@ const collectAndSendInputFormData = ( form, btn ) => {
 		},  TIME_UNTIL_REMOVE );
 	};
 
-	if ( 0 < errors.length ) {
-		errors.forEach( input => {
+	if ( 0 < elemsWithError.length || ( form?.classList?.contains( 'has-captcha' ) && id && ! window.themeisleGutenberg?.tokens[id].token ) ) {
+		elemsWithError.forEach( input => {
 			input?.reportValidity();
 		});
+
+		if (  form?.classList?.contains( 'has-captcha' ) && id && ! window.themeisleGutenberg?.tokens[id].token  ) {
+			const msg = document.createElement( 'div' );
+			msg.classList.add( 'wp-block-themeisle-blocks-form-server-msg' );
+			if ( ! window.hasOwnProperty( 'grecaptcha' ) ) {
+				msg.innerHTML = __( '⚠ Captcha is not loaded. Please check your browser plugins to allow the Google reCaptcha.', 'otter-blocks' );
+			} else {
+				msg.innerHTML = __( '⚠ Please check the captcha.', 'otter-blocks' );
+			}
+			msg.classList.add( 'warning' );
+			addThenRemoveMsg( msg );
+		}
+
 		btn.disabled = false;
 	} else {
-		data.data = exportData;
+		data.data = formFieldsData;
 
 		if ( '' !== form?.dataset?.emailSubject ) {
 			data.emailSubject = form?.dataset?.emailSubject;
