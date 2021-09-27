@@ -459,18 +459,13 @@ class Form_Server {
 	 * @return array
 	 */
 	private function check_form_conditions( $data ) {
+		$integration = $this->get_form_option_settings( $data['formOption'] );
 		$reasons     = array();
 		$has_captcha = false;
+		$has_creditentials = false;
 
-		if ( isset( $data['formOption'] ) ) {
-			$option_name = sanitize_text_field( $data['formOption'] );
-			$form_emails = get_option( 'themeisle_blocks_form_emails' );
-
-			foreach ( $form_emails as $form ) {
-				if ( $form['form'] === $option_name ) {
-					$has_captcha = $form['hasCaptcha'];
-				}
-			}
+		if( isset ($integration['hasCaptcha']) ) {
+			$has_captcha = $integration['hasCaptcha'];
 		}
 
 		if ( $has_captcha && ( ! isset( $data['token'] ) || '' === $data['token'] ) ) {
@@ -479,19 +474,13 @@ class Form_Server {
 			);
 		}
 
-		$has_creditentials = false;
-
-		$integration = $this->get_form_option_settings( $data['formOption'] );
-
 		if ( isset( $integration['apiKey'] ) && '' !== $integration['apiKey'] &&
 			isset( $integration['listId'] ) && '' !== $integration['listId']
 		) {
 			$has_creditentials = true;
 		}
 
-
-		// TODO: Add form captcha validation here.
-		if ( ! $has_creditentials ) {
+		if ( ! $has_creditentials && $integration['provider']) {
 			$reasons += array(
 				__( 'Provider settings are missing!', 'otter-blocks' ),
 			);
