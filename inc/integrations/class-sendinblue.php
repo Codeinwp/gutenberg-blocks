@@ -100,9 +100,9 @@ class Sendinblue_Integration {
 		$response = wp_remote_post( $url, $args );
 		$body     = json_decode( wp_remote_retrieve_body( $response ), true );
 
-		if ( is_wp_error( $response ) || 400 === wp_remote_retrieve_response_code( $response ) || (isset( $body['code'] ) && "unauthorized" === $body['code']) ) {
+		if ( is_wp_error( $response ) || 400 === wp_remote_retrieve_response_code( $response ) || ( isset( $body['code'] ) && 'unauthorized' === $body['code'] ) ) {
 			$return['error']        = ! empty( $body['message'] ) && 'null' !== $body['message'] ? $body['message'] : __( 'The request has been rejected by the provider!', 'otter-blocks' );
-			$return['error'] = (isset( $body['code'] ) && "unauthorized" === $body['code']) ? $body['message'] : $return['error'];
+			$return['error']        = ( isset( $body['code'] ) && 'unauthorized' === $body['code'] ) ? $body['message'] : $return['error'];
 			$return['error_source'] = 'provider';
 		} else {
 			$return['success'] = true;

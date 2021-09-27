@@ -459,12 +459,12 @@ class Form_Server {
 	 * @return array
 	 */
 	private function check_form_conditions( $data ) {
-		$integration = $this->get_form_option_settings( $data['formOption'] );
-		$reasons     = array();
-		$has_captcha = false;
+		$integration       = $this->get_form_option_settings( $data['formOption'] );
+		$reasons           = array();
+		$has_captcha       = false;
 		$has_creditentials = false;
 
-		if( isset ($integration['hasCaptcha']) ) {
+		if ( isset( $integration['hasCaptcha'] ) ) {
 			$has_captcha = $integration['hasCaptcha'];
 		}
 
@@ -480,7 +480,7 @@ class Form_Server {
 			$has_creditentials = true;
 		}
 
-		if ( ! $has_creditentials && $integration['provider']) {
+		if ( ! $has_creditentials && $integration['provider'] ) {
 			$reasons += array(
 				__( 'Provider settings are missing!', 'otter-blocks' ),
 			);
