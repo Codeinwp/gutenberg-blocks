@@ -122,8 +122,7 @@ class Form_Server {
 
 		$integration = $this->get_form_option_settings( $data['formOption'] );
 
-		// TODO: Add reCaptcha token verification.
-		if ( isset( $integration['provider'] ) && isset( $integration['action'] ) && isset( $data['action'] ) && ( 'subscribe' === $data['action'] || 'submit-subscribe' === $data['action'] ) ) {
+		if ( isset( $integration['provider'] ) && isset( $integration['listId'] ) && isset( $integration['action'] ) && isset( $data['action'] ) && ( 'subscribe' === $data['action'] || 'submit-subscribe' === $data['action'] ) ) {
 			if ( 'subscribe' === $data['action'] ) {
 				switch ( $integration['provider'] ) {
 					case 'mailchimp':

@@ -55,6 +55,19 @@ const Inspector = ({
 					options.splice( 0, 0, { label: __( 'None', 'otter-blocks' ), value: '' });
 					setListIDOptions( options );
 					setFetchListIdStatus( 'ready' );
+
+					const isCurrentOptionValid = 1 === options.map( ({ value }) => value ).filter( value => value === attributes.listId ).length;
+
+					if ( attributes.listId && ! isCurrentOptionValid ) {
+						createNotice(
+							'error',
+							__( 'The current contact list is invalid! Please choose a new contact list.', 'otter-blocks' ),
+							{
+								isDismissible: true,
+								type: 'snackbar'
+							}
+						);
+					}
 				},
 				err => {
 					createNotice(
