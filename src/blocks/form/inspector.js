@@ -180,7 +180,7 @@ const Inspector = ({
 	   		</PanelBody>
 			<PanelBody
 				title={ __( 'Integration', 'otter-blocks' )}
-				initialOpen={ true }
+				initialOpen={ false }
 			>
 
 				{
