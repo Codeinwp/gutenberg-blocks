@@ -5,7 +5,7 @@ export const getListIdOptionFrom = ( provider, apiKey, onSuccess, onError ) => {
 				const result = res?.list_id?.map( item => {
 					return {
 						label: item.name,
-						value: item.id
+						value: item.id?.toString()
 					};
 				}) || [];
 				onSuccess( result );

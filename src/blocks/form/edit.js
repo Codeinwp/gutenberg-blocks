@@ -260,14 +260,17 @@ const Edit = ({
 			const emails = res.themeisle_blocks_form_emails ? res.themeisle_blocks_form_emails : [];
 			let isMissing = true;
 			let hasUpdated = false;
+			let hasUpdatedNotice = false;
 
 			emails?.forEach( ({ form }, index )=> {
 				if ( form === attributes.optionName ) {
-					if ( emails[index]?.integration ) {
+					if ( ! emails[index]?.integration ) {
 						emails[index].integration = {};
 					}
+
 					hasUpdated = emails[index].integration.provider !== attributes.provider || emails[index].integration.apiKey !== attributes.apiKey || emails[index].integration.listId !== attributes.listId || emails[index].integration.action !== attributes.action;
 					isMissing = false;
+					hasUpdatedNotice = emails[index].integration.listId !== attributes.listId || emails[index].integration.action !== attributes.action;
 
 					emails[index].integration.provider = attributes.provider; // update the value
 					emails[index].integration.apiKey = attributes.apiKey;
@@ -297,14 +300,16 @@ const Edit = ({
 				});
 
 				model.save().then( () => {
-					createNotice(
-						'info',
-						__( 'Integration detatils has been saved.', 'otter-blocks' ),
-						{
-							isDismissible: true,
-							type: 'snackbar'
-						}
-					);
+					if ( hasUpdatedNotice ) {
+						createNotice(
+							'info',
+							__( 'Integration detatils has been saved.', 'otter-blocks' ),
+							{
+								isDismissible: true,
+								type: 'snackbar'
+							}
+						);
+					}
 				});
 			}
 

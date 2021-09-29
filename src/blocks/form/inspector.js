@@ -57,7 +57,6 @@ const Inspector = ({
 					setFetchListIdStatus( 'ready' );
 
 					const isCurrentOptionValid = 1 === options.map( ({ value }) => value ).filter( value => value === attributes.listId ).length;
-
 					if ( attributes.listId && ! isCurrentOptionValid ) {
 						createNotice(
 							'error',
