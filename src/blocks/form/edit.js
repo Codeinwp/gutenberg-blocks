@@ -255,60 +255,61 @@ const Edit = ({
 	 * Save integration data.
 	 */
 	useEffect( () => {
-		api.loadPromise.then( () => {
-			( new api.models.Settings() ).fetch().done( res => {
-				const emails = res.themeisle_blocks_form_emails ? res.themeisle_blocks_form_emails : [];
-				let isMissing = true;
-				let hasUpdated = false;
 
-				emails?.forEach( ({ form }, index )=> {
-					if ( form === attributes.optionName ) {
-						if ( emails[index]?.integration ) {
-							emails[index].integration = {};
-						}
-						emails[index].integration.provider = attributes.provider; // update the value
-						emails[index].integration.apiKey = attributes.apiKey;
-						emails[index].integration.listId = attributes.listId;
-						emails[index].integration.action = attributes.action;
-						hasUpdated = emails[index].integration.provider !== attributes.provider || emails[index].integration.apiKey !== attributes.apiKey || emails[index].integration.listId !== attributes.listId || emails[index].integration.action !== attributes.action;
-						isMissing = false;
+		settingsRef?.current?.fetch().done( res => {
+			const emails = res.themeisle_blocks_form_emails ? res.themeisle_blocks_form_emails : [];
+			let isMissing = true;
+			let hasUpdated = false;
+
+			emails?.forEach( ({ form }, index )=> {
+				if ( form === attributes.optionName ) {
+					if ( emails[index]?.integration ) {
+						emails[index].integration = {};
+					}
+					hasUpdated = emails[index].integration.provider !== attributes.provider || emails[index].integration.apiKey !== attributes.apiKey || emails[index].integration.listId !== attributes.listId || emails[index].integration.action !== attributes.action;
+					isMissing = false;
+
+					emails[index].integration.provider = attributes.provider; // update the value
+					emails[index].integration.apiKey = attributes.apiKey;
+					emails[index].integration.listId = attributes.listId;
+					emails[index].integration.action = attributes.action;
+				}
+			});
+
+			if ( isMissing ) {
+				emails.push({
+					form: attributes.optionName,
+					integration: {
+						provider: attributes.provider,
+						apiKey: attributes.apiKey,
+						listId: attributes.listId,
+						action: attributes.action
 					}
 				});
+			}
 
-				if ( isMissing ) {
-					emails.push({
-						form: attributes.optionName,
-						integration: {
-							provider: attributes.provider,
-							apiKey: attributes.apiKey,
-							listId: attributes.listId,
-							action: attributes.action
+			console.log( isMissing, hasUpdated );
+
+			if ( isMissing || hasUpdated ) {
+				const model = new api.models.Settings({
+					// eslint-disable-next-line camelcase
+					themeisle_blocks_form_emails: emails
+				});
+
+				model.save().then( () => {
+					createNotice(
+						'info',
+						__( 'Integration detatils has been saved.', 'otter-blocks' ),
+						{
+							isDismissible: true,
+							type: 'snackbar'
 						}
-					});
-				}
+					);
+				});
+			}
 
-				if ( isMissing || hasUpdated ) {
-					const model = new api.models.Settings({
-						// eslint-disable-next-line camelcase
-						themeisle_blocks_form_emails: emails
-					});
-
-					model.save().then( () => {
-						createNotice(
-							'info',
-							__( 'Integration detatils has been saved.', 'otter-blocks' ),
-							{
-								isDismissible: true,
-								type: 'snackbar'
-							}
-						);
-					});
-				}
-
-			});
-		}
-		);
-	}, [ attributes.optionName, attributes.provider, attributes.apiKey, attributes.listId, attributes.action ]);
+		});
+	}, [ attributes.optionName, attributes.provider, attributes.apiKey, attributes.listId, attributes.action, settingsRef.current ]);
 
 	const hasIntegrationActive = attributes.provider && attributes.apiKey && attributes.listId;
 
