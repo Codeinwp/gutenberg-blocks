@@ -420,8 +420,7 @@ const Edit = ({
 					<InnerBlocks
 						allowedBlocks={ [ 'themeisle-blocks/advanced-column' ] }
 						template={ getColumnsTemplate( attributes.columns ) }
-						templateLock="insert"
-						orientation="horizontal"
+						templateLock="all"
 					/>
 				</div>
 
