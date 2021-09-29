@@ -240,7 +240,7 @@ class Main {
 				'canTrack'       => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
 				'userRoles'      => $wp_roles->roles,
 				'hasNeve'        => defined( 'NEVE_VERSION' ),
-				'hasNevePro'     => 'valid' === apply_filters( 'product_neve_license_status', false ),
+				'hasNevePro'     => 'valid' === apply_filters( 'product_neve_license_status', false ) && true === apply_filters( 'neve_has_block_editor_module', false ),
 				'hasWooCommerce' => class_exists( 'WooCommerce' ),
 			)
 		);
