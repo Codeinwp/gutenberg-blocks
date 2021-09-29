@@ -45,7 +45,7 @@ const BlockPlaceholder = ({
 			<Placeholder
 				icon="admin-site"
 				label={ __( 'Google reCaptcha', 'otter-blocks' ) }
-				instructions={ __( 'A Google reCaptcha API keys are required, please enter one below.', 'otter-blocks' ) }
+				instructions={ __( 'A Google reCaptcha V2 API keys are required, please enter one below.', 'otter-blocks' ) }
 				className={ className }
 			>
 				<div className="components-placeholder__actions">

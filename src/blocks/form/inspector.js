@@ -179,10 +179,10 @@ const Inspector = ({
 				</Button>
 
 				<ToggleControl
-					label={ __( 'Add captcha', 'otter-blocks' ) }
+					label={ __( 'Add captcha checkbox', 'otter-blocks' ) }
 					checked={ attributes.hasCaptcha }
 					onChange={ hasCaptcha => setAttributes({ hasCaptcha }) }
-					help={ __( 'Add Google reCaptcha for protection againts bots.', 'otter-blocks' ) }
+					help={ __( 'Add Google reCaptcha V2 for protection againts bots.', 'otter-blocks' ) }
 				/>
 
 				{
