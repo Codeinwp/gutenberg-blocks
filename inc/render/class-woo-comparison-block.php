@@ -13,6 +13,12 @@ use ThemeIsle\GutenbergBlocks\Base_Block;
  * Class Woo_Comparison_Block
  */
 class Woo_Comparison_Block extends Base_Block {
+	/**
+	 * Flag to mark that we can render the table.
+	 *
+	 * @var bool $should_render Should we render the table?
+	 */
+	public static $should_render = true;
 
 	/**
 	 * Woo_Comparison_Block constructor.
@@ -22,13 +28,22 @@ class Woo_Comparison_Block extends Base_Block {
 	 */
 	public function __construct() {
 		parent::__construct();
-		if ( ! 'valid' === apply_filters( 'product_neve_license_status', false ) || true !== apply_filters( 'neve_has_comparison_table_support', false ) || ! class_exists( 'WooCommerce' ) || ! class_exists( 'Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\View\Table' ) ) {
+
+		if (
+			! 'valid' === apply_filters( 'product_neve_license_status', false ) ||
+			true !== apply_filters( 'neve_has_block_editor_module', false ) ||
+			! class_exists( 'WooCommerce' ) ||
+			! class_exists( '\Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\View\Table' ) ||
+			(
+				class_exists( '\Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Options' ) && true !== boolval( \Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Options::is_module_activated() )
+			)
+		) {
+			self::$should_render = false;
 			return;
 		}
 
 		if ( is_admin() && class_exists( '\Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Main' ) ) {
-			$style_path = neve_is_new_skin() ? 'css/woocommerce' : 'css/woocommerce-legacy';
-			wp_enqueue_style( 'neve-woocommerce', NEVE_ASSETS_URL . $style_path . ( ( NEVE_DEBUG ) ? '' : '.min' ) . '.css', array( 'woocommerce-general' ), apply_filters( 'neve_version_filter', NEVE_VERSION ) );
+			wp_enqueue_style( 'neve-woocommerce', NEVE_ASSETS_URL . 'css/woocommerce' . ( ( NEVE_DEBUG ) ? '' : '.min' ) . '.css', array( 'woocommerce-general' ), apply_filters( 'neve_version_filter', NEVE_VERSION ) );
 
 			$table = new \Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Main();
 			$table->register_assets();
@@ -119,7 +134,7 @@ class Woo_Comparison_Block extends Base_Block {
 	 * @return mixed|string
 	 */
 	protected function render( $attributes ) {
-		if ( ! 'valid' === apply_filters( 'product_neve_license_status', false ) || true !== apply_filters( 'neve_has_comparison_table_support', false ) || ! class_exists( 'WooCommerce' ) || ! isset( $attributes['products'] ) || ! class_exists( 'Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\View\Table' ) ) {
+		if ( ! self::$should_render ) {
 			return;
 		}
 

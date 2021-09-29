@@ -48,7 +48,7 @@ if ( Boolean( window.themeisleGutenberg.hasNevePro ) && Boolean( window.themeisl
 		supports: {
 			inserter: false
 		},
-		edit: () => <Placeholder>{ __( 'You need to have Neve Pro & WooCommerce installed to edit WooCOmmerce Comparison Table block.', 'otter-blocks' ) }</Placeholder>,
+		edit: () => <Placeholder>{ __( 'You need to have Neve Pro & WooCommerce installed to edit WooCommerce Comparison Table block.', 'otter-blocks' ) }</Placeholder>,
 		save: () => null
 	});
 }

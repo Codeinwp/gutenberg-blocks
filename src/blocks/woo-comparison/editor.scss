@@ -14,7 +14,6 @@
 		}
 
 		.nv-ct {
-
 			td {
 				font-size: .9em;
 
@@ -42,6 +41,14 @@
 				@media ( min-width:960px ) {
 					min-width: unset;
 					width: unset;
+				}
+			}
+
+			&.nv-ct-layout-row {
+
+				td,
+				th {
+					border-width: 0 0 1px 0;
 				}
 			}
 		}
