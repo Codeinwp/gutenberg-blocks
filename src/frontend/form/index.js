@@ -232,7 +232,7 @@ const renderConsentCheckbox = ( form ) => {
 	input.id = 'consent';
 
 	const label = document.createElement( 'label' );
-	label.innerHTML = __( 'Share your email with third-party provider to recceive promotional offers!', 'otter-blocks' );
+	label.innerHTML = __( 'I consent to my name and email to be collected.', 'otter-blocks' );
 	label.htmlFor = 'consent';
 
 	inputContainer.appendChild( input );

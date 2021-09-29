@@ -270,7 +270,7 @@ const Edit = ({
 
 					hasUpdated = emails[index].integration.provider !== attributes.provider || emails[index].integration.apiKey !== attributes.apiKey || emails[index].integration.listId !== attributes.listId || emails[index].integration.action !== attributes.action;
 					isMissing = false;
-					hasUpdatedNotice = emails[index].integration.listId !== attributes.listId || emails[index].integration.action !== attributes.action;
+					hasUpdatedNotice =  attributes.apiKey && ( emails[index].integration.listId !== attributes.listId || emails[index].integration.action !== attributes.action );
 
 					emails[index].integration.provider = attributes.provider; // update the value
 					emails[index].integration.apiKey = attributes.apiKey;
