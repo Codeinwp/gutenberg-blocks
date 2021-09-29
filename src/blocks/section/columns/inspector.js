@@ -1051,7 +1051,7 @@ const Inspector = ({
 								value={ attributes.columnsWidth || '' }
 								onChange={ changeColumnsWidth }
 								min={ 0 }
-								max={ 1200 }
+								max={ 1800 }
 							/>
 
 							{ attributes.columnsWidth && (
