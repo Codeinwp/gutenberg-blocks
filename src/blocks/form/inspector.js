@@ -211,7 +211,7 @@ const Inspector = ({
 						{ label: __( 'Sendinblue', 'otter-blocks' ), value: 'sendinblue' }
 					] }
 					onChange={ provider => {
-						setAttributes({ provider, apiKey: '' });
+						setAttributes({ provider, apiKey: '', listId: '' });
 					} }
 				/>
 
@@ -226,7 +226,7 @@ const Inspector = ({
 								onChange={ apiKey => {
 									setFetchListIdStatus( 'loading' );
 									setListIDOptions([]);
-									setAttributes({ apiKey });
+									setAttributes({ apiKey, listId: '' });
 								}}
 							/>
 
