@@ -75,7 +75,8 @@ const Inspector = ({
 						__( err?.error, 'otter-blocks' ),
 						{
 							isDismissible: true,
-							type: 'snackbar'
+							type: 'snackbar',
+							id: 'themeisle-form-server-error'
 						}
 					);
 
