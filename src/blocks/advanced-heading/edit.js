@@ -179,7 +179,7 @@ const Edit = ({
 	const style = {
 		color: attributes.headingColor,
 		...fontSizeStyle,
-		fontFamily: attributes.fontFamily ? attributes.fontFamily : 'inherit',
+		fontFamily: attributes.fontFamily,
 		fontWeight: 'regular' === attributes.fontVariant ? 'normal' : attributes.fontVariant,
 		fontStyle: attributes.fontStyle,
 		textTransform: attributes.textTransform,

@@ -222,7 +222,7 @@ class Posts_Grid_Block extends Base_Block {
 								'%1$s <time datetime="%2$s">%3$s</time> ',
 								__( 'on', 'otter-blocks' ),
 								esc_attr( get_the_date( 'c', $id ) ),
-								esc_html( get_the_date( 'j F, Y', $id ) )
+								esc_html( get_the_date( get_option( 'date_format' ), $id ) )
 							);
 						}
 

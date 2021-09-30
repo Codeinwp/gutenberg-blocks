@@ -75,6 +75,7 @@ class Base_CSS {
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Button_Group_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Button_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Circle_Counter_CSS',
+			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Countdown_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Core_Image_Plugin_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Font_Awesome_Icons_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Icon_List_CSS',
@@ -84,7 +85,7 @@ class Base_CSS {
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Review_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Review_Comparison_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Tabs_CSS',
-			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Countdown_CSS',
+			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Woo_Comparison_CSS',
 		);
 	}
 
