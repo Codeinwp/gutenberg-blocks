@@ -164,7 +164,7 @@ const Inspector = ({
 							setAttributes={ setAttributes }
 						/>
 
-						<p>{ __( 'You need to have Neve Pro activate Pro features.', 'otter-blocks' )  }</p>
+						<p>{ __( 'You need to have Neve Pro to activate Pro features.', 'otter-blocks' )  }</p>
 					</Disabled>
 				) }
 
