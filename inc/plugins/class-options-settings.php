@@ -51,7 +51,7 @@ class Options_Settings {
 			'themeisle_google_captcha_api_site_key',
 			array(
 				'type'              => 'string',
-				'description'       => __( 'Google reCaptcha Site API key for the Google Maps Gutenberg Block.', 'otter-blocks' ),
+				'description'       => __( 'Google reCaptcha Site API key for the Form Block.', 'otter-blocks' ),
 				'sanitize_callback' => 'sanitize_text_field',
 				'show_in_rest'      => true,
 				'default'           => '',
@@ -63,7 +63,7 @@ class Options_Settings {
 			'themeisle_google_captcha_api_secret_key',
 			array(
 				'type'              => 'string',
-				'description'       => __( 'Google reCaptcha Secret API key for the Google Maps Gutenberg Block.', 'otter-blocks' ),
+				'description'       => __( 'Google reCaptcha Secret API key for the Form Block.', 'otter-blocks' ),
 				'sanitize_callback' => 'sanitize_text_field',
 				'show_in_rest'      => true,
 				'default'           => '',

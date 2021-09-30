@@ -241,7 +241,7 @@ const Edit = ({
 
 			createNotice(
 				'info',
-				__( 'API Keys has been saved.', 'otter-blocks' ),
+				__( 'API Keys have been saved.', 'otter-blocks' ),
 				{
 					isDismissible: true,
 					type: 'snackbar'

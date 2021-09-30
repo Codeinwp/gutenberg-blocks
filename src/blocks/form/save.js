@@ -32,7 +32,7 @@ const Save = ({
 
 				<div className="wp-block-button">
 					<button className="wp-block-button__link">
-						{ __( 'subscribe' === attributes.action ? 'Subscribe' : 'Submit', 'otter-blocks' ) }
+						{ 'subscribe' === attributes.action ? __( 'Subscribe', 'otter-blocks' )  : __( 'Submit', 'otter-blocks' )  }
 					</button>
 				</div>
 			</div>
