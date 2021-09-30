@@ -303,7 +303,7 @@ const Edit = ({
 					if ( hasUpdatedNotice ) {
 						createNotice(
 							'info',
-							__( 'Integration detatils has been saved.', 'otter-blocks' ),
+							__( 'Integration details have been saved.', 'otter-blocks' ),
 							{
 								isDismissible: true,
 								type: 'snackbar'
