@@ -48,6 +48,30 @@ class Options_Settings {
 
 		register_setting(
 			'themeisle_blocks_settings',
+			'themeisle_google_captcha_api_site_key',
+			array(
+				'type'              => 'string',
+				'description'       => __( 'Google reCaptcha Site API key for the Form Block.', 'otter-blocks' ),
+				'sanitize_callback' => 'sanitize_text_field',
+				'show_in_rest'      => true,
+				'default'           => '',
+			)
+		);
+
+		register_setting(
+			'themeisle_blocks_settings',
+			'themeisle_google_captcha_api_secret_key',
+			array(
+				'type'              => 'string',
+				'description'       => __( 'Google reCaptcha Secret API key for the Form Block.', 'otter-blocks' ),
+				'sanitize_callback' => 'sanitize_text_field',
+				'show_in_rest'      => true,
+				'default'           => '',
+			)
+		);
+
+		register_setting(
+			'themeisle_blocks_settings',
 			'themeisle_blocks_settings_default_block',
 			array(
 				'type'              => 'boolean',
@@ -93,9 +117,21 @@ class Options_Settings {
 						function( $item ) {
 							$item['form'] = sanitize_text_field( $item['form'] );
 							$item['email'] = sanitize_text_field( $item['email'] );
+							if ( isset( $item['integration']['provider'] ) ) {
+								$item['integration']['provider'] = sanitize_text_field( $item['integration']['provider'] );
+							}
+							if ( isset( $item['integration']['apiKey'] ) ) {
+								$item['integration']['apiKey'] = sanitize_text_field( $item['integration']['apiKey'] );
+							}
+							if ( isset( $item['integration']['listId'] ) ) {
+								$item['integration']['listId'] = sanitize_text_field( $item['integration']['listId'] );
+							}
+							if ( isset( $item['integration']['action'] ) ) {
+								$item['integration']['action'] = sanitize_text_field( $item['integration']['action'] );
+							}
 							return $item;
 						},
-						$array 
+						$array
 					);
 				},
 				'show_in_rest'      => array(
@@ -104,11 +140,31 @@ class Options_Settings {
 						'items' => array(
 							'type'       => 'object',
 							'properties' => array(
-								'form'  => array(
+								'form'        => array(
 									'type' => 'string',
 								),
-								'email' => array(
+								'hasCaptcha'  => array(
+									'type' => array( 'boolean', 'number', 'string' ),
+								),
+								'email'       => array(
 									'type' => 'string',
+								),
+								'integration' => array(
+									'type'       => 'object',
+									'properties' => array(
+										'provider' => array(
+											'type' => 'string',
+										),
+										'apiKey'   => array(
+											'type' => 'string',
+										),
+										'listId'   => array(
+											'type' => 'string',
+										),
+										'action'   => array(
+											'type' => 'string',
+										),
+									),
 								),
 							),
 						),

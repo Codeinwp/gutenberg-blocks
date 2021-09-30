@@ -6,3 +6,4 @@ vendor
 notes.md
 changes.md
 .vscode
+.secrets

@@ -10,6 +10,9 @@ const attributes = {
 	},
 	isRequired: {
 		type: 'boolean'
+	},
+	mappedName: {
+		type: 'string'
 	}
 };
 

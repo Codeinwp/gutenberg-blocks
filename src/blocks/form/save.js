@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import classnames from 'classnames';
 
 import { InnerBlocks } from '@wordpress/block-editor';
 
@@ -9,19 +10,29 @@ const Save = ({
 	attributes,
 	className
 }) => {
+
+	const hasIntegrationActive = attributes.provider && attributes.apiKey && attributes.listId;
+
 	return (
 		<div
-			className={ className }
+			className={
+				classnames(
+					className,
+					{ 'is-subscription': hasIntegrationActive && 'subscribe' === attributes.action  },
+					{ 'can-submit-and-subscribe': hasIntegrationActive && 'submit-subscribe' === attributes.action },
+					{'has-captcha': attributes.hasCaptcha }
+				)
+			}
 			id={ attributes.id }
 			data-email-subject={ attributes.subject }
 			data-option-name={ attributes.optionName }
 		>
-			<div className="wp-block-themeisle-blocks-form__container">
+			<div className={'wp-block-themeisle-blocks-form__container'}>
 				<InnerBlocks.Content />
 
 				<div className="wp-block-button">
 					<button className="wp-block-button__link">
-						{ __( 'Submit', 'otter-blocks' ) }
+						{ 'subscribe' === attributes.action ? __( 'Subscribe', 'otter-blocks' )  : __( 'Submit', 'otter-blocks' )  }
 					</button>
 				</div>
 			</div>
