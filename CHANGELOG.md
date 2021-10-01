@@ -1,3 +1,12 @@
+##### [Version 1.6.9](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.6.8...v1.6.9) (2021-07-02)
+
+- Fix links in Review Block
+- Fix block defaults not working in Default Section
+- Allow Custom sizes in Posts Block
+- Add filter to Posts Block's query:
+- Add Tabs Block:
+- Add rel attribute to Review Block's Button
+
 ##### [Version 1.6.8](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.6.7...v1.6.8) (2021-06-11)
 
 add translations over the files
