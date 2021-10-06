@@ -1,1 +1,112 @@
-!function(t){var e={};function n(o){if(e[o])return e[o].exports;var r=e[o]={i:o,l:!1,exports:{}};return t[o].call(r.exports,r,r.exports,n),r.l=!0,r.exports}n.m=t,n.c=e,n.d=function(t,e,o){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:o})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var o=Object.create(null);if(n.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var r in t)n.d(o,r,function(e){return t[e]}.bind(null,r));return o},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=138)}({138:function(t,e,n){"use strict";n.r(e);var o=n(18);n.n(o)()((function(){var t=document.querySelectorAll(".wp-block-themeisle-blocks-lottie"),e=function(t){"false"===t.dataset.loop&&(t.setLooping(!1),-1===t.__direction&&t.seek("100%")),-1===t.__direction&&"true"===t.dataset.loop&&(t.setLooping(!0),Boolean(t.__count)&&t.addEventListener("frame",(function(e){e.target.getLottie().playCount===t.__count&&e.target.getLottie().currentFrame&&t.stop()})))};t.forEach((function(t){t.addEventListener("load",(function(){var n=t.getAttribute("trigger");return"scroll"===n?LottieInteractivity.create({mode:"scroll",player:"#".concat(t.id),actions:[{visibility:[0,1],type:"seek",frames:[0,t.getLottie().totalFrames]}]}):"hover"===n?(t.addEventListener("mouseover",(function(){t.play()})),t.addEventListener("mouseout",(function(){t.stop()})),e(t),t.stop()):"click"===n?(t.addEventListener("click",(function(){t.play()})),t.addEventListener("complete",(function(){return t.stop()})),e(t),t.stop()):e(t)})),t.getAttribute("width")&&(t.style.width="".concat(t.getAttribute("width"),"px"),t.style.height="auto")}))}))},18:function(t,e){t.exports=wp.domReady}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/frontend/lottie/index.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/frontend/lottie/index.js":
+/*!**************************************!*\
+  !*** ./src/frontend/lottie/index.js ***!
+  \**************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/dom-ready */ \"@wordpress/dom-ready\");\n/* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_0__);\n/**\n * WordPress dependencies\n */\n\n_wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_0___default()(function () {\n  var animations = document.querySelectorAll('.wp-block-themeisle-blocks-lottie');\n\n  var initAnimation = function initAnimation(animation) {\n    if ('false' === animation.dataset.loop) {\n      animation.setLooping(false);\n\n      if (-1 === animation.__direction) {\n        animation.seek('100%');\n      }\n    }\n\n    if (-1 === animation.__direction && 'true' === animation.dataset.loop) {\n      animation.setLooping(true);\n\n      if (Boolean(animation.__count)) {\n        animation.addEventListener('frame', function (e) {\n          if (e.target.getLottie().playCount === animation.__count && e.target.getLottie().currentFrame) {\n            animation.stop();\n          }\n        });\n      }\n    }\n  };\n\n  animations.forEach(function (animation) {\n    animation.addEventListener('load', function () {\n      var trigger = animation.getAttribute('trigger');\n\n      if ('scroll' === trigger) {\n        return LottieInteractivity.create({\n          mode: 'scroll',\n          player: \"#\".concat(animation.id),\n          actions: [{\n            visibility: [0, 1],\n            type: 'seek',\n            frames: [0, animation.getLottie().totalFrames]\n          }]\n        });\n      }\n\n      if ('hover' === trigger) {\n        animation.addEventListener('mouseover', function () {\n          animation.play();\n        });\n        animation.addEventListener('mouseout', function () {\n          animation.stop();\n        });\n        initAnimation(animation);\n        return animation.stop();\n      }\n\n      if ('click' === trigger) {\n        animation.addEventListener('click', function () {\n          animation.play();\n        });\n        animation.addEventListener('complete', function () {\n          return animation.stop();\n        });\n        initAnimation(animation);\n        return animation.stop();\n      }\n\n      return initAnimation(animation);\n    });\n\n    if (animation.getAttribute('width')) {\n      animation.style.width = \"\".concat(animation.getAttribute('width'), \"px\");\n      animation.style.height = 'auto';\n    }\n  });\n});\n\n//# sourceURL=webpack:///./src/frontend/lottie/index.js?");
+
+/***/ }),
+
+/***/ "@wordpress/dom-ready":
+/*!******************************!*\
+  !*** external "wp.domReady" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = wp.domReady;\n\n//# sourceURL=webpack:///external_%22wp.domReady%22?");
+
+/***/ })
+
+/******/ });
