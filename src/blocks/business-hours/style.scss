@@ -9,13 +9,13 @@
 		background-color: #2a2730;
 		border-radius: 10px;
 
-		.otter-bh__container {
-			.otter-bh__title {
+		.otter-business-hour__container {
+			.otter-business-hour__title {
 				text-align: center;
 				color: #fff;
 			}
 
-			.otter-bh__content {
+			.otter-business-hour__content {
 				.wp-block-themeisle-blocks-business-hours-item {
 					background-color: #fff;
 
@@ -40,18 +40,18 @@
 		}
 	}
 
-	.otter-bh__container {
+	.otter-business-hour__container {
 		display: flex;
 		flex-direction: column;
 		width: 100%;
 
-		.otter-bh__title {
+		.otter-business-hour__title {
 			position: relative;
 			font-size: 24px;
 			padding: 20px 40px;
 		}
 
-		.otter-bh__content {
+		.otter-business-hour__content {
 			display: flex;
 			flex-direction: column;
 
@@ -64,11 +64,11 @@
 				padding-left: 40px;
 				padding-right: 40px;
 
-				.otter-bhi__label {
+				.otter-business-hour-item__label {
 					width: 50%;
 				}
 			
-				.otter-bhi__time {
+				.otter-business-hour-item__time {
 					width: 50%;
 				}
 			}

@@ -45,7 +45,7 @@ const Edit = ({
 				style={ style }
 			>
 				<div
-					className="otter-bhi__label"
+					className="otter-business-hour-item__label"
 					style={ {
 						color: attributes.labelColor
 					} }
@@ -61,7 +61,7 @@ const Edit = ({
 				</div>
 
 				<div
-					className="otter-bhi__time"
+					className="otter-business-hour-item__time"
 					style={ {
 						color: attributes.timeColor
 					} }
