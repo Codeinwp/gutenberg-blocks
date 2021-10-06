@@ -102,23 +102,23 @@ class Woo_Comparison_Block extends Base_Block {
 			),
 			'rowColor'    => array(
 				'type'    => 'string',
-				'default' => get_theme_mod( 'neve_comparison_table_rows_background_color', '' ),
+				'default' => get_theme_mod( 'neve_comparison_table_rows_background_color', 'var(--nv-site-bg)' ),
 			),
 			'headerColor' => array(
 				'type'    => 'string',
-				'default' => get_theme_mod( 'neve_comparison_table_header_text_color', '' ),
+				'default' => get_theme_mod( 'neve_comparison_table_header_text_color', 'var(--nv-text-color)' ),
 			),
 			'textColor'   => array(
 				'type'    => 'string',
-				'default' => get_theme_mod( 'neve_comparison_table_text_color', '' ),
+				'default' => get_theme_mod( 'neve_comparison_table_text_color', 'var(--nv-text-color)' ),
 			),
 			'borderColor' => array(
 				'type'    => 'string',
-				'default' => get_theme_mod( 'neve_comparison_table_borders_color', '' ),
+				'default' => get_theme_mod( 'neve_comparison_table_borders_color', '#BDC7CB' ),
 			),
 			'altRowColor' => array(
 				'type'    => 'string',
-				'default' => get_theme_mod( 'neve_comparison_table_alternate_row_bg_color', '' ),
+				'default' => get_theme_mod( 'neve_comparison_table_alternate_row_bg_color', 'var(--nv-light-bg)' ),
 			),
 		);
 	}
