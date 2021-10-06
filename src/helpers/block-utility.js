@@ -115,7 +115,9 @@ export const addBlockId = ( args ) => {
 	const blockIDs = window.themeisleGutenberg.blockIDs;
 
 	if ( attributes === undefined || setAttributes === undefined ) {
-		return;
+		return ( savedId ) => {
+			localIDs[name].delete( savedId );
+		};
 	}
 
 	// Initialize with an empty array the id list for the given block
@@ -149,11 +151,11 @@ export const addBlockId = ( args ) => {
 		blockIDs.push( attributes.id );
 	}
 
-	const deleteBlockIdFromRegister = () => {
+	const deleteBlockIdFromRegister = ( savedId ) => {
 		if ( attributes.id !== undefined && ! idIsAlreadyUsed ) {
-			localIDs[name].delete( attributes.id );
+			localIDs[name].delete( attributes?.id || savedId );
 		} else {
-			localIDs[name].delete( instanceId );
+			localIDs[name].delete( instanceId || savedId );
 		}
 	};
 
@@ -203,8 +205,8 @@ const extractBlockData = ( clientId ) => {
  * const Block = ({ cliendId }) => {
  * 		useEffect(() => {
  * 			const unsubscribe = blockInit(clientId, defaultAttributes);
- * 			return () => unsubscribe();
- * 		}, [])
+ * 			return () => unsubscribe( attributes.id );
+ * 		}, [ attributes.id ])
  * }
  */
 export const blockInit = ( clientId, defaultAttributes ) => {
