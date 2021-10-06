@@ -9,13 +9,13 @@
 		background-color: #2a2730;
 		border-radius: 10px;
 
-		.wp-block-themeisle-blocks-business-hours__container {
-			.wp-block-themeisle-blocks-business-hours__container__title {
+		.ti_bh__container {
+			.ti_bh__title {
 				text-align: center;
 				color: #fff;
 			}
 
-			.wp-block-themeisle-blocks-business-hours__container__content {
+			.ti_bh__content {
 				.wp-block-themeisle-blocks-business-hours-item {
 					background-color: #fff;
 
@@ -40,18 +40,18 @@
 		}
 	}
 
-	.wp-block-themeisle-blocks-business-hours__container {
+	.ti_bh__container {
 		display: flex;
 		flex-direction: column;
 		width: 100%;
 
-		.wp-block-themeisle-blocks-business-hours__container__title {
+		.ti_bh__title {
 			position: relative;
 			font-size: 24px;
 			padding: 20px 40px;
 		}
 
-		.wp-block-themeisle-blocks-business-hours__container__content {
+		.ti_bh__content {
 			display: flex;
 			flex-direction: column;
 
@@ -64,11 +64,11 @@
 				padding-left: 40px;
 				padding-right: 40px;
 
-				.wp-block-themeisle-blocks-business-hours-item__label {
+				.ti_bhi__label {
 					width: 50%;
 				}
 			
-				.wp-block-themeisle-blocks-business-hours-item__time {
+				.ti_bhi__time {
 					width: 50%;
 				}
 			}

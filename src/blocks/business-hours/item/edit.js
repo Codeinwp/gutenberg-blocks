@@ -45,7 +45,7 @@ const Edit = ({
 				style={ style }
 			>
 				<div
-					className="wp-block-themeisle-blocks-business-hours-item__label"
+					className="ti_bhi__label"
 					style={ {
 						color: attributes.labelColor
 					} }
@@ -61,7 +61,7 @@ const Edit = ({
 				</div>
 
 				<div
-					className="wp-block-themeisle-blocks-business-hours-item__time"
+					className="ti_bhi__time"
 					style={ {
 						color: attributes.timeColor
 					} }
