@@ -57,13 +57,13 @@ const Edit = ({
 	};
 
 	const contentCSS = css`
-		.ti-bh__container .ti-bh__content .wp-block-themeisle-blocks-business-hours-item {
+		.otter-bh__container .otter-bh__content .wp-block-themeisle-blocks-business-hours-item {
 			font-size: ${ attributes.itemsFontSize }px;
 			padding-top: ${ attributes.gap }px;
 			padding-bottom: ${ attributes.gap }px;
 		}
 
-		.ti-bh__container .ti-bh__content .block-editor-block-list__block:last-child .wp-block-themeisle-blocks-business-hours-item {
+		.otter-bh__container .otter-bh__content .block-editor-block-list__block:last-child .wp-block-themeisle-blocks-business-hours-item {
 			border-radius: 0 0 ${ attributes.borderRadius || 0 }px ${ attributes.borderRadius || 0 }px;
 		}
 	`;
@@ -86,10 +86,10 @@ const Edit = ({
 				style={ style.container }
 				css={ contentCSS }
 			>
-				<div className="ti-bh__container">
+				<div className="otter-bh__container">
 					<div
 						style={ style.title }
-						className="ti-bh__title"
+						className="otter-bh__title"
 					>
 						<RichText
 							placeholder={ __( 'Opening Hours', 'otter-blocks' ) }
@@ -101,7 +101,7 @@ const Edit = ({
 						/>
 					</div>
 
-					<div className="ti-bh__content">
+					<div className="otter-bh__content">
 						<InnerBlocks
 							allowedBlocks={ [
 								'core/separator',

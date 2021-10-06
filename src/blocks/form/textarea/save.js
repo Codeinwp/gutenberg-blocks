@@ -13,11 +13,11 @@ const Save = ({
 		<div className={ className } >
 			<label
 				for={ attributes.id }
-				className="ti-form-textarea-label"
+				className="otter-form-textarea-label"
 			>
 				<RichText.Content
 					value={ attributes.label }
-					className="ti-form-textarea-label__label"
+					className="otter-form-textarea-label__label"
 					tagName="span"
 				/>
 
@@ -32,7 +32,7 @@ const Save = ({
 				required={ attributes.isRequired }
 				placeholder={ attributes.placeholder }
 				rows={ 10 }
-				className="ti-form-textarea-input"
+				className="otter-form-textarea-input"
 			>
 			</textarea>
 		</div>

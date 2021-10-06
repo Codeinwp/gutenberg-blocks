@@ -1,15 +1,15 @@
 .wp-block-themeisle-blocks-countdown {
-	.ti-countdown__container {
+	.otter-countdown__container {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 
-		.ti-countdown__display {
+		.otter-countdown__display {
 			display: flex;
 			flex-direction: row;
 			gap: 6px;
 
-			.ti-countdown__display-area {
+			.otter-countdown__display-area {
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -26,14 +26,14 @@
 					height: 70px;
 				}
 
-				.ti-countdown__value {
+				.otter-countdown__value {
 					font-size: 1.4rem;
 					line-height: 1.2;
 					text-align: center;
 					width: 100%;
 				}
 
-				.ti-countdown__label {
+				.otter-countdown__label {
 					font-size: 0.6rem;
 					min-height: 1rem;
 					text-align: center;
@@ -41,7 +41,7 @@
 				}
 
 				&[name="separator"] {
-					.ti-countdown__label {
+					.otter-countdown__label {
 						opacity: 0%;
 					}
 

@@ -124,17 +124,17 @@
 	}
 }
 
-.wp-block-themeisle-blocks-posts-grid-builder-item-area {
+.otter-blocks-sortable-item-area {
 	margin: 10px 0;
 	z-index: 999999;
 
-	&.wp-block-themeisle-blocks-posts-grid-builder-item-area-meta {
-		.wp-block-themeisle-blocks-posts-grid-builder-control-area {
+	&.otter-blocks-sortable-item-area-meta {
+		.otter-blocks-sortable-control-area {
 			padding: 20px 15px 10px;
 		}
 	}
 
-	.wp-block-themeisle-blocks-posts-grid-builder-item {
+	.otter-blocks-sortable-item {
 		display: flex;
 		background: #ffffff;
 		border: 1px solid #d5dadf;
@@ -144,19 +144,19 @@
 		}
 
 		&.disabled {
-			.wp-block-themeisle-blocks-posts-grid-builder-label {
+			.otter-blocks-sortable-label {
 				flex-basis: 80%;
 				padding-left: 15px;
 			}
 		}
 
 		&.editable {
-			.wp-block-themeisle-blocks-posts-grid-builder-label {
+			.otter-blocks-sortable-label {
 				flex-basis: 40%;
 			}
 
 			&.disabled {
-				.wp-block-themeisle-blocks-posts-grid-builder-label {
+				.otter-blocks-sortable-label {
 					flex-basis: 60%;
 				}
 			}
@@ -165,24 +165,24 @@
 		&.hidden {
 			color: #e5e5e5;
 
-			.wp-block-themeisle-blocks-posts-grid-builder-handle {
+			.otter-blocks-sortable-handle {
 				span {
 					background: linear-gradient(180deg,#e5e5e5,#e5e5e5 20%,#fff 0,#fff 40%,#e5e5e5 0,#e5e5e5 60%,#fff 0,#fff 80%,#e5e5e5 0,#e5e5e5);
 				}
 			}
 
-			.wp-block-themeisle-blocks-posts-grid-builder-label {
+			.otter-blocks-sortable-label {
 				color: #e5e5e5;
 			}
 
-			.wp-block-themeisle-blocks-posts-grid-builder-button {
+			.otter-blocks-sortable-button {
 				svg {
 					fill :#e5e5e5;
 				}
 			}
 		}
 
-		.wp-block-themeisle-blocks-posts-grid-builder-handle {
+		.otter-blocks-sortable-handle {
 			display: flex;
 			justify-content: center;
 			align-self: center;
@@ -203,7 +203,7 @@
 			}
 		}
 
-		.wp-block-themeisle-blocks-posts-grid-builder-label {
+		.otter-blocks-sortable-label {
 			cursor: default;
 			flex-basis: 60%;
 			display: flex;
@@ -214,7 +214,7 @@
 			}
 		}
 
-		.wp-block-themeisle-blocks-posts-grid-builder-button {
+		.otter-blocks-sortable-button {
 			height: auto;
 			flex-basis: 20%;
 			justify-content: center;
@@ -237,7 +237,7 @@
 		}
 	}
 
-	.wp-block-themeisle-blocks-posts-grid-builder-control-area {
+	.otter-blocks-sortable-control-area {
 		background: #ffffff;
 		border: 1px solid #d5dadf;
 		border-top: none;

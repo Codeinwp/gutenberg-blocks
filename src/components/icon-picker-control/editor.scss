@@ -1,4 +1,4 @@
-.wp-block-themeisle-blocks-icon-picker-popover {
+.otter-icon-picker-popover {
 	&:not(.is-mobile) {
 		&.is-bottom {
 			z-index: 9999999;
@@ -36,7 +36,7 @@
 }
 
 .block-editor-block-inspector {
-	.wp-block-themeisle-blocks-icon-picker-control {
+	.otter-icon-picker-control {
 		margin: 8px 0;
 	
 		.components-dropdown {
@@ -48,7 +48,7 @@
 			}
 		}
 	
-		.wp-block-themeisle-blocks-icon-picker-button {
+		.otter-icon-picker-button {
 			background: transparent;
 			position: relative;
 			width: 100%;
@@ -109,8 +109,8 @@
 }
 
 @media ( max-width: 782px ) {
-	.wp-block-themeisle-blocks-icon-picker-control {
-		.wp-block-themeisle-blocks-icon-picker-button {
+	.otter-icon-picker-control {
+		.otter-icon-picker-button {
 			padding: 5px 24px 5px 8px;
 	
 			&:after {

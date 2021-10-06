@@ -24,7 +24,7 @@ function ColorBaseControl({
 			className={
 				classnames(
 					'components-base-control',
-					'wp-block-themeisle-blocks-color-base-control',
+					'otter-color-base-control',
 					className
 				)
 			}

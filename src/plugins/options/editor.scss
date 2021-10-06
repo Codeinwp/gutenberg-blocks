@@ -81,13 +81,13 @@
 			}
 
 			.components-base-control,
-			.wp-block-themeisle-blocks-responsive-control {
+			.otter-responsive-control {
 				padding: 10px;
 				margin: 0;
 			}
 
 			div:not( .components-base-control__field ) {
-				 > .wp-block-themeisle-blocks-sizing-control {
+				 > .otter-sizing-control {
 					padding: 10px;
 					margin: 0;
 				}

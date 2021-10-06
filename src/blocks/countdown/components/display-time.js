@@ -28,7 +28,7 @@ const DisplayTimeComponent = ({
 			style={ compStyle }
 			name={ tag }
 			className={ classnames(
-				'ti-countdown__display-area',
+				'otter-countdown__display-area',
 				{
 					'is-main-component': 'separator' !==  tag
 				}
@@ -36,13 +36,13 @@ const DisplayTimeComponent = ({
 		>
 			<div
 				style={ styles.value }
-				className="ti-countdown__value"
+				className="otter-countdown__value"
 			>
 				{ value }
 			</div>
 			<div
 				style={ styles.label }
-				className="ti-countdown__label"
+				className="otter-countdown__label"
 			>
 				{ name }
 			</div>
@@ -68,8 +68,8 @@ const DisplayTime = ({
 	) );
 
 	return time !== undefined ? (
-		<div className="ti-countdown__container">
-			<div style={ styles.display } className="ti-countdown__display">{ renderElem }</div>
+		<div className="otter-countdown__container">
+			<div style={ styles.display } className="otter-countdown__display">{ renderElem }</div>
 		</div>
 	) : (
 		<Fragment></Fragment>

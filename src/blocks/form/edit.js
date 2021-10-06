@@ -323,14 +323,14 @@ const Edit = ({
 			>
 				{
 					( hasInnerBlocks ) ? (
-						<div className="ti-form__container">
+						<div className="otter-form__container">
 							<InnerBlocks
 							/>
 
 							{
 								attributes.hasCaptcha && ( ! isAPILoaded || ! isAPISaved ) && (
 									<Placeholder
-										className="ti-form-captcha"
+										className="otter-form-captcha"
 										isAPILoaded={ isAPILoaded }
 										isAPISaved={ isAPISaved }
 										saveAPIKey={ saveAPIKey }

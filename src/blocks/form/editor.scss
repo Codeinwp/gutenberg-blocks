@@ -1,9 +1,9 @@
 @import 'style.scss';
 
 .wp-block-themeisle-blocks-form {
-	.ti-form__container {
+	.otter-form__container {
 		.wp-block-themeisle-blocks-form-input {
-			.ti-form-input {
+			.otter-form-input {
 				padding: 10px 5px;
 				margin-bottom: 0;
 			}
@@ -15,7 +15,7 @@
 		height: 32px;
 	}
 
-	.ti-form-captcha {
+	.otter-form-captcha {
 		margin: 10px 0px;
 	}
 }

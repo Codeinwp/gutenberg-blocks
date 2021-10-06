@@ -52,7 +52,7 @@ const ControlPanelControl = ({
 	const id = `inspector-control-panel-control-${ instanceId }`;
 
 	return (
-		<div className="wp-block-themeisle-blocks-control-panel-control">
+		<div className="otter-control-panel-control">
 			<div className="components-base-control__field">
 				<div className="components-base-control__title">
 					<label
@@ -98,7 +98,7 @@ const ControlPanelControl = ({
 								</Fragment>
 							) }
 							renderContent={ () => (
-								<div className="wp-block-themeisle-popover-settings">
+								<div className="otter-popover-settings">
 									{ children }
 								</div>
 							) }

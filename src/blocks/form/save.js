@@ -32,7 +32,7 @@ const Save = ({
 			data-email-subject={ attributes.subject }
 			data-option-name={ attributes.optionName }
 		>
-			<div className="ti-form__container">
+			<div className="otter-form__container">
 				<InnerBlocks.Content />
 
 				<div className="wp-block-button">

@@ -100,7 +100,7 @@ const Edit = ({
 			</InspectorControls>
 
 			{ props.attributes.isMasonry ? (
-				<div class="wp-block-themeisle-blocks-masonry">
+				<div class="otter-masonry">
 					<BlockEdit { ...props } />
 				</div>
 			) : (

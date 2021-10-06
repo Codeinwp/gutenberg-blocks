@@ -66,7 +66,7 @@ const ResponsiveControl = ({
 		<div
 			id={ id }
 			className={ classnames(
-				'wp-block-themeisle-blocks-responsive-control',
+				'otter-responsive-control',
 				className
 			) }
 		>
@@ -87,14 +87,14 @@ const ResponsiveControl = ({
 								/>
 							) }
 							renderContent={ () => (
-								<div className="wp-block-themeisle-blocks-responsive-control-settings">
-									<div className="wp-block-themeisle-blocks-responsive-control-settings-title">
+								<div className="otter-responsive-control-settings">
+									<div className="otter-responsive-control-settings-title">
 										{ __( 'View', 'otter-blocks' ) }
 									</div>
 
 									<Button
 										className={ classnames(
-											'wp-block-themeisle-blocks-responsive-control-settings-item',
+											'otter-responsive-control-settings-item',
 											{ 'is-selected': 'Desktop' === getView }
 										) }
 										onClick={ () => setView( 'Desktop' ) }
@@ -107,7 +107,7 @@ const ResponsiveControl = ({
 
 									<Button
 										className={ classnames(
-											'wp-block-themeisle-blocks-responsive-control-settings-item',
+											'otter-responsive-control-settings-item',
 											{ 'is-selected': 'Tablet' === getView }
 										) }
 										onClick={ () => setView( 'Tablet' ) }
@@ -120,7 +120,7 @@ const ResponsiveControl = ({
 
 									<Button
 										className={ classnames(
-											'wp-block-themeisle-blocks-responsive-control-settings-item',
+											'otter-responsive-control-settings-item',
 											{ 'is-selected': 'Mobile' === getView }
 										) }
 										onClick={ () => setView( 'Mobile' ) }

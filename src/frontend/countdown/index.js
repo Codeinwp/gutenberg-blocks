@@ -22,8 +22,8 @@ const getComponentsUpdate = ( root ) => {
 	return [ 'second', 'minute', 'hour', 'day' ].reduce( ( acc, componentName ) => {
 		const elem = root.querySelector( `div[name=${ componentName }]` );
 		if ( elem ) {
-			const labelElem = elem.querySelector( '.ti-countdown__label' );
-			const valueElem = elem.querySelector( '.ti-countdown__value' );
+			const labelElem = elem.querySelector( '.otter-countdown__label' );
+			const valueElem = elem.querySelector( '.otter-countdown__value' );
 			acc[componentName] = ( labelName, value ) => {
 				if ( parseInt( valueElem.innerHTML ) !== value ) {
 					valueElem.innerHTML = value;

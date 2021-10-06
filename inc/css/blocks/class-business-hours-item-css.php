@@ -47,7 +47,7 @@ class Business_Hours_Item_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .ti-bhi__label',
+				'selector'   => ' .otter-bhi__label',
 				'properties' => array(
 					array(
 						'property' => 'color',
@@ -59,7 +59,7 @@ class Business_Hours_Item_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .ti-bhi__time',
+				'selector'   => ' .otter-bhi__time',
 				'properties' => array(
 					array(
 						'property' => 'color',

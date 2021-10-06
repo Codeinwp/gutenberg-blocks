@@ -46,12 +46,12 @@ const HTMLAnchorControl = ({
 			<BaseControl
 				label={ __( 'HTML Anchor', 'otter-blocks' ) }
 				help={ __( 'Anchors lets you link directly to a section on a page.', 'otter-blocks' ) }
-				id={ `wp-block-themeisle-blocks-html-anchor-control-${ instanceId }` }
+				id={ `otter-html-anchor-control-${ instanceId }` }
 			>
-				<div className="wp-block-themeisle-blocks-html-anchor-control">
+				<div className="otter-html-anchor-control">
 					<input
 						type="text"
-						className="wp-block-themeisle-blocks-html-anchor-control-input"
+						className="otter-html-anchor-control-input"
 						readonly={ isEditing ? false : 'readonly' }
 						value={ isEditing ? ID : value }
 						onChange={ e => setID( e.target.value ) }
@@ -64,7 +64,7 @@ const HTMLAnchorControl = ({
 						showTooltip={ true }
 						disabled={ isInvalid ? true : false }
 						className={ classnames(
-							'wp-block-themeisle-blocks-html-anchor-control-button',
+							'otter-html-anchor-control-button',
 							{ 'is-saved': ! isEditing }
 						) }
 						onClick={ () => {
@@ -83,7 +83,7 @@ const HTMLAnchorControl = ({
 				<Notice
 					status="warning"
 					isDismissible={ false }
-					className="wp-block-themeisle-blocks-anchor-control-notice"
+					className="otter-html-anchor-control-notice"
 				>
 					{ __( 'This ID has already been used in this page. Please consider using a different ID to avoid conflict.', 'otter-blocks' ) }
 				</Notice>

@@ -82,7 +82,7 @@ const GridList = ({
 	return (
 		<SortableList
 			className={ classnames(
-				'wp-block-themeisle-blocks-images-grid-component',
+				'otter-images-grid-component',
 				{ 'is-single': 1 === attributes.images.length }
 			) }
 			open={ open }

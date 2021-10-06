@@ -2,7 +2,7 @@ class PopupBlock {
 	constructor( element ) {
 		this.element = element;
 		this.happened = false;
-		this.storageKey = 'wp-block-themeisle-blocks-popup-dismiss';
+		this.storageKey = 'otter-popup-dismiss';
 
 		const { dismiss, anchor } = element.dataset;
 
@@ -195,7 +195,7 @@ class PopupBlock {
 
 	bindCloseButtons() {
 		const modal = this.element;
-		const closes = modal.querySelectorAll( '.wp-block-themeisle-blocks-popup__modal_header .components-button' );
+		const closes = modal.querySelectorAll( '.otter-popup__modal_header .components-button' );
 
 		closes.forEach( ( close ) => {
 			close.addEventListener( 'click', () => {
@@ -211,7 +211,7 @@ class PopupBlock {
 			return false;
 		}
 
-		const overlay = this.element.querySelector( '.wp-block-themeisle-blocks-popup__modal_wrap_overlay' );
+		const overlay = this.element.querySelector( '.otter-popup__modal_wrap_overlay' );
 
 		overlay.addEventListener( 'click', () => {
 			this.closeModal();

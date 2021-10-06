@@ -12,14 +12,14 @@ const Save = ({
 			className={ className }
 			id={ attributes.id }
 		>
-			<div className="ti-bhi__label">
+			<div className="otter-bhi__label">
 				<RichText.Content
 					value={ attributes.label }
 					tagName="span"
 				/>
 			</div>
 
-			<div className="ti-bhi__time">
+			<div className="otter-bhi__time">
 				<RichText.Content
 					value={ attributes.time }
 					tagName="span"

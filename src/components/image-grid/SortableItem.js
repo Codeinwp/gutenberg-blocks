@@ -23,7 +23,7 @@ const SortableItem = SortableElement( ({
 	return (
 		<Button
 			className={ classnames(
-				'wp-block-themeisle-blocks-images-grid-component__image',
+				'otter-images-grid-component__image',
 				{
 					'is-selected': selected,
 					'is-sorting': selected && sorting
@@ -34,7 +34,7 @@ const SortableItem = SortableElement( ({
 				backgroundImage: `url( ' ${ value.url } ' )`
 			} }
 		>
-			{ shouldRenderItemCountBadge && <div className="wp-block-themeisle-blocks-images-grid-component__image__count">{ selectedItemsCount }</div> }
+			{ shouldRenderItemCountBadge && <div className="otter-images-grid-component__image__count">{ selectedItemsCount }</div> }
 		</Button>
 	);
 });

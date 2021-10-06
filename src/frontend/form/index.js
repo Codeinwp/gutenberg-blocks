@@ -28,16 +28,16 @@ const collectAndSendInputFormData = ( form, btn ) => {
 
 	const formFieldsData = [ { label: __( 'Form submission from', 'otter-blocks' ), value: window.location.href } ];
 
-	const inputs = form?.querySelectorAll( '.ti-form__container .wp-block-themeisle-blocks-form-input' );
-	const textarea = form?.querySelectorAll( '.ti-form__container .wp-block-themeisle-blocks-form-textarea' );
+	const inputs = form?.querySelectorAll( '.otter-form__container .wp-block-themeisle-blocks-form-input' );
+	const textarea = form?.querySelectorAll( '.otter-form__container .wp-block-themeisle-blocks-form-textarea' );
 
 
 	[ ...inputs, ...textarea ]?.forEach( input => {
-		const label = input.querySelector( '.ti-form-input-label__label, .ti-form-textarea-label__label' )?.innerHTML;
-		const valueElem = input.querySelector( '.ti-form-input, .ti-form-textarea-input' );
+		const label = input.querySelector( '.otter-form-input-label__label, .otter-form-textarea-label__label' )?.innerHTML;
+		const valueElem = input.querySelector( '.otter-form-input, .otter-form-textarea-input' );
 
 		// TODO: use checkbox in the future versions
-		const checked = input.querySelector( '.ti-form-input[type="checkbox"]' )?.checked;
+		const checked = input.querySelector( '.otter-form-input[type="checkbox"]' )?.checked;
 
 		if ( valueElem?.hasAttribute( 'required' ) &&  ! valueElem?.checkValidity() ) {
 			elemsWithError.push( valueElem );
@@ -66,7 +66,7 @@ const collectAndSendInputFormData = ( form, btn ) => {
 	const addThenRemoveMsg = ( msg ) => {
 
 		// Remove old messages
-		msgAnchor.querySelectorAll( '.ti-form-server-response' ).forEach( _msg => msgAnchor.removeChild( _msg ) );
+		msgAnchor.querySelectorAll( '.otter-form-server-response' ).forEach( _msg => msgAnchor.removeChild( _msg ) );
 
 		// Add the new message to the page
 		msgAnchor.appendChild( msg );
@@ -86,7 +86,7 @@ const collectAndSendInputFormData = ( form, btn ) => {
 
 		if (  form?.classList?.contains( 'has-captcha' ) && id && ! window.themeisleGutenberg?.tokens[id].token  ) {
 			const msg = document.createElement( 'div' );
-			msg.classList.add( 'ti-form-server-response' );
+			msg.classList.add( 'otter-form-server-response' );
 			if ( ! window.hasOwnProperty( 'grecaptcha' ) ) {
 				msg.innerHTML = __( '⚠ Captcha is not loaded. Please check your browser plugins to allow the Google reCaptcha.', 'otter-blocks' );
 			} else {
@@ -133,7 +133,7 @@ const collectAndSendInputFormData = ( form, btn ) => {
 
 		if ( form.classList.contains( 'can-submit-and-subscribe' ) ) {
 			data.action = 'submit-subscribe';
-			data.consent = form.querySelector( '.ti-form-consent input' )?.checked || false;
+			data.consent = form.querySelector( '.otter-form-consent input' )?.checked || false;
 		}
 
 		data.postUrl = window.location.href;
@@ -148,7 +148,7 @@ const collectAndSendInputFormData = ( form, btn ) => {
 		}).then( res => {
 			msgAnchor?.classList.remove( 'loading' );
 			const msg = document.createElement( 'div' );
-			msg.classList.add( 'ti-form-server-response' );
+			msg.classList.add( 'otter-form-server-response' );
 
 			if ( res?.success ) {
 				msg.innerHTML = __( 'Success', 'otter-blocks' );
@@ -186,7 +186,7 @@ const collectAndSendInputFormData = ( form, btn ) => {
 			console.error( error );
 
 			const msg = document.createElement( 'div' );
-			msg.classList.add( 'ti-form-server-response' );
+			msg.classList.add( 'otter-form-server-response' );
 			msg.innerHTML = __( 'Error. Something is wrong with the server! Try again later.', 'otter-blocks' );
 			msg.classList.add( 'error' );
 
@@ -227,11 +227,11 @@ domReady( () => {
  * @param {HTMLDivElement} form
  */
 const renderConsentCheckbox = ( form ) => {
-	const container = form.querySelector( '.ti-form__container' );
+	const container = form.querySelector( '.otter-form__container' );
 	const button = form.querySelector( '.wp-block-button' );
 
 	const inputContainer = document.createElement( 'div' );
-	inputContainer.classList.add( 'ti-form-consent' );
+	inputContainer.classList.add( 'otter-form-consent' );
 	container.insertBefore( inputContainer, button );
 
 	const input = document.createElement( 'input' );

@@ -9,13 +9,13 @@
 		background-color: #2a2730;
 		border-radius: 10px;
 
-		.ti-bh__container {
-			.ti-bh__title {
+		.otter-bh__container {
+			.otter-bh__title {
 				text-align: center;
 				color: #fff;
 			}
 
-			.ti-bh__content {
+			.otter-bh__content {
 				.wp-block-themeisle-blocks-business-hours-item {
 					background-color: #fff;
 
@@ -40,18 +40,18 @@
 		}
 	}
 
-	.ti-bh__container {
+	.otter-bh__container {
 		display: flex;
 		flex-direction: column;
 		width: 100%;
 
-		.ti-bh__title {
+		.otter-bh__title {
 			position: relative;
 			font-size: 24px;
 			padding: 20px 40px;
 		}
 
-		.ti-bh__content {
+		.otter-bh__content {
 			display: flex;
 			flex-direction: column;
 
@@ -64,11 +64,11 @@
 				padding-left: 40px;
 				padding-right: 40px;
 
-				.ti-bhi__label {
+				.otter-bhi__label {
 					width: 50%;
 				}
 			
-				.ti-bhi__time {
+				.otter-bhi__time {
 					width: 50%;
 				}
 			}

@@ -79,7 +79,7 @@ const GoogleFontsControl = ({
 	const id = `inspector-google-fonts-control-${ instanceId }`;
 
 	return (
-		<div className="wp-block-themeisle-blocks-google-fonts-control">
+		<div className="otter-gfont-control">
 			<BaseControl
 				label={ label }
 				id={ id }
@@ -138,12 +138,12 @@ const GoogleFontsControl = ({
 						/>
 					) : (
 						<Dropdown
-							contentClassName="wp-block-themeisle-blocks-google-fonts-popover"
+							contentClassName="otter-gfont-popover"
 							position="bottom center"
 							renderToggle={ ({ isOpen, onToggle }) => (
 								<Button
 									isLarge
-									className="wp-block-themeisle-blocks-google-fonts-button"
+									className="otter-gfont-button"
 									id={ id }
 									onClick={ onToggle }
 									aria-expanded={ isOpen }

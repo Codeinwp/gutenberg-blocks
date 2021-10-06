@@ -88,7 +88,7 @@ const LinkControlToolbar = ({
 						title={ __( 'Link', 'otter-blocks' ) }
 						shortcut={ displayShortcut.primary( 'k' ) }
 						onClick={ openLinkControl }
-						className="wp-block-themeisle-toolbar-icon"
+						className="otter-toolbar-icon"
 					/>
 				) }
 
@@ -100,7 +100,7 @@ const LinkControlToolbar = ({
 						shortcut={ displayShortcut.primaryShift( 'k' ) }
 						onClick={ unlinkButton }
 						isActive={ true }
-						className="wp-block-themeisle-toolbar-icon"
+						className="otter-toolbar-icon"
 					/>
 				) }
 			</ToolbarGroup>
