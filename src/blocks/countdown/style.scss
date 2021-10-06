@@ -1,27 +1,15 @@
 .wp-block-themeisle-blocks-countdown {
-	.wp-block-themeisle-blocks-countdown__date-picker {
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-
-		.wp-block-themeisle-blocks-countdown__date-picker__container {
-			width: 300px;
-		}
-	}
-
-	.wp-block-themeisle-blocks-countdown__container {
+	.ti-countdown__container {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 
-		.wp-block-themeisle-blocks-countdown__display {
+		.ti-countdown__display {
 			display: flex;
 			flex-direction: row;
 			gap: 6px;
 
-			.wp-block-themeisle-blocks-countdown__display-area {
+			.ti-countdown__display-area {
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -38,14 +26,14 @@
 					height: 70px;
 				}
 
-				.wp-block-themeisle-blocks-countdown__display-area__value {
+				.ti-countdown__value {
 					font-size: 1.4rem;
 					line-height: 1.2;
 					text-align: center;
 					width: 100%;
 				}
 
-				.wp-block-themeisle-blocks-countdown__display-area__label {
+				.ti-countdown__label {
 					font-size: 0.6rem;
 					min-height: 1rem;
 					text-align: center;
@@ -53,7 +41,7 @@
 				}
 
 				&[name="separator"] {
-					.wp-block-themeisle-blocks-countdown__display-area__label {
+					.ti-countdown__label {
 						opacity: 0%;
 					}
 

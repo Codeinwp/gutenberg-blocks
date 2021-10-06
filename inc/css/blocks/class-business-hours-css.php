@@ -68,7 +68,7 @@ class Business_Hours_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .ti_bh__container .ti_bh__title',
+				'selector'   => ' .ti-bh__container .ti-bh__title',
 				'properties' => array(
 					array(
 						'property' => 'text-align',
@@ -89,7 +89,7 @@ class Business_Hours_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .ti_bh__container .ti_bh__content .wp-block-themeisle-blocks-business-hours-item',
+				'selector'   => ' .ti-bh__container .ti-bh__content .wp-block-themeisle-blocks-business-hours-item',
 				'properties' => array(
 					array(
 						'property' => 'padding-top',
@@ -107,7 +107,7 @@ class Business_Hours_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .ti_bh__container .ti_bh__content .wp-block-themeisle-blocks-business-hours-item .ti_bhi__label',
+				'selector'   => ' .ti-bh__container .ti-bh__content .wp-block-themeisle-blocks-business-hours-item .ti-bhi__label',
 				'properties' => array(
 					array(
 						'property' => 'font-size',
@@ -120,7 +120,7 @@ class Business_Hours_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .ti_bh__container .ti_bh__content .wp-block-themeisle-blocks-business-hours-item .ti_bhi__time',
+				'selector'   => ' .ti-bh__container .ti-bh__content .wp-block-themeisle-blocks-business-hours-item .ti-bhi__time',
 				'properties' => array(
 					array(
 						'property' => 'font-size',

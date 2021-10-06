@@ -15,15 +15,15 @@ const Save = ({
 			className={ className }
 			id={ attributes.id }
 		>
-			<div className="ti_bh__container">
-				<div className="ti_bh__title">
+			<div className="ti-bh__container">
+				<div className="ti-bh__title">
 					<RichText.Content
 						value={ attributes.title }
 						tagName="span"
 					/>
 				</div>
 
-				<div className="ti_bh__content">
+				<div className="ti-bh__content">
 					<InnerBlocks.Content />
 				</div>
 			</div>
