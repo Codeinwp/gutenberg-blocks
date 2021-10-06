@@ -9,7 +9,6 @@ import { registerBlockType } from '@wordpress/blocks';
  * Internal dependencies
  */
 import { inputIcon as icon } from '../../../helpers/icons.js';
-
 import edit from './edit.js';
 
 registerBlockType( 'themeisle-blocks/form-nonce', {

@@ -1,27 +1,13 @@
 @import 'style.scss';
 
 .wp-block-themeisle-blocks-form {
-	.wp-block-themeisle-blocks-form__container {
+	.ti-form__container {
 		.wp-block-themeisle-blocks-form-input {
-			.wp-block-themeisle-blocks-form-input-input {
+			.ti-form-input {
 				padding: 10px 5px;
 				margin-bottom: 0;
 			}
 		}
-	}
-
-	.wp-block-themeisle-blocks-form_placeholder {
-		display: flex;
-		flex-direction: row;
-		margin: 10px;
-
-		.wp-block-themeisle-blocks-form_placeholder__button {
-			border: 1.5px solid black;
-		}
-	}
-
-	.components-placeholder__fieldset {
-		flex-direction: column;
 	}
 
 	.components-placeholder__label > svg {
@@ -29,7 +15,7 @@
 		height: 32px;
 	}
 
-	.wp-block-themeisle-blocks-form-captcha-field {
+	.ti-form-captcha {
 		margin: 10px 0px;
 	}
 }

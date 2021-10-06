@@ -13,11 +13,11 @@ const Save = ({
 		<div className={ className } >
 			<label
 				for={ attributes.id }
-				className="wp-block-themeisle-blocks-form-textarea-label"
+				className="ti-form-textarea-label"
 			>
 				<RichText.Content
 					value={ attributes.label }
-					className="wp-block-themeisle-blocks-form-textarea-label__label"
+					className="ti-form-textarea-label__label"
 					tagName="span"
 				/>
 
@@ -32,7 +32,7 @@ const Save = ({
 				required={ attributes.isRequired }
 				placeholder={ attributes.placeholder }
 				rows={ 10 }
-				className="wp-block-themeisle-blocks-form-textarea-input"
+				className="ti-form-textarea-input"
 			>
 			</textarea>
 		</div>

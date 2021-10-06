@@ -1,9 +1,9 @@
 .wp-block-themeisle-blocks-form {
-	.wp-block-themeisle-blocks-form__container {
+	.ti-form__container {
 		.wp-block-themeisle-blocks-form-input {
 			display: flex;
 			flex-direction: column;
-			.wp-block-themeisle-blocks-form-input-label {
+			.ti-form-input-label {
 				width: 100%;
 				font-weight: bold;
 
@@ -15,14 +15,14 @@
 				}
 			}
 
-			.wp-block-themeisle-blocks-form-input-input {
+			.ti-form-input {
 				width: 100%;
 				margin-bottom: 1.5em;
 			}
 		}
 
 		.wp-block-themeisle-blocks-form-textarea {
-			.wp-block-themeisle-blocks-form-textarea-label {
+			.ti-form-textarea-label {
 				width: 100%;
 				font-weight: bold;
 
@@ -33,14 +33,14 @@
 				}
 			}
 
-			.wp-block-themeisle-blocks-form-textarea-input {
+			.ti-form-textarea-input {
 				width: 100%;
 				height: 200px;
 				margin-bottom: 1.5em;
 			}
 		}
 
-		.wp-block-themeisle-blocks-form-consent {
+		.ti-form-consent {
 			label {
 				margin-left: 10px;
 			}
@@ -56,7 +56,7 @@
 
 	}
 
-	.wp-block-themeisle-blocks-form-server-msg {
+	.ti-form-server-response {
 		text-align: left;
 		padding: 1rem;
 		font-size: 1.2rem;
