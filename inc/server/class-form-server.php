@@ -87,6 +87,7 @@ class Form_Server {
 	public function submit_form( $request ) {
 
 		$data = json_decode( $request->get_body(), true );
+		$data = $this->sanitize_data( $data );
 
 		if ( ! $this->has_requiered_data( $data ) ) {
 			$return['error']   = __( 'Invalid request!', 'otter-blocks' );
@@ -263,6 +264,8 @@ class Form_Server {
 		);
 
 		$data = json_decode( $request->get_body(), true );
+		$data = $this->sanitize_data( $data );
+
 		if ( isset( $data['provider'] ) ) {
 			switch ( $data['provider'] ) {
 				case 'mailchimp':
@@ -505,6 +508,40 @@ class Form_Server {
 			}
 		}
 		return array();
+	}
+
+	/**
+	 * Sanitize the request data.
+	 *
+	 * @param array $data The data from the request.
+	 * @return array Sanitized field data.
+	 */
+	private function sanitize_data( $data ) {
+		if ( isset( $data['postUrl'] ) ) {
+			$data['postUrl'] = sanitize_text_field( $data['postUrl'] );
+		}
+		if ( isset( $data['formId'] ) ) {
+			$data['formId'] = sanitize_text_field( $data['formId'] );
+		}
+		if ( isset( $data['formOption'] ) ) {
+			$data['formOption'] = sanitize_text_field( $data['formOption'] );
+		}
+		if ( isset( $data['apiKey'] ) ) {
+			$data['apiKey'] = sanitize_text_field( $data['apiKey'] );
+		}
+		if ( isset( $data['provider'] ) ) {
+			$data['provider'] = sanitize_text_field( $data['provider'] );
+		}
+		if ( isset( $data['emailSubject'] ) ) {
+			$data['emailSubject'] = sanitize_text_field( $data['emailSubject'] );
+		}
+		if ( isset( $data['action'] ) ) {
+			$data['action'] = sanitize_text_field( $data['action'] );
+		}
+		if ( isset( $data['token'] ) ) {
+			$data['token'] = sanitize_text_field( $data['token'] );
+		}
+		return $data;
 	}
 
 	/**

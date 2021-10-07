@@ -12,6 +12,7 @@ namespace ThemeIsle\GutenbergBlocks\Plugins;
  */
 class Options_Settings {
 
+
 	/**
 	 * The main instance var.
 	 *
@@ -112,11 +113,15 @@ class Options_Settings {
 			array(
 				'type'              => 'array',
 				'description'       => __( 'Email used in the Form block.', 'otter-blocks' ),
-				'sanitize_callback' => function( $array ) {
+				'sanitize_callback' => function ( $array ) {
 					return array_map(
-						function( $item ) {
-							$item['form'] = sanitize_text_field( $item['form'] );
-							$item['email'] = sanitize_text_field( $item['email'] );
+						function ( $item ) {
+							if ( isset( $item['form'] ) ) {
+								$item['form'] = sanitize_text_field( $item['form'] );
+							}
+							if ( isset( $item['email'] ) ) {
+								$item['email'] = sanitize_text_field( $item['email'] );
+							}
 							if ( isset( $item['integration']['provider'] ) ) {
 								$item['integration']['provider'] = sanitize_text_field( $item['integration']['provider'] );
 							}
