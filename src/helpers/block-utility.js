@@ -116,7 +116,7 @@ export const addBlockId = ( args ) => {
 
 	if ( attributes === undefined || setAttributes === undefined ) {
 		return ( savedId ) => {
-			localIDs[name].delete( savedId );
+			localIDs[name]?.delete( savedId );
 		};
 	}
 
