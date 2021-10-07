@@ -33,7 +33,7 @@ export const OtterBlock = ( Block, defaultAttributes, idPrefix = undefined ) => 
 			name,
 			defaultAttributes
 		});
-		return () => unsubscribe();
+		return () => unsubscribe( attributes.id );
 	}, [ attributes.id ]);
 	return <Block {...props}/>;
 };
