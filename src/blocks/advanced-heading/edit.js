@@ -66,7 +66,7 @@ const Edit = ({
 
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
-		return () => unsubscribe();
+		return () => unsubscribe( attributes.id );
 	}, [ attributes.id ]);
 
 	let isDesktop = isLarger && ! isLarge && isSmall && ! isSmaller;
