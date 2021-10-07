@@ -47,7 +47,7 @@ class Business_Hours_Item_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-business-hours-item__label',
+				'selector'   => ' .otter-business-hour-item__label',
 				'properties' => array(
 					array(
 						'property' => 'color',
@@ -59,7 +59,7 @@ class Business_Hours_Item_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-business-hours-item__time',
+				'selector'   => ' .otter-business-hour-item__time',
 				'properties' => array(
 					array(
 						'property' => 'color',

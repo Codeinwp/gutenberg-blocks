@@ -908,7 +908,7 @@ class Main {
 
 			$margin = isset( $block['attrs']['margin'] ) ? $block['attrs']['margin'] : 0;
 
-			$output = '<div class="wp-block-themeisle-blocks-masonry" data-margin="' . $margin . '">' . $block_content . '</div>';
+			$output = '<div class="otter-masonry" data-margin="' . $margin . '">' . $block_content . '</div>';
 
 			return $output;
 		}

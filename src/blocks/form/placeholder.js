@@ -1,5 +1,5 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { __ } from '@wordpress/i18n';
 
@@ -11,9 +11,7 @@ import {
 	TextControl
 } from '@wordpress/components';
 
-import {
-	Fragment
-} from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 
 const BlockPlaceholder = ({
 	className,

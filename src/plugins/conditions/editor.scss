@@ -1,4 +1,4 @@
-.wp-block-themeisle-blocks-conditions {
+.otter-blocks-conditions {
 	margin-top: 10px;
 
 	.components-button {
@@ -9,12 +9,12 @@
 	}
 }
 
-.wp-block-themeisle-blocks-conditions__operator-wrapper {
+.otter-blocks-conditions__operator-wrapper {
 	position: relative;
 	height: 45px;
 	margin: 10px 0;
 
-	.wp-block-themeisle-blocks-conditions__operator-line {
+	.otter-blocks-conditions__operator-line {
 		position: absolute;
 		left: 50%;
 		top: 5px;
@@ -24,7 +24,7 @@
 		z-index: 1;
 	}
 
-	.wp-block-themeisle-blocks-conditions__operator-word {
+	.otter-blocks-conditions__operator-word {
 		text-align: center;
 		height: 12px;
 		position: absolute;
@@ -45,7 +45,7 @@
 	}
 }
 
-.wp-block-themeisle-blocks-conditions__add {
+.otter-blocks-conditions__add {
 	display: flex;
 	justify-content: center;
 	width: 100%;

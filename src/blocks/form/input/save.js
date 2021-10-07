@@ -13,11 +13,11 @@ const Save = ({
 		<div className={ className } >
 			<label
 				for={ attributes.id }
-				className="wp-block-themeisle-blocks-form-input-label"
+				className="otter-form-input-label"
 			>
 				<RichText.Content
 					value={ attributes.label }
-					className="wp-block-themeisle-blocks-form-input-label__label"
+					className="otter-form-input-label__label"
 					tagName="span"
 				/>
 
@@ -32,7 +32,7 @@ const Save = ({
 				id={ attributes.id }
 				required={ attributes.isRequired }
 				placeholder={ attributes.placeholder }
-				className="wp-block-themeisle-blocks-form-input-input"
+				className="otter-form-input"
 			/>
 		</div>
 	);

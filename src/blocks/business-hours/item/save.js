@@ -12,14 +12,14 @@ const Save = ({
 			className={ className }
 			id={ attributes.id }
 		>
-			<div className="wp-block-themeisle-blocks-business-hours-item__label">
+			<div className="otter-business-hour-item__label">
 				<RichText.Content
 					value={ attributes.label }
 					tagName="span"
 				/>
 			</div>
 
-			<div className="wp-block-themeisle-blocks-business-hours-item__time">
+			<div className="otter-business-hour-item__time">
 				<RichText.Content
 					value={ attributes.time }
 					tagName="span"

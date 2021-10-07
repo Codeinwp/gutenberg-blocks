@@ -34,7 +34,7 @@ const LayoutBuilder = ({
 	};
 
 	return (
-		<div className="wp-block-themeisle-blocks-posts-grid-builder">
+		<div className="otter-blocks-sortable">
 			<SortableList
 				template={ window.themeisleGutenberg.themeMods.defaultFields }
 				fields={ JSON.parse( attributes.fields ) }

@@ -1,10 +1,28 @@
-/* eslint-disable no-unused-vars */
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
-import { InnerBlocks } from '@wordpress/block-editor';
+import { get } from 'lodash';
+
+import api from '@wordpress/api';
+
+import {
+	__experimentalBlockVariationPicker as VariationPicker,
+	InnerBlocks
+} from '@wordpress/block-editor';
+
+import {
+	createBlock,
+	createBlocksFromInnerBlocksTemplate
+} from '@wordpress/blocks';
+
+import {
+	dispatch,
+	select,
+	useSelect,
+	useDispatch
+} from '@wordpress/data';
 
 import {
 	Fragment,
@@ -12,26 +30,6 @@ import {
 	useEffect,
 	useRef
 } from '@wordpress/element';
-
-import {
-	select,
-	useSelect,
-	useDispatch
-} from '@wordpress/data';
-
-import {
-	createBlocksFromInnerBlocksTemplate
-} from '@wordpress/blocks';
-
-import {
-	__experimentalBlockVariationPicker as VariationPicker
-} from '@wordpress/block-editor';
-
-import { get } from 'lodash';
-
-import { createBlock } from '@wordpress/blocks';
-
-import api from '@wordpress/api';
 
 /**
  * Internal dependencies
@@ -41,11 +39,6 @@ import defaultAttributes from './attributes.js';
 import Inspector from './inspector.js';
 import Placeholder from './placeholder.js';
 
-import {
-	dispatch
-} from '@wordpress/data';
-;
-
 const Edit = ({
 	attributes,
 	setAttributes,
@@ -53,8 +46,6 @@ const Edit = ({
 	clientId,
 	name
 }) => {
-
-	const { createNotice } = dispatch( 'core/notices' );
 
 	const [ googleCaptchaAPISiteKey, setGoogleCaptchaAPISiteKey ] = useState( '' );
 	const [ googleCaptchaAPISecretKey, setGoogleCaptchaAPISecretKey ] = useState( '' );
@@ -68,16 +59,18 @@ const Edit = ({
 		insertBlock,
 		removeBlock
 	} = useDispatch( 'core/block-editor' );
+
 	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
+	const { createNotice } = dispatch( 'core/notices' );
 
 	const hasInnerBlocks = useSelect(
-		( select ) =>
+		select =>
 			0 < select( 'core/block-editor' ).getBlocks( clientId ).length,
 		[ clientId ]
 	);
 
 	const { blockType, defaultVariation, variations } = useSelect(
-		( select ) => {
+		select => {
 			const {
 				getBlockVariations,
 				getBlockType,
@@ -255,7 +248,6 @@ const Edit = ({
 	 * Save integration data.
 	 */
 	useEffect( () => {
-
 		settingsRef?.current?.fetch().done( res => {
 			const emails = res.themeisle_blocks_form_emails ? res.themeisle_blocks_form_emails : [];
 			let isMissing = true;
@@ -331,14 +323,14 @@ const Edit = ({
 			>
 				{
 					( hasInnerBlocks ) ? (
-						<div className="wp-block-themeisle-blocks-form__container">
+						<div className="otter-form__container">
 							<InnerBlocks
 							/>
 
 							{
 								attributes.hasCaptcha && ( ! isAPILoaded || ! isAPISaved ) && (
 									<Placeholder
-										className={ 'wp-block-themeisle-blocks-form-captcha-field' }
+										className="otter-form-captcha"
 										isAPILoaded={ isAPILoaded }
 										isAPISaved={ isAPISaved }
 										saveAPIKey={ saveAPIKey }

@@ -75,20 +75,20 @@ const Edit = ({
 				</Button>
 
 				{ isEditing && (
-					<div className="wp-block-themeisle-blocks-popup__modal_wrap">
+					<div className="otter-popup__modal_wrap">
 						<div
 							role="presentation"
-							className="wp-block-themeisle-blocks-popup__modal_wrap_overlay"
+							className="otter-popup__modal_wrap_overlay"
 							style={ style.overlay }
 							onClick={ () => setEditing( false ) }
 						/>
 
 						<div
-							className="wp-block-themeisle-blocks-popup__modal_content"
+							className="otter-popup__modal_content"
 							style={ style.content }
 						>
 							{ attributes.showClose && (
-								<div className="wp-block-themeisle-blocks-popup__modal_header">
+								<div className="otter-popup__modal_header">
 									<Button
 										icon={ closeSmall }
 										style={ style.close }
@@ -97,7 +97,7 @@ const Edit = ({
 								</div>
 							) }
 
-							<div className="wp-block-themeisle-blocks-popup__modal_body">
+							<div className="otter-popup__modal_body">
 								<InnerBlocks />
 							</div>
 						</div>

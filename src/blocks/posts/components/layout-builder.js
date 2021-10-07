@@ -33,7 +33,7 @@ const LayoutBuilder = ({
 		<Fragment>
 			<div
 				className={ classnames(
-					'wp-block-themeisle-blocks-posts-grid-builder',
+					'otter-blocks-sortable',
 					attributes.style
 				) }
 			>

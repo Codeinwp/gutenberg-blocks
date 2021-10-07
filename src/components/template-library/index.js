@@ -201,7 +201,7 @@ const Library = ({
 	return (
 		<Modal
 			className={ classnames(
-				'wp-block-themeisle-library-modal',
+				'otter-library-modal',
 				{ 'is-preview': preview }
 			) }
 			onRequestClose={ close }

@@ -38,11 +38,11 @@ const Edit = ({
 			<div className={ className } >
 				<label
 					for={ attributes.id }
-					className="wp-block-themeisle-blocks-form-input-label"
+					className="otter-form-input-label"
 				>
 					<RichText
 						placeholder={ __( 'Type here…', 'otter-blocks' )}
-						className="wp-block-themeisle-blocks-form-input-label__label"
+						className="otter-form-input-label__label"
 						value={ attributes.label }
 						onChange={ label => setAttributes({ label }) }
 						tagName="span"
@@ -60,7 +60,7 @@ const Edit = ({
 					id={ attributes.id }
 					required={ attributes.isRequired }
 					disabled
-					className="wp-block-themeisle-blocks-form-input-input components-text-control__input"
+					className="otter-form-input components-text-control__input"
 				/>
 			</div>
 		</Fragment>

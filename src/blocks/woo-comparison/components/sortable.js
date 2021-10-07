@@ -23,7 +23,7 @@ import { Button } from '@wordpress/components';
 
 const DragHandle = SortableHandle( () => {
 	return (
-		<div className="wp-block-themeisle-blocks-posts-grid-builder-handle" tabIndex="0">
+		<div className="otter-blocks-sortable-handle" tabIndex="0">
 			<span></span>
 		</div>
 	);
@@ -46,13 +46,13 @@ export const SortableItem = ({
 	return (
 		<div
 			className={ classnames(
-				'wp-block-themeisle-blocks-posts-grid-builder-item-area',
-				`wp-block-themeisle-blocks-posts-grid-builder-item-area-${ value }`
+				'otter-blocks-sortable-item-area',
+				`otter-blocks-sortable-item-area-${ value }`
 			) }
 		>
 			<div
 				className={ classnames(
-					'wp-block-themeisle-blocks-posts-grid-builder-item',
+					'otter-blocks-sortable-item',
 					{
 						'hidden': hidden
 					}
@@ -60,7 +60,7 @@ export const SortableItem = ({
 			>
 				<DragHandle />
 
-				<div className="wp-block-themeisle-blocks-posts-grid-builder-label">
+				<div className="otter-blocks-sortable-label">
 					{ label }
 				</div>
 
@@ -68,7 +68,7 @@ export const SortableItem = ({
 					icon={ icon }
 					label={ message }
 					showTooltip={ true }
-					className="wp-block-themeisle-blocks-posts-grid-builder-button"
+					className="otter-blocks-sortable-button"
 					onClick={ () =>	toggleFields( value ) }
 				/>
 			</div>

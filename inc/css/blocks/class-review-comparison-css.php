@@ -36,7 +36,7 @@ class Review_Comparison_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-review-comparison__buttons a',
+				'selector'   => ' .otter-review-comparison__buttons a',
 				'properties' => array(
 					array(
 						'property' => 'color',

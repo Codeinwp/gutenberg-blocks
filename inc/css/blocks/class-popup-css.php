@@ -36,7 +36,7 @@ class Popup_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-popup__modal_content',
+				'selector'   => ' .otter-popup__modal_content',
 				'properties' => array(
 					array(
 						'property' => 'min-width',
@@ -53,7 +53,7 @@ class Popup_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-popup__modal_header button',
+				'selector'   => ' .otter-popup__modal_header button',
 				'properties' => array(
 					array(
 						'property' => 'color',
@@ -65,7 +65,7 @@ class Popup_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-popup__modal_wrap_overlay',
+				'selector'   => ' .otter-popup__modal_wrap_overlay',
 				'properties' => array(
 					array(
 						'property' => 'background',

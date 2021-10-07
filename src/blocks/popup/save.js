@@ -31,20 +31,20 @@ const Save = ({
 			data-outside={ attributes.outsideClose ? attributes.outsideClose : '' }
 			data-anchorclose={ attributes.anchorClose ? attributes.closeAnchor : '' }
 		>
-			<div className="wp-block-themeisle-blocks-popup__modal_wrap">
+			<div className="otter-popup__modal_wrap">
 				<div
 					role="presentation"
-					className="wp-block-themeisle-blocks-popup__modal_wrap_overlay"
+					className="otter-popup__modal_wrap_overlay"
 				/>
 
-				<div className="wp-block-themeisle-blocks-popup__modal_content">
+				<div className="otter-popup__modal_content">
 					{ attributes.showClose && (
-						<div className="wp-block-themeisle-blocks-popup__modal_header">
+						<div className="otter-popup__modal_header">
 							<Button icon={ closeSmall } />
 						</div>
 					) }
 
-					<div className="wp-block-themeisle-blocks-popup__modal_body">
+					<div className="otter-popup__modal_body">
 						<InnerBlocks.Content />
 					</div>
 				</div>

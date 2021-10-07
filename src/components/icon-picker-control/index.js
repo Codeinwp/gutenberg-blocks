@@ -157,10 +157,10 @@ const IconPickerControl = ({
 	return (
 		<BaseControl
 			id={ id }
-			className="wp-block-themeisle-blocks-icon-picker-control"
+			className="otter-icon-picker-control"
 		>
 			<Dropdown
-				contentClassName="wp-block-themeisle-blocks-icon-picker-popover"
+				contentClassName="otter-icon-picker-popover"
 				position="bottom center"
 				renderToggle={ ({ isOpen, onToggle }) => (
 					<Fragment>
@@ -179,7 +179,7 @@ const IconPickerControl = ({
 						>
 							<Button
 								isLarge
-								className="wp-block-themeisle-blocks-icon-picker-button"
+								className="otter-icon-picker-button"
 								onClick={ onToggle }
 								aria-expanded={ isOpen }
 							>

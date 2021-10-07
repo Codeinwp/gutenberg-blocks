@@ -36,7 +36,7 @@ class Countdown_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area.is-main-component',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area.is-main-component',
 				'properties' => array(
 					array(
 						'property' => 'background-color',
@@ -91,7 +91,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( min-width: 961px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area.is-main-component',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area.is-main-component',
 				'properties' => array(
 					array(
 						'property' => 'width',
@@ -110,7 +110,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( min-width: 600px ) and ( max-width: 960px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area.is-main-component',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area.is-main-component',
 				'properties' => array(
 					array(
 						'property' => 'width',
@@ -129,7 +129,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( max-width: 600px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area.is-main-component',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area.is-main-component',
 				'properties' => array(
 					array(
 						'property' => 'width',
@@ -148,7 +148,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( min-width: 961px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area',
 				'properties' => array(
 					array(
 						'property' => 'height',
@@ -162,7 +162,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( min-width: 600px ) and ( max-width: 960px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area',
 				'properties' => array(
 					array(
 						'property' => 'height',
@@ -176,7 +176,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( max-width: 600px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area',
 				'properties' => array(
 					array(
 						'property' => 'height',
@@ -190,7 +190,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( min-width: 961px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display',
 				'properties' => array(
 					array(
 						'property' => 'gap',
@@ -204,7 +204,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( min-width: 600px ) and ( max-width: 960px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display',
 				'properties' => array(
 					array(
 						'property' => 'gap',
@@ -218,7 +218,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( max-width: 600px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display',
 				'properties' => array(
 					array(
 						'property' => 'gap',
@@ -231,7 +231,7 @@ class Countdown_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area .wp-block-themeisle-blocks-countdown__display-area__value',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area .otter-countdown__value',
 				'properties' => array(
 					array(
 						'property' => 'color',
@@ -244,7 +244,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( min-width: 961px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area .wp-block-themeisle-blocks-countdown__display-area__value',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area .otter-countdown__value',
 				'properties' => array(
 					array(
 						'property' => 'font-size',
@@ -258,7 +258,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( min-width: 600px ) and ( max-width: 960px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area .wp-block-themeisle-blocks-countdown__display-area__value',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area .otter-countdown__value',
 				'properties' => array(
 					array(
 						'property' => 'font-size',
@@ -272,7 +272,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( max-width: 600px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area .wp-block-themeisle-blocks-countdown__display-area__value',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area .otter-countdown__value',
 				'properties' => array(
 					array(
 						'property' => 'font-size',
@@ -285,7 +285,7 @@ class Countdown_CSS extends Base_CSS {
 
 		$css->add_item(
 			array(
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area .wp-block-themeisle-blocks-countdown__display-area__label',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area .otter-countdown__label',
 				'properties' => array(
 					array(
 						'property' => 'color',
@@ -298,7 +298,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( min-width: 961px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area .wp-block-themeisle-blocks-countdown__display-area__label',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area .otter-countdown__label',
 				'properties' => array(
 					array(
 						'property' => 'font-size',
@@ -312,7 +312,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( min-width: 600px ) and ( max-width: 960px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area .wp-block-themeisle-blocks-countdown__display-area__label',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area .otter-countdown__label',
 				'properties' => array(
 					array(
 						'property' => 'font-size',
@@ -326,7 +326,7 @@ class Countdown_CSS extends Base_CSS {
 		$css->add_item(
 			array(
 				'query'      => '@media ( max-width: 600px )',
-				'selector'   => ' .wp-block-themeisle-blocks-countdown__container .wp-block-themeisle-blocks-countdown__display .wp-block-themeisle-blocks-countdown__display-area .wp-block-themeisle-blocks-countdown__display-area__label',
+				'selector'   => ' .otter-countdown__container .otter-countdown__display .otter-countdown__display-area .otter-countdown__label',
 				'properties' => array(
 					array(
 						'property' => 'font-size',

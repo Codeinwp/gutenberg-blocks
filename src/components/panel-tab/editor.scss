@@ -1,12 +1,12 @@
-.wp-block-themeisle-blocks-panel-tab {
+.otter-panel-tab {
 	z-index: 999999;
 
-	.wp-block-themeisle-blocks-panel-tab__header {
+	.otter-panel-tab__header {
 		display: flex;
 		background: #ffffff;
 		border: 1px solid #d5dadf;
 
-		.wp-block-themeisle-blocks-panel-tab__header__label {
+		.otter-panel-tab__header__label {
 			cursor: default;
 			flex-basis: 60%;
 			display: flex;
@@ -36,7 +36,7 @@
 		}
 	}
 
-	.wp-block-themeisle-blocks-panel-tab__content {
+	.otter-panel-tab__content {
 		background: #ffffff;
 		border: 1px solid #d5dadf;
 		border-top: none;

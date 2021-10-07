@@ -1,9 +1,9 @@
-.wp-block-themeisle-blocks-sizing-control {
+.otter-sizing-control {
 	.components-base-control__label {
 		margin-bottom: 4px;
 	}
 
-	.wp-block-themeisle-blocks-sizing-control-wrapper {
+	.otter-sizing-control-wrapper {
 		display: grid;
 		grid-template-columns: 25% 25% 25% 25%;
 		padding: 6px 0;
@@ -12,8 +12,8 @@
 			grid-template-columns: 20% 20% 20% 20% 20%;
 		}
 
-		.wp-block-themeisle-blocks-sizing-control-item {
-			.wp-block-themeisle-blocks-sizing-control-item-input {
+		.otter-sizing-control-item {
+			.otter-sizing-control-item-input {
 				width: 100%;
 				min-height: 30px;
 				border-radius: 0;
@@ -30,7 +30,7 @@
 				}
 			}
 
-			.wp-block-themeisle-blocks-sizing-control-item-label {
+			.otter-sizing-control-item-label {
 				display: block;
 				text-align: center;
 				font-size: 9px;
@@ -39,13 +39,13 @@
 			}
 
 			&:first-child {
-				.wp-block-themeisle-blocks-sizing-control-item-input {
+				.otter-sizing-control-item-input {
 					border-radius: 5px 0 0 5px;
 				}
 			}
 
 			&:last-child {
-				.wp-block-themeisle-blocks-sizing-control-item-input {
+				.otter-sizing-control-item-input {
 					border-radius: 0 5px 5px 0;
 				}
 			}
@@ -53,7 +53,7 @@
 			&.toggle-linking {
 				display: flex;
 
-				.wp-block-themeisle-blocks-sizing-control-item-input {
+				.otter-sizing-control-item-input {
 					height: 30px;
 					border: 1px solid #8d96a0;
 					width: 100%;
@@ -67,7 +67,7 @@
 				}
 
 				&.is-linked {
-					.wp-block-themeisle-blocks-sizing-control-item-input {
+					.otter-sizing-control-item-input {
 						background: #a4afb7;
 						color: #fff;
 

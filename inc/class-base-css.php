@@ -333,7 +333,11 @@ class Base_CSS {
 				}
 			}
 
-			$style .= apply_filters( 'themeisle_gutenberg_blocks_css', $block );
+			$custom_css = apply_filters( 'themeisle_gutenberg_blocks_css', $block );
+
+			if ( is_string( $custom_css ) ) {
+				$style .= $custom_css;
+			}
 
 			if ( isset( $block['innerBlocks'] ) && ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
 				$style .= $this->cycle_through_static_blocks( $block['innerBlocks'] );

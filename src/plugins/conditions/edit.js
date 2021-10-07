@@ -269,9 +269,9 @@ const Edit = ({
 
 	const Separator = ({ label }) => {
 		return (
-			<div className="wp-block-themeisle-blocks-conditions__operator-wrapper">
-				<div className="wp-block-themeisle-blocks-conditions__operator-line"></div>
-				<div className="wp-block-themeisle-blocks-conditions__operator-word">
+			<div className="otter-blocks-conditions__operator-wrapper">
+				<div className="otter-blocks-conditions__operator-line"></div>
+				<div className="otter-blocks-conditions__operator-word">
 					<span>{ label }</span>
 				</div>
 			</div>
@@ -337,13 +337,13 @@ const Edit = ({
 										<BaseControl
 											label={ __( 'Condition', 'otter-blocks' ) }
 											help={ getConditions().find( condition => condition.value === ( i.type || 'none' ) ).help }
-											id={ `wp-block-themeisle-blocks-conditions-${ index }-${ n }` }
+											id={ `otter-blocks-conditions-${ index }-${ n }` }
 										>
 											<select
 												value={ i.type || '' }
 												onChange={ e => changeCondition( e.target.value, index, n ) }
 												className="components-select-control__input"
-												id={ `wp-block-themeisle-blocks-conditions-${ index }-${ n }` }
+												id={ `otter-blocks-conditions-${ index }-${ n }` }
 											>
 												<option value="none">{ __( 'Select a condition', 'otter-blocks' ) }</option>
 
@@ -441,14 +441,14 @@ const Edit = ({
 											<Fragment>
 												<DateRange
 													label={ __( 'Start Date', 'otter-blocks' ) }
-													id={ `wp-block-themeisle-blocks-conditions-date-start${ index }-${ n }` }
+													id={ `otter-blocks-conditions-date-start${ index }-${ n }` }
 													value={ i.start_date }
 													onChange={ e => changeValue( e, index, n, 'start_date' ) }
 												/>
 
 												<DateRange
 													label={ __( 'End Date (Optional)', 'otter-blocks' ) }
-													id={ `wp-block-themeisle-blocks-conditions-date-end${ index }-${ n }` }
+													id={ `otter-blocks-conditions-date-end${ index }-${ n }` }
 													value={ i.end_date }
 													onChange={ e => changeValue( e, index, n, 'end_date' ) }
 												/>
@@ -475,7 +475,7 @@ const Edit = ({
 												<BaseControl
 													label={ __( 'Start Time', 'otter-blocks' ) }
 												>
-													<div className="wp-block-themeisle-blocks-conditions">
+													<div className="otter-blocks-conditions">
 														<input
 															aria-label={ __( 'Hours', 'otter-blocks' ) }
 															class="components-datetime__time-field-hours-input"
@@ -542,7 +542,7 @@ const Edit = ({
 												<BaseControl
 													label={ __( 'End Time', 'otter-blocks' ) }
 												>
-													<div className="wp-block-themeisle-blocks-conditions">
+													<div className="otter-blocks-conditions">
 														<input
 															aria-label={ __( 'Hours', 'otter-blocks' ) }
 															class="components-datetime__time-field-hours-input"
@@ -629,7 +629,7 @@ const Edit = ({
 										<Button
 											isLarge
 											isDestructive
-											className="wp-block-themeisle-blocks-conditions__add"
+											className="otter-blocks-conditions__add"
 											onClick={ () => removeCondition( index, n ) }
 										>
 											{ __( 'Delete Condition', 'otter-blocks' ) }
@@ -644,7 +644,7 @@ const Edit = ({
 								<Button
 									isSecondary
 									isLarge
-									className="wp-block-themeisle-blocks-conditions__add"
+									className="otter-blocks-conditions__add"
 									onClick={ () => addNewCondition( index ) }
 								>
 									{ __( 'Add a New Condition', 'otter-blocks' ) }
@@ -661,7 +661,7 @@ const Edit = ({
 				<Button
 					isSecondary
 					isLarge
-					className="wp-block-themeisle-blocks-conditions__add"
+					className="otter-blocks-conditions__add"
 					onClick={ addGroup }
 				>
 					{ __( 'Add Rule Group', 'otter-blocks' ) }

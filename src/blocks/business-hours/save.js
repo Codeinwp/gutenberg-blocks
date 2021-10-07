@@ -15,15 +15,15 @@ const Save = ({
 			className={ className }
 			id={ attributes.id }
 		>
-			<div className="wp-block-themeisle-blocks-business-hours__container">
-				<div className="wp-block-themeisle-blocks-business-hours__container__title">
+			<div className="otter-business-hour__container">
+				<div className="otter-business-hour__title">
 					<RichText.Content
 						value={ attributes.title }
 						tagName="span"
 					/>
 				</div>
 
-				<div className="wp-block-themeisle-blocks-business-hours__container__content">
+				<div className="otter-business-hour__content">
 					<InnerBlocks.Content />
 				</div>
 			</div>

@@ -4,7 +4,7 @@
 import domReady from '@wordpress/dom-ready';
 
 domReady( () => {
-	const galleries = document.getElementsByClassName( 'wp-block-themeisle-blocks-masonry' );
+	const galleries = document.getElementsByClassName( 'otter-masonry' );
 
 	Array.from( galleries ).forEach( gallery => {
 		const container = gallery.querySelector( '.wp-block-gallery' );

@@ -40,21 +40,21 @@ const StyleSwitcherControl = ({
 			id={ id }
 			label={ label }
 		>
-			<div className="wp-block-themeisle-blocks-style-switcher">
+			<div className="otter-style-switcher">
 				{ options.map( option => {
 					return (
 						<Button
 							className={ classnames(
-								'wp-block-themeisle-blocks-style-switcher-item',
+								'otter-style-switcher-item',
 								{ 'is-active': option.value === value }
 							) }
 							tabIndex="0"
 							onClick={ () => onChangeValue( option.value ) }
 						>
-							<div className="wp-block-themeisle-blocks-style-switcher-item-preview">
+							<div className="otter-style-switcher-item-preview">
 								<img src={ option.image } />
 							</div>
-							<div className="wp-block-themeisle-blocks-style-switcher-item-label">
+							<div className="otter-style-switcher-item-label">
 								{ option.label }
 							</div>
 						</Button>
@@ -79,7 +79,7 @@ export const StyleSwitcherBlockControl = ({
 		<BlockControls>
 			<Toolbar>
 				<Dropdown
-					contentClassName="wp-themesiel-blocks-block-styles-popover-content"
+					contentClassName="otter-styles-popover-content"
 					position="bottom center"
 					renderToggle={ ({ isOpen, onToggle }) => (
 						<Button
@@ -96,21 +96,21 @@ export const StyleSwitcherBlockControl = ({
 					) }
 					renderContent={ () => (
 						<Fragment>
-							<div className="wp-block-themeisle-blocks-style-switcher">
+							<div className="otter-style-switcher">
 								{ options.map( option => {
 									return (
 										<Button
 											className={ classnames(
-												'wp-block-themeisle-blocks-style-switcher-item',
+												'otter-style-switcher-item',
 												{ 'is-active': option.value === value }
 											) }
 											tabIndex="0"
 											onClick={ () => onChangeValue( option.value ) }
 										>
-											<div className="wp-block-themeisle-blocks-style-switcher-item-preview">
+											<div className="otter-style-switcher-item-preview">
 												<img src={ option.image } />
 											</div>
-											<div className="wp-block-themeisle-blocks-style-switcher-item-label">
+											<div className="otter-style-switcher-item-label">
 												{ option.label }
 											</div>
 										</Button>

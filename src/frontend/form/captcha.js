@@ -33,7 +33,7 @@ const renderCapthcaOn = ( form ) => {
 	const id = form.id;
 
 	const captchaNode = document.createElement( 'div' );
-	const container = form.querySelector( '.wp-block-themeisle-blocks-form__container' );
+	const container = form.querySelector( '.otter-form__container' );
 	container?.insertBefore( captchaNode, container.lastChild );
 
 

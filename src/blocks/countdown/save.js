@@ -22,14 +22,14 @@ const DisplayTimeComponent = ({
 			key={ key }
 			name={ tag }
 			className={ classnames(
-				'wp-block-themeisle-blocks-countdown__display-area',
+				'otter-countdown__display-area',
 				{
 					'is-main-component': 'separator' !==  tag
 				}
 			) }
 		>
-			<div className="wp-block-themeisle-blocks-countdown__display-area__value">{ value }</div>
-			<div className="wp-block-themeisle-blocks-countdown__display-area__label">{ name }</div>
+			<div className="otter-countdown__value">{ value }</div>
+			<div className="otter-countdown__label">{ name }</div>
 		</div>
 	);
 };
@@ -43,8 +43,8 @@ const DisplayTime = ({
 	const renderElem = elemToDisplay?.map( ( elem, key ) => <DisplayTimeComponent { ...elem } key={ key } /> );
 
 	return time !== undefined ? (
-		<div className="wp-block-themeisle-blocks-countdown__container">
-			<div className="wp-block-themeisle-blocks-countdown__display">
+		<div className="otter-countdown__container">
+			<div className="otter-countdown__display">
 				{ renderElem }
 			</div>
 		</div>

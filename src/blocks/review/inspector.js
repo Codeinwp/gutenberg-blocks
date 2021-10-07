@@ -159,7 +159,7 @@ const Inspector = ({
 						<Notice
 							status="warning"
 							isDismissible={ false }
-							className="wp-block-themeisle-blocks-anchor-control-notice"
+							className="otter-html-anchor-control-notice"
 						>
 							{__( 'WooCommerce product synchronization is active. Some options might be disabled.', 'otter-blocks' ) }
 						</Notice>
@@ -341,7 +341,7 @@ const Inspector = ({
 						<Notice
 							status="warning"
 							isDismissible={ false }
-							className="wp-block-themeisle-blocks-anchor-control-notice"
+							className="otter-html-anchor-control-notice"
 						>
 							{__( 'WooCommerce product synchronization is active. Some options might be disabled.', 'otter-blocks' ) }
 						</Notice>

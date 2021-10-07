@@ -1,9 +1,22 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { __ } from '@wordpress/i18n';
 
+import api from '@wordpress/api';
+
 import { InspectorControls } from '@wordpress/block-editor';
+
+import {
+	Button,
+	PanelBody,
+	SelectControl,
+	Spinner,
+	TextControl,
+	ToggleControl
+} from '@wordpress/components';
+
+import { dispatch } from '@wordpress/data';
 
 import {
 	Fragment,
@@ -11,15 +24,10 @@ import {
 	useEffect
 } from '@wordpress/element';
 
-import { TextControl, PanelBody, Button, ToggleControl, Spinner, SelectControl } from '@wordpress/components';
-
-import {
-	dispatch
-} from '@wordpress/data';
-
-import { getListIdOptionFrom } from './integrations';
-
-import api from '@wordpress/api';
+/**
+ * Internal dependencies.
+ */
+import { getListIdOptionFrom } from './integrations.js';
 
 const Inspector = ({
 	attributes,
@@ -30,7 +38,6 @@ const Inspector = ({
 	const [ savedEmail, setSavedEmail ] = useState( '' );
 	const [ email, setEmail ] = useState( '' );
 	const [ isEmailLoaded, setEmailLoading ] = useState( true );
-
 	const [ listIDOptions, setListIDOptions ] = useState([ { label: __( 'None', 'otter-blocks' ), value: '' } ]);
 	const [ fetchListIdStatus, setFetchListIdStatus ] = useState( 'loading' );
 
@@ -142,7 +149,6 @@ const Inspector = ({
 		<InspectorControls>
 			<PanelBody
 				title={ __( 'Settings', 'otter-blocks' ) }
-				initialOpen={ true }
 			>
 				<TextControl
 					label={ __( 'Email Subject', 'otter-blocks' ) }
@@ -191,11 +197,11 @@ const Inspector = ({
 				}
 
 	   		</PanelBody>
+
 			<PanelBody
 				title={ __( 'Integration', 'otter-blocks' )}
 				initialOpen={ false }
 			>
-
 				{
 					__( 'Add your client email to a Digital Marketing provider.', 'otter-blocks' )
 				}
@@ -214,7 +220,6 @@ const Inspector = ({
 						setAttributes({ provider, apiKey: '', listId: '' });
 					} }
 				/>
-
 
 				{
 					attributes.provider && (

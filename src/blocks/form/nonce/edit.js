@@ -1,16 +1,15 @@
-import {
-	useSelect
-} from '@wordpress/data';
+/**
+ * WordPress dependencies
+ */
+import { useSelect } from '@wordpress/data';
 
-import {
-	useEffect
-} from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
-const Edit = ({ setAttributes, clientId }) => {
-
-	const {
-		parent
-	} = useSelect( select => {
+const Edit = ({
+	setAttributes,
+	clientId
+}) => {
+	const { parent } = useSelect( select => {
 		const {
 			getBlock,
 			getBlockRootClientId

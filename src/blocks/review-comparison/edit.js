@@ -77,7 +77,7 @@ const Edit = ({
 	const [ isEditing, setEditing ] = useState( true );
 
 	const styles = css`
-		.wp-block-themeisle-blocks-review-comparison__buttons span {
+		.otter-review-comparison__buttons span {
 			background: ${ attributes.buttonColor } !important;
 			color: ${ attributes.buttonText } !important;
 		}
@@ -113,9 +113,9 @@ const Edit = ({
 
 			features.forEach( feature => {
 				featureRatings.push(
-					<div className="wp-block-themeisle-blocks-review-comparison__rating_container">
-						<div className="wp-block-themeisle-blocks-review-comparison__rating_title">{ feature.title }</div>
-						<div className="wp-block-themeisle-blocks-review-comparison__ratings">{ getStars( feature.rating / 2 ) }</div>
+					<div className="otter-review-comparison__rating_container">
+						<div className="otter-review-comparison__rating_title">{ feature.title }</div>
+						<div className="otter-review-comparison__ratings">{ getStars( feature.rating / 2 ) }</div>
 					</div>
 				);
 			});
@@ -131,10 +131,10 @@ const Edit = ({
 			tableImages.push( <td>{ review.attrs.image && <img src={ review.attrs.image.url } /> }</td> );
 			tableName.push( <td>{ review.attrs.title || __( 'Untitled review', 'otter-blocks' ) }</td> );
 			tablePrice.push( <td>{ review.attrs.discounted ? <Fragment><del>{ currency + review.attrs.price }</del> { currency + review.attrs.discounted }</Fragment> : ( review.attrs.price ? ( currency + review.attrs.price ) : '-' ) }</td> );
-			tableRating.push( <td><div className="wp-block-themeisle-blocks-review-comparison__ratings">{ getStars( overallRatings ) }</div></td> );
+			tableRating.push( <td><div className="otter-review-comparison__ratings">{ getStars( overallRatings ) }</div></td> );
 			tableDescription.push( <td dangerouslySetInnerHTML={ { __html: review.attrs.description } }></td> );
 			tableStatistics.push( <td>{ featureRatings }</td> );
-			tableLinks.push( <td><div className="wp-block-themeisle-blocks-review-comparison__buttons wp-block-button">{ buttonLinks }</div></td> );
+			tableLinks.push( <td><div className="otter-review-comparison__buttons wp-block-button">{ buttonLinks }</div></td> );
 		});
 	}, [ attributes.reviews, data ]);
 

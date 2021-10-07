@@ -20,9 +20,9 @@ const PanelTab = ({
 	const [ isOpen, setOpen ] = useState( false );
 
 	return (
-		<div className="wp-block-themeisle-blocks-panel-tab">
-			<div className="wp-block-themeisle-blocks-panel-tab__header">
-				<div className="wp-block-themeisle-blocks-panel-tab__header__label">{ label }</div>
+		<div className="otter-panel-tab">
+			<div className="otter-panel-tab__header">
+				<div className="otter-panel-tab__header__label">{ label }</div>
 
 				<Button
 					icon={ isOpen ? 'arrow-up-alt2' : 'arrow-down-alt2' }
@@ -39,7 +39,7 @@ const PanelTab = ({
 				/>
 			</div>
 
-			{ isOpen && <div className="wp-block-themeisle-blocks-panel-tab__content">{ children }</div> }
+			{ isOpen && <div className="otter-panel-tab__content">{ children }</div> }
 		</div>
 	);
 };

@@ -57,13 +57,13 @@ const Edit = ({
 	};
 
 	const contentCSS = css`
-		.wp-block-themeisle-blocks-business-hours__container .wp-block-themeisle-blocks-business-hours__container__content .wp-block-themeisle-blocks-business-hours-item {
+		.otter-business-hour__container .otter-business-hour__content .wp-block-themeisle-blocks-business-hours-item {
 			font-size: ${ attributes.itemsFontSize }px;
 			padding-top: ${ attributes.gap }px;
 			padding-bottom: ${ attributes.gap }px;
 		}
 
-		.wp-block-themeisle-blocks-business-hours__container .wp-block-themeisle-blocks-business-hours__container__content .block-editor-block-list__block:last-child .wp-block-themeisle-blocks-business-hours-item {
+		.otter-business-hour__container .otter-business-hour__content .block-editor-block-list__block:last-child .wp-block-themeisle-blocks-business-hours-item {
 			border-radius: 0 0 ${ attributes.borderRadius || 0 }px ${ attributes.borderRadius || 0 }px;
 		}
 	`;
@@ -86,10 +86,10 @@ const Edit = ({
 				style={ style.container }
 				css={ contentCSS }
 			>
-				<div className="wp-block-themeisle-blocks-business-hours__container">
+				<div className="otter-business-hour__container">
 					<div
 						style={ style.title }
-						className="wp-block-themeisle-blocks-business-hours__container__title"
+						className="otter-business-hour__title"
 					>
 						<RichText
 							placeholder={ __( 'Opening Hours', 'otter-blocks' ) }
@@ -101,7 +101,7 @@ const Edit = ({
 						/>
 					</div>
 
-					<div className="wp-block-themeisle-blocks-business-hours__container__content">
+					<div className="otter-business-hour__content">
 						<InnerBlocks
 							allowedBlocks={ [
 								'core/separator',
