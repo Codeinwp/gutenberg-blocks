@@ -10,6 +10,7 @@ import {
 
 import {
 	Disabled,
+	ExternalLink,
 	PanelBody,
 	RangeControl,
 	SelectControl,
@@ -158,14 +159,18 @@ const Inspector = ({
 				/>
 
 				{ ( Boolean( window.themeisleGutenberg.hasNeve ) && ! Boolean( window.themeisleGutenberg.hasNevePro ) ) && (
-					<Disabled>
-						<ProFeatures
-							attributes={ attributes }
-							setAttributes={ setAttributes }
-						/>
+					<Fragment>
+						<Disabled>
+							<ProFeatures
+								attributes={ attributes }
+								setAttributes={ setAttributes }
+							/>
+						</Disabled>
 
-						<p>{ __( 'You need to have Neve Pro to activate Pro features.', 'otter-blocks' )  }</p>
-					</Disabled>
+						<ExternalLink href="https://themeisle.com/themes/neve/pricing">
+							{ __( 'Extend Popup block functionalities with more options in Neve Pro.', 'otter-blocks' )  }
+						</ExternalLink>
+					</Fragment>
 				) }
 
 				{ Boolean( window.themeisleGutenberg.hasNevePro ) && (
