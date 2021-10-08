@@ -72,7 +72,7 @@ const Edit = ({
 					title={ __( 'Sync with WooCommerce', 'otter-blocks' ) }
 					initialOpen={ false }
 				>
-					<p>{ __( 'By selecting a product, the current review information will the synced with the selected WooCommerce product.', 'otter-blocks' ) }</p>
+					<p>{ __( 'By selecting a product, the current review information will sync with the selected WooCommerce product.', 'otter-blocks' ) }</p>
 
 					<SelectProducts
 						label={ __( 'Select Product', 'otter-blocks' ) }
