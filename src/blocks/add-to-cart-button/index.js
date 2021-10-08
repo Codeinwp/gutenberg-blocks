@@ -15,7 +15,7 @@ import { store as icon } from '@wordpress/icons';
 import attributes from './attributes.js';
 import edit from './edit.js';
 
-if ( Boolean( window.themeisleGutenberg.hasNevePro ) && Boolean( window.themeisleGutenberg.hasWooCommerce ) ) {
+if ( Boolean( window.themeisleGutenberg.hasNeveSupport.isBoosterActive ) && Boolean( window.themeisleGutenberg.hasWooCommerce ) ) {
 	registerBlockType( 'themeisle-blocks/add-to-cart-button', {
 		title: __( 'Add to Cart Button', 'otter-blocks' ),
 		description: __( 'Display an Add to Cart button for your WooCommerce products.', 'otter-blocks' ),

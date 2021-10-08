@@ -16,7 +16,7 @@ import { faIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
 
-if ( Boolean( window.themeisleGutenberg.hasNevePro ) ) {
+if ( Boolean( window.themeisleGutenberg.hasNeveSupport.isBoosterActive ) ) {
 	registerBlockType( 'themeisle-blocks/review-comparison', {
 		title: __( 'Review Comparison Table', 'otter-blocks' ),
 		description: __( 'A way to compare different product reviews made on the website.', 'otter-blocks' ),

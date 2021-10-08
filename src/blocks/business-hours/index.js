@@ -17,7 +17,7 @@ import attributes from './attributes.js';
 import edit from './edit.js';
 import save from './save.js';
 
-if ( Boolean( window.themeisleGutenberg.hasNevePro ) ) {
+if ( Boolean( window.themeisleGutenberg.hasNeveSupport.isBoosterActive ) ) {
 	registerBlockType( 'themeisle-blocks/business-hours', {
 		title: __( 'Business Hours', 'otter-blocks' ),
 		description: __( 'Display your business schedule on your website.', 'otter-blocks' ),

@@ -459,16 +459,18 @@ const Inspector = ({
 				/>
 			</PanelColorSettings>
 
-			<PanelBody
-				title={ __( 'More Features', 'otter-blocks' ) }
-				initialOpen={ false }
-			>
-				<p>{ __( 'Build comparison tables for reviews, synchronize review data with WooCommerce products and more with Neve Pro. ', 'otter-blocks' )  }</p>
+			{ ( Boolean( window.themeisleGutenberg.hasNeveSupport.hasNeve ) && ! Boolean( window.themeisleGutenberg.hasNeveSupport.hasNevePro ) ) && (
+				<PanelBody
+					title={ __( 'More Features', 'otter-blocks' ) }
+					initialOpen={ false }
+				>
+					<p>{ __( 'Build comparison tables for reviews, synchronize review data with WooCommerce products and more with Neve Pro. ', 'otter-blocks' )  }</p>
 
-				<ExternalLink href="https://themeisle.com/themes/neve/pricing">
-					{ __( 'Get Neve Pro. ', 'otter-blocks' )  }
-				</ExternalLink>
-			</PanelBody>
+					<ExternalLink href="https://themeisle.com/themes/neve/pricing">
+						{ __( 'Get Neve Pro. ', 'otter-blocks' )  }
+					</ExternalLink>
+				</PanelBody>
+			) }
 		</InspectorControls>
 	);
 };

@@ -257,11 +257,12 @@ class Main {
 				'isWPVIP'        => function_exists( 'is_wpcom_vip' ),
 				'canTrack'       => 'yes' === get_option( 'otter_blocks_logger_flag', false ) ? true : false,
 				'userRoles'      => $wp_roles->roles,
-				'hasNeve'        => defined( 'NEVE_VERSION' ),
-				'hasNevePro'     => 'valid' === apply_filters( 'product_neve_license_status', false ) && true === apply_filters( 'neve_has_block_editor_module', false ),
 				'hasWooCommerce' => class_exists( 'WooCommerce' ),
 				'hasNeveSupport' => array(
-					'wooComparison' => class_exists( '\Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Options' ) ? \Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Options::is_module_activated() : false,
+					'hasNeve'         => defined( 'NEVE_VERSION' ),
+					'hasNevePro'      => defined( 'NEVE_VERSION' ) && 'valid' === apply_filters( 'product_neve_license_status', false ),
+					'isBoosterActive' => 'valid' === apply_filters( 'product_neve_license_status', false ) && true === apply_filters( 'neve_has_block_editor_module', false ),
+					'wooComparison'   => class_exists( '\Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Options' ) ? \Neve_Pro\Modules\Woocommerce_Booster\Comparison_Table\Options::is_module_activated() : false,
 				),
 			)
 		);

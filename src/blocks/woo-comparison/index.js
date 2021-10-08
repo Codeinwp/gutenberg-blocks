@@ -15,7 +15,7 @@ import { faIcon as icon } from '../../helpers/icons.js';
 import attributes from './attributes.js';
 import edit from './edit.js';
 
-if ( Boolean( window.themeisleGutenberg.hasNevePro ) && Boolean( window.themeisleGutenberg.hasWooCommerce ) && Boolean( window.themeisleGutenberg.hasNeveSupport.wooComparison ) ) {
+if ( Boolean( window.themeisleGutenberg.hasNeveSupport.isBoosterActive ) && Boolean( window.themeisleGutenberg.hasWooCommerce ) && Boolean( window.themeisleGutenberg.hasNeveSupport.wooComparison ) ) {
 	registerBlockType( 'themeisle-blocks/woo-comparison', {
 		title: __( 'WooCommerce Comparison Table', 'otter-blocks' ),
 		description: __( 'A way to compare different WooCommerce products made on the website.', 'otter-blocks' ),

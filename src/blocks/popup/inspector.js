@@ -74,7 +74,7 @@ const Inspector = ({
 		}
 	];
 
-	if ( Boolean( window.themeisleGutenberg.hasNeve ) ) {
+	if ( Boolean( window.themeisleGutenberg.hasNeveSupport.hasNeve ) ) {
 		triggerOptions = [
 			{
 				label: __( 'On Load', 'otter-blocks' ),
@@ -83,17 +83,17 @@ const Inspector = ({
 			{
 				label: __( 'On Anchor Click', 'otter-blocks' ),
 				value: 'onClick',
-				disabled: ! Boolean( window.themeisleGutenberg.hasNevePro )
+				disabled: ! Boolean( window.themeisleGutenberg.hasNeveSupport.hasNevePro )
 			},
 			{
 				label: __( 'On Scroll', 'otter-blocks' ),
 				value: 'onScroll',
-				disabled: ! Boolean( window.themeisleGutenberg.hasNevePro )
+				disabled: ! Boolean( window.themeisleGutenberg.hasNeveSupport.hasNevePro )
 			},
 			{
 				label: __( 'On Exit', 'otter-blocks' ),
 				value: 'onExit',
-				disabled: ! Boolean( window.themeisleGutenberg.hasNevePro )
+				disabled: ! Boolean( window.themeisleGutenberg.hasNeveSupport.hasNevePro )
 			}
 		];
 	}
@@ -105,7 +105,7 @@ const Inspector = ({
 			>
 				<SelectControl
 					label={ __( 'Open Trigger', 'otter-blocks' ) }
-					help={ ( Boolean( window.themeisleGutenberg.hasNeve ) && ! Boolean( window.themeisleGutenberg.hasNevePro ) ) && __( 'You need to have Neve Pro to activate Pro features.', 'otter-blocks' ) }
+					help={ ( Boolean( window.themeisleGutenberg.hasNeveSupport.hasNeve ) && ! Boolean( window.themeisleGutenberg.hasNeveSupport.hasNevePro ) ) && __( 'You need to have Neve Pro to activate Pro features.', 'otter-blocks' ) }
 					options={ triggerOptions  }
 					value={ attributes.trigger }
 					onChange={ trigger => setAttributes({ trigger }) }
@@ -158,7 +158,7 @@ const Inspector = ({
 					onChange={ () => setAttributes({ outsideClose: ! attributes.outsideClose }) }
 				/>
 
-				{ ( Boolean( window.themeisleGutenberg.hasNeve ) && ! Boolean( window.themeisleGutenberg.hasNevePro ) ) && (
+				{ ( Boolean( window.themeisleGutenberg.hasNeveSupport.hasNeve ) && ! Boolean( window.themeisleGutenberg.hasNeveSupport.hasNevePro ) ) && (
 					<Fragment>
 						<Disabled>
 							<ProFeatures
@@ -173,7 +173,7 @@ const Inspector = ({
 					</Fragment>
 				) }
 
-				{ Boolean( window.themeisleGutenberg.hasNevePro ) && (
+				{ Boolean( window.themeisleGutenberg.hasNeveSupport.isBoosterActive ) && (
 					<ProFeatures
 						attributes={ attributes }
 						setAttributes={ setAttributes }
