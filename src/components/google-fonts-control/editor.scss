@@ -1,4 +1,4 @@
-.wp-block-themeisle-blocks-google-fonts-popover {
+.otter-gfont-popover {
 	&:not(.is-mobile) {
 		&.is-bottom {
 			z-index: 9999999;
@@ -29,12 +29,12 @@
 	}
 }
 
-.wp-block-themeisle-blocks-google-fonts-control {
+.otter-gfont-control {
 	.components-dropdown {
 		display: flex;
 	}
 
-	.wp-block-themeisle-blocks-google-fonts-button {
+	.otter-gfont-button {
 		background: transparent;
 		position: relative;
 		width: 100%;
@@ -79,14 +79,14 @@
 		}
 	}
 
-	.wp-block-themeisle-blocks-control-panel-control {
+	.otter-control-panel-control {
 		padding: 0;
 	}
 }
 
 @media ( max-width: 782px ) {
-	.wp-block-themeisle-blocks-google-fonts-control {
-		.wp-block-themeisle-blocks-google-fonts-button {
+	.otter-gfont-control {
+		.otter-gfont-button {
 			padding: 5px 24px 5px 8px;
 	
 			&:after {

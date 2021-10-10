@@ -14,42 +14,36 @@ module.exports = {
 			'./src/plugins/registerPlugin.js',
 			...glob.sync( './src/blocks/**/index.js' )
 		],
-		'leaflet-map': [
-			...glob.sync( './src/frontend/leaflet-map/index.js' )
-		],
-		maps: [
-			...glob.sync( './src/frontend/google-map/index.js' )
-		],
-		slider: [
-			...glob.sync( './src/frontend/slider/index.js' )
-		],
-		'progress-bar': [
-			...glob.sync( './src/frontend/progress-bar/index.js' )
-		],
-		'circle-counter': [
-			...glob.sync( './src/frontend/circle-counter/index.js' )
-		],
-		lottie: [
-			...glob.sync( './src/frontend/lottie/index.js' )
-		],
-		tabs: [
-			...glob.sync( './src/frontend/tabs/index.js' )
-		]
+		'leaflet-map': './src/frontend/leaflet-map/index.js',
+		maps: './src/frontend/google-map/index.js',
+		slider: './src/frontend/slider/index.js',
+		'progress-bar': './src/frontend/progress-bar/index.js',
+		'circle-counter': './src/frontend/circle-counter/index.js',
+		lottie: './src/frontend/lottie/index.js',
+		tabs: './src/frontend/tabs/index.js',
+		masonry: './src/frontend/masonry/index.js',
+		form: './src/frontend/form/index.js',
+		countdown: './src/frontend/countdown/index.js',
+		popup: './src/frontend/popup/index.js'
 	},
 	externals: {
 		'react': 'React',
 		'react-dom': 'ReactDOM',
 		'lodash': 'lodash',
+		'moment': 'moment',
 		'@wordpress/api-fetch': 'wp.apiFetch',
 		'@wordpress/blocks': 'wp.blocks',
 		'@wordpress/block-editor': 'wp.blockEditor',
 		'@wordpress/components': 'wp.components',
 		'@wordpress/compose': 'wp.compose',
 		'@wordpress/data': 'wp.data',
+		'@wordpress/date': 'wp.date',
+		'@wordpress/api': 'wp.api',
 		'@wordpress/dom-ready': 'wp.domReady',
 		'@wordpress/edit-post': 'wp.editPost',
 		'@wordpress/editor': 'wp.editor',
 		'@wordpress/element': 'wp.element',
+		'@wordpress/html-entities': 'wp.htmlEntities',
 		'@wordpress/hooks': 'wp.hooks',
 		'@wordpress/i18n': 'wp.i18n',
 		'@wordpress/keycodes': 'wp.keycodes',
@@ -58,7 +52,8 @@ module.exports = {
 		'@wordpress/primitives': 'wp.primitives',
 		'@wordpress/rich-text': 'wp.richText',
 		'@wordpress/server-side-render': 'wp.serverSideRender',
-		'regenerator-runtime/runtime.js': 'window.regeneratorRuntime'
+		'regenerator-runtime/runtime.js': 'window.regeneratorRuntime',
+		'@woocommerce/block-data': 'wc.wcBlocksData'
 	},
 	output: {
 		path: path.resolve( __dirname, 'build' ),

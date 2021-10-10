@@ -57,7 +57,7 @@ const Edit = ({
 			getBlock,
 			getBlockRootClientId
 		} = select( 'core/block-editor' );
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' ) ? select( 'core/edit-post' ) : false;
 		const block = getBlock( clientId );
 		const adjacentBlockClientId = getAdjacentBlockClientId( clientId );
 		const adjacentBlock = getBlock( adjacentBlockClientId );
@@ -88,7 +88,7 @@ const Edit = ({
 
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
-		return () => unsubscribe();
+		return () => unsubscribe( attributes.id );
 	}, [ attributes.id ]);
 
 	useEffect( () => {

@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import getSymbolFromCurrency from 'currency-symbol-map';
 
 /**
- * WordPress dependencies.
+* WordPress dependencies.
  */
 import {
 	__,
@@ -14,6 +14,11 @@ import {
 } from '@wordpress/i18n';
 
 import { RichText } from '@wordpress/block-editor';
+
+import {
+	Placeholder,
+	Spinner
+} from '@wordpress/components';
 
 import {
 	Fragment,
@@ -37,14 +42,16 @@ const Edit = ({
 	setAttributes,
 	clientId,
 	className,
-	isSelected
+	isSelected,
+	status = 'isInactive',
+	productAttributes = {}
 }) => {
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
-		return () => unsubscribe();
+		return () => unsubscribe( attributes.id );
 	}, [ attributes.id ]);
 
-	const overallRatings = Math.round( attributes.features.reduce( ( accumulator, feature ) =>  accumulator + feature.rating, 0 ) / attributes.features.length );
+	const overallRatings = ( attributes.features.reduce( ( accumulator, feature ) =>  accumulator + feature.rating, 0 ) / attributes.features.length ).toFixed( 1 );
 
 	const stars = [];
 
@@ -53,9 +60,9 @@ const Edit = ({
 			<StarFilled
 				className={ classnames(
 					{
-						'low': 3 >= overallRatings && i < overallRatings,
-						'medium': 3 < overallRatings && 8 > overallRatings && i < overallRatings,
-						'high': 7 < overallRatings && 10 >= overallRatings && i < overallRatings
+						'low': 3 >= Math.round( overallRatings ) && i < Math.round( overallRatings ),
+						'medium': 3 < Math.round( overallRatings ) && 8 > Math.round( overallRatings ) && i < Math.round( overallRatings ),
+						'high': 7 < Math.round( overallRatings ) && 10 >= Math.round( overallRatings ) && i < Math.round( overallRatings )
 					}
 				) }
 			/>
@@ -92,11 +99,44 @@ const Edit = ({
 		setAttributes({ links });
 	};
 
+
+	if ( 'isLoading' === status ) {
+		return (
+			<Fragment>
+				<Inspector
+					attributes={ attributes }
+					setAttributes={ setAttributes }
+					productAttributes={ productAttributes }
+				/>
+
+				<Placeholder><Spinner/></Placeholder>
+			</Fragment>
+		);
+	}
+
+
+	if ( 'object' === typeof status && null !== status && status.isError ) {
+		return (
+			<Fragment>
+				<Inspector
+					attributes={ attributes }
+					setAttributes={ setAttributes }
+					productAttributes={ productAttributes }
+				/>
+
+				<Placeholder
+					instructions={ status.message }
+				/>
+			</Fragment>
+		);
+	}
+
 	return (
 		<Fragment>
 			<Inspector
 				attributes={ attributes }
 				setAttributes={ setAttributes }
+				productAttributes={ productAttributes }
 			/>
 
 			<div
@@ -112,16 +152,31 @@ const Edit = ({
 						borderColor: attributes.primaryColor
 					} }
 				>
-					<RichText
-						placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
-						allowedFormats={ [] }
-						value={ attributes.title }
-						onChange={ title => setAttributes({ title }) }
-						tagName="h3"
-						style={ {
-							color: attributes.textColor
-						} }
-					/>
+					{
+						! productAttributes?.title ? (
+							<RichText
+								placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
+								allowedFormats={ [] }
+								value={ attributes.title }
+								onChange={ title => setAttributes({ title }) }
+								tagName="h3"
+								style={ {
+									color: attributes.textColor
+								} }
+							/>
+						) : (
+							<RichText.Content
+								placeholder={ __( 'Name of your product…', 'otter-blocks' ) }
+								allowedFormats={ [] }
+								value={ productAttributes?.title }
+								tagName="h3"
+								style={ {
+									color: attributes.textColor
+								} }
+							/>
+						)
+					}
+
 
 					<div className="wp-block-themeisle-blocks-review__header_meta">
 						<div className="wp-block-themeisle-blocks-review__header_ratings">
@@ -132,7 +187,7 @@ const Edit = ({
 									color: attributes.textColor
 								} }
 							>
-								{ /** translators: %s Rating score. **/ sprintf( __( '%d out of 10', 'otter-blocks' ), overallRatings || 0 ) }
+								{ /** translators: %s Rating score. **/ sprintf( __( '%f out of 10', 'otter-blocks' ), Math.abs( overallRatings ) || 0 ) }
 							</span>
 						</div>
 
@@ -142,11 +197,11 @@ const Edit = ({
 								color: attributes.textColor
 							} }
 						>
-							{ ( attributes.price && attributes.discounted ) && (
-								<del>{ ( getSymbolFromCurrency( attributes.currency ) ?? '$' ) + '' + attributes.price || 0 }</del>
+							{ ( ( productAttributes?.price && productAttributes?.discounted ) || ( attributes.price && attributes.discounted ) ) && (
+								<del>{ ( getSymbolFromCurrency( productAttributes?.currency || attributes.currency ) ?? '$' ) + '' + ( productAttributes?.price || attributes.price ) || 0 }</del>
 							) }
 
-							{ ( attributes.price || attributes.discounted ) && ( getSymbolFromCurrency( attributes.currency ) ?? '$' ) + '' + ( attributes.discounted ? attributes.discounted : attributes.price ) }
+							{ ( attributes.price || attributes.discounted || productAttributes?.price || productAttributes?.discounted ) && ( getSymbolFromCurrency(  productAttributes?.currency || attributes.currency ) ?? '$' ) + '' + ( ( productAttributes?.discounted || attributes.discounted ) ? ( productAttributes?.discounted || attributes.discounted ) : ( productAttributes?.price || attributes.price ) ) }
 						</span>
 					</div>
 				</div>
@@ -160,18 +215,32 @@ const Edit = ({
 							}
 						) }
 					>
-						{ attributes.image && (
+						{ ( productAttributes?.image ) ? (
+							<img
+								src={ productAttributes?.image?.url }
+								alt={ productAttributes?.image?.alt }
+							/>
+						) : attributes.image && (
 							<img
 								src={ attributes.image.url }
 								alt={ attributes.image.alt }
 							/>
 						) }
 
-						{ ( isSelected || attributes.description ) && (
+						{ ( isSelected || attributes.description ) && ! productAttributes?.description ? (
 							<RichText
 								placeholder={ __( 'Product description or a small review…', 'otter-blocks' ) }
 								value={ attributes.description }
 								onChange={ description => setAttributes({ description }) }
+								tagName="p"
+								style={ {
+									color: attributes.textColor
+								} }
+							/>
+						) : (
+							<RichText.Content
+								placeholder={ __( 'Product description or a small review…', 'otter-blocks' ) }
+								value={ productAttributes?.description }
 								tagName="p"
 								style={ {
 									color: attributes.textColor
@@ -189,9 +258,9 @@ const Edit = ({
 									<StarFilled
 										className={ classnames(
 											{
-												'low': 3 >= feature.rating && i < feature.rating,
-												'medium': 3 < feature.rating && 8 > feature.rating && i < feature.rating,
-												'high': 7 < feature.rating && 10 >= feature.rating && i < feature.rating
+												'low': 3 >= Math.round( feature.rating ) && i < Math.round( feature.rating ),
+												'medium': 3 < Math.round( feature.rating ) && 8 > Math.round( feature.rating ) && i < Math.round( feature.rating ),
+												'high': 7 < Math.round( feature.rating ) && 10 >= Math.round( feature.rating ) && i < Math.round( feature.rating )
 											}
 										) }
 									/>
@@ -219,7 +288,7 @@ const Edit = ({
 												color: attributes.textColor
 											} }
 										>
-											{ feature.rating }/10
+											{ feature.rating.toFixed( 1 ) }/10
 										</span>
 									</div>
 								</div>
@@ -286,7 +355,7 @@ const Edit = ({
 					) }
 				</div>
 
-				{ 0 < attributes.links.length && (
+				{ ( 0 < productAttributes?.links?.length || 0 < attributes.links.length ) && (
 					<div className="wp-block-themeisle-blocks-review__footer">
 						<span
 							className="wp-block-themeisle-blocks-review__footer_label"
@@ -298,10 +367,11 @@ const Edit = ({
 						</span>
 
 						<div className="wp-block-themeisle-blocks-review__footer_buttons">
-							{ attributes.links.map( ( link, index ) => (
+							{ ( productAttributes?.links || attributes.links ).map( ( link, index ) => (
 								<RichText
 									placeholder={ __( 'Button label', 'otter-blocks' ) }
 									value={ link.label }
+									disabled={ 0 < productAttributes?.links }
 									onChange={ label => changeLinks( index, { label }) }
 									tagName="span"
 									style={ {

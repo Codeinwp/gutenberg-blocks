@@ -52,7 +52,7 @@ const Edit = ({
 		isPreviewMobile
 	} = useSelect( select => {
 		const { getBlock } = select( 'core/block-editor' );
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' ) ? select( 'core/edit-post' ) : false;
 		const sectionBlock = getBlock( clientId );
 
 		return {
@@ -74,7 +74,7 @@ const Edit = ({
 
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
-		return () => unsubscribe();
+		return () => unsubscribe( attributes.id );
 	}, [ attributes.id ]);
 
 	const [ dividerViewType, setDividerViewType ] = useState( 'top' );

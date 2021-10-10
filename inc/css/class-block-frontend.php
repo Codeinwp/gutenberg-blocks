@@ -38,6 +38,13 @@ class Block_Frontend extends Base_CSS {
 	private $has_fonts = true;
 
 	/**
+	 * Inline CSS size.
+	 *
+	 * @var int
+	 */
+	private $total_inline_size = 0;
+
+	/**
 	 * Initialize the class
 	 */
 	public function init() {
@@ -46,6 +53,7 @@ class Block_Frontend extends Base_CSS {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_google_fonts' ), 19 );
 		add_action( 'wp_head', array( $this, 'enqueue_google_fonts_backward' ), 19 );
 		add_filter( 'get_the_excerpt', array( $this, 'get_excerpt_end' ), 20 );
+		add_filter( 'wp_footer', array( $this, 'enqueue_widgets_css' ) );
 	}
 
 	/**
@@ -266,6 +274,26 @@ class Block_Frontend extends Base_CSS {
 			$this->enqueue_reusable_styles( $blocks, $footer );
 		}
 
+		$total_inline_limit = 20000;
+		$total_inline_limit = apply_filters( 'styles_inline_size_limit', 20000 );
+
+		$wp_upload_dir = wp_upload_dir( null, false );
+		$basedir       = $wp_upload_dir['basedir'] . '/themeisle-gutenberg/';
+		$file_path     = $basedir . $file_name;
+		$file_size     = filesize( $file_path );
+
+		if ( $this->total_inline_size + $file_size < $total_inline_limit ) {
+			add_action(
+				$location,
+				function () use ( $post_id ) {
+					return $this->get_post_css( $post_id );
+				}
+			);
+
+			$this->total_inline_size += (int) $file_size;
+			return;
+		}
+
 		if ( $footer ) {
 			add_action(
 				'wp_footer',
@@ -437,6 +465,74 @@ class Block_Frontend extends Base_CSS {
 		$style .= $this->cycle_through_reusable_blocks( $blocks );
 
 		return $style;
+	}
+
+	/**
+	 * Enqueue widgets CSS file
+	 *
+	 * @since   1.7.0
+	 * @access  public
+	 */
+	public function enqueue_widgets_css() {
+		$empty = '';
+		global $wp_registered_sidebars;
+
+		$has_widgets = false;
+
+		foreach ( $wp_registered_sidebars as $key => $sidebar ) {
+			if ( is_active_sidebar( $key ) ) {
+				$has_widgets = true;
+				break;
+			}
+		}
+
+		if ( ! $has_widgets ) {
+			return $empty;
+		}
+
+		$fonts_list = get_option( 'themeisle_blocks_widgets_fonts', array() );
+		$fonts      = array();
+
+		if ( count( $fonts_list ) > 0 ) {
+			foreach ( $fonts_list as $font ) {
+				if ( empty( $font['fontfamily'] ) ) {
+					continue;
+				}
+				$item = str_replace( ' ', '+', $font['fontfamily'] );
+				if ( count( $font['fontvariant'] ) > 0 ) {
+					$item .= ':' . implode( ',', $font['fontvariant'] );
+				}
+				array_push( $fonts, $item );
+			}
+
+			if ( count( $fonts ) > 0 ) {
+				wp_enqueue_style( 'themeisle-gutenberg-widgets-google-fonts', '//fonts.googleapis.com/css?family=' . implode( '|', $fonts ), [], THEMEISLE_BLOCKS_VERSION );
+			}
+		}
+
+		if ( ! CSS_Handler::has_css_file( 'widgets' ) ) {
+			CSS_Handler::save_widgets_styles();
+
+			$css = get_option( 'themeisle_blocks_widgets_css' );
+
+			if ( empty( $css ) ) {
+				$css = $this->get_widgets_css();
+			}
+
+			if ( empty( $css ) ) {
+				return $empty;
+			}
+
+			$style  = "\n" . '<style type="text/css" media="all">' . "\n";
+			$style .= $css;
+			$style .= "\n" . '</style>' . "\n";
+			echo $style;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			return $empty;
+		}
+
+		$file_url = CSS_Handler::get_css_url( 'widgets' );
+
+		return wp_enqueue_style( 'themeisle-gutenberg-widgets', $file_url, array( 'themeisle-block_styles' ), THEMEISLE_BLOCKS_VERSION );
 	}
 
 	/**

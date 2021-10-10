@@ -38,7 +38,7 @@ const SizingControl = ({
 	return (
 		<div
 			id={ id }
-			className="wp-block-themeisle-blocks-sizing-control"
+			className="otter-sizing-control"
 		>
 			<div className="components-base-control__field">
 				{ label && (
@@ -52,7 +52,7 @@ const SizingControl = ({
 
 				<div
 					className={ classnames(
-						'wp-block-themeisle-blocks-sizing-control-wrapper',
+						'otter-sizing-control-wrapper',
 						{ 'linking': type }
 					) }
 				>
@@ -70,7 +70,7 @@ const SizingControl = ({
 					{ type && (
 						<div
 							className={ classnames(
-								'wp-block-themeisle-blocks-sizing-control-item',
+								'otter-sizing-control-item',
 								'toggle-linking',
 								{ 'is-linked': 'linked' === type }
 							) }
@@ -79,7 +79,7 @@ const SizingControl = ({
 								icon={ 'linked' === type ? 'admin-links' : 'editor-unlink' }
 								label={ 'linked' === type ? __( 'Unlink Values', 'otter-blocks' ) : __( 'Link Values', 'otter-blocks' ) }
 								showTooltip={ true }
-								className="wp-block-themeisle-blocks-sizing-control-item-input"
+								className="otter-sizing-control-item-input"
 								onClick={ () => changeType( 'linked' === type ? 'unlinked' : 'linked' ) }
 							/>
 						</div>

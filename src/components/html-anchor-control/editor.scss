@@ -1,4 +1,4 @@
-.wp-block-themeisle-blocks-html-anchor-control {
+.otter-html-anchor-control {
 	display: grid;
 	grid-template-columns: 80% 20%;
 	padding: 6px 0;
@@ -16,7 +16,7 @@
 	}
 
 	button {
-		&.wp-block-themeisle-blocks-html-anchor-control-button {
+		&.otter-html-anchor-control-button {
 			height: 30px;
 			width: 100%;
 			display: flex;
@@ -46,12 +46,12 @@
 	}
 }
 
-.wp-block-themeisle-blocks-anchor-control-notice {
+.otter-html-anchor-control-notice {
 	margin: 0 0 20px 0;
 }
 
 @media ( max-width: 782px ) {
-	.wp-block-themeisle-blocks-html-anchor-control-button {
+	.otter-html-anchor-control-button {
 		min-height: 40px;
 	}
 }

@@ -8,7 +8,7 @@ import classnames from 'classnames';
  */
 import { ResizableBox } from '@wordpress/components';
 
-import { RichText } from '@wordpress/editor';
+import { RichText } from '@wordpress/block-editor';
 
 import {
 	Fragment,
@@ -35,7 +35,7 @@ const ProgressBar = ({
 
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
-		return () => unsubscribe();
+		return () => unsubscribe( attributes.id );
 	}, [ attributes.id ]);
 
 	const [ showPercentage, setShowPercentage ] = useState( false );

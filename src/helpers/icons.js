@@ -43,6 +43,22 @@ export const buttonsIcon = () => {
 	);
 };
 
+export const contactIcon = () => {
+	return (
+		<SVG viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+			<Path d="M 5 5 L 5 27 L 27 27 L 27 5 Z M 7 7 L 25 7 L 25 25 L 7 25 Z M 14 9 L 14 15 L 23 15 L 23 9 Z M 9 11 L 9 13 L 12 13 L 12 11 Z M 16 11 L 21 11 L 21 13 L 16 13 Z M 14 17 L 14 23 L 23 23 L 23 17 Z M 9 19 L 9 21 L 12 21 L 12 19 Z M 16 19 L 21 19 L 21 21 L 16 21 Z" />
+		</SVG>
+	);
+};
+
+export const inputIcon = () => {
+	return (
+		<SVG viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+			<Path d="M 1 9 L 1 10 L 1 23 L 31 23 L 31 9 L 1 9 z M 3 11 L 29 11 L 29 21 L 3 21 L 3 11 z M 5 17 L 5 19 L 7 19 L 7 17 L 5 17 z M 9 17 L 9 19 L 11 19 L 11 17 L 9 17 z M 13 17 L 13 19 L 15 19 L 15 17 L 13 17 z" />
+		</SVG>
+	);
+};
+
 export const columnsIcon = () => {
 	return (
 		<SVG viewBox="0 0 32 32" style={ { padding: '1px', fill: '#000000' } } xmlns="http://www.w3.org/2000/svg">
@@ -182,6 +198,14 @@ export const StarFilled = ({ className }) => {
 	return (
 		<SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={ className }>
 			<Path d="M11.776 4.454a.25.25 0 01.448 0l2.069 4.192a.25.25 0 00.188.137l4.626.672a.25.25 0 01.139.426l-3.348 3.263a.25.25 0 00-.072.222l.79 4.607a.25.25 0 01-.362.263l-4.138-2.175a.25.25 0 00-.232 0l-4.138 2.175a.25.25 0 01-.363-.263l.79-4.607a.25.25 0 00-.071-.222L4.754 9.881a.25.25 0 01.139-.426l4.626-.672a.25.25 0 00.188-.137l2.069-4.192z" />
+		</SVG>
+	);
+};
+
+export const StarHalf = ({ className }) => {
+	return (
+		<SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={ className }>
+			<Path d="M9.518 8.783a.25.25 0 00.188-.137l2.069-4.192a.25.25 0 01.448 0l2.07 4.192a.25.25 0 00.187.137l4.626.672a.25.25 0 01.139.427l-3.347 3.262a.25.25 0 00-.072.222l.79 4.607a.25.25 0 01-.363.264l-4.137-2.176a.25.25 0 00-.233 0l-4.138 2.175a.25.25 0 01-.362-.263l.79-4.607a.25.25 0 00-.072-.222L4.753 9.882a.25.25 0 01.14-.427l4.625-.672zM12 14.533c.28 0 .559.067.814.2l1.895.997-.362-2.11a1.75 1.75 0 01.504-1.55l1.533-1.495-2.12-.308a1.75 1.75 0 01-1.317-.957L12 7.39v7.143z" />
 		</SVG>
 	);
 };

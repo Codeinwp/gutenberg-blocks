@@ -1,72 +1,152 @@
 /**
  * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n';
+
 import { debounce } from 'lodash';
 
 import apiFetch from '@wordpress/api-fetch';
 
 import {
+	dispatch,
 	select,
 	subscribe
 } from '@wordpress/data';
+
+const { createNotice } = dispatch( 'core/notices' );
 
 const savePostMeta = debounce( async() => {
 	const { getCurrentPostId } = select( 'core/editor' );
 	const postId = getCurrentPostId();
 
+	createNotice(
+		'info',
+		__( 'Saving CSS…', 'otter-blocks' ),
+		{
+			isDismissible: true,
+			type: 'snackbar'
+		}
+	);
+
 	await apiFetch({ path: `themeisle-gutenberg-blocks/v1/save_post_meta/${ postId }`, method: 'POST' });
-}, 1000 );
+
+	createNotice(
+		'info',
+		__( 'CSS saved.', 'otter-blocks' ),
+		{
+			isDismissible: true,
+			type: 'snackbar'
+		}
+	);
+}, 5000 );
+
+const saveWidgets = debounce( async() => {
+	createNotice(
+		'info',
+		__( 'Saving CSS…', 'otter-blocks' ),
+		{
+			isDismissible: true,
+			type: 'snackbar'
+		}
+	);
+
+	await apiFetch({ path: 'themeisle-gutenberg-blocks/v1/save_widgets_styles', method: 'POST' });
+
+	createNotice(
+		'info',
+		__( 'CSS saved.', 'otter-blocks' ),
+		{
+			isDismissible: true,
+			type: 'snackbar'
+		}
+	);
+}, 5000 );
 
 let reusableBlocks = {};
 
 subscribe( () => {
-	const {
-		isCurrentPostPublished,
-		isSavingPost,
-		isPublishingPost,
-		isAutosavingPost,
-		__experimentalIsSavingReusableBlock
-	} = select( 'core/editor' );
+	if ( select( 'core/edit-widgets' ) ) {
+		const {
+			isSavingWidgetAreas,
+			getEditedWidgetAreas
+		} = select( 'core/edit-widgets' );
 
-	const { __experimentalReusableBlocks } = select( 'core/block-editor' ).getSettings();
+		const isSavingWidgets = isSavingWidgetAreas();
+		const editedAreas = getEditedWidgetAreas();
 
-	const { isSavingEntityRecord } = select( 'core' );
-
-	let isSavingReusableBlock;
-
-	if ( __experimentalIsSavingReusableBlock ) {
-		isSavingReusableBlock = id => __experimentalIsSavingReusableBlock( id );
-	} else {
-		isSavingReusableBlock = id => isSavingEntityRecord( 'postType', 'wp_block', id );
+		if ( isSavingWidgets && 0 < editedAreas.length ) {
+			saveWidgets();
+		}
 	}
 
-	const isAutoSaving = isAutosavingPost();
-	const isPublishing = isPublishingPost();
-	const isSaving = isSavingPost();
-	const getReusableBlocks = __experimentalReusableBlocks || [];
-	const postPublished = isCurrentPostPublished();
+	if ( select( 'core/editor' ) ) {
+		const {
+			isCurrentPostPublished,
+			getEditedPostAttribute,
+			isSavingPost,
+			isPublishingPost,
+			isAutosavingPost,
+			__experimentalIsSavingReusableBlock
+		} = select( 'core/editor' );
 
-	getReusableBlocks.map( block => {
-		if ( block ) {
-			const isBlockSaving = isSavingReusableBlock( block.id );
+		const { __experimentalReusableBlocks } = select( 'core/block-editor' ).getSettings();
 
-			if  ( isBlockSaving && ! block.isTemporary ) {
-				reusableBlocks[ block.id ] = {
-					id: block.id,
-					isSaving: true
-				};
-			}
+		const { isSavingEntityRecord } = select( 'core' );
 
-			if  ( ! isBlockSaving && ! block.isTemporary && !! reusableBlocks[ block.id ]) {
-				if ( block.id === reusableBlocks[ block.id ].id && ( ! isBlockSaving && reusableBlocks[ block.id ].isSaving ) ) {
-					reusableBlocks[ block.id ].isSaving = false;
-					apiFetch({ path: `themeisle-gutenberg-blocks/v1/save_block_meta/${ block.id }`, method: 'POST' });
-				}
+		const { getBlocks } = select( 'core/block-editor' );
+
+		const { editPost } = dispatch( 'core/editor' );
+
+		const meta = getEditedPostAttribute( 'meta' ) || {};
+
+		if ( undefined !== meta._themeisle_gutenberg_block_has_review ) {
+			const hasReview = getBlocks().some( block => 'themeisle-blocks/review' === block.name );
+
+			if ( meta._themeisle_gutenberg_block_has_review !== hasReview ) {
+				editPost({
+					meta: {
+						'_themeisle_gutenberg_block_has_review': hasReview
+					}
+				});
 			}
 		}
-	});
 
-	if ( ( isPublishing || ( postPublished && isSaving ) ) && ! isAutoSaving ) {
-		savePostMeta();
+		let isSavingReusableBlock;
+
+		if ( __experimentalIsSavingReusableBlock ) {
+			isSavingReusableBlock = id => __experimentalIsSavingReusableBlock( id );
+		} else {
+			isSavingReusableBlock = id => isSavingEntityRecord( 'postType', 'wp_block', id );
+		}
+
+		const isAutoSaving = isAutosavingPost();
+		const isPublishing = isPublishingPost();
+		const isSaving = isSavingPost();
+		const getReusableBlocks = __experimentalReusableBlocks || [];
+		const postPublished = isCurrentPostPublished();
+
+		getReusableBlocks.map( block => {
+			if ( block ) {
+				const isBlockSaving = isSavingReusableBlock( block.id );
+
+				if  ( isBlockSaving && ! block.isTemporary ) {
+					reusableBlocks[ block.id ] = {
+						id: block.id,
+						isSaving: true
+					};
+				}
+
+				if  ( ! isBlockSaving && ! block.isTemporary && !! reusableBlocks[ block.id ]) {
+					if ( block.id === reusableBlocks[ block.id ].id && ( ! isBlockSaving && reusableBlocks[ block.id ].isSaving ) ) {
+						reusableBlocks[ block.id ].isSaving = false;
+						apiFetch({ path: `themeisle-gutenberg-blocks/v1/save_block_meta/${ block.id }`, method: 'POST' });
+					}
+				}
+			}
+		});
+
+		if ( ( isPublishing || ( postPublished && isSaving ) ) && ! isAutoSaving ) {
+			savePostMeta();
+		}
 	}
 });

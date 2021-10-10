@@ -46,7 +46,7 @@ const Edit = ({
 		isPreviewTablet,
 		isPreviewMobile
 	} = useSelect( select => {
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' ) ? select( 'core/edit-post' ) : false;
 
 		return {
 			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
@@ -66,7 +66,7 @@ const Edit = ({
 
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
-		return () => unsubscribe();
+		return () => unsubscribe( attributes.id );
 	}, [ attributes.id ]);
 
 	let isDesktop = isLarger && ! isLarge && isSmall && ! isSmaller;
@@ -172,18 +172,18 @@ const Edit = ({
 
 	if ( attributes.textShadow ) {
 		textShadowStyle = {
-			textShadow: `${ attributes.textShadowHorizontal }px ${ attributes.textShadowVertical }px ${ attributes.textShadowBlur }px ${  hexToRgba( ( attributes.textShadowColor ? attributes.textShadowColor : '#000000' ), attributes.textShadowColorOpacity ) }`
+			textShadow: `${ attributes.textShadowHorizontal }px ${ attributes.textShadowVertical }px ${ attributes.textShadowBlur }px ${  hexToRgba( ( attributes.textShadowColor ? attributes.textShadowColor : '#000000' ), 0 <= attributes.textShadowColorOpacity ? attributes.textShadowColorOpacity || 0.00001  : 1 ) }`
 		};
 	}
 
 	const style = {
 		color: attributes.headingColor,
 		...fontSizeStyle,
-		fontFamily: attributes.fontFamily ? attributes.fontFamily : 'inherit',
+		fontFamily: attributes.fontFamily,
 		fontWeight: 'regular' === attributes.fontVariant ? 'normal' : attributes.fontVariant,
 		fontStyle: attributes.fontStyle,
 		textTransform: attributes.textTransform,
-		lineHeight: attributes.lineHeight && `${ attributes.lineHeight }px`,
+		lineHeight: 3 < attributes.lineHeight ? attributes.lineHeight + 'px' : attributes.lineHeight,
 		letterSpacing: attributes.letterSpacing && `${ attributes.letterSpacing }px`,
 		...stylesheet,
 		...textShadowStyle

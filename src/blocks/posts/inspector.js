@@ -233,7 +233,6 @@ const Inspector = ({
 					onOrderByChange={ value => setAttributes({ orderBy: value }) }
 					numberOfItems={ attributes.postsToShow }
 					onNumberOfItemsChange={ value => setAttributes({ postsToShow: value }) }
-					categoriesList={ categoriesList }
 					categorySuggestions={ categorySuggestions }
 					selectedCategoryId={ selectedCategoryId }
 					selectedCategories={ selectedCategories }

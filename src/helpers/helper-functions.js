@@ -1,4 +1,9 @@
+
 import { without } from 'lodash';
+
+import { sprintf } from '@wordpress/i18n';
+
+import { __experimentalGetSettings } from '@wordpress/date';
 
 // HTML to Plaintext
 export const unescapeHTML = value => {
@@ -106,4 +111,87 @@ export const convertToTitleCase = ( word ) => {
 		return word[0].toUpperCase() + word.slice( 1 );
 	}
 	throw 'The parameter must be a string.';
+};
+
+/**
+ * Insert an item between the element of the array
+ * @param {Array} arr
+ * @param {any} item
+ * @returns An array with the given item inserted between initial elements
+ */
+export const insertBetweenItems = ( arr, item ) => {
+	const _arr = [];
+	arr?.forEach( ( listItem, index ) => {
+		_arr.push( listItem );
+
+		// Omit to add for the last list item
+		if ( index < arr.length - 1 ) {
+			_arr.push( item );
+		}
+	});
+	return _arr;
+};
+
+// Time constants
+const _MS_PER_SECONDS = 1000;
+const _MS_PER_MINUTES = _MS_PER_SECONDS * 60;
+const _MS_PER_HOURS = _MS_PER_MINUTES * 60;
+const _MS_PER_DAY = _MS_PER_HOURS * 24;
+
+/**
+ * Get the time interval from the unix time
+ * @param {number} unixTime Time as UNIX
+ * @param {object} settings Options to keep a components or/and allow negative time
+ * @returns An object with the values for days, hours, minutes, seconds
+ */
+export const getIntervalFromUnix = ( unixTime, settings ) => {
+
+	unixTime = unixTime ? unixTime : 0; // Check for null/undefined
+
+	const days = Math.floor( unixTime / _MS_PER_DAY );
+	const hours = Math.floor( unixTime / _MS_PER_HOURS % 24 );
+	const minutes = Math.floor( unixTime / _MS_PER_MINUTES % 60 );
+	const seconds = Math.floor( unixTime / _MS_PER_SECONDS % 60 );
+
+	const time = [
+		{
+			tag: 'day',
+			name: 1 < days ? 'Days' : 'Day',
+			value: days
+		},
+		{
+			tag: 'hour',
+			name: 1 < hours ? 'Hours' : 'Hour',
+			value: hours
+		},
+		{
+			tag: 'minute',
+			name: 1 < minutes ? 'Minutes' : 'Minute',
+			value: minutes
+		},
+		{
+			tag: 'second',
+			name: 1 < seconds ? 'Seconds' : 'Second',
+			value: seconds
+		}
+	]
+		.filter( ({ tag }) => ! settings?.exclude?.includes( tag ) )
+		.map( obj => {
+			if ( ! settings?.keepNeg ) {
+				obj.value = Math.max( 0, obj.value );
+			}
+			return obj;
+		});
+
+	return time;
+};
+
+// Get site's timezone.
+export const getTimezone = () => {
+	const settings = __experimentalGetSettings();
+	const offset   = 60 * settings.timezone.offset;
+	const sign     = 0 > offset ? '-' : '+';
+	const absmin   = Math.abs( offset );
+	const timezone = sprintf( '%s%02d:%02d', sign, absmin / 60, absmin % 60 );
+	return timezone;
 };
