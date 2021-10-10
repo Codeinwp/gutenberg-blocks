@@ -188,14 +188,15 @@ class Main {
 		if ( ! isset( $block['blockName'] ) ) {
 			return $block_content;
 		}
+
 		if ( self::$is_fa_loaded ) {
 			return $block_content;
 		}
+
 		// always load for those.
 		static $always_load = [
 			'themeisle-blocks/sharing-icons' => true,
 			'themeisle-blocks/plugin-cards'  => true,
-
 		];
 
 		if ( isset( $always_load[ $block['blockName'] ] ) ) {
@@ -203,16 +204,19 @@ class Main {
 
 			return $block_content;
 		}
+
 		if ( 'themeisle-blocks/button' === $block['blockName'] ) {
 			if ( isset( $block['attrs']['library'] ) && 'themeisle-icons' === $block['attrs']['library'] ) {
 				return $block_content;
 			}
+
 			if ( isset( $block['attrs']['iconType'] ) ) {
 				self::$is_fa_loaded = true;
 
 				return $block_content;
 			}
 		}
+
 		if ( 'themeisle-blocks/font-awesome-icons' === $block['blockName'] ) {
 			if ( ! isset( $block['attrs']['library'] ) ) {
 				self::$is_fa_loaded = true;
@@ -227,6 +231,7 @@ class Main {
 
 				return $block_content;
 			}
+
 			if ( 'fontawesome' === $block['attrs']['library'] ) {
 				self::$is_fa_loaded = true;
 
@@ -236,6 +241,7 @@ class Main {
 
 		return $block_content;
 	}
+
 	/**
 	 * Load Gutenberg blocks.
 	 *
@@ -705,6 +711,7 @@ class Main {
 		}
 
 		add_filter( 'render_block', [ $this, 'subscribe_fa' ], 10, 2 );
+
 		add_filter(
 			'the_content',
 			function ( $content ) {
