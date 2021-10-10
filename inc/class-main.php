@@ -152,6 +152,15 @@ class Main {
 		add_action( 'init', array( $this, 'load_server_side_blocks' ), 11 );
 		add_action( 'init', array( $this, 'register_meta' ), 11 );
 
+		add_action(
+			'get_footer',
+			static function () {
+				if ( Main::$is_fa_loaded ) {
+					wp_enqueue_style( 'font-awesome-5' );
+					wp_enqueue_style( 'font-awesome-4-shims' );
+				}
+			}
+		);
 		if ( version_compare( floatval( get_bloginfo( 'version' ) ), '5.8', '>=' ) ) {
 			add_filter( 'block_categories_all', array( $this, 'block_categories' ) );
 		} else {
@@ -165,6 +174,72 @@ class Main {
 			add_filter( 'upload_mimes', array( $this, 'allow_json' ) ); //phpcs:ignore WordPressVIPMinimum.Filters.RestrictedHook.UploadMimes
 			add_filter( 'wp_check_filetype_and_ext', array( $this, 'fix_mime_type_json' ), 75, 4 );
 		}
+	}
+
+	/**
+	 * Subscribe to FA enqueue.
+	 *
+	 * @param string $block_content Block content parsed.
+	 * @param array  $block Block details.
+	 *
+	 * @return mixed
+	 */
+	public function subscribe_fa( $block_content, $block ) {
+		if ( ! isset( $block['blockName'] ) ) {
+			return $block_content;
+		}
+
+		if ( self::$is_fa_loaded ) {
+			return $block_content;
+		}
+
+		// always load for those.
+		static $always_load = [
+			'themeisle-blocks/sharing-icons' => true,
+			'themeisle-blocks/plugin-cards'  => true,
+		];
+
+		if ( isset( $always_load[ $block['blockName'] ] ) ) {
+			self::$is_fa_loaded = true;
+
+			return $block_content;
+		}
+
+		if ( 'themeisle-blocks/button' === $block['blockName'] ) {
+			if ( isset( $block['attrs']['library'] ) && 'themeisle-icons' === $block['attrs']['library'] ) {
+				return $block_content;
+			}
+
+			if ( isset( $block['attrs']['iconType'] ) ) {
+				self::$is_fa_loaded = true;
+
+				return $block_content;
+			}
+		}
+
+		if ( 'themeisle-blocks/font-awesome-icons' === $block['blockName'] ) {
+			if ( ! isset( $block['attrs']['library'] ) ) {
+				self::$is_fa_loaded = true;
+
+				return $block_content;
+			}
+		}
+
+		if ( 'themeisle-blocks/icon-list-item' === $block['blockName'] ) {
+			if ( ! isset( $block['attrs']['library'] ) ) {
+				self::$is_fa_loaded = true;
+
+				return $block_content;
+			}
+
+			if ( 'fontawesome' === $block['attrs']['library'] ) {
+				self::$is_fa_loaded = true;
+
+				return $block_content;
+			}
+		}
+
+		return $block_content;
 	}
 
 	/**
@@ -387,52 +462,6 @@ class Main {
 			self::$assets_version
 		);
 
-		if ( ! self::$is_fa_loaded && ( has_block( 'themeisle-blocks/button-group', $post ) || has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/icon-list-item', $post ) || has_block( 'themeisle-blocks/sharing-icons', $post ) || has_block( 'themeisle-blocks/plugin-cards', $post ) || has_block( 'block', $post ) ) ) {
-			$has_fa = false;
-
-			if ( ( ! has_block( 'themeisle-blocks/sharing-icons', $post ) && ! has_block( 'themeisle-blocks/plugin-cards', $post ) && ! has_block( 'block', $post ) ) && ( has_block( 'themeisle-blocks/button', $post ) || has_block( 'themeisle-blocks/font-awesome-icons', $post ) || has_block( 'themeisle-blocks/icon-list-item', $post ) ) ) {
-				if ( empty( $post ) ) {
-					$post = get_the_ID();
-				}
-
-				$blocks = parse_blocks( $content );
-
-				$used_blocks = $this->loop_blocks(
-					$blocks,
-					array(
-						'themeisle-blocks/button',
-						'themeisle-blocks/font-awesome-icons',
-						'themeisle-blocks/icon-list',
-						'themeisle-blocks/icon-list-item',
-					)
-				);
-
-				foreach ( $used_blocks as $block ) {
-					if ( ! $has_fa && isset( $block['attrs']['library'] ) && 'themeisle-icons' === $block['attrs']['library'] ) {
-						continue;
-					}
-
-					if ( ! $has_fa && 'themeisle-blocks/button' === $block['blockName'] && ! isset( $block['attrs']['iconType'] ) ) {
-						continue;
-					}
-
-					if ( ! $has_fa && 'themeisle-blocks/icon-list' === $block['blockName'] && isset( $block['attrs']['defaultLibrary'] ) && 'themeisle-icons' === $block['attrs']['defaultLibrary'] ) {
-						continue;
-					}
-
-					$has_fa = true;
-				}
-			} else {
-				$has_fa = true;
-			}
-
-			if ( $has_fa ) {
-				wp_enqueue_style( 'font-awesome-5' );
-				wp_enqueue_style( 'font-awesome-4-shims' );
-
-				self::$is_fa_loaded = true;
-			}
-		}
 
 		// On AMP context, we don't load JS files.
 		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
@@ -680,6 +709,8 @@ class Main {
 				$this->enqueue_dependencies( $post );
 			}
 		}
+
+		add_filter( 'render_block', [ $this, 'subscribe_fa' ], 10, 2 );
 
 		add_filter(
 			'the_content',
