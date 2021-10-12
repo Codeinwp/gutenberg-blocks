@@ -46,6 +46,12 @@ const Edit = ({
 	className,
 	clientId
 }) => {
+
+	useEffect( () => {
+		const unsubscribe = blockInit( clientId, defaultAttributes );
+		return () => unsubscribe( attributes.id );
+	}, [ attributes.id ]);
+
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
 
 	const {
@@ -70,23 +76,12 @@ const Edit = ({
 		};
 	}, []);
 
+	// +-------------------------------- COLUMNS MANIPULATION --------------------------------+
 	const {
 		insertBlock,
 		removeBlock
 	} = useDispatch( 'core/block-editor' );
 
-	const isLarger = useViewportMatch( 'large', '>=' );
-
-	const isLarge = useViewportMatch( 'large', '<=' );
-
-	const isSmall = useViewportMatch( 'small', '>=' );
-
-	const isSmaller = useViewportMatch( 'small', '<=' );
-
-	useEffect( () => {
-		const unsubscribe = blockInit( clientId, defaultAttributes );
-		return () => unsubscribe( attributes.id );
-	}, [ attributes.id ]);
 
 	const changeColumnsNumbers = ( newColumnsNumber ) => {
 		if ( attributes.columns < newColumnsNumber ) {
@@ -129,6 +124,7 @@ const Edit = ({
 			});
 		}
 
+		// Add delay so that we can initiate the new blocks after passing the onbording check.
 		setTimeout( () => changeColumnsNumbers( columns ), 200 );
 	};
 
@@ -141,7 +137,15 @@ const Edit = ({
 		}
 	}, [ children ]);
 
-	const [ dividerViewType, setDividerViewType ] = useState( 'top' );
+	// +-------------------------------- SCREEN SIZE --------------------------------+
+
+	const isLarger = useViewportMatch( 'large', '>=' );
+
+	const isLarge = useViewportMatch( 'large', '<=' );
+
+	const isSmall = useViewportMatch( 'small', '>=' );
+
+	const isSmaller = useViewportMatch( 'small', '<=' );
 
 	let isDesktop = isLarger && ! isLarge && isSmall && ! isSmaller;
 
@@ -154,6 +158,41 @@ const Edit = ({
 		isTablet = isPreviewTablet;
 		isMobile = isPreviewMobile;
 	}
+
+	// +-------------------------------- DIVIDER SIZE --------------------------------+
+
+	const [ dividerViewType, setDividerViewType ] = useState( 'top' );
+
+	const getValueBasedOnScreenSize = ({ mobile, tablet, desktop }) => {
+		return ( isMobile && mobile ) || ( isTablet && tablet ) || ( isDesktop && desktop ) || undefined;
+	};
+
+	const getDividerTopWidth = getValueBasedOnScreenSize({
+		mobile: attributes.dividerTopWidthMobile,
+		tablet: attributes.dividerTopWidthTablet,
+		desktop: attributes.dividerTopWidth
+	});
+
+	const getDividerBottomWidth = getValueBasedOnScreenSize({
+		mobile: attributes.dividerBottomWidthMobile,
+		tablet: attributes.dividerBottomWidthTablet,
+		desktop: attributes.dividerBottomWidth
+	});
+
+	const getDividerTopHeight = getValueBasedOnScreenSize({
+		mobile: attributes.dividerTopHeightMobile,
+		tablet: attributes.dividerTopHeightTablet,
+		desktop: attributes.dividerTopHeight
+	});
+
+	const getDividerBottomHeight = getValueBasedOnScreenSize({
+		mobile: attributes.dividerBottomHeightMobile,
+		tablet: attributes.dividerBottomHeightTablet,
+		desktop: attributes.dividerBottomHeight
+	});
+
+
+	// +-------------------------------- STYLING --------------------------------+
 
 	const Tag = attributes.columnsHTMLTag;
 
@@ -169,9 +208,7 @@ const Edit = ({
 			marginBottom: 'linked' === attributes.marginType ? `${ attributes.margin }px` : `${ attributes.marginBottom }px`,
 			minHeight: 'custom' === attributes.columnsHeight ? `${ attributes.columnsHeightCustom }px` : attributes.columnsHeight
 		};
-	}
-
-	if ( isTablet ) {
+	} else if ( isTablet ) {
 		stylesheet = {
 			paddingTop: 'linked' === attributes.paddingTypeTablet ? `${ attributes.paddingTablet }px` : `${ attributes.paddingTopTablet }px`,
 			paddingRight: 'linked' === attributes.paddingTypeTablet ? `${ attributes.paddingTablet }px` : `${ attributes.paddingRightTablet }px`,
@@ -181,9 +218,7 @@ const Edit = ({
 			marginBottom: 'linked' === attributes.marginTypeTablet ? `${ attributes.marginTablet }px` : `${ attributes.marginBottomTablet }px`,
 			minHeight: 'custom' === attributes.columnsHeight ? `${ attributes.columnsHeightCustomTablet }px` : attributes.columnsHeight
 		};
-	}
-
-	if ( isMobile ) {
+	} else if ( isMobile ) {
 		stylesheet = {
 			paddingTop: 'linked' === attributes.paddingTypeMobile ? `${ attributes.paddingMobile }px` : `${ attributes.paddingTopMobile }px`,
 			paddingRight: 'linked' === attributes.paddingTypeMobile ? `${ attributes.paddingMobile }px` : `${ attributes.paddingRightMobile }px`,
@@ -321,89 +356,6 @@ const Edit = ({
 		{ 'has-viewport-mobile': isMobile }
 	);
 
-	let getDividerTopWidth = () => {
-		let value;
-
-		if ( isDesktop ) {
-			value = attributes.dividerTopWidth;
-		}
-
-		if ( isTablet ) {
-			value = attributes.dividerTopWidthTablet;
-		}
-
-		if ( isMobile ) {
-			value = attributes.dividerTopWidthMobile;
-		}
-
-		return value;
-	};
-
-	getDividerTopWidth = getDividerTopWidth();
-
-	let getDividerBottomWidth = () => {
-		let value;
-
-		if ( isDesktop ) {
-			value = attributes.dividerBottomWidth;
-		}
-
-		if ( isTablet ) {
-			value = attributes.dividerBottomWidthTablet;
-		}
-
-		if ( isMobile ) {
-			value = attributes.dividerBottomWidthMobile;
-		}
-
-		return value;
-	};
-
-	getDividerBottomWidth = getDividerBottomWidth();
-
-	let getDividerTopHeight = () => {
-		let value;
-
-		if ( isDesktop ) {
-			value = attributes.dividerTopHeight;
-		}
-
-		if ( isTablet ) {
-			value = attributes.dividerTopHeightTablet;
-		}
-
-		if ( isMobile ) {
-			value = attributes.dividerTopHeightMobile;
-		}
-
-		return value;
-	};
-
-	getDividerTopHeight = getDividerTopHeight();
-
-	let getDividerBottomHeight = () => {
-		let value;
-
-		if ( isDesktop ) {
-			value = attributes.dividerBottomHeight;
-		}
-
-		if ( isTablet ) {
-			value = attributes.dividerBottomHeightTablet;
-		}
-
-		if ( isMobile ) {
-			value = attributes.dividerBottomHeightMobile;
-		}
-
-		return value;
-	};
-
-	getDividerBottomHeight = getDividerBottomHeight();
-
-	// const getColumnsTemplate = columns => {
-	// 	return times( columns, i => [ 'themeisle-blocks/advanced-column', { columnWidth: layouts[columns][attributes.layout][i] } ]);
-	// };
 
 	if ( ! attributes.columns ) {
 		return (
