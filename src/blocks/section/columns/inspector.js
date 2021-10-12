@@ -50,7 +50,8 @@ const Inspector = ({
 	setAttributes,
 	updateColumnsWidth,
 	dividerViewType,
-	setDividerViewType
+	setDividerViewType,
+	changeColumnsNumbers
 }) => {
 	const getView = useSelect( ( select ) => {
 		const { getView } = select( 'themeisle-gutenberg/data' );
@@ -66,7 +67,6 @@ const Inspector = ({
 	const changeColumns = value => {
 		if ( 6 >= value ) {
 			setAttributes({
-				columns: value,
 				layout: 'equal',
 				layoutTablet: 'equal',
 				layoutMobile: 'collapsedRows'
@@ -75,7 +75,6 @@ const Inspector = ({
 
 		if ( 6 < value ) {
 			setAttributes({
-				columns: 6,
 				layout: 'equal',
 				layoutTablet: 'equal',
 				layoutMobile: 'collapsedRows'
@@ -84,13 +83,13 @@ const Inspector = ({
 
 		if ( 1 >= value ) {
 			setAttributes({
-				columns: 1,
 				layout: 'equal',
 				layoutTablet: 'equal',
 				layoutMobile: 'equal'
 			});
 		}
 
+		changeColumnsNumbers( value );
 		setColumnsChanged( true );
 	};
 

@@ -19,6 +19,10 @@ import {
 import { InnerBlocks } from '@wordpress/block-editor';
 
 import {
+	createBlock
+} from '@wordpress/blocks';
+
+import {
 	Fragment,
 	useEffect,
 	useState
@@ -49,7 +53,8 @@ const Edit = ({
 		isViewportAvailable,
 		isPreviewDesktop,
 		isPreviewTablet,
-		isPreviewMobile
+		isPreviewMobile,
+		children
 	} = useSelect( select => {
 		const { getBlock } = select( 'core/block-editor' );
 		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' ) ? select( 'core/edit-post' ) : false;
@@ -57,12 +62,18 @@ const Edit = ({
 
 		return {
 			sectionBlock,
+			children: sectionBlock.innerBlocks,
 			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
 			isPreviewDesktop: __experimentalGetPreviewDeviceType ? 'Desktop' === __experimentalGetPreviewDeviceType() : false,
 			isPreviewTablet: __experimentalGetPreviewDeviceType ? 'Tablet' === __experimentalGetPreviewDeviceType() : false,
 			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false
 		};
 	}, []);
+
+	const {
+		insertBlock,
+		removeBlock
+	} = useDispatch( 'core/block-editor' );
 
 	const isLarger = useViewportMatch( 'large', '>=' );
 
@@ -76,6 +87,59 @@ const Edit = ({
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe( attributes.id );
 	}, [ attributes.id ]);
+
+	const changeColumnsNumbers = ( newColumnsNumber ) => {
+		if ( attributes.columns < newColumnsNumber ) {
+			console.log( 'ADD', newColumnsNumber - attributes.columns );
+			times(  newColumnsNumber - attributes.columns, () => {
+				const columnBlock = createBlock( 'themeisle-blocks/advanced-column' );
+				console.log( 'Create Block', columnBlock );
+				if ( columnBlock ) {
+					insertBlock( columnBlock, ( children?.length ) || 0, clientId, false );
+				}
+			});
+		} else if ( attributes.columns > newColumnsNumber ) {
+			children.slice( newColumnsNumber ).forEach( column => removeBlock( column.clientId, false ) );
+		}
+	};
+
+	const updateColumnsWidth = ( columns, layout ) => {
+		( sectionBlock.innerBlocks ).map( ( innerBlock, i ) => {
+			updateBlockAttributes( innerBlock.clientId, {
+				columnWidth: layouts[columns][layout][i]
+			});
+		});
+	};
+
+	const setupColumns = ( columns, layout ) => {
+
+		if ( 1 >= columns ) {
+			setAttributes({
+				columns,
+				layout,
+				layoutTablet: 'equal',
+				layoutMobile: 'equal'
+			});
+		} else {
+			setAttributes({
+				columns,
+				layout,
+				layoutTablet: 'equal',
+				layoutMobile: 'collapsedRows'
+			});
+		}
+
+		setTimeout( () => changeColumnsNumbers( columns ), 200 );
+	};
+
+	useEffect( () => {
+		if ( attributes.columns !== children.length ) {
+			console.log( 'Change' );
+			setAttributes({
+				columns: children.length
+			});
+		}
+	}, [ children ]);
 
 	const [ dividerViewType, setDividerViewType ] = useState( 'top' );
 
@@ -257,32 +321,6 @@ const Edit = ({
 		{ 'has-viewport-mobile': isMobile }
 	);
 
-	const updateColumnsWidth = ( columns, layout ) => {
-		( sectionBlock.innerBlocks ).map( ( innerBlock, i ) => {
-			updateBlockAttributes( innerBlock.clientId, {
-				columnWidth: layouts[columns][layout][i]
-			});
-		});
-	};
-
-	const setupColumns = ( columns, layout ) => {
-		if ( 1 >= columns ) {
-			setAttributes({
-				columns,
-				layout,
-				layoutTablet: 'equal',
-				layoutMobile: 'equal'
-			});
-		} else {
-			setAttributes({
-				columns,
-				layout,
-				layoutTablet: 'equal',
-				layoutMobile: 'collapsedRows'
-			});
-		}
-	};
-
 	let getDividerTopWidth = () => {
 		let value;
 
@@ -363,9 +401,9 @@ const Edit = ({
 
 	getDividerBottomHeight = getDividerBottomHeight();
 
-	const getColumnsTemplate = columns => {
-		return times( columns, i => [ 'themeisle-blocks/advanced-column', { columnWidth: layouts[columns][attributes.layout][i] } ]);
-	};
+	// const getColumnsTemplate = columns => {
+	// 	return times( columns, i => [ 'themeisle-blocks/advanced-column', { columnWidth: layouts[columns][attributes.layout][i] } ]);
+	// };
 
 	if ( ! attributes.columns ) {
 		return (
@@ -391,6 +429,7 @@ const Edit = ({
 				updateColumnsWidth={ updateColumnsWidth }
 				dividerViewType={ dividerViewType }
 				setDividerViewType={ setDividerViewType }
+				changeColumnsNumbers={ changeColumnsNumbers }
 			/>
 
 			<Tag
@@ -419,8 +458,6 @@ const Edit = ({
 				>
 					<InnerBlocks
 						allowedBlocks={ [ 'themeisle-blocks/advanced-column' ] }
-						template={ getColumnsTemplate( attributes.columns ) }
-						templateLock="insert"
 						orientation="horizontal"
 					/>
 				</div>
