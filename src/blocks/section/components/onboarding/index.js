@@ -24,6 +24,12 @@ import './editor.scss';
 import { columnsIcon } from '../../../../helpers/icons.js';
 import Library from '../../../../components/template-library/index.js';
 
+/**
+ * Render a layout picker for the Section Block
+ * @param {Object.<{ clientId: string, setupColumns: Function }>} props
+ * @deprecated since version 1.7.0
+ * @returns
+ */
 const Onboarding = ({
 	clientId,
 	setupColumns

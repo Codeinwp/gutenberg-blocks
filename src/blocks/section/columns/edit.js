@@ -10,23 +10,28 @@ import hexToRgba from 'hex-rgba';
 import { times } from 'lodash';
 
 import { useViewportMatch } from '@wordpress/compose';
-
+import { __ } from '@wordpress/i18n';
 import {
 	useDispatch,
 	useSelect
 } from '@wordpress/data';
 
-import { InnerBlocks } from '@wordpress/block-editor';
+import {
+	__experimentalBlockVariationPicker as VariationPicker,
+	InnerBlocks
+} from '@wordpress/block-editor';
 
 import {
-	createBlock
+	createBlock,
+	createBlocksFromInnerBlocksTemplate
 } from '@wordpress/blocks';
 
 import {
-	Fragment,
 	useEffect,
 	useState
 } from '@wordpress/element';
+
+import { get } from 'lodash';
 
 /**
  * Internal dependencies
@@ -37,14 +42,16 @@ import Controls from './controls.js';
 import Inspector from './inspector.js';
 import BlockNavigatorControl from '../../../components/block-navigator-control/index.js';
 import Separators from '../components/separators/index.js';
-import Onboarding from '../components/onboarding/index.js';
 import { blockInit } from '../../../helpers/block-utility.js';
+import { Button, Dashicon, Placeholder, Tooltip } from '@wordpress/components';
+import Library from '../../../components/template-library/index.js';
 
 const Edit = ({
 	attributes,
 	setAttributes,
 	className,
-	clientId
+	clientId,
+	name
 }) => {
 
 	useEffect( () => {
@@ -52,7 +59,7 @@ const Edit = ({
 		return () => unsubscribe( attributes.id );
 	}, [ attributes.id ]);
 
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
+	const { updateBlockAttributes, replaceInnerBlocks } = useDispatch( 'core/block-editor' );
 
 	const {
 		sectionBlock,
@@ -60,9 +67,21 @@ const Edit = ({
 		isPreviewDesktop,
 		isPreviewTablet,
 		isPreviewMobile,
-		children
+		children,
+		variations,
+		blockType,
+		defaultVariation
 	} = useSelect( select => {
-		const { getBlock } = select( 'core/block-editor' );
+		const {
+			getBlock
+		} = select( 'core/block-editor' );
+
+		const {
+			getBlockVariations,
+			getBlockType,
+			getDefaultBlockVariation
+		} = select( 'core/blocks' );
+
 		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' ) ? select( 'core/edit-post' ) : false;
 		const sectionBlock = getBlock( clientId );
 
@@ -72,7 +91,10 @@ const Edit = ({
 			isViewportAvailable: __experimentalGetPreviewDeviceType ? true : false,
 			isPreviewDesktop: __experimentalGetPreviewDeviceType ? 'Desktop' === __experimentalGetPreviewDeviceType() : false,
 			isPreviewTablet: __experimentalGetPreviewDeviceType ? 'Tablet' === __experimentalGetPreviewDeviceType() : false,
-			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false
+			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false,
+			blockType: getBlockType( name ),
+			defaultVariation: getDefaultBlockVariation( name, 'block' ),
+			variations: getBlockVariations( name, 'block' )
 		};
 	}, []);
 
@@ -104,28 +126,6 @@ const Edit = ({
 				columnWidth: layouts[columns][layout][i]
 			});
 		});
-	};
-
-	const setupColumns = ( columns, layout ) => {
-
-		if ( 1 >= columns ) {
-			setAttributes({
-				columns,
-				layout,
-				layoutTablet: 'equal',
-				layoutMobile: 'equal'
-			});
-		} else {
-			setAttributes({
-				columns,
-				layout,
-				layoutTablet: 'equal',
-				layoutMobile: 'collapsedRows'
-			});
-		}
-
-		// Add delay so that we can initiate the new blocks after passing the onbording check.
-		setTimeout( () => changeColumnsNumbers( columns ), 200 );
 	};
 
 	useEffect( () => {
@@ -356,18 +356,69 @@ const Edit = ({
 		{ 'has-viewport-mobile': isMobile }
 	);
 
+	// +-------------------------------- Template Library --------------------------------+
+	const [ isLibraryOpen, setIsLibraryOpen ] = useState( false );
 
 	if ( ! attributes.columns ) {
 		return (
-			<Onboarding
-				clientId={ clientId }
-				setupColumns={ setupColumns }
-			/>
+			<div>
+				<div style={{
+					display: 'flex',
+					flexDirection: 'column'
+				}}>
+					<VariationPicker
+						icon={ get( blockType, [ 'icon', 'src' ]) }
+						label={ get( blockType, [ 'title' ]) }
+						variations={ variations }
+						onSelect={ ( nextVariation = defaultVariation ) => {
+							if ( nextVariation ) {
+								replaceInnerBlocks(
+									clientId,
+									createBlocksFromInnerBlocksTemplate(
+										nextVariation.innerBlocks
+									),
+									true
+								);
+								setAttributes( nextVariation.attributes );
+							}
+						} }
+						allowSkip
+					/>
+					<div style={{ width: '100%', display: 'flex', alignItems: 'center', flexDirection: 'column', color: '#747d86'}}>
+						<span>|</span>
+						<span style={{ textTransform: 'uppercase' }}>{__( 'OR', 'otter-blocks' )}</span>
+						<span>|</span>
+					</div>
+					<Placeholder
+						label={ __( 'Open Template Library', 'otter-blocks' )  }
+						instructions={ __( 'Choose one of our custom templates for creating an amazing page.', 'otter-blocks' ) }
+					>
+						<Tooltip text={ __( 'Open Template Library', 'otter-blocks' ) } >
+							<Button
+								isPrimary
+								isLarge
+								className="wp-block-themeisle-template-library"
+								onClick={ () => setIsLibraryOpen( true ) }
+							>
+								<Dashicon icon="category"/>
+								{ __( 'Template Library', 'otter-blocks' ) }
+							</Button>
+
+							{ isLibraryOpen && (
+								<Library
+									clientId={ clientId }
+									close={ () => setIsLibraryOpen( false ) }
+								/>
+							) }
+						</Tooltip>
+					</Placeholder>
+				</div>
+			</div>
 		);
 	}
 
 	return (
-		<Fragment>
+		<div>
 			<BlockNavigatorControl clientId={ clientId } />
 
 			<Controls
@@ -423,7 +474,7 @@ const Edit = ({
 					height={ getDividerBottomHeight }
 				/>
 			</Tag>
-		</Fragment>
+		</div>
 	);
 };
 
