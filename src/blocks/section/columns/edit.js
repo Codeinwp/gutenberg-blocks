@@ -380,31 +380,24 @@ const Edit = ({
 					} }
 					allowSkip
 				/>
-				<div className="or">
-					<span>|</span>
-					<span>{__( 'OR', 'otter-blocks' )}</span>
-					<span>|</span>
-				</div>
-				<div className="template-library">
-					<Tooltip text={ __( 'Open Template Library', 'otter-blocks' ) } >
-						<Button
-							isPrimary
-							isLarge
-							className="wp-block-themeisle-template-library"
-							onClick={ () => setIsLibraryOpen( true ) }
-						>
-							<Dashicon icon="category"/>
-							{ __( 'Template Library', 'otter-blocks' ) }
-						</Button>
+				<Tooltip text={ __( 'Open Template Library', 'otter-blocks' ) } >
+					<Button
+						isPrimary
+						isLarge
+						className="wp-block-themeisle-template-library"
+						onClick={ () => setIsLibraryOpen( true ) }
+					>
+						<Dashicon icon="category"/>
+						{ __( 'Template Library', 'otter-blocks' ) }
+					</Button>
 
-						{ isLibraryOpen && (
-							<Library
-								clientId={ clientId }
-								close={ () => setIsLibraryOpen( false ) }
-							/>
-						) }
-					</Tooltip>
-				</div>
+					{ isLibraryOpen && (
+						<Library
+							clientId={ clientId }
+							close={ () => setIsLibraryOpen( false ) }
+						/>
+					) }
+				</Tooltip>
 			</Placeholder>
 		);
 	}
