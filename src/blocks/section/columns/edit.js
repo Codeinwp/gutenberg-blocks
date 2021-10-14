@@ -31,7 +31,6 @@ import {
 	useState
 } from '@wordpress/element';
 
-import { get } from 'lodash';
 
 /**
  * Internal dependencies
@@ -69,7 +68,6 @@ const Edit = ({
 		isPreviewMobile,
 		children,
 		variations,
-		blockType,
 		defaultVariation
 	} = useSelect( select => {
 		const {
@@ -94,7 +92,7 @@ const Edit = ({
 			isPreviewMobile: __experimentalGetPreviewDeviceType ? 'Mobile' === __experimentalGetPreviewDeviceType() : false,
 			blockType: getBlockType( name ),
 			defaultVariation: getDefaultBlockVariation( name, 'block' ),
-			variations: getBlockVariations( name, 'block' )
+			variations: getBlockVariations( name, 'block' ).filter( ({ isDefault }) => ! isDefault )
 		};
 	}, []);
 
@@ -361,59 +359,53 @@ const Edit = ({
 
 	if ( ! attributes.columns ) {
 		return (
-			<div>
-				<div style={{
-					display: 'flex',
-					flexDirection: 'column'
-				}}>
-					<VariationPicker
-						icon={ get( blockType, [ 'icon', 'src' ]) }
-						label={ get( blockType, [ 'title' ]) }
-						variations={ variations }
-						onSelect={ ( nextVariation = defaultVariation ) => {
-							if ( nextVariation ) {
-								replaceInnerBlocks(
-									clientId,
-									createBlocksFromInnerBlocksTemplate(
-										nextVariation.innerBlocks
-									),
-									true
-								);
-								setAttributes( nextVariation.attributes );
-							}
-						} }
-						allowSkip
-					/>
-					<div style={{ width: '100%', display: 'flex', alignItems: 'center', flexDirection: 'column', color: '#747d86'}}>
-						<span>|</span>
-						<span style={{ textTransform: 'uppercase' }}>{__( 'OR', 'otter-blocks' )}</span>
-						<span>|</span>
-					</div>
-					<Placeholder
-						label={ __( 'Open Template Library', 'otter-blocks' )  }
-						instructions={ __( 'Choose one of our custom templates for creating an amazing page.', 'otter-blocks' ) }
-					>
-						<Tooltip text={ __( 'Open Template Library', 'otter-blocks' ) } >
-							<Button
-								isPrimary
-								isLarge
-								className="wp-block-themeisle-template-library"
-								onClick={ () => setIsLibraryOpen( true ) }
-							>
-								<Dashicon icon="category"/>
-								{ __( 'Template Library', 'otter-blocks' ) }
-							</Button>
-
-							{ isLibraryOpen && (
-								<Library
-									clientId={ clientId }
-									close={ () => setIsLibraryOpen( false ) }
-								/>
-							) }
-						</Tooltip>
-					</Placeholder>
+			<Placeholder
+				label={ __( 'Section', 'otter-blocks' )  }
+				instructions={ __( 'Select a layout to start with, or make one yourself.', 'otter-blocks' ) }
+				className="otter-section-layout-picker"
+			>
+				<VariationPicker
+					variations={ variations }
+					onSelect={ ( nextVariation = defaultVariation ) => {
+						if ( nextVariation ) {
+							replaceInnerBlocks(
+								clientId,
+								createBlocksFromInnerBlocksTemplate(
+									nextVariation.innerBlocks
+								),
+								true
+							);
+							setAttributes( nextVariation.attributes );
+						}
+					} }
+					allowSkip
+				/>
+				<div className="or">
+					<span>|</span>
+					<span>{__( 'OR', 'otter-blocks' )}</span>
+					<span>|</span>
 				</div>
-			</div>
+				<div className="template-library">
+					<Tooltip text={ __( 'Open Template Library', 'otter-blocks' ) } >
+						<Button
+							isPrimary
+							isLarge
+							className="wp-block-themeisle-template-library"
+							onClick={ () => setIsLibraryOpen( true ) }
+						>
+							<Dashicon icon="category"/>
+							{ __( 'Template Library', 'otter-blocks' ) }
+						</Button>
+
+						{ isLibraryOpen && (
+							<Library
+								clientId={ clientId }
+								close={ () => setIsLibraryOpen( false ) }
+							/>
+						) }
+					</Tooltip>
+				</div>
+			</Placeholder>
 		);
 	}
 
