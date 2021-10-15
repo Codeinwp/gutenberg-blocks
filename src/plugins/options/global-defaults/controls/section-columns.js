@@ -626,19 +626,19 @@ const SectionColumns = ({
 				initialOpen={ false }
 			>
 				<ToggleControl
-					label={ __( 'Hide this section in Desktop devices?', 'otter-blocks' ) }
+					label={ __( 'Hide this section on Desktop devices?', 'otter-blocks' ) }
 					checked={ defaults.hide }
 					onChange={ value => changeConfig( blockName, { hide: value }) }
 				/>
 
 				<ToggleControl
-					label={ __( 'Hide this section in Tablet devices?', 'otter-blocks' ) }
+					label={ __( 'Hide this section on Tablet devices?', 'otter-blocks' ) }
 					checked={ defaults.hideTablet }
 					onChange={ value => changeConfig( blockName, { hideTablet: value }) }
 				/>
 
 				<ToggleControl
-					label={ __( 'Hide this section in Mobile devices?', 'otter-blocks' ) }
+					label={ __( 'Hide this section on Mobile devices?', 'otter-blocks' ) }
 					checked={ defaults.hideMobile }
 					onChange={ value => changeConfig( blockName, { hideMobile: value }) }
 				/>

@@ -1608,19 +1608,19 @@ const Inspector = ({
 							title={ __( 'Responsive', 'otter-blocks' ) }
 						>
 							<ToggleControl
-								label={ __( 'Hide this section in Desktop devices?', 'otter-blocks' ) }
+								label={ __( 'Hide this section on Desktop devices?', 'otter-blocks' ) }
 								checked={ attributes.hide }
 								onChange={ e => changeHideStatus( e, 'Desktop' ) }
 							/>
 
 							<ToggleControl
-								label={ __( 'Hide this section in Tablet devices?', 'otter-blocks' ) }
+								label={ __( 'Hide this section on Tablet devices?', 'otter-blocks' ) }
 								checked={ attributes.hideTablet }
 								onChange={ e => changeHideStatus( e, 'Tablet' ) }
 							/>
 
 							<ToggleControl
-								label={ __( 'Hide this section in Mobile devices?', 'otter-blocks' ) }
+								label={ __( 'Hide this section on Mobile devices?', 'otter-blocks' ) }
 								checked={ attributes.hideMobile }
 								onChange={ e => changeHideStatus( e, 'Mobile' ) }
 							/>
