@@ -7,10 +7,19 @@ import hexToRgba from 'hex-rgba';
 /**
  * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n';
+
 import { times } from 'lodash';
 
+import {
+	Button,
+	Dashicon,
+	Placeholder,
+	Tooltip
+} from '@wordpress/components';
+
 import { useViewportMatch } from '@wordpress/compose';
-import { __ } from '@wordpress/i18n';
+
 import {
 	useDispatch,
 	useSelect
@@ -31,7 +40,6 @@ import {
 	useState
 } from '@wordpress/element';
 
-
 /**
  * Internal dependencies
  */
@@ -42,7 +50,6 @@ import Inspector from './inspector.js';
 import BlockNavigatorControl from '../../../components/block-navigator-control/index.js';
 import Separators from '../components/separators/index.js';
 import { blockInit } from '../../../helpers/block-utility.js';
-import { Button, Dashicon, Placeholder, Tooltip } from '@wordpress/components';
 import Library from '../../../components/template-library/index.js';
 
 const Edit = ({
@@ -52,7 +59,6 @@ const Edit = ({
 	clientId,
 	name
 }) => {
-
 	useEffect( () => {
 		const unsubscribe = blockInit( clientId, defaultAttributes );
 		return () => unsubscribe( attributes.id );
@@ -102,13 +108,10 @@ const Edit = ({
 		removeBlock
 	} = useDispatch( 'core/block-editor' );
 
-
 	const changeColumnsNumbers = ( newColumnsNumber ) => {
 		if ( attributes.columns < newColumnsNumber ) {
-			console.log( 'ADD', newColumnsNumber - attributes.columns );
 			times(  newColumnsNumber - attributes.columns, () => {
 				const columnBlock = createBlock( 'themeisle-blocks/advanced-column' );
-				console.log( 'Create Block', columnBlock );
 				if ( columnBlock ) {
 					insertBlock( columnBlock, ( children?.length ) || 0, clientId, false );
 				}
@@ -128,7 +131,6 @@ const Edit = ({
 
 	useEffect( () => {
 		if ( attributes.columns !== children.length ) {
-			console.log( 'Change' );
 			setAttributes({
 				columns: children.length
 			});
@@ -188,7 +190,6 @@ const Edit = ({
 		tablet: attributes.dividerBottomHeightTablet,
 		desktop: attributes.dividerBottomHeight
 	});
-
 
 	// +-------------------------------- STYLING --------------------------------+
 

@@ -1,5 +1,13 @@
-import { Path, SVG, Rect } from '@wordpress/components';
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
+
+import {
+	Path,
+	SVG,
+	Rect
+} from '@wordpress/components';
 
 const variations =
 	[
