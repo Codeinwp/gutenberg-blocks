@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "872764f89add6a49a1af4729ec795027",
+    "content-hash": "28690f0d41c24f4b9de2ffe10e759027",
     "packages": [
         {
             "name": "masterminds/html5",
@@ -136,16 +136,16 @@
     "packages-dev": [
         {
             "name": "automattic/vipwpcs",
-            "version": "0.3.1",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/VIP-Coding-Standards.git",
-                "reference": "6ee2440476918f7f8d1419fab41a71a835cd3c0b"
+                "reference": "8544a94c32f990b6669f2c7f034d4ba75ccbb558"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/6ee2440476918f7f8d1419fab41a71a835cd3c0b",
-                "reference": "6ee2440476918f7f8d1419fab41a71a835cd3c0b",
+                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/8544a94c32f990b6669f2c7f034d4ba75ccbb558",
+                "reference": "8544a94c32f990b6669f2c7f034d4ba75ccbb558",
                 "shasum": ""
             },
             "require": {
@@ -154,11 +154,12 @@
                 "wp-coding-standards/wpcs": "1.*"
             },
             "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.5",
                 "phpcompatibility/php-compatibility": "^9",
-                "phpunit/phpunit": "*"
+                "phpunit/phpunit": "^5 || ^6 || ^7"
             },
             "suggest": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3 || This Composer plugin will sort out the PHPCS 'installed_paths' automatically."
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.5 || This Composer plugin will sort out the PHPCS 'installed_paths' automatically."
             },
             "type": "phpcodesniffer-standard",
             "notification-url": "https://packagist.org/downloads/",
@@ -182,7 +183,7 @@
                 "source": "https://github.com/Automattic/VIP-Coding-Standards",
                 "wiki": "https://github.com/Automattic/VIP-Coding-Standards/wiki"
             },
-            "time": "2018-12-04T18:31:10+00:00"
+            "time": "2019-04-24T21:34:09+00:00"
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
@@ -1632,16 +1633,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.6.0",
+            "version": "3.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "ffced0d2c8fa8e6cdc4d695a743271fab6c38625"
+                "reference": "5e4e71592f69da17871dba6e80dd51bce74a351a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/ffced0d2c8fa8e6cdc4d695a743271fab6c38625",
-                "reference": "ffced0d2c8fa8e6cdc4d695a743271fab6c38625",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/5e4e71592f69da17871dba6e80dd51bce74a351a",
+                "reference": "5e4e71592f69da17871dba6e80dd51bce74a351a",
                 "shasum": ""
             },
             "require": {
@@ -1684,7 +1685,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2021-04-09T00:54:41+00:00"
+            "time": "2021-12-12T21:44:58+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -1948,5 +1949,5 @@
     "platform-overrides": {
         "php": "5.6"
     },
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
