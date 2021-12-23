@@ -39,7 +39,7 @@
 		"@emotion/babel-preset-css-prop": "^11.2.0",
 		"@semantic-release/changelog": "^6.0.0",
 		"@semantic-release/exec": "^6.0.1",
-		"@semantic-release/git": "^10.0.0",
+		"@semantic-release/git": "^10.0.1",
 		"autoprefixer": "^10.3.6",
 		"babel-eslint": "^10.1.0",
 		"babel-loader": "^8.2.2",
